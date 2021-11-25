@@ -15,5 +15,5 @@ export default class Styles extends Vue {}
 </script>
 
 <style lang="scss">
-@import './List.scss';
+@import 'polaris-react/src/components/List/List.scss';
 </style>

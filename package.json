@@ -13,18 +13,18 @@
   "main": "dist/polaris-vue.js",
   "files": [
     "dist",
-    "src",
     "package.json",
     "LICENCE",
     "README.md"
   ],
   "scripts": {
-    "serve": "vue-cli-service serve",
+    "serve": "yarn run copy-polaris-tokens && vue-cli-service serve",
     "build": "vue-cli-service build",
     "lint": "vue-cli-service lint",
-    "storybook": "start-storybook -p 6006",
-    "build-storybook": "build-storybook",
-    "roll": "rollup --config ./build/rollup.config.js"
+    "storybook": "yarn run copy-polaris-tokens && start-storybook -p 6006",
+    "build-storybook": "yarn run copy-polaris-tokens && build-storybook",
+    "roll": "yarn run copy-polaris-tokens && rollup --config ./build/rollup.config.js",
+    "copy-polaris-tokens": "rimraf ./node_modules/polaris-react/src/styles/polaris-tokens && shx cp -r ./node_modules/@shopify/polaris-tokens/dist ./node_modules/polaris-react/src/styles/polaris-tokens"
   },
   "dependencies": {
     "@shopify/polaris-tokens": "^4.0.0",
@@ -57,10 +57,10 @@
     "eslint-plugin-typescript": "^0.14.0",
     "eslint-plugin-vue": "^8.1.0",
     "node-sass": "^4.12.0",
-    "polaris-react": "^1.0.0",
+    "polaris-react": "https://github.com/Shopify/polaris-react.git",
     "postcss": "^8.3.11",
-    "postcss-import": "^12",
     "pug-plain-loader": "^1.1.0",
+    "rimraf": "^3.0.2",
     "rollup": "^2.60.0",
     "rollup-plugin-clear": "^2.0.7",
     "rollup-plugin-postcss-modules": "^2.0.2",
@@ -68,6 +68,7 @@
     "rollup-plugin-uglify": "^6.0.4",
     "rollup-plugin-vue": "^6.0.0",
     "sass-loader": "^8.0.2",
+    "shx": "^0.3.3",
     "typescript": "~4.1.5",
     "typescript-plugin-css-modules": "^3.4.0",
     "vue-class-component": "^7.2.3",

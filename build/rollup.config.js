@@ -1,7 +1,6 @@
 import vue from 'rollup-plugin-vue';
 import typescript from 'rollup-plugin-typescript2';
 import postcss from 'rollup-plugin-postcss-modules';
-import postcssImport from 'postcss-import';
 import clear from 'rollup-plugin-clear';
 import uglify from 'rollup-plugin-uglify';
 import { generateScopedName } from './config/namespaced-classname';
@@ -23,9 +22,6 @@ export default {
       modules: {
         generateScopedName,
       },
-      plugins: [postcssImport({
-        path: ['src/components/**/*.scss'],
-      })],
       autoModules: false,
     }),
     typescript({

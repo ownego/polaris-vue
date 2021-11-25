@@ -75,7 +75,7 @@ function styleInject(css, ref) {
   }
 }
 
-var css_248z$2 = ".Polaris-List {\n  margin-top: 0;\n  margin-bottom: 0;\n  list-style: disc outside none;\n}\n.Polaris-List + .Polaris-List {\n  margin-top: 10px;\n}\n.Polaris-List--typeNumber {\n  list-style: decimal outside none;\n}\n.Polaris-List__Item:last-child {\n  margin-bottom: 0;\n}\n.Polaris-List__Item .Polaris-List:first-child {\n  margin-top: 10px;\n}";
+var css_248z$2 = ".Polaris-List {\n  padding-left: 2rem;\n  margin-top: 0;\n  margin-bottom: 0;\n  list-style: disc outside none;\n}\n.Polaris-List + .Polaris-List {\n  margin-top: 1.6rem;\n}\n.Polaris-List--typeNumber {\n  padding-left: 3.2rem;\n  list-style: decimal outside none;\n}\n.Polaris-List__Item {\n  margin-bottom: 0.8rem;\n}\n.Polaris-List__Item:last-child {\n  margin-bottom: 0;\n}\n.Polaris-List__Item .Polaris-List:first-child {\n  margin-top: 0.8rem;\n}";
 styleInject(css_248z$2);
 
 script$4.render = render$4;
