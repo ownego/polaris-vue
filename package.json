@@ -1,33 +1,88 @@
 {
   "name": "polaris-vue",
   "version": "0.1.0",
-  "private": true,
+  "description": "Shopify Polaris UI library for Vue 2",
+  "author": {
+    "name": "Qikify"
+  },
+  "keywords": [
+    "polaris",
+    "shopify polaris",
+    "polaris-vue"
+  ],
+  "main": "dist/polaris-vue.js",
+  "files": [
+    "dist",
+    "src",
+    "package.json",
+    "LICENCE",
+    "README.md"
+  ],
   "scripts": {
     "serve": "vue-cli-service serve",
     "build": "vue-cli-service build",
-    "lint": "vue-cli-service lint"
+    "lint": "vue-cli-service lint",
+    "storybook": "start-storybook -p 6006",
+    "build-storybook": "build-storybook",
+    "roll": "rollup --config ./build/rollup.config.js"
   },
   "dependencies": {
+    "@shopify/polaris-tokens": "^4.0.0",
     "core-js": "^3.6.5",
     "vue": "^2.6.11",
-    "vue-class-component": "^7.2.3",
     "vue-property-decorator": "^9.1.2"
   },
   "devDependencies": {
-    "@typescript-eslint/eslint-plugin": "^4.18.0",
-    "@typescript-eslint/parser": "^4.18.0",
+    "@babel/core": "^7.16.0",
+    "@storybook/addon-actions": "^6.3.12",
+    "@storybook/addon-docs": "^6.3.12",
+    "@storybook/addon-essentials": "^6.3.12",
+    "@storybook/addon-links": "^6.3.12",
+    "@storybook/addons": "^6.3.12",
+    "@storybook/preset-scss": "^1.0.3",
+    "@storybook/theming": "^6.3.12",
+    "@storybook/vue": "^6.3.12",
+    "@typescript-eslint/eslint-plugin": "^5.4.0",
+    "@typescript-eslint/parser": "^5.4.0",
     "@vue/cli-plugin-babel": "~4.5.0",
     "@vue/cli-plugin-eslint": "~4.5.0",
     "@vue/cli-plugin-typescript": "~4.5.0",
     "@vue/cli-service": "~4.5.0",
     "@vue/eslint-config-airbnb": "^5.0.2",
     "@vue/eslint-config-typescript": "^7.0.0",
-    "eslint": "^6.7.2",
+    "babel-loader": "^8.2.3",
+    "change-case": "^4.1.2",
+    "eslint": "7.14.0",
     "eslint-plugin-import": "^2.20.2",
-    "eslint-plugin-vue": "^6.2.2",
+    "eslint-plugin-typescript": "^0.14.0",
+    "eslint-plugin-vue": "^8.1.0",
     "node-sass": "^4.12.0",
+    "polaris-react": "^1.0.0",
+    "postcss": "^8.3.11",
+    "postcss-import": "^12",
+    "pug-plain-loader": "^1.1.0",
+    "rollup": "^2.60.0",
+    "rollup-plugin-clear": "^2.0.7",
+    "rollup-plugin-postcss-modules": "^2.0.2",
+    "rollup-plugin-typescript2": "^0.31.0",
+    "rollup-plugin-uglify": "^6.0.4",
+    "rollup-plugin-vue": "^6.0.0",
     "sass-loader": "^8.0.2",
     "typescript": "~4.1.5",
+    "typescript-plugin-css-modules": "^3.4.0",
+    "vue-class-component": "^7.2.3",
+    "vue-css-modules": "^1.2.0",
+    "vue-loader": "^15.9.8",
+    "vue-router": "^3.5.3",
     "vue-template-compiler": "^2.6.11"
-  }
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/qikify/polaris-vue.git"
+  },
+  "bugs": {
+    "url": "https://github.com/qikify/polaris-vue/issues"
+  },
+  "homepage": "https://github.com/qikify/polaris-vue#readme",
+  "license": "MIT"
 }

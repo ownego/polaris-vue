@@ -1,24 +1,8 @@
-# polaris-vue
+# Polaris Vue
 
-## Project setup
-```
-yarn install
-```
+Polaris Vue by Qikify based on [Shopify Polaris style guide](https://polaris.shopify.com/).
+We're trying to make it mostly close with Shopify style guide and get a better performance.
 
-### Compiles and hot-reloads for development
-```
-yarn serve
-```
+## Documentation
 
-### Compiles and minifies for production
-```
-yarn build
-```
-
-### Lints and fixes files
-```
-yarn lint
-```
-
-### Customize configuration
-See [Configuration Reference](https://cli.vuejs.org/config/).
+Coming soon...

@@ -13,8 +13,12 @@
     "sourceMap": true,
     "baseUrl": ".",
     "types": [
-      "webpack-env"
+      "node",
+      "vue",
     ],
+    "declaration": true,
+    "declarationDir": "./types",
+    "plugins": [{ "name": "typescript-plugin-css-modules" }],
     "paths": {
       "@/*": [
         "src/*"
@@ -25,9 +29,10 @@
       "dom",
       "dom.iterable",
       "scripthost"
-    ]
+    ],
   },
   "include": [
+    "types/*.ts",
     "src/**/*.ts",
     "src/**/*.tsx",
     "src/**/*.vue",
@@ -36,5 +41,5 @@
   ],
   "exclude": [
     "node_modules"
-  ]
+  ],
 }
