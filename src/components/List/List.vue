@@ -35,11 +35,7 @@ export default class List extends Vue {
   public element = this.type === 'bullet' ? 'ul' : 'ol';
 
   protected get className(): string {
-    const name = classNames(
-      this.$style.List,
-      this.type && this.$style[variationName('type', this.type)],
-    );
-    console.log(this.$style, name);
+    console.log('aaa', this.$style);
     return classNames(
       this.$style.List,
       this.type && this.$style[variationName('type', this.type)],

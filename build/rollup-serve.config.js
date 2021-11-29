@@ -3,18 +3,15 @@ import typescript from 'rollup-plugin-typescript2';
 import postcss from 'rollup-plugin-postcss-modules';
 import clear from 'rollup-plugin-clear';
 import uglify from 'rollup-plugin-uglify';
+import resolve from 'rollup-plugin-node-resolve';
+import commonJS from 'rollup-plugin-commonjs';
 import { generateScopedName } from './config/namespaced-classname';
 
 export default {
-  input: './src/polaris-vue.ts',
+  input: './src/main.ts',
   output: [{
-    file: './dist/polaris-vue.js',
-    format: 'esm',
-  }, {
-    name: 'PolarisVue',
-    file: './dist/polaris-vue.min.js',
+    file: './dist/main.js',
     format: 'iife',
-    exports: 'named',
     globals: {
       vue: 'Vue',
       'vue-property-decorator': 'vuePropertyDecorator',
@@ -38,6 +35,10 @@ export default {
         },
         include: null,
       },
+    }),
+    resolve(),
+    commonJS({
+      include: 'node_modules/**',
     }),
     uglify,
     clear({

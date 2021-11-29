@@ -1,9 +1,28 @@
-// eslint-disable-next-line @typescript-eslint/no-var-requires
+/* eslint-disable @typescript-eslint/no-var-requires */
+const postcssModules = require('postcss-modules');
+const classConfig = require('./build/config/ok');
+
 module.exports = {
   devServer: {
     port: 1902,
   },
   productionSourceMap: false,
+  css: {
+    requireModuleExtension: false,
+    loaderOptions: {
+      css: {
+        modules: true,
+        importLoaders: 2,
+      },
+      postcss: {
+        plugins: [
+          postcssModules({
+            generateScopedName: classConfig,
+          }),
+        ],
+      },
+    },
+  },
 
   chainWebpack: (config) => {
     // CSS loader
