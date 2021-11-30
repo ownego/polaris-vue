@@ -19,7 +19,7 @@
   ],
   "scripts": {
     "serve": "yarn run copy-polaris-tokens && vue-cli-service serve",
-    "build": "vue-cli-service build",
+    "build": "vue-cli-service build --target lib --name polaris-vue ./src/polaris-vue.ts",
     "lint": "vue-cli-service lint",
     "storybook": "yarn run copy-polaris-tokens && start-storybook -p 6006",
     "build-storybook": "yarn run copy-polaris-tokens && build-storybook",

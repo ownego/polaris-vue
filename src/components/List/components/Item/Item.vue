@@ -4,13 +4,10 @@ li(:class="className")
 </template>
 
 <script lang="ts">
-import { Component, Vue } from 'vue-property-decorator';
-import Styles from '../../Styles.vue';
+import { Vue } from 'vue-property-decorator';
+import * as style from '../../Styles.vue.json';
 
-@Component({
-  mixins: [Styles],
-})
 export default class Item extends Vue {
-  public className = this.$style.Item;
+  public className = style.Item;
 }
 </script>

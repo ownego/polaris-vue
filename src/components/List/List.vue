@@ -9,8 +9,8 @@ component(
 <script lang="ts">
 import Vue from 'vue';
 import { Component, Prop } from 'vue-property-decorator';
-import { classNames, variationName } from '../../utilities/css';
 import Styles from './Styles.vue';
+import * as style from './Styles.vue.json';
 
 type Type = 'bullet' | 'number';
 
@@ -32,14 +32,8 @@ export default class List extends Vue {
   @Prop({ type: String, default: 'bullet' })
   public type!: Type;
 
-  public element = this.type === 'bullet' ? 'ul' : 'ol';
+  public className = style.List;
 
-  protected get className(): string {
-    console.log('aaa', this.$style);
-    return classNames(
-      this.$style.List,
-      this.type && this.$style[variationName('type', this.type)],
-    );
-  }
+  public element = this.type === 'bullet' ? 'ul' : 'ol';
 }
 </script>
