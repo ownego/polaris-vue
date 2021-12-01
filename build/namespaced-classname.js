@@ -10,7 +10,7 @@ const NESTED_COMPONENT_PATH_REGEX = /.*\/components\/(.*)\/components/;
 
 const scopedHashes = {};
 
-export const generateScopedName = (name, filename, css) => {
+module.exports = function generateScopedName(name, filename, css) {
   const parseName = name.split('_');
   const originalName = parseName.length > 1 ? parseName[1] : name;
 
@@ -75,7 +75,6 @@ export const generateScopedName = (name, filename, css) => {
     // Variation of component
     className = variationClassName(polarisComponentName, camelCase(originalName));
   }
-
   return className;
 };
 

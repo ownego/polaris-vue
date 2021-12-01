@@ -9,8 +9,7 @@ component(
 <script lang="ts">
 import Vue from 'vue';
 import { Component, Prop } from 'vue-property-decorator';
-import Styles from './Styles.vue';
-import * as style from './Styles.vue.json';
+import * as style from '@/classes/List.json';
 
 type Type = 'bullet' | 'number';
 
@@ -21,9 +20,7 @@ type Type = 'bullet' | 'number';
  * Each list item begins with a bullet or a number.
  * </h4>
  */
-@Component({
-  mixins: [Styles],
-})
+@Component
 export default class List extends Vue {
   /**
    * Type of list to display
@@ -37,3 +34,6 @@ export default class List extends Vue {
   public element = this.type === 'bullet' ? 'ul' : 'ol';
 }
 </script>
+<style lang="scss">
+@import 'polaris-react/src/components/List/List.scss';
+</style>
