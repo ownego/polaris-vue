@@ -1,10 +1,14 @@
 import _Vue from 'vue';
 import {
+  UnstyledLink,
+  Link,
   List,
   ListItem,
 } from './components';
 
 const components = [
+  UnstyledLink,
+  Link,
   List,
   ListItem,
 ];
@@ -21,6 +25,8 @@ const PolarisVue = {
 
 // Export single component
 export {
+  UnstyledLink,
+  Link,
   List,
   ListItem,
 };
