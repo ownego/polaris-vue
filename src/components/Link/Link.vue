@@ -23,7 +23,7 @@ button(
 <script lang="ts">
 import Vue from 'vue';
 import { Component, Prop } from 'vue-property-decorator';
-import { classNames } from '../../utilities/css';
+import { classNames } from 'polaris-react/src/utilities/css';
 import { UnstyledLink } from '../UnstyledLink';
 import * as styles from '@/classes/Link.json';
 
