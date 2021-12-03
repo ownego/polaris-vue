@@ -7,17 +7,18 @@ module.exports = {
   ],
   framework: '@storybook/vue',
   addons: [
-    "@storybook/addon-links",
-    "@storybook/addon-essentials",
+    '@storybook/addon-links',
+    '@storybook/addon-essentials',
     '@storybook/addon-knobs',
-    {
-      name: '@storybook/preset-scss',
-      options: {
-        cssLoaderOptions: {
-          modules: true,
-        }
-      }
-    },
+    '@storybook/preset-scss',
+    // {
+    //   name: '@storybook/preset-scss',
+    //   options: {
+    //     cssLoaderOptions: {
+    //       modules: true,
+    //     }
+    //   }
+    // },
   ],
   webpackFinal: async (config, { configType }) => {
     // `configType` has a value of 'DEVELOPMENT' or 'PRODUCTION'
@@ -34,6 +35,7 @@ module.exports = {
 
     config.resolve.alias = {
       '@': path.resolve(__dirname, '../src'),
+      'vue': 'vue/dist/vue.js',
     };
 
     // Return the altered config
