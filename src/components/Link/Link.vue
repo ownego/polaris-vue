@@ -1,0 +1,90 @@
+<template lang="pug">
+UnstyledLink(
+  v-if="url || to",
+  :to="to",
+  :url="url",
+  :external="external",
+  :class="className",
+  v-on="$listeners",
+  data-polaris-unstyled=true,
+)
+  <!-- Slot for displaying content inside the link -->
+  slot
+button(
+  v-else,
+  type="button",
+  :class="className",
+  v-on="$listeners",
+)
+  <!-- Slot for displaying content inside the link -->
+  slot
+</template>
+
+<script lang="ts">
+import Vue from 'vue';
+import { Component, Prop } from 'vue-property-decorator';
+import { classNames } from '../../utilities/css';
+import { UnstyledLink } from '../UnstyledLink';
+import * as styles from '@/classes/Link.json';
+
+/**
+ * <br/>
+ * <h4 class="desc">
+ * Links take users to another place, and usually appear
+ * within or directly following a sentence.
+ * <h4/>
+ * <p>
+ * For actions that aren't related to navigation, use the
+ * button component.
+ * </p>
+ */
+@Component({
+  components: {
+    UnstyledLink,
+  },
+})
+export default class Link extends Vue {
+  /**
+   * The url to Link to
+   */
+  @Prop({ type: String })
+  public url!: string
+
+  /**
+   * Set to for vue-router
+   */
+  @Prop({ type: [String, Object] })
+  public to!: string|object
+
+  /**
+   * Makes the link open in new tab
+   */
+  @Prop({ type: Boolean, default: false })
+  public external!: boolean
+
+  /**
+   * Makes the link color the same as the current text color
+   * and adds an underline
+   */
+  @Prop({ type: Boolean, default: false })
+  public monochrome!: boolean
+
+  /**
+   * Removes text decoration underline to the link
+   */
+  @Prop({ type: Boolean, default: false })
+  public removeUnderline!: boolean
+
+  get className(): string {
+    return classNames(
+      styles.Link,
+      this.monochrome && styles.monochrome,
+      this.removeUnderline && styles.removeUnderline,
+    );
+  }
+}
+</script>
+
+<style lang="scss">
+@import 'polaris-react/src/components/Link/Link.scss';
+</style>
