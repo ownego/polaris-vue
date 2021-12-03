@@ -10,6 +10,7 @@ module.exports = {
   },
   productionSourceMap: false,
   css: {
+    extract: false,
     requireModuleExtension: false,
     loaderOptions: {
       postcss: {
@@ -41,4 +42,10 @@ module.exports = {
       .use('vue-svg-loader')
       .loader('vue-svg-loader');
   },
+
+  // configureWebpack: {
+  //   output: {
+  //     libraryExport: 'default',
+  //   },
+  // },
 };

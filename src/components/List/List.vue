@@ -9,7 +9,8 @@ component(
 <script lang="ts">
 import Vue from 'vue';
 import { Component, Prop } from 'vue-property-decorator';
-import * as style from '@/classes/List.json';
+import { classNames, variationName } from 'polaris-react/src/utilities/css';
+import style from '@/classes/List.json';
 
 type Type = 'bullet' | 'number';
 
@@ -29,7 +30,17 @@ export default class List extends Vue {
   @Prop({ type: String, default: 'bullet' })
   public type!: Type;
 
-  public className = style.List;
+  get className() {
+    const variation = variationName('type', this.type) as keyof typeof style;
+    console.log(variation,
+      style,
+      style[variation]);
+
+    return classNames(
+      style.List,
+      this.type && style[variation],
+    );
+  }
 
   public element = this.type === 'bullet' ? 'ul' : 'ol';
 }

@@ -1,17 +1,15 @@
+const path = require('path');
+
 module.exports = {
   stories: [
     './stories/**/*.stories.mdx',
     '../src/**/README.stories.mdx',
   ],
+  framework: '@storybook/vue',
   addons: [
-    '@storybook/addon-links',
-    '@storybook/addon-actions',
-    {
-      name: '@storybook/addon-essentials',
-      options: {
-        actions: false,
-      },
-    },
+    "@storybook/addon-links",
+    "@storybook/addon-essentials",
+    '@storybook/addon-knobs',
     {
       name: '@storybook/preset-scss',
       options: {
@@ -19,14 +17,12 @@ module.exports = {
           modules: true,
         }
       }
-    }
-    '@storybook/preset-typescript',
+    },
   ],
   webpackFinal: async (config, { configType }) => {
     // `configType` has a value of 'DEVELOPMENT' or 'PRODUCTION'
     // You can change the configuration based on that.
     // 'PRODUCTION' is used when building the static version of storybook.
-
     config.module.rules.push(
       {
         test: /\.pug$/,
@@ -35,6 +31,10 @@ module.exports = {
         ]
       }
     );
+
+    config.resolve.alias = {
+      '@': path.resolve(__dirname, '../src'),
+    };
 
     // Return the altered config
     return config;
