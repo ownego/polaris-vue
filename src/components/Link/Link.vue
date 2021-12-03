@@ -1,7 +1,6 @@
 <template lang="pug">
 UnstyledLink(
   v-if="url || to",
-  :id="id",
   :to="to",
   :url="url",
   :external="external",
@@ -14,7 +13,6 @@ UnstyledLink(
 button(
   v-else,
   type="button",
-  :id="id",
   :class="className",
   v-on="$listeners",
 )
@@ -46,12 +44,6 @@ import * as styles from '@/classes/Link.json';
   },
 })
 export default class Link extends Vue {
-  /**
-   * Id for the link
-   */
-  @Prop({ type: String })
-  public id!: string
-
   /**
    * The url to Link to
    */
