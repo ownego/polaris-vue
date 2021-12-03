@@ -32,9 +32,6 @@ export default class List extends Vue {
 
   get className() {
     const variation = variationName('type', this.type) as keyof typeof style;
-    console.log(variation,
-      style,
-      style[variation]);
 
     return classNames(
       style.List,
