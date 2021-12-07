@@ -1,6 +1,4 @@
 const path = require('path');
-const postcssModules = require('postcss-modules');
-const classConfig = require('../build/namespaced-classname');
 
 module.exports = {
   stories: [
