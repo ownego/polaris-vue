@@ -43,10 +43,8 @@ module.exports = {
     config.resolve.alias = {
       '@': path.resolve(__dirname, '../src'),
       'vue': 'vue/dist/vue.js',
-      // '^polaris-react/*': path.resolve(__dirname, '..', 'node_modules/polaris-react'),
     };
 
-    // Return the altered config
     return config;
   },
 }
