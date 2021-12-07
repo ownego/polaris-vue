@@ -13,30 +13,79 @@ import { Meta } from '@storybook/addon-docs';
   }}
 />
 
+<img src="https://github.com/qikify/polaris-vue/blob/master/public/images/banner.jpg?raw=true" alt="Shopify Polaris Vue" width="1000" height="376" />
+
+<br/>
+<br/>
+
 # Get Started
 
 Polaris Vue by Qikify is a component library for [Vue.js](https://vuejs.org/) based on [Shopify Polaris style guide](https://polaris.shopify.com/).
 
-<img src="https://github.com/qikify/polaris-vue/blob/dev/public/images/banner.jpg?raw=true&v=1" alt="Shopify Polaris Vue" width="1000" height="376" />
+<br/>
 
-## Quick start
+### Installation
 
-Coming Soon
+Using NPM
 
-### 1. Install via npm or yarn
+```bash
+npm install @qikify/polaris-vue
+```
+
+Using Yarn
 
 ```bash
 yarn add @qikify/polaris-vue
 ```
 
-### 2. Import and use Polaris Vue
+### Usage
 
-Coming Soon
+Use as a Vue plugin (globally registers all components):
+
+```js
+import Vue from 'vue';
+import PolarisVue from 'polaris-vue';
+import '@qikify/polaris-vue/dist/polaris-vue.css';
+
+Vue.use(PolarisVue);
+
+new Vue({
+  components: {
+    // all Polaris Vue components already registered
+  }
+});
+```
+
+OR use individual component:
+
+```js
+import Vue from 'vue';
+import { List, Icon } from 'polaris-vue';
+
+new Vue({
+  components: {
+    List,
+    Icon
+  }
+});
+```
+
+<br/>
+<br/>
 
 ## Contributing
 
-If you notice any bugs, please create issues under [polaris-vue](https://github.com/qikify/polaris-vue/issues). Also, pull requests are welcome.
+Polaris Vue by qikify is an open source project and we are very happy to accept community contributions.
+
+If you notice any bugs, please create issues under [Issues](https://github.com/qikify/polaris-vue/issues).
+
+We will update the contribution rules later.
+
+<br/>
+<br/>
 
 ## License
 
-Code released under [MIT](https://github.com/qikify/polaris-vue/LICENSE) license.
+Code released under the  [MIT License](https://github.com/qikify/polaris-vue/LICENSE).
+
+Copyright (c) 2021 Qikify
