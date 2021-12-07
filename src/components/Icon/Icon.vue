@@ -48,7 +48,7 @@ const COLORS_WITH_BACKDROPS: string[] = [
 export default class Icon extends Vue {
   /**
    * The contents to display
-   * @values Shopify icons name| placeholder | svg
+   * @values Shopify icons name| 'placeholder' | svg string
    */
   @Prop({ type: String })
   public source!: string;
