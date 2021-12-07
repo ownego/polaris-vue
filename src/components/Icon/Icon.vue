@@ -1,8 +1,7 @@
 <template lang="pug">
-span(
-  :class="className",
-  :aria-label="accessibilityLabel",
-)
+span(:class="className")
+  VisuallyHidden
+    span {{ accessibilityLabel }}
   component(
     v-if="sourceType === 'shopify-icon'",
     :is="shopifyIcon",
@@ -25,6 +24,7 @@ import { Component, Prop } from 'vue-property-decorator';
 import { classNames, variationName } from 'polaris-react/src/utilities/css';
 import * as ShopifyIcons from '@shopify/polaris-icons/dist';
 import styles from '@/classes/Icon.json';
+import { VisuallyHidden } from '../VisuallyHidden';
 
 type Color =
   | 'base'
@@ -52,7 +52,11 @@ const COLORS_WITH_BACKDROPS: string[] = [
  * where they are in the product, and common interaction patterns that are available.
  * </h4>
  */
-@Component
+@Component({
+  components: {
+    VisuallyHidden,
+  },
+})
 export default class Icon extends Vue {
   /**
    * The contents to display

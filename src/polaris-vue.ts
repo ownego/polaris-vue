@@ -1,5 +1,6 @@
 import _Vue from 'vue';
 import {
+  VisuallyHidden,
   Icon,
   UnstyledLink,
   Link,
@@ -8,6 +9,7 @@ import {
 } from './components';
 
 const components = [
+  VisuallyHidden,
   Icon,
   UnstyledLink,
   Link,
@@ -27,6 +29,7 @@ const PolarisVue = {
 
 // Export single component
 export {
+  VisuallyHidden,
   Icon,
   UnstyledLink,
   Link,
