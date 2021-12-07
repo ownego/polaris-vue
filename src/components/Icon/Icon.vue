@@ -14,7 +14,7 @@ span(
   img(
     v-else,
     :class="externalClassName",
-    :src="`data:image/svg+xml;utf8,${source}`",
+    :src="`data:image/svg+xml;utf8,${encodedSvg}`",
     aria-hidden="true",
   )
 </template>
@@ -99,6 +99,10 @@ export default class Icon extends Vue {
   get shopifyIcon(): string {
     const iconVariation = this.source as keyof typeof ShopifyIcons;
     return ShopifyIcons[iconVariation];
+  }
+
+  get encodedSvg(): string {
+    return encodeURIComponent(this.source);
   }
 
   get className(): string {
