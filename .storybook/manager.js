@@ -14,7 +14,7 @@ addons.setConfig({
     base: 'light',
     brandTitle: 'Qikify Polaris Storybook',
     brandUrl: '/',
-    brandImage: 'https://github.com/qikify/polaris-vue/blob/dev/public/images/brand.jpg?raw=true',
+    brandImage: 'https://github.com/qikify/polaris-vue/blob/dev/public/images/brand.png?raw=true',
     appBorderRadius: 0,
     colorPrimary: colorGreenDark,
     colorSecondary: colorGreenDark,
