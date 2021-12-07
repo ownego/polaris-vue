@@ -27,17 +27,6 @@ import { classNames } from 'polaris-react/src/utilities/css';
 import styles from '@/classes/Link.json';
 import { UnstyledLink } from '../UnstyledLink';
 
-/**
- * <br/>
- * <h4 class="desc">
- * Links take users to another place, and usually appear
- * within or directly following a sentence.
- * <h4/>
- * <p>
- * For actions that aren't related to navigation, use the
- * button component.
- * </p>
- */
 @Component({
   components: {
     UnstyledLink,
