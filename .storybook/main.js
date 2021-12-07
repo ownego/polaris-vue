@@ -1,4 +1,6 @@
 const path = require('path');
+const postcssModules = require('postcss-modules');
+const classConfig = require('../build/namespaced-classname');
 
 module.exports = {
   stories: [
@@ -7,35 +9,41 @@ module.exports = {
   ],
   framework: '@storybook/vue',
   addons: [
+    {
+      name: '@storybook/preset-typescript',
+      options: {
+        tsLoaderOptions: {
+          configFile: path.resolve(__dirname, '../tsconfig.json'),
+        },
+        include: [path.resolve(__dirname, '../src')],
+        exclude: ['*.mdx'],
+      },
+    },
     '@storybook/addon-links',
     '@storybook/addon-essentials',
     '@storybook/addon-knobs',
-    '@storybook/preset-scss',
-    // {
-    //   name: '@storybook/preset-scss',
-    //   options: {
-    //     cssLoaderOptions: {
-    //       modules: true,
-    //     }
-    //   }
-    // },
   ],
   webpackFinal: async (config, { configType }) => {
-    // `configType` has a value of 'DEVELOPMENT' or 'PRODUCTION'
-    // You can change the configuration based on that.
-    // 'PRODUCTION' is used when building the static version of storybook.
     config.module.rules.push(
       {
         test: /\.pug$/,
+        use: ['pug-plain-loader'],
+      },
+      {
+        test: /\.(scss)$/,
         use: [
-          { loader: 'pug-plain-loader' }
-        ]
-      }
+          'style-loader',
+          'css-loader',
+          'postcss-loader',
+          'sass-loader',
+        ],
+      },
     );
 
     config.resolve.alias = {
       '@': path.resolve(__dirname, '../src'),
       'vue': 'vue/dist/vue.js',
+      // '^polaris-react/*': path.resolve(__dirname, '..', 'node_modules/polaris-react'),
     };
 
     // Return the altered config
