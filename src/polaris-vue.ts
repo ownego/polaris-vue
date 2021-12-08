@@ -1,5 +1,8 @@
 import _Vue from 'vue';
 import {
+  InlineError,
+  VisuallyHidden,
+  Icon,
   UnstyledLink,
   Link,
   List,
@@ -7,6 +10,9 @@ import {
 } from './components';
 
 const components = [
+  InlineError,
+  VisuallyHidden,
+  Icon,
   UnstyledLink,
   Link,
   List,
@@ -25,6 +31,9 @@ const PolarisVue = {
 
 // Export single component
 export {
+  InlineError,
+  VisuallyHidden,
+  Icon,
   UnstyledLink,
   Link,
   List,

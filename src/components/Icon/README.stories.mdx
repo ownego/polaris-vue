@@ -1,0 +1,60 @@
+import { Meta, Story, Canvas, ArgsTable } from '@storybook/addon-docs';
+
+import { Icon } from '@/polaris-vue';
+
+<Meta
+  title="Components / Images &amp; Icons / Icon"
+  component={ Icon }
+  argTypes={{
+      source: {
+        name: 'source',
+        table: {
+          type: {
+            summary: 'shopify icon name | "placeholder" | svg',
+          },
+        },
+    },
+     color: {
+      name: 'color',
+      options: [
+        'base',
+        'subdued',
+        'critical',
+        'interactive',
+        'warning',
+        'highlight',
+        'success',
+        'primary',
+      ],
+      control: { type: 'select' },
+      table: {
+        type: {
+          summary: 'base | subdued | critical | interactive | warning | highlight | success | primary'
+        },
+      },
+    },
+    default: {
+      table: {
+        disable: true,
+      },
+    },
+  }}
+/>
+
+export const Template = (args, { argTypes }) => ({
+  props: Object.keys(argTypes),
+  components: { Icon },
+  template: `<Icon v-bind="$props"/>`,
+});
+
+# List
+
+Lists display a set of related text-only content. Each list item begins with a bullet or a number.
+
+<Canvas>
+  <Story name="Icon">
+    {Template.bind({})}
+  </Story>
+</Canvas>
+
+<ArgsTable story="Icon" />
