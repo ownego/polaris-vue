@@ -14,6 +14,7 @@
   "files": [
     "dist",
     "package.json",
+    "src",
     "LICENCE",
     "README.md"
   ],
@@ -22,7 +23,7 @@
     "build": "yarn run copy-polaris-tokens && vue-cli-service build --target lib --name polaris-vue ./src/polaris-vue.ts",
     "lint": "vue-cli-service lint",
     "storybook": "yarn run copy-polaris-tokens && start-storybook -p 6006",
-    "build-storybook": "yarn run copy-polaris-tokens && build-storybook",
+    "build-storybook": "yarn run copy-polaris-tokens && rimraf ./docs && build-storybook -o docs",
     "copy-polaris-tokens": "rimraf ./node_modules/polaris-react/src/styles/polaris-tokens && shx cp -r ./node_modules/@shopify/polaris-tokens/dist ./node_modules/polaris-react/src/styles/polaris-tokens"
   },
   "dependencies": {
@@ -30,16 +31,16 @@
   },
   "devDependencies": {
     "@babel/core": "^7.16.0",
-    "@storybook/addon-docs": "6.4.4",
-    "@storybook/addon-essentials": "^6.4.4",
+    "@storybook/addon-docs": "^6.4.8",
+    "@storybook/addon-essentials": "^6.4.8",
     "@storybook/addon-knobs": "^6.4.0",
     "@storybook/addon-links": "^6.3.12",
     "@storybook/addon-postcss": "^2.0.0",
-    "@storybook/addons": "^6.4.4",
+    "@storybook/addons": "^6.4.8",
     "@storybook/preset-scss": "^1.0.3",
     "@storybook/preset-typescript": "^3.0.0",
-    "@storybook/theming": "^6.3.12",
-    "@storybook/vue": "6.4.4",
+    "@storybook/theming": "^6.4.8",
+    "@storybook/vue": "^6.4.8",
     "@typescript-eslint/eslint-plugin": "^5.4.0",
     "@typescript-eslint/parser": "^5.4.0",
     "@vue/cli-plugin-babel": "~4.5.0",

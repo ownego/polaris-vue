@@ -23,6 +23,9 @@ const PolarisVue = {
   },
 };
 
+// Export all
+export default PolarisVue;
+
 // Export single component
 export {
   UnstyledLink,
@@ -30,6 +33,3 @@ export {
   List,
   ListItem,
 };
-
-// Export all
-export default PolarisVue;
