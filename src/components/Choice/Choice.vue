@@ -10,12 +10,12 @@ div
     v-if="error || $slots.helpText",
     :class="descriptionMarkupClass",
   )
-    slot(
+    div(
       v-if="$slots.helpText",
       :id="helpTextId",
       :class="helpTextClass",
-      name="helpText",
     )
+      slot(name="helpText")
     InlineError(
       v-if="error",
       :fieldId="id",
