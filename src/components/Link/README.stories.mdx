@@ -6,6 +6,15 @@ import { Link } from '@/polaris-vue';
   title="Components / Navigation / Link"
   component={ Link }
   argTypes={{
+    to: {
+      name: 'to',
+      description: 'Set to for vue-router',
+      table: {
+        type: {
+          summary: 'string | object',
+        },
+      },
+    },
     default: {
       table: {
         disable: true,
