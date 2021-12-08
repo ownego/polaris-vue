@@ -1,13 +1,7 @@
 <template lang="pug">
-div(
-  :id="errorTextId",
-  :class="className",
-)
-  <!-- Error icon -->
+div(:id="errorTextId", :class="className")
   div(:class="iconClassName")
     Icon(source="AlertMinor")
-
-  <!-- Error message -->
   span {{ message }}
 </template>
 
