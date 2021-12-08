@@ -6,10 +6,11 @@ li(:class="className")
 <script lang="ts">
 import Vue from 'vue';
 import { Component } from 'vue-property-decorator';
-import * as style from '@/classes/List.json';
+import { classNames } from 'polaris-react/src/utilities/css';
+import styles from '@/classes/List.json';
 
 @Component
 export default class Item extends Vue {
-  public className = style.Item;
+  public className = classNames(styles.Item);
 }
 </script>

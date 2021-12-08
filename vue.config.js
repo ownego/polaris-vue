@@ -1,8 +1,5 @@
 /* eslint-disable @typescript-eslint/no-var-requires */
 const path = require('path');
-const fs = require('fs');
-const postcssModules = require('postcss-modules');
-const classConfig = require('./build/namespaced-classname');
 
 module.exports = {
   devServer: {
@@ -12,20 +9,6 @@ module.exports = {
   css: {
     extract: false,
     requireModuleExtension: false,
-    loaderOptions: {
-      postcss: {
-        plugins: [
-          postcssModules({
-            generateScopedName: classConfig,
-            getJSON: (cssFileName, json) => {
-              const cssName = path.basename(cssFileName, '.vue');
-              const jsonFileName = path.resolve(`./src/classes/${cssName}.json`);
-              fs.writeFileSync(jsonFileName, JSON.stringify(json));
-            },
-          }),
-        ],
-      },
-    },
   },
 
   chainWebpack: (config) => {
@@ -42,10 +25,4 @@ module.exports = {
       .use('vue-svg-loader')
       .loader('vue-svg-loader');
   },
-
-  // configureWebpack: {
-  //   output: {
-  //     libraryExport: 'default',
-  //   },
-  // },
 };

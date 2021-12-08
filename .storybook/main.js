@@ -7,36 +7,42 @@ module.exports = {
   ],
   framework: '@storybook/vue',
   addons: [
-    "@storybook/addon-links",
-    "@storybook/addon-essentials",
-    '@storybook/addon-knobs',
     {
-      name: '@storybook/preset-scss',
+      name: '@storybook/preset-typescript',
       options: {
-        cssLoaderOptions: {
-          modules: true,
-        }
-      }
+        tsLoaderOptions: {
+          configFile: path.resolve(__dirname, '../tsconfig.json'),
+        },
+        include: [path.resolve(__dirname, '../src')],
+        exclude: ['*.mdx'],
+      },
     },
+    '@storybook/addon-links',
+    '@storybook/addon-essentials',
+    '@storybook/addon-knobs',
   ],
   webpackFinal: async (config, { configType }) => {
-    // `configType` has a value of 'DEVELOPMENT' or 'PRODUCTION'
-    // You can change the configuration based on that.
-    // 'PRODUCTION' is used when building the static version of storybook.
     config.module.rules.push(
       {
         test: /\.pug$/,
+        use: ['pug-plain-loader'],
+      },
+      {
+        test: /\.(scss)$/,
         use: [
-          { loader: 'pug-plain-loader' }
-        ]
-      }
+          'style-loader',
+          'css-loader',
+          'postcss-loader',
+          'sass-loader',
+        ],
+      },
     );
 
     config.resolve.alias = {
       '@': path.resolve(__dirname, '../src'),
+      'vue': 'vue/dist/vue.js',
     };
 
-    // Return the altered config
     return config;
   },
 }
