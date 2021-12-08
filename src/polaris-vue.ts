@@ -1,5 +1,6 @@
 import _Vue from 'vue';
 import {
+  Choice,
   InlineError,
   VisuallyHidden,
   Icon,
@@ -10,6 +11,7 @@ import {
 } from './components';
 
 const components = [
+  Choice,
   InlineError,
   VisuallyHidden,
   Icon,
@@ -31,6 +33,7 @@ const PolarisVue = {
 
 // Export single component
 export {
+  Choice,
   InlineError,
   VisuallyHidden,
   Icon,
