@@ -4,8 +4,8 @@ div
     span(:class="childrenClass")
       slot
     span(:class="labelClass")
-      slot(v-if="$slots.label", name="label")
-      span(v-else) {{ label }}
+      slot(name="label")
+        | &nbsp;
   div(
     v-if="error || $slots.helpText",
     :class="descriptionMarkupClass",
