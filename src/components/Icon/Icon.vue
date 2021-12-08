@@ -51,22 +51,14 @@ const COLORS_WITH_BACKDROPS: string[] = [
 })
 export default class Icon extends Vue {
   /**
-   * The contents to display
-   * @values Shopify icons name| 'placeholder' | svg string
+   * The SVG contents to display in the icon
+   * (icons should fit in a 20 × 20 pixel viewBox)
    */
   @Prop({ type: String })
   public source!: string;
 
   /**
    * Set the color for the SVG fill
-   * @values base
-   * | subdued
-   * | critical
-   * | interactive
-   * | warning
-   * | highlight
-   * | success
-   * | primary
    */
   @Prop({ type: String })
   public color!: Color;
