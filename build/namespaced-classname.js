@@ -76,7 +76,6 @@ module.exports = function generateScopedName(name, filename, css) {
     className = variationClassName(polarisComponentName, camelCase(originalName));
   }
 
-  console.log(className);
   return className;
 };
 
