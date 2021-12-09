@@ -1,13 +1,7 @@
 <template lang="pug">
-div(
-  :id="errorTextId",
-  :class="className",
-)
-  <!-- Error icon -->
+div(:id="errorTextID", :class="className")
   div(:class="iconClassName")
     Icon(source="AlertMinor")
-
-  <!-- Error message -->
   span {{ message }}
 </template>
 
@@ -33,14 +27,14 @@ export default class InlineError extends Vue {
    * Unique identifier of the invalid form field that the message describes
    */
   @Prop({ type: String, required: true })
-  public fieldId!: string;
+  public fieldID!: string;
 
   public className: string = styles.InlineError;
 
   public iconClassName: string = styles.Icon;
 
-  get errorTextId(): string {
-    return `${this.fieldId}Error`;
+  get errorTextID(): string {
+    return `${this.fieldID}Error`;
   }
 }
 </script>
