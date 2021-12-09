@@ -12,7 +12,7 @@ div
   )
     div(
       v-if="$slots.helpText",
-      :id="helpTextId",
+      :id="helpTextID",
       :class="helpTextClass",
     )
       slot(name="helpText")
@@ -82,7 +82,7 @@ export default class Choice extends Vue {
     );
   }
 
-  get helpTextId(): string {
+  get helpTextID(): string {
     return `${this.id}HelpText`;
   }
 }
