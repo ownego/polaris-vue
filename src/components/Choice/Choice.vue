@@ -1,6 +1,6 @@
 <template lang="pug">
 div
-  label(:class="className", :for="id")
+  label(:class="wrapperClassName", :for="id")
     span(:class="childrenClass")
       slot
     span(:class="labelClass")
@@ -74,7 +74,7 @@ export default class Choice extends Vue {
 
   public helpTextClass: string = styles.HelpText;
 
-  get className(): string {
+  get wrapperClassName(): string {
     return classNames(
       styles.Choice,
       this.labelHidden && styles.labelHidden,
