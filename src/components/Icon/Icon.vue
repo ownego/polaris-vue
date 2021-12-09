@@ -1,5 +1,5 @@
 <template lang="pug">
-span(:class="className")
+span(:class="wrapperClassName")
   VisuallyHidden
     span {{ accessibilityLabel }}
   component(
@@ -101,7 +101,7 @@ export default class Icon extends Vue {
     return encodeURIComponent(this.source);
   }
 
-  get className(): string {
+  get wrapperClassName(): string {
     const variation = this.color
       && variationName('color', this.color) as keyof typeof styles;
 
