@@ -76,6 +76,7 @@
     "vue-loader": "^15.9.8",
     "vue-property-decorator": "^9.1.2",
     "vue-router": "^3.5.3",
+    "vue-svg-loader": "^0.16.0",
     "vue-template-compiler": "^2.6.11"
   },
   "repository": {
