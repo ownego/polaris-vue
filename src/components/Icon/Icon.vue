@@ -111,7 +111,7 @@ export default class Icon extends Vue {
     );
   }
 
-  public svgClassName: string = styles.Placeholder;
+  public svgClassName: string = styles.Svg;
 
   public placeholderClassName: string = styles.Placeholder;
 
