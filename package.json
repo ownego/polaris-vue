@@ -26,7 +26,6 @@
     "copy-polaris-tokens": "rimraf ./node_modules/polaris-react/src/styles/polaris-tokens && shx cp -r ./node_modules/@shopify/polaris-tokens/dist ./node_modules/polaris-react/src/styles/polaris-tokens"
   },
   "dependencies": {
-    "@shopify/polaris-icons": "^4.10.0",
     "@shopify/polaris-tokens": "^4.0.0"
   },
   "devDependencies": {
@@ -76,6 +75,7 @@
     "vue-loader": "^15.9.8",
     "vue-property-decorator": "^9.1.2",
     "vue-router": "^3.5.3",
+    "vue-svg-loader": "^0.16.0",
     "vue-template-compiler": "^2.6.11"
   },
   "repository": {
