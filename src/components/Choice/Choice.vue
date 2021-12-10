@@ -1,7 +1,7 @@
 <template lang="pug">
 div
   label(:class="wrapperClassName", :for="id")
-    span(:class="childrenClass")
+    span(:class="controlClass")
       slot
     span(:class="labelClass")
       slot(name="label")
@@ -17,7 +17,7 @@ div
     )
       slot(name="helpText")
     InlineError(
-      v-if="error",
+      v-if="(error && typeof error !== 'boolean')",
       :fieldId="id",
       :message="error",
     )
@@ -28,6 +28,7 @@ import Vue from 'vue';
 import { Component, Prop } from 'vue-property-decorator';
 import { classNames } from 'polaris-react/src/utilities/css';
 import styles from '@/classes/Choice.json';
+import { Error } from '@/type';
 import { InlineError } from '../InlineError';
 
 @Component({
@@ -57,8 +58,8 @@ export default class Choice extends Vue {
   /**
    * Display an error message
    */
-  @Prop({ type: String })
-  public error!: string;
+  @Prop({ type: [String, Boolean, Object] })
+  public error!: Error | boolean;
 
   /**
    * Visually hide the label
@@ -66,7 +67,7 @@ export default class Choice extends Vue {
   @Prop({ type: Boolean })
   public labelHidden!: boolean;
 
-  public childrenClass: string = styles.Control;
+  public controlClass: string = styles.Control;
 
   public labelClass: string = styles.Label;
 
