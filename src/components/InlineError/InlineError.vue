@@ -1,5 +1,5 @@
 <template lang="pug">
-div(:id="errorTextID", :class="wrapperClassName")
+div(:id="wrapperID", :class="wrapperClassName")
   div(:class="iconClassName")
     Icon(:source="icon")
   div {{ message }}
@@ -12,6 +12,8 @@ import AlertMinor from '@shopify/polaris-icons/dist/svg/AlertMinor.svg';
 import styles from '@/classes/InlineError.json';
 import { IconSource } from '@/type';
 import { Icon } from '../Icon';
+
+export const errorTextID = (id: string): string => `${id}Error`;
 
 @Component({
   components: {
@@ -37,8 +39,8 @@ export default class InlineError extends Vue {
 
   public iconClassName: string = styles.Icon;
 
-  get errorTextID(): string {
-    return `${this.fieldID}Error`;
+  get wrapperID(): string {
+    return errorTextID(this.fieldID);
   }
 }
 </script>
