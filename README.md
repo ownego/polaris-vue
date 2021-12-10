@@ -1,5 +1,8 @@
 # Polaris Vue
 
+# Not released yet. Coming soon...
+
+
 Polaris Vue by Qikify based on [Shopify Polaris style guide](https://polaris.shopify.com/).
 We're trying to make it mostly close with Shopify style guide and get a better performance.
 
@@ -58,10 +61,10 @@ If you want to contribute, all pull requests are welcome.
 
 | Component           | Status          | Description |
 | ---                 | ---             | ---         |
-| List                | Completed       | - |
-| Link                | Completed       | - |
-| Icon                | Completed       | - |
 | Button              | *Ongoing*       | - |
+| Icon                | Completed       | - |
+| Link                | Completed       | - |
+| List                | Completed       | - |
 
 ---
 

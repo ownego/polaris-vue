@@ -27,6 +27,9 @@ const PolarisVue = {
   },
 };
 
+// Export all
+export default PolarisVue;
+
 // Export single component
 export {
   VisuallyHidden,
@@ -36,6 +39,3 @@ export {
   List,
   ListItem,
 };
-
-// Export all
-export default PolarisVue;
