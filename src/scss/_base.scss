@@ -18,5 +18,5 @@ html {
   letter-spacing: normal;
   font-weight: 400;
   color: var(--p-text);
-  font-family: -apple-system,BlinkMacSystemFont,San Francisco,Segoe UI,Roboto,Helvetica Neue,sans-serif;
+  font-family: $font-stack-base;
 }
