@@ -43,7 +43,7 @@ export default class Link extends Vue {
    * Set to for vue-router
    */
   @Prop({ type: [String, Object] })
-  public to!: string|object
+  public to!: string | object
 
   /**
    * Makes the link open in new tab
