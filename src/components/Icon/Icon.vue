@@ -117,7 +117,7 @@ export default class Icon extends Vue {
 
   public externalClassName: string = styles.Img;
 
-  checkSupportedSvg(): void {
+  private checkSupportedSvg(): void {
     if (
       this.color
       && this.sourceType === 'external'
@@ -130,7 +130,7 @@ export default class Icon extends Vue {
     }
   }
 
-  checkSupportedBackdrop(): void {
+  private checkSupportedBackdrop(): void {
     if (
       this.backdrop
       && this.color
