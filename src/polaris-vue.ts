@@ -29,6 +29,9 @@ const PolarisVue = {
   },
 };
 
+// Export all
+export default PolarisVue;
+
 // Export single component
 export {
   InlineError,
@@ -39,6 +42,3 @@ export {
   List,
   ListItem,
 };
-
-// Export all
-export default PolarisVue;
