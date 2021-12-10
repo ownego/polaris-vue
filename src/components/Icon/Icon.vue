@@ -5,6 +5,7 @@ span(:class="wrapperClassName")
   component(
     v-if="sourceType === 'function'",
     :is="source",
+    :class="svgClassName",
   )
   div(
     v-else-if="sourceType === 'placeholder'",
@@ -110,17 +111,11 @@ export default class Icon extends Vue {
     );
   }
 
-  get placeholderClassName(): string {
-    return classNames(
-      this.sourceType === 'placeholder' && styles.Placeholder,
-    );
-  }
+  public svgClassName: string = styles.Placeholder;
 
-  get externalClassName(): string {
-    return classNames(
-      this.sourceType === 'external' && styles.Img,
-    );
-  }
+  public placeholderClassName: string = styles.Placeholder;
+
+  public externalClassName: string = styles.Img;
 
   checkSupportedSvg(): void {
     if (
