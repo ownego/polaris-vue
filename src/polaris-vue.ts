@@ -31,6 +31,9 @@ const PolarisVue = {
   },
 };
 
+// Export all
+export default PolarisVue;
+
 // Export single component
 export {
   Choice,
@@ -42,6 +45,3 @@ export {
   List,
   ListItem,
 };
-
-// Export all
-export default PolarisVue;

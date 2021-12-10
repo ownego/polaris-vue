@@ -1,14 +1,16 @@
 <template lang="pug">
-div(:id="errorTextID", :class="className")
+div(:id="errorTextID", :class="wrapperClassName")
   div(:class="iconClassName")
-    Icon(source="AlertMinor")
-  span {{ message }}
+    Icon(:source="icon")
+  div {{ message }}
 </template>
 
 <script lang="ts">
 import Vue from 'vue';
 import { Component, Prop } from 'vue-property-decorator';
+import AlertMinor from '@shopify/polaris-icons/dist/svg/AlertMinor.svg';
 import styles from '@/classes/InlineError.json';
+import { IconSource } from '@/type';
 import { Icon } from '../Icon';
 
 @Component({
@@ -29,7 +31,9 @@ export default class InlineError extends Vue {
   @Prop({ type: String, required: true })
   public fieldID!: string;
 
-  public className: string = styles.InlineError;
+  public icon: IconSource = AlertMinor;
+
+  public wrapperClassName: string = styles.InlineError;
 
   public iconClassName: string = styles.Icon;
 

@@ -3,8 +3,9 @@ span(:class="wrapperClassName")
   VisuallyHidden
     span {{ accessibilityLabel }}
   component(
-    v-if="sourceType === 'shopify-icon'",
-    :is="shopifyIcon",
+    v-if="sourceType === 'function'",
+    :is="source",
+    :class="svgClassName",
   )
   div(
     v-else-if="sourceType === 'placeholder'",
@@ -22,7 +23,7 @@ span(:class="wrapperClassName")
 import Vue from 'vue';
 import { Component, Prop } from 'vue-property-decorator';
 import { classNames, variationName } from 'polaris-react/src/utilities/css';
-import * as ShopifyIcons from '@shopify/polaris-icons/dist';
+import { IconSource } from '@/type';
 import styles from '@/classes/Icon.json';
 import { VisuallyHidden } from '../VisuallyHidden';
 
@@ -54,8 +55,8 @@ export default class Icon extends Vue {
    * The SVG contents to display in the icon
    * (icons should fit in a 20 × 20 pixel viewBox)
    */
-  @Prop({ type: String })
-  public source!: string;
+  @Prop({ type: [String, Object] })
+  public source!: IconSource;
 
   /**
    * Set the color for the SVG fill
@@ -76,8 +77,8 @@ export default class Icon extends Vue {
   public accessibilityLabel!: string;
 
   get sourceType(): string {
-    if (Object.keys(ShopifyIcons).some((icon) => icon === this.source)) {
-      return 'shopify-icon';
+    if (typeof this.source === 'object') {
+      return 'function';
     }
 
     if (this.source === 'placeholder') {
@@ -92,13 +93,10 @@ export default class Icon extends Vue {
     this.checkSupportedBackdrop();
   }
 
-  get shopifyIcon(): string {
-    const iconVariation = this.source as keyof typeof ShopifyIcons;
-    return ShopifyIcons[iconVariation];
-  }
-
   get encodedSvg(): string {
-    return encodeURIComponent(this.source);
+    return typeof this.source === 'string'
+      ? encodeURIComponent(this.source)
+      : '';
   }
 
   get wrapperClassName(): string {
@@ -113,17 +111,11 @@ export default class Icon extends Vue {
     );
   }
 
-  get placeholderClassName(): string {
-    return classNames(
-      this.sourceType === 'placeholder' && styles.Placeholder,
-    );
-  }
+  public svgClassName: string = styles.Svg;
 
-  get externalClassName(): string {
-    return classNames(
-      this.sourceType === 'external' && styles.Img,
-    );
-  }
+  public placeholderClassName: string = styles.Placeholder;
+
+  public externalClassName: string = styles.Img;
 
   checkSupportedSvg(): void {
     if (
