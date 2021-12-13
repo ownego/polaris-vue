@@ -31,6 +31,8 @@ import styles from '@/classes/Choice.json';
 import { Error } from '@/type';
 import { InlineError } from '../InlineError';
 
+export const helpTextID = (id: string): string => `${id}HelpText`;
+
 @Component({
   components: {
     InlineError,
@@ -84,7 +86,7 @@ export default class Choice extends Vue {
   }
 
   get helpTextID(): string {
-    return `${this.id}HelpText`;
+    return helpTextID(this.id);
   }
 }
 </script>
