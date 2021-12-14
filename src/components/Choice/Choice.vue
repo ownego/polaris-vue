@@ -18,7 +18,7 @@ div
       slot(name="helpText")
     InlineError(
       v-if="(error && typeof error !== 'boolean')",
-      :fieldId="id",
+      :fieldID="id",
       :message="error",
     )
 </template>
