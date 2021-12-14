@@ -39,7 +39,6 @@ Choice(
 import Vue, { VueConstructor } from 'vue';
 import { Component, Prop, Emit } from 'vue-property-decorator';
 import { classNames } from 'polaris-react/src/utilities/css';
-import { useUniqueId } from 'polaris-react/src/utilities/unique-id';
 import MinusMinor from '@shopify/polaris-icons/dist/svg/MinusMinor.svg';
 import TickSmallMinor from '@shopify/polaris-icons/dist/svg/TickSmallMinor.svg';
 import styles from '@/classes/Checkbox.json';
@@ -111,10 +110,6 @@ export default class Checkbox extends Vue {
   public error!: Error | boolean;
 
   public mouseOver = false;
-
-  get uniqueID(): string {
-    return useUniqueId('Checkbox', this.id);
-  }
 
   get wrapperClassName(): string {
     return classNames(styles.Checkbox, this.error && styles.error);
