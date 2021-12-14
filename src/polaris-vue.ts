@@ -1,5 +1,6 @@
 import _Vue from 'vue';
 import {
+  Checkbox,
   Choice,
   InlineError,
   VisuallyHidden,
@@ -11,6 +12,7 @@ import {
 } from './components';
 
 const components = [
+  Checkbox,
   Choice,
   InlineError,
   VisuallyHidden,
@@ -36,6 +38,7 @@ export default PolarisVue;
 
 // Export single component
 export {
+  Checkbox,
   Choice,
   InlineError,
   VisuallyHidden,

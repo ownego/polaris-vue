@@ -1,0 +1,104 @@
+import { Meta, Story, Canvas, ArgsTable } from '@storybook/addon-docs';
+
+import { Checkbox } from '@/polaris-vue';
+
+<Meta
+  title="Components / Forms / Checkbox"
+  component={ Checkbox }
+  argTypes={{
+    checked: {
+      name: 'checked',
+      control: { type: 'text' },
+      table: {
+        type: {
+          summary: 'boolean | "indeterminate"',
+        },
+      },
+    },
+    error: {
+      name: 'error',
+      control: { type: 'text' },
+      table: {
+        type: {
+          summary: 'boolean | string',
+        },
+      },
+    },
+    blur: {
+      name: 'blur',
+      description: 'Callback when focus is remove',
+      control: { disable: true },
+      table: {
+        type: {
+          summary: '"() => void"',
+        },
+      },
+    },
+    change: {
+      name: 'change',
+      description: 'Callback when checkbox is toggled',
+      control: { disable: true },
+      table: {
+        type: {
+          summary: '"(newChecked: boolean, id: string) => void"',
+        },
+      },
+    },
+    focus: {
+      name: 'focus',
+      description: 'Callback when checkbox is focussed',
+      control: { disable: true },
+      table: {
+        type: {
+          summary: '"() => void"',
+        },
+      },
+    },
+    helpText: {
+      name: 'helpText',
+      description: 'Additional text to aide in use',
+      control: { disable: true },
+      table: {
+        type: {
+          summary: null,
+        },
+      },
+    },
+    label: {
+      name: 'label',
+      description: 'Label for the checkbox',
+      control: { disable: true },
+      table: {
+        type: {
+          summary: null,
+        },
+      },
+    },
+    default: {
+      table: {
+        disable: true,
+      },
+    },
+  }}
+/>
+
+export const Template = (args, { argTypes }) => ({
+  props: Object.keys(argTypes),
+  components: { Checkbox },
+  template: `<Checkbox v-bind="$props" id="demoCheckbox">
+    <template slot="label">Checkbox label</template>
+  </Checkbox>`,
+});
+
+# Inline error
+
+Inline errors are brief, in-context messages that tell merchants something went wrong with a single or group of inputs in a form
+Use inline errors to help merchants understand why a form input may not be valid and how to fix it.
+
+<Canvas>
+  <Story name="Checkbox">
+    {Template.bind({})}
+  </Story>
+</Canvas>
+
+<ArgsTable story="Checkbox"/>
