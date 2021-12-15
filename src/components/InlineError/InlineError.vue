@@ -14,7 +14,7 @@ import Vue from 'vue';
 import { Component, Prop } from 'vue-property-decorator';
 import AlertMinor from '@shopify/polaris-icons/dist/svg/AlertMinor.svg';
 import styles from '@/classes/InlineError.json';
-import { IconSource, Error } from '@/type';
+import type { IconSource, Error } from '@/type';
 import { Icon } from '../Icon';
 
 export const errorTextID = (id: string): string => `${id}Error`;
