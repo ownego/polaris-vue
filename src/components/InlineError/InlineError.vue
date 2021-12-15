@@ -3,7 +3,7 @@ div(:id="wrapperID", :class="wrapperClassName")
   div(:class="iconClassName")
     Icon(:source="icon")
   component(
-    v-if="typeof message === 'object'",
+    v-if="['object', 'function'].includes(typeof message)",
     :is="message",
   )
   div(v-else) {{ message }}
@@ -28,7 +28,7 @@ export default class InlineError extends Vue {
   /**
    * Content briefly explaining how to resolve the invalid form field input.
    */
-  @Prop({ type: [String, Object], required: true })
+  @Prop({ type: [String, Object, Function], required: true })
   public message!: Error;
 
   /**
