@@ -1,5 +1,6 @@
 import _Vue from 'vue';
 import {
+  RadioButton,
   Checkbox,
   Choice,
   InlineError,
@@ -12,6 +13,7 @@ import {
 } from './components';
 
 const components = [
+  RadioButton,
   Checkbox,
   Choice,
   InlineError,
@@ -38,6 +40,7 @@ export default PolarisVue;
 
 // Export single component
 export {
+  RadioButton,
   Checkbox,
   Choice,
   InlineError,
