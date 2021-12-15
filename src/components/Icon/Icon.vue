@@ -55,7 +55,7 @@ export default class Icon extends Vue {
    * The SVG contents to display in the icon
    * (icons should fit in a 20 × 20 pixel viewBox)
    */
-  @Prop({ type: [String, Object] })
+  @Prop({ type: [String, Object, Function] })
   public source!: IconSource;
 
   /**
@@ -77,7 +77,7 @@ export default class Icon extends Vue {
   public accessibilityLabel!: string;
 
   get sourceType(): string {
-    if (typeof this.source === 'object') {
+    if (['object', 'function'].includes(typeof this.source)) {
       return 'function';
     }
 
