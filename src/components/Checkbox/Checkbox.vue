@@ -106,7 +106,7 @@ export default class Checkbox extends Vue {
   /**
    * Display an error message
    */
-  @Prop({ type: [String, Boolean, Object] })
+  @Prop({ type: [String, Boolean, Object, Function] })
   public error!: Error | boolean;
 
   public mouseOver = false;
