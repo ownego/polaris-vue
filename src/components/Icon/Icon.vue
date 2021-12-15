@@ -23,7 +23,7 @@ span(:class="wrapperClassName")
 import Vue from 'vue';
 import { Component, Prop } from 'vue-property-decorator';
 import { classNames, variationName } from 'polaris-react/src/utilities/css';
-import { IconSource } from '@/type';
+import type { IconSource } from '@/type';
 import styles from '@/classes/Icon.json';
 import { VisuallyHidden } from '../VisuallyHidden';
 
