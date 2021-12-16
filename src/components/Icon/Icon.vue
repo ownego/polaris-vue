@@ -3,7 +3,7 @@ span(:class="wrapperClassName")
   VisuallyHidden
     span {{ accessibilityLabel }}
   component(
-    v-if="sourceType === 'function'",
+    v-if="sourceType === 'component'",
     :is="source",
     :class="svgClassName",
   )
@@ -23,7 +23,7 @@ span(:class="wrapperClassName")
 import Vue from 'vue';
 import { Component, Prop } from 'vue-property-decorator';
 import { classNames, variationName } from 'polaris-react/src/utilities/css';
-import { IconSource } from '@/type';
+import type { IconSource } from '@/type';
 import styles from '@/classes/Icon.json';
 import { VisuallyHidden } from '../VisuallyHidden';
 
@@ -55,7 +55,7 @@ export default class Icon extends Vue {
    * The SVG contents to display in the icon
    * (icons should fit in a 20 × 20 pixel viewBox)
    */
-  @Prop({ type: [String, Object] })
+  @Prop({ type: [String, Object, Function], required: true })
   public source!: IconSource;
 
   /**
@@ -77,8 +77,8 @@ export default class Icon extends Vue {
   public accessibilityLabel!: string;
 
   get sourceType(): string {
-    if (typeof this.source === 'object') {
-      return 'function';
+    if (['object', 'function'].includes(typeof this.source)) {
+      return 'component';
     }
 
     if (this.source === 'placeholder') {
@@ -117,7 +117,7 @@ export default class Icon extends Vue {
 
   public externalClassName: string = styles.Img;
 
-  checkSupportedSvg(): void {
+  private checkSupportedSvg(): void {
     if (
       this.color
       && this.sourceType === 'external'
@@ -130,7 +130,7 @@ export default class Icon extends Vue {
     }
   }
 
-  checkSupportedBackdrop(): void {
+  private checkSupportedBackdrop(): void {
     if (
       this.backdrop
       && this.color
