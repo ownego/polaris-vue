@@ -28,7 +28,7 @@ export default class InlineError extends Vue {
   /**
    * Content briefly explaining how to resolve the invalid form field input.
    */
-  @Prop({ type: [String, Object, Function], required: true })
+  @Prop({ type: [String, Array, Object, Function], required: true })
   public message!: Error;
 
   /**
