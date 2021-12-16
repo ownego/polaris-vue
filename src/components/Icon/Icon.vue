@@ -55,7 +55,7 @@ export default class Icon extends Vue {
    * The SVG contents to display in the icon
    * (icons should fit in a 20 × 20 pixel viewBox)
    */
-  @Prop({ type: [String, Object, Function] })
+  @Prop({ type: [String, Object, Function], required: true })
   public source!: IconSource;
 
   /**
