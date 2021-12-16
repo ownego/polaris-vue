@@ -3,7 +3,7 @@ div(:id="wrapperID", :class="wrapperClassName")
   div(:class="iconClassName")
     Icon(:source="icon")
   component(
-    v-if="typeof message === 'object'",
+    v-if="['object', 'function'].includes(typeof message)",
     :is="message",
   )
   div(v-else) {{ message }}
@@ -14,7 +14,7 @@ import Vue from 'vue';
 import { Component, Prop } from 'vue-property-decorator';
 import AlertMinor from '@shopify/polaris-icons/dist/svg/AlertMinor.svg';
 import styles from '@/classes/InlineError.json';
-import { IconSource, Error } from '@/type';
+import type { IconSource, Error } from '@/type';
 import { Icon } from '../Icon';
 
 export const errorTextID = (id: string): string => `${id}Error`;
@@ -28,7 +28,7 @@ export default class InlineError extends Vue {
   /**
    * Content briefly explaining how to resolve the invalid form field input.
    */
-  @Prop({ type: [String, Object], required: true })
+  @Prop({ type: [String, Array, Object, Function], required: true })
   public message!: Error;
 
   /**
