@@ -106,7 +106,7 @@ export default class Checkbox extends Vue {
   /**
    * Display an error message
    */
-  @Prop({ type: [String, Boolean, Object] })
+  @Prop({ type: [String, Boolean, Array, Object, Function] })
   public error!: Error | boolean;
 
   public mouseOver = false;
@@ -166,8 +166,7 @@ export default class Checkbox extends Vue {
   @Emit('change')
   // eslint-disable-next-line class-methods-use-this
   onChange(event: InputEvent): object {
-    const target = event.target as HTMLInputElement;
-    return { checked: target.checked, id: this.id };
+    return event;
   }
 
   // eslint-disable-next-line class-methods-use-this
