@@ -3,7 +3,7 @@ span(:class="wrapperClassName")
   VisuallyHidden
     span {{ accessibilityLabel }}
   component(
-    v-if="sourceType === 'function'",
+    v-if="sourceType === 'component'",
     :is="source",
     :class="svgClassName",
   )
@@ -78,7 +78,7 @@ export default class Icon extends Vue {
 
   get sourceType(): string {
     if (['object', 'function'].includes(typeof this.source)) {
-      return 'function';
+      return 'component';
     }
 
     if (this.source === 'placeholder') {
