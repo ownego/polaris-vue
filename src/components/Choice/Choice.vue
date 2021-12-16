@@ -60,7 +60,7 @@ export default class Choice extends Vue {
   /**
    * Display an error message
    */
-  @Prop({ type: [String, Boolean, Object] })
+  @Prop({ type: [String, Array, Object, Function, Boolean] })
   public error!: Error | boolean;
 
   /**

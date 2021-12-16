@@ -115,8 +115,7 @@ export default class RadioButton extends Vue {
   @Emit('change')
   // eslint-disable-next-line class-methods-use-this
   onChange(event: InputEvent): object {
-    const target = event.target as HTMLInputElement;
-    return { checked: target.checked, id: this.id };
+    return event;
   }
 }
 </script>
