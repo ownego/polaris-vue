@@ -1,5 +1,6 @@
 import _Vue from 'vue';
 import {
+  ChoiceList,
   RadioButton,
   Checkbox,
   Choice,
@@ -13,6 +14,7 @@ import {
 } from './components';
 
 const components = [
+  ChoiceList,
   RadioButton,
   Checkbox,
   Choice,
@@ -40,6 +42,7 @@ export default PolarisVue;
 
 // Export single component
 export {
+  ChoiceList,
   RadioButton,
   Checkbox,
   Choice,

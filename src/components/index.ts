@@ -7,3 +7,4 @@ export * from './InlineError';
 export * from './Choice';
 export * from './Checkbox';
 export * from './RadioButton';
+export * from './ChoiceList';
