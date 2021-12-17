@@ -1,5 +1,4 @@
 import minimist from 'minimist';
-import { terser } from 'rollup-plugin-terser';
 import vue from 'rollup-plugin-vue';
 import babel from '@rollup/plugin-babel';
 import typescript from 'rollup-plugin-typescript2';
@@ -21,7 +20,7 @@ if (!argv.format || argv.format === 'es') {
     input: 'src/polaris-vue.ts',
     external,
     output: {
-      file: 'dist/polaris-vue.min.js',
+      file: 'dist/polaris-vue.js',
       format: 'esm',
       exports: 'named',
     },
@@ -39,7 +38,6 @@ if (!argv.format || argv.format === 'es') {
         ...baseConfig.plugins.babel,
         presets: [['@babel/preset-env']],
       }),
-      terser(),
     ],
   };
 
