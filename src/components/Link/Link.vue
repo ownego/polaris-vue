@@ -6,7 +6,7 @@ UnstyledLink(
   :external="external",
   :class="className",
   v-on="$listeners",
-  data-polaris-unstyled=true,
+  data-polaris-unstyled="true",
 )
   <!-- Slot for displaying content inside the link -->
   slot

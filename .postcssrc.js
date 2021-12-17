@@ -9,7 +9,10 @@ module.exports = {
     postcssModules({
       generateScopedName: classConfig,
       getJSON: (cssFileName, json) => {
-        const cssName = path.basename(cssFileName, '.vue');
+        let cssName = path.basename(cssFileName, '.vue');
+
+        // Fix rollup repeat
+        cssName = cssName.replace(/(.*)\.vue\?.*/, '$1');
         const jsonFileName = path.resolve(`./src/classes/${cssName}.json`);
         fs.writeFileSync(jsonFileName, JSON.stringify(json));
       },

@@ -6,7 +6,9 @@
 Polaris Vue by Qikify based on [Shopify Polaris style guide](https://polaris.shopify.com/).
 We're trying to make it mostly close with Shopify style guide and get a better performance.
 
-Online documentation: [Click Here](https://polaris.qikify.com/)
+### Documentation
+
+Online documentation: [Click Here](https://qikify.github.io/polaris-vue/)
 
 ## Installation
 
