@@ -18,12 +18,12 @@
       "vue",
     ],
     "declaration": true,
-    "declarationDir": "./types",
+    "declarationMap": true,
+    "declarationDir": "dist/types",
+    "emitDeclarationOnly": true,
     "plugins": [{ "name": "typescript-plugin-css-modules" }],
     "paths": {
-      "@/*": [
-        "src/*"
-      ]
+      "@/*": ["./src/*"]
     },
     "lib": [
       "esnext",
@@ -41,6 +41,8 @@
     "tests/**/*.tsx"
   ],
   "exclude": [
-    "node_modules"
+    "node_modules",
+    "dist",
+    "build",
   ],
 }

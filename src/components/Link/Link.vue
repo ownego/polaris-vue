@@ -6,7 +6,7 @@ UnstyledLink(
   :external="external",
   :class="className",
   v-on="$listeners",
-  data-polaris-unstyled=true,
+  data-polaris-unstyled="true",
 )
   <!-- Slot for displaying content inside the link -->
   slot
@@ -86,5 +86,5 @@ export default class Link extends Vue {
 </script>
 
 <style lang="scss">
-@import 'polaris-react/src/components/Link/Link.scss';
+@import '~polaris-react/src/components/Link/Link.scss';
 </style>
