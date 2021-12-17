@@ -1,6 +1,6 @@
 <template lang="pug">
 Choice(
-  :id="id",
+  :id="uniqueID",
   :labelHidden="labelHidden",
   :error="error",
   :disabled="disabled",
@@ -13,7 +13,7 @@ Choice(
     slot(name="helpText")
   span(:class="wrapperClassName")
     input(
-      :id="id",
+      :id="uniqueID",
       :name="name",
       :value="value",
       type="checkbox",
@@ -42,7 +42,8 @@ import { classNames } from 'polaris-react/src/utilities/css';
 import MinusMinor from '@shopify/polaris-icons/dist/svg/MinusMinor.svg';
 import TickSmallMinor from '@shopify/polaris-icons/dist/svg/TickSmallMinor.svg';
 import styles from '@/classes/Checkbox.json';
-import { Error } from '@/type';
+import { useUniqueID } from '@/utilities/unique-id';
+import type { Error } from '@/type';
 import { errorTextID } from '../InlineError/InlineError.vue';
 import { Choice } from '../Choice';
 import { helpTextID } from '../Choice/Choice.vue';
@@ -88,7 +89,7 @@ export default class Checkbox extends Vue {
   /**
    * ID for form input
    */
-  @Prop({ type: String, required: true })
+  @Prop({ type: String })
   public id!: string;
 
   /**
@@ -130,6 +131,10 @@ export default class Checkbox extends Vue {
   }
 
   public checkboxIconClassName: string = styles.Icon;
+
+  get uniqueID(): string {
+    return useUniqueID('Checkbox', this.id);
+  }
 
   get isIndeterminate(): boolean {
     return this.checked === 'indeterminate';
