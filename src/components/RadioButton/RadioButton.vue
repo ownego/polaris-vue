@@ -1,6 +1,6 @@
 <template lang="pug">
 Choice(
-  :id="id",
+  :id="uniqueId",
   :labelHidden="labelHidden",
   :disabled="disabled",
   @mouseover.native="mouseOver = true",
@@ -12,7 +12,7 @@ Choice(
     slot(name="helpText")
   span(:class="wrapperClassName")
     input(
-      :id="id",
+      :id="uniqueId",
       :name="name",
       :value="value",
       type="radio",
@@ -32,8 +32,9 @@ import Vue from 'vue';
 import { Component, Prop, Emit } from 'vue-property-decorator';
 import { classNames } from 'polaris-react/src/utilities/css';
 import styles from '@/classes/RadioButton.json';
-import { Choice } from '../Choice';
+import { useUniqueID } from '@/utilities/unique-id';
 import { helpTextID } from '../Choice/Choice.vue';
+import { Choice } from '../Choice';
 
 @Component({
   components: {
@@ -68,7 +69,7 @@ export default class RadioButton extends Vue {
   /**
    * ID for form input
    */
-  @Prop({ type: String, required: true })
+  @Prop({ type: String })
   public id!: string;
 
   /**
@@ -88,6 +89,10 @@ export default class RadioButton extends Vue {
   public wrapperClassName: string = styles.RadioButton;
 
   public inputClassName: string = styles.Input;
+
+  get uniqueId(): string {
+    return useUniqueID('RadioButton', this.id);
+  }
 
   get backdropClassName(): string {
     return classNames(
