@@ -86,5 +86,5 @@ export default class Link extends Vue {
 </script>
 
 <style lang="scss">
-@import '~polaris-react/src/components/Link/Link.scss';
+@import 'polaris-react/src/components/Link/Link.scss';
 </style>

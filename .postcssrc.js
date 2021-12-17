@@ -12,7 +12,7 @@ module.exports = {
         let cssName = path.basename(cssFileName, '.vue');
 
         // Fix rollup repeat
-        cssName = cssName.replace('.vue.component.scss', '');
+        cssName = cssName.replace(/(.*)\.vue\?.*/, '$1');
         const jsonFileName = path.resolve(`./src/classes/${cssName}.json`);
         fs.writeFileSync(jsonFileName, JSON.stringify(json));
       },

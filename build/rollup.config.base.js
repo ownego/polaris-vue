@@ -2,18 +2,8 @@ import path from 'path';
 import alias from '@rollup/plugin-alias';
 import resolve from '@rollup/plugin-node-resolve';
 import replace from '@rollup/plugin-replace';
-import typescript from 'rollup-plugin-typescript2';
 import postcss from 'rollup-plugin-postcss';
-// import css from 'rollup-plugin-css-only';
-import styles from 'rollup-plugin-styles';
-import includePaths from 'rollup-plugin-includepaths';
 import commonjs from '@rollup/plugin-commonjs';
-
-// let postVueConfig = [postcss];
-
-// if (process.env.SEP_CSS) {
-//   postVueConfig = [css({ output: './dist/main.css' }), ...postVueConfig];
-// }
 
 export default {
   plugins: {
@@ -26,26 +16,26 @@ export default {
       }),
       alias({
         entries: [
-          { find: /@\//, replacement: `${path.resolve(__dirname, 'src/')}` },
-          { find: /'vue'/, replacement: `${path.resolve(__dirname, '\'node_modules/vue/dist/vue.js\'')}` },
+          { find: /@/, replacement: `${path.resolve(__dirname, '../src')}` },
         ],
-        customResolver: resolve({
-          extensions: ['.ts', '.js', '.vue'],
-        }),
       }),
-      styles(),
+      postcss(),
     ],
     vue: {
-      // css: false,
-      target: 'browser',
-      // preprocessStyles: true,
-      compileTemplate: true,
+      css: false,
+      preprocessStyles: true,
       template: {
         isProduction: true,
       },
+      style: {
+        preprocessOptions: {
+          scss: {
+            includePaths: ['node_modules'],
+          },
+        },
+      },
     },
     postVue: [
-      // postcss,
       resolve({
         extensions: ['.js', '.ts', '.vue'],
       }),

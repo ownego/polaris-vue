@@ -43,5 +43,5 @@ export default class List extends Vue {
 }
 </script>
 <style lang="scss">
-@import '~polaris-react/src/components/List/List.scss';
+@import 'polaris-react/src/components/List/List.scss';
 </style>

@@ -20,7 +20,6 @@
     "declaration": true,
     "declarationMap": true,
     "declarationDir": "dist/types",
-    "emitDeclarationOnly": true,
     "plugins": [{ "name": "typescript-plugin-css-modules" }],
     "paths": {
       "@/*": ["./src/*"]
