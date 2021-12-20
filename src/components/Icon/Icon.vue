@@ -145,6 +145,7 @@ export default class Icon extends Vue {
   }
 }
 </script>
+
 <style lang="scss">
 @import 'polaris-react/src/components/Icon/Icon.scss';
 </style>
