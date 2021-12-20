@@ -88,11 +88,6 @@ export default class Icon extends Vue {
     return 'external';
   }
 
-  created(): void {
-    this.checkSupportedSvg();
-    this.checkSupportedBackdrop();
-  }
-
   get encodedSvg(): string {
     return typeof this.source === 'string'
       ? encodeURIComponent(this.source)
@@ -116,6 +111,11 @@ export default class Icon extends Vue {
   public placeholderClassName: string = styles.Placeholder;
 
   public externalClassName: string = styles.Img;
+
+  created(): void {
+    this.checkSupportedSvg();
+    this.checkSupportedBackdrop();
+  }
 
   private checkSupportedSvg(): void {
     if (
