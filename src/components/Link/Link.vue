@@ -6,7 +6,7 @@ UnstyledLink(
   :external="external",
   :class="className",
   v-on="$listeners",
-  data-polaris-unstyled=true,
+  data-polaris-unstyled="true",
 )
   <!-- Slot for displaying content inside the link -->
   slot
@@ -27,17 +27,6 @@ import { classNames } from 'polaris-react/src/utilities/css';
 import styles from '@/classes/Link.json';
 import { UnstyledLink } from '../UnstyledLink';
 
-/**
- * <br/>
- * <h4 class="desc">
- * Links take users to another place, and usually appear
- * within or directly following a sentence.
- * <h4/>
- * <p>
- * For actions that aren't related to navigation, use the
- * button component.
- * </p>
- */
 @Component({
   components: {
     UnstyledLink,
@@ -54,7 +43,7 @@ export default class Link extends Vue {
    * Set to for vue-router
    */
   @Prop({ type: [String, Object] })
-  public to!: string|object
+  public to!: string | object
 
   /**
    * Makes the link open in new tab
