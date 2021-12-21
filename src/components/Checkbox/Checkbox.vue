@@ -101,8 +101,8 @@ export default class Checkbox extends Vue {
   /**
    * Value for form input
    */
-  @Prop({ type: String })
-  public value!: string;
+  @Prop({ type: [String, Boolean] })
+  public value!: string | boolean;
 
   /**
    * Display an error message
@@ -141,7 +141,8 @@ export default class Checkbox extends Vue {
   }
 
   get isChecked(): boolean {
-    return !this.isIndeterminate && Boolean(this.checked);
+    return Boolean(this.value)
+      || (!this.isIndeterminate && Boolean(this.checked));
   }
 
   get iconSource(): VueConstructor<Vue> {
