@@ -15,8 +15,7 @@ jobs:
       - uses: actions/setup-node@v2
         with:
           node-version: lts/fermium
-      - run: npm ci
-      - run: npm test
+      - run: yarn --frozen-lockfile
 
   publish-npm:
     needs: build
@@ -27,7 +26,7 @@ jobs:
         with:
           node-version: lts/fermium
           registry-url: https://registry.npmjs.org/
-      - run: yarn
+      - run: yarn --frozen-lockfile
       - run: yarn publish --access public
         env:
           NODE_AUTH_TOKEN: ${{secrets.NPM_TOKEN}}
