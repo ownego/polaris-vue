@@ -1,17 +1,8 @@
-export const globalIdGenerator = (prefix: string, index = 1): string => {
-  const queryString = `#Polaris${prefix}${index}`;
-  const useUniqueIdRef = document.querySelector(queryString);
-  const newIndex = index + 1;
+export const generateId = (): number => Math.floor(10000 + Math.random() * 90000);
 
-  if (!useUniqueIdRef) return `Polaris${prefix}${index}`;
-
-  return globalIdGenerator(prefix, newIndex);
-};
-
-export const useUniqueID = (prefix: string, overrideID: string): string => {
-  if (overrideID) return overrideID;
-
-  return globalIdGenerator(prefix);
+export const useUniqueId = (prefix: string, overrideId: string): string => {
+  const stringId = `Polaris${prefix}`;
+  return overrideId || stringId + generateId();
 };
 
 export default {};

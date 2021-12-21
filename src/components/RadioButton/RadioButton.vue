@@ -32,7 +32,7 @@ import Vue from 'vue';
 import { Component, Prop, Emit } from 'vue-property-decorator';
 import { classNames } from 'polaris-react/src/utilities/css';
 import styles from '@/classes/RadioButton.json';
-import { useUniqueID } from '@/utilities/unique-id';
+import { useUniqueId } from '@/utilities/unique-id';
 import { helpTextID } from '../Choice/Choice.vue';
 import { Choice } from '../Choice';
 
@@ -91,7 +91,7 @@ export default class RadioButton extends Vue {
   public inputClassName: string = styles.Input;
 
   get uniqueId(): string {
-    return useUniqueID('RadioButton', this.id);
+    return useUniqueId('RadioButton', this.id);
   }
 
   get backdropClassName(): string {
