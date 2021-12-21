@@ -4,7 +4,8 @@ fieldset(
   :class="className",
   :aria-invalid="error !== null",
 )
-  slot(:class="titleClassName")
+  legend(:class="titleClassName")
+    slot
   ul(:class="listClassName")
     li(
       v-for="choice, index in choices",
@@ -12,24 +13,21 @@ fieldset(
     )
       component(
         :is="allowMultiple ? 'Checkbox' : 'RadioButton'",
-        :id="finalName + index",
-        :name="allowMultiple ? finalName + index : finalName",
+        :name="finalName",
         :value="choice.value",
-        :disabled="choice.disabledField || disabled"
-        :checked="choiceIsSelected(choice.value, selected)",
-        :ariaDescribedBy="error && choice.describedByErrorField ? formattedAriaDescribedBy : null",
+        :disabled="choice.disabledField || disabled",
+        :ariaDescribedBy="generateAriaDescribedBy(choice.describedByErrorField)",
         @change="onChange",
       )
         template(slot="label")
           span {{ choice.label }}
         template(slot="helpText")
           span {{ choice.helpText }}
-      div(
+      component(
         v-if="choice.renderChildrenField",
-        :id="finalName + index",
-        :class="renderChildrenClassName",
+        :is="choice.renderChildrenField",
+        :class="childrenClassName",
       )
-        slot(name="renderChildren")
   div(
     v-if="error",
     :class="errorClassName",
@@ -46,6 +44,7 @@ import { Component, Prop, Emit } from 'vue-property-decorator';
 import { classNames } from 'polaris-react/src/utilities/css';
 import styles from '@/classes/ChoiceList.json';
 import type { Error } from '@/type';
+import { useUniqueId } from '@/utilities/unique-id';
 import { Checkbox } from '../Checkbox';
 import { RadioButton } from '../RadioButton';
 import { InlineError } from '../InlineError';
@@ -60,16 +59,18 @@ import { errorTextID } from '../InlineError/InlineError.vue';
 })
 export default class ChoiceList extends Vue {
   /**
-   * Collection of selected choices
+   * Collection of choices
    */
   @Prop({ type: Array, required: true })
   public choices!: object[];
 
   /**
    * Collection of selected choices
+   * The child has a prop named 'value'.
+   * v-model will automatically bind to this prop
    */
   @Prop({ type: Array, required: true })
-  public selected!: string[];
+  public value!: string[];
 
   /**
    * Name for form input
@@ -107,7 +108,7 @@ export default class ChoiceList extends Vue {
 
   public listClassName: string = styles.Choices;
 
-  public renderChildrenClassName: string = styles.ChoiceChildren;
+  public childrenClassName: string = styles.ChoiceChildren;
 
   get className(): string {
     return classNames(
@@ -117,19 +118,17 @@ export default class ChoiceList extends Vue {
   }
 
   get finalName(): string {
-    return this.allowMultiple ? `${this.name}Multiple` : this.name;
+    const name = useUniqueId('ChoiceList', this.name);
+    return this.allowMultiple ? `${this.name}Multiple` : name;
   }
 
-  get formattedAriaDescribedBy(): string {
-    return errorTextID(this.finalName);
+  public generateAriaDescribedBy(describedByErrorField: string): string {
+    return this.error && describedByErrorField
+      ? errorTextID(this.finalName)
+      : '';
   }
 
-  // eslint-disable-next-line class-methods-use-this
-  public choiceIsSelected(value: string, selected: string[]): boolean {
-    return selected.includes(value);
-  }
-
-  @Emit('change')
+  @Emit('input')
   public onChange(event: InputEvent): string[] {
     return this.updateSelectedChoices(event);
   }
@@ -138,10 +137,13 @@ export default class ChoiceList extends Vue {
     const target = event.target as HTMLInputElement;
 
     if (target.checked) {
-      return this.allowMultiple ? [...this.selected, target.value] : [target.value];
+      return this.allowMultiple
+        ? [...this.value, target.value]
+        : [target.value];
     }
 
-    return this.selected.filter((selectedChoice) => selectedChoice !== target.value);
+    return this.value
+      .filter((selectedChoice) => selectedChoice !== target.value);
   }
 }
 </script>
