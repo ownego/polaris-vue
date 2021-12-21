@@ -141,7 +141,7 @@ export default class Checkbox extends Vue {
   }
 
   get isChecked(): boolean {
-    return Boolean(this.value)
+    return (typeof this.value === 'boolean' && this.value)
       || (!this.isIndeterminate && Boolean(this.checked));
   }
 
