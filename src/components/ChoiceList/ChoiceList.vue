@@ -65,8 +65,7 @@ export default class ChoiceList extends Vue {
   public choices!: object[];
 
   /**
-   * Collection of selected choices
-   * The child has a prop named 'value'.
+   * Collection of selected choices.
    * v-model will automatically bind to this prop
    */
   @Prop({ type: Array, required: true })
@@ -122,7 +121,7 @@ export default class ChoiceList extends Vue {
     return this.allowMultiple ? `${this.name}Multiple` : name;
   }
 
-  public generateAriaDescribedBy(describedByErrorField: string): string {
+  public generateAriaDescribedBy(describedByErrorField: boolean): string {
     return this.error && describedByErrorField
       ? errorTextID(this.finalName)
       : '';
