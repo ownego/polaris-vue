@@ -13,7 +13,8 @@ module.exports = {
 
   chainWebpack: (config) => {
     config.resolve.alias
-      .set('@', path.resolve(__dirname, 'src'));
+      .set('@', path.resolve(__dirname, 'src'))
+      .set('~', path.resolve(__dirname, 'node_modules/'));
 
     // SVG loader
     const svgRule = config.module.rule('svg');
