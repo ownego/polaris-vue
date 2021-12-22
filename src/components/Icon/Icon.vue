@@ -3,7 +3,7 @@ span(:class="wrapperClassName")
   VisuallyHidden
     span {{ accessibilityLabel }}
   component(
-    v-if="sourceType === 'functional'",
+    v-if="sourceType === 'icon'",
     :is="shopifyIcon || source",
     :class="svgClassName",
   )
@@ -119,7 +119,7 @@ export default class Icon extends Vue {
 
   private async generateSourceType(): Promise<void> {
     if (['object', 'function'].includes(typeof this.source)) {
-      this.sourceType = 'functional';
+      this.sourceType = 'icon';
     }
 
     if (typeof this.source === 'string' && this.source !== 'placeholder') {
@@ -127,7 +127,7 @@ export default class Icon extends Vue {
 
       if (icon) {
         this.shopifyIcon = icon;
-        this.sourceType = 'functional';
+        this.sourceType = 'icon';
       }
     }
 
