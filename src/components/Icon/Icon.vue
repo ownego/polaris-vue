@@ -3,8 +3,8 @@ span(:class="wrapperClassName")
   VisuallyHidden
     span {{ accessibilityLabel }}
   component(
-    v-if="sourceType === 'component'",
-    :is="source",
+    v-if="sourceType === 'functional'",
+    :is="shopifyIcon || source",
     :class="svgClassName",
   )
   div(
@@ -20,12 +20,19 @@ span(:class="wrapperClassName")
 </template>
 
 <script lang="ts">
-import Vue from 'vue';
+import Vue, { VueConstructor } from 'vue';
 import { Component, Prop } from 'vue-property-decorator';
 import { classNames, variationName } from 'polaris-react/src/utilities/css';
 import type { IconSource } from '@/type';
 import styles from '@/classes/Icon.json';
 import { VisuallyHidden } from '../VisuallyHidden';
+
+export const getPolarisIcon = async (
+  iconName: string,
+): Promise<VueConstructor<Vue>> => {
+  const icon = await import(`@shopify/polaris-icons/dist/svg/${iconName}.svg`);
+  return icon;
+};
 
 type Color =
   | 'base'
@@ -76,17 +83,9 @@ export default class Icon extends Vue {
   @Prop({ type: String })
   public accessibilityLabel!: string;
 
-  get sourceType(): string {
-    if (['object', 'function'].includes(typeof this.source)) {
-      return 'component';
-    }
+  public shopifyIcon!: VueConstructor<Vue>;
 
-    if (this.source === 'placeholder') {
-      return 'placeholder';
-    }
-
-    return 'external';
-  }
+  public sourceType = 'external';
 
   get encodedSvg(): string {
     return typeof this.source === 'string'
@@ -113,8 +112,33 @@ export default class Icon extends Vue {
   public externalClassName: string = styles.Img;
 
   created(): void {
+    this.generateSourceType();
     this.checkSupportedSvg();
     this.checkSupportedBackdrop();
+  }
+
+  private async generateSourceType(): Promise<void> {
+    let sourceType = 'external';
+
+    if (['object', 'function'].includes(typeof this.source)) {
+      sourceType = 'functional';
+    }
+
+    if (typeof this.source === 'string'
+      && this.source !== 'placeholder') {
+      const icon = await getPolarisIcon(this.source);
+
+      if (icon) {
+        this.shopifyIcon = icon;
+        sourceType = 'functional';
+      }
+    }
+
+    if (this.source === 'placeholder') {
+      sourceType = 'placeholder';
+    }
+
+    this.sourceType = sourceType;
   }
 
   private checkSupportedSvg(): void {
