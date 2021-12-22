@@ -124,8 +124,7 @@ export default class Icon extends Vue {
       sourceType = 'functional';
     }
 
-    if (typeof this.source === 'string'
-      && this.source !== 'placeholder') {
+    if (typeof this.source === 'string' && this.source !== 'placeholder') {
       const icon = await getPolarisIcon(this.source);
 
       if (icon) {
