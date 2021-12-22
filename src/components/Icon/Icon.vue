@@ -118,10 +118,8 @@ export default class Icon extends Vue {
   }
 
   private async generateSourceType(): Promise<void> {
-    let sourceType = 'external';
-
     if (['object', 'function'].includes(typeof this.source)) {
-      sourceType = 'functional';
+      this.sourceType = 'functional';
     }
 
     if (typeof this.source === 'string' && this.source !== 'placeholder') {
@@ -129,15 +127,13 @@ export default class Icon extends Vue {
 
       if (icon) {
         this.shopifyIcon = icon;
-        sourceType = 'functional';
+        this.sourceType = 'functional';
       }
     }
 
     if (this.source === 'placeholder') {
-      sourceType = 'placeholder';
+      this.sourceType = 'placeholder';
     }
-
-    this.sourceType = sourceType;
   }
 
   private checkSupportedSvg(): void {
