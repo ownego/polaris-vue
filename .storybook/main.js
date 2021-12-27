@@ -19,7 +19,7 @@ module.exports = {
     },
     '@storybook/addon-links',
     '@storybook/addon-essentials',
-    '@storybook/addon-knobs',
+    // '@storybook/addon-knobs',
   ],
   webpackFinal: async (config, { configType }) => {
     config.module.rules.push(
@@ -35,6 +35,7 @@ module.exports = {
           'postcss-loader',
           'sass-loader',
         ],
+        include: path.resolve(__dirname, '../src/components'),
       },
     );
 

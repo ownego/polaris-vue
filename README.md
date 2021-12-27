@@ -30,7 +30,7 @@ Use as a Vue plugin (globally registers all components):
 
 ```js
 import Vue from 'vue';
-import PolarisVue from 'polaris-vue';
+import PolarisVue from '@qikify/polaris-vue';
 import '@qikify/polaris-vue/dist/polaris-vue.css';
 
 Vue.use(PolarisVue);
@@ -46,7 +46,7 @@ new Vue({
 
 ```js
 import Vue from 'vue';
-import { List, Icon } from 'polaris-vue';
+import { List, Icon } from '@qikify/polaris-vue';
 
 new Vue({
   components: {
