@@ -22,7 +22,7 @@ export default class UnstyledLink extends Vue {
    * Set to for router-link
    */
   @Prop({ type: [String, Object] })
-  public to!: string|object
+  public to!: string | object
 
   /**
    * The url to Link to

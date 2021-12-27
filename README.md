@@ -6,7 +6,9 @@
 Polaris Vue by Qikify based on [Shopify Polaris style guide](https://polaris.shopify.com/).
 We're trying to make it mostly close with Shopify style guide and get a better performance.
 
-Online documentation: [Click Here](https://polaris.qikify.com/)
+### Documentation
+
+Online documentation: [Click Here](https://qikify.github.io/polaris-vue/)
 
 ## Installation
 
@@ -28,7 +30,7 @@ Use as a Vue plugin (globally registers all components):
 
 ```js
 import Vue from 'vue';
-import PolarisVue from 'polaris-vue';
+import PolarisVue from '@qikify/polaris-vue';
 import '@qikify/polaris-vue/dist/polaris-vue.css';
 
 Vue.use(PolarisVue);
@@ -44,7 +46,7 @@ new Vue({
 
 ```js
 import Vue from 'vue';
-import { List, Icon } from 'polaris-vue';
+import { List, Icon } from '@qikify/polaris-vue';
 
 new Vue({
   components: {

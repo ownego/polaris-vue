@@ -1,0 +1,93 @@
+import { Meta, Story, Canvas, ArgsTable, Source } from '@storybook/addon-docs';
+
+import { Icon } from '@/polaris-vue';
+
+<Meta
+  title="Components / Images &amp; Icons / Icon"
+  component={ Icon }
+  argTypes={{
+    accessibilityLabel: {
+      table: {
+        type: { summary: null },
+      },
+    },
+    backdrop: {
+      table: {
+        type: { summary: null },
+      },
+    },
+    source: {
+      name: 'source',
+      defaultValue: 'CirclePlusMinor',
+      options: [
+        'CirclePlusMinor',
+        'placeholder',
+      ],
+      control: {
+        type: 'select',
+        labels: {
+          CirclePlusMinor: 'default',
+        },
+      },
+      table: {
+        type: {
+          summary: 'Shopify SVG Icon | "placeholder" | svg',
+        },
+      },
+    },
+    color: {
+      name: 'color',
+      options: [
+        null,
+        'base',
+        'subdued',
+        'critical',
+        'interactive',
+        'warning',
+        'highlight',
+        'success',
+        'primary',
+      ],
+      control: {
+        type: 'select',
+        labels: {
+          null: 'default',
+        },
+      },
+      table: {
+        type: {
+          summary: null
+        },
+      },
+    },
+    default: {
+      table: {
+        disable: true,
+      },
+    },
+  }}
+/>
+
+export const Template = (args, { argTypes }) => ({
+  props: Object.keys(argTypes),
+  components: { Icon },
+  template: `<Icon v-bind="$props"/>`,
+});
+
+# Icon
+
+Icons are used to visually communicate core parts of the product and available actions.
+They can act as wayfinding tools to help merchants more easily understand where they are in the product,
+and common interaction patterns that are available.
+
+*Note: To use icons, you must add `vue-svg-loader` package to your project first, by running:* `yarn add -D vue-svg-loader`
+
+You can find icon list from **Shopify Icon Library**: [here](https://polaris-icons.shopify.com/).
+
+<Canvas>
+  <Story name="Icon">
+    {Template.bind({})}
+  </Story>
+</Canvas>
+
+<ArgsTable story="Icon" />

@@ -14,13 +14,6 @@ import styles from '@/classes/List.json';
 
 type Type = 'bullet' | 'number';
 
-/**
- * <br/>
- * <h4 class="desc">
- * Lists display a set of related text-only content.
- * Each list item begins with a bullet or a number.
- * </h4>
- */
 @Component
 export default class List extends Vue {
   /**
