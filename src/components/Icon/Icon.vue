@@ -30,7 +30,7 @@ import { VisuallyHidden } from '../VisuallyHidden';
 export const getPolarisIcon = async (
   iconName: string,
 ): Promise<VueConstructor<Vue>> => {
-  const icon = await import(`@shopify/polaris-icons/dist/svg/${iconName}.svg`);
+  const icon = await import(`!vue-svg-loader!@shopify/polaris-icons/dist/svg/${iconName}.svg`);
   return icon;
 };
 
