@@ -1,0 +1,47 @@
+import { Meta, Story, Canvas, ArgsTable } from '@storybook/addon-docs';
+
+import { VisuallyHidden } from '@/polaris-vue';
+
+<Meta
+  title="Components / Title &amp; Text / VisuallyHidden"
+  component={ VisuallyHidden }
+  argTypes={{
+    content: {
+      name: 'content',
+      description: 'The content to be hidden visually',
+      table: {
+        type: {
+          summary: 'slot'
+        },
+      },
+    },
+    default: {
+      table: {
+        disable: true,
+      },
+    },
+  }}
+/>
+
+export const Template = (args, { argTypes }) => ({
+  props: Object.keys(argTypes),
+  components: { VisuallyHidden },
+  template: `<div>
+    <VisuallyHidden>
+      <span>Hidden content</span>
+    </VisuallyHidden>
+    <p>Content passed down have been hide, choose "show code" to see more clearly<p/>
+  <div/>`,
+});
+
+# Visually hidden
+
+Use when an element needs to be available to assistive technology (for example, a screen reader) but otherwise hidden.
+
+<Canvas>
+  <Story name="VisuallyHidden">
+    {Template.bind({})}
+  </Story>
+</Canvas>
+
+<ArgsTable story="VisuallyHidden" />

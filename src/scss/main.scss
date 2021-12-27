@@ -1,5 +1,5 @@
 @import '@shopify/polaris-tokens/dist/index.scss';
 
-@import './variables';
+@import 'polaris-react/src/components/AppProvider/AppProvider.scss';
 
-@import './base';
+@import './variables';
