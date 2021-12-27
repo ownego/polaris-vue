@@ -26,6 +26,7 @@ import { classNames, variationName } from 'polaris-react/src/utilities/css';
 import type { IconSource } from 'types/type';
 import styles from '@/classes/Icon.json';
 import { VisuallyHidden } from '../VisuallyHidden';
+import config from '@/config';
 
 export const getPolarisIcon = async (
   iconName: string,
@@ -140,7 +141,7 @@ export default class Icon extends Vue {
     if (
       this.color
       && this.sourceType === 'external'
-      && process.env.NODE_ENV === 'development'
+      && config.env === 'development'
     ) {
       // eslint-disable-next-line no-console
       console.warn(
@@ -154,7 +155,7 @@ export default class Icon extends Vue {
       this.backdrop
       && this.color
       && !COLORS_WITH_BACKDROPS.includes(this.color)
-      && process.env.NODE_ENV === 'development'
+      && config.env === 'development'
     ) {
       // eslint-disable-next-line no-console
       console.warn(

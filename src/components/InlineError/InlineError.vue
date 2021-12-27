@@ -12,8 +12,8 @@ div(:id="wrapperID", :class="wrapperClassName")
 <script lang="ts">
 import Vue from 'vue';
 import { Component, Prop } from 'vue-property-decorator';
+import type { Error } from 'types/type';
 import styles from '@/classes/InlineError.json';
-import type { Error } from '@/type';
 import { Icon } from '../Icon';
 
 export const errorTextID = (id: string): string => `${id}Error`;
