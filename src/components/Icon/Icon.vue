@@ -2,11 +2,19 @@
 span(:class="wrapperClassName")
   VisuallyHidden
     span {{ accessibilityLabel }}
-  component(
+  template(
     v-if="sourceType === 'icon'",
-    :is="shopifyIcon || source",
-    :class="svgClassName",
   )
+    component(
+      v-if="!isShopifyIcon",
+      :is="source",
+      :class="svgClassName",
+    )
+    component(
+      v-else,
+      :is="require(`!vue-svg-loader!@icons/${source}.svg`)",
+      :class="svgClassName",
+    )
   div(
     v-else-if="sourceType === 'placeholder'",
     :class="placeholderClassName",
@@ -20,20 +28,12 @@ span(:class="wrapperClassName")
 </template>
 
 <script lang="ts">
-import Vue, { VueConstructor } from 'vue';
-import { Component, Prop } from 'vue-property-decorator';
+import { Component, Prop, Vue } from 'vue-property-decorator';
 import { classNames, variationName } from 'polaris-react/src/utilities/css';
 import type { IconSource } from 'types/type';
 import styles from '@/classes/Icon.json';
 import { VisuallyHidden } from '../VisuallyHidden';
 import config from '@/config';
-
-export const getPolarisIcon = async (
-  iconName: string,
-): Promise<VueConstructor<Vue>> => {
-  const icon = await import(`!vue-svg-loader!@shopify/polaris-icons/dist/svg/${iconName}.svg`);
-  return icon;
-};
 
 type Color =
   | 'base'
@@ -84,9 +84,11 @@ export default class Icon extends Vue {
   @Prop({ type: String })
   public accessibilityLabel!: string;
 
-  public shopifyIcon!: VueConstructor<Vue>;
-
   public sourceType = 'external';
+
+  get isShopifyIcon(): boolean {
+    return typeof this.source === 'string';
+  }
 
   get encodedSvg(): string {
     return typeof this.source === 'string'
@@ -124,12 +126,7 @@ export default class Icon extends Vue {
     }
 
     if (typeof this.source === 'string' && this.source !== 'placeholder') {
-      const icon = await getPolarisIcon(this.source);
-
-      if (icon) {
-        this.shopifyIcon = icon;
-        this.sourceType = 'icon';
-      }
+      this.sourceType = 'icon';
     }
 
     if (this.source === 'placeholder') {
