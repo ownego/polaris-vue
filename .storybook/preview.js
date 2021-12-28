@@ -13,7 +13,6 @@ export const decorators = [(story) => ({
 
 export const parameters = {
   viewMode: 'docs',
-  actions: { disable: true },
   controls: {
     matchers: {
       color: /(background|color|backgroundColor)$/i,
@@ -26,17 +25,9 @@ export const parameters = {
     storySort: {
       order: [
         "Get Started",
+        "Polaris Icons",
         "Changelog",
-        "Actions",
-        "Structure",
-        "Forms",
-        "Images & Icons",
-        "Feedback indicators",
-        "Titles & Text",
-        "Behavior",
-        "Lists & Tables",
-        "Navigation",
-        "Overlays",
+        "Components",
       ]
     }
   },

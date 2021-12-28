@@ -3,8 +3,8 @@ span(:class="wrapperClassName")
   VisuallyHidden
     span {{ accessibilityLabel }}
   component(
-    v-if="sourceType === 'component'",
-    :is="source",
+    v-if="sourceType === 'icon'",
+    :is="shopifyIcon || source",
     :class="svgClassName",
   )
   div(
@@ -20,12 +20,20 @@ span(:class="wrapperClassName")
 </template>
 
 <script lang="ts">
-import Vue from 'vue';
+import Vue, { VueConstructor } from 'vue';
 import { Component, Prop } from 'vue-property-decorator';
 import { classNames, variationName } from 'polaris-react/src/utilities/css';
-import type { IconSource } from '@/type';
+import type { IconSource } from 'types/type';
 import styles from '@/classes/Icon.json';
 import { VisuallyHidden } from '../VisuallyHidden';
+import config from '@/config';
+
+export const getPolarisIcon = async (
+  iconName: string,
+): Promise<VueConstructor<Vue>> => {
+  const icon = await import(`!vue-svg-loader!@shopify/polaris-icons/dist/svg/${iconName}.svg`);
+  return icon;
+};
 
 type Color =
   | 'base'
@@ -76,22 +84,9 @@ export default class Icon extends Vue {
   @Prop({ type: String })
   public accessibilityLabel!: string;
 
-  get sourceType(): string {
-    if (['object', 'function'].includes(typeof this.source)) {
-      return 'component';
-    }
+  public shopifyIcon!: VueConstructor<Vue>;
 
-    if (this.source === 'placeholder') {
-      return 'placeholder';
-    }
-
-    return 'external';
-  }
-
-  created(): void {
-    this.checkSupportedSvg();
-    this.checkSupportedBackdrop();
-  }
+  public sourceType = 'external';
 
   get encodedSvg(): string {
     return typeof this.source === 'string'
@@ -117,11 +112,36 @@ export default class Icon extends Vue {
 
   public externalClassName: string = styles.Img;
 
+  created(): void {
+    this.generateSourceType();
+    this.checkSupportedSvg();
+    this.checkSupportedBackdrop();
+  }
+
+  private async generateSourceType(): Promise<void> {
+    if (['object', 'function'].includes(typeof this.source)) {
+      this.sourceType = 'icon';
+    }
+
+    if (typeof this.source === 'string' && this.source !== 'placeholder') {
+      const icon = await getPolarisIcon(this.source);
+
+      if (icon) {
+        this.shopifyIcon = icon;
+        this.sourceType = 'icon';
+      }
+    }
+
+    if (this.source === 'placeholder') {
+      this.sourceType = 'placeholder';
+    }
+  }
+
   private checkSupportedSvg(): void {
     if (
       this.color
       && this.sourceType === 'external'
-      && process.env.NODE_ENV === 'development'
+      && config.env === 'development'
     ) {
       // eslint-disable-next-line no-console
       console.warn(
@@ -135,7 +155,7 @@ export default class Icon extends Vue {
       this.backdrop
       && this.color
       && !COLORS_WITH_BACKDROPS.includes(this.color)
-      && process.env.NODE_ENV === 'development'
+      && config.env === 'development'
     ) {
       // eslint-disable-next-line no-console
       console.warn(
@@ -145,6 +165,7 @@ export default class Icon extends Vue {
   }
 }
 </script>
+
 <style lang="scss">
 @import 'polaris-react/src/components/Icon/Icon.scss';
 </style>
