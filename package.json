@@ -58,6 +58,7 @@
     "@vue/eslint-config-airbnb": "^5.0.2",
     "@vue/eslint-config-typescript": "^7.0.0",
     "babel-loader": "^8.2.3",
+    "babel-plugin-transform-runtime": "^6.23.0",
     "change-case": "^4.1.2",
     "cross-env": "^7.0.3",
     "css-loader": "^5",

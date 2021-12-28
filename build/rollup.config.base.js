@@ -44,7 +44,7 @@ export default {
     babel: {
       exclude: 'node_modules/**',
       extensions: ['.ts', '.js', '.vue'],
-      babelHelpers: 'bundled',
+      babelHelpers: 'runtime',
     },
   },
 };
