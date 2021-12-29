@@ -4,6 +4,7 @@ import babel from '@rollup/plugin-babel';
 import typescript from 'rollup-plugin-typescript2';
 import ttypescript from 'ttypescript';
 import json from '@rollup/plugin-json';
+import svg from 'rollup-plugin-vue-inline-svg';
 
 import baseConfig from './rollup.config.base';
 
@@ -27,6 +28,7 @@ if (!argv.format || argv.format === 'es') {
     plugins: [
       ...baseConfig.plugins.preVue,
       json(),
+      svg(),
       vue(baseConfig.plugins.vue),
       ...baseConfig.plugins.postVue,
       typescript({
@@ -37,9 +39,6 @@ if (!argv.format || argv.format === 'es') {
       babel({
         ...baseConfig.plugins.babel,
         presets: [['@babel/preset-env']],
-        plugins: [
-          ['@babel/transform-runtime'],
-        ],
       }),
     ],
   };
