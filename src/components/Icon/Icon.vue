@@ -2,19 +2,11 @@
 span(:class="wrapperClassName")
   VisuallyHidden
     span {{ accessibilityLabel }}
-  template(
+  component(
     v-if="sourceType === 'icon'",
+    :is="source",
+    :class="svgClassName",
   )
-    component(
-      v-if="!isShopifyIcon",
-      :is="source",
-      :class="svgClassName",
-    )
-    component(
-      v-else,
-      :is="require(`!vue-svg-loader!@icons/${source}.svg`)",
-      :class="svgClassName",
-    )
   div(
     v-else-if="sourceType === 'placeholder'",
     :class="placeholderClassName",
@@ -28,12 +20,12 @@ span(:class="wrapperClassName")
 </template>
 
 <script lang="ts">
-import { Component, Prop, Vue } from 'vue-property-decorator';
+import Vue from 'vue';
+import { Component, Prop } from 'vue-property-decorator';
 import { classNames, variationName } from 'polaris-react/src/utilities/css';
 import type { IconSource } from 'types/type';
 import styles from '@/classes/Icon.json';
-import { VisuallyHidden } from '../VisuallyHidden';
-import config from '@/config';
+import { VisuallyHidden } from '@/polaris-vue';
 
 type Color =
   | 'base'
@@ -84,10 +76,16 @@ export default class Icon extends Vue {
   @Prop({ type: String })
   public accessibilityLabel!: string;
 
-  public sourceType = 'external';
+  get sourceType(): string {
+    if (['object', 'function'].includes(typeof this.source)) {
+      return 'icon';
+    }
 
-  get isShopifyIcon(): boolean {
-    return typeof this.source === 'string';
+    if (this.source === 'placeholder') {
+      return 'placeholder';
+    }
+
+    return 'external';
   }
 
   get encodedSvg(): string {
@@ -115,23 +113,8 @@ export default class Icon extends Vue {
   public externalClassName: string = styles.Img;
 
   created(): void {
-    this.generateSourceType();
     this.checkSupportedSvg();
     this.checkSupportedBackdrop();
-  }
-
-  private async generateSourceType(): Promise<void> {
-    if (['object', 'function'].includes(typeof this.source)) {
-      this.sourceType = 'icon';
-    }
-
-    if (typeof this.source === 'string' && this.source !== 'placeholder') {
-      this.sourceType = 'icon';
-    }
-
-    if (this.source === 'placeholder') {
-      this.sourceType = 'placeholder';
-    }
   }
 
   private checkSupportedSvg(): void {
