@@ -4,7 +4,7 @@ span(:class="wrapperClassName")
     span {{ accessibilityLabel }}
   component(
     v-if="sourceType === 'icon'",
-    :is="shopifyIcon || source",
+    :is="source",
     :class="svgClassName",
   )
   div(
@@ -20,19 +20,12 @@ span(:class="wrapperClassName")
 </template>
 
 <script lang="ts">
-import Vue, { VueConstructor } from 'vue';
+import Vue from 'vue';
 import { Component, Prop } from 'vue-property-decorator';
 import { classNames, variationName } from 'polaris-react/src/utilities/css';
-import type { IconSource } from '@/type';
+import type { IconSource } from 'types/type';
 import styles from '@/classes/Icon.json';
-import { VisuallyHidden } from '../VisuallyHidden';
-
-export const getPolarisIcon = async (
-  iconName: string,
-): Promise<VueConstructor<Vue>> => {
-  const icon = await import(`@shopify/polaris-icons/dist/svg/${iconName}.svg`);
-  return icon;
-};
+import { VisuallyHidden } from '@/polaris-vue';
 
 type Color =
   | 'base'
@@ -83,9 +76,17 @@ export default class Icon extends Vue {
   @Prop({ type: String })
   public accessibilityLabel!: string;
 
-  public shopifyIcon!: VueConstructor<Vue>;
+  get sourceType(): string {
+    if (['object', 'function'].includes(typeof this.source)) {
+      return 'icon';
+    }
 
-  public sourceType = 'external';
+    if (this.source === 'placeholder') {
+      return 'placeholder';
+    }
+
+    return 'external';
+  }
 
   get encodedSvg(): string {
     return typeof this.source === 'string'
@@ -112,35 +113,15 @@ export default class Icon extends Vue {
   public externalClassName: string = styles.Img;
 
   created(): void {
-    this.generateSourceType();
     this.checkSupportedSvg();
     this.checkSupportedBackdrop();
-  }
-
-  private async generateSourceType(): Promise<void> {
-    if (['object', 'function'].includes(typeof this.source)) {
-      this.sourceType = 'icon';
-    }
-
-    if (typeof this.source === 'string' && this.source !== 'placeholder') {
-      const icon = await getPolarisIcon(this.source);
-
-      if (icon) {
-        this.shopifyIcon = icon;
-        this.sourceType = 'icon';
-      }
-    }
-
-    if (this.source === 'placeholder') {
-      this.sourceType = 'placeholder';
-    }
   }
 
   private checkSupportedSvg(): void {
     if (
       this.color
       && this.sourceType === 'external'
-      && process.env.NODE_ENV === 'development'
+      && config.env === 'development'
     ) {
       // eslint-disable-next-line no-console
       console.warn(
@@ -154,7 +135,7 @@ export default class Icon extends Vue {
       this.backdrop
       && this.color
       && !COLORS_WITH_BACKDROPS.includes(this.color)
-      && process.env.NODE_ENV === 'development'
+      && config.env === 'development'
     ) {
       // eslint-disable-next-line no-console
       console.warn(

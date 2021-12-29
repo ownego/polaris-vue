@@ -37,6 +37,9 @@ if (!argv.format || argv.format === 'es') {
       babel({
         ...baseConfig.plugins.babel,
         presets: [['@babel/preset-env']],
+        plugins: [
+          ['@babel/transform-runtime'],
+        ],
       }),
     ],
   };

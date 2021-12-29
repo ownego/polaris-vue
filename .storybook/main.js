@@ -35,10 +35,12 @@ module.exports = {
           'postcss-loader',
           'sass-loader',
         ],
+        include: path.resolve(__dirname, '../src/components'),
       },
     );
 
     config.resolve.alias = {
+      '@icons': path.resolve(__dirname, '../node_modules/@shopify/polaris-icons/dist/svg'),
       '@': path.resolve(__dirname, '../src'),
       'vue': 'vue/dist/vue.js',
     };

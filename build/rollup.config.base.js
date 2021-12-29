@@ -16,7 +16,8 @@ export default {
       }),
       alias({
         entries: [
-          { find: /@/, replacement: `${path.resolve(__dirname, '../src')}` },
+          { find: /@icons/, replacement: `${path.resolve(__dirname, '../node_modules/@shopify/polaris-icons/dist/svg')}` },
+          { find: /@\/(.*)/, replacement: `${path.resolve(__dirname, '../src/$1')}` },
         ],
       }),
       postcss(),
@@ -44,7 +45,7 @@ export default {
     babel: {
       exclude: 'node_modules/**',
       extensions: ['.ts', '.js', '.vue'],
-      babelHelpers: 'bundled',
+      babelHelpers: 'runtime',
     },
   },
 };
