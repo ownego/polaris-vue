@@ -46,12 +46,6 @@ export default class Choice extends Vue {
   public id!: string;
 
   /**
-   * Label for the choice
-   */
-  @Prop({ type: String })
-  public label!: string;
-
-  /**
    * Whether the associated form control is disabled
    */
   @Prop({ type: Boolean })
