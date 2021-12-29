@@ -40,6 +40,7 @@ module.exports = {
     );
 
     config.resolve.alias = {
+      '@icons': path.resolve(__dirname, '../node_modules/@shopify/polaris-icons/dist/svg'),
       '@': path.resolve(__dirname, '../src'),
       'vue': 'vue/dist/vue.js',
     };
