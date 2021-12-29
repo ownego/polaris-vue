@@ -27,8 +27,8 @@ div
 import Vue from 'vue';
 import { Component, Prop } from 'vue-property-decorator';
 import { classNames } from 'polaris-react/src/utilities/css';
+import type { Error } from 'types/type';
 import styles from '@/classes/Choice.json';
-import type { Error } from '@/type';
 import { InlineError } from '../InlineError';
 
 export const helpTextID = (id: string): string => `${id}HelpText`;
