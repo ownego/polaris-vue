@@ -5,7 +5,6 @@ div
       slot
     span(:class="labelClass")
       slot(name="label")
-        | &nbsp;
   div(
     v-if="error || $slots.helpText",
     :class="descriptionMarkupClass",
