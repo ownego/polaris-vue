@@ -168,7 +168,7 @@ export default class Checkbox extends Vue {
       : undefined;
   }
 
-  @Emit()
+  @Emit('change')
   // eslint-disable-next-line class-methods-use-this
   onChange(event: InputEvent): object {
     return event;
