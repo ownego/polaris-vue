@@ -1,5 +1,5 @@
 {
-  "name": "polaris-vue",
+  "name": "@qikify/polaris-vue",
   "version": "0.1.0",
   "description": "Shopify Polaris UI library for Vue 2",
   "author": {
@@ -27,10 +27,11 @@
     "copy-polaris-tokens": "rimraf ./node_modules/polaris-react/src/styles/polaris-tokens && shx cp -r ./node_modules/@shopify/polaris-tokens/dist ./node_modules/polaris-react/src/styles/polaris-tokens"
   },
   "dependencies": {
-    "@shopify/polaris-icons": "^4.10.0",
+    "@shopify/polaris-icons": "^4.11.0",
     "@shopify/polaris-tokens": "^4.0.0",
     "core-js": "^3.6.5",
-    "vue": "^2.6.14"
+    "vue": "^2.6.14",
+    "vue-svg-loader": "^0.16.0"
   },
   "devDependencies": {
     "@babel/core": "^7.16.0",
@@ -44,9 +45,7 @@
     "@storybook/addon-essentials": "^6.4.8",
     "@storybook/addon-knobs": "^6.4.0",
     "@storybook/addon-links": "^6.3.12",
-    "@storybook/addon-postcss": "^2.0.0",
     "@storybook/addons": "^6.4.8",
-    "@storybook/preset-scss": "^1.0.3",
     "@storybook/preset-typescript": "^3.0.0",
     "@storybook/theming": "^6.4.8",
     "@storybook/vue": "^6.4.8",
@@ -78,10 +77,12 @@
     "rollup-plugin-terser": "^7.0.2",
     "rollup-plugin-typescript2": "^0.31.1",
     "rollup-plugin-vue": "^5.1.9",
+    "rollup-plugin-vue-inline-svg": "^1.1.2",
     "sass": "~1.32.13",
     "sass-loader": "^10",
     "shx": "^0.3.3",
     "style-loader": "^2",
+    "ts-dedent": "^2.2.0",
     "ttypescript": "^1.5.13",
     "typescript": "~4.1.5",
     "typescript-plugin-css-modules": "^3.4.0",
@@ -90,7 +91,6 @@
     "vue-loader": "^15.9.8",
     "vue-property-decorator": "^9.1.2",
     "vue-router": "^3.5.3",
-    "vue-svg-loader": "^0.16.0",
     "vue-template-compiler": "^2.6.11"
   },
   "repository": {

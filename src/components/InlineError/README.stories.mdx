@@ -6,6 +6,12 @@ import { InlineError } from '@/polaris-vue';
   title="Components / Form layout / InlineError"
   component={ InlineError }
   argTypes={{
+    message: {
+      control: { type: 'text' },
+      table: {
+        type: { summary: 'String | Vue Component' },
+      },
+    },
     default: {
       table: {
         disable: true,

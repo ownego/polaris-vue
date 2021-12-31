@@ -6,3 +6,4 @@ export * from './VisuallyHidden';
 export * from './InlineError';
 export * from './Choice';
 export * from './Checkbox';
+export * from './Spinner';

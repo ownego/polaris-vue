@@ -4,19 +4,19 @@
     list-item Yellow
     list-item Red
     list-item Blue
+
+  icon(:source="icon")
+  spinner
 </template>
 
 <script lang="ts">
 import { Component, Vue } from 'vue-property-decorator';
-import { List, ListItem } from './polaris-vue';
+import CirclePlusMinor from '@icons/CirclePlusMinor.svg';
 
-@Component({
-  components: {
-    List,
-    ListItem,
-  },
-})
-export default class Demo extends Vue {}
+@Component
+export default class Demo extends Vue {
+  public icon = CirclePlusMinor;
+}
 </script>
 
 <style lang="scss">
