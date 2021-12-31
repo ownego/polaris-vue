@@ -23,6 +23,10 @@ export interface LabelProps {
   requiredIndicator?: boolean;
 }
 
+export function labelID(id: string) {
+  return `${id}Label`;
+}
+
 @Component
 export default class Label extends Vue {
   @Prop({ type: String, required: true })
@@ -49,7 +53,7 @@ export default class Label extends Vue {
   }
 
   get labelID() {
-    return `${this.id}Label`;
+    return labelID(this.id);
   }
 }
 </script>
