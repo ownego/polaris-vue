@@ -1,7 +1,7 @@
 <template lang="pug">
 div(:id="wrapperID", :class="wrapperClassName")
   div(:class="iconClassName")
-    Icon(:source="icon")
+    Icon(:source="iconAlertMinor")
   component(
     v-if="['object', 'function'].includes(typeof message)",
     :is="message",
@@ -12,9 +12,9 @@ div(:id="wrapperID", :class="wrapperClassName")
 <script lang="ts">
 import Vue from 'vue';
 import { Component, Prop } from 'vue-property-decorator';
-import AlertMinor from '@shopify/polaris-icons/dist/svg/AlertMinor.svg';
+import type { Error } from 'types/type';
+import AlertMinor from '@icons/AlertMinor.svg';
 import styles from '@/classes/InlineError.json';
-import type { IconSource, Error } from '@/type';
 import { Icon } from '../Icon';
 
 export const errorTextID = (id: string): string => `${id}Error`;
@@ -37,11 +37,11 @@ export default class InlineError extends Vue {
   @Prop({ type: String, required: true })
   public fieldID!: string;
 
-  public icon: IconSource = AlertMinor;
-
   public wrapperClassName: string = styles.InlineError;
 
   public iconClassName: string = styles.Icon;
+
+  public iconAlertMinor = AlertMinor;
 
   get wrapperID(): string {
     return errorTextID(this.fieldID);

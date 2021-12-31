@@ -1,19 +1,27 @@
 import '!style-loader!css-loader!sass-loader!../src/scss/main.scss';
 import Vue from 'vue';
-import VueRouter from 'vue-router';
+// import VueRouter from 'vue-router';
 
-Vue.use(VueRouter);
-Vue.component('router-link', Vue.component('RouterLink'));
+// Vue.use(VueRouter);
+// Vue.component('router-link', Vue.component('RouterLink'));
 
-export const decorators = [(story) => ({
-  components: {story},
-  template: '<story />',
-  router: new VueRouter()
-})];
+// export const decorators = [(story) => ({
+//   components: {story},
+//   template: '<story />',
+//   router: new VueRouter()
+// })];
 
 export const parameters = {
   viewMode: 'docs',
-  actions: { disable: true },
+  docs: {
+    transformSource: (src) => {
+      const pattern = /<template>(.*)<\/template>/g;
+      return `${src.replace(pattern, '$1')}`;
+    },
+    source: {
+      state: 'open',
+    },
+  },
   controls: {
     matchers: {
       color: /(background|color|backgroundColor)$/i,
@@ -26,17 +34,9 @@ export const parameters = {
     storySort: {
       order: [
         "Get Started",
+        "Polaris Icons",
         "Changelog",
-        "Actions",
-        "Structure",
-        "Forms",
-        "Images & Icons",
-        "Feedback indicators",
-        "Titles & Text",
-        "Behavior",
-        "Lists & Tables",
-        "Navigation",
-        "Overlays",
+        "Components",
       ]
     }
   },
