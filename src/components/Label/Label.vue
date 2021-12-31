@@ -12,28 +12,19 @@ div(:class="className")
 import Vue from 'vue';
 import { Component, Prop } from 'vue-property-decorator';
 import { classNames } from 'polaris-react/src/utilities/css';
-import { labelID } from './utils';
+import { labelID, LabelProps } from './utils';
 import styles from '@/classes/Label.json';
-
-export interface LabelProps {
-  /** A unique identifier for the label */
-  id: string;
-  /** Visually hide the label */
-  hidden?: boolean;
-  /** Visual required indicator for the label */
-  requiredIndicator?: boolean;
-}
 
 @Component
 export default class Label extends Vue {
   @Prop({ type: String, required: true })
-  public id!: string;
+  public id!: LabelProps['id'];
 
   @Prop({ type: Boolean })
-  public hidden?: boolean;
+  public hidden?: LabelProps['hidden'];
 
   @Prop({ type: Boolean })
-  public requiredIndicator?: boolean;
+  public requiredIndicator?: LabelProps['requiredIndicator'];
 
   get className() {
     return classNames(
