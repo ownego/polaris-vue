@@ -1,2 +1,4 @@
 export { default as Labelled } from './Labelled.vue';
-export { labelID, errorID, helpTextID } from './utils';
+export {
+  labelID, errorID, helpTextID, LabelledProps,
+} from './utils';
