@@ -36,14 +36,14 @@ Choice(
 </template>
 
 <script lang="ts">
-import Vue, { VueConstructor } from 'vue';
+import Vue from 'vue';
 import { Component, Prop, Emit } from 'vue-property-decorator';
 import { classNames } from 'polaris-react/src/utilities/css';
 import MinusMinor from '@shopify/polaris-icons/dist/svg/MinusMinor.svg';
 import TickSmallMinor from '@shopify/polaris-icons/dist/svg/TickSmallMinor.svg';
+import type { Error, IconSource } from 'types/type';
 import styles from '@/classes/Checkbox.json';
 import { useUniqueId } from '@/utilities/unique-id';
-import type { Error } from '@/type';
 import { errorTextID } from '../InlineError/InlineError.vue';
 import { Choice } from '../Choice';
 import { helpTextID } from '../Choice/Choice.vue';
@@ -141,11 +141,10 @@ export default class Checkbox extends Vue {
   }
 
   get isChecked(): boolean {
-    return (typeof this.value === 'boolean' && this.value)
-      || (!this.isIndeterminate && Boolean(this.checked));
+    return !this.isIndeterminate && Boolean(this.checked);
   }
 
-  get iconSource(): VueConstructor<Vue> {
+  get iconSource(): IconSource {
     return this.isIndeterminate ? MinusMinor : TickSmallMinor;
   }
 
@@ -169,7 +168,7 @@ export default class Checkbox extends Vue {
       : undefined;
   }
 
-  @Emit('change')
+  @Emit()
   // eslint-disable-next-line class-methods-use-this
   onChange(event: InputEvent): object {
     return event;
