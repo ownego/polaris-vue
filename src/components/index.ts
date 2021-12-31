@@ -2,6 +2,7 @@ export * from './Choice';
 export * from './Icon';
 export * from './InlineError';
 export * from './Label';
+export * from './Labelled';
 export * from './Link';
 export * from './List';
 export * from './Spinner';
