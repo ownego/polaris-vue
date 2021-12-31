@@ -1,6 +1,9 @@
 import { Meta, Story, Canvas, ArgsTable, Source } from '@storybook/addon-docs';
+import dedent from 'ts-dedent';
 
 import { Icon } from '@/polaris-vue';
+import CirclePlusMinor from '@icons/CirclePlusMinor.svg';
+import BehaviorMajor from '@icons/BehaviorMajor.svg';
 
 <Meta
   title="Components / Images &amp; Icons / Icon"
@@ -21,17 +24,18 @@ import { Icon } from '@/polaris-vue';
       defaultValue: 'CirclePlusMinor',
       options: [
         'CirclePlusMinor',
+        'BehaviorMajor',
         'placeholder',
       ],
       control: {
         type: 'select',
         labels: {
-          CirclePlusMinor: 'default',
+          null: 'default',
         },
       },
       table: {
         type: {
-          summary: 'Shopify SVG Icon | "placeholder" | svg',
+          summary: 'SVG Component | "placeholder" | svg html string',
         },
       },
     },
@@ -71,7 +75,18 @@ import { Icon } from '@/polaris-vue';
 export const Template = (args, { argTypes }) => ({
   props: Object.keys(argTypes),
   components: { Icon },
-  template: `<Icon v-bind="$props"/>`,
+  computed: {
+    iconSource() {
+      if (args.source === 'CirclePlusMinor') {
+        return CirclePlusMinor;
+      }
+      if (args.source === 'BehaviorMajor') {
+        return BehaviorMajor;
+      }
+      return args.source;
+    },
+  },
+  template: `<Icon :source="iconSource" v-bind="$props" icon-name="${args.source || 'CirclePlusMinor'}" />`,
 });
 
 # Icon
@@ -80,12 +95,68 @@ Icons are used to visually communicate core parts of the product and available a
 They can act as wayfinding tools to help merchants more easily understand where they are in the product,
 and common interaction patterns that are available.
 
-*Note: To use icons, you must add `vue-svg-loader` package to your project first, by running:* `yarn add -D vue-svg-loader`
+**How to use:**
+
+To use icons, you need to import svg icon as Vue component by `vue-svg-loader` then bind it to `data`.<br/>
+*WHY we do that?* To reduce the size (a lot) of the bundle.
 
 You can find icon list from **Shopify Icon Library**: [here](https://polaris-icons.shopify.com/).
 
+See example:
+
+<Source
+  language="javascript"
+  code={dedent`
+  <template>
+    <Icon :source="iconCirclePlusMinor" />
+  </template>\n
+  <script>
+  \/\/ Change \`CirclePlusMinor\` to icon name from Shopify Icon Library
+  import CirclePlusMinor from '!vue-svg-loader!@shopify/polaris-icons/dist/svg/CirclePlusMinor.svg';\n
+  \/\/ OR if you config \`vue-svg-loader\` in vue.config.js
+  \/\/ import CirclePlusMinor from '@shopify/polaris-icons/dist/svg/CirclePlusMinor.svg';\n
+  export default {
+    data() {
+      return {
+        iconCirclePlusMinor: CirclePlusMinor,
+      };
+    },
+  };
+  </script>
+  `}
+/>
+
+### **Demo & Properties**
+
 <Canvas>
-  <Story name="Icon">
+  <Story
+    name="Icon"
+    parameters={{
+      docs: {
+        transformSource: (source) => {
+          const iconName = source.match(/icon-name="(.*?)"/)[1];
+          const tmpSource = source
+            .replace(/<template>/, '')
+            .replace(/<\/template>/, '')
+            .replace(/icon-name=".*?"/, '')
+            .replace(/source='(.*)'/, `source="icon${iconName}"`);
+          if (iconName === 'placeholder') {
+            return tmpSource;
+          }
+          const fullSource = dedent`
+          import ${iconName} from '@shopify/polaris-icons/dist/svg/${iconName}.svg';\n
+            data() {
+              return {
+                icon${iconName}: ${iconName},
+              };
+            },
+          ${tmpSource}
+          `;
+          return fullSource;
+        },
+      },
+    }}
+  >
     {Template.bind({})}
   </Story>
 </Canvas>

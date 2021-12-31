@@ -36,6 +36,7 @@ module.exports = {
         allowBlockStart: false,
       },
     ],
+    'import/no-webpack-loader-syntax': 0,
     'babel/no-unused-expressions': 0,
     'import/named': 0,
     'import/export': 0,
