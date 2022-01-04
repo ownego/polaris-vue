@@ -44,7 +44,7 @@ import TickSmallMinor from '@shopify/polaris-icons/dist/svg/TickSmallMinor.svg';
 import type { Error, IconSource } from 'types/type';
 import styles from '@/classes/Checkbox.json';
 import { useUniqueId } from '@/utilities/unique-id';
-import { errorTextID } from '../InlineError/InlineError.vue';
+import { errorTextID } from '../InlineError';
 import { Choice } from '../Choice';
 import { helpTextID } from '../Choice/Choice.vue';
 import { Icon } from '../Icon';
