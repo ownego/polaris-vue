@@ -32,10 +32,8 @@ import Vue from 'vue';
 import { Component, Prop, Emit } from 'vue-property-decorator';
 import { classNames } from 'polaris-react/src/utilities/css';
 import styles from '@/classes/RadioButton.json';
-import { RadioButtonProps } from './utils';
 import { useUniqueId } from '@/utilities/unique-id';
-import { helpTextID } from '../Choice/Choice.vue';
-import { Choice } from '../Choice';
+import { Choice, helpTextID } from '../Choice';
 
 @Component({
   components: {
@@ -43,26 +41,47 @@ import { Choice } from '../Choice';
   },
 })
 export default class RadioButton extends Vue {
+  /**
+   * Indicates the ID of the element that describes the the radio button
+   */
   @Prop({ type: String })
-  public ariaDescribedBy!: RadioButtonProps['ariaDescribedBy'];
+  public ariaDescribedBy!: string;
 
+  /**
+   * Visually hide the label
+   */
   @Prop({ type: Boolean })
-  public labelHidden!: RadioButtonProps['labelHidden'];
+  public labelHidden!: boolean;
 
+  /**
+   * Radio button is selected
+   */
   @Prop({ type: Boolean })
-  public checked!: RadioButtonProps['checked'];
+  public checked!: boolean;
 
+  /**
+   * Disable input
+   */
   @Prop({ type: Boolean })
-  public disabled!: RadioButtonProps['disabled'];
+  public disabled!: boolean;
 
+  /**
+   * ID for form input
+   */
   @Prop({ type: String })
-  public id!: RadioButtonProps['id'];
+  public id!: string;
 
+  /**
+   * Name for form input
+   */
   @Prop({ type: String })
-  public name!: RadioButtonProps['name'];
+  public name!: string;
 
+  /**
+   * Value for form input
+   */
   @Prop({ type: String })
-  public value!: RadioButtonProps['value'];
+  public value!: string;
 
   public mouseOver = false;
 
