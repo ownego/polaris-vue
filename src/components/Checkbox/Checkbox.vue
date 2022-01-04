@@ -43,6 +43,7 @@ import MinusMinor from '@shopify/polaris-icons/dist/svg/MinusMinor.svg';
 import TickSmallMinor from '@shopify/polaris-icons/dist/svg/TickSmallMinor.svg';
 import type { Error, IconSource } from 'types/type';
 import styles from '@/classes/Checkbox.json';
+import { CheckboxProps } from './utils';
 import { useUniqueId } from '@/utilities/unique-id';
 import { errorTextID } from '../InlineError';
 import { Choice } from '../Choice';
@@ -56,59 +57,32 @@ import { Icon } from '../Icon';
   },
 })
 export default class Checkbox extends Vue {
-  /**
-   * Indicates the ID of the element that is controlled by the checkbox
-   */
   @Prop({ type: String })
-  public ariaControl!: string;
+  public ariaControl!: CheckboxProps['ariaControl'];
 
-  /**
-   * Indicates the ID of the element that describes the checkbox
-   */
   @Prop({ type: String })
-  public ariaDescribedBy!: string;
+  public ariaDescribedBy!: CheckboxProps['ariaDescribedBy'];
 
-  /**
-   * Visually hide the label
-   */
   @Prop({ type: Boolean })
-  public labelHidden!: boolean;
+  public labelHidden!: CheckboxProps['labelHidden'];
 
-  /**
-   * Checkbox is selected. `indeterminate` shows a horizontal line in the checkbox
-   */
   @Prop({ type: [Boolean, String] })
-  public checked!: boolean | 'indeterminate';
+  public checked!: CheckboxProps['checked'];
 
-  /**
-   * Disable input
-   */
   @Prop({ type: Boolean })
-  public disabled!: boolean;
+  public disabled!: CheckboxProps['disabled'];
 
-  /**
-   * ID for form input
-   */
   @Prop({ type: String })
-  public id!: string;
+  public id!: CheckboxProps['id'];
 
-  /**
-   * Name for form input
-   */
   @Prop({ type: String })
-  public name!: string;
+  public name!: CheckboxProps['name'];
 
-  /**
-   * Value for form input
-   */
   @Prop({ type: [String, Boolean] })
-  public value!: string | boolean;
+  public value!: CheckboxProps['value'];
 
-  /**
-   * Display an error message
-   */
   @Prop({ type: [String, Boolean, Array, Object, Function] })
-  public error!: Error | boolean;
+  public error!: CheckboxProps['error'];
 
   public mouseOver = false;
 
