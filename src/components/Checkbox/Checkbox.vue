@@ -130,11 +130,11 @@ export default class Checkbox extends Vue {
     }
 
     if (this.error && typeof this.error !== 'boolean') {
-      describedBy.push(errorTextID(this.id));
+      describedBy.push(errorTextID(this.uniqueId));
     }
 
     if (this.$slots.helpText) {
-      describedBy.push(helpTextID(this.id));
+      describedBy.push(helpTextID(this.uniqueId));
     }
 
     return describedBy.length
