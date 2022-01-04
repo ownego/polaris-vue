@@ -45,8 +45,7 @@ import type { IconSource, Error } from 'types/type';
 import styles from '@/classes/Checkbox.json';
 import { useUniqueId } from '@/utilities/unique-id';
 import { errorTextID } from '../InlineError';
-import { Choice } from '../Choice';
-import { helpTextID } from '../Choice/Choice.vue';
+import { Choice, helpTextID } from '../Choice';
 import { Icon } from '../Icon';
 
 @Component({
