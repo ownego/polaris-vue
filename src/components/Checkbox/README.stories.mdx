@@ -20,7 +20,16 @@ import { Checkbox } from '@/polaris-vue';
       control: { type: 'text' },
       table: {
         type: {
-          summary: 'string | Vue Component | boolean',
+          summary: 'string | component | boolean',
+        },
+      },
+    },
+    value: {
+      name: 'value',
+      control: { type: 'text' },
+      table: {
+        type: {
+          summary: 'string | boolean',
         },
       },
     },
@@ -51,6 +60,16 @@ import { Checkbox } from '@/polaris-vue';
       table: {
         type: {
           summary: '"() => void"',
+        },
+      },
+    },
+    input: {
+      name: 'input',
+      description: 'v-model available',
+      control: { disable: true },
+      table: {
+        type: {
+          summary: '"() => boolean"',
         },
       },
     },
