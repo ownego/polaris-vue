@@ -37,7 +37,7 @@ Choice(
 
 <script lang="ts">
 import Vue from 'vue';
-import { Component, Prop, Emit } from 'vue-property-decorator';
+import { Component, Prop } from 'vue-property-decorator';
 import { classNames } from 'polaris-react/src/utilities/css';
 import MinusMinor from '@shopify/polaris-icons/dist/svg/MinusMinor.svg';
 import TickSmallMinor from '@shopify/polaris-icons/dist/svg/TickSmallMinor.svg';
@@ -115,7 +115,8 @@ export default class Checkbox extends Vue {
   }
 
   get isChecked(): boolean {
-    return !this.isIndeterminate && Boolean(this.checked);
+    return (!this.isIndeterminate && Boolean(this.checked))
+      || (typeof this.value === 'boolean' && this.value === true);
   }
 
   get iconSource(): IconSource {
@@ -142,10 +143,11 @@ export default class Checkbox extends Vue {
       : undefined;
   }
 
-  @Emit('change')
-  // eslint-disable-next-line class-methods-use-this
-  onChange(event: InputEvent): object {
-    return event;
+  onChange(event: InputEvent): void {
+    const target = event.target as HTMLInputElement;
+
+    this.$emit('input', target.checked);
+    this.$emit('change', event);
   }
 
   // eslint-disable-next-line class-methods-use-this
