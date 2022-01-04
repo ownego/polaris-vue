@@ -1,3 +1,5 @@
+import type { Error } from 'types/type';
+
 export interface CheckboxProps {
  /* Indicates the ID of the element that is controlled by the checkbox */
   ariaControl?: string;

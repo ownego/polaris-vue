@@ -41,7 +41,7 @@ import { Component, Prop, Emit } from 'vue-property-decorator';
 import { classNames } from 'polaris-react/src/utilities/css';
 import MinusMinor from '@shopify/polaris-icons/dist/svg/MinusMinor.svg';
 import TickSmallMinor from '@shopify/polaris-icons/dist/svg/TickSmallMinor.svg';
-import type { Error, IconSource } from 'types/type';
+import type { IconSource } from 'types/type';
 import styles from '@/classes/Checkbox.json';
 import { CheckboxProps } from './utils';
 import { useUniqueId } from '@/utilities/unique-id';
