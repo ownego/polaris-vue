@@ -36,15 +36,16 @@ Choice(
 </template>
 
 <script lang="ts">
-import Vue, { VueConstructor } from 'vue';
+import Vue from 'vue';
 import { Component, Prop, Emit } from 'vue-property-decorator';
 import { classNames } from 'polaris-react/src/utilities/css';
 import MinusMinor from '@shopify/polaris-icons/dist/svg/MinusMinor.svg';
 import TickSmallMinor from '@shopify/polaris-icons/dist/svg/TickSmallMinor.svg';
+import type { IconSource } from 'types/type';
 import styles from '@/classes/Checkbox.json';
+import { CheckboxProps } from './utils';
 import { useUniqueId } from '@/utilities/unique-id';
-import type { Error } from '@/type';
-import { errorTextID } from '../InlineError/InlineError.vue';
+import { errorTextID } from '../InlineError';
 import { Choice } from '../Choice';
 import { helpTextID } from '../Choice/Choice.vue';
 import { Icon } from '../Icon';
@@ -56,59 +57,32 @@ import { Icon } from '../Icon';
   },
 })
 export default class Checkbox extends Vue {
-  /**
-   * Indicates the ID of the element that is controlled by the checkbox
-   */
   @Prop({ type: String })
-  public ariaControl!: string;
+  public ariaControl!: CheckboxProps['ariaControl'];
 
-  /**
-   * Indicates the ID of the element that describes the checkbox
-   */
   @Prop({ type: String })
-  public ariaDescribedBy!: string;
+  public ariaDescribedBy!: CheckboxProps['ariaDescribedBy'];
 
-  /**
-   * Visually hide the label
-   */
   @Prop({ type: Boolean })
-  public labelHidden!: boolean;
+  public labelHidden!: CheckboxProps['labelHidden'];
 
-  /**
-   * Checkbox is selected. `indeterminate` shows a horizontal line in the checkbox
-   */
   @Prop({ type: [Boolean, String] })
-  public checked!: boolean | 'indeterminate';
+  public checked!: CheckboxProps['checked'];
 
-  /**
-   * Disable input
-   */
   @Prop({ type: Boolean })
-  public disabled!: boolean;
+  public disabled!: CheckboxProps['disabled'];
 
-  /**
-   * ID for form input
-   */
   @Prop({ type: String })
-  public id!: string;
+  public id!: CheckboxProps['id'];
 
-  /**
-   * Name for form input
-   */
   @Prop({ type: String })
-  public name!: string;
+  public name!: CheckboxProps['name'];
 
-  /**
-   * Value for form input
-   */
-  @Prop({ type: String })
-  public value!: string;
+  @Prop({ type: [String, Boolean] })
+  public value!: CheckboxProps['value'];
 
-  /**
-   * Display an error message
-   */
   @Prop({ type: [String, Boolean, Array, Object, Function] })
-  public error!: Error | boolean;
+  public error!: CheckboxProps['error'];
 
   public mouseOver = false;
 
@@ -144,7 +118,7 @@ export default class Checkbox extends Vue {
     return !this.isIndeterminate && Boolean(this.checked);
   }
 
-  get iconSource(): VueConstructor<Vue> {
+  get iconSource(): IconSource {
     return this.isIndeterminate ? MinusMinor : TickSmallMinor;
   }
 
@@ -156,11 +130,11 @@ export default class Checkbox extends Vue {
     }
 
     if (this.error && typeof this.error !== 'boolean') {
-      describedBy.push(errorTextID(this.id));
+      describedBy.push(errorTextID(this.uniqueId));
     }
 
     if (this.$slots.helpText) {
-      describedBy.push(helpTextID(this.id));
+      describedBy.push(helpTextID(this.uniqueId));
     }
 
     return describedBy.length

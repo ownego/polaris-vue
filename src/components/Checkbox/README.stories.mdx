@@ -20,7 +20,7 @@ import { Checkbox } from '@/polaris-vue';
       control: { type: 'text' },
       table: {
         type: {
-          summary: 'boolean | string',
+          summary: 'string | Vue Component | boolean',
         },
       },
     },
@@ -40,7 +40,7 @@ import { Checkbox } from '@/polaris-vue';
       control: { disable: true },
       table: {
         type: {
-          summary: '"(newChecked: boolean, id: string) => void"',
+          summary: '"(Event) => void"',
         },
       },
     },
@@ -90,10 +90,10 @@ export const Template = (args, { argTypes }) => ({
   </Checkbox>`,
 });
 
-# Inline error
+# Checkbox
 
-Inline errors are brief, in-context messages that tell merchants something went wrong with a single or group of inputs in a form
-Use inline errors to help merchants understand why a form input may not be valid and how to fix it.
+Checkboxes are most commonly used to give merchants a way to make a range of selections (zero, one, or multiple).
+They may also be used as a way to have merchants indicate they agree to specific terms and services.
 
 <Canvas>
   <Story name="Checkbox">
