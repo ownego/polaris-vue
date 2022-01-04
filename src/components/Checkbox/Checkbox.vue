@@ -71,7 +71,7 @@ export default class Checkbox extends Vue {
    * Visually hide the label
    */
   @Prop({ type: Boolean })
-  public labelHidden!: boolean
+  public labelHidden!: boolean;
 
   /**
    * Checkbox is selected. `indeterminate` shows a horizontal line in the checkbox
@@ -89,13 +89,13 @@ export default class Checkbox extends Vue {
    * Name for form input
    */
   @Prop({ type: String })
-  public id!: string
+  public id!: string;
 
   /**
    * Value for form input
    */
   @Prop({ type: String })
-  public name!: string
+  public name!: string;
 
   /**
    * Value for form input
