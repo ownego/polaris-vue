@@ -36,17 +36,16 @@ Choice(
 </template>
 
 <script lang="ts">
-import Vue, { VueConstructor } from 'vue';
-import { Component, Prop, Emit } from 'vue-property-decorator';
+import Vue from 'vue';
+import { Component, Prop } from 'vue-property-decorator';
 import { classNames } from 'polaris-react/src/utilities/css';
 import MinusMinor from '@shopify/polaris-icons/dist/svg/MinusMinor.svg';
 import TickSmallMinor from '@shopify/polaris-icons/dist/svg/TickSmallMinor.svg';
+import type { IconSource, Error } from 'types/type';
 import styles from '@/classes/Checkbox.json';
 import { useUniqueId } from '@/utilities/unique-id';
-import type { Error } from '@/type';
-import { errorTextID } from '../InlineError/InlineError.vue';
-import { Choice } from '../Choice';
-import { helpTextID } from '../Choice/Choice.vue';
+import { errorTextID } from '../InlineError';
+import { Choice, helpTextID } from '../Choice';
 import { Icon } from '../Icon';
 
 @Component({
@@ -63,7 +62,7 @@ export default class Checkbox extends Vue {
   public ariaControl!: string;
 
   /**
-   * Indicates the ID of the element that describes the checkbox
+   * Indicates the ID of the element that is controlled by the checkbox
    */
   @Prop({ type: String })
   public ariaDescribedBy!: string;
@@ -81,19 +80,19 @@ export default class Checkbox extends Vue {
   public checked!: boolean | 'indeterminate';
 
   /**
-   * Disable input
+   * ID for form input
    */
   @Prop({ type: Boolean })
   public disabled!: boolean;
 
   /**
-   * ID for form input
+   * Name for form input
    */
   @Prop({ type: String })
   public id!: string;
 
   /**
-   * Name for form input
+   * Value for form input
    */
   @Prop({ type: String })
   public name!: string;
@@ -141,11 +140,11 @@ export default class Checkbox extends Vue {
   }
 
   get isChecked(): boolean {
-    return (typeof this.value === 'boolean' && this.value)
-      || (!this.isIndeterminate && Boolean(this.checked));
+    return (!this.isIndeterminate && Boolean(this.checked))
+      || (typeof this.value === 'boolean' && this.value === true);
   }
 
-  get iconSource(): VueConstructor<Vue> {
+  get iconSource(): IconSource {
     return this.isIndeterminate ? MinusMinor : TickSmallMinor;
   }
 
@@ -157,11 +156,11 @@ export default class Checkbox extends Vue {
     }
 
     if (this.error && typeof this.error !== 'boolean') {
-      describedBy.push(errorTextID(this.id));
+      describedBy.push(errorTextID(this.uniqueId));
     }
 
     if (this.$slots.helpText) {
-      describedBy.push(helpTextID(this.id));
+      describedBy.push(helpTextID(this.uniqueId));
     }
 
     return describedBy.length
@@ -169,10 +168,11 @@ export default class Checkbox extends Vue {
       : undefined;
   }
 
-  @Emit('change')
-  // eslint-disable-next-line class-methods-use-this
-  onChange(event: InputEvent): object {
-    return event;
+  onChange(event: InputEvent): void {
+    const target = event.target as HTMLInputElement;
+
+    this.$emit('input', target.checked);
+    this.$emit('change', event);
   }
 
   // eslint-disable-next-line class-methods-use-this

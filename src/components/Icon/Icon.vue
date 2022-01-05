@@ -3,7 +3,7 @@ span(:class="wrapperClassName")
   VisuallyHidden
     span {{ accessibilityLabel }}
   component(
-    v-if="sourceType === 'component'",
+    v-if="sourceType === 'icon'",
     :is="source",
     :class="svgClassName",
   )
@@ -23,9 +23,10 @@ span(:class="wrapperClassName")
 import Vue from 'vue';
 import { Component, Prop } from 'vue-property-decorator';
 import { classNames, variationName } from 'polaris-react/src/utilities/css';
-import type { IconSource } from '@/type';
+import type { IconSource } from 'types/type';
 import styles from '@/classes/Icon.json';
 import { VisuallyHidden } from '../VisuallyHidden';
+import config from '@/config';
 
 type Color =
   | 'base'
@@ -78,7 +79,7 @@ export default class Icon extends Vue {
 
   get sourceType(): string {
     if (['object', 'function'].includes(typeof this.source)) {
-      return 'component';
+      return 'icon';
     }
 
     if (this.source === 'placeholder') {
@@ -86,11 +87,6 @@ export default class Icon extends Vue {
     }
 
     return 'external';
-  }
-
-  created(): void {
-    this.checkSupportedSvg();
-    this.checkSupportedBackdrop();
   }
 
   get encodedSvg(): string {
@@ -117,11 +113,16 @@ export default class Icon extends Vue {
 
   public externalClassName: string = styles.Img;
 
+  created(): void {
+    this.checkSupportedSvg();
+    this.checkSupportedBackdrop();
+  }
+
   private checkSupportedSvg(): void {
     if (
       this.color
       && this.sourceType === 'external'
-      && process.env.NODE_ENV === 'development'
+      && config.env === 'development'
     ) {
       // eslint-disable-next-line no-console
       console.warn(
@@ -135,7 +136,7 @@ export default class Icon extends Vue {
       this.backdrop
       && this.color
       && !COLORS_WITH_BACKDROPS.includes(this.color)
-      && process.env.NODE_ENV === 'development'
+      && config.env === 'development'
     ) {
       // eslint-disable-next-line no-console
       console.warn(
@@ -145,6 +146,7 @@ export default class Icon extends Vue {
   }
 }
 </script>
+
 <style lang="scss">
 @import 'polaris-react/src/components/Icon/Icon.scss';
 </style>

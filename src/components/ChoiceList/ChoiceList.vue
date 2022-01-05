@@ -43,12 +43,12 @@ import Vue from 'vue';
 import { Component, Prop, Emit } from 'vue-property-decorator';
 import { classNames } from 'polaris-react/src/utilities/css';
 import styles from '@/classes/ChoiceList.json';
-import type { Error } from '@/type';
+import type { Error } from 'types/type';
 import { useUniqueId } from '@/utilities/unique-id';
 import { Checkbox } from '../Checkbox';
 import { RadioButton } from '../RadioButton';
 import { InlineError } from '../InlineError';
-import { errorTextID } from '../InlineError/InlineError.vue';
+import { errorTextID } from '../InlineError';
 
 @Component({
   components: {

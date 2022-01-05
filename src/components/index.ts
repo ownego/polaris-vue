@@ -6,5 +6,6 @@ export * from './VisuallyHidden';
 export * from './InlineError';
 export * from './Choice';
 export * from './Checkbox';
-export * from './RadioButton';
 export * from './ChoiceList';
+export * from './RadioButton';
+export * from './Spinner';

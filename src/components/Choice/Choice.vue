@@ -5,7 +5,6 @@ div
       slot
     span(:class="labelClass")
       slot(name="label")
-        | &nbsp;
   div(
     v-if="error || $slots.helpText",
     :class="descriptionMarkupClass",
@@ -27,11 +26,10 @@ div
 import Vue from 'vue';
 import { Component, Prop } from 'vue-property-decorator';
 import { classNames } from 'polaris-react/src/utilities/css';
+import type { Error } from 'types/type';
+import { helpTextID } from './utils';
 import styles from '@/classes/Choice.json';
-import type { Error } from '@/type';
 import { InlineError } from '../InlineError';
-
-export const helpTextID = (id: string): string => `${id}HelpText`;
 
 @Component({
   components: {
@@ -44,12 +42,6 @@ export default class Choice extends Vue {
    */
   @Prop({ type: String, required: true })
   public id!: string;
-
-  /**
-   * Label for the choice
-   */
-  @Prop({ type: String })
-  public label!: string;
 
   /**
    * Whether the associated form control is disabled
