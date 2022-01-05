@@ -16,7 +16,7 @@ Choice(
       :name="name",
       :value="value",
       type="radio",
-      :checked="checked",
+      :checked="isChecked",
       :disabled="disabled",
       :class="inputClassName",
       :aria-describedby="formattedAriaDescribedBy",
@@ -29,14 +29,18 @@ Choice(
 
 <script lang="ts">
 import Vue from 'vue';
-import { Component, Prop, Emit } from 'vue-property-decorator';
+import { Component, Prop } from 'vue-property-decorator';
 import { classNames } from 'polaris-react/src/utilities/css';
 import styles from '@/classes/RadioButton.json';
 import { useUniqueId } from '@/utilities/unique-id';
-import { helpTextID } from '../Choice/Choice.vue';
-import { Choice } from '../Choice';
+import { Choice, helpTextID } from '../Choice';
 
 @Component({
+  model: {
+    prop: 'modelValue',
+    event: 'input',
+  },
+
   components: {
     Choice,
   },
@@ -84,6 +88,12 @@ export default class RadioButton extends Vue {
   @Prop({ type: String })
   public value!: string;
 
+  /**
+   * Model value using for v-model
+   */
+  @Prop({ type: String })
+  public modelValue!: string;
+
   public mouseOver = false;
 
   public wrapperClassName: string = styles.RadioButton;
@@ -92,6 +102,10 @@ export default class RadioButton extends Vue {
 
   get uniqueId(): string {
     return useUniqueId('RadioButton', this.id);
+  }
+
+  get isChecked(): boolean {
+    return this.checked || this.modelValue === this.value;
   }
 
   get backdropClassName(): string {
@@ -109,7 +123,7 @@ export default class RadioButton extends Vue {
     }
 
     if (this.$slots.helpText) {
-      describedBy.push(helpTextID(this.id));
+      describedBy.push(helpTextID(this.uniqueId));
     }
 
     return describedBy.length
@@ -117,10 +131,11 @@ export default class RadioButton extends Vue {
       : undefined;
   }
 
-  @Emit('change')
-  // eslint-disable-next-line class-methods-use-this
-  onChange(event: InputEvent): object {
-    return event;
+  onChange(event: InputEvent): void {
+    const target = event.target as HTMLInputElement;
+
+    this.$emit('input', target.value);
+    this.$emit('change', event);
   }
 }
 </script>

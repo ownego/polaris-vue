@@ -6,6 +6,14 @@ import { RadioButton } from '@/polaris-vue';
   title="Components / Forms / RadioButton"
   component={ RadioButton }
   argTypes={{
+    modelValue: {
+      table: {
+        disable: true,
+        type: {
+          summary: '"() => void"',
+        },
+      },
+    },
     blur: {
       name: 'blur',
       description: 'Callback when focus is remove',
@@ -22,7 +30,7 @@ import { RadioButton } from '@/polaris-vue';
       control: { disable: true },
       table: {
         type: {
-          summary: '"(newChecked: boolean, id: string) => void"',
+          summary: '"(Event) => void"',
         },
       },
     },
@@ -33,6 +41,16 @@ import { RadioButton } from '@/polaris-vue';
       table: {
         type: {
           summary: '"() => void"',
+        },
+      },
+    },
+    input: {
+      name: 'input',
+      description: 'v-model available',
+      control: { disable: true },
+      table: {
+        type: {
+          summary: '"(boolean) => void"',
         },
       },
     },
@@ -70,18 +88,18 @@ export const Template = (args, { argTypes }) => ({
   template: `<div>
     <RadioButton
       v-bind="$props"
-      id="demoRadioButton1"
-      :checked="demoValue==='demoRadioButton1'"
-      @change="setValue"
+      name="demoRadioButton"
+      value="data1"
+      v-model="setValue"
     >
       <template slot="label">Accounts are disabled</template>
       <template slot="helpText">Customers will only be able to check out as guests.</template>
     </RadioButton>
     <RadioButton
       v-bind="$props"
-      id="demoRadioButton2"
-      :checked="demoValue==='demoRadioButton2'"
-      @change="setValue"
+      name="demoRadioButton"
+      value="data2"
+      v-model="setValue"
     >
       <template slot="label">Accounts are optional</template>
       <template slot="helpText">Customers will be able to check out with a customer account or as a guests.</template>
@@ -89,7 +107,7 @@ export const Template = (args, { argTypes }) => ({
   </div>`,
   data() {
     return {
-      demoValue: '',
+      setValue: 'data1',
     };
   },
   methods: {
