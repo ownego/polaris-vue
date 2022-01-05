@@ -1,0 +1,130 @@
+import { Meta, Story, Canvas, ArgsTable } from '@storybook/addon-docs';
+
+import { RadioButton } from '@/polaris-vue';
+
+<Meta
+  title="Components / Forms / RadioButton"
+  component={ RadioButton }
+  argTypes={{
+    modelValue: {
+      table: {
+        disable: true,
+        type: {
+          summary: '"() => void"',
+        },
+      },
+    },
+    blur: {
+      name: 'blur',
+      description: 'Callback when focus is remove',
+      control: { disable: true },
+      table: {
+        type: {
+          summary: '"() => void"',
+        },
+      },
+    },
+    change: {
+      name: 'change',
+      description: 'Callback when radio button is toggled',
+      control: { disable: true },
+      table: {
+        type: {
+          summary: '"(Event) => void"',
+        },
+      },
+    },
+    focus: {
+      name: 'focus',
+      description: 'Callback when radio button is focussed',
+      control: { disable: true },
+      table: {
+        type: {
+          summary: '"() => void"',
+        },
+      },
+    },
+    input: {
+      name: 'input',
+      description: 'v-model available',
+      control: { disable: true },
+      table: {
+        type: {
+          summary: '"(boolean) => void"',
+        },
+      },
+    },
+    helpText: {
+      name: 'helpText',
+      description: 'Additional text to aide in use',
+      control: { disable: true },
+      table: {
+        type: {
+          summary: null,
+        },
+      },
+    },
+    label: {
+      name: 'label',
+      description: 'Label for the radio button',
+      control: { disable: true },
+      table: {
+        type: {
+          summary: null,
+        },
+      },
+    },
+    default: {
+      table: {
+        disable: true,
+      },
+    },
+  }}
+/>
+
+export const Template = (args, { argTypes }) => ({
+  props: Object.keys(argTypes),
+  components: { RadioButton },
+  template: `<div>
+    <RadioButton
+      v-bind="$props"
+      name="demoRadioButton"
+      value="data1"
+      v-model="setValue"
+    >
+      <template slot="label">Accounts are disabled</template>
+      <template slot="helpText">Customers will only be able to check out as guests.</template>
+    </RadioButton>
+    <RadioButton
+      v-bind="$props"
+      name="demoRadioButton"
+      value="data2"
+      v-model="setValue"
+    >
+      <template slot="label">Accounts are optional</template>
+      <template slot="helpText">Customers will be able to check out with a customer account or as a guests.</template>
+    </RadioButton>
+  </div>`,
+  data() {
+    return {
+      setValue: 'data1',
+    };
+  },
+  methods: {
+    setValue(payload) {
+      this.demoValue = payload.id;
+    },
+  },
+});
+
+# Radio button
+
+Use radio buttons to present each item in a list of options where merchants must make a single selection.
+
+<Canvas>
+  <Story name="RadioButton">
+    {Template.bind({})}
+  </Story>
+</Canvas>
+
+<ArgsTable story="RadioButton"/>
