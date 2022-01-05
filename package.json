@@ -43,7 +43,6 @@
     "@rollup/plugin-replace": "^3.0.0",
     "@storybook/addon-docs": "^6.4.8",
     "@storybook/addon-essentials": "^6.4.8",
-    "@storybook/addon-knobs": "^6.4.0",
     "@storybook/addon-links": "^6.3.12",
     "@storybook/addons": "^6.4.8",
     "@storybook/preset-typescript": "^3.0.0",
