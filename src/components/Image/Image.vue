@@ -31,9 +31,6 @@ type CrossOrigin = 'anonymous' | 'use-credentials' | '' | undefined;
 })
 export default class Image extends Vue {
   @Prop({ type: String, required: true })
-  public alt!: string;
-
-  @Prop({ type: String, required: true })
   public source!: string;
 
   @Prop({ type: String })
