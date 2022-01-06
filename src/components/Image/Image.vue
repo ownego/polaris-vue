@@ -1,10 +1,16 @@
 <template lang="pug">
 img(
+  v-if="finalSourceSet",
   :src="source",
   :srcSet="sourceSet",
   :crossOrigin="crossOrigin",
-  @error="onError",
-  @load="onLoad",
+  @error="$emit('error')",
+  @load="$emit('load')",
+)
+img(
+  v-else,
+  :src="source",
+  :crossOrigin="crossOrigin",
 )
 </template>
 
@@ -37,12 +43,6 @@ export default class Image extends Vue {
 
   @Prop({ type: Array })
   public sourceSet!: SourceSet[];
-
-  @Prop({ type: Function })
-  public onLoad!: () => void;
-
-  @Prop({ type: Function })
-  public onError!: () => void;
 
   get finalSourceSet(): string | null {
     return this.sourceSet
