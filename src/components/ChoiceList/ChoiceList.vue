@@ -15,6 +15,7 @@ fieldset(
         :is="allowMultiple ? 'Checkbox' : 'RadioButton'",
         :name="finalName",
         :value="choice.value",
+        :checked="isChoiceSelected(choice)",
         :disabled="choice.disabledField || disabled",
         :ariaDescribedBy="generateAriaDescribedBy(choice.describedByErrorField)",
         @change="onChange",
@@ -23,7 +24,7 @@ fieldset(
           span {{ choice.label }}
         template(slot="helpText")
           span {{ choice.helpText }}
-      component(
+      component(choice
         v-if="choice.renderChildrenField",
         :is="choice.renderChildrenField",
         :class="childrenClassName",
@@ -42,13 +43,13 @@ fieldset(
 import Vue from 'vue';
 import { Component, Prop, Emit } from 'vue-property-decorator';
 import { classNames } from 'polaris-react/src/utilities/css';
-import styles from '@/classes/ChoiceList.json';
 import type { Error } from 'types/type';
+import styles from '@/classes/ChoiceList.json';
+import { choiceProps } from './utils';
 import { useUniqueId } from '@/utilities/unique-id';
 import { Checkbox } from '../Checkbox';
 import { RadioButton } from '../RadioButton';
-import { InlineError } from '../InlineError';
-import { errorTextID } from '../InlineError';
+import { InlineError, errorTextID } from '../InlineError';
 
 @Component({
   components: {
@@ -62,14 +63,13 @@ export default class ChoiceList extends Vue {
    * Collection of choices
    */
   @Prop({ type: Array, required: true })
-  public choices!: object[];
+  public choices!: choiceProps[];
 
   /**
-   * Collection of selected choices.
-   * v-model will automatically bind to this prop
+   * V-model will automatically bind to this prop
    */
-  @Prop({ type: Array, required: true })
-  public value!: string[];
+  @Prop({ type: [String, Array], required: true })
+  public value!: string | string[];
 
   /**
    * Name for form input
@@ -127,22 +127,29 @@ export default class ChoiceList extends Vue {
       : '';
   }
 
-  @Emit('input')
-  public onChange(event: InputEvent): string[] {
-    return this.updateSelectedChoices(event);
+  protected isChoiceSelected(choice: choiceProps): boolean {
+    return this.allowMultiple
+      ? this.value.includes(choice.value as string)
+      : choice.value === this.value;
   }
 
-  public updateSelectedChoices(event: InputEvent): string[] {
+  public updateSelectedChoices(event: InputEvent): string | string[] {
     const target = event.target as HTMLInputElement;
 
     if (target.checked) {
       return this.allowMultiple
         ? [...this.value, target.value]
-        : [target.value];
+        : target.value;
     }
 
-    return this.value
-      .filter((selectedChoice) => selectedChoice !== target.value);
+    return Array.isArray(this.value)
+      ? this.value.filter((val) => val !== target.value)
+      : [];
+  }
+
+  @Emit('input')
+  public onChange(event: InputEvent): string | string[] {
+    return this.updateSelectedChoices(event);
   }
 }
 </script>
