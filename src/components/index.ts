@@ -5,6 +5,7 @@ export * from './Label';
 export * from './Labelled';
 export * from './Link';
 export * from './List';
+export * from './Select';
 export * from './Spinner';
 export * from './UnstyledLink';
 export * from './VisuallyHidden';
