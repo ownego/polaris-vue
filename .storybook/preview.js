@@ -37,7 +37,19 @@ export const parameters = {
         "Polaris Icons",
         "Changelog",
         "Components",
-      ]
-    }
+        [
+          "Actions",
+          "Structure",
+          "Forms",
+          "Images and icons",
+          "Feedback indicators",
+          "Titles and text",
+          "Behavior",
+          "Lists and tables",
+          "Navigation",
+          "Overlays",
+        ],
+      ],
+    },
   },
 }
