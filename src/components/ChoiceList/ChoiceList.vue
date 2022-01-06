@@ -40,16 +40,24 @@ fieldset(
 </template>
 
 <script lang="ts">
-import Vue from 'vue';
+import Vue, { VueConstructor } from 'vue';
 import { Component, Prop, Emit } from 'vue-property-decorator';
 import { classNames } from 'polaris-react/src/utilities/css';
 import type { Error } from 'types/type';
 import styles from '@/classes/ChoiceList.json';
-import { choiceProps } from './utils';
 import { useUniqueId } from '@/utilities/unique-id';
 import { Checkbox } from '../Checkbox';
 import { RadioButton } from '../RadioButton';
 import { InlineError, errorTextID } from '../InlineError';
+
+interface choiceProps {
+  value: string | boolean,
+  disabledField: boolean,
+  describedByErrorField: boolean,
+  label: string,
+  helpText: string,
+  renderChildrenField: string | VueConstructor<Vue>,
+}
 
 @Component({
   components: {
