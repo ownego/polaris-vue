@@ -18,7 +18,7 @@ fieldset(
         :checked="isChoiceSelected(choice)",
         :disabled="choice.disabledField || disabled",
         :ariaDescribedBy="generateAriaDescribedBy(choice.describedByErrorField)",
-        @change="onChange",
+        @change="onChange($event, choice)",
       )
         template(slot="label")
           span {{ choice.label }}
@@ -155,9 +155,10 @@ export default class ChoiceList extends Vue {
       : [];
   }
 
-  @Emit('input')
-  public onChange(event: InputEvent): string | string[] {
-    return this.updateSelectedChoices(event);
+  public onChange(event: InputEvent, choice: choiceProps): void {
+    console.log(choice, event);
+    this.$emit('input', this.updateSelectedChoices(event));
+    this.$emit('change', choice);
   }
 }
 </script>
