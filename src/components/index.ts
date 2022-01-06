@@ -1,6 +1,7 @@
 export * from './Choice';
 export * from './Icon';
 export * from './InlineError';
+export * from './Image';
 export * from './Choice';
 export * from './Checkbox';
 export * from './RadioButton';
