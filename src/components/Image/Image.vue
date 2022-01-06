@@ -4,8 +4,6 @@ img(
   :src="source",
   :srcSet="sourceSet",
   :crossOrigin="crossOrigin",
-  @error="$emit('error')",
-  @load="$emit('load')",
 )
 img(
   v-else,
