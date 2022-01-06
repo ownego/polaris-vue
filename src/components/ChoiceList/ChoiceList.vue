@@ -52,11 +52,11 @@ import { InlineError, errorTextID } from '../InlineError';
 
 interface choiceProps {
   value: string | boolean,
-  disabledField: boolean,
-  describedByErrorField: boolean,
   label: string,
-  helpText: string,
-  renderChildrenField: string | VueConstructor<Vue>,
+  disabledField?: boolean,
+  helpText?: string,
+  describedByErrorField?: boolean,
+  renderChildrenField?: string | VueConstructor<Vue>,
 }
 
 @Component({
