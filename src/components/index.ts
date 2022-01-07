@@ -13,5 +13,6 @@ export * from './Labelled';
 export * from './Link';
 export * from './List';
 export * from './Spinner';
+export * from './Scrollable';
 export * from './UnstyledLink';
 export * from './VisuallyHidden';
