@@ -9,9 +9,12 @@ div(:class="className")
       v-bind="$attrs",
     )
       slot(name="label")
-      div(:class="classAction")
-        //- TODO
-        //- buttonFrom(action, {plain: true})
+    div(
+      v-if="action",
+      :class="classAction"
+    )
+      //- TODO
+      //- buttonFrom(action, {plain: true})
   slot
   div(
     v-if="isError",
