@@ -1,0 +1,150 @@
+import { Meta, Story, Canvas, ArgsTable } from '@storybook/addon-docs';
+import { Select } from '@/polaris-vue';
+import dedent from 'ts-dedent';
+
+import HintMajor from '@icons/HintMajor.svg';
+
+<Meta
+  title="Components / Forms / Select"
+  component={ Select }
+  argTypes={{
+    options: {
+      name: 'options',
+      control: {
+        type: 'object',
+      },
+      defaultValue: [
+        { "label": "Today", "value": "today" },
+        { "label": "Yesterday", "value": "yesterday" },
+        { "label": "Last 7 days", "value": "lastWeek" },
+        { "label": "Option with icon", "value": "hint", "prefix": { "component": "Icon", "props": { "source": HintMajor }}},
+        { "label": "Option disabled", "value": "disabled", "disabled": true },
+      ],
+      table: {
+        type: {
+          summary: null,
+        },
+      },
+    },
+    error: {
+      control: {
+        type: 'text',
+      },
+      table: {
+        type: {
+          summary: 'string | component',
+        },
+      },
+    },
+    value: {
+      table: {
+        disable: true,
+      },
+    },
+    blur: {
+      description: 'Callback when focus is removed',
+      table: {
+        type: {
+          summary: null,
+        },
+      },
+    },
+    focus: {
+      description: 'Callback when select is focused',
+      table: {
+        type: {
+          summary: null,
+        },
+      },
+    },
+    input: {
+      table: {
+        type: {
+          summary: 'selected value',
+        },
+      },
+    },
+    change: {
+      table: {
+        type: {
+          summary: 'selected value',
+        },
+      },
+    },
+    'help-text': {
+      table: {
+        type: {
+          summary: null,
+        },
+      },
+    },
+    label: {
+      table: {
+        type: {
+          summary: null,
+        },
+      },
+    },
+    default: {
+      table: {
+        type: {
+          summary: null,
+        },
+      },
+    },
+  }}
+/>
+
+export const Template = (args, { argTypes }) => ({
+  props: Object.keys(argTypes),
+  components: { Select },
+  data() {
+    return {
+      selectValue: 'today',
+      propsExtend: {
+        ...this.$props,
+        options: [
+          ...this.$props.options,
+        ],
+      },
+    };
+  },
+  template: `<div><Select v-bind="propsExtend" v-model="selectValue">
+    <template slot="label">Date Range</template>
+  </Select>
+  <br/>
+  <strong>Value selected:</strong> {{ selectValue }}
+  </div>`,
+});
+
+# Select
+
+Select lets merchants choose one option from an options menu. Consider select when you have 4 or more options, to avoid cluttering the interface.
+
+<font color="#FF7900">Use component with camel case for prevent conflict with <b>select</b> element in html.</font>
+
+<Canvas>
+  <Story
+    name="Select"
+    parameters={{
+      docs: {
+        transformSource: (source) => {
+          const tmpSource = source
+            .replace(/<div>\s*/,'')
+            .replace(/\s*<\/div>/,'')
+            .replace(/\s*<br\s\/>\s*<strong>(.*)<\/strong>\s*today/,'')
+            .replace(/value=".*"\s*/, '')
+            .replace(/:options='(.*)'/, ':options="options" v-model="selectValue"');
+          const fullSource = dedent`
+            ${tmpSource}
+          `;
+          return fullSource;
+        },
+      },
+    }}
+  >
+    {Template.bind({})}
+  </Story>
+</Canvas>
+
+<ArgsTable story="Select" />
