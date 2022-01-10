@@ -14,5 +14,6 @@ export * from './Link';
 export * from './List';
 export * from './Select';
 export * from './Spinner';
+export * from './Scrollable';
 export * from './UnstyledLink';
 export * from './VisuallyHidden';
