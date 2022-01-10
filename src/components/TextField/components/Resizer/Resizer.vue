@@ -93,7 +93,3 @@ export default class Resizer extends Vue {
   }
 }
 </script>
-
-<style>
-@import 'polaris-react/src/components/TextField/TextField.scss';
-</style>
