@@ -11,7 +11,7 @@ div(
 import Vue from 'vue';
 import { Component, Prop } from 'vue-property-decorator';
 import { classNames } from 'polaris-react/src/utilities/css';
-import styles from '@/classes/Connected.json';
+import styles from '@/classes/Item.json';
 
 type ItemPosition = 'left' | 'right' | 'primary';
 
