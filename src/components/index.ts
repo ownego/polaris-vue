@@ -5,6 +5,7 @@ export * from './Image';
 export * from './Choice';
 export * from './Checkbox';
 export * from './ChoiceList';
+export * from './Connected';
 export * from './RadioButton';
 export * from './Spinner';
 export * from './RadioButton';
