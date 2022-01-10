@@ -26,7 +26,7 @@ export default class EventListener extends Vue {
   @Prop({ type: Boolean })
   public passive!: EventListenerProps['passive'];
 
-  protected componentDidMount() {
+  protected mounted() {
     this.attachListener();
   }
 
