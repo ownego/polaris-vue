@@ -30,6 +30,7 @@
     "@shopify/polaris-icons": "^4.11.0",
     "@shopify/polaris-tokens": "^4.0.0",
     "core-js": "^3.6.5",
+    "lodash": "^4.17.21",
     "vue": "^2.6.14",
     "vue-svg-loader": "^0.16.0"
   },
@@ -48,6 +49,7 @@
     "@storybook/preset-typescript": "^3.0.0",
     "@storybook/theming": "^6.4.8",
     "@storybook/vue": "^6.4.8",
+    "@types/lodash": "^4.14.178",
     "@typescript-eslint/eslint-plugin": "^5.4.0",
     "@typescript-eslint/parser": "^5.4.0",
     "@vue/cli-plugin-babel": "~4.5.0",
