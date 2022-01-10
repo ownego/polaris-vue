@@ -163,7 +163,7 @@ export default class Scrollable extends Vue {
       /**
        * Called when scrolled to the bottom of the scroll area
        */
-      this.$emit('scrolledToBottom');
+      this.$emit('scrolled-to-bottom');
     }
 
     this.topShadow = shouldTopShadow;
