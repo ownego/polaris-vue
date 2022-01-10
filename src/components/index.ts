@@ -16,5 +16,6 @@ export * from './List';
 export * from './Select';
 export * from './Spinner';
 export * from './Scrollable';
+export * from './TextField';
 export * from './UnstyledLink';
 export * from './VisuallyHidden';
