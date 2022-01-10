@@ -14,7 +14,7 @@ import {
   Watch,
 } from 'vue-property-decorator';
 import { useUniqueId } from '@/utilities/unique-id';
-import type { ScrollToPositionFn } from '../utils';
+import type { ScrollToPositionFn } from '../../utils';
 
 @Component
 export default class ScrollTo extends Vue {
