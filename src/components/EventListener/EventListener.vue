@@ -7,9 +7,11 @@ interface BaseEventProps {
   capture?: boolean,
   handler(event: Event): void,
 }
+
 export interface EventListenerProps extends BaseEventProps {
   passive?: boolean;
 }
+
 @Component
 export default class EventListener extends Vue {
   @Prop({ type: String, required: true })
@@ -23,11 +25,6 @@ export default class EventListener extends Vue {
 
   @Prop({ type: Boolean })
   public passive!: EventListenerProps['passive'];
-
-  // eslint-disable-next-line class-methods-use-this
-  render() {
-    return null;
-  }
 
   protected componentDidMount() {
     this.attachListener();
