@@ -1,4 +1,5 @@
 export * from './Choice';
+export * from './EventListener';
 export * from './Icon';
 export * from './InlineError';
 export * from './Image';
