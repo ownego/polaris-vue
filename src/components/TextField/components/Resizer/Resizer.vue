@@ -1,6 +1,6 @@
 <template lang="pug">
 div(
-  aria-hidden,
+  aria-hidden="true",
   :class="wrapperClassName",
 )
   div(
