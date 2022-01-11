@@ -1,7 +1,7 @@
 <template lang="pug">
 div(
   ref="scrollArea",
-  data-polaris-scrollable="true",
+  v-bind="scrollableAttr",
   :class="finalClassName",
   :tabindex="focusable ? 0 : undefined",
 )
@@ -19,9 +19,9 @@ import {
 } from 'vue-property-decorator';
 import debounce from 'lodash/debounce';
 import { classNames } from 'polaris-react/src/utilities/css';
+import { scrollable } from 'polaris-react/src/components/shared';
 import { StickyManager } from '@/utilities/sticky-manager';
 import styles from '@/classes/Scrollable.json';
-import { scrollable } from '../shared';
 import { ScrollTo } from './components';
 import type { ScrollToPositionFn } from './utils';
 
@@ -62,7 +62,7 @@ export default class Scrollable extends Vue {
   /**
    * Scroll content vertically
    */
-  @Prop({ type: Boolean })
+  @Prop({ type: Boolean, default: true })
   public vertical!: boolean;
 
   /**
@@ -96,6 +96,8 @@ export default class Scrollable extends Vue {
   public scrollPosition = 0;
 
   public canScroll = false;
+
+  public scrollableAttr = scrollable.props;
 
   get finalClassName(): string {
     return classNames(

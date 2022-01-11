@@ -1,7 +1,7 @@
 import debounce from 'lodash/debounce';
 import { spacingLoose } from '@shopify/polaris-tokens';
-import { dataPolarisTopBar, scrollable } from '@/components/shared';
-import { stackedContent } from './breakpoints';
+import { dataPolarisTopBar, scrollable } from 'polaris-react/src/components/shared';
+import { stackedContent } from 'polaris-react/src/utilities/breakpoints';
 import { getRectForNode, Rect } from './geometry';
 
 interface StickyItem {
