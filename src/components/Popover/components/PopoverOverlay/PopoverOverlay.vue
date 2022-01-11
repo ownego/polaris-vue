@@ -1,5 +1,4 @@
 <template lang="pug">
-// TODO: event keypresslistener
 PositionedOverlay(
   :id="id",
   :fullWidth="fullWidth",
@@ -19,6 +18,9 @@ PositionedOverlay(
     slot="overlay",
     slot-scope="props",
   )
+    EventListener(event="click", :handler="handleClick")
+    EventListener(event="touchstart", :handler="handleClick")
+    KeypressListener(:keyCode="keyEscape", :handler="handleEscape")
     div(:class="focusTrackerClasses", tabIndex="0", @focus="handleFocusFirstItem")
     div(:class="popoverWrapperClasses")
       div(
@@ -54,11 +56,15 @@ import { findFirstFocusableNode } from '@/utilities/focus';
 import { PositionedOverlay } from '../../../PositionedOverlay';
 import { Pane } from '../Pane';
 import styles from '@/classes/Popover.json';
+import { EventListener } from '@/components/EventListener';
+import { KeypressListener, Key } from '@/components/KeypressListener';
 
 @Component({
   components: {
     PositionedOverlay,
     Pane,
+    EventListener,
+    KeypressListener,
   },
 })
 export default class PopoverOverlay extends Vue {
@@ -128,6 +134,8 @@ export default class PopoverOverlay extends Vue {
     );
   }
 
+  public keyEscape = Key.Escape;
+
   public contentStyles: null | Record<string, unknown> = {};
 
   public popoverWrapperClasses = styles.Wrapper;
@@ -158,6 +166,10 @@ export default class PopoverOverlay extends Vue {
 
   public handleScrollOut() {
     this.$emit('close', PopoverCloseSource.ScrollOut);
+  }
+
+  public handleEscape() {
+    this.$emit('close', PopoverCloseSource.EscapeKeypress);
   }
 
   public handleClick(event: Event) {
@@ -209,8 +221,6 @@ export default class PopoverOverlay extends Vue {
   }
 
   mounted(): void {
-    window.addEventListener('click', this.handleClick);
-    window.addEventListener('touchstart', this.handleClick);
     if (this.active) {
       this.focusContent();
       this.changeTransitionStatus(TransitionStatus.Entered);
@@ -218,8 +228,6 @@ export default class PopoverOverlay extends Vue {
   }
 
   beforeDestroy(): void {
-    window.removeEventListener('click', this.handleClick);
-    window.removeEventListener('touchstart', this.handleClick);
     this.clearTransitionTimeout();
   }
 }

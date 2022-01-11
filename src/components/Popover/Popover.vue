@@ -1,7 +1,7 @@
 <template lang="pug">
 div(ref="container")
   slot(name="activator")
-  Portal(v-if="activatorNode", v-show="active", to="popover")
+  Portal(v-if="activatorNode && active", to="popover")
     div(:data-portal-id="portalId")
       PopoverOverlay(
         :activator="activatorNode",
