@@ -22,7 +22,7 @@ export default class KeypressListener extends Vue {
     }
   }
 
-  created(): void {
+  mounted(): void {
     document.addEventListener(this.keyEvent, this.handleKeyEvent);
   }
 
