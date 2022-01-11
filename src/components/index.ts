@@ -2,6 +2,7 @@ export * from './Choice';
 export * from './Checkbox';
 export * from './ChoiceList';
 export * from './Connected';
+export * from './EventListener';
 export * from './Icon';
 export * from './InlineError';
 export * from './Image';
