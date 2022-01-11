@@ -155,8 +155,6 @@ export default class PositionedOverlay extends Vue {
       preferInputActivator = true,
     } = this;
 
-    console.log(this.preferredPosition);
-
     const preferredActivator = preferInputActivator
       ? activator.querySelector('input') || activator
       : activator;
