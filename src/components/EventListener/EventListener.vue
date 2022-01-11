@@ -30,7 +30,7 @@ export default class EventListener extends Vue {
     this.attachListener();
   }
 
-  protected destroyed() {
+  protected beforeDestroy() {
     this.detachListener();
   }
 
