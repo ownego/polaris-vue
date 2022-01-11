@@ -23,7 +23,7 @@ div(:class="className")
     InlineError(
       v-if="typeof error === 'string'",
       :message="error",
-      :fieldID="id",
+      :fieldID="errorId",
     )
     component(
       v-else,
@@ -41,9 +41,9 @@ div(:class="className")
 import Vue from 'vue';
 import { Component, Prop } from 'vue-property-decorator';
 import { classNames } from 'polaris-react/src/utilities/css';
-import type { Error, Action } from 'types/type';
+import type { Action } from 'types/type';
 import { Label } from '../Label';
-import { helpTextID, LabelledProps } from './utils';
+import { helpTextID, errorID, LabelledProps } from './utils';
 import { InlineError } from '../InlineError';
 import styles from '@/classes/Labelled.json';
 
@@ -63,8 +63,8 @@ export default class Labelled extends Vue {
   @Prop({ type: Boolean })
   public requiredIndicator?: LabelledProps['requiredIndicator'];
 
-  @Prop({ type: [String, Array, Object, Function] })
-  public error?: Error;
+  @Prop({ type: [Boolean, String, Array, Object, Function] })
+  public error?: LabelledProps['error'];
 
   @Prop({ type: Object })
   public action?: Action;
@@ -91,6 +91,10 @@ export default class Labelled extends Vue {
 
   get helpTextId() {
     return helpTextID(this.id);
+  }
+
+  get errorId() {
+    return errorID(this.id);
   }
 
   get isError() {

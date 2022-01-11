@@ -1,0 +1,110 @@
+import { Meta, Story, Canvas, ArgsTable, Source, Preview } from '@storybook/addon-docs';
+import dedent from 'ts-dedent';
+
+import { Badge } from '@/polaris-vue';
+
+<Meta
+  title="Components / Images and icons / Badge"
+  component={ Badge }
+  argTypes={{
+    status: {
+      control: {
+        type: 'select',
+        options: ['success', 'info', 'critical', 'warning', 'new', 'attention'],
+      },
+      table: {
+        type: {
+          summary: null,
+        },
+      },
+    },
+    progress: {
+      control: {
+        type: 'select',
+      },
+      table: {
+        type: {
+          summary: null,
+        },
+      },
+    },
+    size: {
+      table: {
+        type: {
+          summary: null,
+        },
+      },
+    },
+    statusAndProgressLabelOverride: {
+      table: {
+        type: {
+          summary: null,
+        },
+      },
+    },
+    default: {
+      table: {
+        disable: true,
+      }
+    },
+  }}
+/>
+
+export const Template = (args, { argTypes }) => ({
+  props: Object.keys(argTypes),
+  components: { Badge },
+  template: `<Badge v-bind="$props">Fulfilled</Badge>`,
+});
+
+export const Variants = (args, { argTypes }) => ({
+  components: { Badge },
+  template: ` <div>
+  <Badge>Fulfilled</Badge>
+  <Badge status="info">Published</Badge>
+  <Badge status="success">Funds recovered</Badge>
+  <Badge status="attention">Unfulfilled</Badge>
+  <Badge status="warning">SSL unavailable</Badge>
+  <Badge status="critical">Not approved</Badge>
+  <br/><br/>
+  <Badge progress="incomplete">Unfulfilled</Badge>
+  <Badge progress="partiallyComplete">Partially fulfilled</Badge>
+  <Badge progress="complete">Fulfilled</Badge>
+  <Badge
+    status="success"
+    progress="complete"
+    statusAndProgressLabelOverride="Status: Published. Your online store is visible."
+  >Published</Badge>
+  </div>`,
+});
+Variants.storyName = 'Variants';
+Variants.parameters = {
+  docs: {
+    source: false,
+    transformSource: (source) => {
+      const tmpSource = source
+        .replace(/<template>\s*/, '')
+        .replace(/\s*<\/template>/, '')
+        .replace(/<div>\s*/, '')
+        .replace(/<br\s*\/>\s*/g, '')
+        .replace(/\s*<\/div>/, '')
+        .replace(/>\s*</gi, '>\n<') // line breaks
+      return tmpSource;
+    },
+  },
+}
+
+# Badge
+
+Badges are used to inform merchants of the status of an object or of an action that's been taken.
+
+<Canvas>
+  <Story story={Variants} height="65px" />
+</Canvas>
+
+<Canvas>
+  <Story name="Badge" height="30px">
+    {Template.bind({})}
+  </Story>
+</Canvas>
+
+<ArgsTable story="Badge" />
