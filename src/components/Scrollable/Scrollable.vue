@@ -171,7 +171,7 @@ export default class Scrollable extends Vue {
     this.topShadow = shouldTopShadow;
     this.bottomShadow = shouldBottomShadow;
     this.scrollPosition = scrollTop;
-    this.canScroll = true;
+    this.canScroll = canScroll;
   }
 
   private scrollHint() {
