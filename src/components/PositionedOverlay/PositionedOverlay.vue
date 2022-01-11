@@ -10,6 +10,7 @@ div(:class="className", :style="style", ref="overlay")
       :positioning="positioning",
       :activator-rect="activatorRect",
     )
+  EventListener(event="resize", :handler="handleMeasurement")
 </template>
 
 <script lang="ts">
@@ -31,7 +32,7 @@ import styles from '@/classes/PositionedOverlay.json';
 import popoverStyles from '@/classes/Popover.json';
 import { PopoverAutofocusTarget } from '../Popover/index';
 import { isDocument, getMarginsForNode, getZIndexForLayerFromNode } from './utils';
-import { Scrollable } from '@/components/Scrollable';
+import { Scrollable, EventListener } from '@/components';
 
 const OBSERVER_CONFIG = {
   childList: true,
@@ -44,6 +45,7 @@ type Positioning = 'above' | 'below';
 @Component({
   components: {
     Scrollable,
+    EventListener,
   },
 })
 export default class PositionedOverlay extends Vue {
@@ -142,6 +144,9 @@ export default class PositionedOverlay extends Vue {
     const { lockPosition, top } = this;
 
     this.observer.disconnect();
+    this.height = 0;
+    this.positioning = 'below';
+    this.measuring = true;
 
     if (this.overlayNode == null || this.scrollableContainer == null) {
       return;
@@ -161,7 +166,7 @@ export default class PositionedOverlay extends Vue {
 
     const activatorRect = getRectForNode(preferredActivator);
 
-    const currentOverlayRect = getRectForNode(this.overlay as HTMLElement);
+    const currentOverlayRect = getRectForNode(this.overlay);
     const scrollableElement = isDocument(this.scrollableContainer)
       ? document.body
       : this.scrollableContainer;
@@ -234,21 +239,12 @@ export default class PositionedOverlay extends Vue {
   }
 
   updated(): void {
-    const {
-      outsideScrollableContainer, top, active,
-    } = this;
-
-    if (
-      active
-      && top !== 0
-      && outsideScrollableContainer
-    ) {
+    if (this.active && this.top !== 0 && this.outsideScrollableContainer) {
       this.$emit('scroll-out');
     }
   }
 
   mounted(): void {
-    window.addEventListener('resize', this.handleMeasurement);
     this.scrollableContainer = Scrollable.forNode(this.activator);
     if (this.scrollableContainer && !this.fixed) {
       this.scrollableContainer.addEventListener('scroll', this.handleMeasurement);
@@ -257,7 +253,6 @@ export default class PositionedOverlay extends Vue {
   }
 
   beforeDestroy(): void {
-    window.removeEventListener('resize', this.handleMeasurement);
     if (this.scrollableContainer && !this.fixed) {
       this.scrollableContainer.removeEventListener('scroll', this.handleMeasurement);
     }

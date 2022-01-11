@@ -18,9 +18,6 @@ PositionedOverlay(
     slot="overlay",
     slot-scope="props",
   )
-    EventListener(event="click", :handler="handleClick")
-    EventListener(event="touchstart", :handler="handleClick")
-    KeypressListener(:keyCode="keyEscape", :handler="handleEscape")
     div(:class="focusTrackerClasses", tabIndex="0", @focus="handleFocusFirstItem")
     div(:class="popoverWrapperClasses")
       div(
@@ -39,6 +36,9 @@ PositionedOverlay(
             :data="props",
           )
     div(:class="focusTrackerClasses", tabIndex="0", @focus="handleFocusLastItem")
+    EventListener(event="click", :handler="handleClick")
+    EventListener(event="touchstart", :handler="handleClick")
+    KeypressListener(:keyCode="keyEscape", :handler="handleEscape")
 </template>
 
 <script lang="ts">
