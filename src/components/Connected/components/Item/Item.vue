@@ -11,7 +11,7 @@ div(
 import Vue from 'vue';
 import { Component, Prop } from 'vue-property-decorator';
 import { classNames } from 'polaris-react/src/utilities/css';
-import styles from '@/classes/Item.json';
+import styles from '@/classes/Connected.json';
 
 type ItemPosition = 'left' | 'right' | 'primary';
 
@@ -44,7 +44,3 @@ export default class Item extends Vue {
   }
 }
 </script>
-
-<style lang="scss">
-@import 'polaris-react/src/components/Connected/Connected.scss';
-</style>
