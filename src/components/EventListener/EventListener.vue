@@ -26,6 +26,11 @@ export default class EventListener extends Vue {
   @Prop({ type: Boolean })
   public passive!: EventListenerProps['passive'];
 
+  // eslint-disable-next-line class-methods-use-this
+  render() {
+    return null;
+  }
+
   protected mounted() {
     this.attachListener();
   }

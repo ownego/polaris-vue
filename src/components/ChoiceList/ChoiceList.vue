@@ -41,7 +41,7 @@ fieldset(
 
 <script lang="ts">
 import Vue, { VueConstructor } from 'vue';
-import { Component, Prop, Emit } from 'vue-property-decorator';
+import { Component, Prop } from 'vue-property-decorator';
 import { classNames } from 'polaris-react/src/utilities/css';
 import type { Error } from 'types/type';
 import styles from '@/classes/ChoiceList.json';

@@ -22,6 +22,11 @@ export default class KeypressListener extends Vue {
     }
   }
 
+  // eslint-disable-next-line class-methods-use-this
+  render() {
+    return null;
+  }
+
   mounted(): void {
     document.addEventListener(this.keyEvent, this.handleKeyEvent);
   }
