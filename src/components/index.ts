@@ -15,6 +15,7 @@ export * from './Link';
 export * from './List';
 export * from './RadioButton';
 export * from './Select';
+export * from './SettingAction';
 export * from './Spinner';
 export * from './Scrollable';
 export * from './UnstyledLink';
