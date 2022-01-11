@@ -1,5 +1,3 @@
-// TODO: remove eslint-disable when component popover was updated
-// eslint-disable-next-line no-shadow
 export enum Key {
   Backspace= 'Backspace',
   Tab= 'Tab',
