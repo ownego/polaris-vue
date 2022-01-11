@@ -1,12 +1,12 @@
 <template lang="pug">
 span(:class="className")
-  span(
-    v-if="progressLabel && hasAccessibilityLabel",
-    :class="classPip",
-  )
-    VisuallyHidden {{ accessibilityLabel }}
-  template(v-else)
-    VisuallyHidden(v-if="hasAccessibilityLabel") {{ accessibilityLabel }}
+  template(v-if="hasAccessibilityLabel")
+    span(
+      v-if="progressLabel",
+      :class="classPip",
+    )
+      VisuallyHidden {{ accessibilityLabel }}
+    VisuallyHidden(v-else) {{ accessibilityLabel }}
   slot
 </template>
 
