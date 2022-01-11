@@ -1,20 +1,114 @@
 <template lang="pug">
+Labelled(
+  :id="uniqueId",
+  :error="error",
+  :action="labelAction",
+  :labelHidden="labelHidden",
+  :requiredIndicator="requiredIndicator",
+)
+  template(name="label")
+    slot(name="label")
+  template(name="help-text")
+    slot(name="help-text")
+  Connected
+    template(name="left")
+      slot(name="connected-left")
+    template(name="right")
+      slot(name="connected-right")
+    div(
+      :class="wrapperClassName",
+      @focus="onFocus",
+      @click="onClick",
+      @blur="onBlur",
+    )
+      div(
+        v-if="$slots.prefix",
+        :id="`${uniqueId}Prefix`",
+        :class="prefixClassName",
+        ref="prefixRef",
+      )
+        slot(name="prefix")
+      component(
+        :is="multiline ? 'textarea' : 'input'",
+        :id="uniqueId",
+        :name="name",
+        :disabled="disabled",
+        :readOnly="readOnly",
+        :role="role",
+        :autoFocus="autoFocus",
+        :value="value",
+        :placeholder="placeholder",
+        :style="style",
+        :autoComplete="autoComplete",
+        :class="inputClassName",
+        ref="inputRef",
+        :min="min",
+        :max="max",
+        :step="step",
+        :minLength="minLength",
+        :maxLength="maxLength",
+        :spellCheck="spellCheck",
+        :pattern="pattern",
+        :inputMode="inputMode",
+        :type="inputType",
+        :aria-describedby="formattedDescribedBy",
+        :aria-labelledby="formattedLabelledBy",
+        :aria-invalid="Boolean(error)",
+        :aria-owns="ariaOwns",
+        :aria-activedescendant="ariaActiveDescendant",
+        :aria-autocomplete="ariaAutocomplete",
+        :aria-controls="ariaControls",
+        :aria-expanded="ariaExpanded",
+        :aria-required="requiredIndicator",
+        v-bind="normalizeAriaMultiline(multiline)",
+        @input="$emit('input', $event.target.value)",
+      )
+      div(
+        v-if="$slots.suffix",
+        :id="`${uniqueId}Suffix`",
+        :class="suffixClassName",
+        ref="suffixRef",
+      )
+        slot(name="suffix")
+      div(
+        v-if="showCharacterCount",
+        :class="characterCountClassName",
+        aria-label=characterCountLabel,
+        aria-live=focus ? 'polite' : 'off',
+        aria-atomic="true",
+      )
+        p {{ characterCountText }}
+      button(
+        v-if="clearButtonVisible && clearButton",
+        :class="clearButtonClassName",
+        :disabled="disabled",
+        @click="$emit('clear-btn-clicked')",
+      )
+        VisuallyHidden
+          p Clear button
+        Icon(:source="clearIcon" color="base")
+      Spinner(
+        v-if="type === 'number' && step !== 0 && !disabled && !readOnly",
+      )
+      div(:class="backdropClassName")
+      Resizer(
+        v-if="multiline",
+        :current-height="height",
+        :minimum-lines="typeof multiline === 'number' ? multiline : 1",
+        @height-change="handleExpandingResize",
+      )
 </template>
 
 <script lang="ts">
 import Vue from 'vue';
-import { Component, Prop } from 'vue-property-decorator';
+import { Component, Prop, Ref } from 'vue-property-decorator';
 import CircleCancelMinor from '@shopify/polaris-icons/dist/svg/CircleCancelMinor.svg';
 import { classNames, variationName } from 'polaris-react/src/utilities/css';
-import type { Error } from 'types/type';
+import type { Error, Action } from 'types/type';
 import { useUniqueId } from '@/utilities/unique-id';
-import {
-  VisuallyHidden,
-  Labelled,
-  Connected,
-  Icon,
-} from '@/components';
-import { LabelledProps, helpTextID, labelID } from '../Labelled/utils';
+import { Connected, Icon, Labelled } from '@/components';
+import { VisuallyHidden } from '../VisuallyHidden';
+import { helpTextID, labelID } from '../Labelled/utils';
 import { Resizer, Spinner } from './components';
 import styles from '@/classes/TextField.json';
 
@@ -51,12 +145,18 @@ type InputMode =
     Labelled,
     Connected,
     Icon,
+    Resizer,
+    Spinner,
   },
 })
 export default class TextField extends Vue {
+  @Ref('prefixRef') prefixRef!: HTMLDivElement;
+
+  @Ref('suffixRef') suffixRef!: HTMLDivElement;
+
   /** Hint text to display */
   @Prop({ type: String })
-  public hint!: string;
+  public placeholder!: string;
 
   /** Initial value for the input */
   @Prop({ type: String })
@@ -64,7 +164,7 @@ export default class TextField extends Vue {
 
   /** Adds an action to the label */
   @Prop({ type: Array })
-  public labelAction!: LabelledProps[];
+  public labelAction!: Action;
 
   /** Visually hide the label */
   @Prop({ type: Boolean })
@@ -193,8 +293,188 @@ export default class TextField extends Vue {
   @Prop({ type: Boolean })
   monospaced!: boolean;
 
+  public height!: number;
+
+  public focus!: boolean;
+
+  public clearIcon = CircleCancelMinor;
+
+  public prefixClassName = styles.Prefix;
+
+  public suffixClassName = styles.Suffix;
+
+  public clearButtonClassName = styles.ClearButton;
+
   get uniqueId(): string {
     return useUniqueId('TextField', this.id);
+  }
+
+  get inputType(): string {
+    return this.type === 'currency' ? 'text' : this.type;
+  }
+
+  get normalizedValue(): string {
+    return typeof this.value === 'string' ? this.value : '';
+  }
+
+  get normalizedStep(): number {
+    return this.step ? this.step : 1;
+  }
+
+  get normalizeMax(): number | string {
+    return this.max ? this.max : Infinity;
+  }
+
+  get normalizeMin(): number | string {
+    return this.min ? this.min : -Infinity;
+  }
+
+  get style() {
+    return this.multiline && this.height
+      ? { height: this.height, maxHeight: this.maxHeight }
+      : null;
+  }
+
+  get wrapperClassName(): string {
+    return classNames(
+      styles.TextField,
+      Boolean(this.normalizedValue) && styles.hasValue,
+      this.disabled && styles.disabled,
+      this.readOnly && styles.readOnly,
+      this.error && styles.error,
+      this.multiline && styles.multiline,
+      this.focus && styles.focus,
+    );
+  }
+
+  get inputClassName(): string {
+    const inputAlignVariation = this.$slots.suffix
+      && styles[variationName('Input-align', this.align) as keyof typeof styles];
+
+    return classNames(
+      styles.Input,
+      inputAlignVariation,
+      this.$slots.suffix && styles['Input-suffixed'],
+      this.clearButton && styles['Input-hasClearButton'],
+      this.monospaced && styles.monospaced,
+    );
+  }
+
+  get characterCountClassName(): string {
+    return classNames(
+      styles.CharacterCount,
+      this.multiline && styles.AlignFieldBottom,
+    );
+  }
+
+  get backdropClassName(): string {
+    const leftVariation = styles['Backdrop-connectedLeft' as keyof typeof styles];
+    const rightVariation = styles['Backdrop-connectedRight' as keyof typeof styles];
+
+    return classNames(
+      styles.Backdrop,
+      this.$slots['connected-left'] && leftVariation,
+      this.$slots['connected-right'] && rightVariation,
+    );
+  }
+
+  get characterCount(): number {
+    return this.normalizedValue.length;
+  }
+
+  get characterCountText(): string | number {
+    return !this.maxLength
+      ? this.characterCount
+      : `${this.characterCount}/${this.maxLength}`;
+  }
+
+  get clearButtonVisible(): boolean {
+    return this.normalizedValue !== '';
+  }
+
+  get formattedDescribedBy(): string | undefined {
+    const describedBy: string[] = [];
+
+    if (this.error) {
+      describedBy.push(`${this.uniqueId}Error`);
+    }
+
+    if (this.$slots['help-text']) {
+      describedBy.push(helpTextID(this.uniqueId));
+    }
+
+    if (this.showCharacterCount) {
+      describedBy.push(`${this.uniqueId}CharacterCounter`);
+    }
+
+    return describedBy.length
+      ? describedBy.join(' ')
+      : undefined;
+  }
+
+  get formattedLabelledBy(): string {
+    const labelledBy: string[] = [];
+
+    if (this.$slots.prefix) {
+      labelledBy.push(`${this.uniqueId}Prefix`);
+    }
+
+    if (this.$slots.suffix) {
+      labelledBy.push(`${this.uniqueId}Suffix`);
+    }
+
+    labelledBy.unshift(labelID(this.uniqueId));
+
+    return labelledBy.join(' ');
+  }
+
+  public containsAffix(target: HTMLElement | EventTarget) {
+    return (
+      target instanceof HTMLElement
+      && ((this.prefixRef && this.prefixRef.contains(target))
+      || (this.suffixRef && this.suffixRef.contains(target)))
+    );
+  }
+
+  public onFocus(event: InputEvent): void {
+    const target = event.target as HTMLInputElement;
+
+    if (this.containsAffix(target)) return;
+
+    this.focus = true;
+    this.$emit('focus');
+  }
+
+  public onBlur(event: InputEvent): void {
+    const target = event.target as HTMLInputElement;
+
+    if (this.containsAffix(target)) return;
+
+    this.focus = false;
+    this.$emit('blur');
+  }
+
+  public onClick(event: InputEvent): void {
+    const target = event.target as HTMLInputElement;
+
+    if (this.containsAffix(target) || this.focus) {
+      return;
+    }
+
+    (this.$refs.inputRef as HTMLInputElement)?.focus();
+  }
+
+  // eslint-disable-next-line class-methods-use-this
+  public normalizeAriaMultiline(multiline?: boolean | number) {
+    if (!multiline) return undefined;
+
+    return Boolean(multiline) || multiline > 0
+      ? { 'aria-multiline': true }
+      : undefined;
+  }
+
+  public handleExpandingResize(height: number): void {
+    this.height = height;
   }
 }
 </script>

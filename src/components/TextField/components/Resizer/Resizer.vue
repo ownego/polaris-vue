@@ -3,6 +3,10 @@ div(
   aria-hidden="true",
   :class="wrapperClassName",
 )
+  EventListener(
+    event="resize",
+    handler="handleHeightCheck",
+  )
   div(
     ref="contentNode",
     :class="dummyInputClassName",
@@ -20,6 +24,7 @@ div(
 import Vue from 'vue';
 import { Component, Prop, Ref } from 'vue-property-decorator';
 import styles from '@/classes/TextField.json';
+import { EventListener } from '@/components';
 
 const ENTITIES_TO_REPLACE = {
   '&': '&amp;',
@@ -38,7 +43,11 @@ function replaceEntity(entity: string) {
   return ENTITIES_TO_REPLACE[entity as keyof typeof ENTITIES_TO_REPLACE];
 }
 
-@Component
+@Component({
+  components: {
+    EventListener,
+  },
+})
 export default class Resizer extends Vue {
   @Ref('contentNode') contentNode!: HTMLDivElement;
 
@@ -73,7 +82,7 @@ export default class Resizer extends Vue {
       : '</br>';
   }
 
-  mounted(): void {
+  protected mounted(): void {
     this.handleHeightCheck();
   }
 

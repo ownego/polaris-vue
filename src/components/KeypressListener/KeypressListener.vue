@@ -32,7 +32,7 @@ export default class KeypressListener extends Vue {
   }
 
   beforeDestroy(): void {
-    document.addEventListener(this.keyEvent, this.handleKeyEvent);
+    document.removeEventListener(this.keyEvent, this.handleKeyEvent);
   }
 }
 
