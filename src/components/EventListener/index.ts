@@ -1,1 +1,1 @@
-export { default as EventEmitter } from './EventListener.vue';
+export { default as EventListener } from './EventListener.vue';
