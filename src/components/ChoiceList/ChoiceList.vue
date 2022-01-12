@@ -156,7 +156,6 @@ export default class ChoiceList extends Vue {
   }
 
   public onChange(event: InputEvent, choice: choiceProps): void {
-    console.log(choice, event);
     this.$emit('input', this.updateSelectedChoices(event));
     this.$emit('change', choice);
   }

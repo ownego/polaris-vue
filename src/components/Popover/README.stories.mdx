@@ -1,0 +1,110 @@
+import { Meta, Story, Canvas, ArgsTable } from '@storybook/addon-docs';
+import { Popover, List, ListItem } from '@/polaris-vue';
+
+<Meta
+  title="Components / Overlays / Popover"
+  component={ Popover }
+  argTypes={{
+    preferredPosition: {
+      name: 'preferredPosition',
+      description: 'The preferred direction to open the popover',
+      options: [
+        'above',
+        'below',
+        'mostSpace'
+      ],
+      control: { type: 'select' },
+      table: {
+        defaultValue: {
+          summary: 'below'
+        },
+        type: {
+          summary: null,
+        },
+      },
+    },
+    preferredAlignment: {
+      name: 'preferredAlignment',
+      description: 'The preferred alignment of the popover relative to its activator',
+      options: [
+        'left',
+        'center',
+        'right'
+      ],
+      control: { type: 'select' },
+      table: {
+        defaultValue: {
+          summary: 'center'
+        },
+        type: {
+          summary: null,
+        },
+      },
+    },
+    autofocusTarget: {
+      name: 'autofocusTarget',
+      description: 'The preferred auto focus target defaulting to the popover container',
+      options: [
+        'container',
+        'none',
+        'first-node'
+      ],
+      control: { type: 'select' },
+      table: {
+        defaultValue: {
+          summary: 'container'
+        },
+        type: {
+          summary: null,
+        },
+      },
+    },
+    default: {
+      table: {
+        disable: true,
+      },
+    },
+  }}
+/>
+
+export const Template = (args, { argTypes }) => ({
+  props: Object.keys(argTypes),
+  components: { Popover, List, ListItem },
+  template: `
+  <Popover v-bind="$props">
+    <button slot="activator" @click="active = !active">Action</button>
+    <List type="number" slot="content">
+      <ListItem>Yellow shirt</ListItem>
+      <ListItem>Red shirt</ListItem>
+      <ListItem>Green shirt</ListItem>
+  </Popover>
+  `,
+});
+
+# Popover
+
+Popovers are small overlays that open on demand. They let merchants access additional content and actions without cluttering the page.
+
+<Canvas>
+  <Story
+    name="Popover"
+    args={{
+      active: false,
+    }}
+    height="300px"
+    parameters={{
+      docs: {
+        transformSource: (source) => {
+          const tmpSource = source
+            .replace(/<template>/, '')
+            .replace(/<\/template>/, '');
+          return tmpSource;
+        },
+      },
+    }}
+  >
+    {Template.bind({})}
+  </Story>
+</Canvas>
+
+<ArgsTable story="Popover" />
