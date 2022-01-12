@@ -9,8 +9,8 @@ Choice(
 )
   template(slot="label")
     slot(name="label")
-  template(slot="helpText")
-    slot(name="helpText")
+  template(slot="help-text")
+    slot(name="help-text")
   span(:class="wrapperClassName")
     input(
       :id="uniqueId",

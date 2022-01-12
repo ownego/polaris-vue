@@ -14,7 +14,7 @@ div
       :id="helpTextID",
       :class="helpTextClass",
     )
-      slot(name="helpText")
+      slot(name="help-text")
     InlineError(
       v-if="(error && typeof error !== 'boolean')",
       :fieldID="id",
