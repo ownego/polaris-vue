@@ -9,8 +9,8 @@ div(
     tabindex="-1",
     :class="segmentClassName",
     @click="handleStep(1)",
-    @mouseDown="$emit('mouse-down')",
-    @mouseUp="$emit('mouse-up')",
+    @mousedown="$emit('mouse-down')",
+    @mouseup="$emit('mouse-up')",
   )
     div(:class="iconClassName")
       Icon(:source="iconCaretUpMinor")
@@ -19,8 +19,8 @@ div(
     tabindex="-1",
     :class="segmentClassName",
     @click="handleStep(-1)",
-    @mouseDown="$emit('mouse-down')",
-    @mouseUp="$emit('mouse-up')",
+    @mousedown="$emit('mouse-down')",
+    @mouseup="$emit('mouse-up')",
   )
     div(:class="iconClassName")
       Icon(:source="iconCaretDownMinor")
@@ -51,6 +51,7 @@ export default class Spinner extends Vue {
  public iconCaretDownMinor = CaretDownMinor;
 
  public handleStep(value: number): void {
+   this.$emit('click');
    this.$emit('change', value);
  }
 }
