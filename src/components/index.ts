@@ -18,5 +18,6 @@ export * from './Select';
 export * from './SettingAction';
 export * from './Spinner';
 export * from './TextStyle';
+export * from './TextField';
 export * from './UnstyledLink';
 export * from './VisuallyHidden';
