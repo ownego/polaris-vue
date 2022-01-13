@@ -5,21 +5,28 @@
     list-item Red
     list-item Blue
 
-  icon(source="CirclePlusMinor")
+  icon(:source="icon")
+  Popover(
+    :active="active",
+    @close="active = !active",
+  )
+    button(slot="activator", @click="active = !active") Action
+    list(type="number", slot="content")
+      list-item a
+      list-item b
+      list-item c
 </template>
 
 <script lang="ts">
 import { Component, Vue } from 'vue-property-decorator';
-import { List, ListItem, Icon } from './polaris-vue';
+import CirclePlusMinor from '@icons/CirclePlusMinor.svg';
 
-@Component({
-  components: {
-    List,
-    ListItem,
-    Icon,
-  },
-})
-export default class Demo extends Vue {}
+@Component
+export default class Demo extends Vue {
+  public icon = CirclePlusMinor;
+
+  public active = false;
+}
 </script>
 
 <style lang="scss">

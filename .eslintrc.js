@@ -12,6 +12,8 @@ module.exports = {
     ecmaVersion: 2020,
   },
   rules: {
+    'no-shadow': 'off',
+    '@typescript-eslint/no-shadow': ['error'],
     'no-console': process.env.NODE_ENV === 'production' ? 'warn' : 0,
     'no-debugger': process.env.NODE_ENV === 'production' ? 'warn' : 0,
     'import/no-extraneous-dependencies': ['error', {
@@ -36,6 +38,7 @@ module.exports = {
         allowBlockStart: false,
       },
     ],
+    'import/no-webpack-loader-syntax': 0,
     'babel/no-unused-expressions': 0,
     'import/named': 0,
     'import/export': 0,

@@ -25,8 +25,8 @@ import { Component, Prop } from 'vue-property-decorator';
 import { classNames, variationName } from 'polaris-react/src/utilities/css';
 import type { IconSource } from 'types/type';
 import styles from '@/classes/Icon.json';
-import { VisuallyHidden } from '../VisuallyHidden';
 import config from '@/config';
+import { VisuallyHidden } from '../VisuallyHidden';
 
 type Color =
   | 'base'
