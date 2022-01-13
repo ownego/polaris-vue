@@ -14,8 +14,8 @@ import Vue from 'vue';
 import { Component, Prop } from 'vue-property-decorator';
 import type { Error } from 'types/type';
 import AlertMinor from '@icons/AlertMinor.svg';
-import { errorTextID } from './utils';
 import styles from '@/classes/InlineError.json';
+import { errorTextID } from './utils';
 import { Icon } from '../Icon';
 
 @Component({

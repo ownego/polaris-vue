@@ -1,0 +1,62 @@
+import { Meta, Story, Canvas, ArgsTable } from '@storybook/addon-docs';
+import { TextStyle } from '@/polaris-vue';
+
+<Meta
+  title="Components / Titles and text / TextStyle"
+  component={ TextStyle }
+  argTypes={{
+    variation: {
+      name: 'variation',
+      description: 'Give text additional visual meaning',
+      options: [
+        'positive',
+        'negative',
+        'strong',
+        'subdued',
+        'code',
+      ],
+      control: { type: 'select' },
+      table: {
+        type: {
+          summary: null,
+        },
+      },
+    },
+    default: {
+      table: {
+        disable: true,
+      },
+    },
+  }}
+/>
+
+export const Template = (args, { argTypes }) => ({
+  props: Object.keys(argTypes),
+  components: { TextStyle},
+  template: `<TextStyle v-bind="$props"> Hello </TextStyle>`,
+});
+
+# TextStyle
+
+Text style enhances text with additional visual meaning. For example, using subdued text to de-emphasize it from its surrounding text.
+
+<Canvas>
+  <Story
+    name="TextStyle"
+    height="60px"
+    parameters={{
+      docs: {
+        transformSource: (source) => {
+          const tmpSource = source
+            .replace(/<template>/, '')
+            .replace(/<\/template>/, '');
+          return tmpSource;
+        },
+      },
+    }}
+  >
+    {Template.bind({})}
+  </Story>
+</Canvas>
+
+<ArgsTable story="TextStyle" />
