@@ -3,6 +3,7 @@ export * from './Checkbox';
 export * from './Choice';
 export * from './ChoiceList';
 export * from './Connected';
+export * from './Combobox';
 export * from './EventListener';
 export * from './Icon';
 export * from './Image';

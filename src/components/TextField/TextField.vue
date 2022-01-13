@@ -61,7 +61,7 @@ Labelled(
         :aria-expanded="ariaExpanded",
         :aria-required="requiredIndicator",
         v-bind="normalizeAriaMultiline(multiline)",
-        @input="$emit('input', $event.target.value)",
+        @input="onChange",
       )
       div(
         v-if="$slots.suffix",
@@ -101,12 +101,18 @@ Labelled(
 
 <script lang="ts">
 import Vue from 'vue';
-import { Component, Prop, Ref } from 'vue-property-decorator';
+import {
+  Component,
+  Prop,
+  Ref,
+  Inject,
+} from 'vue-property-decorator';
 import CircleCancelMinor from '@shopify/polaris-icons/dist/svg/CircleCancelMinor.svg';
 import { classNames, variationName } from 'polaris-react/src/utilities/css';
 import type { Error, Action } from 'types/type';
 import { useUniqueId } from '@/utilities/unique-id';
-import { Connected, Icon, Labelled } from '@/components';
+import { Connected, Icon } from '@/components';
+import { Labelled } from '../Labelled';
 import { VisuallyHidden } from '../VisuallyHidden';
 import { helpTextID, labelID } from '../Labelled/utils';
 import { Resizer, Spinner } from './components';
@@ -150,6 +156,12 @@ type InputMode =
   },
 })
 export default class TextField extends Vue {
+  @Inject() comboboxTextFieldFocus!: () => void;
+
+  @Inject() comboboxTextFieldBlur!: () => void;
+
+  @Inject() comboboxTextFieldChange!: () => void;
+
   @Ref('prefixRef') prefixRef!: HTMLDivElement;
 
   @Ref('suffixRef') suffixRef!: HTMLDivElement;
@@ -436,11 +448,22 @@ export default class TextField extends Vue {
     );
   }
 
+  public onClick(event: InputEvent): void {
+    const target = event.target as HTMLInputElement;
+
+    if (this.containsAffix(target) || this.focus) {
+      return;
+    }
+
+    (this.$refs.inputRef as HTMLInputElement)?.focus();
+  }
+
   public onFocus(event: InputEvent): void {
     const target = event.target as HTMLInputElement;
 
     if (this.containsAffix(target)) return;
 
+    this.comboboxTextFieldFocus();
     this.focus = true;
     this.$emit('focus');
   }
@@ -450,18 +473,17 @@ export default class TextField extends Vue {
 
     if (this.containsAffix(target)) return;
 
+    this.comboboxTextFieldBlur();
     this.focus = false;
     this.$emit('blur');
   }
 
-  public onClick(event: InputEvent): void {
+  public onChange(event: InputEvent): void {
     const target = event.target as HTMLInputElement;
 
-    if (this.containsAffix(target) || this.focus) {
-      return;
-    }
-
-    (this.$refs.inputRef as HTMLInputElement)?.focus();
+    this.comboboxTextFieldChange();
+    this.$emit('input', target.value);
+    this.$emit('change');
   }
 
   // eslint-disable-next-line class-methods-use-this
