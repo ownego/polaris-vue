@@ -31,7 +31,7 @@ import Vue from 'vue';
 import { Component } from 'vue-property-decorator';
 import CaretDownMinor from '@shopify/polaris-icons/dist/svg/CaretDownMinor.svg';
 import CaretUpMinor from '@shopify/polaris-icons/dist/svg/CaretUpMinor.svg';
-import { Icon } from '@/components';
+import { Icon } from '@/components/Icon';
 import styles from '@/classes/TextField.json';
 
 @Component({

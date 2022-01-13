@@ -48,12 +48,11 @@ import {
 } from 'vue-property-decorator';
 import { classNames } from 'polaris-react/src/utilities/css';
 import { durationFast } from '@shopify/polaris-tokens';
-import type { PreferredAlignment, PreferredPosition } from '../../../PositionedOverlay';
 import {
   PopoverCloseSource, PopoverAutofocusTarget, nodeContainsDescendant, TransitionStatus,
 } from '../../utils';
 import { findFirstFocusableNode } from '@/utilities/focus';
-import { PositionedOverlay } from '../../../PositionedOverlay';
+import { PositionedOverlay, PreferredAlignment, PreferredPosition } from '@/components/PositionedOverlay';
 import { Pane } from '../Pane';
 import styles from '@/classes/Popover.json';
 import { EventListener } from '@/components/EventListener';
@@ -209,13 +208,9 @@ export default class PopoverOverlay extends Vue {
       const focusableChild = findFirstFocusableNode(this.contentNode);
 
       if (focusableChild && autofocusTarget === 'first-node') {
-        focusableChild.focus({
-          preventScroll: process.env.NODE_ENV === 'development',
-        });
+        focusableChild.focus();
       } else {
-        this.contentNode.focus({
-          preventScroll: process.env.NODE_ENV === 'development',
-        });
+        this.contentNode.focus();
       }
     });
   }
