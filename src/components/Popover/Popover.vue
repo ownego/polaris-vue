@@ -154,10 +154,10 @@ export default class Popover extends Vue {
       && this.activatorNode
     ) {
       const focusableActivator = findFirstFocusableNodeIncludingDisabled(
-          this.activatorNode as HTMLElement,
+        this.activatorNode as HTMLElement,
       )
-          || findFirstFocusableNodeIncludingDisabled(this.containerNode)
-          || this.containerNode;
+        || findFirstFocusableNodeIncludingDisabled(this.containerNode)
+        || this.containerNode;
       if (!focusNextFocusableNode(focusableActivator, this.isInPortal)) {
         focusableActivator.focus();
       }
