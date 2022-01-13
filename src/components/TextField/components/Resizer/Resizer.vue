@@ -24,7 +24,7 @@ div(
 import Vue from 'vue';
 import { Component, Prop, Ref } from 'vue-property-decorator';
 import styles from '@/classes/TextField.json';
-import { EventListener } from '@/components';
+import { EventListener } from '@/components/EventListener';
 
 const ENTITIES_TO_REPLACE = {
   '&': '&amp;',
