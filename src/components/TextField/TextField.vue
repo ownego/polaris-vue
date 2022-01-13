@@ -111,9 +111,10 @@ import CircleCancelMinor from '@shopify/polaris-icons/dist/svg/CircleCancelMinor
 import { classNames, variationName } from 'polaris-react/src/utilities/css';
 import type { Error, Action } from 'types/type';
 import { useUniqueId } from '@/utilities/unique-id';
-import { Connected, Icon } from '@/components';
-import { Labelled } from '../Labelled';
 import { VisuallyHidden } from '../VisuallyHidden';
+import { Connected } from '../Connected';
+import { Icon } from '../Icon';
+import { Labelled } from '../Labelled';
 import { helpTextID, labelID } from '../Labelled/utils';
 import { Resizer, Spinner } from './components';
 import styles from '@/classes/TextField.json';

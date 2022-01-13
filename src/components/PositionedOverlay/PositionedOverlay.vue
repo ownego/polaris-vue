@@ -30,9 +30,10 @@ import {
 import { getRectForNode, Rect } from '@/utilities/geometry';
 import styles from '@/classes/PositionedOverlay.json';
 import popoverStyles from '@/classes/Popover.json';
-import { PopoverAutofocusTarget } from '../Popover/index';
+import { PopoverAutofocusTarget } from '../Popover/utils';
 import { isDocument, getMarginsForNode, getZIndexForLayerFromNode } from './utils';
-import { Scrollable, EventListener } from '@/components';
+import { EventListener } from '../EventListener';
+import { forNode } from '../Scrollable/utils';
 
 const OBSERVER_CONFIG = {
   childList: true,
@@ -44,7 +45,6 @@ type Positioning = 'above' | 'below';
 
 @Component({
   components: {
-    Scrollable,
     EventListener,
   },
 })
@@ -245,7 +245,7 @@ export default class PositionedOverlay extends Vue {
   }
 
   mounted(): void {
-    this.scrollableContainer = Scrollable.forNode(this.activator);
+    this.scrollableContainer = forNode(this.activator);
     if (this.scrollableContainer && !this.fixed) {
       this.scrollableContainer.addEventListener('scroll', this.handleMeasurement);
     }

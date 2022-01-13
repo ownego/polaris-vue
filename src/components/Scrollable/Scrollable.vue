@@ -22,7 +22,6 @@ import { classNames } from 'polaris-react/src/utilities/css';
 import { scrollable } from 'polaris-react/src/components/shared';
 import { StickyManager } from '@/utilities/sticky-manager';
 import styles from '@/classes/Scrollable.json';
-import { ScrollTo } from './components';
 import type { ScrollToPositionFn } from './utils';
 
 function prevent(evt: Event) {
@@ -46,13 +45,6 @@ const LOW_RES_BUFFER = 2;
 
 @Component
 export default class Scrollable extends Vue {
-  static ScrollTo = ScrollTo;
-
-  static forNode(node: HTMLElement): HTMLElement | Document {
-    const closestElement = node.closest(scrollable.selector);
-    return closestElement instanceof HTMLElement ? closestElement : document;
-  }
-
   @Provide() 'stickyManager' = new StickyManager();
 
   @Provide() 'scrollToPosition': ScrollToPositionFn;
