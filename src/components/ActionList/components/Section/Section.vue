@@ -1,26 +1,20 @@
 <template lang="pug">
 li(v-if="hasMultipleSections", :class="className", role="presentation")
   SectionMarkup(
-    :section="section",
-    :hasMultipleSections="hasMultipleSections",
-    :actionRole="actionRole",
-    :firstSection="firstSection",
+    v-bind="sectionMarkupProps",
     @action-any-item="$emit('action-any-item')",
   )
-    template(v-for="item, itemIndex in section.items")
-      slot(:name="`prefix-${itemIndex}`", :slot="`prefix-${itemIndex}`")
-      slot(:name="`suffix-${itemIndex}`", :slot="`suffix-${itemIndex}`")
+    template(v-for="{prefixId, suffixId} in section.items")
+        slot(v-if="prefixId", :name="`prefix-${prefixId}`", :slot="`prefix-${prefixId}`")
+        slot(v-if="suffixId", :name="`suffix-${suffixId}`", :slot="`suffix-${suffixId}`")
 SectionMarkup(
   v-else,
-  :section="section",
-  :hasMultipleSections="hasMultipleSections",
-  :actionRole="actionRole",
-  :firstSection="firstSection",
+  v-bind="sectionMarkupProps",
   @action-any-item="$emit('action-any-item')",
 )
-  template(v-for="item, itemIndex in section.items")
-    slot(:name="`prefix-${itemIndex}`", :slot="`prefix-${itemIndex}`")
-    slot(:name="`suffix-${itemIndex}`", :slot="`suffix-${itemIndex}`")
+  template(v-for="{prefixId, suffixId} in section.items")
+    slot(v-if="prefixId", :name="`prefix-${prefixId}`", :slot="`prefix-${prefixId}`")
+    slot(v-if="suffixId", :name="`suffix-${suffixId}`", :slot="`suffix-${suffixId}`")
 </template>
 
 <script lang="ts">
@@ -45,5 +39,14 @@ export default class Section extends Vue {
   @Prop({ type: Boolean }) public firstSection?: boolean;
 
   public className = styles.Section;
+
+  get sectionMarkupProps() {
+    const {
+      section, hasMultipleSections, actionRole, firstSection,
+    } = this;
+    return {
+      section, hasMultipleSections, actionRole, firstSection,
+    };
+  }
 }
 </script>

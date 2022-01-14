@@ -16,9 +16,9 @@ components(
       :actionRole="actionRole",
       @action-any-item="$emit('action-any-item')",
     )
-      template(v-for="item, itemIndex in section.items")
-        slot(:name="`prefix-${itemIndex}`", :slot="`prefix-${itemIndex}`")
-        slot(:name="`suffix-${itemIndex}`", :slot="`suffix-${itemIndex}`")
+      template(v-for="{prefixId, suffixId} in section.items")
+        slot(v-if="prefixId", :name="`prefix-${prefixId}`", :slot="`prefix-${prefixId}`")
+        slot(v-if="suffixId", :name="`suffix-${suffixId}`", :slot="`suffix-${suffixId}`")
   template(v-if="actionRole === 'menuitem'")
     KeypressListener(
       keyEvent="keydown",
@@ -39,6 +39,7 @@ import { classNames } from 'polaris-react/src/utilities/css';
 import { ActionListItemDescriptor, ActionListSection } from './utils';
 import styles from '@/classes/ActionList.json';
 import { KeypressListener, Key } from '@/components/KeypressListener';
+import { Section } from './components/Section';
 import {
   wrapFocusPreviousFocusableMenuItem,
   wrapFocusNextFocusableMenuItem,
@@ -47,6 +48,7 @@ import {
 @Component({
   components: {
     KeypressListener,
+    Section,
   },
 })
 export default class ActionList extends Vue {

@@ -11,18 +11,7 @@ li(:role="roleName")
     :role="role",
     @click="onClick",
   )
-    ContentElement(
-      :badge="badge",
-      :content="content",
-      :helpText="helpText",
-      :icon="icon",
-      :prefix="prefix",
-      :suffix="suffix",
-      :image="image",
-      :disabled="disabled",
-      :ellipsis="ellipsis",
-      :role="role",
-    )
+    ContentElement(v-bind="contentElementProps")
       slot(name="suffix", slot="suffix")
       slot(name="prefix", slot="prefix")
   button(
@@ -36,18 +25,7 @@ li(:role="roleName")
     @click="onClick",
     @mouseup="onMouseUp",
   )
-    ContentElement(
-      :badge="badge",
-      :content="content",
-      :helpText="helpText",
-      :icon="icon",
-      :prefix="prefix",
-      :suffix="suffix",
-      :image="image",
-      :disabled="disabled",
-      :ellipsis="ellipsis",
-      :role="role",
-    )
+    ContentElement(v-bind="contentElementProps")
       slot(name="suffix", slot="suffix")
       slot(name="prefix", slot="prefix")
 </template>
@@ -112,21 +90,23 @@ export default class Item extends Vue {
     );
   }
 
-  get roleName() {
-    return this.role === 'menuitem' ? 'presentation' : undefined;
+  get contentElementProps() {
+    return {
+      badge: this.badge,
+      content: this.content,
+      helpText: this.helpText,
+      icon: this.icon,
+      prefixId: this.prefixId,
+      suffixId: this.suffixId,
+      image: this.image,
+      disabled: this.disabled,
+      ellipsis: this.ellipsis,
+      role: this.role,
+    };
   }
 
-  public contentElementProps = {
-    badge: this.badge,
-    content: this.content,
-    helpText: this.helpText,
-    icon: this.icon,
-    prefixId: this.prefixId,
-    suffixId: this.suffixId,
-    image: this.image,
-    disabled: this.disabled,
-    ellipsis: this.ellipsis,
-    role: this.role,
+  get roleName() {
+    return this.role === 'menuitem' ? 'presentation' : undefined;
   }
 
   public onMouseUp = handleMouseUpByBlurring;

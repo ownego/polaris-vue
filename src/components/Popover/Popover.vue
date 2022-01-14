@@ -1,4 +1,5 @@
 <template lang="pug">
+// TODO: Update docs
 div(ref="container")
   slot(name="activator")
   Portal(v-if="activatorNode && active", to="popover")

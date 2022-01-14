@@ -1,2 +1,2 @@
 export { default as Popover } from './Popover.vue';
-export { Pane, PopoverOverlay, Section } from './components';
+export { Pane, PopoverOverlay } from './components';
