@@ -51,7 +51,24 @@ export const Template = (args, { argTypes }) => ({
 Spinners are used to notify merchants that their action is being processed. For loading states, spinners should only be used for content that can’t be represented with skeleton loading components, like for data charts.
 
 <Canvas>
-  <Story name="Spinner">
+  <Story
+    name="Spinner"
+    height="60px"
+    args={{
+      accessibilityLabel: 'Spinner example',
+      size: 'large',
+    }}
+    parameters={{
+      docs: {
+        transformSource: (source) => {
+          const tmpSource = source
+            .replace(/<template>/, '')
+            .replace(/<\/template>/, '');
+          return tmpSource;
+        },
+      },
+    }}
+  >
     {Template.bind({})}
   </Story>
 </Canvas>

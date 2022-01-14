@@ -1,0 +1,100 @@
+import { Meta, Story, Canvas, ArgsTable } from '@storybook/addon-docs';
+
+import { ChoiceList } from '@/polaris-vue';
+
+<Meta
+  title="Components / Forms / ChoiceList"
+  component={ ChoiceList }
+  argTypes={{
+    choices: {
+      name: 'choices',
+      control: { disable: true },
+      table: {
+        type: {
+          summary: 'Choices[]',
+        },
+      },
+    },
+    value: {
+      name: 'value',
+      table: {
+        type: {
+          summary: null,
+        },
+      },
+    },
+    error: {
+      name: 'error',
+      control: { type: 'text' },
+      table: {
+        type: {
+          summary: 'Error',
+        },
+      },
+    },
+    change: {
+      name: 'change',
+      description: 'Callback when choice is toggled (this will emit input event)',
+      table: {
+        category: 'events',
+        type: {
+          summary: '"(Event) => void"',
+        }
+      }
+    },
+    input: {
+      name: 'input',
+      description: 'Event for using with v-model',
+      control: { disable: true },
+      table: {
+        type: {
+          summary: null,
+        }
+      }
+    },
+    focus: {
+      name: 'focus',
+      description: 'Callback when checkbox is focussed',
+      table: {
+        category: 'events',
+        type: {
+          summary: '"() => void"',
+        },
+      },
+    },
+    blur: {
+      name: 'blur',
+      description: 'Callback when focus is remove',
+      table: {
+        category: 'events',
+        type: {
+          summary: '"() => void"',
+        },
+      },
+    },
+    default: {
+      table: {
+        disable: true,
+      },
+    },
+  }}
+/>
+
+export const Template = (args, { argTypes }) => ({
+  props: Object.keys(argTypes),
+  components: { ChoiceList },
+  template: ``,
+});
+
+# Choice list
+
+A choice list lets you create a list of grouped radio buttons or checkboxes.
+Use this component if you need to group together a related list of interactive choices.
+
+<Canvas>
+  <Story name="ChoiceList">
+    {Template.bind({})}
+  </Story>
+</Canvas>
+
+<ArgsTable story="ChoiceList"/>

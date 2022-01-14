@@ -1,0 +1,123 @@
+import { Meta, Story, Canvas, ArgsTable } from '@storybook/addon-docs';
+
+import { Checkbox } from '@/polaris-vue';
+
+<Meta
+  title="Components / Forms / Checkbox"
+  component={ Checkbox }
+  argTypes={{
+    checked: {
+      name: 'checked',
+      control: { type: 'text' },
+      table: {
+        type: {
+          summary: 'boolean | "indeterminate"',
+        },
+      },
+    },
+    error: {
+      name: 'error',
+      control: { type: 'text' },
+      table: {
+        type: {
+          summary: 'string | component | boolean',
+        },
+      },
+    },
+    value: {
+      name: 'value',
+      control: { type: 'text' },
+      table: {
+        type: {
+          summary: 'string | boolean',
+        },
+      },
+    },
+    blur: {
+      name: 'blur',
+      description: 'Callback when focus is remove',
+      control: { disable: true },
+      table: {
+        type: {
+          summary: '"() => void"',
+        },
+      },
+    },
+    change: {
+      name: 'change',
+      description: 'Callback when checkbox is toggled',
+      control: { disable: true },
+      table: {
+        type: {
+          summary: '"(Event) => void"',
+        },
+      },
+    },
+    focus: {
+      name: 'focus',
+      description: 'Callback when checkbox is focussed',
+      control: { disable: true },
+      table: {
+        type: {
+          summary: '"() => void"',
+        },
+      },
+    },
+    input: {
+      name: 'input',
+      description: 'v-model available',
+      control: { disable: true },
+      table: {
+        type: {
+          summary: '"() => boolean"',
+        },
+      },
+    },
+    helpText: {
+      name: 'helpText',
+      description: 'Additional text to aide in use',
+      control: { disable: true },
+      table: {
+        type: {
+          summary: null,
+        },
+      },
+    },
+    label: {
+      name: 'label',
+      description: 'Label for the checkbox',
+      control: { disable: true },
+      table: {
+        type: {
+          summary: null,
+        },
+      },
+    },
+    default: {
+      table: {
+        disable: true,
+      },
+    },
+  }}
+/>
+
+export const Template = (args, { argTypes }) => ({
+  props: Object.keys(argTypes),
+  components: { Checkbox },
+  template: `<Checkbox v-bind="$props" id="demoCheckbox">
+    <template slot="label">Checkbox label</template>
+  </Checkbox>`,
+});
+
+# Checkbox
+
+Checkboxes are most commonly used to give merchants a way to make a range of selections (zero, one, or multiple).
+They may also be used as a way to have merchants indicate they agree to specific terms and services.
+
+<Canvas>
+  <Story name="Checkbox">
+    {Template.bind({})}
+  </Story>
+</Canvas>
+
+<ArgsTable story="Checkbox"/>

@@ -6,7 +6,15 @@
     list-item Blue
 
   icon(:source="icon")
-  spinner
+  Popover(
+    :active="active",
+    @close="active = !active",
+  )
+    button(slot="activator", @click="active = !active") Action
+    list(type="number", slot="content")
+      list-item a
+      list-item b
+      list-item c
 </template>
 
 <script lang="ts">
@@ -16,6 +24,8 @@ import CirclePlusMinor from '@icons/CirclePlusMinor.svg';
 @Component
 export default class Demo extends Vue {
   public icon = CirclePlusMinor;
+
+  public active = false;
 }
 </script>
 

@@ -15,9 +15,8 @@ import { Component, Prop } from 'vue-property-decorator';
 import type { Error } from 'types/type';
 import AlertMinor from '@icons/AlertMinor.svg';
 import styles from '@/classes/InlineError.json';
+import { errorTextID } from './utils';
 import { Icon } from '../Icon';
-
-export const errorTextID = (id: string): string => `${id}Error`;
 
 @Component({
   components: {

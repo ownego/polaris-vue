@@ -3,7 +3,7 @@ import { Meta, Story, Canvas, ArgsTable } from '@storybook/addon-docs';
 import { InlineError } from '@/polaris-vue';
 
 <Meta
-  title="Components / Form layout / InlineError"
+  title="Components / Forms / InlineError"
   component={ InlineError }
   argTypes={{
     message: {
@@ -32,7 +32,23 @@ Inline errors are brief, in-context messages that tell merchants something went 
 Use inline errors to help merchants understand why a form input may not be valid and how to fix it.
 
 <Canvas>
-  <Story name="InlineError">
+  <Story
+    name="InlineError"
+    args={{
+      message: 'Store name is required',
+      fieldID: 'myFieldID'
+    }}
+    parameters={{
+      docs: {
+        transformSource: (source) => {
+          const tmpSource = source
+            .replace(/<template>/, '')
+            .replace(/<\/template>/, '');
+          return tmpSource;
+        },
+      },
+    }}
+  >
     {Template.bind({})}
   </Story>
 </Canvas>

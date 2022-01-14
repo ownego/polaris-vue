@@ -1,9 +1,8 @@
 import { Meta, Story, Canvas, ArgsTable } from '@storybook/addon-docs';
-
 import { List, ListItem } from '@/polaris-vue';
 
 <Meta
-  title="Components / Lists &amp; Tables / List"
+  title="Components / Lists and tables / List"
   component={ List }
   argTypes={{
     type: {
@@ -34,11 +33,11 @@ import { List, ListItem } from '@/polaris-vue';
 export const Template = (args, { argTypes }) => ({
   props: Object.keys(argTypes),
   components: { List, ListItem },
-  template: `<list v-bind="$props">
-    <list-item>Yellow shirt</list-item>
-    <list-item>Red shirt</list-item>
-    <list-item>Green shirt</list-item>
-  </list>`,
+  template: `<List v-bind="$props">
+    <ListItem>Yellow shirt</ListItem>
+    <ListItem>Red shirt</ListItem>
+    <ListItem>Green shirt</ListItem>
+  </List>`,
 });
 
 # List
@@ -46,7 +45,7 @@ export const Template = (args, { argTypes }) => ({
 Lists display a set of related text-only content. Each list item begins with a bullet or a number.
 
 <Canvas>
-  <Story name="List">
+  <Story name="List" height="80px">
     {Template.bind({})}
   </Story>
 </Canvas>
