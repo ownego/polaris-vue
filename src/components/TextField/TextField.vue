@@ -63,8 +63,8 @@ Labelled(
         v-bind="normalizeAriaMultiline(multiline)",
         @input="onChange",
         @keydown="handleKeyPress",
-        @focus="comboboxTextFieldFocus ? comboboxTextFieldFocus : null",
-        @blur="comboboxTextFieldBlur ? comboboxTextFieldBlur : null",
+        @focus="comboboxTextFieldFocus",
+        @blur="comboboxTextFieldBlur",
       )
       div(
         v-if="$slots.suffix",
@@ -165,11 +165,11 @@ type InputMode =
   },
 })
 export default class TextField extends Vue {
-  @Inject({ default: null }) comboboxTextFieldFocus!: () => void;
+  @Inject({ default: Function }) comboboxTextFieldFocus!: () => void;
 
-  @Inject({ default: null }) comboboxTextFieldBlur!: () => void;
+  @Inject({ default: Function }) comboboxTextFieldBlur!: () => void;
 
-  @Inject({ default: null }) comboboxTextFieldChange!: () => void;
+  @Inject({ default: Function }) comboboxTextFieldChange!: () => void;
 
   @Ref('prefixRef') prefixRef!: HTMLDivElement;
 
