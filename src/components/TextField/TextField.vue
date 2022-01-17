@@ -93,8 +93,8 @@ Labelled(
       Spinner(
         v-if="type === 'number' && step !== 0 && !disabled && !readOnly",
         @change="handleNumberChange",
-        @mouse-down="handleButtonPress",
-        @mouse-up="handleButtonRelease",
+        @mousedown="handleButtonPress",
+        @mouseup="handleButtonRelease",
       )
       div(:class="backdropClassName")
       Resizer(
