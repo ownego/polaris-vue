@@ -14,11 +14,12 @@ import {
   Watch,
 } from 'vue-property-decorator';
 import { useUniqueId } from '@/utilities/unique-id';
-import type { ScrollToPositionFn } from '../../utils';
+
+type ScrollToPositionFn = (scrollY: number) => void;
 
 @Component
 export default class ScrollTo extends Vue {
-  @Inject() 'scrollToPosition': ScrollToPositionFn;
+  @Inject({ default: false }) 'scrollToPosition': ScrollToPositionFn;
 
   @Ref('anchorNode') anchorNode!: HTMLAnchorElement;
 
