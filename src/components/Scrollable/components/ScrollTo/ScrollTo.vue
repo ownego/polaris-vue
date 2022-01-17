@@ -19,15 +19,13 @@ type ScrollToPositionFn = (scrollY: number) => void;
 
 @Component
 export default class ScrollTo extends Vue {
-  // eslint-disable-next-line @typescript-eslint/no-empty-function
-  @Inject({ default: (scrollY: number) => {} }) 'scrollToPositionContext': ScrollToPositionFn;
+  @Inject({ default: null }) 'scrollToPositionContext': ScrollToPositionFn;
 
   @Ref('anchorNode') anchorNode!: HTMLAnchorElement;
 
   @Watch('scrollToPosition')
   onScrollToPosition() {
-    if (!this.anchorNode) return;
-
+    if (!this.scrollToPositionContext || !this.anchorNode) return;
     this.scrollToPositionContext(this.anchorNode.offsetTop);
   }
 
