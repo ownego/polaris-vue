@@ -63,8 +63,8 @@ Labelled(
         v-bind="normalizeAriaMultiline(multiline)",
         @input="onChange",
         @keydown="handleKeyPress",
-        @focus="comboboxTextFieldFocus",
-        @blur="comboboxTextFieldBlur",
+        @focus="comboboxTextFieldFocus ? comboboxTextFieldFocus : null",
+        @blur="comboboxTextFieldBlur ? comboboxTextFieldBlur : null",
       )
       div(
         v-if="$slots.suffix",
@@ -165,11 +165,11 @@ type InputMode =
   },
 })
 export default class TextField extends Vue {
-  @Inject({ default: 'focus' }) comboboxTextFieldFocus!: () => void;
+  @Inject({ default: null }) comboboxTextFieldFocus!: () => void;
 
-  @Inject({ default: 'blur' }) comboboxTextFieldBlur!: () => void;
+  @Inject({ default: null }) comboboxTextFieldBlur!: () => void;
 
-  @Inject({ default: 'change' }) comboboxTextFieldChange!: () => void;
+  @Inject({ default: null }) comboboxTextFieldChange!: () => void;
 
   @Ref('prefixRef') prefixRef!: HTMLDivElement;
 
@@ -504,7 +504,7 @@ export default class TextField extends Vue {
   public onChange(event: InputEvent): void {
     const target = event.target as HTMLInputElement;
 
-    if (typeof this.comboboxTextFieldChange === 'function') {
+    if (this.comboboxTextFieldChange) {
       this.comboboxTextFieldChange();
     }
 
