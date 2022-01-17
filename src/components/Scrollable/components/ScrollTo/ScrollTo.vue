@@ -19,7 +19,7 @@ type ScrollToPositionFn = (scrollY: number) => void;
 
 @Component
 export default class ScrollTo extends Vue {
-  @Inject({ default: null }) 'scrollToPositionContext': ScrollToPositionFn;
+  @Inject({ default: Function }) 'scrollToPositionContext': ScrollToPositionFn;
 
   @Ref('anchorNode') anchorNode!: HTMLAnchorElement;
 
