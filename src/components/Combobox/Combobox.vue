@@ -10,9 +10,10 @@ Popover(
 )
   template(slot="activator")
     slot(name="activator")
-  Pane(@scrolled-to-bottom="$emit('scrolled-to-bottom')")
-    div(:class="listboxClassName")
-      slot
+  template(slot="content")
+    Pane(@scrolled-to-bottom="$emit('scrolled-to-bottom')")
+      div(:class="listboxClassName")
+        slot
 </template>
 
 <script lang="ts">
@@ -22,10 +23,10 @@ import {
   Prop,
   Provide,
 } from 'vue-property-decorator';
-import type { PreferredPosition } from '@/components/PositionedOverlay';
+import type { PreferredPosition } from '../PositionedOverlay';
 import styles from '@/classes/Combobox.json';
-import { Popover, Pane } from '@/components/Popover';
 import { TextField } from '../TextField';
+import { Popover, Pane } from '../Popover';
 
 @Component({
   components: {
@@ -44,16 +45,10 @@ export default class Combobox extends Vue {
   @Prop({ type: Boolean })
   public allowMultiple!: boolean;
 
-  @Prop({ type: String })
+  @Prop({ type: String, default: 'below' })
   public preferredPosition!: PreferredPosition;
 
   public popoverActive = false;
-
-  public textFieldLabelId!: string;
-
-  public listboxId!: string;
-
-  public textFieldFocused = false;
 
   public listboxClassName = styles.Listbox;
 
