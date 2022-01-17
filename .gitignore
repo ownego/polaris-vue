@@ -1,7 +1,7 @@
 .DS_Store
 node_modules
 dist
-src/Demo.vue
+Demo.vue
 
 # local env files
 .env.local
