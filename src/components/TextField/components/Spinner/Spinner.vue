@@ -2,7 +2,6 @@
 div(
   aria-hidden="true",
   :class="wrapperClassName",
-  @click="$emit('click')",
 )
   div(
     role="button",
