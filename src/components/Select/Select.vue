@@ -12,9 +12,7 @@ Labelled(
   )
     <!-- @slot Label for the select -->
     slot(name="label")
-  template(
-    slot="help-text",
-  )
+  template(slot="help-text")
     <!-- @slot Slot for additional text to aide in use -->
     slot(name="help-text")
   div(:class="className")
@@ -39,7 +37,7 @@ Labelled(
           :key="option.title",
         )
           template(
-            v-for="option in option.options",
+            v-for="option, index in option.options",
           )
             option(
               :key="option.value",
@@ -51,8 +49,7 @@ Labelled(
           :value="option.value",
           :disabled="option.disabled",
         ) {{ option.label }}
-      <!-- @slot Slot to show input options as dynamic way -->
-      slot
+
     div(
       :class="classContent",
       aria-hidden,
@@ -64,23 +61,16 @@ Labelled(
       )
         slot(name="label")
       div(
-        v-if="selectedOption.prefix",
+        v-if="$slots[`prefix-${selectedOption.id}`]",
         :class="classPrefix",
       )
-        template(v-if="typeof selectedOption.prefix === 'string'")
-          | {{ selectedOption.prefix }}
-        component(
-          v-else,
-          :is="selectedOption.prefix.component",
-          v-bind="selectedOption.prefix.props",
-        )
+        slot(:name="`prefix-${selectedOption.id}`")
       span(:class="classSelectedOption")
-        template(v-if="typeof selectedOption.label === 'string'")
-          | {{ selectedOption.label }}
-        component(
-          v-else,
-          :is="selectedOption.label",
+        slot(
+          v-if="$slots[`label-${selectedOption.id}`]",
+          :name="`label-${selectedOption.id}`"
         )
+        template(v-else) {{ selectedOption.label }}
       span(:class="classIcon")
         Icon(:source="iconSelectMinor")
     div(:class="classBackdrop")
@@ -242,25 +232,7 @@ export default class Select extends Vue {
    * Gets the text to display in the UI, for the currently selected option
    */
   get selectedOption() {
-    let selectedOption = this.flattenOptions.find((option) => this.value === option.value);
-
-    if (!selectedOption) {
-      if (!this.value) {
-        // Get the first visible option (not the hidden placeholder)
-        selectedOption = this.flattenOptions.find((option) => !option.hidden);
-      } else if (this.value && this.$slots.default) {
-        const slotOption = this.$slots.default.find(
-          (opt) => opt.data?.attrs?.value === this.value,
-        );
-
-        return {
-          prefix: slotOption ? slotOption.data?.attrs?.prefix : null,
-          label: slotOption ? slotOption.data?.attrs?.label : this.value,
-          value: this.value,
-        };
-      }
-    }
-
+    const selectedOption = this.flattenOptions.find((option) => this.value === option.value);
     return selectedOption || { value: '', label: '' };
   }
 
