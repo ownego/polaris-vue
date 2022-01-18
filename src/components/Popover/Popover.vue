@@ -2,7 +2,7 @@
 // TODO: Update docs
 div(ref="container")
   slot(name="activator")
-  Portal(v-if="activatorNode && active", to="popover")
+  Portal(v-if="activatorNode && active", :to="portalId")
     div(:data-portal-id="portalId")
       PopoverOverlay(
         :activator="activatorNode",
@@ -18,7 +18,7 @@ div(ref="container")
       )
         template(v-slot:overlay="props")
           slot(name="content")
-  PortalTarget(name="popover")
+  PortalTarget(:name="portalId")
 </template>
 
 <script lang="ts">
