@@ -122,8 +122,6 @@ export default class PositionedOverlay extends Vue {
 
   public outsideScrollableContainer = false;
 
-  private overlay: HTMLElement | null = null;
-
   private scrollableContainer: HTMLElement | Document | null = null;
 
   private observer!: MutationObserver;
@@ -165,8 +163,7 @@ export default class PositionedOverlay extends Vue {
       : activator;
 
     const activatorRect = getRectForNode(preferredActivator);
-
-    const currentOverlayRect = getRectForNode(this.overlay);
+    const currentOverlayRect = getRectForNode(this.overlayNode);
     const scrollableElement = isDocument(this.scrollableContainer)
       ? document.body
       : this.scrollableContainer;
@@ -229,8 +226,8 @@ export default class PositionedOverlay extends Vue {
     );
     this.zIndex = zIndex;
     this.$emit('change-content-styles', { height: `${this.height}px` });
-    if (!this.overlay) return;
-    this.observer.observe(this.overlay, OBSERVER_CONFIG);
+    if (!this.overlayNode) return;
+    this.observer.observe(this.overlayNode, OBSERVER_CONFIG);
     this.observer.observe(activator, OBSERVER_CONFIG);
   }
 
