@@ -1,26 +1,6 @@
-import type { IconSource, Action } from 'types/type';
-
-export interface IconableAction extends Action {
-  /** Source of the icon */
-  icon?: IconSource;
-}
-
-export interface DisableableAction extends Action {
-  /** Whether or not the action is disabled */
-  disabled?: boolean;
-}
-
-export interface BadgeAction {
-  badge?: {
-    status: 'new';
-    content: string;
-  };
-}
-
-export interface DestructableAction extends Action {
-  /** Destructive action */
-  destructive?: boolean;
-}
+import {
+  IconableAction, DisableableAction, BadgeAction, DestructableAction,
+} from '@/interface';
 
 export interface ActionListItemDescriptor
   extends IconableAction,
