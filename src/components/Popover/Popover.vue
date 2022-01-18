@@ -13,6 +13,7 @@ div(ref="container")
         :preferredPosition="preferredPosition",
         :preferredAlignment="preferredAlignment",
         :zIndexOverride="zIndexOverride",
+        :autofocusTarget="autofocusTarget",
         @close="handleClose",
         @scrolled-to-bottom="$emit('scrolled-to-bottom')",
       )

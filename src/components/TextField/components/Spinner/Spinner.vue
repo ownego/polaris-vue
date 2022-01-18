@@ -2,15 +2,14 @@
 div(
   aria-hidden="true",
   :class="wrapperClassName",
-  @click="$emit('click')",
 )
   div(
     role="button",
     tabindex="-1",
     :class="segmentClassName",
     @click="handleStep(1)",
-    @mousedown="$emit('mouse-down')",
-    @mouseup="$emit('mouse-up')",
+    @mousedown="$emit('mousedown')",
+    @mouseup="$emit('mouseup')",
   )
     div(:class="iconClassName")
       Icon(:source="iconCaretUpMinor")
@@ -19,8 +18,8 @@ div(
     tabindex="-1",
     :class="segmentClassName",
     @click="handleStep(-1)",
-    @mousedown="$emit('mouse-down')",
-    @mouseup="$emit('mouse-up')",
+    @mousedown="$emit('mousedown')",
+    @mouseup="$emit('mouseup')",
   )
     div(:class="iconClassName")
       Icon(:source="iconCaretDownMinor")
