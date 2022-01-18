@@ -232,20 +232,32 @@ Buttons are used primarily for actions, such as “Add”, “Close”, “Cance
 For navigational actions that appear within or directly following a sentence, use the [link component.](/docs/components-navigation-link--link)
 
 <font color="#FF7900">Use component with camel case for prevent conflict with <b>button</b> element in html.</font>
+<br/><br/>
 
-<Canvas style={{ backgroundColor: 'rgba(246, 246, 247, 1)'}}>
-  <Story story={Variants} height="250px" />
+### Button Variants
+
+<Canvas style={{ backgroundColor: '#f6f6f7' }}>
+  <Story story={Variants} height="280px" />
 </Canvas>
 
-<Canvas>
+### Disclosure Button
+
+<Canvas style={{ backgroundColor: '#f6f6f7' }}>
   <Story story={Disclosure} height="140px" />
 </Canvas>
 
-<Canvas>
-  <Story story={SplitButton} height="120px" />
+### Split Button
+
+<Canvas style={{ backgroundColor: '#f6f6f7' }}>
+  <Story
+    story={SplitButton}
+    height="120px"
+    inline={false}
+  />
 </Canvas>
 
-<Canvas>
+### Example
+<Canvas style={{ backgroundColor: '#f6f6f7' }}>
   <Story name="Button" height="40px">
     {Template.bind({})}
   </Story>

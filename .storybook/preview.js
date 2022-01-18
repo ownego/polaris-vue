@@ -1,8 +1,10 @@
 import '!style-loader!css-loader!sass-loader!../src/scss/main.scss';
 import Vue from 'vue';
+import PortalVue from 'portal-vue';
 // import VueRouter from 'vue-router';
 
 // Vue.use(VueRouter);
+Vue.use(PortalVue);
 // Vue.component('router-link', Vue.component('RouterLink'));
 
 // export const decorators = [(story) => ({
