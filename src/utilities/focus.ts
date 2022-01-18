@@ -137,6 +137,6 @@ export function wrapFocusNextFocusableMenuItem(
 }
 
 export const handleMouseUpByBlurring = (event: MouseEvent) => {
-  const target = event.target as HTMLInputElement;
-  target.blur();
+  const currentTarget = event.currentTarget as HTMLInputElement;
+  currentTarget.blur();
 };
