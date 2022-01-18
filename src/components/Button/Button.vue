@@ -68,78 +68,78 @@ export default class Button extends Vue {
   /**
    * A unique identifier for the button
    */
-  @Prop() public id?: ButtonProps['id'];
+  @Prop({ type: String }) public id?: string;
 
   /**
    * A destination to link to, rendered in the href attribute of a link
    */
-  @Prop() public url?: ButtonProps['url'];
+  @Prop({ type: String }) public url?: string;
 
   /**
    * Forces url to open in a new tab
    */
-  @Prop() public external?: ButtonProps['external'];
+  @Prop({ type: Boolean }) public external?: boolean;
 
   /**
    * Tells the browser to download the url instead of opening it.
    * Provides a hint for the downloaded filename if it is a string value
    */
-  @Prop() public download?: ButtonProps['download'];
+  @Prop({ type: String }) public download?: string | boolean;
 
   /**
    * Allows the button to submit a form
    */
-  @Prop() public submit?: ButtonProps['submit'];
+  @Prop({ type: Boolean }) public submit?: boolean;
 
   /**
    * Disables the button, disallowing merchant interaction
    */
-  @Prop() public disabled?: ButtonProps['disabled'];
+  @Prop({ type: Boolean }) public disabled?: boolean;
 
   /**
    * Replaces button text with a spinner while a background action is being performed
    */
-  @Prop() public loading?: ButtonProps['loading'];
+  @Prop({ type: Boolean }) public loading?: boolean;
 
   /**
    * Sets the button in a pressed state
    */
-  @Prop() public pressed?: ButtonProps['pressed'];
+  @Prop({ type: Boolean }) public pressed?: boolean;
 
   /**
    * Visually hidden text for screen readers
    */
-  @Prop() public accessibilityLabel?: ButtonProps['accessibilityLabel'];
+  @Prop({ type: String }) public accessibilityLabel?: string;
 
   /**
    * A valid WAI-ARIA role to define the semantic value of this element
    */
-  @Prop() public role?: ButtonProps['role'];
+  @Prop({ type: String }) public role?: string;
 
   /**
    * Id of the element the button controls
    */
-  @Prop() public ariaControls?: ButtonProps['ariaControls'];
+  @Prop({ type: String }) public ariaControls?: string;
 
   /**
    * Tells screen reader the controlled element is expanded
    */
-  @Prop() public ariaExpanded?: ButtonProps['ariaExpanded'];
+  @Prop({ type: Boolean }) public ariaExpanded?: boolean;
 
   /**
    * Indicates the ID of the element that describes the button
    */
-  @Prop() public ariaDescribedBy?: ButtonProps['ariaDescribedBy'];
+  @Prop({ type: String }) public ariaDescribedBy?: string;
 
   /**
    * Provides extra visual weight and identifies the primary action in a set of buttons
    */
-  @Prop() public primary?: ButtonProps['primary'];
+  @Prop({ type: Boolean }) public primary?: boolean;
 
   /**
    * Indicates a dangerous or potentially negative action
    */
-  @Prop() public destructive?: ButtonProps['destructive'];
+  @Prop({ type: Boolean }) public destructive?: boolean;
 
   /**
    * Changes the size of the button, giving it more or less padding
@@ -151,43 +151,43 @@ export default class Button extends Vue {
    * Changes the inner text alignment of the button
    * @values left | center | right
    */
-  @Prop() public textAlign?: ButtonProps['textAlign'];
+  @Prop({ type: String }) public textAlign?: ButtonProps['textAlign'];
 
   /**
    * Gives the button a subtle alternative to the default button styling,
    * appropriate for certain backdrops
    */
-  @Prop() public outline?: ButtonProps['outline'];
+  @Prop({ type: Boolean }) public outline?: boolean;
 
   /**
    * Indicates a dangerous or potentially negative action
    */
-  @Prop() public fullWidth?: ButtonProps['fullWidth'];
+  @Prop({ type: Boolean }) public fullWidth?: boolean;
 
   /**
    * Displays the button with a disclosure icon. Defaults to `down` when set to true
    * @values down | up | select | boolean
    */
-  @Prop() public disclosure?: ButtonProps['disclosure'];
+  @Prop({ type: String }) public disclosure?: ButtonProps['disclosure'];
 
   /**
    * Renders a button that looks like a link
    */
-  @Prop() public plain?: ButtonProps['plain'];
+  @Prop({ type: Boolean }) public plain?: boolean;
 
   /**
    * Makes plain and outline Button colors (text, borders, icons) the same as the current text color
    * Also adds an underline to `plain` Buttons
    */
-  @Prop() public monochrome?: ButtonProps['monochrome'];
+  @Prop({ type: Boolean }) public monochrome?: boolean;
 
   /**
    * Removes underline from button text (including on interaction)when monochrome and plain are true
    */
-  @Prop() public removeUnderline?: ButtonProps['removeUnderline'];
+  @Prop({ type: Boolean }) public removeUnderline?: boolean;
 
   /**
-   * Icon to display to the left of the button content
+   * Disclosure button connected right of the button. Toggles a popover action list.
    */
   @Prop() public connectedDisclosure?: ButtonProps['connectedDisclosure'];
 
