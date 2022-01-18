@@ -1,6 +1,6 @@
 <template lang="pug">
 li(:role="roleName")
-  Scrollable.ScrollTo(v-if="active")
+  ScrollTo(v-if="active")
   UnstyledLink(
     v-if="url",
     :id="id",
@@ -36,6 +36,7 @@ import { Component, Prop } from 'vue-property-decorator';
 import { classNames } from 'polaris-react/src/utilities/css';
 import { ItemProps } from '../../utils';
 import { Scrollable } from '@/components/Scrollable';
+import { ScrollTo } from '@/components/Scrollable/components/ScrollTo';
 import { UnstyledLink } from '@/components/UnstyledLink';
 import ContentElement from './ContentElement.vue';
 import styles from '@/classes/ActionList.json';
@@ -46,6 +47,7 @@ import { handleMouseUpByBlurring } from '@/utilities/focus';
     Scrollable,
     UnstyledLink,
     ContentElement,
+    ScrollTo,
   },
 })
 export default class Item extends Vue {
