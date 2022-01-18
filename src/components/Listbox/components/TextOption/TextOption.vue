@@ -1,0 +1,60 @@
+<template lang="pug">
+div(:class="wrapperClassName")
+  div(:class="contentClassName")
+    div(
+      v-if="allowMultiple && !isAction",
+      :class="checkboxClassName",
+    )
+      Checkbox(:checked="selected")
+        template(slot="label")
+          slot(name="label")
+</template>
+
+<script lang="ts">
+import Vue from 'vue';
+import { Component, Prop, Inject } from 'vue-property-decorator';
+import { classNames } from 'polaris-react/src/utilities/css';
+import styles from '@/classes/TextOption.json';
+import { Checkbox } from '../../../Checkbox';
+
+@Component({
+  components: {
+    Checkbox,
+  },
+})
+export default class TextOption extends Vue {
+  @Inject({ default: false }) allowMultiple!: boolean;
+
+  @Inject({ default: false }) isAction!: boolean;
+
+  /**
+   * Whether the option is selected
+   */
+  @Prop({ type: Boolean })
+  public selected!: boolean;
+
+  /**
+   * Whether the option is disabled
+   */
+  @Prop({ type: Boolean })
+  public disabled!: boolean;
+
+  public contentClassName = styles.Content;
+
+  public checkboxClassName = styles.Checkbox;
+
+  get wrapperClassName(): string {
+    return classNames(
+      styles.TextOption,
+      this.selected && !this.allowMultiple && styles.selected,
+      this.disabled && styles.disabled,
+      this.allowMultiple && styles.allowMultiple,
+      this.isAction && styles.isAction,
+    );
+  }
+}
+</script>
+
+<style lang="scss">
+@import 'polaris-react/src/components/Listbox/components/TextOption/TextOption.scss';
+</style>

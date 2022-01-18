@@ -1,0 +1,140 @@
+<template lang="pug">
+li(
+  v-bind="sectionAttributes",
+  :id="domId",
+  :class="className",
+  ref="listItemRef",
+  tabindex="-1",
+  @mousedown="handleMouseDown",
+  :data-within-section="isWithinSection",
+  :data-listbox-option-value="value",
+  :data-listbox-option-destructive="mappedActionContext.destructive",
+  :aria-disabled="disabled",
+  @click="disabled ? undefined : handleOptionClick",
+  :role="legacyRoleSupport",
+  :aria-label="accessibilityLabel",
+  :aria-selected="selected",
+  data-listbox-option,
+)
+  UnstyledLink(v-if="mappedActionContext.url", :external="mappedActionContext.external")
+    TextOption(:selected="selected", :disabled="disabled")
+      slot
+  TextOption(:selected="selected", :disabled="disabled")
+    slot
+</template>
+
+<script lang="ts">
+import Vue from 'vue';
+import {
+  Component,
+  Prop,
+  Inject,
+  Ref,
+} from 'vue-property-decorator';
+import { classNames } from 'polaris-react/src/utilities/css';
+import { useUniqueId } from '@/utilities/unique-id';
+import styles from '@/classes/Option.json';
+import {
+  listboxWithinSectionDataSelector,
+} from 'polaris-react/src/components/Listbox/components/Section/selectors';
+import { TextOption } from '../TextOption';
+import { UnstyledLink } from '../../../UnstyledLink';
+import { MappedActionContextType, OptionProps } from './utils';
+import { NavigableOption } from '../../utils';
+
+@Component({
+  components: {
+    TextOption,
+    UnstyledLink,
+  },
+})
+export default class ListBox extends Vue {
+  @Inject({ default: {} }) mappedActionContext!: MappedActionContextType;
+
+  @Inject({ default: Function }) onAction!: () => void;
+
+  @Inject({ default: '' }) sectionId!: string;
+
+  @Inject({ default: Function }) onOptionSelect!: (option: NavigableOption) => void;
+
+  @Ref() listItemRef!: HTMLLIElement
+
+  /**
+   * Unique item values
+   */
+  @Prop({ type: String })
+  public value!: OptionProps['value'];
+
+  /**
+   * Visually hidden text for screen readers
+   */
+  @Prop({ type: String })
+  public accessibilityLabel!: OptionProps['accessibilityLabel'];
+
+  /**
+   * Option is selected
+   */
+  @Prop({ type: Boolean })
+  public selected!: OptionProps['selected'];
+
+  /**
+   * Option is disabled
+   * @default false
+   */
+  @Prop({ type: Boolean, default: false })
+  public disabled!: OptionProps['disabled'];
+
+  /**
+   * Adds a border-bottom to the Option
+   */
+  @Prop({ type: Boolean })
+  public divider!: OptionProps['divider'];
+
+  public isWithinSection = Boolean(this.sectionId);
+
+  public sectionAttributes = {
+    [listboxWithinSectionDataSelector.attribute]: this.isWithinSection,
+  }
+
+  get className(): string {
+    return classNames(
+      styles.Option,
+      this.divider && styles.divider,
+    );
+  }
+
+  // eslint-disable-next-line class-methods-use-this
+  get domId(): string {
+    return useUniqueId('ListboxOption');
+  }
+
+  get legacyRoleSupport(): string {
+    return this.mappedActionContext.role || 'option';
+  }
+
+  public handleOptionClick(event: MouseEvent): void {
+    event.preventDefault();
+    this.onAction();
+
+    if (this.listItemRef && !this.onAction) {
+      const params = {
+        domId: this.domId,
+        value: this.value,
+        element: this.listItemRef,
+        disabled: this.disabled || false,
+      };
+
+      this.onOptionSelect(params);
+    }
+  }
+
+  // eslint-disable-next-line class-methods-use-this
+  public handleMouseDown(event: MouseEvent): void {
+    event.preventDefault();
+  }
+}
+</script>
+
+<style lang="scss">
+@import 'polaris-react/src/components/Listbox/components/Option/Option.scss';
+</style>
