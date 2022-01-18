@@ -1,5 +1,5 @@
 import { Meta, Story, Canvas, ArgsTable } from '@storybook/addon-docs';
-import { Select } from '@/polaris-vue';
+import { Select, Icon } from '@/polaris-vue';
 import dedent from 'ts-dedent';
 
 import HintMajor from '@icons/HintMajor.svg';
@@ -17,7 +17,7 @@ import HintMajor from '@icons/HintMajor.svg';
         { "label": "Today", "value": "today" },
         { "label": "Yesterday", "value": "yesterday" },
         { "label": "Last 7 days", "value": "lastWeek" },
-        { "label": "Option with icon", "value": "hint", "prefix": { "component": "Icon", "props": { "source": HintMajor }}},
+        { "id": "hint", "label": "Option with icon", "value": "hint" },
         { "label": "Option disabled", "value": "disabled", "disabled": true },
       ],
       table: {
@@ -42,6 +42,7 @@ import HintMajor from '@icons/HintMajor.svg';
       },
     },
     blur: {
+      control: false,
       description: 'Callback when focus is removed',
       table: {
         type: {
@@ -50,6 +51,7 @@ import HintMajor from '@icons/HintMajor.svg';
       },
     },
     focus: {
+      control: false,
       description: 'Callback when select is focused',
       table: {
         type: {
@@ -58,28 +60,38 @@ import HintMajor from '@icons/HintMajor.svg';
       },
     },
     input: {
+      control: false,
       table: {
         type: {
-          summary: 'selected value',
+          summary: 'Return: selected value',
         },
       },
     },
     change: {
+      control: false,
       table: {
         type: {
-          summary: 'selected value',
+          summary: 'Return: selected value',
         },
       },
     },
     'help-text': {
+      control: {
+        type: 'text',
+      },
       table: {
+        category: 'Slots',
         type: {
           summary: null,
         },
       },
     },
     label: {
+      control: {
+        type: 'text',
+      },
       table: {
+        category: 'Slots',
         type: {
           summary: null,
         },
@@ -87,6 +99,15 @@ import HintMajor from '@icons/HintMajor.svg';
     },
     default: {
       table: {
+        disable: true,
+      },
+    },
+    prefix: {
+      name: 'prefix-{option-id}',
+      description: 'Slot to custom prefix for each option by `option-id`',
+      controls: null,
+      table: {
+        category: 'Slots',
         type: {
           summary: null,
         },
@@ -97,20 +118,29 @@ import HintMajor from '@icons/HintMajor.svg';
 
 export const Template = (args, { argTypes }) => ({
   props: Object.keys(argTypes),
-  components: { Select },
+  components: { Select, Icon },
   data() {
     return {
       selectValue: 'today',
+      iconHintMajor: HintMajor,
       propsExtend: {
         ...this.$props,
         options: [
           ...this.$props.options,
         ],
       },
+      helpText: argTypes['help-text'],
+      label: argTypes['label'],
     };
   },
+  created() {
+    delete this.propsExtend['helpText'];
+    delete this.propsExtend['label'];
+  },
   template: `<div><Select v-bind="propsExtend" v-model="selectValue">
-    <template slot="label">Date Range</template>
+    <template slot="label">{{ label || 'Date Range' }}</template>
+    <template v-if="helpText" slot="help-text">{{ helpText }}</template>
+    <Icon :source="iconHintMajor" slot="prefix-hint" />
   </Select>
   <br/>
   <strong>Value selected:</strong> {{ selectValue }}
@@ -134,6 +164,7 @@ Select lets merchants choose one option from an options menu. Consider select wh
             .replace(/\s*<\/div>/,'')
             .replace(/\s*<br\s\/>\s*<strong>(.*)<\/strong>\s*today/,'')
             .replace(/value=".*"\s*/, '')
+            .replace(/:source='.*'\s*/, ':source="iconHintMajor"')
             .replace(/:options='(.*)'/, ':options="options" v-model="selectValue"');
           const fullSource = dedent`
             ${tmpSource}
