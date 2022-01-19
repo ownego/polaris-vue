@@ -34,7 +34,7 @@ div(
         slot(v-if="prefixId", :name="`prefix-${prefixId}`", :slot="`prefix-${prefixId}`")
         slot(v-if="suffixId", :name="`suffix-${suffixId}`", :slot="`suffix-${suffixId}`")
 ButtonMarkup(
-  v-else
+  v-else,
   v-on="{...$listeners, mouseup: onMouseUp}",
   v-bind="buttonMarkupProps",
 )
@@ -46,14 +46,14 @@ import Vue from 'vue';
 import { Component, Prop } from 'vue-property-decorator';
 import { classNames, variationName } from 'polaris-react/src/utilities/css';
 import CaretDownMinor from '@icons/CaretDownMinor.svg';
+import styles from '@/classes/Button.json';
+import { handleMouseUpByBlurring } from '@/utilities/focus';
 import { ButtonProps } from './utils';
 import { VisuallyHidden } from '../VisuallyHidden';
 import { Popover } from '../Popover';
 import { ActionList } from '../ActionList';
 import { Icon } from '../Icon';
-import styles from '@/classes/Button.json';
 import ButtonMarkup from './ButtonMarkup.vue';
-import { handleMouseUpByBlurring } from '@/utilities/focus';
 
 @Component({
   components: {
@@ -203,7 +203,7 @@ export default class Button extends Vue {
   get className() {
     const textAlignVariation = this.textAlign
       && variationName('textAlign', this.textAlign) as keyof typeof styles;
-    const sizeVariantion = this.size && variationName('size', this.size) as keyof typeof styles;
+    const sizeVariation = this.size && variationName('size', this.size) as keyof typeof styles;
 
     return classNames(
       styles.Button,
@@ -215,7 +215,7 @@ export default class Button extends Vue {
       this.plain && styles.plain,
       this.pressed && !this.disabled && !this.url && styles.pressed,
       this.monochrome && styles.monochrome,
-      this.size !== 'medium' && sizeVariantion && styles[sizeVariantion],
+      this.size !== 'medium' && sizeVariation && styles[sizeVariation],
       textAlignVariation && styles[textAlignVariation],
       this.fullWidth && styles.fullWidth,
       this.icon && this.children == null && styles.iconOnly,
