@@ -1,0 +1,266 @@
+import { Meta, Story, Canvas, ArgsTable, Source, Preview } from '@storybook/addon-docs';
+import dedent from 'ts-dedent';
+
+import { Button } from '@/polaris-vue';
+
+<Meta
+  title="Components / Actions / Button"
+  component={ Button }
+  argTypes={{
+    disclosure: {
+      control: {
+        type: 'select',
+        options: ['down', 'up', 'select', 'boolean'],
+      },
+      table: {
+        type: {
+          summary: null,
+        },
+      },
+    },
+    size: {
+      control: {
+        type: 'select',
+        options: ['slim', 'medium', 'large'],
+      },
+      table: {
+        type: {
+          summary: null,
+        },
+      },
+    },
+    textAlign: {
+      control: {
+        type: 'select',
+        options: ['left', 'right', 'center'],
+      },
+      table: {
+        type: {
+          summary: null,
+        },
+      },
+    },
+    default: {
+      table: {
+        disable: 'true',
+      }
+    },
+    icon: {
+      name: 'icon',
+      options: [
+        'placeholder',
+      ],
+      control: {
+        type: 'select',
+        labels: {
+          null: 'default',
+        },
+      },
+      table: {
+        type: {
+          summary: 'SVG Component | "placeholder" | svg html string',
+        },
+      },
+    },
+  }}
+/>
+
+export const Template = (args, { argTypes }) => ({
+  props: Object.keys(argTypes),
+  components: { Button },
+  template: `<Button v-bind="$props">Add Product</Button>`,
+});
+
+export const Variants = (args, { argTypes }) => ({
+  components: { Button },
+  template: ` <div style="margin: 0 auto; width: 97%">
+  <Button>Basic</Button>
+  <Button :outline="true">Outline</Button>
+  <span data-style="{color: '#bf0711'}" style="color: #bf0711;">
+    <Button :monochrome="true" :outline="true">Outline monochrome</Button>
+  </span>
+  <Button :primary="true">Primary</Button>
+  <Button :destructive="true">Destructive</Button>
+  <Button size="slim">Size slim</Button>
+  <Button size="large">Size large</Button>
+  <Button :loading="true">Loading</Button>
+  <Button :disabled="true">Disabled</Button>
+  <br/>
+  <br/>
+  <Button :fullWidth="true">Fullwidth</Button>
+  <br/>
+  <Button :plain="true">View shipping settings</Button>
+  <br/>
+  <span>
+    Could not retrieve data. <Button :plain="true" :monochrome="true"> Try again </Button>
+  </span>
+  <br/>
+  <Button :plain="true" :destructive="true">Remove</Button>
+  <Button :plain="true" textAlign="left">
+    This is a really long string of text that overflows onto the next line we need
+    to put in a lot of words now you can see the alignment. It is very long but a
+    customer could potentially name something this long.
+  </Button>
+  </div>`,
+});
+Variants.storyName = 'Variants';
+Variants.parameters = {
+  docs: {
+    source: false,
+    transformSource: (source) => {
+      const tmpSource = source
+        .replace(/<template>\s*/, '')
+        .replace(/\s*<\/template>/, '')
+        .replace(/<div.*>\s*/, '')
+        .replace(/\s*<\/div>/, '')
+        .replace(/<br\s*\/>\s*/g, '')
+        .replace(/data-style/, ':style')
+        .replace(/>\s*</gi, '>\n<') // line breaks
+      return tmpSource;
+    },
+  },
+}
+
+export const Disclosure = (args, { argTypes }) => ({
+  components: { Button },
+  data() {
+    return {
+      expanded: false,
+    };
+  },
+  computed: {
+    disclosure() {
+      return this.expanded ? 'up' : 'down';
+    },
+    disclosureText() {
+      return this.expanded ? 'Show less' : 'Show more';
+    },
+  },
+  template: `<div>
+    <Button
+      :plain="true"
+      :disclosure="disclosure"
+      v-on:click="expanded = !expanded"
+      on-click="expanded = !expanded"
+    >
+      {{disclosureText}}
+    </Button>
+    <br/>
+    <br/>
+    <div :style="{width: '200px'}" data-style="{width: '200px'}">
+      <Button
+        :fullWidth="true"
+        textAlign="left"
+        :disclosure="disclosure"
+        v-on:click="expanded = !expanded"
+        on-click="expanded = !expanded"
+      >
+        {{disclosureText}}
+      </Button>
+    </div>
+    <br/>
+    <Button disclosure="select">Disclosure select</Button>
+  </div>`,
+});
+Disclosure.storyName = 'Disclosure';
+Disclosure.parameters = {
+  docs: {
+    source: false,
+    transformSource: (source) => {
+      const tmpSource = source
+        .replace(/<template>/, '')
+        .replace(/<\/template>/, '')
+        .replace(/disclosure="down"/g, ':disclosure="disclosure"')
+        .replace(/Show more/g, '{{disclosureText}}')
+        .replace(/on-click/g, 'v-on:click')
+        .replace(/data-style/g, ':style')
+        .replace(/<br\s*\/>\s*/g, '')
+      const fullSource = dedent`
+        data() {
+          return {
+            expanded: false,
+          };
+        },\n
+        computed: {
+          disclosure() {
+            return this.expanded ? 'up' : 'down';
+          },
+          buttonText() {
+            return this.expanded ? 'Show less' : 'Show more';
+          },
+        },
+        ${tmpSource}
+      `;
+      return fullSource;
+    },
+  },
+}
+
+export const SplitButton = (args, { argTypes }) => ({
+  components: { Button },
+  data() {
+    return {
+      connectedDisclosure: {
+        accessibilityLabel: 'Other save actions',
+        actions: [
+          { content: 'Save as draft' },
+        ],
+      }
+    };
+  },
+  template: ` <div >
+    <Button :connectedDisclosure="connectedDisclosure" :primary="true"> Save </Button>
+  </div>`,
+});
+SplitButton.storyName = 'Split Button';
+SplitButton.parameters = {
+  docs: {
+    source: false,
+    transformSource: (source) => {
+      const tmpSource = source
+        .replace(/<template>/, '')
+        .replace(/<\/template>/, '');
+      return tmpSource;
+    },
+  },
+}
+
+# Button
+
+Buttons are used primarily for actions, such as “Add”, “Close”, “Cancel”, or “Save”. Plain buttons, which look similar to links, are used for less important or less commonly used actions, such as “view shipping settings”.
+
+For navigational actions that appear within or directly following a sentence, use the [link component.](/docs/components-navigation-link--link)
+
+<font color="#FF7900">Use component with camel case for prevent conflict with <b>button</b> element in html.</font>
+<br/><br/>
+
+### Button Variants
+
+<Canvas style={{ backgroundColor: '#f6f6f7' }}>
+  <Story story={Variants} height="280px" />
+</Canvas>
+
+### Disclosure Button
+
+<Canvas style={{ backgroundColor: '#f6f6f7' }}>
+  <Story story={Disclosure} height="140px" />
+</Canvas>
+
+### Split Button
+
+<Canvas style={{ backgroundColor: '#f6f6f7' }}>
+  <Story
+    story={SplitButton}
+    height="120px"
+    inline={false}
+  />
+</Canvas>
+
+### Example
+<Canvas style={{ backgroundColor: '#f6f6f7' }}>
+  <Story name="Button" height="40px">
+    {Template.bind({})}
+  </Story>
+</Canvas>
+
+<ArgsTable story="Button" />
