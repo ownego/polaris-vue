@@ -24,6 +24,7 @@ div(ref="container")
 
 <script lang="ts">
 import Vue from 'vue';
+import { Portal, PortalTarget } from 'portal-vue';
 import {
   Component, Prop, Watch, Ref,
 } from 'vue-property-decorator';
@@ -39,6 +40,8 @@ import { PopoverOverlay } from './components';
 @Component({
   components: {
     PopoverOverlay,
+    Portal,
+    PortalTarget,
   },
 })
 export default class Popover extends Vue {
