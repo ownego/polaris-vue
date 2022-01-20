@@ -1,10 +1,9 @@
 # Polaris Vue
 
-# Not released yet. Coming soon...
-
-
 Polaris Vue by Qikify based on [Shopify Polaris style guide](https://polaris.shopify.com/).
 We're trying to make it mostly close with Shopify style guide and get a better performance.
+
+#### Progress: 30% (We're working very hard to make it 99%)
 
 ### Documentation
 
@@ -58,15 +57,7 @@ new Vue({
 
 ## Components List
 
-Here are all the components and their status. Please check the [component's documentation](https://polaris.qikify.com/) for more information.
-If you want to contribute, all pull requests are welcome.
-
-| Component           | Status          | Description |
-| ---                 | ---             | ---         |
-| Button              | *Ongoing*       | - |
-| Icon                | Completed       | - |
-| Link                | Completed       | - |
-| List                | Completed       | - |
+See [Component Status](https://qikify.github.io/polaris-vue/?path=/docs/component-status--page) in documentation.
 
 ---
 
