@@ -62,11 +62,11 @@ export const Variants = (args, { argTypes }) => ({
   <Badge>Fulfilled</Badge>
   <Badge status="info">Published</Badge>
   <Badge status="success">Funds recovered</Badge>
-  <Badge status="attention">Unfulfilled</Badge>
-  <Badge status="warning">SSL unavailable</Badge>
-  <Badge status="critical">Not approved</Badge>
+  <Badge status="attention">Inactive</Badge>
+  <Badge status="warning">Expired</Badge>
+  <Badge status="critical">Action required</Badge>
   <br/><br/>
-  <Badge progress="incomplete">Unfulfilled</Badge>
+  <Badge progress="incomplete" status="warning">Unfulfilled</Badge>
   <Badge progress="partiallyComplete">Partially fulfilled</Badge>
   <Badge progress="complete">Fulfilled</Badge>
   <Badge
