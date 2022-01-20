@@ -65,13 +65,9 @@ new Vue({
 });
 ```
 
-<<<<<<< HEAD
-### **Styles**
-=======
 <br/>
 
 ## **Styles**
->>>>>>> origin/dev
 
 Polaris Vue supports both **CSS** & **SCSS**, you can find the neccessary styles files in `node_modules/@qikify/polaris-vue/dist/`.
 
