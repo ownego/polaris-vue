@@ -40,18 +40,11 @@ import { Button } from '@/polaris-vue';
         },
       },
     },
-    default: {
-      table: {
-        disable: 'true',
-      }
-    },
     icon: {
       name: 'icon',
-      options: [
-        'placeholder',
-      ],
       control: {
         type: 'select',
+        options: ['placeholder'],
         labels: {
           null: 'default',
         },
@@ -61,6 +54,121 @@ import { Button } from '@/polaris-vue';
           summary: 'SVG Component | "placeholder" | svg html string',
         },
       },
+    },
+    blur: {
+      name: 'blur',
+      description: 'Callback when focus leaves button',
+      control: { disable: true },
+      table: {
+        category: 'Events',
+        type: {
+          summary: '"() => void"',
+        },
+      },
+    },
+    click: {
+      name: 'click',
+      description: 'Callback when clicked',
+      control: { disable: true },
+      table: {
+        category: 'Events',
+        type: {
+          summary: '"() => void"',
+        },
+      },
+    },
+    focus: {
+      name: 'focus',
+      description: 'Callback when button becomes focussed',
+      control: { disable: true },
+      table: {
+        category: 'Events',
+        type: {
+          summary: '"() => void"',
+        },
+      },
+    },
+    keydown: {
+      name: 'keydown',
+      description: 'Callback when a keydown event is registered on the button',
+      control: { disable: true },
+      table: {
+        category: 'Events',
+        type: {
+          summary: '"(event: KeyboardEvent) => void"',
+        },
+      },
+    },
+    keypress: {
+      name: 'keypress',
+      description: 'Callback when a keypress event is registered on the button',
+      control: { disable: true },
+      table: {
+        category: 'Events',
+        type: {
+          summary: '"(event: KeyboardEvent) => void"',
+        },
+      },
+    },
+    keyup: {
+      name: 'keyup',
+      description: 'Callback when a keyup event is registered on the button',
+      control: { disable: true },
+      table: {
+        category: 'Events',
+        type: {
+          summary: '"(event: KeyboardEvent) => void"',
+        },
+      },
+    },
+    mouseover: {
+      name: 'mouseover',
+      description: 'Callback when mouse enter',
+      control: { disable: true },
+      table: {
+        category: 'Events',
+        type: {
+          summary: '"() => void"',
+        },
+      },
+    },
+    touchstart: {
+      name: 'touchstart',
+      description: 'Callback when element is touched',
+      control: { disable: true },
+      table: {
+        category: 'Events',
+        type: {
+          summary: '"() => void"',
+        },
+      },
+    },
+    prefix: {
+      name: 'prefix-${prefixId}',
+      description: 'Slot to custom prefix for each item of actions on connectedDisclosure by `prefixId`',
+      control: { disable: true },
+      table: {
+        category: 'Slots',
+        type: {
+          summary: null,
+        },
+      },
+    },
+    suffix: {
+      name: 'suffix-${suffixId}',
+      description: 'Slot to custom suffix for each item of actions on connectedDisclosure by `suffixId`',
+      control: { disable: true },
+      table: {
+        category: 'Slots',
+        type: {
+          summary: null,
+        },
+      },
+    },
+    default: {
+      table: {
+        disable: 'true',
+      }
     },
   }}
 />
@@ -219,8 +327,22 @@ SplitButton.parameters = {
     transformSource: (source) => {
       const tmpSource = source
         .replace(/<template>/, '')
-        .replace(/<\/template>/, '');
-      return tmpSource;
+        .replace(/<\/template>/, '')
+        .replace( /(?<=:connectedDisclosure=).+/, '"connectedDisclosure"');
+      const fullSource = dedent`
+        data() {
+          return {
+            connectedDisclosure: {
+              accessibilityLabel: 'Other save actions',
+              actions: [
+                { content: 'Save as draft' },
+              ],
+            },
+          };
+        },
+        ${tmpSource}
+      `;
+      return fullSource;
     },
   },
 }
@@ -230,6 +352,8 @@ SplitButton.parameters = {
 Buttons are used primarily for actions, such as “Add”, “Close”, “Cancel”, or “Save”. Plain buttons, which look similar to links, are used for less important or less commonly used actions, such as “view shipping settings”.
 
 For navigational actions that appear within or directly following a sentence, use the [link component.](/docs/components-navigation-link--link)
+
+For connectedDisclosure actions, use the [ActionList component.](/docs/components-actions-actionlist--actionlist)
 
 <font color="#FF7900">Use component with camel case for prevent conflict with <b>button</b> element in html.</font>
 <br/><br/>
