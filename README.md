@@ -101,11 +101,7 @@ Similar with SCSS, you can import the `main.css` file in your `.vue` file. Or us
 
 `PolarisVue` and `PortalVue` require access to the global Vue reference (via `import Vue from 'vue'`).
 
-<<<<<<< HEAD
-<font color="#0c5460">If you are using a specific build of Vue (i.e. runtime-only vs. compiler + runtime), you will need to set up an alias to `vue` in your bundler config to ensure that your project, **PolarisVue** and **PortalVue** are all using the same build version of Vue. If you are seeing an error such as <font color="red">"$attr and $listeners is readonly"</font>, or <font color="red">"Multiple instances of Vue detected"</font>, then you will need to set up an alias.</font>
-=======
 If you are using a specific build of Vue (i.e. runtime-only vs. compiler + runtime), you will need to set up an alias to `vue` in your bundler config to ensure that your project, **PolarisVue** and **PortalVue** are all using the same build version of Vue. If you are seeing an error such as `$attr and $listeners is readonly`, or `Multiple instances of Vue detected`, then you will need to set up an alias.
->>>>>>> origin/dev
 
 <br/>
 
