@@ -24,6 +24,7 @@ export * from './SettingAction';
 export * from './Spinner';
 export * from './TextStyle';
 export * from './TextField';
+export * from './Truncate';
 export * from './UnstyledLink';
 export * from './UnstyledButton';
 export * from './VisuallyHidden';
