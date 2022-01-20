@@ -9,9 +9,13 @@ We're trying to make it mostly close with Shopify style guide and get a better p
 
 **Follow Polaris React version:** [7.6.0](https://github.com/Shopify/polaris-react/releases/tag/v7.6.0) - Release date: *19/01/2022*.
 
-### Documentation
+<br/>
+
+## Documentation
 
 Online documentation: [Click Here](https://qikify.github.io/polaris-vue/)
+
+<br/>
 
 ## Installation
 
@@ -26,6 +30,8 @@ Via Yarn:
 ```bash
 yarn add @qikify/polaris-vue
 ```
+
+<br/>
 
 ## Usage
 
@@ -59,7 +65,13 @@ new Vue({
 });
 ```
 
+<<<<<<< HEAD
 ### **Styles**
+=======
+<br/>
+
+## **Styles**
+>>>>>>> origin/dev
 
 Polaris Vue supports both **CSS** & **SCSS**, you can find the neccessary styles files in `node_modules/@qikify/polaris-vue/dist/`.
 
@@ -93,7 +105,11 @@ Similar with SCSS, you can import the `main.css` file in your `.vue` file. Or us
 
 `PolarisVue` and `PortalVue` require access to the global Vue reference (via `import Vue from 'vue'`).
 
+<<<<<<< HEAD
 <font color="#0c5460">If you are using a specific build of Vue (i.e. runtime-only vs. compiler + runtime), you will need to set up an alias to `vue` in your bundler config to ensure that your project, **PolarisVue** and **PortalVue** are all using the same build version of Vue. If you are seeing an error such as <font color="red">"$attr and $listeners is readonly"</font>, or <font color="red">"Multiple instances of Vue detected"</font>, then you will need to set up an alias.</font>
+=======
+If you are using a specific build of Vue (i.e. runtime-only vs. compiler + runtime), you will need to set up an alias to `vue` in your bundler config to ensure that your project, **PolarisVue** and **PortalVue** are all using the same build version of Vue. If you are seeing an error such as `$attr and $listeners is readonly`, or `Multiple instances of Vue detected`, then you will need to set up an alias.
+>>>>>>> origin/dev
 
 <br/>
 
@@ -131,6 +147,8 @@ module.exports = {
 }
 ```
 
+<br/>
+
 ## Components List
 
 See [Component Status](https://qikify.github.io/polaris-vue/?path=/docs/component-status--page) in documentation.
@@ -146,11 +164,10 @@ git clone https://github.com/qikify/polaris-vue.git
 # Install packages
 yarn
 
+# Create a Demo.vue file to test
+
 # Development & Demo - http://localhost:1902
 yarn serve
-
-# Build main library
-yarn build-bundle
 ```
 
 ## Contributing
