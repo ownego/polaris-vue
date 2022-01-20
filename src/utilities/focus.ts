@@ -3,6 +3,7 @@ import { isElementInViewport } from 'polaris-react/src/utilities/is-element-in-v
 type Filter = (element: Element) => void;
 
 const FOCUSABLE_SELECTOR = 'a,frame,iframe,input:not([type=hidden]):not(:disabled),select:not(:disabled),textarea:not(:disabled),button:not(:disabled),*[tabindex]';
+const MENUITEM_FOCUSABLE_SELECTORS = 'a[role="menuitem"],frame[role="menuitem"],iframe[role="menuitem"],input[role="menuitem"]:not([type=hidden]):not(:disabled),select[role="menuitem"]:not(:disabled),textarea[role="menuitem"]:not(:disabled),button[role="menuitem"]:not(:disabled),*[tabindex]:not([tabindex="-1"])';
 
 function matches(node: HTMLElement, selector: string) {
   if (node.matches) {
@@ -74,3 +75,68 @@ export function findFirstFocusableNode(
 
   return element.querySelector(FOCUSABLE_SELECTOR);
 }
+
+function getMenuFocusableDescendants(
+  element: HTMLElement,
+): NodeListOf<HTMLElement> {
+  return element.querySelectorAll(
+    MENUITEM_FOCUSABLE_SELECTORS,
+  ) as NodeListOf<HTMLElement>;
+}
+
+function getCurrentFocusedElementIndex(
+  allFocusableChildren: NodeListOf<HTMLElement>,
+  currentFocusedElement: HTMLElement,
+): number {
+  let currentItemIdx = 0;
+
+  // eslint-disable-next-line no-restricted-syntax
+  for (const focusableChild of allFocusableChildren) {
+    if (focusableChild === currentFocusedElement) {
+      break;
+    }
+    currentItemIdx += 1;
+  }
+  return currentItemIdx === allFocusableChildren.length ? -1 : currentItemIdx;
+}
+
+export function wrapFocusPreviousFocusableMenuItem(
+  parentElement: HTMLElement,
+  currentFocusedElement: HTMLElement,
+) {
+  const allFocusableChildren = getMenuFocusableDescendants(parentElement);
+  const currentItemIdx = getCurrentFocusedElementIndex(
+    allFocusableChildren,
+    currentFocusedElement,
+  );
+  if (currentItemIdx === -1) {
+    allFocusableChildren[0].focus();
+  } else {
+    allFocusableChildren[
+      (currentItemIdx - 1 + allFocusableChildren.length) % allFocusableChildren.length
+    ].focus();
+  }
+}
+
+export function wrapFocusNextFocusableMenuItem(
+  parentElement: HTMLElement,
+  currentFocusedElement: HTMLElement,
+) {
+  const allFocusableChildren = getMenuFocusableDescendants(parentElement);
+  const currentItemIdx = getCurrentFocusedElementIndex(
+    allFocusableChildren,
+    currentFocusedElement,
+  );
+  if (currentItemIdx === -1) {
+    allFocusableChildren[0].focus();
+  } else {
+    allFocusableChildren[
+      (currentItemIdx + 1) % allFocusableChildren.length
+    ].focus();
+  }
+}
+
+export const handleMouseUpByBlurring = (event: MouseEvent) => {
+  const currentTarget = event.currentTarget as HTMLInputElement;
+  currentTarget.blur();
+};

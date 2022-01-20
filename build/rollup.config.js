@@ -5,6 +5,7 @@ import typescript from 'rollup-plugin-typescript2';
 import ttypescript from 'ttypescript';
 import json from '@rollup/plugin-json';
 import svg from 'rollup-plugin-vue-inline-svg';
+import scss from 'rollup-plugin-scss';
 
 import baseConfig from './rollup.config.base';
 
@@ -43,7 +44,29 @@ if (!argv.format || argv.format === 'es') {
     ],
   };
 
+  const cssBuild = {
+    input: 'src/scss/main.scss',
+    plugins: [
+      scss({
+        output: 'dist/css/main.css',
+        failOnError: true,
+      }),
+    ],
+  };
+
+  const vendorsBuild = {
+    input: 'src/scss/_vendors.scss',
+    plugins: [
+      scss({
+        output: 'dist/scss/_vendors.scss',
+        failOnError: true,
+      }),
+    ],
+  };
+
   buildFormats.push(merged);
+  buildFormats.push(cssBuild);
+  buildFormats.push(vendorsBuild);
 }
 
 // Export config

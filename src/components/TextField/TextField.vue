@@ -61,7 +61,10 @@ Labelled(
         :aria-expanded="ariaExpanded",
         :aria-required="requiredIndicator",
         v-bind="normalizeAriaMultiline(multiline)",
-        @input="$emit('input', $event.target.value)",
+        @input="onChange",
+        @keydown="handleKeyPress",
+        @focus="comboboxTextFieldFocus",
+        @blur="comboboxTextFieldBlur",
       )
       div(
         v-if="$slots.suffix",
@@ -89,10 +92,14 @@ Labelled(
         Icon(:source="clearIcon" color="base")
       Spinner(
         v-if="type === 'number' && step !== 0 && !disabled && !readOnly",
+        @change="handleNumberChange",
+        @mousedown="handleButtonPress",
+        @mouseup="handleButtonRelease",
       )
       div(:class="backdropClassName")
       Resizer(
         v-if="multiline",
+        :contents="normalizedValue || placeholder",
         :current-height="height",
         :minimum-lines="typeof multiline === 'number' ? multiline : 1",
         @height-change="handleExpandingResize",
@@ -101,10 +108,17 @@ Labelled(
 
 <script lang="ts">
 import Vue from 'vue';
-import { Component, Prop, Ref } from 'vue-property-decorator';
+import {
+  Component,
+  Prop,
+  Ref,
+  Inject,
+  Watch,
+} from 'vue-property-decorator';
 import CircleCancelMinor from '@shopify/polaris-icons/dist/svg/CircleCancelMinor.svg';
 import { classNames, variationName } from 'polaris-react/src/utilities/css';
 import type { Error, Action } from 'types/type';
+import styles from '@/classes/TextField.json';
 import { useUniqueId } from '@/utilities/unique-id';
 import { VisuallyHidden } from '../VisuallyHidden';
 import { Connected } from '../Connected';
@@ -112,7 +126,6 @@ import { Icon } from '../Icon';
 import { Labelled } from '../Labelled';
 import { helpTextID, labelID } from '../Labelled/utils';
 import { Resizer, Spinner } from './components';
-import styles from '@/classes/TextField.json';
 
 type Type =
   | 'text'
@@ -152,9 +165,17 @@ type InputMode =
   },
 })
 export default class TextField extends Vue {
+  @Inject({ default: Function }) comboboxTextFieldFocus!: () => void;
+
+  @Inject({ default: Function }) comboboxTextFieldBlur!: () => void;
+
+  @Inject({ default: Function }) comboboxTextFieldChange!: () => void;
+
   @Ref('prefixRef') prefixRef!: HTMLDivElement;
 
   @Ref('suffixRef') suffixRef!: HTMLDivElement;
+
+  @Ref('inputRef') inputRef!: HTMLInputElement;
 
   /** Hint text to display */
   @Prop({ type: String })
@@ -307,6 +328,8 @@ export default class TextField extends Vue {
 
   public clearButtonClassName = styles.ClearButton;
 
+  public buttonPressTimer?: number;
+
   get uniqueId(): string {
     return useUniqueId('TextField', this.id);
   }
@@ -323,11 +346,11 @@ export default class TextField extends Vue {
     return this.step ? this.step : 1;
   }
 
-  get normalizeMax(): number | string {
+  get normalizedMax(): number | string {
     return this.max ? this.max : Infinity;
   }
 
-  get normalizeMin(): number | string {
+  get normalizedMin(): number | string {
     return this.min ? this.min : -Infinity;
   }
 
@@ -350,8 +373,9 @@ export default class TextField extends Vue {
   }
 
   get inputClassName(): string {
-    const inputAlignVariation = this.$slots.suffix
-      && styles[variationName('Input-align', this.align) as keyof typeof styles];
+    const inputAlignVariation = this.align && styles[
+      variationName('Input-align', this.align) as keyof typeof styles
+    ];
 
     return classNames(
       styles.Input,
@@ -430,12 +454,33 @@ export default class TextField extends Vue {
     return labelledBy.join(' ');
   }
 
+  @Watch('focused')
+  onFocusedChanged() {
+    if (!this.inputRef) return;
+
+    if (this.focused) {
+      (this.$refs.inputRef as HTMLInputElement).focus();
+    } else {
+      (this.$refs.inputRef as HTMLInputElement).blur();
+    }
+  }
+
   public containsAffix(target: HTMLElement | EventTarget) {
     return (
       target instanceof HTMLElement
       && ((this.prefixRef && this.prefixRef.contains(target))
       || (this.suffixRef && this.suffixRef.contains(target)))
     );
+  }
+
+  public onClick(event: InputEvent): void {
+    const target = event.target as HTMLInputElement;
+
+    if (this.containsAffix(target) || this.focus) {
+      return;
+    }
+
+    (this.$refs.inputRef as HTMLInputElement).focus();
   }
 
   public onFocus(event: InputEvent): void {
@@ -456,14 +501,75 @@ export default class TextField extends Vue {
     this.$emit('blur');
   }
 
-  public onClick(event: InputEvent): void {
+  public onChange(event: InputEvent): void {
     const target = event.target as HTMLInputElement;
 
-    if (this.containsAffix(target) || this.focus) {
+    if (this.comboboxTextFieldChange) {
+      this.comboboxTextFieldChange();
+    }
+
+    this.$emit('input', target.value);
+    this.$emit('change');
+  }
+
+  public handleNumberChange(payload: number): void {
+    // Returns the length of decimal places in a number
+    const dpl = (num: number) => (num.toString().split('.')[1] || []).length;
+    const numericValue = this.value ? parseFloat(this.value) : 0;
+
+    if (typeof numericValue !== 'number') return;
+
+    /** Making sure the new value has the same length of decimal places as the
+     * step / value has.
+     */
+    const decimalPlaces = Math.max(dpl(numericValue), dpl(this.normalizedStep));
+
+    const newValue = Math.min(
+      Number(this.normalizedMax),
+      Math.max(numericValue + payload * this.normalizedStep, Number(this.normalizedMin)),
+    );
+
+    // re-bind value for input el
+    (this.$refs.inputRef as HTMLInputElement).value = String(newValue.toFixed(decimalPlaces));
+
+    this.$emit('input', String(newValue.toFixed(decimalPlaces)));
+  }
+
+  // eslint-disable-next-line class-methods-use-this
+  public handleKeyPress(event: KeyboardEvent): void {
+    const { key, which } = { ...event };
+    const numbersSpec = /[\d.eE+-]$/;
+
+    if (this.type !== 'number' || which !== 13 || numbersSpec.test(key)) {
       return;
     }
 
-    (this.$refs.inputRef as HTMLInputElement)?.focus();
+    event.preventDefault();
+  }
+
+  public handleButtonPress(): void {
+    const minInterval = 50;
+    const decrementBy = 10;
+    let interval = 200;
+
+    const onChangeInterval = () => {
+      if (interval > minInterval) interval -= decrementBy;
+      this.handleNumberChange(0);
+      this.buttonPressTimer = window.setTimeout(
+        onChangeInterval,
+        interval,
+      );
+    };
+
+    this.buttonPressTimer = window.setTimeout(onChangeInterval, interval);
+
+    document.addEventListener('mouseup', this.handleButtonRelease, {
+      once: true,
+    });
+  }
+
+  public handleButtonRelease(): void {
+    clearTimeout(this.buttonPressTimer);
   }
 
   // eslint-disable-next-line class-methods-use-this

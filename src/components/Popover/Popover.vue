@@ -1,7 +1,8 @@
 <template lang="pug">
+// TODO: Update docs
 div(ref="container")
   slot(name="activator")
-  Portal(v-if="activatorNode && active", to="popover")
+  Portal(v-if="activatorNode && active", :to="portalId")
     div(:data-portal-id="portalId")
       PopoverOverlay(
         :activator="activatorNode",
@@ -12,16 +13,18 @@ div(ref="container")
         :preferredPosition="preferredPosition",
         :preferredAlignment="preferredAlignment",
         :zIndexOverride="zIndexOverride",
+        :autofocusTarget="autofocusTarget",
         @close="handleClose",
         @scrolled-to-bottom="$emit('scrolled-to-bottom')",
       )
         template(v-slot:overlay="props")
           slot(name="content")
-  PortalTarget(name="popover")
+  PortalTarget(:name="portalId")
 </template>
 
 <script lang="ts">
 import Vue from 'vue';
+import { Portal, PortalTarget } from 'portal-vue';
 import {
   Component, Prop, Watch, Ref,
 } from 'vue-property-decorator';
@@ -37,6 +40,8 @@ import { PopoverOverlay } from './components';
 @Component({
   components: {
     PopoverOverlay,
+    Portal,
+    PortalTarget,
   },
 })
 export default class Popover extends Vue {

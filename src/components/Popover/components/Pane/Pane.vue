@@ -8,7 +8,7 @@ div(
   slot(v-else)
 Scrollable(
   v-else,
-  shadow,
+  shadow=true,
   :class="className",
   @scrolled-to-bottom="$emit('scrolled-to-bottom')",
 )

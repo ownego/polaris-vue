@@ -13,4 +13,51 @@ import { Meta } from '@storybook/addon-docs';
   }}
 />
 
-Coming soon...
+# Polaris Icons
+
+You can use all icons from [Shopify Polaris Icons](https://polaris-icons.shopify.com/) Library or any SVG files.
+
+`vue-svg-loader` & `polaris-icons` are already included in Polaris Vue package.
+
+So you don't have to install any additional packages.
+
+<br/>
+<br/>
+
+## Usage
+
+You have to use `vue-svg-loader` in your project. There are 2 ways to do as below.
+
+See [Icon Component](#icon-component) for more details.
+
+<br/>
+
+1. **[Recommended]** Config in `vue.config.js` if you are using `vue-cli` to compile your project:
+
+```javascript
+// vue.config.js
+module.exports = {
+  chainWebpack: (config) => {
+    const svgRule = config.module.rule('svg');
+    svgRule.uses.clear();
+    svgRule
+      .use('babel-loader')
+      .loader('babel-loader')
+      .end()
+      .use('vue-svg-loader')
+      .loader('vue-svg-loader');
+  },
+};
+
+// In components *.vue
+import CirclePlusMinor from '@shopify/polaris-icons/dist/svg/CirclePlusMinor.svg';
+```
+
+2. **OR** use `!vue-svg-loader!` prefix in your import path.
+
+```javascript
+// Change `CirclePlusMinor` to icon name from Shopify Icon Library
+import CirclePlusMinor from '!vue-svg-loader!@shopify/polaris-icons/dist/svg/CirclePlusMinor.svg';
+```
+
+

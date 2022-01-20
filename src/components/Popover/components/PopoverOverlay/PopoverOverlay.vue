@@ -23,7 +23,7 @@ PositionedOverlay(
       div(
         :tabIndex="autofocusTarget === 'none' ? undefined : -1",
         :style="contentStyles",
-        :className="contentClassNames",
+        :class="contentClassNames",
         ref="content",
       )
         Pane(

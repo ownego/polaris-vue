@@ -35,7 +35,7 @@ export const parameters = {
       order: [
         "Get Started",
         "Polaris Icons",
-        "Changelog",
+        "Component Status",
         "Components",
         [
           "Actions",
