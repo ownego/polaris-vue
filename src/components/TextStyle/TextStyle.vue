@@ -9,12 +9,13 @@ import { Component, Prop } from 'vue-property-decorator';
 import { classNames, variationName } from 'polaris-react/src/utilities/css';
 import styles from '@/classes/TextStyle.json';
 
-type Variation = 'positive' | 'negative' | 'strong' | 'subdued' | 'code';
+type Variation = 'positive' | 'negative'| 'warning' | 'strong' | 'subdued' | 'code';
 
 // eslint-disable-next-line no-shadow
 enum VariationValue {
   Positive = 'positive',
   Negative = 'negative',
+  Warning = 'warning',
   Strong = 'strong',
   Subdued = 'subdued',
   Code = 'code',
