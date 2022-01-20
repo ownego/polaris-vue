@@ -11,9 +11,9 @@ Labelled(
   template(slot="help-text")
     slot(name="help-text")
   Connected
-    template(name="left")
+    template(slot="left")
       slot(name="connected-left")
-    template(name="right")
+    template(slot="right")
       slot(name="connected-right")
     div(
       :class="wrapperClassName",
