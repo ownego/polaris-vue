@@ -6,9 +6,9 @@ Labelled(
   :labelHidden="labelHidden",
   :requiredIndicator="requiredIndicator",
 )
-  template(name="label")
+  template(slot="label")
     slot(name="label")
-  template(name="help-text")
+  template(slot="help-text")
     slot(name="help-text")
   Connected
     template(name="left")
