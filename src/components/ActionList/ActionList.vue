@@ -36,14 +36,14 @@ components(
 import Vue from 'vue';
 import { Component, Prop, Ref } from 'vue-property-decorator';
 import { classNames } from 'polaris-react/src/utilities/css';
-import { ActionListItemDescriptor, ActionListSection } from './utils';
 import styles from '@/classes/ActionList.json';
 import { KeypressListener, Key } from '@/components/KeypressListener';
-import { Section } from './components/Section';
 import {
   wrapFocusPreviousFocusableMenuItem,
   wrapFocusNextFocusableMenuItem,
 } from '@/utilities/focus';
+import { Section } from './components/Section';
+import { ActionListItemDescriptor, ActionListSection } from './utils';
 
 @Component({
   components: {

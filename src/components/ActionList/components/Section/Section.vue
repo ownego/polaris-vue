@@ -20,9 +20,9 @@ SectionMarkup(
 <script lang="ts">
 import Vue from 'vue';
 import { Component, Prop } from 'vue-property-decorator';
+import styles from '@/classes/ActionList.json';
 import SectionMarkup from './SectionMarkup.vue';
 import { ActionListSection } from '../../utils';
-import styles from '@/classes/ActionList.json';
 
 @Component({
   components: {

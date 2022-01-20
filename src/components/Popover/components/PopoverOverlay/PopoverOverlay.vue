@@ -48,15 +48,15 @@ import {
 } from 'vue-property-decorator';
 import { classNames } from 'polaris-react/src/utilities/css';
 import { durationFast } from '@shopify/polaris-tokens';
-import {
-  PopoverCloseSource, PopoverAutofocusTarget, nodeContainsDescendant, TransitionStatus,
-} from '../../utils';
 import { findFirstFocusableNode } from '@/utilities/focus';
 import { PositionedOverlay, PreferredAlignment, PreferredPosition } from '@/components/PositionedOverlay';
-import { Pane } from '../Pane';
 import styles from '@/classes/Popover.json';
 import { EventListener } from '@/components/EventListener';
 import { KeypressListener, Key } from '@/components/KeypressListener';
+import {
+  PopoverCloseSource, PopoverAutofocusTarget, nodeContainsDescendant, TransitionStatus,
+} from '../../utils';
+import { Pane } from '../Pane';
 
 @Component({
   components: {

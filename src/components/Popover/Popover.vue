@@ -28,13 +28,13 @@ import { Portal, PortalTarget } from 'portal-vue';
 import {
   Component, Prop, Watch, Ref,
 } from 'vue-property-decorator';
-import type { PreferredAlignment, PreferredPosition } from '../PositionedOverlay';
 import {
   findFirstFocusableNodeIncludingDisabled,
   focusNextFocusableNode,
 } from '@/utilities/focus';
-import { PopoverCloseSource, PopoverAutofocusTarget, setActivatorAttributes } from './utils';
 import { useUniqueId } from '@/utilities/unique-id';
+import type { PreferredAlignment, PreferredPosition } from '../PositionedOverlay';
+import { PopoverCloseSource, PopoverAutofocusTarget, setActivatorAttributes } from './utils';
 import { PopoverOverlay } from './components';
 
 @Component({

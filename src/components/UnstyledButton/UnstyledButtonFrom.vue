@@ -10,9 +10,9 @@ UnstyledButton(
 import Vue from 'vue';
 import { Component, Prop } from 'vue-property-decorator';
 import { ComplexAction } from '@/interface';
+import { handleMouseUpByBlurring } from '@/utilities/focus';
 import { UnstyledButtonProps } from './utils';
 import UnstyledButton from './UnstyledButton.vue';
-import { handleMouseUpByBlurring } from '@/utilities/focus';
 
 @Component({
   components: {

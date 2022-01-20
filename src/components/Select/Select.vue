@@ -82,11 +82,11 @@ import type { Action } from 'types/type';
 import { classNames } from 'polaris-react/src/utilities/css';
 import SelectMinor from '@icons/SelectMinor.svg';
 import { useUniqueId } from '@/utilities/unique-id';
+import styles from '@/classes/Select.json';
 import { StrictOption, SelectOption, SelectGroup } from './utils';
 import { Icon } from '../Icon';
 import { Labelled } from '../Labelled';
 import { helpTextID } from '../Labelled/utils';
-import styles from '@/classes/Select.json';
 
 interface HideableStrictOption extends StrictOption {
   hidden?: boolean;

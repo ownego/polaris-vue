@@ -27,11 +27,11 @@ span(:class="contentClass")
 <script lang="ts">
 import Vue from 'vue';
 import { Component, Prop } from 'vue-property-decorator';
-import { ItemProps } from '../../utils';
 import { TextStyle } from '@/components/TextStyle';
 import { Icon } from '@/components/Icon';
 import { Badge } from '@/components/Badge';
 import styles from '@/classes/ActionList.json';
+import { ItemProps } from '../../utils';
 
 @Component({
   components: {

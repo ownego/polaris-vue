@@ -34,13 +34,13 @@ li(:role="roleName")
 import Vue from 'vue';
 import { Component, Prop } from 'vue-property-decorator';
 import { classNames } from 'polaris-react/src/utilities/css';
-import { ItemProps } from '../../utils';
 import { Scrollable } from '@/components/Scrollable';
 import { ScrollTo } from '@/components/Scrollable/components/ScrollTo';
 import { UnstyledLink } from '@/components/UnstyledLink';
-import ContentElement from './ContentElement.vue';
 import styles from '@/classes/ActionList.json';
 import { handleMouseUpByBlurring } from '@/utilities/focus';
+import ContentElement from './ContentElement.vue';
+import { ItemProps } from '../../utils';
 
 @Component({
   components: {
