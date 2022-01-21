@@ -54,7 +54,7 @@ import ChevronRightMinor from '@icons/ChevronRightMinor.svg';
       },
     },
     prefix: {
-      name: 'prefix-${prefixId}',
+      name: 'prefix-{prefixId}',
       description: 'Slot to custom prefix for each item of ActionList by `prefixId`',
       control: { disable: true },
       table: {
@@ -65,7 +65,7 @@ import ChevronRightMinor from '@icons/ChevronRightMinor.svg';
       },
     },
     suffix: {
-      name: 'suffix-${suffixId}',
+      name: 'suffix-{suffixId}',
       description: 'Slot to custom suffix for each item of ActionList by `suffixId`',
       control: { disable: true },
       table: {
@@ -86,17 +86,19 @@ import ChevronRightMinor from '@icons/ChevronRightMinor.svg';
 export const Template = (args, { argTypes }) => ({
   props: Object.keys(argTypes),
   components: { ActionList },
-  template: `<div :style="{width: '200px', background: '#f6f6f7'}" data-style="{width: '200px', background: '#f6f6f7'}">
+  template: `<div :style="{width: '200px', background: '#fff'}" data-style="{width: '200px', background: '#fff'}">
     <ActionList v-bind="$props"></ActionList>
   </div>`,
 });
 
-export const inAPopover = (args, { argTypes }) => ({
-  components: { ActionList, Button, Popover },
+export const itemExamples = (args, { argTypes }) => ({
+  components: { ActionList, Button, Popover, Icon },
   data() {
     return {
       active: false,
-      items: [
+      iconTickSmallMinor: TickSmallMinor,
+      iconChevronRightMinor: ChevronRightMinor,
+      inAPopoverItems: [
         {
           content: 'Import file',
           onAction: this.handleImportedAction,
@@ -105,11 +107,41 @@ export const inAPopover = (args, { argTypes }) => ({
           content: 'Export file',
           onAction: this.handleExportedAction,
         },
-      ]
+      ],
+      iconsOrImagesItems: [
+        {
+          content: 'Import file',
+          image: 'https://user-images.githubusercontent.com/31103446/150456962-80f99435-aa6b-459f-be78-4b89a03417a7.png',
+        },
+        {
+          content: 'Export file',
+          icon: ExportMinor,
+        },
+      ],
+      iconAndSuffixItems: [
+        {
+          active: true,
+          content: 'Import file',
+          icon: ImportMinor,
+          suffixId: 'import',
+        },
+        {content: 'Export file', icon: ExportMinor},
+      ],
+      suffixAndPrefixItems: [
+        {
+          content: 'Go here',
+          prefixId: 'here',
+          suffixId: 'here',
+        },
+        {
+          content: 'Or there',
+          suffixId: 'there',
+        },
+      ],
     };
   },
   methods: {
-    toggleActive() {
+    toggle() {
       this.active = !this.active;
     },
     handleImportedAction() {
@@ -119,44 +151,66 @@ export const inAPopover = (args, { argTypes }) => ({
       console.log('Exported!');
     }
   },
-  template: ` <div>
+  template: ` <div :style="{display: 'flex', flexDirection: 'row', gap: '40px', justifyContent: 'center'}">
     <Popover
       :active="active"
       autofocusTarget="first-node"
-      v-on:click="toggleActive"
-      on-click="toggleActive"
+      v-on:click="toggle"
+      on-click="toggle"
     >
-      <Button
-        :disclosure="true"
-        slot="activator"
-        v-on:click="toggleActive"
-        on-click="toggleActive"
-      > More actions
+      <Button slot="activator" :disclosure="true" v-on:click="toggle" on-click="toggle">
+        In a Popover
       </Button>
-      <ActionList
-        slot="content"
-        :items="items"
-      >
+      <ActionList slot="content" :items="inAPopoverItems" data-items="inAPopoverItems" />
+    </Popover>
+    <Popover :active="true">
+      <Button slot="activator" :disclosure="true"> With Icons or image </Button>
+      <ActionList slot="content" data-items="iconsOrImagesItems" :items="iconsOrImagesItems"/>
+    </Popover>
+    <Popover :active="true">
+      <Button slot="activator" :disclosure="true"> With an icon and a suffix </Button>
+      <ActionList slot="content" data-items="iconAndSuffixItems" :items="iconAndSuffixItems">
+        <Icon
+          :source="iconTickSmallMinor"
+          data-source="iconTickSmallMinor"
+          slot="suffix-import"
+        />
+      </ActionList>
+    </Popover>
+    <Popover :active="true">
+      <Button slot="activator" :disclosure="true"> With suffix and prefix </Button>
+      <ActionList slot="content" data-items="suffixAndPrefixItems" :items="suffixAndPrefixItems">
+        <img slot="prefix-here" width="30px" height="30px" src="https://user-images.githubusercontent.com/31103446/150456962-80f99435-aa6b-459f-be78-4b89a03417a7.png"/>
+        <Icon :source="iconChevronRightMinor" data-source="iconChevronRightMinor" slot="suffix-here"/>
+        <Icon :source="iconChevronRightMinor" data-source="iconChevronRightMinor" slot="suffix-there"/>
       </ActionList>
     </Popover>
   </div>`,
 });
-inAPopover.storyName = 'In a popover';
-inAPopover.parameters = {
+itemExamples.storyName = 'Items';
+itemExamples.parameters = {
   docs: {
     source: false,
     transformSource: (source) => {
       const tmpSource = source
         .replace(/<template>\s*/, '')
         .replace(/\s*<\/template>/, '')
-        .replace( /(?<=:items=).+/, '"items"')
-        .replace( /(?<=:active=).+/, '"active"')
-        .replace(/on-click/g, 'v-on:click');
+        .replace(/on-click/g, 'v-on:click')
+        .replace(/:items='(.*)'\s*/g, '')
+        .replace(/:source='(.*)'\s*/g, '')
+        .replace(/data-items/g, ':items')
+        .replace(/data-source/g, ':source');
       const fullSource = dedent`
+        import ExportMinor from '!vue-svg-loader!@shopify/polaris-icons/dist/svg/ExportMinor.svg';
+        import ImportMinor from '!vue-svg-loader!@shopify/polaris-icons/dist/svg/ImportMinor.svg';
+        import TickSmallMinor from '!vue-svg-loader!@shopify/polaris-icons/dist/svg/TickSmallMinor.svg';
+        import ChevronRightMinor from '!vue-svg-loader!@shopify/polaris-icons/dist/svg/ChevronRightMinor.svg';
         data() {
           return {
-            active: false,
-            items: [
+            inAPopoverActive: false,
+            iconTickSmallMinor: TickSmallMinor,
+            iconChevronRightMinor: ChevronRightMinor,
+            inAPopoverItems: [
               {
                 content: 'Import file',
                 onAction: this.handleImportedAction,
@@ -165,7 +219,37 @@ inAPopover.parameters = {
                 content: 'Export file',
                 onAction: this.handleExportedAction,
               },
-            ]
+            ],
+            iconsOrImagesItems: [
+              {
+                content: 'Import file',
+                image: 'https://user-images.githubusercontent.com/31103446/150456962-80f99435-aa6b-459f-be78-4b89a03417a7.png',
+              },
+              {
+                content: 'Export file',
+                icon: ExportMinor,
+              },
+            ],
+            iconAndSuffixItems: [
+              {
+                active: true,
+                content: 'Import file',
+                icon: ImportMinor,
+                suffixId: 'import',
+              },
+              {content: 'Export file', icon: ExportMinor},
+            ],
+            suffixAndPrefixItems: [
+              {
+                content: 'Go here',
+                prefixId: 'here',
+                suffixId: 'here',
+              },
+              {
+                content: 'Or there',
+                suffixId: 'there',
+              },
+            ],
           };
         },
         methods: {
@@ -186,290 +270,10 @@ inAPopover.parameters = {
   },
 }
 
-export const iconsOrImages = (args, { argTypes }) => ({
-  components: { ActionList, Button, Popover },
-  data() {
-    return {
-      active: false,
-      items: [
-        {
-          content: 'Import file',
-          image: 'https://user-images.githubusercontent.com/31103446/150456962-80f99435-aa6b-459f-be78-4b89a03417a7.png',
-        },
-        {
-          content: 'Export file',
-          icon: ExportMinor,
-        },
-      ]
-    };
-  },
-  methods: {
-    toggleActive() {
-      this.active = !this.active;
-    },
-    handleImportedAction() {
-      console.log('Imported!');
-    },
-    handleExportedAction() {
-      console.log('Exported!');
-    }
-  },
-  template: ` <div>
-    <Popover
-      :active="active"
-      autofocusTarget="first-node"
-      v-on:click="toggleActive"
-      on-click="toggleActive"
-    >
-      <Button
-        :disclosure="true"
-        slot="activator"
-        v-on:click="toggleActive"
-        on-click="toggleActive"
-      > More actions
-      </Button>
-      <ActionList
-        slot="content"
-        :items="items"
-      >
-      </ActionList>
-    </Popover>
-  </div>`,
-});
-iconsOrImages.storyName = 'With icons or image';
-iconsOrImages.parameters = {
-  docs: {
-    source: false,
-    transformSource: (source) => {
-      const tmpSource = source
-        .replace(/<template>\s*/, '')
-        .replace(/\s*<\/template>/, '')
-        .replace( /(?<=:items=).+/, '"items"')
-        .replace( /(?<=:active=).+/, '"active"')
-        .replace(/on-click/g, 'v-on:click');
-      const fullSource = dedent`
-        import ExportMinor from '!vue-svg-loader!@shopify/polaris-icons/dist/svg/ExportMinor.svg';
-        data() {
-          return {
-            active: false,
-            items: [
-              {
-                content: 'Import file',
-                image: 'https://user-images.githubusercontent.com/31103446/150456962-80f99435-aa6b-459f-be78-4b89a03417a7.png',
-              },
-              {
-                content: 'Export file',
-                icon: ExportMinor,
-              },
-            ]
-          };
-        },
-        methods: {
-          toggleActive() {
-            this.active = !this.active;
-          },
-        },
-        ${tmpSource}
-      `;
-      return fullSource;
-    },
-  },
-}
-
-export const iconAndSuffix = (args, { argTypes }) => ({
+export const sectionExamples = (args, { argTypes }) => ({
   components: { ActionList, Button, Popover, Icon },
   data() {
     return {
-      active: false,
-      items: [
-        {
-          active: true,
-          content: 'Import file',
-          icon: ImportMinor,
-          suffixId: 'import',
-        },
-        {content: 'Export file', icon: ExportMinor},
-      ],
-      suffixIcon: TickSmallMinor,
-    };
-  },
-  methods: {
-    toggleActive() {
-      this.active = !this.active;
-    },
-    handleImportedAction() {
-      console.log('Imported!');
-    },
-    handleExportedAction() {
-      console.log('Exported!');
-    }
-  },
-  template: ` <div>
-    <Popover
-      :active="active"
-      autofocusTarget="first-node"
-      v-on:click="toggleActive"
-      on-click="toggleActive"
-    >
-      <Button
-        :disclosure="true"
-        slot="activator"
-        v-on:click="toggleActive"
-        on-click="toggleActive"
-      > More actions
-      </Button>
-      <ActionList
-        slot="content"
-        :items="items"
-      >
-        <Icon
-          :source="suffixIcon"
-          slot="suffix-import"
-        />
-      </ActionList>
-    </Popover>
-  </div>`,
-});
-iconAndSuffix.storyName = 'With an icon and a suffix';
-iconAndSuffix.parameters = {
-  docs: {
-    source: false,
-    transformSource: (source) => {
-      const tmpSource = source
-        .replace(/<template>\s*/, '')
-        .replace(/\s*<\/template>/, '')
-        .replace( /(?<=:items=).+/, '"items"')
-        .replace( /(?<=:active=).+/, '"active"')
-        .replace( /source='(.*)'/, 'source="suffixIcon"')
-        .replace(/on-click/g, 'v-on:click');
-      const fullSource = dedent`
-        import ExportMinor from '!vue-svg-loader!@shopify/polaris-icons/dist/svg/ExportMinor.svg';
-        import ImportMinor from '!vue-svg-loader!@shopify/polaris-icons/dist/svg/ImportMinor.svg';
-        import TickSmallMinor from '!vue-svg-loader!@shopify/polaris-icons/dist/svg/TickSmallMinor.svg';
-        data() {
-          return {
-            active: false,
-            items: [
-              {
-                active: true,
-                content: 'Import file',
-                icon: ImportMinor,
-                suffixId: 'import',
-              },
-              {content: 'Export file', icon: ExportMinor},
-            ],
-            suffixIcon: TickSmallMinor,
-          };
-        },
-        methods: {
-          toggleActive() {
-            this.active = !this.active;
-          },
-        },
-        ${tmpSource}
-      `;
-      return fullSource;
-    },
-  },
-}
-
-export const suffixAndPrefix = (args, { argTypes }) => ({
-  components: { ActionList, Button, Popover, Icon },
-  data() {
-    return {
-      active: false,
-      items: [
-        {
-          content: 'Go here',
-          prefixId: 'here',
-          suffixId: 'here',
-        },
-        {
-          content: 'Or there',
-          suffixId: 'there',
-        },
-      ],
-      iconChevronRightMinor: ChevronRightMinor,
-    };
-  },
-  methods: {
-    toggleActive() {
-      this.active = !this.active;
-    },
-  },
-  template: ` <div>
-    <Popover
-      :active="active"
-      autofocusTarget="first-node"
-      v-on:click="toggleActive"
-      on-click="toggleActive"
-    >
-      <Button
-        :disclosure="true"
-        slot="activator"
-        v-on:click="toggleActive"
-        on-click="toggleActive"
-      > More actions
-      </Button>
-      <ActionList
-        slot="content"
-        :items="items"
-      >
-        <img slot="prefix-here" width="30px" height="30px" src="https://user-images.githubusercontent.com/31103446/150456962-80f99435-aa6b-459f-be78-4b89a03417a7.png"/>
-        <Icon :source="iconChevronRightMinor" slot="suffix-here"/>
-        <Icon :source="iconChevronRightMinor" slot="suffix-there"/>
-      </ActionList>
-    </Popover>
-  </div>`,
-});
-suffixAndPrefix.storyName = 'With suffix and prefix';
-suffixAndPrefix.parameters = {
-  docs: {
-    source: false,
-    transformSource: (source) => {
-      const tmpSource = source
-        .replace(/<template>\s*/, '')
-        .replace(/\s*<\/template>/, '')
-        .replace( /(?<=:items=).+/, '"items"')
-        .replace( /(?<=:active=).+/, '"active"')
-        .replace( /source='(.*)'/g, 'source="iconChevronRightMinor"')
-        .replace(/on-click/g, 'v-on:click');
-      const fullSource = dedent`
-        import ChevronRightMinor from '!vue-svg-loader!@shopify/polaris-icons/dist/svg/ChevronRightMinor.svg';
-        data() {
-          return {
-            active: false,
-            items: [
-              {
-                content: 'Go here',
-                prefixId: 'here',
-                suffixId: 'here',
-              },
-              {
-                content: 'Or there',
-                suffixId: 'there',
-              },
-            ],
-            iconChevronRightMinor: ChevronRightMinor,
-          };
-        },
-        methods: {
-          toggleActive() {
-            this.active = !this.active;
-          },
-        },
-        ${tmpSource}
-      `;
-      return fullSource;
-    },
-  },
-}
-
-export const section = (args, { argTypes }) => ({
-  components: { ActionList, Button, Popover, Icon },
-  data() {
-    return {
-      active: false,
       sections: [
         {
           title: 'File options',
@@ -486,91 +290,7 @@ export const section = (args, { argTypes }) => ({
           ],
         },
       ],
-    }
-  },
-  methods: {
-    toggleActive() {
-      this.active = !this.active;
-    },
-  },
-  template: ` <div>
-    <Popover
-      :active="active"
-      autofocusTarget="first-node"
-      v-on:click="toggleActive"
-      on-click="toggleActive"
-    >
-      <Button
-        :disclosure="true"
-        slot="activator"
-        v-on:click="toggleActive"
-        on-click="toggleActive"
-      > More actions
-      </Button>
-      <ActionList
-        slot="content"
-        :sections="sections"
-      >
-      </ActionList>
-    </Popover>
-  </div>`,
-});
-section.storyName = 'Section';
-section.parameters = {
-  docs: {
-    source: false,
-    transformSource: (source) => {
-      const tmpSource = source
-        .replace(/<template>\s*/, '')
-        .replace(/\s*<\/template>/, '')
-        .replace( /(?<=:sections=).+/, '"sections"')
-        .replace( /(?<=:active=).+/, '"active"')
-        .replace( /source='(.*)'/, 'source="suffixIcon"')
-        .replace(/on-click/g, 'v-on:click');
-      const fullSource = dedent`
-        import ExportMinor from '!vue-svg-loader!@shopify/polaris-icons/dist/svg/ExportMinor.svg';
-        import ImportMinor from '!vue-svg-loader!@shopify/polaris-icons/dist/svg/ImportMinor.svg';
-        import EditMinor from '!vue-svg-loader!@shopify/polaris-icons/dist/svg/EditMinor.svg';
-        import DeleteMinor from '!vue-svg-loader!@shopify/polaris-icons/dist/svg/DeleteMinor.svg';
-        data() {
-          return {
-            active: false,
-            sections: [
-              {
-                title: 'File options',
-                items: [
-                  {content: 'Import file', icon: ImportMinor},
-                  {content: 'Export file', icon: ExportMinor},
-                ],
-              },
-              {
-                title: 'Bulk actions',
-                items: [
-                  {content: 'Edit', icon: EditMinor},
-                  {content: 'Delete', icon: DeleteMinor},
-                ],
-              },
-            ],
-          };
-        },
-        methods: {
-          toggleActive() {
-            this.active = !this.active;
-          },
-        },
-        ${tmpSource}
-      `;
-      return fullSource;
-    },
-  },
-}
-
-export const destructive = (args, { argTypes }) => ({
-  components: { ActionList, Button, Popover },
-  data() {
-    return {
-      active: false,
-      sections: [
+      destructiveItemSections: [
         {
           title: 'File options',
           items: [
@@ -588,55 +308,72 @@ export const destructive = (args, { argTypes }) => ({
           ],
         },
       ],
+      helpTextSections: [
+        {
+          items: [
+            {
+              content: 'Blog posts',
+              helpText: 'Manage your blog articles',
+            },
+            {
+              content: 'Blogs',
+              helpText: 'Manage blogs published to your Online Store',
+            },
+          ],
+        },
+      ],
     }
   },
-  methods: {
-    toggleActive() {
-      this.active = !this.active;
-    },
-  },
-  template: ` <div>
-    <Popover
-      :active="active"
-      autofocusTarget="first-node"
-      v-on:click="toggleActive"
-      on-click="toggleActive"
-    >
-      <Button
-        :disclosure="true"
-        slot="activator"
-        v-on:click="toggleActive"
-        on-click="toggleActive"
-      > More actions
-      </Button>
-      <ActionList
-        slot="content"
-        :sections="sections"
-      >
-      </ActionList>
+  template: ` <div :style="{display: 'flex', flexDirection: 'row', gap: '120px', justifyContent: 'center'}">
+    <Popover :active="true">
+      <Button slot="activator" :disclosure="true"> Sections </Button>
+      <ActionList slot="content" :sections="sections" data-sections="sections" />
+    </Popover>
+    <Popover :active="true">
+      <Button slot="activator" :disclosure="true"> With Destructive Item </Button>
+      <ActionList slot="content" :sections="destructiveItemSections" data-sections="destructiveItemSections" />
+    </Popover>
+    <Popover :active="true">
+      <Button slot="activator" :disclosure="true"> With Help Text </Button>
+      <ActionList slot="content" :sections="helpTextSections" data-sections="helpTextSections" />
     </Popover>
   </div>`,
 });
-destructive.storyName = 'With destructive item';
-destructive.parameters = {
+sectionExamples.storyName = 'Sections';
+sectionExamples.parameters = {
   docs: {
     source: false,
     transformSource: (source) => {
       const tmpSource = source
         .replace(/<template>\s*/, '')
         .replace(/\s*<\/template>/, '')
-        .replace( /(?<=:sections=).+/, '"sections"')
-        .replace( /(?<=:active=).+/, '"active"')
-        .replace( /source='(.*)'/, 'source="suffixIcon"')
-        .replace(/on-click/g, 'v-on:click');
+        .replace(/on-click/g, 'v-on:click')
+        .replace(/:sections='(.*)'\s*/g, '')
+        .replace(/data-sections/g, ':sections')
       const fullSource = dedent`
         import ExportMinor from '!vue-svg-loader!@shopify/polaris-icons/dist/svg/ExportMinor.svg';
         import ImportMinor from '!vue-svg-loader!@shopify/polaris-icons/dist/svg/ImportMinor.svg';
+        import EditMinor from '!vue-svg-loader!@shopify/polaris-icons/dist/svg/EditMinor.svg';
         import DeleteMinor from '!vue-svg-loader!@shopify/polaris-icons/dist/svg/DeleteMinor.svg';
         data() {
           return {
-            active: false,
             sections: [
+              {
+                title: 'File options',
+                items: [
+                  {content: 'Import file', icon: ImportMinor},
+                  {content: 'Export file', icon: ExportMinor},
+                ],
+              },
+              {
+                title: 'Bulk actions',
+                items: [
+                  {content: 'Edit', icon: EditMinor},
+                  {content: 'Delete', icon: DeleteMinor},
+                ],
+              },
+            ],
+            destructiveItemSections: [
               {
                 title: 'File options',
                 items: [
@@ -654,85 +391,7 @@ destructive.parameters = {
                 ],
               },
             ],
-          };
-        },
-        methods: {
-          toggleActive() {
-            this.active = !this.active;
-          },
-        },
-        ${tmpSource}
-      `;
-      return fullSource;
-    },
-  },
-}
-
-export const helpText = (args, { argTypes }) => ({
-  components: { ActionList, Button, Popover },
-  data() {
-    return {
-      active: false,
-      sections: [
-        {
-          items: [
-            {
-              content: 'Blog posts',
-              helpText: 'Manage your blog articles',
-            },
-            {
-              content: 'Blogs',
-              helpText: 'Manage blogs published to your Online Store',
-            },
-          ],
-        },
-      ],
-    }
-  },
-  methods: {
-    toggleActive() {
-      this.active = !this.active;
-    },
-  },
-  template: ` <div>
-    <Popover
-      :active="active"
-      autofocusTarget="first-node"
-      v-on:click="toggleActive"
-      on-click="toggleActive"
-    >
-      <Button
-        :disclosure="true"
-        slot="activator"
-        v-on:click="toggleActive"
-        on-click="toggleActive"
-      > More actions
-      </Button>
-      <ActionList
-        slot="content"
-        :sections="sections"
-      >
-      </ActionList>
-    </Popover>
-  </div>`,
-});
-helpText.storyName = 'With help text';
-helpText.parameters = {
-  docs: {
-    source: false,
-    transformSource: (source) => {
-      const tmpSource = source
-        .replace(/<template>\s*/, '')
-        .replace(/\s*<\/template>/, '')
-        .replace( /(?<=:sections=).+/, '"sections"')
-        .replace( /(?<=:active=).+/, '"active"')
-        .replace( /source='(.*)'/, 'source="suffixIcon"')
-        .replace(/on-click/g, 'v-on:click');
-      const fullSource = dedent`
-        data() {
-          return {
-            active: false,
-            sections: [
+            helpTextSections: [
               {
                 items: [
                   {
@@ -746,12 +405,7 @@ helpText.parameters = {
                 ],
               },
             ],
-          };
-        },
-        methods: {
-          toggleActive() {
-            this.active = !this.active;
-          },
+          }
         },
         ${tmpSource}
       `;
@@ -764,53 +418,24 @@ helpText.parameters = {
 
 Action lists render a list of actions or selectable options. This component is usually placed inside a popover container to create a dropdown menu or to let merchants select from a list of options.
 
-For Icon Usage, use the [Icon component.](/docs/components-images-and-icons-icon--icon)
+For Icon usages, use the [Icon component.](/docs/components-images-and-icons-icon--icon)
 
 <br/><br/>
 
-### In a Popover
+### Items
 
 <Canvas style={{ backgroundColor: '#f6f6f7' }}>
-  <Story story={inAPopover} height="250px" inline={false} />
+  <Story story={itemExamples} height="250px" inline={false} />
 </Canvas>
 
-### With icons or image
+### Sections
 
 <Canvas style={{ backgroundColor: '#f6f6f7' }}>
-  <Story story={iconsOrImages} height="250px" inline={false} />
+  <Story story={sectionExamples} height="300px" inline={false} />
 </Canvas>
 
-### With an icon and a suffix
+### ActionList
 
-<Canvas style={{ backgroundColor: '#f6f6f7' }}>
-  <Story story={iconAndSuffix} height="250px" inline={false} />
-</Canvas>
-
-### With prefix and suffix
-
-<Canvas style={{ backgroundColor: '#f6f6f7' }}>
-  <Story story={suffixAndPrefix} height="250px" inline={false} />
-</Canvas>
-
-### Section
-
-<Canvas style={{ backgroundColor: '#f6f6f7' }}>
-  <Story story={section} height="280px" inline={false} />
-</Canvas>
-
-### With destructive item
-
-<Canvas style={{ backgroundColor: '#f6f6f7' }}>
-  <Story story={destructive} height="250px" inline={false} />
-</Canvas>
-
-### With help text
-
-<Canvas style={{ backgroundColor: '#f6f6f7' }}>
-  <Story story={helpText} height="250px" inline={false} />
-</Canvas>
-
-### Example
 <Canvas>
   <Story name="ActionList" height="40px">
     {Template.bind({})}
