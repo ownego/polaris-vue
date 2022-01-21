@@ -30,10 +30,6 @@ import { Item, Group } from './components';
 })
 export default class FormLayout extends Vue {
   public className = classNames(styles.FormLayout);
-
-  created() {
-    console.log(this.$slots);
-  }
 }
 </script>
 <style lang="scss">
