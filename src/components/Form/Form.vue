@@ -24,7 +24,7 @@ import { VisuallyHidden } from '../VisuallyHidden';
 })
 export default class Form extends Vue {
   /** Toggles if form submits on Enter keypress. Defaults to true. */
-  @Prop({ type: Boolean })
+  @Prop({ type: Boolean, default: true })
   public implicitSubmit?: boolean;
 
   /** Blocks the default form action */
