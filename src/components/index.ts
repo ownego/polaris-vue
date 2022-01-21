@@ -7,6 +7,8 @@ export * from './ChoiceList';
 export * from './Connected';
 export * from './Combobox';
 export * from './EventListener';
+export * from './Form';
+export * from './FormLayout';
 export * from './Icon';
 export * from './Image';
 export * from './InlineError';
