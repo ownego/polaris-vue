@@ -1,6 +1,6 @@
 <template lang="pug">
 div(
-  :className="className",
+  :class="className",
   @focus="onFocus",
   @blur="onBlur",
 )
