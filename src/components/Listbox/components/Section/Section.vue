@@ -27,7 +27,7 @@ export default class Section extends Vue {
   @Provide() SectionContext = this.sectionId;
 
   @Prop({ type: Boolean, default: true })
-  public divider!: boolean;
+  public divider?: boolean;
 
   public listboxSectionDataSelector = listboxSectionDataSelector;
 

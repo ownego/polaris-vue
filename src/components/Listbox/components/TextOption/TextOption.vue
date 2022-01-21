@@ -8,6 +8,7 @@ div(:class="wrapperClassName")
       Checkbox(:checked="selected")
         template(slot="label")
           slot(name="label")
+    slot(v-else)
 </template>
 
 <script lang="ts">
@@ -31,13 +32,13 @@ export default class TextOption extends Vue {
    * Whether the option is selected
    */
   @Prop({ type: Boolean })
-  public selected!: boolean;
+  public selected?: boolean;
 
   /**
    * Whether the option is disabled
    */
   @Prop({ type: Boolean })
-  public disabled!: boolean;
+  public disabled?: boolean;
 
   public contentClassName = styles.Content;
 

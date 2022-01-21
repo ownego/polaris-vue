@@ -16,11 +16,26 @@ li(
   :aria-selected="selected",
   data-listbox-option,
 )
-  UnstyledLink(v-if="mappedActionContext.url", :external="mappedActionContext.external")
-    TextOption(:selected="selected", :disabled="disabled")
+  UnstyledLink(
+    v-if="mappedActionContext.url",
+    :url="mappedActionContext.url",
+    :external="mappedActionContext.external",
+  )
+    TextOption(
+      v-if="!isSlotContainHTMLTag",
+      :selected="selected",
+      :disabled="disabled",
+    )
       slot
-  TextOption(:selected="selected", :disabled="disabled")
-    slot
+    slot(v-else)
+  template(v-else)
+    TextOption(
+      v-if="!isSlotContainHTMLTag",
+      :selected="selected",
+      :disabled="disabled",
+    )
+      slot
+    slot(v-else)
 </template>
 
 <script lang="ts">
@@ -37,10 +52,10 @@ import styles from '@/classes/Option.json';
 import {
   listboxWithinSectionDataSelector,
 } from 'polaris-react/src/components/Listbox/components/Section/selectors';
+import { NavigableOption } from 'polaris-react/src/utilities/listbox/types';
 import { TextOption } from '../TextOption';
 import { UnstyledLink } from '../../../UnstyledLink';
 import { MappedActionContextType, OptionProps } from './utils';
-import { NavigableOption } from '../../utils';
 
 @Component({
   components: {
@@ -50,8 +65,6 @@ import { NavigableOption } from '../../utils';
 })
 export default class ListBox extends Vue {
   @Inject({ default: {} }) mappedActionContext!: MappedActionContextType;
-
-  @Inject({ default: Function }) onAction!: () => void;
 
   @Inject({ default: '' }) sectionId!: string;
 
@@ -69,26 +82,26 @@ export default class ListBox extends Vue {
    * Visually hidden text for screen readers
    */
   @Prop({ type: String })
-  public accessibilityLabel!: OptionProps['accessibilityLabel'];
+  public accessibilityLabel?: OptionProps['accessibilityLabel'];
 
   /**
    * Option is selected
    */
   @Prop({ type: Boolean })
-  public selected!: OptionProps['selected'];
+  public selected?: OptionProps['selected'];
 
   /**
    * Option is disabled
    * @default false
    */
   @Prop({ type: Boolean, default: false })
-  public disabled!: OptionProps['disabled'];
+  public disabled?: OptionProps['disabled'];
 
   /**
    * Adds a border-bottom to the Option
    */
   @Prop({ type: Boolean })
-  public divider!: OptionProps['divider'];
+  public divider?: OptionProps['divider'];
 
   public isWithinSection = Boolean(this.sectionId);
 
@@ -112,11 +125,17 @@ export default class ListBox extends Vue {
     return this.mappedActionContext.role || 'option';
   }
 
+  get isSlotContainHTMLTag(): boolean {
+    return Boolean(this.$slots.default?.[0].tag);
+  }
+
   public handleOptionClick(event: MouseEvent): void {
     event.preventDefault();
-    this.onAction();
+    if (this.mappedActionContext && this.mappedActionContext.onAction) {
+      this.mappedActionContext.onAction();
+    }
 
-    if (this.listItemRef && !this.onAction) {
+    if (this.listItemRef && !this.mappedActionContext.onAction) {
       const params = {
         domId: this.domId,
         value: this.value,
