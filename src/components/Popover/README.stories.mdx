@@ -1,5 +1,6 @@
 import { Meta, Story, Canvas, ArgsTable } from '@storybook/addon-docs';
-import { Popover, List, ListItem } from '@/polaris-vue';
+import dedent from 'ts-dedent';
+import { Popover, ActionList, Button, Pane, PopoverSection, FormLayout, Select, TextField } from '@/polaris-vue';
 
 <Meta
   title="Components / Overlays / Popover"
@@ -69,41 +70,236 @@ import { Popover, List, ListItem } from '@/polaris-vue';
 
 export const Template = (args, { argTypes }) => ({
   props: Object.keys(argTypes),
-  components: { Popover, List, ListItem },
-  template: `
-  <Popover v-bind="$props">
-    <button slot="activator" @click="active = !active">Action</button>
-    <List type="number" slot="content">
-      <ListItem>Yellow shirt</ListItem>
-      <ListItem>Red shirt</ListItem>
-      <ListItem>Green shirt</ListItem>
-  </Popover>
-  `,
+  components: { ActionList, Button, Popover },
+  data() {
+    return {
+      active: true,
+      items: [
+        { content: 'Import file' },
+        { content: 'Export file' },
+      ]
+    };
+  },
+  methods: {
+    toggleActive() {
+      this.active = !this.active;
+    },
+  },
+  template: ` <div>
+    <Popover :active="active">
+      <Button
+        slot="activator"
+        :disclosure="true"
+        v-on:click="toggleActive"
+        on-click="toggleActive"
+      > More actions
+      </Button>
+      <ActionList slot="content" :items="items" />
+    </Popover>
+  </div>`,
 });
+
+export const ContentAndActions = (args, { argTypes }) => ({
+  components: { ActionList, Button, Popover, Pane, PopoverSection },
+  data() {
+    return {
+      active: true,
+      items: [
+        {content: 'Online store'},
+        {content: 'Facebook'},
+        {content: 'Shopify POS'},
+      ]
+    };
+  },
+  methods: {
+    toggleActive() {
+      this.active = !this.active;
+    },
+  },
+  template: ` <div>
+    <Popover
+      :active="active"
+      autofocusTarget="first-node"
+      v-on:close="toggleActive"
+      on-close="toggleActive"
+    >
+      <Button
+        slot="activator"
+        :disclosure="true"
+        v-on:click="toggleActive"
+        on-click="toggleActive"
+      > Sales channels
+      </Button>
+      <Pane slot="extra-content" :fixed="true">
+        <PopoverSection>
+          <p>Available sales channels</p>
+        </PopoverSection>
+      </Pane>
+      <ActionList slot="content" actionRole="menuitem" :items="items" data-items="items" />
+    </Popover>
+  </div>`,
+});
+ContentAndActions.storyName = 'With content and actions';
+ContentAndActions.parameters = {
+  docs: {
+    source: false,
+    transformSource: (source) => {
+      const tmpSource = source
+        .replace(/<template>\s*/, '')
+        .replace(/\s*<\/template>/, '')
+        .replace(/on-/g, 'v-on:')
+        .replace(/:items='(.*)'\s*/g, '')
+        .replace(/active/, ':active="active"')
+        .replace(/data-items/g, ':items')
+      const fullSource = dedent`
+        data() {
+          return {
+            active: true,
+            items: [
+              {content: 'Online store'},
+              {content: 'Facebook'},
+              {content: 'Shopify POS'},
+            ]
+          };
+        },
+        methods: {
+          toggleActive() {
+            this.active = !this.active;
+          },
+        },
+        ${tmpSource}
+      `;
+      return fullSource;
+    },
+  },
+}
+
+export const FormComponents = (args, { argTypes }) => ({
+  components: { Button, Popover, FormLayout, TextField, Select },
+  data() {
+    return {
+      active: true,
+      options: [{label: 'Tagged with', value: 'Tagged with'}],
+      selectedValue: 'Tagged with',
+      tagValue: '',
+    };
+  },
+  methods: {
+    toggleActive() {
+      this.active = !this.active;
+    },
+    handleTagValueChange(value) {
+      this.tagValue = value;
+    },
+  },
+  template: ` <div>
+    <Popover
+      :active="active"
+      aria-haspopup="false"
+      :sectioned="true"
+      v-on:close="toggleActive"
+      on-close="toggleActive"
+    >
+      <Button
+        slot="activator"
+        :disclosure="true"
+        v-on:click="toggleActive"
+        on-click="toggleActive"
+      > Filter
+      </Button>
+      <FormLayout slot="content">
+        <Select slot="field-select" :options="options" v-model="selectedValue" data-model="selectedValue">
+          <template slot="label">Show all customers where:</template>
+        </Select>
+        <TextField
+          slot="field-tags"
+          :value="tagValue"
+          data-Value="tagValue"
+          @change="handleTagValueChange"
+          on-change="handleTagValueChange"
+          autoComplete="off"
+        >
+          <template slot="label">Tags</template>
+        </TextField>
+        <Button slot="field-button" size="slim">Add filter</Button>
+      </FormLayout>
+    </Popover>
+  </div>`,
+});
+FormComponents.storyName = 'With form components';
+FormComponents.parameters = {
+  docs: {
+    source: false,
+    transformSource: (source) => {
+      const tmpSource = source
+        .replace(/<template>\s*/, '')
+        .replace(/\s*<\/template>/, '')
+        .replace(/on-/g, 'v-on:')
+        .replace(/value=".*"\s*/g, '')
+        .replace(/data-Value/g, ':value')
+        .replace(/data-model/g, 'v-model')
+        .replace(/active/, ':active="active"')
+        .replace(/data-items/g, ':items')
+      const fullSource = dedent`
+        data() {
+          return {
+            active: true,
+            options: [{label: 'Tagged with', value: 'Tagged with'}],
+            selectedValue: 'Tagged with',
+            tagValue: '',
+          };
+        },
+        methods: {
+          toggleActive() {
+            this.active = !this.active;
+          },
+          handleTagValueChange(value) {
+            this.tagValue = value;
+          },
+        },
+        ${tmpSource}
+      `;
+      return fullSource;
+    },
+  },
+}
 
 # Popover
 
 Popovers are small overlays that open on demand. They let merchants access additional content and actions without cluttering the page.
 
-<Canvas>
+For ActionList usages, use the [ActionList component.](/docs/components-actions-actionlist--action-list)
+
+### With Content and Actions
+
+<Canvas style={{ backgroundColor: '#f6f6f7' }}>
+  <Story story={ContentAndActions} height="280px" inline={false} />
+</Canvas>
+
+### With Form Components
+
+<Canvas style={{ backgroundColor: '#f6f6f7' }}>
+  <Story story={FormComponents} height="280px" inline={false} />
+</Canvas>
+
+<Canvas style={{ backgroundColor: '#f6f6f7' }}>
   <Story
     name="Popover"
-    args={{
-      active: false,
-    }}
     height="300px"
+    inline={false}
     parameters={{
       docs: {
         transformSource: (source) => {
           const tmpSource = source
-            .replace(/<template>/, '')
-            .replace(/<\/template>/, '');
+            .replace(/<template>\s*/, '')
+            .replace(/\s*<\/template>/, '')
+            .replace( /(?<=:items=).+/, '"items"')
+            .replace( /(?<=:active=).+/, '"active"')
+            .replace(/on-click/g, 'v-on:click');
           return tmpSource;
-        },
       },
     }}
-  >
-    {Template.bind({})}
+  > {Template.bind({})}
   </Story>
 </Canvas>
 
