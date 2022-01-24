@@ -7,7 +7,7 @@ We're trying to make it mostly close with Shopify style guide and get a better p
 
 **Package size:** ~55KB (all components).
 
-**Follow Polaris React version:** [7.6.0](https://github.com/Shopify/polaris-react/releases/tag/v7.6.0) - Release date: *19/01/2022*.
+**Follow Polaris React version:** [8.0.0](https://github.com/Shopify/polaris-react/releases/tag/v8.0.0) - Release date: *21/01/2022*.
 
 <br/>
 
