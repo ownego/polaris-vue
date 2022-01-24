@@ -7,6 +7,7 @@ export * from './ChoiceList';
 export * from './Connected';
 export * from './Combobox';
 export * from './EventListener';
+export * from './ExceptionList';
 export * from './Form';
 export * from './FormLayout';
 export * from './Icon';
