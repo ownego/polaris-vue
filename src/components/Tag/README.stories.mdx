@@ -1,0 +1,90 @@
+import { Meta, Story, Canvas, ArgsTable } from '@storybook/addon-docs';
+import dedent from 'ts-dedent';
+
+import { Tag } from '@/polaris-vue';
+
+<Meta
+  title="Components / Forms / Tag"
+  component={ Tag }
+  argTypes={{
+    disabled: {
+      table: {
+        type: {
+          summary: null,
+        },
+      },
+    },
+    click: {
+      description: 'Callback when tag is clicked or keypressed. Renders without remove button or url when set.',
+      control: false,
+      table: {
+        type: {
+          summary: null,
+        },
+      },
+    },
+    remove: {
+      control: false,
+      description: 'Callback when remove button is clicked or keypressed.',
+      table: {
+        type: {
+          summary: null,
+        },
+      },
+    },
+    default: {
+      table: {
+        disable: true,
+      },
+    },
+  }}
+/>
+
+export const Template = (args, { argTypes }) => ({
+  props: Object.keys(argTypes),
+  components: { Tag },
+  methods: {
+    removeHandle() {
+      alert('Removed');
+    },
+    clickHandle() {
+      alert('Clicked');
+    },
+  },
+  template: `<div>
+  <Tag v-bind="$props">Wholesale</Tag>
+  <Tag @remove="removeHandle" data-remove="removeHandle">Removable</Tag>
+  <Tag @click="clickHandle" data-click="clickHandle">Clickable</Tag>
+  <Tag url="https://github.com/qikify/polaris-vue">With link</Tag>
+  </div>`,
+});
+
+# Tag
+
+Tags represent a set of interactive, merchant-supplied keywords that help label, organize, and categorize objects. Tags can be added or removed from an object by merchants.
+
+<Canvas>
+  <Story
+    name="Tag"
+    height="30px"
+    parameters={{
+      docs: {
+        transformSource: (source) => {
+          const tmpSource = source
+            .replace(/<div>\s\s\s/,'')
+            .replace(/\s*<\/div>/,'')
+            .replace(/data-remove/,'@remove')
+            .replace(/data-click/,'@click')
+          const fullSource = dedent`
+            ${tmpSource}
+          `;
+          return fullSource;
+        },
+      },
+    }}
+  >
+    {Template.bind({})}
+  </Story>
+</Canvas>
+
+<ArgsTable story="Tag" />
