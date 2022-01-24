@@ -1,34 +1,44 @@
 import { Meta, Story, Canvas, ArgsTable } from '@storybook/addon-docs';
-import { Spinner } from '@/polaris-vue';
+import { Thumbnail } from '@/polaris-vue';
+import CirclePlusMinor from '@icons/CirclePlusMinor.svg';
 
 <Meta
-  title="Components / Feedback indicators / Spinner"
-  component={ Spinner }
+  title="Components / Images and Icons / Thumbnail"
+  component={ Thumbnail }
   argTypes={{
-    accessibilityLabel: {
-      table: {
-        type: { summary: null },
-      },
-    },
-    hasFocusableParent: {
-      table: {
-        type: { summary: null },
-      },
-    },
     size: {
       name: 'size',
-      description: 'Size of Spinner',
+      description: 'Size of Thumbnail',
       options: [
         'large',
+        'medium',
         'small',
       ],
       control: { type: 'select' },
       table: {
         defaultValue: {
-          summary: 'large'
+          summary: 'medium'
         },
         type: {
           summary: null,
+        },
+      },
+    },
+    source: {
+      name: 'source',
+      options: [
+        'CirclePlusMinor',
+        'https://burst.shopifycdn.com/photos/black-leather-choker-necklace_373x@2x.jpg',
+      ],
+      control: {
+        type: 'select',
+        labels: {
+          null: 'default',
+        },
+      },
+      table: {
+        type: {
+          summary: 'image url String | SVG Component',
         },
       },
     },
@@ -42,28 +52,40 @@ import { Spinner } from '@/polaris-vue';
 
 export const Template = (args, { argTypes }) => ({
   props: Object.keys(argTypes),
-  components: { Spinner},
-  template: `<Spinner v-bind="$props"/>`,
+  components: { Thumbnail },
+  computed: {
+    thumbnailSource() {
+      if (args.source === 'CirclePlusMinor') {
+        return CirclePlusMinor;
+      }
+      return args.source;
+    },
+  },
+  template: `<Thumbnail :source="thumbnailSource" v-bind="$props" icon-name="${args.source}" />`,
 });
 
-# Spinner
+# Thumbnail
 
-Spinners are used to notify merchants that their action is being processed. For loading states, spinners should only be used for content that can’t be represented with skeleton loading components, like for data charts.
+Use thumbnails as a visual anchor and identifier for an object. They should be used along with text to provide context.
 
 <Canvas>
   <Story
-    name="Spinner"
+    name="Thumbnail"
     height="60px"
     args={{
-      accessibilityLabel: 'Spinner example',
-      size: 'large',
+      alt: 'Thumbnail example',
+      size: 'medium',
+      source: 'https://burst.shopifycdn.com/photos/black-leather-choker-necklace_373x@2x.jpg'
     }}
     parameters={{
       docs: {
         transformSource: (source) => {
           const tmpSource = source
             .replace(/<template>/, '')
-            .replace(/<\/template>/, '');
+            .replace(/<\/template>/, '')
+            .replace(/source="(.*)"\s*/, '')
+            .replace(/:source='(.*)'\s*/, '')
+            .replace(/icon-name/, ':source');
           return tmpSource;
         },
       },
@@ -73,4 +95,4 @@ Spinners are used to notify merchants that their action is being processed. For 
   </Story>
 </Canvas>
 
-<ArgsTable story="Spinner" />
+<ArgsTable story="Thumbnail" />
