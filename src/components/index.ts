@@ -24,6 +24,7 @@ export * from './Scrollable';
 export * from './Select';
 export * from './SettingAction';
 export * from './Spinner';
+export * from './Tag';
 export * from './TextStyle';
 export * from './TextField';
 export * from './Truncate';
