@@ -12,15 +12,7 @@ div(
   )
     slot(name="title")
   div(:class="classItems")
-    template(
-      v-if="$slots",
-      v-for="(field, index) in Object.keys($slots)",
-    )
-      Item(
-        v-if="field.startsWith('field-')",
-        :key="index",
-      )
-        slot(:name="field")
+    slot
   div(
     v-if="$slots['help-text']",
     :id="helpTextId",
