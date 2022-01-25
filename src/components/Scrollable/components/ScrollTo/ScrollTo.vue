@@ -14,21 +14,19 @@ import {
   Watch,
 } from 'vue-property-decorator';
 import { useUniqueId } from '@/utilities/unique-id';
-import type { ScrollToPositionFn } from '../../utils';
+
+type ScrollToPositionFn = (scrollY: number) => void;
 
 @Component
 export default class ScrollTo extends Vue {
-  @Inject() 'scrollToPosition': ScrollToPositionFn;
+  @Inject({ default: Function }) 'scrollToPositionContext'!: ScrollToPositionFn;
 
   @Ref('anchorNode') anchorNode!: HTMLAnchorElement;
 
   @Watch('scrollToPosition')
   onScrollToPosition() {
-    if (!this.scrollToPosition || !this.anchorNode) {
-      return;
-    }
-
-    this.scrollToPosition(this.anchorNode.offsetTop);
+    if (!this.scrollToPositionContext || !this.anchorNode) return;
+    this.scrollToPositionContext(this.anchorNode.offsetTop);
   }
 
   public id = useUniqueId('ScrollTo');

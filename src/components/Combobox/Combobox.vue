@@ -23,8 +23,8 @@ import {
   Prop,
   Provide,
 } from 'vue-property-decorator';
-import type { PreferredPosition } from '../PositionedOverlay';
 import styles from '@/classes/Combobox.json';
+import type { PreferredPosition } from '../PositionedOverlay';
 import { TextField } from '../TextField';
 import { Popover, Pane } from '../Popover';
 

@@ -42,10 +42,10 @@ import Vue from 'vue';
 import { Component, Prop } from 'vue-property-decorator';
 import { classNames } from 'polaris-react/src/utilities/css';
 import type { Action } from 'types/type';
+import styles from '@/classes/Labelled.json';
 import { Label } from '../Label';
 import { helpTextID, errorID, LabelledProps } from './utils';
 import { InlineError } from '../InlineError';
-import styles from '@/classes/Labelled.json';
 
 @Component({
   components: {

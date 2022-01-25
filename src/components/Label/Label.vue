@@ -12,8 +12,8 @@ div(:class="className")
 import Vue from 'vue';
 import { Component, Prop } from 'vue-property-decorator';
 import { classNames } from 'polaris-react/src/utilities/css';
-import { labelID, LabelProps } from './utils';
 import styles from '@/classes/Label.json';
+import { labelID, LabelProps } from './utils';
 
 @Component
 export default class Label extends Vue {

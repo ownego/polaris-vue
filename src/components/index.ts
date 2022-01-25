@@ -1,5 +1,6 @@
 export * from './ActionList';
 export * from './Badge';
+export * from './Button';
 export * from './Checkbox';
 export * from './Choice';
 export * from './ChoiceList';
@@ -24,5 +25,7 @@ export * from './SettingAction';
 export * from './Spinner';
 export * from './TextStyle';
 export * from './TextField';
+export * from './Truncate';
 export * from './UnstyledLink';
+export * from './UnstyledButton';
 export * from './VisuallyHidden';
