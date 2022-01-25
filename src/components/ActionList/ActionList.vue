@@ -1,5 +1,4 @@
 <template lang="pug">
-// TODO: Update docs
 components(
   :is="element",
   ref="actionList",
