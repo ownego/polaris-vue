@@ -27,6 +27,7 @@ export * from './Spinner';
 export * from './Tag';
 export * from './TextStyle';
 export * from './TextField';
+export * from './Thumbnail';
 export * from './Truncate';
 export * from './UnstyledLink';
 export * from './UnstyledButton';
