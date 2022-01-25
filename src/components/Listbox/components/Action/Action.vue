@@ -6,7 +6,7 @@ Option(
 )
   div(:class="className")
     TextOption(:selected="selected", :disabled="disabled")
-      div(:class="iconClassName")
+      div(v-if="icon", :class="iconClassName")
         Icon(color="subdued", :source="icon")
       slot
 </template>

@@ -10,7 +10,7 @@ li(
   :data-listbox-option-value="value",
   :data-listbox-option-destructive="mappedActionContext.destructive",
   :aria-disabled="disabled",
-  @click="disabled ? undefined : handleOptionClick",
+  @click="handleOptionClick",
   :role="legacyRoleSupport",
   :aria-label="accessibilityLabel",
   :aria-selected="selected",
@@ -52,7 +52,7 @@ import styles from '@/classes/Option.json';
 import {
   listboxWithinSectionDataSelector,
 } from 'polaris-react/src/components/Listbox/components/Section/selectors';
-import { NavigableOption } from 'polaris-react/src/utilities/listbox/types';
+import { ListboxContextType } from 'polaris-react/src/utilities/listbox';
 import { TextOption } from '../TextOption';
 import { UnstyledLink } from '../../../UnstyledLink';
 import { MappedActionContextType, OptionProps } from './utils';
@@ -68,7 +68,7 @@ export default class ListBox extends Vue {
 
   @Inject({ default: '' }) sectionId!: string;
 
-  @Inject({ default: Function }) onOptionSelect!: (option: NavigableOption) => void;
+  @Inject({ default: {} }) listboxContext!: ListboxContextType;
 
   @Ref() listItemRef!: HTMLLIElement
 
@@ -131,6 +131,9 @@ export default class ListBox extends Vue {
 
   public handleOptionClick(event: MouseEvent): void {
     event.preventDefault();
+
+    if (this.disabled) return;
+
     if (this.mappedActionContext && this.mappedActionContext.onAction) {
       this.mappedActionContext.onAction();
     }
@@ -143,7 +146,9 @@ export default class ListBox extends Vue {
         disabled: this.disabled || false,
       };
 
-      this.onOptionSelect(params);
+      if (this.listboxContext && this.listboxContext.onOptionSelect) {
+        this.listboxContext.onOptionSelect(params);
+      }
     }
   }
 

@@ -1,4 +1,37 @@
 <template lang="pug">
+div
+  template
+    KeypressListener(
+      keyEvent="keydown",
+      :keyCode="String(Key.DownArrow)",
+      :handler="handleDownArrow",
+    )
+    KeypressListener(
+      keyEvent="keydown",
+      :keyCode="String(Key.UpArrow)",
+      :handler="handleUpArrow",
+    )
+    KeypressListener(
+      keyEvent="keydown",
+      :keyCode="String(Key.Enter)",
+      :handler="handleEnter",
+    )
+  VisuallyHidden
+    div(aria-live="polite") {{ loading ? loading : null }}
+  ul(
+    v-if="$slots.default",
+    tabindex="0",
+    role="listbox",
+    :class="listboxClassName",
+    :aria-label="inCombobox ? undefined : accessibilityLabel",
+    :aria-labelledby="comboboxListboxContext.textFieldLabelId || ''",
+    :aria-busy="Boolean(loading)",
+    :id="listId",
+    @focus="handleFocus",
+    @blur="handleBlur",
+    ref="listboxRef",
+  )
+    slot
 </template>
 
 <script lang="ts">
@@ -6,28 +39,27 @@ import Vue from 'vue';
 import {
   Component,
   Prop,
+  Provide,
   Inject,
+  Ref,
+  Watch,
 } from 'vue-property-decorator';
+import debounce from 'lodash/debounce';
 import { classNames } from 'polaris-react/src/utilities/css';
-import styles from '@/classes/Listbox.json';
-import { useUniqueId } from '@/utilities/unique-id';
-import type { NavigableOption } from 'polaris-react/src/utilities/listbox';
+import { scrollIntoView } from 'polaris-react/src/utilities/scroll-into-view';
+import { Key } from 'polaris-react/src/types';
+import type {
+  ListboxContextType, NavigableOption,
+} from 'polaris-react/src/utilities/listbox';
 import { closestParentMatch } from 'polaris-react/src/utilities/closest-parent-match';
-import { ListboxContext, WithinListboxContext } from 'polaris-react/src/utilities/listbox';
 import {
   listboxSectionDataSelector,
 } from 'polaris-react/src/components/Listbox/components/Section/selectors';
 import { ComboboxListboxType } from 'polaris-react/src/utilities/combobox/context';
+import styles from '@/classes/Listbox.json';
+import { useUniqueId } from '@/utilities/unique-id';
 import { KeypressListener } from '../KeypressListener';
 import { VisuallyHidden } from '../VisuallyHidden';
-import {
-  Option,
-  Section,
-  Header,
-  Action,
-  Loading,
-  TextOption,
-} from './components';
 
 export type ArrowKeys = 'up' | 'down';
 
@@ -40,6 +72,7 @@ const LISTBOX_OPTION_SELECTOR = '[data-listbox-option]';
 const LISTBOX_OPTION_VALUE_ATTRIBUTE = 'data-listbox-option-value';
 
 const DATA_ATTRIBUTE = 'data-focused';
+const ARIA_ATTRIBUTE = 'aria-activedescendant';
 
 @Component({
   components: {
@@ -48,7 +81,18 @@ const DATA_ATTRIBUTE = 'data-focused';
   },
 })
 export default class Listbox extends Vue {
-  @Inject({ default: {} }) comboboxListboxContext?: ComboboxListboxType;
+  @Inject({ default: {} }) comboboxListboxContext!: ComboboxListboxType;
+
+  @Provide() listboxContext: ListboxContextType = {
+    onOptionSelect: this.onOptionSelect,
+    setLoading: this.setLoading,
+  };
+
+  @Provide() WithinListboxContext!: boolean;
+
+  @Ref() listboxRef!: HTMLUListElement;
+
+  @Ref() scrollableRef!: HTMLElement;
 
   /**
    * Explicitly enable keyboard control
@@ -62,17 +106,214 @@ export default class Listbox extends Vue {
   @Prop({ type: String })
   public accessibilityLabel?: string;
 
-  public currentActiveOption!: NavigableOption;
-
-  public listboxClassName = classNames(styles.Listbox);
-
   public listId = useUniqueId('Listbox');
+
+  public currentActiveOption?: NavigableOption;
+
+  public loading = '';
+
+  public listboxClassName: string = classNames(styles.Listbox);
+
+  public Key = Key;
 
   get inCombobox(): boolean {
     return Boolean(
       this.comboboxListboxContext
       && this.comboboxListboxContext.setActiveOptionId,
     );
+  }
+
+  get listBoxId() {
+    return this.comboboxListboxContext
+      ? this.comboboxListboxContext.listboxId
+      : '';
+  }
+
+  @Watch('currentActiveOption', { deep: true })
+  onCurrentActiveOptionChanged(): void {
+    if (!this.currentActiveOption) return;
+
+    if (
+      this.comboboxListboxContext
+      && this.comboboxListboxContext.setActiveOptionId
+    ) {
+      this.comboboxListboxContext.setActiveOptionId(this.currentActiveOption.domId);
+    }
+  }
+
+  @Watch('listboxId')
+  @Watch('listId')
+  onIdChanged() {
+    if (
+      this.comboboxListboxContext
+      && this.comboboxListboxContext.setListboxId
+      && !this.comboboxListboxContext.listboxId
+    ) {
+      this.comboboxListboxContext.setListboxId(this.listId);
+    }
+  }
+
+  public setLoading(value: string): void {
+    this.loading = value;
+  }
+
+  public handleScrollIntoView(option: NavigableOption, first: boolean): void {
+    debounce(() => {
+      if (this.scrollableRef) {
+        const { element } = option;
+        const focusTarget = first
+          ? closestParentMatch(element, listboxSectionDataSelector.selector)
+            || element
+          : element;
+
+        scrollIntoView(focusTarget, this.scrollableRef);
+      }
+    }, 15);
+  }
+
+  public handleChangeActiveOption(nextOption?: NavigableOption) {
+    if (this.currentActiveOption) {
+      this.currentActiveOption.element.removeAttribute(DATA_ATTRIBUTE);
+    }
+
+    if (nextOption) {
+      nextOption.element.setAttribute(DATA_ATTRIBUTE, 'true');
+
+      this.listboxRef.setAttribute(ARIA_ATTRIBUTE, nextOption.domId);
+
+      if (this.scrollableRef) {
+        const first = this.getNavigableOptions().findIndex(
+          (element) => element.id === nextOption.element.id,
+        ) === 0;
+
+        this.handleScrollIntoView(nextOption, first);
+      }
+
+      this.currentActiveOption = nextOption;
+    }
+  }
+
+  public onSelect(value: string): void {
+    this.$emit('select', value);
+  }
+
+  public onOptionSelect(option: NavigableOption): void {
+    this.handleChangeActiveOption(option);
+
+    if (
+      this.comboboxListboxContext
+      && this.comboboxListboxContext.onOptionSelected
+    ) {
+      this.comboboxListboxContext.onOptionSelected();
+    }
+
+    this.onSelect(option.value);
+  }
+
+  public findNextValidOption(type: ArrowKeys) {
+    const isUp = type === 'up';
+    const navItems = this.getNavigableOptions();
+    let nextElement: HTMLElement | null | undefined = this.currentActiveOption?.element;
+    let count = -1;
+
+    // eslint-disable-next-line no-plusplus
+    while (count++ < navItems.length) {
+      let nextIndex;
+      if (nextElement) {
+        const currentId = nextElement?.id;
+        const currentIndex = navItems.findIndex(
+          (currentNavItem) => currentNavItem.id === currentId,
+        );
+
+        let increment = isUp ? -1 : 1;
+        if (currentIndex === 0 && isUp) {
+          increment = navItems.length - 1;
+        } else if (currentIndex === navItems.length - 1 && !isUp) {
+          increment = -(navItems.length - 1);
+        }
+
+        nextIndex = currentIndex + increment;
+        nextElement = navItems[nextIndex];
+      } else {
+        nextIndex = isUp ? navItems.length - 1 : 0;
+        nextElement = navItems[nextIndex];
+      }
+
+      // eslint-disable-next-line no-continue
+      if (nextElement?.getAttribute('aria-disabled') === 'true') continue;
+
+      if (
+        nextIndex === navItems.length - 1
+        && this.comboboxListboxContext
+        && this.comboboxListboxContext.onKeyToBottom
+      ) {
+        this.comboboxListboxContext.onKeyToBottom();
+      }
+      return nextElement;
+    }
+
+    return null;
+  }
+
+  public handleArrow(type: ArrowKeys, evt: KeyboardEvent): void {
+    evt.preventDefault();
+
+    const nextValidElement = this.findNextValidOption(type);
+
+    if (!nextValidElement) return;
+
+    const nextOption = {
+      domId: nextValidElement.id,
+      value: nextValidElement
+        .getAttribute(LISTBOX_OPTION_VALUE_ATTRIBUTE) || '',
+      element: nextValidElement,
+      disabled: nextValidElement.getAttribute('aria-disabled') === 'true',
+    };
+
+    this.handleChangeActiveOption(nextOption);
+  }
+
+  public handleDownArrow(evt: KeyboardEvent) {
+    this.handleArrow('down', evt);
+  }
+
+  public handleUpArrow(evt: KeyboardEvent) {
+    this.handleArrow('up', evt);
+  }
+
+  public handleEnter(evt: KeyboardEvent) {
+    evt.preventDefault();
+    evt.stopPropagation();
+
+    if (this.currentActiveOption) {
+      this.onOptionSelect(this.currentActiveOption);
+    }
+  }
+
+  public handleFocus() {
+    if (this.enableKeyboardControl || this.inCombobox) return;
+    this.enableKeyboardControl = true;
+  }
+
+  public handleBlur(event: FocusEvent) {
+    event.stopPropagation();
+
+    if (this.enableKeyboardControl) {
+      this.handleChangeActiveOption();
+    }
+
+    if (this.enableKeyboardControl || this.inCombobox) return;
+    this.enableKeyboardControl = false;
+  }
+
+  public getNavigableOptions() {
+    return [
+      ...new Set(
+        this.listboxRef.querySelectorAll<HTMLElement>(
+          LISTBOX_OPTION_SELECTOR,
+        ),
+      ),
+    ];
   }
 }
 </script>

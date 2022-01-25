@@ -1,2 +1,9 @@
 export { default as Listbox } from './Listbox.vue';
-export * from './components';
+export {
+  Action,
+  Header,
+  Loading,
+  Option,
+  Section,
+  TextOption,
+} from './components';
