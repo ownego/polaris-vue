@@ -1,6 +1,6 @@
 import { Meta, Story, Canvas, ArgsTable } from '@storybook/addon-docs';
 
-import { Form, FormLayout, Checkbox, Button, TextField } from '@/polaris-vue';
+import { Form, FormLayout, FormItem, Checkbox, Button, TextField } from '@/polaris-vue';
 
 <Meta
   title="Components / Forms / Form"
@@ -30,7 +30,7 @@ import { Form, FormLayout, Checkbox, Button, TextField } from '@/polaris-vue';
 
 export const Template = (args, { argTypes }) => ({
   props: Object.keys(argTypes),
-  components: { Form, FormLayout, Checkbox, Button, TextField },
+  components: { Form, FormLayout, FormItem, Checkbox, Button, TextField },
   data() {
     return {
       checkbox: false,
@@ -40,26 +40,32 @@ export const Template = (args, { argTypes }) => ({
   methods: {
     handleSubmit(event) {
       event.preventDefault();
+      alert(`Form submitted - Checkbox: ${this.checkbox} - email: ${this.textField}`);
       this.checkbox = false;
       this.textField = '';
-      alert('Form submitted');
     },
   },
-  template: `<Form @submit="handleSubmit">
+  template: `<Form @submit="handleSubmit" data-submit="handleSubmit">
     <FormLayout>
-      <Checkbox slot="field-newsletter" id="signUpCheckbox" v-model="checkbox">
-        <template slot="label">Sign up for the Polaris newsletter</template>
-      </Checkbox>
-      <TextField slot="field-email" v-model="textField" type="email" autoComplete="email">
-        <template slot="label">Email</template>
-        <template slot="help-text">
-          <span>
-            We'll use this email address to inform you on future changes to
-            Polaris.
-          </span>
-        </template>
-      </TextField>
-      <Button slot="field-submitBtn" submit>Submit</Button>
+      <FormItem>
+        <Checkbox id="signUpCheckbox" v-model="checkbox">
+          <template slot="label">Sign up for the Polaris newsletter</template>
+        </Checkbox>
+      </FormItem>
+      <FormItem>
+        <TextField v-model="textField" type="email" autoComplete="email">
+          <template slot="label">Email</template>
+          <template slot="help-text">
+            <span>
+              We'll use this email address to inform you on future changes to
+              Polaris.
+            </span>
+          </template>
+        </TextField>
+      </FormItem>
+      <FormItem>
+        <Button submit>Submit</Button>
+      </FormItem>
     </FormLayout>
   </Form>`,
 });
@@ -77,6 +83,8 @@ A wrapper component that handles the submission of forms.
         transformSource: (source) => {
           const tmpSource = source
             .replace(/:value="false"/, 'v-model="newsletter"')
+            .replace(/submit=""/, 'submit')
+            .replace(/data-submit/, '@submit')
             .replace(/value=""/, 'v-model="email"');
           return tmpSource;
         },

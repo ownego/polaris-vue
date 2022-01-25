@@ -1,4 +1,5 @@
 export * from './ActionList';
+export * from './Avatar';
 export * from './Badge';
 export * from './Button';
 export * from './Checkbox';
@@ -24,9 +25,11 @@ export * from './Scrollable';
 export * from './Select';
 export * from './SettingAction';
 export * from './Spinner';
+export * from './Stack';
 export * from './Tag';
 export * from './TextStyle';
 export * from './TextField';
+export * from './Thumbnail';
 export * from './Truncate';
 export * from './UnstyledLink';
 export * from './UnstyledButton';
