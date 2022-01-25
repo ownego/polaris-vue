@@ -1,36 +1,18 @@
 import { Meta, Story, Canvas, ArgsTable } from '@storybook/addon-docs';
 import dedent from 'ts-dedent';
 
-import { ExceptionList } from '@/polaris-vue';
+import { ExceptionList, ExceptionListItem } from '@/polaris-vue';
 import NoteMinor from '@icons/NoteMinor.svg';
 import CircleCancelMajor from '@icons/CircleCancelMajor.svg';
 import DiscountsMajor from '@icons/DiscountsMajor.svg';
 
 <Meta
   title="Components / Lists and tables / Exception List"
-  component={ ExceptionList }
+  component={ ExceptionListItem }
   argTypes={{
-    items: {
-      control: false,
-      table: {
-        type: {
-          summary: null
-        },
-      },
-    },
     default: {
       table: {
         disable: true,
-      },
-    },
-    itemSlot: {
-      name: 'item-{index}',
-      description: 'Slot for each item description, defined by `index` of item. Starts at 0.',
-      table: {
-        category: 'Slots',
-        type: {
-          summary: null,
-        },
       },
     },
   }}
@@ -38,25 +20,19 @@ import DiscountsMajor from '@icons/DiscountsMajor.svg';
 
 export const Template = (args, { argTypes }) => ({
   props: Object.keys(argTypes),
-  components: { ExceptionList },
+  components: { ExceptionList, ExceptionListItem },
   data() {
     return {
-      itemList: [{
-        icon: NoteMinor,
-      }, {
-        icon: CircleCancelMajor,
-        status: 'warning',
-        title: 'This item does not have a description',
-      }, {
-        title: 'This is title',
-        truncate: true,
-        status: 'critical',
-      }],
+      iconNoteMinor: NoteMinor,
+      iconCircleCancelMajor: CircleCancelMajor,
+      iconDiscountsMajor: DiscountsMajor,
     };
   },
-  template: `<ExceptionList :items="itemList">
-    <template slot="item-0">This customer is awesome. Make sure to treat them right!</template>
-    <template slot="item-2">This order need to be fulfilled ASAP.</template>
+  template: `<ExceptionList>
+    <ExceptionListItem :icon="iconNoteMinor">This customer is awesome. Make sure to treat them right!</ExceptionListItem>
+    <ExceptionListItem title="Required" status="critical">This order need to be fulfilled ASAP.</ExceptionListItem>
+    <ExceptionListItem title="Warning" status="warning" :icon="iconDiscountsMajor">This order was applied discount code.</ExceptionListItem>
+    <ExceptionListItem v-bind="$props">Example Exception List Item</ExceptionListItem>
   </ExceptionList>`,
 });
 
@@ -67,28 +43,22 @@ Use exception lists to help merchants notice important, standout information tha
 <Canvas>
   <Story
     name="Exception List"
-    height="100px"
+    height="120px"
     parameters={{
       docs: {
         transformSource: (source) => {
           const tmpSource = source
             .replace(/\s*:items='.*'\s*/,' :items="items"')
+            .replace(/\s*:icon='.*'\s*/,' :icon="iconNoteMinor"')
+            .replace(/\s:icon='.*'/,' :icon="iconDiscountsMajor"');
           const fullSource = dedent`
             ${tmpSource}\n
-            import NoteMinor from '@shopify/polaris-icons/dist/svg/NoteMinor.svg';\n
+            import NoteMinor from '@shopify/polaris-icons/dist/svg/NoteMinor.svg';
+            import DiscountsMajor from '@shopify/polaris-icons/dist/svg/DiscountsMajor.svg';\n
             data() {
               return {
-                items: [{
-                  icon: NoteMinor,
-                }, {
-                  icon: CircleCancelMajor,
-                  status: 'warning',
-                  title: 'This item does not have a description',
-                }, {
-                  title: 'This is title',
-                  truncate: true,
-                  status: 'critical',
-                }],
+                iconNoteMinor: NoteMinor,
+                iconDiscountsMajor: DiscountsMajor,
               };
             }
           `;
