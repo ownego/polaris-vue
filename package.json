@@ -1,6 +1,7 @@
 {
   "name": "@qikify/polaris-vue",
   "version": "0.1.0",
+  "polaris_version": "8.0.0",
   "description": "Shopify Polaris UI library for Vue 2",
   "author": {
     "name": "Qikify"
@@ -94,7 +95,8 @@
     "vue-loader": "^15.9.8",
     "vue-property-decorator": "^9.1.2",
     "vue-router": "^3.5.3",
-    "vue-template-compiler": "^2.6.11"
+    "vue-template-compiler": "^2.6.11",
+    "webpack-plugin-replace": "^1.2.0"
   },
   "repository": {
     "type": "git",

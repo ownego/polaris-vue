@@ -149,7 +149,7 @@
   --p-override-zero: 0;
   --p-override-loading-z-index: 514;
   --p-button-font-weight: 500;
-  --p-non-null-content: '';
+  --p-non-null-content: "";
   --p-choice-size: 2rem;
   --p-icon-size: 1rem;
   --p-choice-margin: 0.1rem;
@@ -180,5 +180,5 @@
 * Variables for library
 */
 :root {
-  --p-font-size-base: 1rem;
+  --p-font-size-base: 1.4rem;
 }
