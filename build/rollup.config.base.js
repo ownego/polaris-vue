@@ -4,6 +4,7 @@ import resolve from '@rollup/plugin-node-resolve';
 import replace from '@rollup/plugin-replace';
 import postcss from 'rollup-plugin-postcss';
 import commonjs from '@rollup/plugin-commonjs';
+import packageJSON from '../package.json';
 
 export default {
   plugins: {
@@ -11,6 +12,7 @@ export default {
       replace({
         values: {
           'process.env.NODE_ENV': JSON.stringify('production'),
+          '{{POLARIS_VERSION}}': packageJSON.polaris_version,
         },
         preventAssignment: true,
       }),

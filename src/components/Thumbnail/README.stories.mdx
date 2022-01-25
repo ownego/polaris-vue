@@ -1,0 +1,98 @@
+import { Meta, Story, Canvas, ArgsTable } from '@storybook/addon-docs';
+import { Thumbnail } from '@/polaris-vue';
+import CirclePlusMinor from '@icons/CirclePlusMinor.svg';
+
+<Meta
+  title="Components / Images and Icons / Thumbnail"
+  component={ Thumbnail }
+  argTypes={{
+    size: {
+      name: 'size',
+      description: 'Size of Thumbnail',
+      options: [
+        'large',
+        'medium',
+        'small',
+      ],
+      control: { type: 'select' },
+      table: {
+        defaultValue: {
+          summary: 'medium'
+        },
+        type: {
+          summary: null,
+        },
+      },
+    },
+    source: {
+      name: 'source',
+      options: [
+        'CirclePlusMinor',
+        'https://burst.shopifycdn.com/photos/black-leather-choker-necklace_373x@2x.jpg',
+      ],
+      control: {
+        type: 'select',
+        labels: {
+          null: 'default',
+        },
+      },
+      table: {
+        type: {
+          summary: 'image url String | SVG Component',
+        },
+      },
+    },
+    default: {
+      table: {
+        disable: true,
+      },
+    },
+  }}
+/>
+
+export const Template = (args, { argTypes }) => ({
+  props: Object.keys(argTypes),
+  components: { Thumbnail },
+  computed: {
+    thumbnailSource() {
+      if (args.source === 'CirclePlusMinor') {
+        return CirclePlusMinor;
+      }
+      return args.source;
+    },
+  },
+  template: `<Thumbnail :source="thumbnailSource" v-bind="$props" icon-name="${args.source}" />`,
+});
+
+# Thumbnail
+
+Use thumbnails as a visual anchor and identifier for an object. They should be used along with text to provide context.
+
+<Canvas>
+  <Story
+    name="Thumbnail"
+    height="60px"
+    args={{
+      alt: 'Thumbnail example',
+      size: 'medium',
+      source: 'https://burst.shopifycdn.com/photos/black-leather-choker-necklace_373x@2x.jpg'
+    }}
+    parameters={{
+      docs: {
+        transformSource: (source) => {
+          const tmpSource = source
+            .replace(/<template>/, '')
+            .replace(/<\/template>/, '')
+            .replace(/source="(.*)"\s*/, '')
+            .replace(/:source='(.*)'\s*/, '')
+            .replace(/icon-name/, ':source');
+          return tmpSource;
+        },
+      },
+    }}
+  >
+    {Template.bind({})}
+  </Story>
+</Canvas>
+
+<ArgsTable story="Thumbnail" />

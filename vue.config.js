@@ -1,5 +1,7 @@
 /* eslint-disable @typescript-eslint/no-var-requires */
 const path = require('path');
+const ReplacePlugin = require('webpack-plugin-replace');
+const packageJSON = require('./package.json');
 
 module.exports = {
   devServer: {
@@ -9,6 +11,23 @@ module.exports = {
   css: {
     extract: false,
     requireModuleExtension: false,
+  },
+
+  configureWebpack: {
+    plugins: [
+      new ReplacePlugin({
+        exclude: [
+          'src/components/**',
+          'src/classes/**',
+          'src/assets/**',
+          'src/utilities/**',
+          /node_modules/,
+        ],
+        values: {
+          '{{POLARIS_VERSION}}': packageJSON.polaris_version,
+        },
+      }),
+    ],
   },
 
   chainWebpack: (config) => {
