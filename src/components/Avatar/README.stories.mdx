@@ -1,0 +1,74 @@
+import { Meta, Story, Canvas, ArgsTable } from '@storybook/addon-docs';
+import { Avatar } from '@/polaris-vue';
+
+<Meta
+  title="Components / Images and Icons / Avatar"
+  component={ Avatar }
+  argTypes={{
+    size: {
+      name: 'size',
+      description: 'Size of Avatar',
+      options: [
+        'extraSmall',
+        'small',
+        'medium',
+        'large',
+      ],
+      control: { type: 'select' },
+      table: {
+        defaultValue: {
+          summary: 'medium'
+        },
+        type: {
+          summary: null,
+        },
+      },
+    },
+    error: {
+      name: 'error',
+      description: 'Callback fired when the image fails to load',
+      control: { disable: true },
+      table: {
+        type: {
+          summary: '"() => void"',
+        },
+      },
+    },
+    default: {
+      table: {
+        disable: true,
+      },
+    },
+  }}
+/>
+
+export const Template = (args, { argTypes }) => ({
+  props: Object.keys(argTypes),
+  components: { Avatar},
+  template: `<Avatar v-bind="$props"/>`,
+});
+
+# Avatar
+
+Avatars are used to show a thumbnail representation of an individual or business in the interface.
+
+<Canvas>
+  <Story
+    name="Avatar"
+    height="60px"
+    parameters={{
+      docs: {
+        transformSource: (source) => {
+          const tmpSource = source
+            .replace(/<template>/, '')
+            .replace(/<\/template>/, '');
+          return tmpSource;
+        },
+      },
+    }}
+  >
+    {Template.bind({})}
+  </Story>
+</Canvas>
+
+<ArgsTable story="Avatar" />
