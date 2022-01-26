@@ -1,5 +1,5 @@
 <template lang="pug">
-// TODO: Update docs
+// TODO: Update lazy loaded docs
 div(ref="container")
   slot(name="activator")
   Portal(v-if="activatorNode && active", :to="portalId")
@@ -14,11 +14,13 @@ div(ref="container")
         :preferredAlignment="preferredAlignment",
         :zIndexOverride="zIndexOverride",
         :autofocusTarget="autofocusTarget",
+        :sectioned="sectioned",
         @close="handleClose",
         @scrolled-to-bottom="$emit('scrolled-to-bottom')",
       )
         template(v-slot:overlay="props")
           slot(name="content")
+        slot(name="extra-content", slot="extra-content")
   PortalTarget(:name="portalId")
 </template>
 
@@ -115,7 +117,7 @@ export default class Popover extends Vue {
   public fixed?: boolean;
 
   /**
-  /** Used to illustrate the type of popover element
+   * Used to illustrate the type of popover element
    */
   @Prop({ type: String })
   public ariaHaspopup!: string;
