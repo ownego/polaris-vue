@@ -1,5 +1,9 @@
 import type { Action, IconSource } from 'types/type';
 
+export interface anyKey {
+  [key: string]: any;
+}
+
 export interface DisableableAction extends Action {
   /** Whether or not the action is disabled */
   disabled?: boolean;
