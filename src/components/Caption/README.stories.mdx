@@ -1,0 +1,28 @@
+import { Meta, Story, Canvas, ArgsTable } from '@storybook/addon-docs';
+import { List, ListItem, Caption } from '@/polaris-vue';
+
+<Meta
+  title="Components / Titles and text  / Caption"
+  component={ Caption }
+/>
+
+export const Template = (args, { argTypes }) => ({
+  props: Object.keys(argTypes),
+  components: { List, ListItem, Caption },
+  template: `<List>
+    <ListItem>Order #1001 <Caption>Received April 21, 2017</Caption></ListItem>
+    <ListItem>Order #1002 <Caption>Received April 22, 2017</Caption></ListItem>
+  </List>`,
+});
+
+# Caption
+
+Caption text size is smaller than the recommended size for general reading.
+On web, it should be used only in a graph or as a timestamp for a list item.
+On Android and iOS, it can also be used as help text or as other kinds of secondary text for list items.
+
+<Canvas>
+  <Story name="Caption" height="100px">
+    {Template.bind({})}
+  </Story>
+</Canvas>
