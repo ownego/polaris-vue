@@ -1,0 +1,95 @@
+import { Meta, Story, Canvas, ArgsTable } from '@storybook/addon-docs';
+import { ButtonGroup, ButtonGroupItem, Button } from '@/polaris-vue';
+
+<Meta
+  title="Components / Actions / ButtonGroup"
+  component={ ButtonGroup }
+  argTypes={{
+    spacing: {
+      name: 'spacing',
+      description: 'Determines the space between button group items',
+      options: [
+        'extraTight',
+        'tight',
+        'loose',
+      ],
+      control: { type: 'select' },
+      table: {
+        type: {
+          summary: null,
+        },
+      },
+    },
+    default: {
+      table: {
+        disable: true,
+      },
+    },
+  }}
+/>
+
+export const Template = (args, { argTypes }) => ({
+  props: Object.keys(argTypes),
+  components: { ButtonGroup, ButtonGroupItem, Button },
+  template: `<ButtonGroup v-bind="$props">
+    <ButtonGroupItem> <Button> Cancel </Button> </ButtonGroupItem>
+    <ButtonGroupItem> <Button :primary="true"> Save </Button> </ButtonGroupItem>
+  </ButtonGroup>`,
+});
+
+export const SegmentedButtons = (args, { argTypes }) => ({
+  components: { ButtonGroup, ButtonGroupItem, Button },
+  template: `<ButtonGroup :segmented="true">
+    <ButtonGroupItem> <Button> Bold </Button> </ButtonGroupItem>
+    <ButtonGroupItem> <Button> Italic </Button> </ButtonGroupItem>
+    <ButtonGroupItem> <Button> Underline </Button> </ButtonGroupItem>
+  </ButtonGroup>`,
+});
+SegmentedButtons.storyName = 'With segmented buttons';
+SegmentedButtons.parameters = {
+  docs: {
+    source: false,
+    transformSource: (source) => {
+      const tmpSource = source
+        .replace(/<template>\s*/, '')
+        .replace(/\s*<\/template>/, '')
+      return tmpSource;
+    },
+  },
+}
+
+
+# ButtonGroup
+
+Button group displays multiple related actions stacked or in a horizontal row to help with arrangement and spacing.
+
+<br/>
+
+### With segmented buttons
+
+<Canvas>
+  <Story story={SegmentedButtons} height="65px" />
+</Canvas>
+
+### Example
+
+<Canvas>
+  <Story
+    name="ButtonGroup"
+    height="60px"
+    parameters={{
+      docs: {
+        transformSource: (source) => {
+          const tmpSource = source
+            .replace(/<template>/, '')
+            .replace(/<\/template>/, '');
+          return tmpSource;
+        },
+      },
+    }}
+  >
+    {Template.bind({})}
+  </Story>
+</Canvas>
+
+<ArgsTable story="ButtonGroup" />
