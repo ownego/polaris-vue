@@ -28,6 +28,7 @@ export * from './Select';
 export * from './SettingAction';
 export * from './Spinner';
 export * from './Stack';
+export * from './Subheading';
 export * from './Tag';
 export * from './TextStyle';
 export * from './TextField';
