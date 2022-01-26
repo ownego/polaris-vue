@@ -1,6 +1,5 @@
 <template lang="pug">
 // TODO: Update lazy loaded docs
-// TODO: pass props inline story
 div(ref="container")
   slot(name="activator")
   Portal(v-if="activatorNode && active", :to="portalId")
@@ -118,7 +117,7 @@ export default class Popover extends Vue {
   public fixed?: boolean;
 
   /**
-  /** Used to illustrate the type of popover element
+   * Used to illustrate the type of popover element
    */
   @Prop({ type: String })
   public ariaHaspopup!: string;
@@ -197,7 +196,6 @@ export default class Popover extends Vue {
   }
 
   mounted(): void {
-    console.log('props', this.$props);
     if (this.containerNode) {
       const activatorNode = this.containerNode.firstElementChild;
       if (activatorNode) this.activatorNode = activatorNode;
