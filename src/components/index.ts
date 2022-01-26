@@ -8,6 +8,7 @@ export * from './Choice';
 export * from './ChoiceList';
 export * from './Connected';
 export * from './Combobox';
+export * from './DisplayText';
 export * from './EventListener';
 export * from './ExceptionList';
 export * from './Form';
