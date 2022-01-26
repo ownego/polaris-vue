@@ -11,9 +11,15 @@ module.exports = {
       getJSON: (cssFileName, json) => {
         let cssName = path.basename(cssFileName, '.vue');
 
+        const pattern = /polaris\-vue\/src\/components\/(.*?)\/components/g;
+        let parentName = cssFileName.match(pattern);
+        if (parentName) {
+          parentName = parentName[0].replace(pattern, '$1');
+        }
+
         // Fix rollup repeat
         cssName = cssName.replace(/(.*)\.vue\?.*/, '$1');
-        const jsonFileName = path.resolve(`./src/classes/${cssName}.json`);
+        const jsonFileName = path.resolve(`./src/classes/${parentName ? `${parentName}-` : ''}${cssName}.json`);
         fs.writeFileSync(jsonFileName, JSON.stringify(json));
       },
     }),
