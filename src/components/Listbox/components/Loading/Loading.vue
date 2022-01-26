@@ -16,6 +16,7 @@ import {
   Inject,
   Watch,
 } from 'vue-property-decorator';
+import { ListboxContextType } from 'polaris-react/src/utilities/listbox';
 import styles from '@/classes/Loading.json';
 import { Spinner } from '../../../Spinner';
 
@@ -25,7 +26,7 @@ import { Spinner } from '../../../Spinner';
   },
 })
 export default class Loading extends Vue {
-  @Inject({ default: Function }) setLoading!: (label?: string) => void;
+  @Inject({ default: {} }) listboxContext!: ListboxContextType;
 
   @Prop({ type: String, required: true })
   public accessibilityLabel!: string;
@@ -35,15 +36,14 @@ export default class Loading extends Vue {
   public loadingClassName: string = styles.Loading;
 
   @Watch('accessibilityLabel')
-  onAccessibilityLabelChanged(): void {
-    this.handleAccessibilityLabelChanged();
-  }
+  onAccessibilityLabelChanged() {
+    if (this.listboxContext && this.listboxContext.setLoading) {
+      this.listboxContext.setLoading(this.accessibilityLabel);
 
-  public handleAccessibilityLabelChanged() {
-    this.setLoading(this.accessibilityLabel);
-    return () => {
-      this.setLoading(undefined);
-    };
+      return () => {
+        this.listboxContext.setLoading(undefined);
+      };
+    }
   }
 }
 </script>
