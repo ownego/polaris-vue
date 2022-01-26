@@ -1,10 +1,11 @@
 <template lang="pug">
 div(:id="sectionId || ''", aria-hidden)
   div(
-    v-if="typeof children === 'string'",
+    v-if="!isSlotContainHTMLTag",
     :class="className",
-  ) {{ children }}
-  component(v-else, :is="children")
+  )
+    slot
+  slot(v-else)
 </template>
 
 <script lang="ts">
@@ -20,6 +21,10 @@ export default class Header extends Vue {
    public children!: string | object | VueConstructor<Vue>;
 
    public className: string = styles.Header;
+
+   get isSlotContainHTMLTag(): boolean {
+     return Boolean(this.$slots.default?.[0].tag);
+   }
 }
 </script>
 
