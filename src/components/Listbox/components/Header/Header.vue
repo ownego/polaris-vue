@@ -11,7 +11,7 @@ div(:id="sectionId || ''", aria-hidden)
 <script lang="ts">
 import Vue, { VueConstructor } from 'vue';
 import { Component, Prop, Inject } from 'vue-property-decorator';
-import styles from '@/classes/Header.json';
+import styles from '@/classes/Listbox-Header.json';
 
 @Component
 export default class Header extends Vue {

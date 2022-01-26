@@ -17,7 +17,7 @@ import {
   Watch,
 } from 'vue-property-decorator';
 import { ListboxContextType } from 'polaris-react/src/utilities/listbox';
-import styles from '@/classes/Loading.json';
+import styles from '@/classes/Listbox-Loading.json';
 import { Spinner } from '../../../Spinner';
 
 @Component({

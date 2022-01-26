@@ -47,12 +47,12 @@ import {
   Ref,
 } from 'vue-property-decorator';
 import { classNames } from 'polaris-react/src/utilities/css';
-import { useUniqueId } from '@/utilities/unique-id';
-import styles from '@/classes/Option.json';
 import {
   listboxWithinSectionDataSelector,
 } from 'polaris-react/src/components/Listbox/components/Section/selectors';
 import { ListboxContextType } from 'polaris-react/src/utilities/listbox';
+import { useUniqueId } from '@/utilities/unique-id';
+import styles from '@/classes/Listbox-Option.json';
 import { TextOption } from '../TextOption';
 import { UnstyledLink } from '../../../UnstyledLink';
 import { MappedActionContextType, OptionProps } from './utils';

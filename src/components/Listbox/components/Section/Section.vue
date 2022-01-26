@@ -15,12 +15,12 @@ li(
 <script lang="ts">
 import Vue from 'vue';
 import { Component, Prop, Provide } from 'vue-property-decorator';
-import styles from '@/classes/Section.json';
-import { useUniqueId } from '@/utilities/unique-id';
 import { classNames } from 'polaris-react/src/utilities/css';
 import {
   listboxSectionDataSelector,
 } from 'polaris-react/src/components/Listbox/components/Section/selectors';
+import styles from '@/classes/Listbox-Section.json';
+import { useUniqueId } from '@/utilities/unique-id';
 
 @Component
 export default class Section extends Vue {
