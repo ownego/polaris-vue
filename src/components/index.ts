@@ -33,6 +33,7 @@ export * from './TextStyle';
 export * from './TextField';
 export * from './Thumbnail';
 export * from './Truncate';
+export * from './TextContainer';
 export * from './UnstyledLink';
 export * from './UnstyledButton';
 export * from './VisuallyHidden';
