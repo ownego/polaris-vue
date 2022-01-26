@@ -1,5 +1,5 @@
 <template lang="pug">
-div(:class="classNames")
+div(:class="className")
   slot
 </template>
 
