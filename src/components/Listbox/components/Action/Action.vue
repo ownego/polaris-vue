@@ -16,7 +16,7 @@ import Vue from 'vue';
 import { Component, Prop } from 'vue-property-decorator';
 import { classNames } from 'polaris-react/src/utilities/css';
 import type { IconSource } from 'types/type';
-import styles from '@/classes/Action.json';
+import styles from '@/classes/Listbox-Action.json';
 import { Icon } from '../../../Icon';
 import { Option, OptionProps } from '../Option';
 import { TextOption } from '../TextOption';

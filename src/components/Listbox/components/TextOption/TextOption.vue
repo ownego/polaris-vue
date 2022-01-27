@@ -15,7 +15,7 @@ div(:class="wrapperClassName")
 import Vue from 'vue';
 import { Component, Prop, Inject } from 'vue-property-decorator';
 import { classNames } from 'polaris-react/src/utilities/css';
-import styles from '@/classes/TextOption.json';
+import styles from '@/classes/Listbox-TextOption.json';
 import { Checkbox } from '../../../Checkbox';
 
 @Component({
