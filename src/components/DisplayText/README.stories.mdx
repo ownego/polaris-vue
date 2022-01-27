@@ -1,0 +1,55 @@
+import { Meta, Story, Canvas, ArgsTable } from '@storybook/addon-docs';
+import { DisplayText } from '@/polaris-vue';
+
+<Meta
+  title="Components / Titles and text  / Display text"
+  component={ DisplayText }
+  argTypes={{
+    element: {
+      control: {
+        type: 'text',
+      },
+      table: {
+        type: {
+          summary: 'Tag name'
+        }
+      }
+    },
+    default: {
+      table: {
+        disable: true,
+      },
+    },
+    size: {
+      control: {
+        type: 'select',
+      },
+      table: {
+        defaultValue: { summary: 'medium' },
+        type: {
+          summary: null,
+        },
+      },
+    },
+  }}
+/>
+
+export const Template = (args, { argTypes }) => ({
+  props: Object.keys(argTypes),
+  components: { DisplayText },
+  template: `<DisplayText v-bind="$props">Good evening, Dominic.</DisplayText>`,
+});
+
+# Caption
+
+Caption text size is smaller than the recommended size for general reading.
+On web, it should be used only in a graph or as a timestamp for a list item.
+On Android and iOS, it can also be used as help text or as other kinds of secondary text for list items.
+
+<Canvas>
+  <Story name="Display text" height="60px">
+    {Template.bind({})}
+  </Story>
+</Canvas>
+
+<ArgsTable story="Display text" />

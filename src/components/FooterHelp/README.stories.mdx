@@ -1,0 +1,48 @@
+import { Meta, Story, Canvas, ArgsTable } from '@storybook/addon-docs';
+
+import { FooterHelp } from '@/polaris-vue';
+
+<Meta
+  title="Components / Navigation / Footer help"
+  component={ FooterHelp }
+  argTypes={{
+    default: {
+      table: {
+        disable: true,
+      },
+    },
+    content: {
+      name: 'content',
+      description: 'The content to display inside FooterHelp',
+      table: {
+        type: {
+          summary: 'slot'
+        },
+      },
+    },
+  }}
+/>
+
+# Footer help
+
+Footer help is used to refer merchants to more information related to the product or feature they're using.
+
+export const Template = (args, { argTypes }) => ({
+  props: Object.keys(argTypes),
+  components: { FooterHelp },
+  template: `
+  <FooterHelp>
+    <p>Footer help content</p>
+  </FooterHelp>`,
+});
+
+<Canvas>
+  <Story name="Footer help">
+    {Template.bind({})}
+  </Story>
+</Canvas>
+
+<ArgsTable story="Footer help" />
+
+
+

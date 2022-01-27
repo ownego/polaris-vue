@@ -1,0 +1,74 @@
+import { Meta, Story, Canvas, ArgsTable } from '@storybook/addon-docs';
+import dedent from 'ts-dedent';
+
+import { ExceptionList, ExceptionListItem } from '@/polaris-vue';
+import NoteMinor from '@icons/NoteMinor.svg';
+import CircleCancelMajor from '@icons/CircleCancelMajor.svg';
+import DiscountsMajor from '@icons/DiscountsMajor.svg';
+
+<Meta
+  title="Components / Lists and tables / Exception List"
+  component={ ExceptionListItem }
+  argTypes={{
+    default: {
+      table: {
+        disable: true,
+      },
+    },
+  }}
+/>
+
+export const Template = (args, { argTypes }) => ({
+  props: Object.keys(argTypes),
+  components: { ExceptionList, ExceptionListItem },
+  data() {
+    return {
+      iconNoteMinor: NoteMinor,
+      iconCircleCancelMajor: CircleCancelMajor,
+      iconDiscountsMajor: DiscountsMajor,
+    };
+  },
+  template: `<ExceptionList>
+    <ExceptionListItem :icon="iconNoteMinor">This customer is awesome. Make sure to treat them right!</ExceptionListItem>
+    <ExceptionListItem title="Required" status="critical">This order need to be fulfilled ASAP.</ExceptionListItem>
+    <ExceptionListItem title="Warning" status="warning" :icon="iconDiscountsMajor">This order was applied discount code.</ExceptionListItem>
+    <ExceptionListItem v-bind="$props">Example Exception List Item</ExceptionListItem>
+  </ExceptionList>`,
+});
+
+# Exception List
+
+Use exception lists to help merchants notice important, standout information that adds extra context to a task. Exception lists often consist of a title and description. Each item in the list either has a bullet or icon at the front.
+
+<Canvas>
+  <Story
+    name="Exception List"
+    height="120px"
+    parameters={{
+      docs: {
+        transformSource: (source) => {
+          const tmpSource = source
+            .replace(/\s*:items='.*'\s*/,' :items="items"')
+            .replace(/\s*:icon='.*'\s*/,' :icon="iconNoteMinor"')
+            .replace(/\s:icon='.*'/,' :icon="iconDiscountsMajor"');
+          const fullSource = dedent`
+            ${tmpSource}\n
+            import NoteMinor from '@shopify/polaris-icons/dist/svg/NoteMinor.svg';
+            import DiscountsMajor from '@shopify/polaris-icons/dist/svg/DiscountsMajor.svg';\n
+            data() {
+              return {
+                iconNoteMinor: NoteMinor,
+                iconDiscountsMajor: DiscountsMajor,
+              };
+            }
+          `;
+          return fullSource;
+        },
+      },
+    }}
+  >
+    {Template.bind({})}
+  </Story>
+</Canvas>
+
+<ArgsTable story="Exception List" />

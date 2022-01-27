@@ -26,6 +26,7 @@ PositionedOverlay(
         :class="contentClassNames",
         ref="content",
       )
+        slot(name="extra-content")
         Pane(
           :sectioned="sectioned",
           :fixed="fixed",
