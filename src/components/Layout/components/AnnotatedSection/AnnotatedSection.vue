@@ -46,7 +46,11 @@ export default class AnnotatedSection extends Vue {
   public AnnotationDescriptionClassName = styles.AnnotationDescription;
 
   get isDescriptionSlotContainHTMLTag(): boolean {
-    return Boolean(this.$slots.description && this.$slots.description?.[0].tag);
+    return Boolean(
+      this.$slots.description
+      && this.$slots.description.length < 2
+      && this.$slots.description[0]?.tag,
+    );
   }
 }
 </script>
