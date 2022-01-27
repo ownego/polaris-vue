@@ -25,6 +25,7 @@ export * from './Label';
 export * from './Labelled';
 export * from './Link';
 export * from './List';
+export * from './Layout';
 export * from './Popover';
 export * from './PositionedOverlay';
 export * from './RadioButton';
