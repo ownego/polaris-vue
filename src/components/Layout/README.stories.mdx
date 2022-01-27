@@ -1,6 +1,6 @@
 import { Meta, Story, Canvas, ArgsTable } from '@storybook/addon-docs';
 
-import { Layout, LayoutSection, AnnotatedSection, TextField, FormLayout } from '@/polaris-vue';
+import { Layout, LayoutSection, AnnotatedSection, TextField, FormLayout, FormItem } from '@/polaris-vue';
 
 <Meta
   title="Components / Structure / Layout"
@@ -185,7 +185,7 @@ the title and description on each section helps merchants quickly find the setti
 
 export const AnnotatedLayout = (args, { argTypes }) => ({
   props: Object.keys(argTypes),
-  components: { Layout, LayoutSection, AnnotatedSection, TextField, FormLayout },
+  components: { Layout, LayoutSection, AnnotatedSection, TextField, FormLayout, FormItem },
   template: `
   <Layout>
     <AnnotatedSection>
@@ -194,16 +194,20 @@ export const AnnotatedLayout = (args, { argTypes }) => ({
         Shopify and your customers will use this information to contact you.
       </template>
       <FormLayout>
-        <TextField autoComplete="off">
-          <template slot="label">
-            Store name
-          </template>
-        </TextField>
-        <TextField type="email" autoComplete="email">
-          <template slot="label">
-            Account email
-          </template>
-        </TextField>
+        <FormItem>
+          <TextField autoComplete="off">
+            <template slot="label">
+              Store name
+            </template>
+          </TextField>
+        </FormItem>
+        <FormItem>
+          <TextField type="email" autoComplete="email">
+            <template slot="label">
+              Account email
+            </template>
+          </TextField>
+        </FormItem>
       </FormLayout>
     </AnnotatedSection>
   </Layout>`,
@@ -222,7 +226,7 @@ Use for settings pages that need a banner or other content at the top.
 
 export const AnnotatedBannerLayout = (args, { argTypes }) => ({
   props: Object.keys(argTypes),
-  components: { Layout, LayoutSection, AnnotatedSection, TextField, FormLayout },
+  components: { Layout, LayoutSection, AnnotatedSection, TextField, FormLayout, FormItem },
   template: `
   <Layout>
     <LayoutSection>
@@ -234,16 +238,20 @@ export const AnnotatedBannerLayout = (args, { argTypes }) => ({
         Shopify and your customers will use this information to contact you.
       </template>
       <FormLayout>
-        <TextField autoComplete="off">
-          <template slot="label">
-            Store name
-          </template>
-        </TextField>
-        <TextField type="email" autoComplete="email">
-          <template slot="label">
-            Account email
-          </template>
-        </TextField>
+        <FormItem>
+          <TextField autoComplete="off">
+            <template slot="label">
+              Store name
+            </template>
+          </TextField>
+        </FormItem>
+        <FormItem>
+          <TextField type="email" autoComplete="email">
+            <template slot="label">
+              Account email
+            </template>
+          </TextField>
+        </FormItem>
       </FormLayout>
     </AnnotatedSection>
   </Layout>`,
