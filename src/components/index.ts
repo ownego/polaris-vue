@@ -12,6 +12,7 @@ export * from './Combobox';
 export * from './Connected';
 export * from './DisplayText';
 export * from './EventListener';
+export * from './FooterHelp';
 export * from './Heading';
 export * from './ExceptionList';
 export * from './Form';
