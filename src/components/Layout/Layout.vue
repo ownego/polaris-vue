@@ -1,6 +1,6 @@
 <template lang="pug">
 div(:class="className")
-  Section(v-if="this.sectioned")
+  Section(v-if="sectioned")
     slot
   slot(v-else)
 </template>
