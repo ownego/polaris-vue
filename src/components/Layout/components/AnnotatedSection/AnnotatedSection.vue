@@ -13,7 +13,7 @@ div(:class="annotatedSectionClassName")
         slot(v-else, name="description")
 
     div(
-      :className="annotationContentClassName",
+      :class="annotationContentClassName",
     )
       slot
 </template>
