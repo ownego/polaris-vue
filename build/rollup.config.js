@@ -54,19 +54,8 @@ if (!argv.format || argv.format === 'es') {
     ],
   };
 
-  const vendorsBuild = {
-    input: 'src/scss/_vendors.scss',
-    plugins: [
-      scss({
-        output: 'dist/scss/_vendors.scss',
-        failOnError: true,
-      }),
-    ],
-  };
-
   buildFormats.push(merged);
   buildFormats.push(cssBuild);
-  buildFormats.push(vendorsBuild);
 }
 
 // Export config
