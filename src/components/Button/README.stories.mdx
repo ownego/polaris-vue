@@ -1,7 +1,7 @@
 import { Meta, Story, Canvas, ArgsTable, Source, Preview } from '@storybook/addon-docs';
 import dedent from 'ts-dedent';
 
-import { Button } from '@/polaris-vue';
+import { Button, ButtonGroup, ButtonGroupItem } from '@/polaris-vue';
 
 <Meta
   title="Components / Actions / Button"
@@ -144,7 +144,7 @@ import { Button } from '@/polaris-vue';
       },
     },
     prefix: {
-      name: 'prefix-${prefixId}',
+      name: 'prefix-{prefixId}',
       description: 'Slot to custom prefix for each item of actions on connectedDisclosure by `prefixId`',
       control: { disable: true },
       table: {
@@ -155,7 +155,7 @@ import { Button } from '@/polaris-vue';
       },
     },
     suffix: {
-      name: 'suffix-${suffixId}',
+      name: 'suffix-{suffixId}',
       description: 'Slot to custom suffix for each item of actions on connectedDisclosure by `suffixId`',
       control: { disable: true },
       table: {
@@ -347,6 +347,79 @@ SplitButton.parameters = {
   },
 }
 
+export const PressedButton = (args, { argTypes }) => ({
+  components: { ButtonGroup, ButtonGroupItem, Button },
+  data() {
+    return {
+      isFirstButtonActive: true,
+    }
+  },
+  methods: {
+    handleFirstButtonActive() {
+      if (this.isFirstButtonActive) return;
+      this.isFirstButtonActive = true;
+    },
+    handleSecondButtonActive() {
+      if (!this.isFirstButtonActive) return;
+      this.isFirstButtonActive = false;
+    }
+  },
+  template: `<ButtonGroup :segmented="true">
+    <ButtonGroupItem>
+      <Button
+        on-click="handleFirstButtonActive"
+        :pressed="isFirstButtonActive"
+        @click="handleFirstButtonActive"
+      >
+        First button
+      </Button>
+    </ButtonGroupItem>
+    <ButtonGroupItem>
+      <Button
+        on-click="handleSecondButtonActive"
+        @click="handleSecondButtonActive"
+        :pressed="!isFirstButtonActive"
+      >
+        Second button
+      </Button>
+    </ButtonGroupItem>
+  </ButtonGroup>`,
+});
+PressedButton.storyName = 'Pressed Button';
+PressedButton.parameters = {
+  docs: {
+    source: false,
+    transformSource: (source) => {
+      const tmpSource = source
+        .replace(/<template>\s*/, '')
+        .replace(/\s*<\/template>/, '')
+        .replace(/on-/g, 'v-on:')
+        .replace(/:pressed="false"/, ':pressed="!isFirstButtonActive"')
+        .replace(/pressed/, ':pressed="isFirstButtonActive"');
+      const fullSource = dedent`
+        data() {
+          return {
+            isFirstButtonActive: true,
+          }
+        },
+        methods: {
+          handleFirstButtonActive() {
+            if (this.isFirstButtonActive) return;
+            this.isFirstButtonActive = true;
+          },
+          handleSecondButtonActive() {
+            if (!this.isFirstButtonActive) return;
+            this.isFirstButtonActive = false;
+          }
+        },
+        ${tmpSource}
+      `;
+      return fullSource;
+    },
+  },
+}
+
+
 # Button
 
 Buttons are used primarily for actions, such as “Add”, “Close”, “Cancel”, or “Save”. Plain buttons, which look similar to links, are used for less important or less commonly used actions, such as “view shipping settings”.
@@ -362,6 +435,12 @@ For connectedDisclosure actions, use the [ActionList component.](/docs/component
 
 <Canvas style={{ backgroundColor: '#f6f6f7' }}>
   <Story story={Variants} height="280px" />
+</Canvas>
+
+### Pressed Button
+
+<Canvas style={{ backgroundColor: '#f6f6f7' }}>
+  <Story story={PressedButton} height="60px" />
 </Canvas>
 
 ### Disclosure Button

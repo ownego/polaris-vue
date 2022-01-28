@@ -18,6 +18,10 @@ import Vue from 'vue';
 import { Component, Prop, Ref } from 'vue-property-decorator';
 import { classNames } from 'polaris-react/src/utilities/css';
 import { dataPolarisTopBar, overlay } from 'polaris-react/src/components/shared';
+import { getRectForNode, Rect } from '@/utilities/geometry';
+import styles from '@/classes/PositionedOverlay.json';
+import popoverStyles from '@/classes/Popover.json';
+import { PopoverAutofocusTarget } from '../Popover/utils';
 import {
   PreferredPosition,
   PreferredAlignment,
@@ -27,10 +31,6 @@ import {
   intersectionWithViewport,
   windowRect,
 } from './math';
-import { getRectForNode, Rect } from '@/utilities/geometry';
-import styles from '@/classes/PositionedOverlay.json';
-import popoverStyles from '@/classes/Popover.json';
-import { PopoverAutofocusTarget } from '../Popover/utils';
 import { isDocument, getMarginsForNode, getZIndexForLayerFromNode } from './utils';
 import { EventListener } from '../EventListener';
 import { forNode } from '../Scrollable/utils';

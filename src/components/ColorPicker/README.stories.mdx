@@ -1,0 +1,100 @@
+import { Meta, Story, Canvas, ArgsTable } from '@storybook/addon-docs';
+import dedent from 'ts-dedent';
+
+import { ColorPicker } from '@/polaris-vue';
+
+<Meta
+  title="Components / Forms / Color Picker"
+  component={ ColorPicker }
+  argTypes={{
+    color: {
+      control: {
+        type: 'color'
+      },
+      table: {
+        type: {
+          summary: 'HSB object, RGB string, Hex string',
+        },
+      },
+    },
+    change: {
+      description: 'Callback when the color is changed. Return selected color.',
+      control: false,
+    },
+    outputType: {
+      control: {
+        type: 'select',
+      },
+      table: {
+        defaultValue: { summary: 'hsb' },
+      },
+    },
+  }}
+/>
+
+# Color picker
+
+The color picker is used to let merchants select a color visually.
+For example, merchants use the color picker to customize the accent color of the email templates for their shop.
+
+export const Template = (args, { argTypes }) => ({
+  props: Object.keys(argTypes),
+  components: { ColorPicker },
+  data() {
+    return {
+      color: '#000000',
+    };
+  },
+  methods: {
+    setColor(color) {
+      this.color = color;
+    },
+  },
+  template: dedent`<div>
+  <ColorPicker v-bind="$props" data-color="color" :color="color" @change="setColor" data-change="setColor" />
+  <br/>
+  <strong>Output:</strong>
+  <span>{{ color }}</span>
+  </div>`,
+});
+
+<Canvas>
+  <Story
+    name="Color Picker"
+    height="210px"
+    parameters={{
+      docs: {
+        transformSource: (source) => {
+          const tmpSource = source
+            .replace(/<template>/, '')
+            .replace(/<\/template>/, '')
+            .replace(/\s\s<div>/, '')
+            .replace(/\s\s<\/div>/, '')
+            .replace(/data-color/, ':color')
+            .replace(/data-change/, '@change')
+            .replace(/color="#.*?"\s/, '')
+            .replace(/\s*<strong>(.*)<\/strong>/, '')
+            .replace(/\s*<span>(.*)<\/span>\s*/, '')
+            .replace(/\s*<br\s\/>/, '');
+          return dedent`${tmpSource}\n
+            data() {
+              return {
+                color: '#000',
+              };
+            },
+            methods: {
+              setColor(color) {
+                this.color = color;
+              },
+            },
+          `;
+        },
+      },
+    }}
+  >
+    {Template.bind({})}
+  </Story>
+</Canvas>
+
+<ArgsTable story="Color Picker"/>
+

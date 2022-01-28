@@ -14,8 +14,8 @@ span(:class="className")
 import Vue from 'vue';
 import { Component, Prop } from 'vue-property-decorator';
 import { classNames, variationName } from 'polaris-react/src/utilities/css';
-import { VisuallyHidden } from '../VisuallyHidden';
 import styles from '@/classes/Badge.json';
+import { VisuallyHidden } from '../VisuallyHidden';
 
 const DEFAULT_SIZE = 'medium';
 

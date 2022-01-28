@@ -12,10 +12,10 @@ div
 import Vue from 'vue';
 import { Component, Prop } from 'vue-property-decorator';
 import { classNames, variationName } from 'polaris-react/src/utilities/css';
-import { VisuallyHidden } from '../VisuallyHidden';
 import styles from '@/classes/Spinner.json';
 import SpinnerIconLarge from '@/assets/spinner-large.svg';
 import SpinnerIconSmall from '@/assets/spinner-small.svg';
+import { VisuallyHidden } from '../VisuallyHidden';
 
 type Size = 'small' | 'large';
 

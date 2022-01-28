@@ -23,9 +23,9 @@ div(:class="className")
 import Vue from 'vue';
 import { Component, Prop } from 'vue-property-decorator';
 import { classNames } from 'polaris-react/src/utilities/css';
+import styles from '@/classes/ActionList.json';
 import { Item } from '../Item';
 import { ActionListSection, ActionListItemDescriptor } from '../../utils';
-import styles from '@/classes/ActionList.json';
 
 @Component({
   components: {

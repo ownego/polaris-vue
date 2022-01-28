@@ -35,13 +35,13 @@ import { classNames } from 'polaris-react/src/utilities/css';
 import SelectMinor from '@icons/SelectMinor.svg';
 import CaretUpMinor from '@icons/CaretUpMinor.svg';
 import CaretDownMinor from '@icons/CaretDownMinor.svg';
+import styles from '@/classes/Button.json';
 import {
   ButtonProps, CommonButtonProps, LinkButtonProps, ActionButtonProps,
 } from './utils';
 import { UnstyledButton } from '../UnstyledButton';
 import { Icon } from '../Icon';
 import { Spinner } from '../Spinner';
-import styles from '@/classes/Button.json';
 
 @Component({
   components: {

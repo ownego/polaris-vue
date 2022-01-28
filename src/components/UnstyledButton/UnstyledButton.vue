@@ -33,9 +33,9 @@ button(
 <script lang="ts">
 import Vue from 'vue';
 import { Component, Prop } from 'vue-property-decorator';
-import { UnstyledButtonProps } from './utils';
 import { UnstyledLink } from '@/components/UnstyledLink';
 import { handleMouseUpByBlurring } from '@/utilities/focus';
+import { UnstyledButtonProps } from './utils';
 
 @Component({
   components: {

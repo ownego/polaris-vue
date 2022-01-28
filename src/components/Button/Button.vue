@@ -168,7 +168,7 @@ export default class Button extends Vue {
    * Displays the button with a disclosure icon. Defaults to `down` when set to true
    * @values down | up | select | boolean
    */
-  @Prop({ type: String }) public disclosure?: ButtonProps['disclosure'];
+  @Prop({ type: [String, Boolean] }) public disclosure?: ButtonProps['disclosure'];
 
   /**
    * Renders a button that looks like a link

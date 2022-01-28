@@ -1,5 +1,6 @@
 import '!style-loader!css-loader!sass-loader!../src/scss/main.scss';
-import Vue from 'vue';
+import '!style-loader!css-loader!sass-loader!../src/scss/_vendors.scss';
+// import Vue from 'vue';
 // import VueRouter from 'vue-router';
 
 // Vue.use(VueRouter);
