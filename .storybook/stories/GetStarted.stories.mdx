@@ -81,6 +81,25 @@ new Vue({
 });
 ```
 
+<br/>
+
+### **AppProvider**
+The AppProvider component is `required` to use PolarisVue. Without it, the components in your application will not function correctly. You must wrap the root (the top) of your application in the app provider component.
+
+```javascript
+// App.vue
+<template>
+<AppProvider>
+  <div id="app">
+  </div>
+</AppProvider>
+</template>
+
+<script></script>
+```
+
+<br/>
+
 ### **Styles**
 
 Polaris Vue supports both **CSS** & **SCSS**, you can find the neccessary styles files in `node_modules/@qikify/polaris-vue/dist/`.
