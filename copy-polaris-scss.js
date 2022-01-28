@@ -2,6 +2,11 @@
 const fs = require('fs');
 
 const directoryPath = 'src/scss';
+const dir = 'dist/scss';
+
+if (!fs.existsSync(dir)) {
+  fs.mkdirSync(dir, { recursive: true });
+}
 
 fs.readdirSync(directoryPath).forEach((file) => {
   if (!['_vendors.scss'].includes(file)) {

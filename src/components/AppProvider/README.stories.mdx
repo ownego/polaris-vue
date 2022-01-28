@@ -1,0 +1,28 @@
+import { Meta } from '@storybook/addon-docs';
+import { AppProvider } from '@/polaris-vue';
+
+<Meta
+  title="Components / Structure / AppProvider"
+  component={ AppProvider }
+/>
+
+# AppProvider
+
+App provider is a required component that enables sharing global settings throughout the hierarchy of your application.
+
+<br/>
+
+## Best practices
+The AppProvider component is `required` to use PolarisVue. Without it, the components in your application will not function correctly. You must wrap the root (the top) of your application in the app provider component.
+
+```javascript
+// App.vue
+<template>
+<AppProvider>
+  <div>
+  </div>
+</AppProvider>
+</template>
+
+<script></script>
+```
