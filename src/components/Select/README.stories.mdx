@@ -168,6 +168,17 @@ Select lets merchants choose one option from an options menu. Consider select wh
             .replace(/:options='(.*)'/, ':options="options" v-model="selectValue"');
           const fullSource = dedent`
             ${tmpSource}
+            data() {
+              return {
+                options: [
+                  { "label": "Today", "value": "today" },
+                  { "label": "Yesterday", "value": "yesterday" },
+                  { "label": "Last 7 days", "value": "lastWeek" },
+                  { "id": "hint", "label": "Option with icon", "value": "hint" },
+                  { "label": "Option disabled", "value": "disabled", "disabled": true },
+                ],
+              };
+            },
           `;
           return fullSource;
         },
