@@ -45,7 +45,7 @@ import {
   hsbToHex,
   hexToRgb,
   rgbToHsb,
-} from 'polaris-react/src/utilities/color-transformers';
+} from '@/utilities/color-transformers';
 import styles from '@/classes/ColorPicker.json';
 import { AlphaPicker, HuePicker, Slidable } from './components';
 import { EventListener } from '../EventListener';

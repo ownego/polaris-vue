@@ -20,7 +20,7 @@ import Vue from 'vue';
 import { Component, Prop } from 'vue-property-decorator';
 import { classNames } from 'polaris-react/src/utilities/css';
 import type { HSBColor } from 'polaris-react/src/utilities/color-types';
-import { hsbToRgb } from 'polaris-react/src/utilities/color-transformers';
+import { hsbToRgb } from '@/utilities/color-transformers';
 import { calculateDraggerY, alphaForDraggerY } from 'polaris-react/src/components/ColorPicker/components/AlphaPicker/utilities';
 import styles from '@/classes/ColorPicker.json';
 import { Slidable } from '../Slidable';
