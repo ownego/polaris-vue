@@ -1,5 +1,6 @@
 <template lang="pug">
 Option(
+  :value="value",
   :selected="selected",
   :disabled="disabled",
   :divider="divider",
@@ -33,6 +34,9 @@ export default class Action extends Vue {
 
   @Prop({ type: [String, Object, Function] })
   public icon?: IconSource;
+
+  @Prop({ type: String, required: true })
+  public value!: OptionProps['value'];
 
   @Prop({ type: Boolean })
   public selected?: OptionProps['selected'];
