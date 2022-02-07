@@ -84,7 +84,7 @@ export default class Listbox extends Vue {
     setLoading: this.setLoading,
   };
 
-  @Provide() WithinListboxContext!: boolean;
+  @Provide() WithinListboxContext = true;
 
   @Ref() listboxRef!: HTMLUListElement;
 
