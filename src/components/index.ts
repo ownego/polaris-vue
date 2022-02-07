@@ -21,6 +21,7 @@ export * from './FormLayout';
 export * from './Icon';
 export * from './Image';
 export * from './InlineError';
+export * from './KeyboardKey';
 export * from './KeypressListener';
 export * from './Label';
 export * from './Labelled';
