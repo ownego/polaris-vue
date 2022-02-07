@@ -28,6 +28,7 @@ export * from './Link';
 export * from './List';
 export * from './Layout';
 export * from './Popover';
+export * from './Portal';
 export * from './PositionedOverlay';
 export * from './RadioButton';
 export * from './Scrollable';
