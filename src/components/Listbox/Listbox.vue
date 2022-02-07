@@ -142,7 +142,7 @@ export default class Listbox extends Vue {
     }
   }
 
-  created(): void {
+  mounted(): void {
     if (this.listboxRef) {
       this.scrollableRef = this.listboxRef.closest(scrollable.selector) as HTMLElement;
     }
