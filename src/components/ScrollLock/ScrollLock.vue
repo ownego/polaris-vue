@@ -1,13 +1,7 @@
 <script lang="ts">
 import Vue from 'vue';
-import { Component, Provide } from 'vue-property-decorator';
-import { isServer } from 'polaris-react/src/utilities/target';
-
-export const SCROLL_LOCKING_ATTRIBUTE = 'data-lock-scrolling';
-
-const SCROLL_LOCKING_WRAPPER_ATTRIBUTE = 'data-lock-scrolling-wrapper';
-
-let scrollPosition = 0;
+import { Component, Inject } from 'vue-property-decorator';
+import { ScrollLockManager } from 'polaris-react/src/utilities/scroll-lock-manager/scroll-lock-manager';
 
 @Component
 export default class ScrollLock extends Vue {
@@ -16,53 +10,14 @@ export default class ScrollLock extends Vue {
     return null;
   }
 
-  @Provide() scrollLocks = 0;
-
-  @Provide() locked = false;
-
-  registerScrollLock() {
-    this.scrollLocks += 1;
-    this.handleScrollLocking();
-  }
-
-  unregisterScrollLock() {
-    this.scrollLocks -= 1;
-    this.handleScrollLocking();
-  }
-
-  handleScrollLocking() {
-    if (isServer) return;
-
-    const { scrollLocks } = this;
-    const { body } = document;
-    const wrapper = body.firstElementChild;
-
-    if (scrollLocks === 0) {
-      body.removeAttribute(SCROLL_LOCKING_ATTRIBUTE);
-      if (wrapper) {
-        wrapper.removeAttribute(SCROLL_LOCKING_WRAPPER_ATTRIBUTE);
-      }
-      window.scroll(0, scrollPosition);
-      this.locked = false;
-    } else if (scrollLocks > 0 && !this.locked) {
-      scrollPosition = window.pageYOffset;
-      body.setAttribute(SCROLL_LOCKING_ATTRIBUTE, '');
-
-      if (wrapper) {
-        wrapper.setAttribute(SCROLL_LOCKING_WRAPPER_ATTRIBUTE, '');
-        wrapper.scrollTop = scrollPosition;
-      }
-      this.locked = true;
-    }
-  }
+  @Inject({ default: new ScrollLockManager() }) scrollLockManager !: ScrollLockManager;
 
   created(): void {
-    console.log('register', this.scrollLocks);
-    this.registerScrollLock();
+    this.scrollLockManager.registerScrollLock();
   }
 
   beforeDestroy(): void {
-    this.unregisterScrollLock();
+    this.scrollLockManager.unregisterScrollLock();
   }
 }
 
