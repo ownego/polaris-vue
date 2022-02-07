@@ -15,6 +15,7 @@ div(:class="wrapperClassName")
 import Vue from 'vue';
 import { Component, Prop, Inject } from 'vue-property-decorator';
 import { classNames } from 'polaris-react/src/utilities/css';
+import { ComboboxListboxOptionType } from 'polaris-react/src/utilities/combobox/context';
 import styles from '@/classes/Listbox-TextOption.json';
 import { Checkbox } from '../../../Checkbox';
 
@@ -24,9 +25,9 @@ import { Checkbox } from '../../../Checkbox';
   },
 })
 export default class TextOption extends Vue {
-  @Inject({ default: false }) allowMultiple!: boolean;
+  @Inject({ default: {} }) ComboboxListboxOptionContext!: ComboboxListboxOptionType;
 
-  @Inject({ default: false }) isAction!: boolean;
+  @Inject({ default: false }) ActionContext!: boolean;
 
   /**
    * Whether the option is selected
@@ -43,6 +44,14 @@ export default class TextOption extends Vue {
   public contentClassName = styles.Content;
 
   public checkboxClassName = styles.Checkbox;
+
+  get allowMultiple(): boolean {
+    return Boolean(this.ComboboxListboxOptionContext.allowMultiple);
+  }
+
+  get isAction(): boolean {
+    return this.ActionContext;
+  }
 
   get wrapperClassName(): string {
     return classNames(

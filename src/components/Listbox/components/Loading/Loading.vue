@@ -45,6 +45,12 @@ export default class Loading extends Vue {
       };
     }
   }
+
+  protected mounted(): void {
+    if (Object.keys(this.listboxContext).length === 0) {
+      throw new Error('No Listbox was provided. Listbox components must be wrapped in a Listbox');
+    }
+  }
 }
 </script>
 

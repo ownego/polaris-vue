@@ -13,7 +13,7 @@ Option(
 
 <script lang="ts">
 import Vue from 'vue';
-import { Component, Prop } from 'vue-property-decorator';
+import { Component, Prop, Provide } from 'vue-property-decorator';
 import { classNames } from 'polaris-react/src/utilities/css';
 import type { IconSource } from 'types/type';
 import styles from '@/classes/Listbox-Action.json';
@@ -29,7 +29,9 @@ import { TextOption } from '../TextOption';
   },
 })
 export default class Action extends Vue {
-  @Prop({ type: [String, Object, Function], required: true })
+  @Provide() ActionContext = true;
+
+  @Prop({ type: [String, Object, Function] })
   public icon?: IconSource;
 
   @Prop({ type: Boolean })

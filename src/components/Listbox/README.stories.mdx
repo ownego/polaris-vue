@@ -220,7 +220,7 @@ export const ActionListbox = (args, { argTypes }) => ({
   components: { Listbox, ListboxOption, ListboxAction },
   template: `
   <Listbox accessibilityLabel="Listbox with Action example">
-    <ListboxAction value="ActionValue" divider=true>
+    <ListboxAction value="ActionValue" :divider="true">
       <div>Add item</div>
     </ListboxAction>
     <ListboxOption value="1">Option 1</ListboxOption>
@@ -257,7 +257,7 @@ export const CustomListbox = (args, { argTypes }) => ({
   components: { Listbox, ListboxOption, ListboxLoading, ListboxAction },
   template: `
   <Listbox accessibilityLabel="Listbox with custom element example">
-    <ListboxAction value="ActionValue" divider=true>
+    <ListboxAction value="ActionValue" :divider="true">
       <div>Add item</div>
     </ListboxAction>
     <ListboxOption value="1">
@@ -312,7 +312,7 @@ export const ExampleListbox = (args, { argTypes }) => ({
   components: { Listbox, ListboxOption, ListboxLoading, ListboxAction },
   template: `
   <Listbox v-bind="$props">
-    <ListboxAction value="ActionValue" divider=true>
+    <ListboxAction value="ActionValue" :divider="true">
       <div>Add item</div>
     </ListboxAction>
     <ListboxOption value="1">Option 1</ListboxOption>
