@@ -1,7 +1,7 @@
 <template lang="pug">
 div
   slot
-  #PolarisPortalsContainer(v-if="this.portalManager.hasContainer")
+  #PolarisPortalsContainer(v-if="portalManager.hasContainer")
 </template>
 
 <script lang="ts">
