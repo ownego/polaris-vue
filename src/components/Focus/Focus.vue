@@ -4,7 +4,7 @@ import { Component, Prop, Watch } from 'vue-property-decorator';
 import { focusFirstFocusableNode } from '@/utilities/focus';
 
 @Component
-export default class KeypressListener extends Vue {
+export default class Focus extends Vue {
   @Prop({ type: Boolean }) public disabled?: boolean;
 
   @Prop({ type: HTMLElement }) public root?: HTMLElement;
@@ -30,5 +30,4 @@ export default class KeypressListener extends Vue {
     this.focusNode();
   }
 }
-
 </script>
