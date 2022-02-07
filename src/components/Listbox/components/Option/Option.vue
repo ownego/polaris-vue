@@ -75,7 +75,7 @@ export default class ListBox extends Vue {
   /**
    * Unique item values
    */
-  @Prop({ type: String })
+  @Prop({ type: String, required: true })
   public value!: OptionProps['value'];
 
   /**
@@ -126,7 +126,11 @@ export default class ListBox extends Vue {
   }
 
   get isSlotContainHTMLTag(): boolean {
-    return Boolean(this.$slots.default?.[0].tag);
+    return Boolean(
+      this.$slots.default
+      && this.$slots.default.length < 2
+      && this.$slots.default[0]?.tag,
+    );
   }
 
   public handleOptionClick(event: MouseEvent): void {
@@ -134,7 +138,7 @@ export default class ListBox extends Vue {
 
     if (this.disabled) return;
 
-    if (this.mappedActionContext && this.mappedActionContext.onAction) {
+    if (this.mappedActionContext.onAction) {
       this.mappedActionContext.onAction();
     }
 
@@ -146,7 +150,7 @@ export default class ListBox extends Vue {
         disabled: this.disabled || false,
       };
 
-      if (this.listboxContext && this.listboxContext.onOptionSelect) {
+      if (this.listboxContext.onOptionSelect) {
         this.listboxContext.onOptionSelect(params);
       }
     }

@@ -37,7 +37,7 @@ export default class Loading extends Vue {
 
   @Watch('accessibilityLabel')
   onAccessibilityLabelChanged() {
-    if (this.listboxContext && this.listboxContext.setLoading) {
+    if (this.listboxContext.setLoading) {
       this.listboxContext.setLoading(this.accessibilityLabel);
 
       return () => {

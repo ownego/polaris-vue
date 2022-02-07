@@ -30,16 +30,16 @@ import { TextOption } from '../TextOption';
 })
 export default class Action extends Vue {
   @Prop({ type: [String, Object, Function], required: true })
-  public source?: IconSource;
+  public icon?: IconSource;
 
   @Prop({ type: Boolean })
-  public selected!: OptionProps['selected'];
+  public selected?: OptionProps['selected'];
 
   @Prop({ type: Boolean })
-  public disabled!: OptionProps['disabled'];
+  public disabled?: OptionProps['disabled'];
 
   @Prop({ type: Boolean })
-  public divider!: OptionProps['divider'];
+  public divider?: OptionProps['divider'];
 
   public iconClassName: string = styles.Icon;
 

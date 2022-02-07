@@ -1,6 +1,6 @@
 <template lang="pug">
 div
-  template
+  template(v-if="keyboardEventsEnabled || comboboxListboxContext.textFieldFocused")
     KeypressListener(
       keyEvent="keydown",
       :keyCode="String(Key.DownArrow)",
@@ -47,7 +47,7 @@ import {
 import debounce from 'lodash/debounce';
 import { classNames } from 'polaris-react/src/utilities/css';
 import { scrollIntoView } from 'polaris-react/src/utilities/scroll-into-view';
-import { Key } from 'polaris-react/src/types';
+import { scrollable } from 'polaris-react/src/components/shared';
 import type {
   ListboxContextType, NavigableOption,
 } from 'polaris-react/src/utilities/listbox';
@@ -58,15 +58,11 @@ import {
 import { ComboboxListboxType } from 'polaris-react/src/utilities/combobox/context';
 import styles from '@/classes/Listbox.json';
 import { useUniqueId } from '@/utilities/unique-id';
+import type { Key } from '../KeypressListener';
 import { KeypressListener } from '../KeypressListener';
 import { VisuallyHidden } from '../VisuallyHidden';
 
 export type ArrowKeys = 'up' | 'down';
-
-export const scrollable = {
-  props: { 'data-polaris-scrollable': true },
-  selector: '[data-polaris-scrollable]',
-};
 
 const LISTBOX_OPTION_SELECTOR = '[data-listbox-option]';
 const LISTBOX_OPTION_VALUE_ATTRIBUTE = 'data-listbox-option-value';
@@ -110,33 +106,27 @@ export default class Listbox extends Vue {
 
   public currentActiveOption?: NavigableOption;
 
-  public loading = '';
-
   public listboxClassName: string = classNames(styles.Listbox);
 
-  public Key = Key;
+  public keyboardEventsEnabled = false;
+
+  public Key?: Key;
+
+  public loading = '';
 
   get inCombobox(): boolean {
-    return Boolean(
-      this.comboboxListboxContext
-      && this.comboboxListboxContext.setActiveOptionId,
-    );
+    return Boolean(this.comboboxListboxContext.setActiveOptionId);
   }
 
   get listBoxId() {
-    return this.comboboxListboxContext
-      ? this.comboboxListboxContext.listboxId
-      : '';
+    return this.comboboxListboxContext.listboxId || '';
   }
 
   @Watch('currentActiveOption', { deep: true })
   onCurrentActiveOptionChanged(): void {
     if (!this.currentActiveOption) return;
 
-    if (
-      this.comboboxListboxContext
-      && this.comboboxListboxContext.setActiveOptionId
-    ) {
+    if (this.comboboxListboxContext.setActiveOptionId) {
       this.comboboxListboxContext.setActiveOptionId(this.currentActiveOption.domId);
     }
   }
@@ -145,11 +135,16 @@ export default class Listbox extends Vue {
   @Watch('listId')
   onIdChanged() {
     if (
-      this.comboboxListboxContext
-      && this.comboboxListboxContext.setListboxId
+      this.comboboxListboxContext.setListboxId
       && !this.comboboxListboxContext.listboxId
     ) {
       this.comboboxListboxContext.setListboxId(this.listId);
+    }
+  }
+
+  created(): void {
+    if (this.listboxRef) {
+      this.scrollableRef = this.listboxRef.closest(scrollable.selector) as HTMLElement;
     }
   }
 
@@ -200,10 +195,7 @@ export default class Listbox extends Vue {
   public onOptionSelect(option: NavigableOption): void {
     this.handleChangeActiveOption(option);
 
-    if (
-      this.comboboxListboxContext
-      && this.comboboxListboxContext.onOptionSelected
-    ) {
+    if (this.comboboxListboxContext.onOptionSelected) {
       this.comboboxListboxContext.onOptionSelected();
     }
 
@@ -244,7 +236,6 @@ export default class Listbox extends Vue {
 
       if (
         nextIndex === navItems.length - 1
-        && this.comboboxListboxContext
         && this.comboboxListboxContext.onKeyToBottom
       ) {
         this.comboboxListboxContext.onKeyToBottom();
