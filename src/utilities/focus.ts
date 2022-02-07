@@ -140,3 +140,10 @@ export const handleMouseUpByBlurring = (event: MouseEvent) => {
   const currentTarget = event.currentTarget as HTMLInputElement;
   currentTarget.blur();
 };
+
+export function focusFirstFocusableNode(
+  element: HTMLElement,
+  onlyDescendants = true,
+) {
+  findFirstFocusableNode(element, onlyDescendants)?.focus();
+}
