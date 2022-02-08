@@ -44,6 +44,7 @@ export * from './TextContainer';
 export * from './TextField';
 export * from './TextStyle';
 export * from './Thumbnail';
+export * from './TrapFocus';
 export * from './Truncate';
 export * from './UnstyledButton';
 export * from './UnstyledLink';
