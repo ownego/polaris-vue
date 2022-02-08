@@ -63,8 +63,8 @@ Labelled(
         v-bind="normalizeAriaMultiline(multiline)",
         @input="onChange",
         @keydown="handleKeyPress",
-        @focus="comboboxTextFieldFocus",
-        @blur="comboboxTextFieldBlur",
+        @focus="onInputFocus",
+        @blur="onInputBlur",
       )
       div(
         v-if="$slots.suffix",
@@ -117,6 +117,7 @@ import {
 } from 'vue-property-decorator';
 import CircleCancelMinor from '@shopify/polaris-icons/dist/svg/CircleCancelMinor.svg';
 import { classNames, variationName } from 'polaris-react/src/utilities/css';
+import type { ComboboxTextFieldType } from 'polaris-react/src/utilities/combobox';
 import type { Error, Action } from 'types/type';
 import styles from '@/classes/TextField.json';
 import { useUniqueId } from '@/utilities/unique-id';
@@ -165,11 +166,7 @@ type InputMode =
   },
 })
 export default class TextField extends Vue {
-  @Inject({ default: Function }) comboboxTextFieldFocus!: () => void;
-
-  @Inject({ default: Function }) comboboxTextFieldBlur!: () => void;
-
-  @Inject({ default: Function }) comboboxTextFieldChange!: () => void;
+  @Inject({ default: {} }) comboboxTextFieldContext!: ComboboxTextFieldType;
 
   @Ref('prefixRef') prefixRef!: HTMLDivElement;
 
@@ -504,12 +501,24 @@ export default class TextField extends Vue {
   public onChange(event: InputEvent): void {
     const target = event.target as HTMLInputElement;
 
-    if (this.comboboxTextFieldChange) {
-      this.comboboxTextFieldChange();
+    if (this.comboboxTextFieldContext.onTextFieldChange) {
+      this.comboboxTextFieldContext.onTextFieldChange();
     }
 
     this.$emit('input', target.value);
     this.$emit('change');
+  }
+
+  public onInputFocus() {
+    if (this.comboboxTextFieldContext.onTextFieldFocus) {
+      this.comboboxTextFieldContext.onTextFieldFocus();
+    }
+  }
+
+  public onInputBlur() {
+    if (this.comboboxTextFieldContext.onTextFieldBlur) {
+      this.comboboxTextFieldContext.onTextFieldBlur();
+    }
   }
 
   public handleNumberChange(payload: number): void {

@@ -1,5 +1,6 @@
 <template lang="pug">
 Popover(
+  ref="popoverRef",
   :active="popoverActive",
   autofocusTarget="none",
   preventFocusOnClose=true,
@@ -36,11 +37,36 @@ import { Popover, Pane } from '../Popover';
   },
 })
 export default class Combobox extends Vue {
-  @Provide() comboboxTextFieldFocus = this.handleFocus;
+  public popoverActive = false;
 
-  @Provide() comboboxTextFieldBlur = this.handleBlur;
+  public activeOptionId = '';
 
-  @Provide() comboboxTextFieldChange = this.handleChange;
+  public listboxId = '';
+
+  public textFieldFocused = false;
+
+  @Provide() comboboxTextFieldContext = {
+    activeOptionId: this.activeOptionId,
+    expanded: this.popoverActive,
+    listboxId: this.listboxId,
+    setTextFieldFocus: () => { this.textFieldFocused = true; },
+    setTextFieldLabelId: (id: string) => { this.textFieldLabelId = id; },
+    onTextFieldFocus: this.handleFocus,
+    onTextFieldChange: this.handleChange,
+    onTextFieldBlur: this.handleBlur,
+  }
+
+  @Provide() comboboxListboxContext = {
+    setActiveOptionId: (id: string) => { this.activeOptionId = id; },
+    setListboxId: (id: string) => { this.listboxId = id; },
+    listboxId: this.listboxId,
+    textFieldFocused: this.textFieldFocused,
+    onKeyToBottom: () => { this.$emit('scrolled-to-bottom'); },
+  }
+
+  @Provide() comboboxListboxOptionContext = {
+    allowMultiple: this.activeOptionId,
+  }
 
   @Prop({ type: Boolean })
   public allowMultiple!: boolean;
@@ -48,7 +74,7 @@ export default class Combobox extends Vue {
   @Prop({ type: String, default: 'below' })
   public preferredPosition!: PreferredPosition;
 
-  public popoverActive = false;
+  public textFieldLabelId = '';
 
   public listboxClassName = styles.Listbox;
 
@@ -56,8 +82,19 @@ export default class Combobox extends Vue {
     return Boolean(!this.popoverActive && this.$slots.default);
   }
 
+  public onOptionSelect(): void {
+    if (!this.allowMultiple) {
+      this.popoverActive = false;
+      this.activeOptionId = '';
+    }
+
+    // TODO: block by forceUpdatePosition in popover
+    // (this.$refs.popoverRef as Popover)?.forceUpdatePosition();
+  }
+
   public handleClose(): void {
     this.popoverActive = false;
+    this.activeOptionId = '';
   }
 
   public handleFocus(): void {
@@ -75,6 +112,7 @@ export default class Combobox extends Vue {
   public handleBlur(): void {
     if (this.popoverActive) {
       this.popoverActive = false;
+      this.activeOptionId = '';
     }
   }
 }
