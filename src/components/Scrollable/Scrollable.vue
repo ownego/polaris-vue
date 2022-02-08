@@ -16,6 +16,7 @@ import {
   Prop,
   Ref,
   Provide,
+  Watch,
 } from 'vue-property-decorator';
 import debounce from 'lodash/debounce';
 import { classNames } from 'polaris-react/src/utilities/css';
@@ -44,9 +45,11 @@ const LOW_RES_BUFFER = 2;
 
 @Component
 export default class Scrollable extends Vue {
-  @Provide() 'stickyManager' = new StickyManager();
+  private stickyManagerContext = new StickyManager();
 
-  @Provide() 'scrollToPositionContext' = this.scrollToPosition;
+  @Provide() stickyManager = this.stickyManagerContext;
+
+  @Provide() scrollToPosition = this.scrollToPositionMethod;
 
   @Ref('scrollArea') scrollArea!: HTMLDivElement;
 
@@ -54,31 +57,31 @@ export default class Scrollable extends Vue {
    * Scroll content vertically
    */
   @Prop({ type: Boolean, default: true })
-  public vertical!: boolean;
+  public vertical?: boolean;
 
   /**
    * Scroll content horizontally
    */
   @Prop({ type: Boolean })
-  public horizontal!: boolean;
+  public horizontal?: boolean;
 
   /**
    * Add a shadow when content is scrollable
    */
   @Prop({ type: Boolean })
-  public shadow!: boolean;
+  public shadow?: boolean;
 
   /**
    * Slightly hints content upon mounting when scrollable
    */
   @Prop({ type: Boolean })
-  public hint!: boolean;
+  public hint?: boolean;
 
   /**
    * Adds a tabIndex to scrollable when children are not focusable
    */
   @Prop({ type: Boolean })
-  public focusable!: boolean;
+  public focusable?: boolean;
 
   public topShadow = false;
 
@@ -104,6 +107,7 @@ export default class Scrollable extends Vue {
   protected mounted() {
     if (!this.scrollArea) return;
 
+    this.stickyManagerContext.setContainer(this.scrollArea);
     (this.$refs.scrollArea as HTMLDivElement).addEventListener('scroll', () => {
       window.requestAnimationFrame(this.handleScroll);
     });
@@ -116,8 +120,9 @@ export default class Scrollable extends Vue {
     });
   }
 
-  protected updated() {
-    if (this.scrollPosition && this.scrollArea && this.scrollPosition > 0) {
+  @Watch('scrollPosition')
+  onScrollPositionChanged() {
+    if (this.scrollArea && this.scrollPosition > 0) {
       (this.$refs.scrollArea as HTMLDivElement).scrollTop = this.scrollPosition;
     }
   }
@@ -128,6 +133,7 @@ export default class Scrollable extends Vue {
     (this.$refs.scrollArea as HTMLDivElement)
       .removeEventListener('scroll', this.handleScroll);
     window.removeEventListener('resize', this.handleResize);
+    this.stickyManagerContext.removeScrollListener();
   }
 
   private handleResize = debounce(
@@ -215,7 +221,7 @@ export default class Scrollable extends Vue {
     }
   }
 
-  private scrollToPosition(scrollY: number): void {
+  private scrollToPositionMethod(scrollY: number): void {
     this.scrollPosition = scrollY;
   }
 }
