@@ -2,7 +2,7 @@
 // TODO: Update lazy loaded docs
 div(ref="container")
   slot(name="activator")
-  Portal(v-if="activatorNode && active", :to="portalId")
+  Portal(v-if="activatorNode && active", :portalId="portalId")
     div(:data-portal-id="portalId")
       PopoverOverlay(
         :activator="activatorNode",
@@ -21,12 +21,10 @@ div(ref="container")
         template(v-slot:overlay="props")
           slot(name="content")
         slot(name="extra-content", slot="extra-content")
-  PortalTarget(:name="portalId")
 </template>
 
 <script lang="ts">
 import Vue from 'vue';
-import { Portal, PortalTarget } from 'portal-vue';
 import {
   Component, Prop, Watch, Ref,
 } from 'vue-property-decorator';
@@ -38,12 +36,12 @@ import { useUniqueId } from '@/utilities/unique-id';
 import type { PreferredAlignment, PreferredPosition } from '../PositionedOverlay';
 import { PopoverCloseSource, PopoverAutofocusTarget, setActivatorAttributes } from './utils';
 import { PopoverOverlay } from './components';
+import { Portal } from '../Portal';
 
 @Component({
   components: {
     PopoverOverlay,
     Portal,
-    PortalTarget,
   },
 })
 export default class Popover extends Vue {

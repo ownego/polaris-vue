@@ -1,6 +1,7 @@
 <template lang="pug">
 div
   slot
+  #PolarisPortalsContainer(v-if="portalManager.hasContainer")
 </template>
 
 <script lang="ts">
@@ -10,11 +11,13 @@ import {
   Provide,
 } from 'vue-property-decorator';
 import { ScrollLockManager } from 'polaris-react/src/utilities/scroll-lock-manager/scroll-lock-manager';
+import { PortalManager } from '@/utilities/portal-manager';
 
 @Component
 export default class AppProvider extends Vue {
-  @Provide('scrollLockManager')
-  scrollLockManager = new ScrollLockManager();
+  @Provide() scrollLockManager = new ScrollLockManager();
+
+  @Provide() portalManager = new PortalManager();
 }
 </script>
 
