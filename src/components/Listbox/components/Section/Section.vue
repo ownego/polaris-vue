@@ -24,7 +24,7 @@ import { useUniqueId } from '@/utilities/unique-id';
 
 @Component
 export default class Section extends Vue {
-  @Provide() SectionContext = this.sectionId;
+  @Provide() sectionContext = this.sectionId;
 
   @Prop({ type: Boolean, default: true })
   public divider?: boolean;

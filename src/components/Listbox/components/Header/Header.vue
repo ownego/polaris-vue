@@ -1,5 +1,5 @@
 <template lang="pug">
-div(:id="sectionId", aria-hidden)
+div(:id="sectionContext", aria-hidden)
   div(
     v-if="!isSlotContainHTMLTag",
     :class="className",
@@ -15,7 +15,7 @@ import styles from '@/classes/Listbox-Header.json';
 
 @Component
 export default class Header extends Vue {
-   @Inject({ default: '' }) sectionId!: string;
+   @Inject({ default: '' }) sectionContext!: string;
 
    public className: string = styles.Header;
 

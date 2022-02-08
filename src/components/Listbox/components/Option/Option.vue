@@ -66,7 +66,7 @@ import { MappedActionContextType, OptionProps } from './utils';
 export default class ListBox extends Vue {
   @Inject({ default: {} }) mappedActionContext!: MappedActionContextType;
 
-  @Inject({ default: '' }) sectionId!: string;
+  @Inject({ default: '' }) sectionContext!: string;
 
   @Inject({ default: {} }) listboxContext!: ListboxContextType;
 
@@ -103,7 +103,7 @@ export default class ListBox extends Vue {
   @Prop({ type: Boolean })
   public divider?: OptionProps['divider'];
 
-  public isWithinSection = Boolean(this.sectionId);
+  public isWithinSection = Boolean(this.sectionContext);
 
   public sectionAttributes = {
     [listboxWithinSectionDataSelector.attribute]: this.isWithinSection,

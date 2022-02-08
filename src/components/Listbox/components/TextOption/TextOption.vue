@@ -25,9 +25,9 @@ import { Checkbox } from '../../../Checkbox';
   },
 })
 export default class TextOption extends Vue {
-  @Inject({ default: {} }) ComboboxListboxOptionContext!: ComboboxListboxOptionType;
+  @Inject({ default: {} }) comboboxListboxOptionContext!: ComboboxListboxOptionType;
 
-  @Inject({ default: false }) ActionContext!: boolean;
+  @Inject({ default: false }) actionContext!: boolean;
 
   /**
    * Whether the option is selected
@@ -46,11 +46,11 @@ export default class TextOption extends Vue {
   public checkboxClassName = styles.Checkbox;
 
   get allowMultiple(): boolean {
-    return Boolean(this.ComboboxListboxOptionContext.allowMultiple);
+    return Boolean(this.comboboxListboxOptionContext.allowMultiple);
   }
 
   get isAction(): boolean {
-    return this.ActionContext;
+    return this.actionContext;
   }
 
   get wrapperClassName(): string {

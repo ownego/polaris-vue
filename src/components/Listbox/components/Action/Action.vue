@@ -30,7 +30,7 @@ import { TextOption } from '../TextOption';
   },
 })
 export default class Action extends Vue {
-  @Provide() ActionContext = true;
+  @Provide() actionContext = true;
 
   @Prop({ type: [String, Object, Function] })
   public icon?: IconSource;
