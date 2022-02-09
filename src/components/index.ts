@@ -11,6 +11,7 @@ export * from './ChoiceList';
 export * from './ColorPicker';
 export * from './Combobox';
 export * from './Connected';
+export * from './DescriptionList';
 export * from './DisplayText';
 export * from './EventListener';
 export * from './FooterHelp';
