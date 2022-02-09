@@ -22,11 +22,10 @@ div(
 </template>
 
 <script lang="ts">
-import Vue from 'vue';
-import { Component, Prop } from 'vue-property-decorator';
+import { Component, Mixins, Prop } from 'vue-property-decorator';
 import { classNames } from 'polaris-react/src/utilities/css';
 import styles from '@/classes/FormLayout.json';
-import { useUniqueId } from '@/utilities/unique-id';
+import { UseUniqueId } from '@/mixins';
 import { Item } from '../Item';
 
 @Component({
@@ -34,11 +33,11 @@ import { Item } from '../Item';
     Item,
   },
 })
-export default class Group extends Vue {
+export default class Group extends Mixins(UseUniqueId) {
   @Prop({ type: Boolean })
   public condensed?: boolean;
 
-  public id = useUniqueId('FormLayoutGroup');
+  public id = this.useUniqueId('FormLayoutGroup');
 
   public helpTextId = `${this.id}HelpText`;
 
