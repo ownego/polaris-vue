@@ -5,30 +5,31 @@ MountingPortal(
   :append="true",
   :name="portalId",
 )
-  slot
-div(v-else)
-  PortalVue(:to="portalId")
+  div(:data-portal-id="portalId")
     slot
-  PortalTarget(:name="portalId")
 </template>
 
 <script lang="ts">
-import Vue from 'vue';
-import { Component, Prop, Inject } from 'vue-property-decorator';
-import { Portal as PortalVue, PortalTarget, MountingPortal } from 'portal-vue';
+import {
+  Component, Prop, Inject, Mixins,
+} from 'vue-property-decorator';
+import { UseUniqueId } from '@/mixins';
+import { MountingPortal } from 'portal-vue';
 import { PortalManager } from '@/utilities/portal-manager';
 
 @Component({
   components: {
     MountingPortal,
-    PortalVue,
-    PortalTarget,
   },
 })
-export default class Portal extends Vue {
+export default class Portal extends Mixins(UseUniqueId) {
   @Inject({ default: null }) public portalManager!: PortalManager;
 
-  @Prop({ type: String }) public portalId!: string;
+  @Prop({ type: String }) public idPrefix!: string;
+
+  private uniqueId = this.useUniqueId('portal');
+
+  private portalId = this.idPrefix ? `${this.idPrefix}-${this.uniqueId}` : this.uniqueId;
 
   created() {
     if (this.portalManager) {

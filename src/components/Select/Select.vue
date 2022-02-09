@@ -77,11 +77,11 @@ Labelled(
 </template>
 
 <script lang="ts">
-import { Component, Prop, Vue } from 'vue-property-decorator';
+import { Component, Mixins, Prop } from 'vue-property-decorator';
 import type { Action } from 'types/type';
 import { classNames } from 'polaris-react/src/utilities/css';
 import SelectMinor from '@icons/SelectMinor.svg';
-import { useUniqueId } from '@/utilities/unique-id';
+import { UseUniqueId } from '@/mixins';
 import styles from '@/classes/Select.json';
 import { StrictOption, SelectOption, SelectGroup } from './utils';
 import { Icon } from '../Icon';
@@ -105,7 +105,7 @@ interface StrictGroup {
     Labelled,
   },
 })
-export default class Select extends Vue {
+export default class Select extends Mixins(UseUniqueId) {
   /** Disable input */
   @Prop({ type: Boolean })
   disabled!: boolean;
@@ -239,7 +239,7 @@ export default class Select extends Vue {
   created() {
     this.selected = this.value;
 
-    this.selectId = useUniqueId('Select', this.id);
+    this.selectId = this.useUniqueId('Select', this.id);
 
     if (this.$slots['help-text']) {
       this.describedBy.push(helpTextID(this.id || ''));
