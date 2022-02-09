@@ -39,9 +39,9 @@ li(
 </template>
 
 <script lang="ts">
-import Vue from 'vue';
 import {
   Component,
+  Mixins,
   Prop,
   Inject,
   Ref,
@@ -51,7 +51,7 @@ import {
   listboxWithinSectionDataSelector,
 } from 'polaris-react/src/components/Listbox/components/Section/selectors';
 import { ListboxContextType } from 'polaris-react/src/utilities/listbox';
-import { useUniqueId } from '@/utilities/unique-id';
+import { UseUniqueId } from '@/mixins';
 import styles from '@/classes/Listbox-Option.json';
 import { TextOption } from '../TextOption';
 import { UnstyledLink } from '../../../UnstyledLink';
@@ -63,7 +63,7 @@ import { MappedActionContextType, OptionProps } from './utils';
     UnstyledLink,
   },
 })
-export default class ListBox extends Vue {
+export default class ListBox extends Mixins(UseUniqueId) {
   @Inject({ default: {} }) mappedActionContext!: MappedActionContextType;
 
   @Inject({ default: '' }) sectionContext!: string;
@@ -118,7 +118,7 @@ export default class ListBox extends Vue {
 
   // eslint-disable-next-line class-methods-use-this
   get domId(): string {
-    return useUniqueId('ListboxOption');
+    return this.useUniqueId('ListboxOption');
   }
 
   get legacyRoleSupport(): string {

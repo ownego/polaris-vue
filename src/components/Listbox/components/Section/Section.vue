@@ -13,17 +13,21 @@ li(
 </template>
 
 <script lang="ts">
-import Vue from 'vue';
-import { Component, Prop, Provide } from 'vue-property-decorator';
+import {
+  Mixins,
+  Component,
+  Prop,
+  Provide,
+} from 'vue-property-decorator';
 import { classNames } from 'polaris-react/src/utilities/css';
 import {
   listboxSectionDataSelector,
 } from 'polaris-react/src/components/Listbox/components/Section/selectors';
 import styles from '@/classes/Listbox-Section.json';
-import { useUniqueId } from '@/utilities/unique-id';
+import { UseUniqueId } from '@/mixins';
 
 @Component
-export default class Section extends Vue {
+export default class Section extends Mixins(UseUniqueId) {
   @Provide() sectionContext = this.sectionId;
 
   @Prop({ type: Boolean, default: true })
@@ -33,7 +37,7 @@ export default class Section extends Vue {
 
   // eslint-disable-next-line class-methods-use-this
   get sectionId(): string {
-    return useUniqueId('ListboxSection');
+    return this.useUniqueId('ListboxSection');
   }
 
   get className(): string {

@@ -35,8 +35,8 @@ div
 </template>
 
 <script lang="ts">
-import Vue from 'vue';
 import {
+  Mixins,
   Component,
   Prop,
   Provide,
@@ -57,7 +57,7 @@ import {
 } from 'polaris-react/src/components/Listbox/components/Section/selectors';
 import { ComboboxListboxType } from 'polaris-react/src/utilities/combobox/context';
 import styles from '@/classes/Listbox.json';
-import { useUniqueId } from '@/utilities/unique-id';
+import { UseUniqueId } from '@/mixins';
 import type { Key } from '../KeypressListener';
 import { KeypressListener } from '../KeypressListener';
 import { VisuallyHidden } from '../VisuallyHidden';
@@ -76,7 +76,7 @@ const ARIA_ATTRIBUTE = 'aria-activedescendant';
     VisuallyHidden,
   },
 })
-export default class Listbox extends Vue {
+export default class Listbox extends Mixins(UseUniqueId) {
   @Inject({ default: {} }) comboboxListboxContext!: ComboboxListboxType;
 
   @Provide() listboxContext: ListboxContextType = {
@@ -102,7 +102,7 @@ export default class Listbox extends Vue {
   @Prop({ type: String })
   public accessibilityLabel?: string;
 
-  public listId = useUniqueId('Listbox');
+  public listId = this.useUniqueId('Listbox');
 
   public currentActiveOption?: NavigableOption;
 

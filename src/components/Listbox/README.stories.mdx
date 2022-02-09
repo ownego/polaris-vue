@@ -168,6 +168,7 @@ export const BasicListbox = (args, { argTypes }) => ({
 });
 BasicListbox.parameters = {
   docs: {
+    source: false,
     transformSource: (source) => {
       const fullSource = dedent`
         ${source}
@@ -202,6 +203,7 @@ export const LoadingListbox = (args, { argTypes }) => ({
 });
 LoadingListbox.parameters = {
   docs: {
+    source: false,
     transformSource: (source) => {
       const fullSource = dedent`
         ${source}
@@ -239,6 +241,7 @@ export const ActionListbox = (args, { argTypes }) => ({
 });
 ActionListbox.parameters = {
   docs: {
+    source: false,
     transformSource: (source) => {
       const fullSource = dedent`
         ${source}
@@ -289,6 +292,7 @@ export const CustomListbox = (args, { argTypes }) => ({
 });
 CustomListbox.parameters = {
   docs: {
+    source: false,
     transformSource: (source) => {
       const fullSource = dedent`
         ${source}
@@ -332,7 +336,6 @@ export const ExampleListbox = (args, { argTypes }) => ({
 });
 ExampleListbox.parameters = {
   docs: {
-    source: false,
     transformSource: (source) => {
       const fullSource = dedent`
         ${source}
