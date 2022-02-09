@@ -2,37 +2,36 @@
 // TODO: Update lazy loaded docs
 div(ref="container")
   slot(name="activator")
-  Portal(v-if="activatorNode && active", :portalId="portalId")
-    div(:data-portal-id="portalId")
-      PopoverOverlay(
-        :activator="activatorNode",
-        :fullWidth="fullWidth",
-        :active="active",
-        :preferInputActivator="preferInputActivator",
-        :fixed="fixed",
-        :preferredPosition="preferredPosition",
-        :preferredAlignment="preferredAlignment",
-        :zIndexOverride="zIndexOverride",
-        :autofocusTarget="autofocusTarget",
-        :sectioned="sectioned",
-        @close="handleClose",
-        @scrolled-to-bottom="$emit('scrolled-to-bottom')",
-      )
-        template(v-slot:overlay="props")
-          slot(name="content")
-        slot(name="extra-content", slot="extra-content")
+  Portal(v-if="activatorNode && active", idPrefix="popover")
+    PopoverOverlay(
+      :id="id",
+      :activator="activatorNode",
+      :fullWidth="fullWidth",
+      :active="active",
+      :preferInputActivator="preferInputActivator",
+      :fixed="fixed",
+      :preferredPosition="preferredPosition",
+      :preferredAlignment="preferredAlignment",
+      :zIndexOverride="zIndexOverride",
+      :autofocusTarget="autofocusTarget",
+      :sectioned="sectioned",
+      @close="handleClose",
+      @scrolled-to-bottom="$emit('scrolled-to-bottom')",
+    )
+      template(v-slot:overlay="props")
+        slot(name="content")
+      slot(name="extra-content", slot="extra-content")
 </template>
 
 <script lang="ts">
-import Vue from 'vue';
 import {
-  Component, Prop, Watch, Ref,
+  Component, Prop, Watch, Ref, Mixins,
 } from 'vue-property-decorator';
 import {
   findFirstFocusableNodeIncludingDisabled,
   focusNextFocusableNode,
 } from '@/utilities/focus';
-import { useUniqueId } from '@/utilities/unique-id';
+import { UseUniqueId } from '@/mixins';
 import type { PreferredAlignment, PreferredPosition } from '../PositionedOverlay';
 import { PopoverCloseSource, PopoverAutofocusTarget, setActivatorAttributes } from './utils';
 import { PopoverOverlay } from './components';
@@ -44,7 +43,7 @@ import { Portal } from '../Portal';
     Portal,
   },
 })
-export default class Popover extends Vue {
+export default class Popover extends Mixins(UseUniqueId) {
   /**
    * The preferred direction to open the popover
    * @values above | below | mostSpace
@@ -171,9 +170,7 @@ export default class Popover extends Vue {
 
   public activatorNode: HTMLElement | Element | null = null;
 
-  public id = useUniqueId('popover');
-
-  public portalId = `popover-${useUniqueId('portal')}`;
+  public id = this.useUniqueId('popover');
 
   public setAccessibilityAttributes() {
     if (!this.containerNode) {

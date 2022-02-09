@@ -41,11 +41,11 @@ fieldset(
 
 <script lang="ts">
 import Vue, { VueConstructor } from 'vue';
-import { Component, Prop } from 'vue-property-decorator';
+import { Component, Mixins, Prop } from 'vue-property-decorator';
 import { classNames } from 'polaris-react/src/utilities/css';
 import type { Error } from 'types/type';
 import styles from '@/classes/ChoiceList.json';
-import { useUniqueId } from '@/utilities/unique-id';
+import { UseUniqueId } from '@/mixins';
 import { Checkbox } from '../Checkbox';
 import { RadioButton } from '../RadioButton';
 import { InlineError, errorTextID } from '../InlineError';
@@ -66,7 +66,7 @@ interface choiceProps {
     InlineError,
   },
 })
-export default class ChoiceList extends Vue {
+export default class ChoiceList extends Mixins(UseUniqueId) {
   /**
    * Collection of choices
    */
@@ -125,7 +125,7 @@ export default class ChoiceList extends Vue {
   }
 
   get finalName(): string {
-    const name = useUniqueId('ChoiceList', this.name);
+    const name = this.useUniqueId('ChoiceList', this.name);
     return this.allowMultiple ? `${this.name}Multiple` : name;
   }
 
