@@ -1,6 +1,12 @@
 <template lang="pug">
 div
-  label(:class="wrapperClassName", :for="id")
+  label(
+    :class="wrapperClassName",
+    :for="id",
+    @click="$emit('click')",
+    @mouseover="$emit('mouseover')",
+    @mouseout="$emit('mouseout')",
+  )
     span(:class="controlClass")
       slot
     span(:class="labelClass")
@@ -47,19 +53,19 @@ export default class Choice extends Vue {
    * Whether the associated form control is disabled
    */
   @Prop({ type: Boolean })
-  public disabled!: boolean;
+  public disabled?: boolean;
 
   /**
    * Display an error message
    */
   @Prop({ type: [String, Array, Object, Function, Boolean] })
-  public error!: Error | boolean;
+  public error?: Error | boolean;
 
   /**
    * Visually hide the label
    */
   @Prop({ type: Boolean })
-  public labelHidden!: boolean;
+  public labelHidden?: boolean;
 
   public controlClass: string = styles.Control;
 
