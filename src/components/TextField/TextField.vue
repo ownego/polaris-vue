@@ -107,19 +107,19 @@ Labelled(
 </template>
 
 <script lang="ts">
-import Vue from 'vue';
 import {
   Component,
   Prop,
   Ref,
   Inject,
   Watch,
+  Mixins,
 } from 'vue-property-decorator';
 import CircleCancelMinor from '@shopify/polaris-icons/dist/svg/CircleCancelMinor.svg';
 import { classNames, variationName } from 'polaris-react/src/utilities/css';
 import type { Error, Action } from 'types/type';
 import styles from '@/classes/TextField.json';
-import { useUniqueId } from '@/utilities/unique-id';
+import { UseUniqueId } from '@/mixins';
 import { VisuallyHidden } from '../VisuallyHidden';
 import { Connected } from '../Connected';
 import { Icon } from '../Icon';
@@ -164,7 +164,7 @@ type InputMode =
     Spinner,
   },
 })
-export default class TextField extends Vue {
+export default class TextField extends Mixins(UseUniqueId) {
   @Inject({ default: Function }) comboboxTextFieldFocus!: () => void;
 
   @Inject({ default: Function }) comboboxTextFieldBlur!: () => void;
@@ -331,7 +331,7 @@ export default class TextField extends Vue {
   public buttonPressTimer?: number;
 
   get uniqueId(): string {
-    return useUniqueId('TextField', this.id);
+    return this.useUniqueId('TextField', this.id);
   }
 
   get inputType(): string {

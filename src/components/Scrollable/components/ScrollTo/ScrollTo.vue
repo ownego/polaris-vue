@@ -6,23 +6,23 @@ a(
 </template>
 
 <script lang="ts">
-import Vue from 'vue';
 import {
   Component,
   Inject,
+  Mixins,
   Ref,
 } from 'vue-property-decorator';
-import { useUniqueId } from '@/utilities/unique-id';
+import { UseUniqueId } from '@/mixins';
 
 type ScrollToPositionFn = (scrollY: number) => void;
 
 @Component
-export default class ScrollTo extends Vue {
+export default class ScrollTo extends Mixins(UseUniqueId) {
   @Inject({ default: Function }) scrollToPosition!: ScrollToPositionFn;
 
   @Ref('anchorNode') anchorNode!: HTMLAnchorElement;
 
-  public id = useUniqueId('ScrollTo');
+  public id = this.useUniqueId('ScrollTo');
 
   mounted(): void {
     if (!this.anchorNode) return;

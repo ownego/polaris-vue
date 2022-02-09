@@ -36,14 +36,13 @@ Choice(
 </template>
 
 <script lang="ts">
-import Vue from 'vue';
-import { Component, Prop } from 'vue-property-decorator';
+import { Component, Prop, Mixins } from 'vue-property-decorator';
 import { classNames } from 'polaris-react/src/utilities/css';
 import MinusMinor from '@shopify/polaris-icons/dist/svg/MinusMinor.svg';
 import TickSmallMinor from '@shopify/polaris-icons/dist/svg/TickSmallMinor.svg';
+import { UseUniqueId } from '@/mixins';
 import type { IconSource, Error } from 'types/type';
 import styles from '@/classes/Checkbox.json';
-import { useUniqueId } from '@/utilities/unique-id';
 import { errorTextID } from '../InlineError';
 import { Choice, helpTextID } from '../Choice';
 import { Icon } from '../Icon';
@@ -54,7 +53,7 @@ import { Icon } from '../Icon';
     Icon,
   },
 })
-export default class Checkbox extends Vue {
+export default class Checkbox extends Mixins(UseUniqueId) {
   /**
    * Indicates the ID of the element that is controlled by the checkbox
    */
@@ -132,7 +131,7 @@ export default class Checkbox extends Vue {
   public checkboxIconClassName: string = styles.Icon;
 
   get uniqueId(): string {
-    return useUniqueId('Checkbox', this.id);
+    return this.useUniqueId('Checkbox', this.id);
   }
 
   get isIndeterminate(): boolean {

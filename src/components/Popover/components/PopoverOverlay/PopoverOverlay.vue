@@ -21,6 +21,7 @@ PositionedOverlay(
     div(:class="focusTrackerClasses", tabIndex="0", @focus="handleFocusFirstItem")
     div(:class="popoverWrapperClasses")
       div(
+        :id="id",
         :tabIndex="autofocusTarget === 'none' ? undefined : -1",
         :style="contentStyles",
         :class="contentClassNames",
