@@ -49,9 +49,3 @@ export interface ComplexAction
   OutlineableAction,
   LoadableAction,
   PlainAction { }
-
-export interface FocusManagerContextType {
-  trapFocusList: string[];
-  add: (id: string) => void;
-  remove: (id: string) => boolean;
-}
