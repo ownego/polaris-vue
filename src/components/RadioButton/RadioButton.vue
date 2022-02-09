@@ -28,11 +28,10 @@ Choice(
 </template>
 
 <script lang="ts">
-import Vue from 'vue';
-import { Component, Prop } from 'vue-property-decorator';
+import { Component, Mixins, Prop } from 'vue-property-decorator';
 import { classNames } from 'polaris-react/src/utilities/css';
 import styles from '@/classes/RadioButton.json';
-import { useUniqueId } from '@/utilities/unique-id';
+import { UseUniqueId } from '@/mixins';
 import { Choice, helpTextID } from '../Choice';
 
 @Component({
@@ -45,7 +44,7 @@ import { Choice, helpTextID } from '../Choice';
     Choice,
   },
 })
-export default class RadioButton extends Vue {
+export default class RadioButton extends Mixins(UseUniqueId) {
   /**
    * Indicates the ID of the element that describes the the radio button
    */
@@ -101,7 +100,7 @@ export default class RadioButton extends Vue {
   public inputClassName: string = styles.Input;
 
   get uniqueId(): string {
-    return useUniqueId('RadioButton', this.id);
+    return this.useUniqueId('RadioButton', this.id);
   }
 
   get isChecked(): boolean {
