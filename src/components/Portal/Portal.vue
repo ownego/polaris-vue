@@ -23,15 +23,15 @@ import { PortalManager } from '@/utilities/portal-manager';
   },
 })
 export default class Portal extends Mixins(UseUniqueId) {
-  @Inject({ default: null }) public portalManager!: PortalManager;
+  @Inject({ default: null }) portalManager!: PortalManager;
 
   @Prop({ type: String }) public idPrefix!: string;
 
-  private uniqueId = this.useUniqueId('portal');
-
-  private portalId = this.idPrefix ? `${this.idPrefix}-${this.uniqueId}` : this.uniqueId;
+  private portalId = '';
 
   created() {
+    const uniqueId = this.useUniqueId('portal');
+    this.portalId = this.idPrefix ? `${this.idPrefix}-${uniqueId}` : uniqueId;
     if (this.portalManager) {
       this.portalManager.register(this.portalId);
     }
