@@ -1,6 +1,7 @@
 export * from './ActionList';
 export * from './AppProvider';
 export * from './Avatar';
+export * from './Backdrop';
 export * from './Badge';
 export * from './Button';
 export * from './ButtonGroup';
@@ -46,6 +47,7 @@ export * from './TextContainer';
 export * from './TextField';
 export * from './TextStyle';
 export * from './Thumbnail';
+export * from './TrapFocus';
 export * from './Truncate';
 export * from './UnstyledButton';
 export * from './UnstyledLink';

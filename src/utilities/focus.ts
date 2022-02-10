@@ -2,6 +2,7 @@ import { isElementInViewport } from 'polaris-react/src/utilities/is-element-in-v
 
 type Filter = (element: Element) => void;
 
+const KEYBOARD_FOCUSABLE_SELECTORS = 'a,frame,iframe,input:not([type=hidden]):not(:disabled),select:not(:disabled),textarea:not(:disabled),button:not(:disabled),*[tabindex]:not([tabindex="-1"])';
 const FOCUSABLE_SELECTOR = 'a,frame,iframe,input:not([type=hidden]):not(:disabled),select:not(:disabled),textarea:not(:disabled),button:not(:disabled),*[tabindex]';
 const MENUITEM_FOCUSABLE_SELECTORS = 'a[role="menuitem"],frame[role="menuitem"],iframe[role="menuitem"],input[role="menuitem"]:not([type=hidden]):not(:disabled),select[role="menuitem"]:not(:disabled),textarea[role="menuitem"]:not(:disabled),button[role="menuitem"]:not(:disabled),*[tabindex]:not([tabindex="-1"])';
 
@@ -146,4 +147,54 @@ export function focusFirstFocusableNode(
   onlyDescendants = true,
 ) {
   findFirstFocusableNode(element, onlyDescendants)?.focus();
+}
+
+export function findFirstKeyboardFocusableNode(
+  element: HTMLElement,
+  onlyDescendants = true,
+): HTMLElement | null {
+  if (!onlyDescendants && matches(element, KEYBOARD_FOCUSABLE_SELECTORS)) {
+    return element;
+  }
+  return element.querySelector(KEYBOARD_FOCUSABLE_SELECTORS);
+}
+
+export function findLastKeyboardFocusableNode(
+  element: HTMLElement,
+  onlyDescendants = true,
+) {
+  if (!onlyDescendants && matches(element, KEYBOARD_FOCUSABLE_SELECTORS)) {
+    return element;
+  }
+  const allFocusable = element.querySelectorAll(KEYBOARD_FOCUSABLE_SELECTORS);
+  return allFocusable[allFocusable.length - 1] as HTMLElement | null;
+}
+
+export function focusFirstKeyboardFocusableNode(
+  element: HTMLElement,
+  onlyDescendants = true,
+) {
+  const firstFocusable = findFirstKeyboardFocusableNode(
+    element,
+    onlyDescendants,
+  );
+  if (firstFocusable) {
+    firstFocusable.focus();
+    return true;
+  }
+
+  return false;
+}
+
+export function focusLastKeyboardFocusableNode(
+  element: HTMLElement,
+  onlyDescendants = true,
+) {
+  const lastFocusable = findLastKeyboardFocusableNode(element, onlyDescendants);
+  if (lastFocusable) {
+    lastFocusable.focus();
+    return true;
+  }
+
+  return false;
 }
