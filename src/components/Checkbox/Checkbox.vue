@@ -15,6 +15,7 @@ Choice(
     input(
       :id="uniqueId",
       ref="checkboxRef",
+      :role="isWithinListbox ? 'presentation' : 'checkbox'"
       :name="name",
       :value="value",
       type="checkbox",
@@ -77,7 +78,7 @@ export default class Checkbox extends Mixins(UseUniqueId) {
   public ariaControl?: string;
 
   /**
-   * Indicates the ID of the element that is controlled by the checkbox
+   * Indicates the ID of the element that describes the checkbox
    */
   @Prop({ type: String })
   public ariaDescribedBy?: string;
@@ -96,19 +97,19 @@ export default class Checkbox extends Mixins(UseUniqueId) {
   public checked?: boolean | 'indeterminate';
 
   /**
-   * ID for form input
+   * Disable input
    */
   @Prop({ type: Boolean })
   public disabled?: boolean;
 
   /**
-   * Name for form input
+   * Id for form input
    */
   @Prop({ type: String })
   public id?: string;
 
   /**
-   * Value for form input
+   * Name for form input
    */
   @Prop({ type: String })
   public name?: string;
@@ -148,7 +149,7 @@ export default class Checkbox extends Mixins(UseUniqueId) {
     );
   }
 
-  public checkboxIconClassName: string = styles.Icon;
+  public checkboxIconClassName = styles.Icon;
 
   get uniqueId(): string {
     return this.useUniqueId('Checkbox', this.id);

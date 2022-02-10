@@ -12,11 +12,11 @@ div
     span(:class="labelClass")
       slot(name="label")
   div(
-    v-if="error || $slots.helpText",
+    v-if="error || $slots['help-text']",
     :class="descriptionMarkupClass",
   )
     div(
-      v-if="$slots.helpText",
+      v-if="$slots['help-text']",
       :id="helpTextID",
       :class="helpTextClass",
     )
