@@ -3,17 +3,17 @@ div
   template(v-if="keyboardEventsEnabled || comboboxListboxContext.textFieldFocused")
     KeypressListener(
       keyEvent="keydown",
-      :keyCode="String(Key.DownArrow)",
+      :keyCode="keyDownArrow",
       :handler="handleDownArrow",
     )
     KeypressListener(
       keyEvent="keydown",
-      :keyCode="String(Key.UpArrow)",
+      :keyCode="keyUpArrow",
       :handler="handleUpArrow",
     )
     KeypressListener(
       keyEvent="keydown",
-      :keyCode="String(Key.Enter)",
+      :keyCode="keyEnter",
       :handler="handleEnter",
     )
   VisuallyHidden
@@ -58,8 +58,7 @@ import {
 import { ComboboxListboxType } from 'polaris-react/src/utilities/combobox/context';
 import styles from '@/classes/Listbox.json';
 import { UseUniqueId } from '@/mixins';
-import type { Key } from '../KeypressListener';
-import { KeypressListener } from '../KeypressListener';
+import { Key, KeypressListener } from '../KeypressListener';
 import { VisuallyHidden } from '../VisuallyHidden';
 
 export type ArrowKeys = 'up' | 'down';
@@ -110,7 +109,11 @@ export default class Listbox extends Mixins(UseUniqueId) {
 
   public keyboardEventsEnabled = false;
 
-  public Key?: Key;
+  public keyDownArrow = Key.ArrowDown;
+
+  public keyUpArrow = Key.ArrowUp;
+
+  public keyEnter = Key.Enter;
 
   public loading = '';
 
