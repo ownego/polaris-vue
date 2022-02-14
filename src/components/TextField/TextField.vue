@@ -67,7 +67,7 @@ Labelled(
         @blur="$emit('blur')",
       )
         template(v-if="multiline") {{ value }}
-      div(1
+      div(
         v-if="$slots.suffix",
         :id="`${uniqueId}Suffix`",
         :class="suffixClassName",
