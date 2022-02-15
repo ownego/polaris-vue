@@ -132,7 +132,7 @@ import {
       },
       table: {
         type: {
-          summary: 'string'
+          summary: 'string | component'
         },
       },
     },
@@ -745,7 +745,7 @@ HiddenLabelField.parameters = {
         .replace(/:disabled="false"/, ':disabled="selected === \'no\'"')
       return dedent`
         ${tmpSource}\n
-        import 'ChoiceList' from '@/polaris-vue';\n
+        import { ChoiceList } from '@/polaris-vue';\n
         components: {
           ChoiceList,
         },
@@ -1053,66 +1053,99 @@ export const SeparateErrField = (args, { argTypes }) => ({
     InlineError,
   },
   template: `
-    <FormLayout>
-      <FormItem>
-        <Stack :wrap="false" alignment="leading" spacing="loose">
-          <StackItem :fill="true">
-            <FormLayout>
-              <FormGroup :condensed="true">
-                <FormItem>
-                  <Select
-                    :labelHidden="true"
-                    value="Product type"
-                    :options="['Product type']"
-                  >
-                    <template slot="label">Collection rule type</template>
-                  </Select>
-                </FormItem>
-                <FormItem>
-                  <Select
-                    :labelHidden="true"
-                    value="is equal to"
-                    :options="['is equal to']"
-                  >
-                    <template slot="label">Collection rule condition</template>
-                  </Select>
-                </FormItem>
-                <FormItem>
-                  <TextField
-                    v-model="data"
-                    autoComplete="off"
-                    :labelHidden="true"
-                    :error="isInvalid"
-                  >
-                  </TextField>
-                </FormItem>
-              </FormGroup>
-            </FormLayout>
-            <div v-if="isInvalid" style="margin-top: 4px">
-              <InlineError
-                fieldID="inline-err-id"
-                message="Enter 3 or more characters for product type is equal to"
-              />
-            </div>
-          </StackItem>
-        </Stack>
-      </FormItem>
-    </FormLayout>
+    <Stack :wrap="false" alignment="leading" spacing="loose">
+      <StackItem :fill="true">
+        <FormLayout>
+          <FormGroup :condensed="true">
+            <FormItem>
+              <Select
+                :labelHidden="true"
+                value="Product type"
+                :options="['Product type']"
+              >
+                <template slot="label">Collection rule type</template>
+              </Select>
+            </FormItem>
+            <FormItem>
+              <Select
+                :labelHidden="true"
+                value="is equal to"
+                :options="['is equal to']"
+              >
+                <template slot="label">Collection rule condition</template>
+              </Select>
+            </FormItem>
+            <FormItem>
+              <TextField
+                v-model="inputChar"
+                autoComplete="off"
+                :labelHidden="true"
+                :error="isInvalid"
+              >
+              </TextField>
+            </FormItem>
+          </FormGroup>
+        </FormLayout>
+        <div v-if="isInvalid" style="margin-top: 4px">
+          <InlineError
+            fieldID="inline-err-id"
+            message="Enter 3 or more characters for product type is equal to"
+          />
+        </div>
+      </StackItem>
+    </Stack>
     `,
   data() {
     return {
-      data: ''
+      inputChar: ''
     };
   },
   computed: {
     isInvalid() {
-      return this.data.length < 3;
+      return this.inputChar.length < 3;
     }
   }
 });
 SeparateErrField.parameters = {
   docs: {
     source: false,
+    transformSource: (source) => {
+      const tmpSource = source
+        .replace(/value=""/, 'v-model="inputChar"')
+      return dedent`
+        ${tmpSource}\n
+        import {
+          Select,
+          FormLayout,
+          FormGroup,
+          FormItem,
+          Form,
+          Stack,
+          StackItem,
+          InlineError,
+        } from '@shopify/polaris';\n
+        components: {
+          Select,
+          FormLayout,
+          FormGroup,
+          FormItem,
+          Form,
+          Stack,
+          StackItem,
+          InlineError,
+        },
+        data() {
+          return {
+            inputChar: '',
+          };
+        },
+        computed: {
+          isInvalid() {
+            return this.inputChar.length < 3;
+          }
+        },
+      `;
+    },
   },
 };
 
@@ -1265,7 +1298,7 @@ export const ExampleField = (args, { argTypes }) => ({
   props: Object.keys(argTypes),
   components: { TextField },
   template: `
-    <TextField v-bind="$props">
+    <TextField v-bind="$props" autoComplete="off">
       <template slot="label">Example text field</template>
     </TextField>
   `,

@@ -1,6 +1,5 @@
 <template lang="pug">
 Popover(
-  ref="popoverRef",
   :active="popoverActive",
   autofocusTarget="none",
   preventFocusOnClose=true,
@@ -45,6 +44,14 @@ export default class Combobox extends Vue {
 
   public textFieldFocused = false;
 
+  public textFieldLabelId = '';
+
+  @Prop({ type: Boolean })
+  public allowMultiple!: boolean;
+
+  @Prop({ type: String, default: 'below' })
+  public preferredPosition!: PreferredPosition;
+
   @Provide() comboboxTextFieldContext = {
     activeOptionId: this.activeOptionId,
     expanded: this.popoverActive,
@@ -60,21 +67,15 @@ export default class Combobox extends Vue {
     setActiveOptionId: (id: string) => { this.activeOptionId = id; },
     setListboxId: (id: string) => { this.listboxId = id; },
     listboxId: this.listboxId,
+    textFieldLabelId: this.textFieldLabelId,
+    onOptionSelected: this.onOptionSelected,
     textFieldFocused: this.textFieldFocused,
     onKeyToBottom: () => { this.$emit('scrolled-to-bottom'); },
   }
 
   @Provide() comboboxListboxOptionContext = {
-    allowMultiple: this.activeOptionId,
+    allowMultiple: this.allowMultiple,
   }
-
-  @Prop({ type: Boolean })
-  public allowMultiple!: boolean;
-
-  @Prop({ type: String, default: 'below' })
-  public preferredPosition!: PreferredPosition;
-
-  public textFieldLabelId = '';
 
   public listboxClassName = styles.Listbox;
 
@@ -82,14 +83,11 @@ export default class Combobox extends Vue {
     return Boolean(!this.popoverActive && this.$slots.default);
   }
 
-  public onOptionSelect(): void {
+  public onOptionSelected(): void {
     if (!this.allowMultiple) {
       this.popoverActive = false;
       this.activeOptionId = '';
     }
-
-    // TODO: block by forceUpdatePosition in popover
-    // (this.$refs.popoverRef as Popover)?.forceUpdatePosition();
   }
 
   public handleClose(): void {
