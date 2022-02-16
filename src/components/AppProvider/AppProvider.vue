@@ -15,9 +15,11 @@ import { PortalManager } from '@/utilities/portal-manager';
 import { FocusManager } from '@/utilities/focus-manager';
 import {
   CustomProperties,
+} from '../CustomProperties';
+import {
   CustomPropertiesProps,
   DEFAULT_COLOR_SCHEME,
-} from '../CustomProperties';
+} from '../CustomProperties/utils';
 
 @Component({
   components: {
