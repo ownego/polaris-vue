@@ -1,5 +1,5 @@
 <template lang="pug">
-CustomProperties
+CustomProperties(:color-scheme="colorScheme")
   slot
   #PolarisPortalsContainer
 </template>
@@ -33,7 +33,7 @@ export default class AppProvider extends Vue {
 
   @Provide() focusManager = new FocusManager();
 
-  @Prop({ type: String })
+  @Prop({ type: String, default: DEFAULT_COLOR_SCHEME })
   colorScheme?: CustomPropertiesProps['colorScheme'];
 
   @Watch('colorScheme')
