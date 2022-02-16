@@ -1,9 +1,9 @@
 <template lang="pug">
 component(
-  :is="as"
-  :p-color-scheme="colorScheme"
-  :class="className"
-  :style="{ color: 'var(--p-text-color)' }"
+  :is="as",
+  :p-color-scheme="colorScheme",
+  :class="className",
+  :style="{ color: 'var(--p-text-color)' }",
 )
   <!-- @slot The content to display -->
   slot
