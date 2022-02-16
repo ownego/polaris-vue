@@ -49,7 +49,7 @@ import {
   Component, Prop, Watch, Ref,
 } from 'vue-property-decorator';
 import { classNames } from 'polaris-react/src/utilities/css';
-import { durationFast } from '@shopify/polaris-tokens';
+import { tokens } from 'polaris-react/src/tokens';
 import { findFirstFocusableNode } from '@/utilities/focus';
 import { PositionedOverlay, PreferredAlignment, PreferredPosition } from '@/components/PositionedOverlay';
 import styles from '@/classes/Popover.json';
@@ -107,7 +107,7 @@ export default class PopoverOverlay extends Vue {
     this.clearTransitionTimeout();
     const timer = window.setTimeout(() => {
       this.transitionStatus = afterStatus;
-    }, durationFast);
+    }, parseInt(tokens.motion['duration-100'], 10));
 
     if (this.active) {
       this.enteringTimer = timer;
