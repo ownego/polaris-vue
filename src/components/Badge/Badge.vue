@@ -19,8 +19,6 @@ import { VisuallyHidden } from '../VisuallyHidden';
 
 const DEFAULT_SIZE = 'medium';
 
-type StatusDeprecated = 'attention';
-
 @Component({
   components: {
     VisuallyHidden,
@@ -31,7 +29,7 @@ export default class Badge extends Vue {
    * Set the color of the badge for the given status.
    */
   @Prop({ type: String })
-  public status?: 'success' | 'info' | 'critical' | 'warning' | 'new' | StatusDeprecated;
+  public status?: 'success' | 'info' | 'critical' | 'warning' | 'new' | 'attention';
 
   /**
    * Render a pip showing the progress of a given task.
