@@ -1069,10 +1069,17 @@
     pirates "^4.0.5"
     source-map-support "^0.5.16"
 
-"@babel/runtime@^7.0.0", "@babel/runtime@^7.10.2", "@babel/runtime@^7.11.0", "@babel/runtime@^7.12.5", "@babel/runtime@^7.14.8", "@babel/runtime@^7.16.7", "@babel/runtime@^7.3.1", "@babel/runtime@^7.5.0", "@babel/runtime@^7.5.5", "@babel/runtime@^7.7.2", "@babel/runtime@^7.7.6", "@babel/runtime@^7.8.4", "@babel/runtime@^7.8.7":
-  version "7.17.0"
-  resolved "https://registry.yarnpkg.com/@babel/runtime/-/runtime-7.17.0.tgz#b8d142fc0f7664fb3d9b5833fd40dcbab89276c0"
-  integrity sha512-etcO/ohMNaNA2UBdaXBBSX/3aEzFMRrVfaPv8Ptc0k+cWpWW0QFiGZ2XnVqQZI1Cf734LbPGmqBKWESfW4x/dQ==
+"@babel/runtime@^7.0.0", "@babel/runtime@^7.10.2", "@babel/runtime@^7.11.0", "@babel/runtime@^7.12.5", "@babel/runtime@^7.14.8", "@babel/runtime@^7.16.7", "@babel/runtime@^7.3.1", "@babel/runtime@^7.5.0", "@babel/runtime@^7.5.5", "@babel/runtime@^7.7.2", "@babel/runtime@^7.7.6", "@babel/runtime@^7.8.4":
+  version "7.16.7"
+  resolved "https://registry.yarnpkg.com/@babel/runtime/-/runtime-7.16.7.tgz#03ff99f64106588c9c403c6ecb8c3bafbbdff1fa"
+  integrity sha512-9E9FJowqAsytyOY6LG+1KuueckRL+aQW+mKvXRXnuFGyRAyepJPmEo9vgMfXUA6O9u3IeEdv9MAkppFcaQwogQ==
+  dependencies:
+    regenerator-runtime "^0.13.4"
+
+"@babel/runtime@^7.8.7":
+  version "7.17.2"
+  resolved "https://registry.yarnpkg.com/@babel/runtime/-/runtime-7.17.2.tgz#66f68591605e59da47523c631416b18508779941"
+  integrity sha512-hzeyJyMA1YGdJTuWU0e/j4wKXrU4OMFvY2MSlaI9B7VQb0r5cxTE3EAIS2Q7Tn2RIcDkRvTA/v2JsAEhxe99uw==
   dependencies:
     regenerator-runtime "^0.13.4"
 
@@ -1528,18 +1535,10 @@
     estree-walker "^2.0.1"
     picomatch "^2.2.2"
 
-"@shopify/polaris-icons@^4.11.0", "@shopify/polaris-icons@^4.17.0":
+"@shopify/polaris-icons@^4.17.0":
   version "4.17.0"
   resolved "https://registry.yarnpkg.com/@shopify/polaris-icons/-/polaris-icons-4.17.0.tgz#6658154b0dfcc6ce9427095cb0a3423cf266d1de"
   integrity sha512-Vd6APDtyrCV+RkexqlzJ62iY3pInilGiClknpeK8wBq1suAZBa9A9g7WA0JM0RrjPHCGpG+W7Rb8iJitYYfOuQ==
-
-"@shopify/polaris-tokens@^3.0.0":
-  version "3.1.0"
-  resolved "https://registry.yarnpkg.com/@shopify/polaris-tokens/-/polaris-tokens-3.1.0.tgz#1e02974e8640b49678ca88ac0dae1de89ed706d9"
-  integrity sha512-SQPNtoevLxD3y1/nhXkthzhEyWAdi1+muxBn/DCHir1/+R/+1v/hkXDLG5o2X3jxqpnxd1R/rJVh9fMKmfWTyw==
-  dependencies:
-    hsluv "^0.1.0"
-    tslib "^1.14.1"
 
 "@shopify/polaris-tokens@^4.0.0":
   version "4.0.0"
@@ -2696,7 +2695,16 @@
   dependencies:
     "@types/react" "*"
 
-"@types/react@*", "@types/react@^17.0.19":
+"@types/react@*":
+  version "17.0.38"
+  resolved "https://registry.yarnpkg.com/@types/react/-/react-17.0.38.tgz#f24249fefd89357d5fa71f739a686b8d7c7202bd"
+  integrity sha512-SI92X1IA+FMnP3qM5m4QReluXzhcmovhZnLNm3pyeQlooi02qI7sLiepEYqT678uNiyc25XfCqxREFpy3W7YhQ==
+  dependencies:
+    "@types/prop-types" "*"
+    "@types/scheduler" "*"
+    csstype "^3.0.2"
+
+"@types/react@^17.0.19":
   version "17.0.39"
   resolved "https://registry.yarnpkg.com/@types/react/-/react-17.0.39.tgz#d0f4cde092502a6db00a1cded6e6bf2abb7633ce"
   integrity sha512-UVavlfAxDd/AgAacMa60Azl7ygyQNRwC/DsHZmKgNvPmRR5p70AJ5Q9EAmL2NWOJmeV+vVUI4IAP7GZrN8h8Ug==
@@ -10532,11 +10540,10 @@ pnp-webpack-plugin@^1.6.4:
     ts-pnp "^1.1.6"
 
 "polaris-react@https://github.com/Shopify/polaris-react.git":
-  version "8.1.0"
-  resolved "https://github.com/Shopify/polaris-react.git#85096ec6340071d4a83138a12e6d54c0ced04505"
+  version "9.0.0"
+  resolved "https://github.com/Shopify/polaris-react.git#499327a79cf487750e75b2047e5eab564ee3d1a1"
   dependencies:
     "@shopify/polaris-icons" "^4.17.0"
-    "@shopify/polaris-tokens" "^3.0.0"
     "@types/react" "^17.0.19"
     "@types/react-dom" "^17.0.9"
     "@types/react-transition-group" "^4.4.2"
