@@ -1,35 +1,19 @@
 <template lang="pug">
-div(:class="wrapperClassName")
-  div(:class="contentClassName")
-    div(:class="iconClassName")
-      Icon(:source="footerHelpIcon", color="highlight")
-    div(:class="textClassName")
-      slot
+div(:class="footerHelpClassName")
+  div(:class="textClassName")
+    slot
 </template>
 
 <script lang="ts">
 import Vue from 'vue';
 import { Component } from 'vue-property-decorator';
-import { classNames } from 'polaris-react/src/utilities/css';
 import styles from '@/classes/FooterHelp.json';
-import InfoMinor from '@icons/InfoMinor.svg';
-import { Icon } from '../Icon';
 
-@Component({
-  components: {
-    Icon,
-  },
-})
+@Component
 export default class FooterHelp extends Vue {
-  public wrapperClassName = classNames(styles.FooterHelp);
-
-  public contentClassName = styles.Content;
-
-  public iconClassName = styles.Icon;
+  public footerHelpClassName = styles.FooterHelp;
 
   public textClassName = styles.Text;
-
-  public footerHelpIcon = InfoMinor;
 }
 </script>
 

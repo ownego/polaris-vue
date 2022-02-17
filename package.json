@@ -20,16 +20,14 @@
     "README.md"
   ],
   "scripts": {
-    "serve": "yarn run copy-polaris-tokens && vue-cli-service serve",
-    "build": "rimraf dist && yarn run copy-polaris-tokens && cross-env NODE_ENV=production rollup --config build/rollup.config.js --format es && node build/copy-polaris-scss",
+    "serve": "vue-cli-service serve",
+    "build": "rimraf dist && cross-env NODE_ENV=production rollup --config build/rollup.config.js --format es && node build/copy-polaris-scss",
     "lint": "vue-cli-service lint",
-    "storybook": "yarn run copy-polaris-tokens && start-storybook -p 6006",
-    "build-storybook": "yarn run copy-polaris-tokens && rimraf ./docs && build-storybook -o docs",
-    "copy-polaris-tokens": "rimraf ./node_modules/polaris-react/src/styles/polaris-tokens && shx cp -r ./node_modules/@shopify/polaris-tokens/dist ./node_modules/polaris-react/src/styles/polaris-tokens"
+    "storybook": "start-storybook -p 6006",
+    "build-storybook": "rimraf ./docs && build-storybook -o docs"
   },
   "dependencies": {
-    "@shopify/polaris-icons": "^4.11.0",
-    "@shopify/polaris-tokens": "^4.0.0",
+    "@shopify/polaris-icons": "^4.17.0",
     "core-js": "^3.6.5",
     "lodash": "^4.17.21",
     "vue": "^2.6.14",

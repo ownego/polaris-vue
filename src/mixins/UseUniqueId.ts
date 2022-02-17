@@ -7,7 +7,7 @@ import { MissingAppProviderError } from '@/utilities/errors';
 export default class UseUniqueId extends Vue {
   @Inject('uniqueIdFactory') idFactory!: UniqueIdFactory;
 
-  private uniqueIdRef: string | null = null;
+  public uniqueIdRef: string | null = null;
 
   public useUniqueId(prefix = '', overrideId = '') {
     if (!this.idFactory) {
