@@ -1,0 +1,122 @@
+import { Meta, Story, Canvas, ArgsTable } from '@storybook/addon-docs';
+import dedent from 'ts-dedent';
+
+import { DatePicker } from '@/polaris-vue';
+
+<Meta
+  title="Components / Forms / Date Picker"
+  component={ DatePicker }
+  argTypes={{
+    change: {
+      table: {
+        type: {
+          summary: 'date'
+        }
+      }
+    },
+    'month-change': {
+      table: {
+        type: {
+          summary: '{month, year}'
+        }
+      }
+    }
+  }}
+/>
+
+# Date picker
+
+Date pickers let merchants choose dates from a visual calendar that's consistently applied wherever dates need to be selected across Shopify.
+
+export const Template = (args, { argTypes }) => ({
+  props: Object.keys(argTypes),
+  components: { DatePicker },
+  data() {
+    return {
+      selectedDate: {
+        start: new Date('01/16/2022'),
+        end: new Date('01/19/2022'),
+      },
+      pickerView: {
+        month: args.month,
+        year: args.year,
+      }
+    };
+  },
+  methods: {
+    setSelectedDate(date) {
+      this.selectedDate = date;
+    },
+    handleMonthChange({ month, year }) {
+      this.pickerView = { month, year };
+    },
+  },
+  template: dedent`<div>
+  <DatePicker v-bind="$props"
+    @change="setSelectedDate"
+    @month-change="handleMonthChange"
+    :selected="selectedDate"
+    data-change="setSelectedDate"
+    data-month-change="handleMonthChange"
+  />
+  <br/>
+  <span><strong>Output:</strong> {{ selectedDate }}</span>
+  </div>`,
+});
+
+<Canvas>
+  <Story
+    name="Date Picker"
+    height="320px"
+    args={{
+      selectedDate: {
+        start: new Date('01/16/2022'),
+        end: new Date('01/19/2022'),
+      },
+      month: 0,
+      year: 2022,
+      allowRange: true,
+    }}
+    parameters={{
+      docs: {
+        transformSource: (source) => {
+          const tmpSource = source
+            .replace(/\s\s<div>\s/, '')
+            .replace(/\s\s<\/div>/, '')
+            .replace(/\s*<span>[\s\S]*<\/span>\s/, '')
+            .replace(/selected='.*'/, 'selected="selectedDate"')
+            .replace(/:selectedDate='.*'\s*/, '')
+            .replace(/data-/g, 'v-on:')
+            .replace(/\s*<br\s\/>/, '');
+          return dedent`${tmpSource}\n
+          data() {
+            return {
+              selectedDate: {
+                start: new Date('01/16/2022'),
+                end: new Date('01/19/2022'),
+              },
+              pickerView: {
+                month: 0,
+                year: 2022,
+              }
+            };
+          },
+          methods: {
+            setSelectedDate(date) {
+              this.selectedDate = date;
+            },
+            handleMonthChange({ month, year }) {
+              this.pickerView = { month, year };
+            },
+          },
+          `;
+        },
+      },
+    }}
+  >
+    {Template.bind({})}
+  </Story>
+</Canvas>
+
+<ArgsTable story="Date Picker"/>
+

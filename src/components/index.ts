@@ -13,6 +13,7 @@ export * from './ColorPicker';
 export * from './Combobox';
 export * from './Connected';
 export * from './CustomProperties';
+export * from './DatePicker';
 export * from './DescriptionList';
 export * from './DisplayText';
 export * from './EventListener';
