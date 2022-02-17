@@ -1,0 +1,364 @@
+import { Meta, Story, Canvas, ArgsTable } from '@storybook/addon-docs';
+import dedent from 'ts-dedent';
+
+import { Listbox, ListboxOption, ListboxLoading, ListboxAction } from '@/polaris-vue';
+
+<Meta
+  title="Components / Lists and tables / Listbox"
+  component={ Listbox }
+  argTypes={{
+    default: {
+      table: {
+        disable: true,
+      },
+    },
+    accessibilityLabel: {
+      defaultValue: 'Listbox example',
+    },
+    select: {
+      description: 'Callback when an option is selected',
+      control: {
+        disable: true,
+      },
+      table: {
+        type: {
+          summary: '(value: string) => void',
+        }
+      },
+    },
+    children: {
+      description: 'Content to display inside Listbox by slot',
+      table: {
+        type: {
+          summary: 'ListboxOption|ListboxAction|ListboxLoading',
+        },
+      },
+    },
+    'ListboxOption - value': {
+      description: 'Unique item values',
+      table: {
+        category: 'Listbox Option props',
+        type: {
+          summary: 'string',
+        }
+      }
+    },
+    'listboxOption - accessibilityLabel': {
+      description: 'Visually hidden text for screen readers',
+      table: {
+        category: 'Listbox Option props',
+        type: {
+          summary: 'string',
+        }
+      }
+    },
+    'ListboxOption - selected': {
+      description: 'Option is selected',
+      table: {
+        category: 'Listbox Option props',
+        type: {
+          summary: 'boolean',
+        }
+      }
+    },
+    'ListboxOption - disabled': {
+      description: 'Option is disabled',
+      table: {
+        category: 'Listbox Option props',
+        type: {
+          summary: 'boolean',
+        }
+      }
+    },
+    'ListboxOption - divider': {
+      description: 'Adds a border-bottom to the Option',
+      table: {
+        category: 'Listbox Option props',
+        type: {
+          summary: 'boolean',
+        }
+      }
+    },
+    'ListboxAction - icon': {
+      description: 'Icon for option',
+      table: {
+        category: 'Listbox Action props',
+        type: {
+          summary: 'SVG component|"placeholder"|svg html string',
+        }
+      }
+    },
+    'ListboxAction - value': {
+      description: 'Unique item values',
+      table: {
+        category: 'Listbox Action props',
+        type: {
+          summary: 'string',
+        }
+      }
+    },
+    'ListboxAction - selected': {
+      description: 'Option is selected',
+      table: {
+        category: 'Listbox Action props',
+        type: {
+          summary: 'boolean',
+        }
+      }
+    },
+    'ListboxAction - disabled': {
+      description: 'Option is disabled',
+      table: {
+        category: 'Listbox Action props',
+        type: {
+          summary: 'boolean',
+        }
+      }
+    },
+    'ListboxAction - divider': {
+      description: 'Adds a border-bottom to the Option',
+      table: {
+        category: 'Listbox Action props',
+        type: {
+          summary: 'boolean',
+        }
+      }
+    },
+    'ListboxAction - selected': {
+      description: 'Icon for action',
+      table: {
+        category: 'Listbox Action props',
+        type: {
+          summary: 'SVG component|"placeholder"|svg html string',
+        }
+      }
+    },
+    'ListboxLoading- accessibilityLabel': {
+      description: 'Icon for action',
+      table: {
+        category: 'Listbox Loading props',
+        type: {
+          summary: 'string',
+        }
+      }
+    },
+  }}
+/>
+
+# Listbox
+
+The Listbox component is a list component that implements part of [the Aria 1.2 Listbox specs.](https://www.w3.org/TR/wai-aria-practices-1.2/#Listbox)
+It presents a list of options and allows users to select one or more of them.
+If you need more structure than the standard component offers, use composition to customize the presentation of these lists by using headers or custom elements.
+
+<br/><br/>
+
+### Basic Listbox
+
+Basic implementation of a control element used to let merchants select options
+
+export const BasicListbox = (args, { argTypes }) => ({
+  components: { Listbox, ListboxOption },
+  template: `
+  <Listbox accessibilityLabel="Basic Listbox example">
+    <ListboxOption value="1">Option 1</ListboxOption>
+    <ListboxOption value="2">Option 2</ListboxOption>
+    <ListboxOption value="3">Option 3</ListboxOption>
+  </Listbox>`,
+});
+BasicListbox.parameters = {
+  docs: {
+    source: false,
+    transformSource: (source) => {
+      const fullSource = dedent`
+        ${source}
+        import { Listbox, ListboxOption } from '@/polaris-vue';\n
+        components: {
+          Listbox,
+          ListboxOption,
+        },
+      `;
+      return fullSource;
+    }
+  },
+};
+
+<Canvas>
+  <Story story={BasicListbox} name="Basic Listbox"></Story>
+</Canvas>
+
+### Listbox with Loading
+
+Implementation of a control element showing a loading indicator to let merchants know more options are being loaded
+
+export const LoadingListbox = (args, { argTypes }) => ({
+  components: { Listbox, ListboxOption, ListboxLoading },
+  template: `
+  <Listbox accessibilityLabel="Listbox with loading example">
+    <ListboxOption value="1">Option 1</ListboxOption>
+    <ListboxOption value="2">Option 2</ListboxOption>
+    <ListboxOption value="3">Option 3</ListboxOption>
+    <ListboxLoading accessibilityLabel="items are loading"/>
+  </Listbox>`,
+});
+LoadingListbox.parameters = {
+  docs: {
+    source: false,
+    transformSource: (source) => {
+      const fullSource = dedent`
+        ${source}
+        import { Listbox, ListboxOption, ListboxLoading } from '@/polaris-vue';\n
+        components: {
+          Listbox,
+          ListboxOption,
+          ListboxLoading,
+        },
+      `;
+      return fullSource;
+    }
+  },
+}
+
+<Canvas>
+  <Story story={LoadingListbox} name="Listbox with Loading"></Story>
+</Canvas>
+
+### Listbox with Action
+
+Implementation of a control element used to let merchants take an action
+
+export const ActionListbox = (args, { argTypes }) => ({
+  components: { Listbox, ListboxOption, ListboxAction },
+  template: `
+  <Listbox accessibilityLabel="Listbox with Action example">
+    <ListboxAction value="ActionValue" :divider="true">
+      <div>Add item</div>
+    </ListboxAction>
+    <ListboxOption value="1">Option 1</ListboxOption>
+    <ListboxOption value="2">Option 2</ListboxOption>
+    <ListboxOption value="3">Option 3</ListboxOption>
+  </Listbox>`,
+});
+ActionListbox.parameters = {
+  docs: {
+    source: false,
+    transformSource: (source) => {
+      const fullSource = dedent`
+        ${source}
+        import { Listbox, ListboxOption, ListboxAction } from '@/polaris-vue';\n
+        components: {
+          Listbox,
+          ListboxOption,
+          ListboxAction,
+        },
+      `;
+      return fullSource;
+    }
+  },
+}
+
+<Canvas>
+  <Story story={ActionListbox} name="Listbox with Action"></Story>
+</Canvas>
+
+### Listbox with custom element
+
+Implementation of a control with custom rendering of options
+
+export const CustomListbox = (args, { argTypes }) => ({
+  components: { Listbox, ListboxOption, ListboxLoading, ListboxAction },
+  template: `
+  <Listbox accessibilityLabel="Listbox with custom element example">
+    <ListboxAction value="ActionValue" :divider="true">
+      <div>Add item</div>
+    </ListboxAction>
+    <ListboxOption value="1">
+      <div>
+        Option 1
+      </div>
+    </ListboxOption>
+    <ListboxOption value="2">
+      <div>
+        Option 2
+      </div>
+    </ListboxOption>
+    <ListboxOption value="3">
+      <div>
+        Option 3
+      </div>
+    </ListboxOption>
+    <ListboxLoading accessibilityLabel="items are loading"/>
+  </Listbox>`,
+});
+CustomListbox.parameters = {
+  docs: {
+    source: false,
+    transformSource: (source) => {
+      const fullSource = dedent`
+        ${source}
+        import {
+          Listbox,
+          ListboxOption,
+          ListboxLoading,
+          ListboxAction,
+        } from '@/polaris-vue';\n
+        components: {
+          Listbox,
+          ListboxOption,
+          ListboxAction,
+          ListboxLoading,
+        },
+      `;
+      return fullSource;
+    }
+  },
+}
+
+<Canvas>
+  <Story story={CustomListbox} name="Listbox with custom element"></Story>
+</Canvas>
+
+### Example
+
+export const ExampleListbox = (args, { argTypes }) => ({
+  props: Object.keys(argTypes),
+  components: { Listbox, ListboxOption, ListboxLoading, ListboxAction },
+  template: `
+  <Listbox v-bind="$props">
+    <ListboxAction value="ActionValue" :divider="true">
+      <div>Add item</div>
+    </ListboxAction>
+    <ListboxOption value="1">Option 1</ListboxOption>
+    <ListboxOption value="2">Option 2</ListboxOption>
+    <ListboxOption value="3">Option 3</ListboxOption>
+    <ListboxLoading accessibilityLabel="items are loading"/>
+  </Listbox>`,
+});
+ExampleListbox.parameters = {
+  docs: {
+    transformSource: (source) => {
+      const fullSource = dedent`
+        ${source}
+        import {
+          Listbox,
+          ListboxOption,
+          ListboxLoading,
+          ListboxAction,
+        } from '@/polaris-vue';\n
+        components: {
+          Listbox,
+          ListboxOption,
+          ListboxAction,
+          ListboxLoading,
+        },
+      `;
+      return fullSource;
+    }
+  },
+}
+
+<Canvas>
+  <Story story={ExampleListbox} name="Example" height="180px"></Story>
+</Canvas>
+
+<ArgsTable story="Example"/>
