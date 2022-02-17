@@ -16,17 +16,22 @@ fieldset(
         :name="finalName",
         :value="choice.value",
         :checked="isChoiceSelected(choice)",
-        :disabled="choice.disabledField || disabled",
+        :disabled="choice.disabled || disabled",
         :ariaDescribedBy="generateAriaDescribedBy(choice.describedByErrorField)",
         @change="onChange($event, choice)",
       )
         template(slot="label")
           span {{ choice.label }}
-        template(slot="helpText")
+        template(slot="help-text")
           span {{ choice.helpText }}
-      component(choice
-        v-if="choice.renderChildrenField",
-        :is="choice.renderChildrenField",
+      div(
+        v-if="typeof choice.renderChildren === 'string'",
+        v-html="choice.renderChildren",
+        :class="childrenClassName",
+      )
+      component(
+        v-else
+        :is="choice.renderChildren",
         :class="childrenClassName",
       )
   div(
@@ -51,12 +56,12 @@ import { RadioButton } from '../RadioButton';
 import { InlineError, errorTextID } from '../InlineError';
 
 interface choiceProps {
-  value: string | boolean,
+  value: string,
   label: string,
-  disabledField?: boolean,
+  disabled?: boolean,
   helpText?: string,
   describedByErrorField?: boolean,
-  renderChildrenField?: string | VueConstructor<Vue>,
+  renderChildren?: string | VueConstructor<Vue>,
 }
 
 @Component({
@@ -83,25 +88,25 @@ export default class ChoiceList extends Mixins(UseUniqueId) {
    * Name for form input
    */
   @Prop({ type: String })
-  public name!: string;
+  public name?: string;
 
   /**
    * Allow merchants to select multiple options at once
    */
   @Prop({ type: Boolean })
-  public allowMultiple!: boolean;
+  public allowMultiple?: boolean;
 
   /**
    * Toggles display of the title
    */
   @Prop({ type: Boolean })
-  public titleHidden!: boolean;
+  public titleHidden?: boolean;
 
   /**
    * Display an error message
    */
   @Prop({ type: [String, Object, Function, Array] })
-  public error!: Error;
+  public error?: Error;
 
   /**
    * Disable all choices

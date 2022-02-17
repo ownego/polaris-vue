@@ -3,8 +3,8 @@ Choice(
   :id="uniqueId",
   :labelHidden="labelHidden",
   :disabled="disabled",
-  @mouseover.native="mouseOver = true",
-  @mouseout.native="mouseOver = false",
+  @mouseover="mouseOver = true",
+  @mouseout="mouseOver = false",
 )
   template(slot="label")
     slot(name="label")
@@ -49,49 +49,49 @@ export default class RadioButton extends Mixins(UseUniqueId) {
    * Indicates the ID of the element that describes the the radio button
    */
   @Prop({ type: String })
-  public ariaDescribedBy!: string;
+  public ariaDescribedBy?: string;
 
   /**
    * Visually hide the label
    */
   @Prop({ type: Boolean })
-  public labelHidden!: boolean;
+  public labelHidden?: boolean;
 
   /**
    * Radio button is selected
    */
   @Prop({ type: Boolean })
-  public checked!: boolean;
+  public checked?: boolean;
 
   /**
    * Disable input
    */
   @Prop({ type: Boolean })
-  public disabled!: boolean;
+  public disabled?: boolean;
 
   /**
    * ID for form input
    */
   @Prop({ type: String })
-  public id!: string;
+  public id?: string;
 
   /**
    * Name for form input
    */
   @Prop({ type: String })
-  public name!: string;
+  public name?: string;
 
   /**
    * Value for form input
    */
   @Prop({ type: String })
-  public value!: string;
+  public value?: string;
 
   /**
    * Model value using for v-model
    */
   @Prop({ type: String })
-  public modelValue!: string;
+  public modelValue?: string;
 
   public mouseOver = false;
 
@@ -121,7 +121,7 @@ export default class RadioButton extends Mixins(UseUniqueId) {
       describedBy.push(this.ariaDescribedBy);
     }
 
-    if (this.$slots.helpText) {
+    if (this.$slots['help-text']) {
       describedBy.push(helpTextID(this.uniqueId));
     }
 

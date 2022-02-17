@@ -1,4 +1,5 @@
 import { Meta, Story, Canvas, ArgsTable } from '@storybook/addon-docs';
+import dedent from 'ts-dedent';
 
 import { ChoiceList } from '@/polaris-vue';
 
@@ -7,7 +8,6 @@ import { ChoiceList } from '@/polaris-vue';
   component={ ChoiceList }
   argTypes={{
     choices: {
-      name: 'choices',
       control: { disable: true },
       table: {
         type: {
@@ -16,44 +16,45 @@ import { ChoiceList } from '@/polaris-vue';
       },
     },
     value: {
-      name: 'value',
+      control: {
+        disable: true,
+      },
       table: {
         type: {
-          summary: null,
+          summary: 'string | array',
         },
       },
     },
     error: {
-      name: 'error',
       control: { type: 'text' },
       table: {
         type: {
-          summary: 'Error',
+          summary: 'string',
         },
       },
     },
     change: {
-      name: 'change',
       description: 'Callback when choice is toggled (this will emit input event)',
+      control: {
+        disable: true,
+      },
       table: {
         category: 'events',
         type: {
-          summary: '"(Event) => void"',
+          summary: '"(event) => void"',
         }
       }
     },
     input: {
-      name: 'input',
       description: 'Event for using with v-model',
       control: { disable: true },
       table: {
         type: {
-          summary: null,
-        }
-      }
+          summary: '"(newVal: string | array) => void"',
+        },
+      },
     },
     focus: {
-      name: 'focus',
       description: 'Callback when checkbox is focussed',
       table: {
         category: 'events',
@@ -63,12 +64,75 @@ import { ChoiceList } from '@/polaris-vue';
       },
     },
     blur: {
-      name: 'blur',
       description: 'Callback when focus is remove',
       table: {
         category: 'events',
         type: {
           summary: '"() => void"',
+        },
+      },
+    },
+    'default slot': {
+      description: 'Label for list of choices',
+      control: {
+        disable: true,
+      },
+      table: {
+        category: 'slots',
+      },
+    },
+    'value (choice)': {
+      description: 'Value of the choice',
+      table: {
+        category: 'choice props',
+        type: {
+          summary: 'string',
+        },
+      },
+    },
+    label: {
+      description: 'Label for the choice',
+      table: {
+        category: 'choice props',
+        type: {
+          summary: 'string',
+        },
+      },
+    },
+    disabled: {
+      control: { disable: true },
+      description: 'Disable choice',
+      table: {
+        category: 'choice props',
+        type: {
+          summary: 'boolean',
+        },
+      },
+    },
+    label: {
+      description: ' Additional text to aide in use',
+      table: {
+        category: 'choice props',
+        type: {
+          summary: 'string',
+        },
+      },
+    },
+    describedByErrorField: {
+      description: 'Indicates that the choice is aria-describedBy the error message',
+      table: {
+        category: 'choice props',
+        type: {
+          summary: 'boolean',
+        },
+      },
+    },
+    renderChildren: {
+      description: 'children rendered within each choice',
+      table: {
+        category: 'choice props',
+        type: {
+          summary: 'string | component | html element',
         },
       },
     },
@@ -80,21 +144,406 @@ import { ChoiceList } from '@/polaris-vue';
   }}
 />
 
-export const Template = (args, { argTypes }) => ({
-  props: Object.keys(argTypes),
-  components: { ChoiceList },
-  template: ``,
-});
-
 # Choice list
 
 A choice list lets you create a list of grouped radio buttons or checkboxes.
 Use this component if you need to group together a related list of interactive choices.
 
+<br/><br/>
+
+### Single choice list
+
+Allows merchants to select one option from a list.
+
+* Make sure all options are an either/or choice.
+
+export const singleChoiceList = (args, { argTypes }) => ({
+  components: { ChoiceList },
+  template: `
+  <div>
+    <ChoiceList
+      name="singleChoiceList"
+      v-model="value"
+      :choices="choices"
+    >
+      Company name
+    </ChoiceList>
+    <p style="margin-top: 30px"> Value: {{ value }} </p>
+  </div>
+  `,
+  data() {
+    return {
+      value: 'hidden',
+      choices: [
+        {label: 'Hidden', value: 'hidden'},
+        {label: 'Optional', value: 'optional'},
+        {label: 'Required', value: 'required'},
+      ]
+    };
+  },
+});
+singleChoiceList.parameters = {
+  docs: {
+    source: false,
+    transformSource: (source) => {
+      const tmpSource = source
+        .replace(/value="hidden"/, 'v-model="value"')
+        .replace(/\'\[.*\]\'/, '"choices"')
+        .replace(/Value: hidden/, 'Value: {{ value }}');
+      const fullSource = dedent`
+        ${tmpSource}\n
+        data() {
+          return {
+            value: 'hidden',
+            choices: [
+              {label: 'Hidden', value: 'hidden'},
+              {label: 'Optional', value: 'optional'},
+              {label: 'Required', value: 'required'},
+            ]
+          };
+        },
+      `;
+      return fullSource;
+    }
+  },
+}
+
 <Canvas>
-  <Story name="ChoiceList">
-    {Template.bind({})}
-  </Story>
+  <Story story={singleChoiceList} name="Single choice list"></Story>
 </Canvas>
 
-<ArgsTable story="ChoiceList"/>
+### Single choice list with error
+
+Allows for accessible error handling by connecting the error message to the field with the error.
+
+export const errorSingleChoiceList = (args, { argTypes }) => ({
+  components: { ChoiceList },
+  template: `
+   <div>
+    <ChoiceList
+      name="errSingleChoiceList"
+      v-model="value"
+      error="Company name cannot be hidden at this time"
+      :choices="choices"
+    >
+      Company name
+    </ChoiceList>
+  </div>
+  `,
+  data() {
+    return {
+      value: 'hidden',
+      choices: [
+        {label: 'Hidden', value: 'hidden'},
+        {label: 'Optional', value: 'optional'},
+        {label: 'Required', value: 'required'},
+      ],
+    };
+  },
+});
+errorSingleChoiceList.parameters = {
+  docs: {
+    source: false,
+    transformSource: (source) => {
+      const tmpSource = source
+        .replace(/\'\[.*\]\'/, '"choices"')
+        .replace(/value="hidden"/, 'v-model="value"')
+      const fullSource = dedent`
+        ${tmpSource}\n
+        data() {
+          return {
+            value: 'hidden',
+            choices: [
+              {label: 'Hidden', value: 'hidden'},
+              {label: 'Optional', value: 'optional'},
+              {label: 'Required', value: 'required'},
+            ]
+          };
+        },
+      `;
+      return fullSource;
+    }
+  },
+}
+
+<Canvas>
+  <Story story={errorSingleChoiceList} name="Single choice list with error"></Story>
+</Canvas>
+
+### Multi-choice list
+
+Allows merchants to select multiple options from a list.
+
+* Avoid options that are an either/or choice.
+
+export const multiChoiceList = (args, { argTypes }) => ({
+  components: { ChoiceList },
+  template: `
+  <div>
+    <ChoiceList
+      name="multi"
+      v-model="value"
+      :allowMultiple="true"
+      :choices="choices"
+    >
+      Company name
+    </ChoiceList>
+    <p style="margin-top: 30px"> Value: {{ value }} </p>
+  </div>
+  `,
+  data() {
+    return {
+      value: ['shipping'],
+      choices: [
+        {
+          label: 'Use the shipping address as the billing address by default',
+          helpText: 'Reduces the number of fields required to check out. The billing address can still be edited.',
+          value: 'shipping',
+        },
+        {
+          label: 'Require a confirmation step',
+          helpText: 'Customers must review their order details before purchasing.',
+          value: 'confirmation',
+        },
+      ]
+    };
+  },
+});
+multiChoiceList.parameters = {
+  docs: {
+    source: false,
+    transformSource: (source) => {
+      const tmpSource = source
+        .replace(/:value=\'\[\"shipping\"\]\'/, 'v-model="value"')
+        .replace(/\'\[.*\]\'/, '"choices"')
+        .replace(/<p>.*<\/p>/s, '<p> Value: {{ value }} </p>')
+      const fullSource = dedent`
+        ${tmpSource}\n
+        data() {
+          return {
+            value: ['hidden'],
+            choices: [
+              {label: 'Hidden', value: 'hidden'},
+              {label: 'Optional', value: 'optional'},
+              {label: 'Required', value: 'required'},
+            ]
+          };
+        },
+      `;
+      return fullSource; 
+    }
+  },
+}
+
+<Canvas>
+  <Story story={multiChoiceList} name="Multi-choice list"></Story>
+</Canvas>
+
+### Single-choice or multi-choice list with children content (always rendered)
+
+Use when you need merchants to view and/or interact with additional content under a choice.
+The content will always be rendered. Works for both single-choice and multi-choice list.
+
+export const renderChildChoiceList = (args, { argTypes }) => ({
+  components: { ChoiceList },
+  template: `
+  <div>
+    <ChoiceList
+      name="singleChild"
+      v-model="value"
+      :choices="choices"
+    >
+      Company name
+    </ChoiceList>
+  </div>
+  `,
+  data() {
+    return {
+      value: 'none',
+      choices: [
+        {label: 'None', value: 'none'},
+        {label: 'Minimum purchase', value: 'minimum_purchase'},
+        {
+          label: 'Minimum quantity',
+          value: 'minimum_quantity',
+          renderChildren: '<p>This is child content of Minimum quantity option</p>',
+        },
+      ],
+    };
+  },
+});
+renderChildChoiceList.parameters = {
+  docs: {
+    source: false,
+    transformSource: (source) => {
+      const tmpSource = source
+        .replace(/value="none"/, 'v-model="value"')
+        .replace(/\'\[.*\]\'/, '"choices"')
+      const fullSource = dedent`
+        ${tmpSource}\n
+        data() {
+          return {
+            value: 'none',
+            choices: [
+              {label: 'None', value: 'none'},
+              {label: 'Minimum purchase', value: 'minimum_purchase'},
+              {
+                label: 'Minimum quantity',
+                value: 'minimum_quantity',
+                renderChildren: '<p>This is child content of Minimum quantity option</p>',
+              },
+            ],
+          };
+        },
+      `;
+      return fullSource;
+    }
+  },
+}
+
+<Canvas>
+  <Story story={renderChildChoiceList} name="Single-choice or multi-choice list with children content (always rendered)"></Story>
+</Canvas>
+
+
+### Single-choice or multi-choice list with children content (rendered only when selected)
+
+Use when you need merchants to view and/or interact with additional content under a choice.
+The content is only rendered when the choice is selected. Works for both single-choice and multi-choice list.
+
+export const renderChildWithConditional = (args, { argTypes }) => ({
+  components: { ChoiceList },
+  template: `
+  <div>
+    <ChoiceList
+      name="renderChildWithConditional"
+      v-model="selected"
+      :choices="choices"
+      @change="handleChange"
+      onChange=""
+    >
+      Company name
+    </ChoiceList>
+  </div>
+  `,
+  data() {
+    return {
+      selected: 'none',
+      choices: [
+        {label: 'None', value: 'none'},
+        {label: 'Minimum purchase', value: 'minimum_purchase'},
+        {
+          label: 'Minimum quantity',
+          value: 'minimum_quantity',
+          renderChildren: '',
+        },
+      ],
+    };
+  },    
+  methods: {
+    handleChange() {
+      const renderFieldPosition = this.choices
+        .findIndex(obj => obj.value === 'minimum_quantity');
+      this.choices[renderFieldPosition].renderChildren = this.selected === 'minimum_quantity'
+        ? '<p>This is child content of Minimum quantity option</p>'
+        : '';
+    }
+  },
+});
+renderChildWithConditional.parameters = {
+  docs: {
+    source: false,
+    transformSource: (source) => {
+      const tmpSource = source
+        .replace(/value="none"/, 'v-model="selected"')
+        .replace(/\'\[.*\]\'/, '"choices"')
+        .replace(/onChange=""/, '@change="handleChange"')
+      const fullSource = dedent`
+        ${tmpSource}\n
+        data() {
+          return {
+            selected: 'none',
+            choices: [
+              {label: 'None', value: 'none'},
+              {label: 'Minimum purchase', value: 'minimum_purchase'},
+              {
+                label: 'Minimum quantity',
+                value: 'minimum_quantity',
+                renderChildren: '',
+              },
+            ],
+          };
+        },
+        methods: {
+          handleChange() {
+            const renderFieldPosition = this.choices
+              .findIndex(obj => obj.value === 'minimum_quantity');
+            this.choices[renderFieldPosition].renderChildren = this.selected === 'minimum_quantity'
+              ? '<p>This is child content of Minimum quantity option</p>'
+              : '';
+          },
+        },
+      `;
+      return fullSource;
+    },
+  },
+}
+
+<Canvas>
+  <Story story={renderChildWithConditional} name="Single-choice or multi-choice list with children content (rendered only when selected)"></Story>
+</Canvas>
+
+### Example
+
+export const ExampleChoiceList = (args, { argTypes }) => ({
+  props: Object.keys(argTypes),
+  components: { ChoiceList },
+  template: `
+  <ChoiceList
+    v-bind="$props"
+    v-model="selected"
+    :choices="options"
+  >
+    Example choice list
+  </ChoiceList>
+  `,
+  data() {
+    return {
+      selected: 'hidden',
+      options: [
+        {label: 'Hidden', value: 'hidden'},
+        {label: 'Optional', value: 'optional'},
+        {label: 'Required', value: 'required'},
+      ]
+    };
+  },
+});
+ExampleChoiceList.parameters = {
+  docs: {
+    transformSource: (source) => {
+      const tmpSource = source
+        .replace(/\'\[.*\]\'/, '"options"')
+        .replace(/value="hidden"/, 'v-model="selected"')
+      const fullSource = dedent`
+        ${tmpSource}\n
+        data() {
+          return {
+            selected: 'hidden',
+            options: [
+              {label: 'Hidden', value: 'hidden'},
+              {label: 'Optional', value: 'optional'},
+              {label: 'Required', value: 'required'},
+            ],
+          };
+        },
+      `;
+      return fullSource;
+    }
+  }
+}
+
+<Canvas>
+  <Story story={ExampleChoiceList} name="Example" height="160px"></Story>
+</Canvas>
+
+<ArgsTable story="Example"/>
