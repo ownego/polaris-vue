@@ -15,6 +15,7 @@ div(ref="container")
       :zIndexOverride="zIndexOverride",
       :autofocusTarget="autofocusTarget",
       :sectioned="sectioned",
+      :colorScheme="colorScheme",
       @close="handleClose",
       @scrolled-to-bottom="$emit('scrolled-to-bottom')",
     )
@@ -36,6 +37,7 @@ import type { PreferredAlignment, PreferredPosition } from '../PositionedOverlay
 import { PopoverCloseSource, PopoverAutofocusTarget, setActivatorAttributes } from './utils';
 import { PopoverOverlay } from './components';
 import { Portal } from '../Portal';
+import { CustomPropertiesProps } from '../CustomProperties/utils';
 
 @Component({
   components: {
@@ -131,6 +133,10 @@ export default class Popover extends Mixins(UseUniqueId) {
    */
   @Prop({ type: String, default: 'container' })
   public autofocusTarget?: PopoverAutofocusTarget;
+
+  /** Accepts a color scheme for the contents of the popover */
+  @Prop({ type: String })
+  public colorScheme?: CustomPropertiesProps['colorScheme'];
 
   @Watch('active')
   onActiveChanged() {

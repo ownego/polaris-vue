@@ -13,7 +13,13 @@ App provider is a required component that enables sharing global settings throug
 <br/>
 
 ## Best practices
+
 The AppProvider component is `required` to use PolarisVue. Without it, the components in your application will not function correctly. You must wrap the root (the top) of your application in the app provider component.
+<br/>
+
+### With color scheme
+
+With a `colorScheme`, the app provider component will set the root color scheme for the App (such as: light or dark). For `colorScheme` configuration, see the [CustomProperties](?path=/docs/components-structure-appprovider--page) component documentation.
 
 ```javascript
 // App.vue
@@ -26,3 +32,19 @@ The AppProvider component is `required` to use PolarisVue. Without it, the compo
 
 <script></script>
 ```
+
+**Dark Mode:**
+
+```javascript
+// App.vue
+<template>
+<AppProvider colorScheme="dark">
+  <div>
+  </div>
+</AppProvider>
+</template>
+
+<script></script>
+```
+
+
