@@ -19,24 +19,25 @@ PositionedOverlay(
     slot-scope="props",
   )
     div(:class="focusTrackerClasses", tabIndex="0", @focus="handleFocusFirstItem")
-    div(:class="popoverWrapperClasses")
-      div(
-        :id="id",
-        :tabIndex="autofocusTarget === 'none' ? undefined : -1",
-        :style="contentStyles",
-        :class="contentClassNames",
-        ref="content",
-      )
-        slot(name="extra-content")
-        Pane(
-          :sectioned="sectioned",
-          :fixed="fixed",
-          @scrolled-to-bottom="$emit('scrolled-to-bottom')",
+    CustomProperties(:color-scheme="colorScheme")
+      div(:class="popoverWrapperClasses")
+        div(
+          :id="id",
+          :tabIndex="autofocusTarget === 'none' ? undefined : -1",
+          :style="contentStyles",
+          :class="contentClassNames",
+          ref="content",
         )
-          slot(
-            name="overlay",
-            :data="props",
+          slot(name="extra-content")
+          Pane(
+            :sectioned="sectioned",
+            :fixed="fixed",
+            @scrolled-to-bottom="$emit('scrolled-to-bottom')",
           )
+            slot(
+              name="overlay",
+              :data="props",
+            )
     div(:class="focusTrackerClasses", tabIndex="0", @focus="handleFocusLastItem")
     EventListener(event="click", :handler="handleClick")
     EventListener(event="touchstart", :handler="handleClick")
@@ -49,12 +50,14 @@ import {
   Component, Prop, Watch, Ref,
 } from 'vue-property-decorator';
 import { classNames } from 'polaris-react/src/utilities/css';
-import { durationFast } from '@shopify/polaris-tokens';
+import { tokens } from 'polaris-react/src/tokens';
 import { findFirstFocusableNode } from '@/utilities/focus';
 import { PositionedOverlay, PreferredAlignment, PreferredPosition } from '@/components/PositionedOverlay';
 import styles from '@/classes/Popover.json';
 import { EventListener } from '@/components/EventListener';
 import { KeypressListener, Key } from '@/components/KeypressListener';
+import { CustomProperties } from '@/components/CustomProperties';
+import { CustomPropertiesProps } from '@/components/CustomProperties/utils';
 import {
   PopoverCloseSource, PopoverAutofocusTarget, nodeContainsDescendant, TransitionStatus,
 } from '../../utils';
@@ -66,6 +69,7 @@ import { Pane } from '../Pane';
     Pane,
     EventListener,
     KeypressListener,
+    CustomProperties,
   },
 })
 export default class PopoverOverlay extends Vue {
@@ -97,6 +101,9 @@ export default class PopoverOverlay extends Vue {
 
   @Prop({ type: String, default: 'container' }) public autofocusTarget?: PopoverAutofocusTarget;
 
+  @Prop({ type: String })
+  public colorScheme?: CustomPropertiesProps['colorScheme'];
+
   @Watch('active')
   onActiveChanged() {
     const beforeStatus = this.active ? TransitionStatus.Entering : TransitionStatus.Exiting;
@@ -107,7 +114,7 @@ export default class PopoverOverlay extends Vue {
     this.clearTransitionTimeout();
     const timer = window.setTimeout(() => {
       this.transitionStatus = afterStatus;
-    }, durationFast);
+    }, parseInt(tokens.motion['duration-100'], 10));
 
     if (this.active) {
       this.enteringTimer = timer;
