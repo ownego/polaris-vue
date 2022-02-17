@@ -62,6 +62,21 @@ import {
         },
       },
     },
+    colorScheme: {
+      options: [
+        'light',
+        'dark',
+      ],
+      control: { type: 'select' },
+      table: {
+        defaultValue: {
+          summary: 'light'
+        },
+        type: {
+          summary: 'dark | light',
+        },
+      }
+    },
     'close': {
       name: 'close',
       description: 'Callback when popover is closed',
@@ -136,12 +151,13 @@ export const Template = (args, { argTypes }) => ({
       this.active = !this.active;
     },
   },
-  template: ` <div>
+  template: `
     <Popover
       :active="active"
       autofocusTarget="first-node"
       v-on:close="toggleActive"
       on-close="toggleActive"
+      :colorScheme="'${args.colorScheme}'"
     >
       <Button
         slot="activator"
@@ -151,8 +167,7 @@ export const Template = (args, { argTypes }) => ({
       > More actions
       </Button>
       <ActionList slot="content" :items="items" data-items="items" />
-    </Popover>
-  </div>`,
+    </Popover>`,
 });
 
 export const ContentAndActions = (args, { argTypes }) => ({
@@ -352,17 +367,19 @@ For ActionList usages, use the [ActionList component.](/docs/components-actions-
     name="Popover"
     inline={false}
     height="300px"
+    args={{
+      colorScheme: 'light',
+    }}
     parameters={{
       docs: {
         transformSource: (source) => {
           const tmpSource = source
-            .replace(/<template>\s*/, '')
-            .replace(/\s*<\/template>/, '')
             .replace(/on-/g, 'v-on:')
             .replace(/:items='(.*)'\s*/g, '')
             .replace(/active/, ':active="active"')
             .replace(/data-items/g, ':items');
           const fullSource = dedent`
+            ${tmpSource}
             data() {
               return {
                 active: true,
@@ -377,7 +394,6 @@ For ActionList usages, use the [ActionList component.](/docs/components-actions-
                 this.active = !this.active;
               },
             },
-            ${tmpSource}
           `;
           return fullSource;
         },

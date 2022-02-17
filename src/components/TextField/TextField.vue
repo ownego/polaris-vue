@@ -50,6 +50,7 @@ Labelled(
         :spellCheck="spellCheck",
         :pattern="pattern",
         :inputMode="inputMode",
+        :rows="rows",
         :type="inputType",
         :aria-describedby="formattedDescribedBy",
         :aria-labelledby="formattedLabelledBy",
@@ -89,7 +90,7 @@ Labelled(
       )
         VisuallyHidden
           p Clear button
-        Icon(:source="clearIcon" color="base")
+        Icon(:source="clearIcon", color="base")
       Spinner(
         v-if="type === 'number' && step !== 0 && !disabled && !readOnly",
         @change="handleNumberChange",
@@ -214,8 +215,8 @@ export default class TextField extends Mixins(UseUniqueId) {
   public focused!: boolean;
 
   /** Allow for multiple lines of input */
-  @Prop({ type: Boolean })
-  public multiline!: boolean;
+  @Prop({ type: [Number, Boolean] })
+  public multiline!: boolean | number;
 
   /** Error to display beneath the label */
   @Prop({ type: [String, Boolean, Array, Object, Function] })
@@ -326,8 +327,6 @@ export default class TextField extends Mixins(UseUniqueId) {
 
   public suffixClassName = styles.Suffix;
 
-  public clearButtonClassName = styles.ClearButton;
-
   public buttonPressTimer?: number;
 
   get uniqueId(): string {
@@ -358,6 +357,13 @@ export default class TextField extends Mixins(UseUniqueId) {
     return this.multiline && this.height
       ? { height: this.height, maxHeight: this.maxHeight }
       : null;
+  }
+
+  get clearButtonClassName() {
+    return classNames(
+      styles.ClearButton,
+      !this.clearButtonVisible && styles.Hidden,
+    );
   }
 
   get wrapperClassName(): string {
@@ -454,6 +460,12 @@ export default class TextField extends Mixins(UseUniqueId) {
     return labelledBy.join(' ');
   }
 
+  get rows() {
+    if (!this.multiline) return undefined;
+
+    return typeof this.multiline === 'number' ? this.multiline : 1;
+  }
+
   @Watch('focused')
   onFocusedChanged() {
     if (!this.inputRef) return;
@@ -480,7 +492,7 @@ export default class TextField extends Mixins(UseUniqueId) {
       return;
     }
 
-    (this.$refs.inputRef as HTMLInputElement).focus();
+    (this.$refs.inputRef as HTMLInputElement)?.focus();
   }
 
   public onFocus(event: InputEvent): void {
