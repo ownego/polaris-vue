@@ -1,8 +1,7 @@
 <template lang="pug">
-div
+div(v-if="error && typeof error !== 'boolean' || $slots['help-text']")
   label(
     :class="wrapperClassName",
-    :for="id",
     @click="$emit('click')",
     @mouseover="$emit('mouseover')",
     @mouseout="$emit('mouseout')",
@@ -11,10 +10,7 @@ div
       slot
     span(:class="labelClass")
       slot(name="label")
-  div(
-    v-if="error || $slots['help-text']",
-    :class="descriptionMarkupClass",
-  )
+  div(:class="descriptionMarkupClass")
     div(
       v-if="$slots['help-text']",
       :id="helpTextID",
@@ -26,6 +22,17 @@ div
       :fieldID="id",
       :message="error",
     )
+label(
+  v-else
+  :class="wrapperClassName",
+  @click="$emit('click')",
+  @mouseover="$emit('mouseover')",
+  @mouseout="$emit('mouseout')",
+)
+  span(:class="controlClass")
+    slot
+  span(:class="labelClass")
+    slot(name="label")
 </template>
 
 <script lang="ts">

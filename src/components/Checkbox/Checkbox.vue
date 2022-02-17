@@ -27,7 +27,6 @@ Choice(
       :aria-describedby="formattedAriaDescribedBy",
       @blur="handleBlur",
       @change="onChange",
-      @click="handleOnClick",
       @focus="$emit('focus')",
       @keyup="handleKeyup",
       v-bind="indeterminateAttributes",
@@ -185,7 +184,7 @@ export default class Checkbox extends Mixins(UseUniqueId) {
       describedBy.push(errorTextID(this.uniqueId));
     }
 
-    if (this.$slots.helpText) {
+    if (this.$slots['help-text']) {
       describedBy.push(helpTextID(this.uniqueId));
     }
 
@@ -205,15 +204,6 @@ export default class Checkbox extends Mixins(UseUniqueId) {
     if (key === Key.Space || key === Key.Tab) {
       if (!this.keyFocused) this.keyFocused = true;
     }
-  }
-
-  public handleOnClick(event: Event): void {
-    if (!this.checkboxRef || this.disabled) {
-      return;
-    }
-
-    this.onChange(event as InputEvent);
-    (this.$refs.checkboxRef as HTMLInputElement).focus();
   }
 
   public onChange(event: InputEvent): void {
