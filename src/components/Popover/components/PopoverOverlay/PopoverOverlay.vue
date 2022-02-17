@@ -69,6 +69,7 @@ import { Pane } from '../Pane';
     Pane,
     EventListener,
     KeypressListener,
+    CustomProperties,
   },
 })
 export default class PopoverOverlay extends Vue {
