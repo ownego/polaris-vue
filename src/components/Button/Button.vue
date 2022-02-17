@@ -218,7 +218,7 @@ export default class Button extends Vue {
       this.size !== 'medium' && sizeVariation && styles[sizeVariation],
       textAlignVariation && styles[textAlignVariation],
       this.fullWidth && styles.fullWidth,
-      this.icon && this.children == null && styles.iconOnly,
+      this.icon && !this.children && styles.iconOnly,
       this.connectedDisclosure && styles.connectedDisclosure,
       this.removeUnderline && styles.removeUnderline,
     );
