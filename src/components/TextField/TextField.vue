@@ -17,9 +17,9 @@ Labelled(
       slot(name="connected-right")
     div(
       :class="wrapperClassName",
-      @focus="onFocus",
-      @click="onClick",
-      @blur="onBlur",
+      @focus="handleFocus",
+      @click="handleClick",
+      @blur="handleBlur",
     )
       div(
         v-if="$slots.prefix",
@@ -33,21 +33,21 @@ Labelled(
         :id="uniqueId",
         :name="name",
         :disabled="disabled",
-        :readOnly="readOnly",
+        :readonly="readOnly",
         :role="role",
-        :autoFocus="autoFocus",
+        :autofocus="autoFocus",
         :value="value",
         :placeholder="placeholder",
         :style="style",
-        :autoComplete="autoComplete",
+        :autocomplete="normalizeAutocomplete",
         :class="inputClassName",
         ref="inputRef",
         :min="min",
         :max="max",
         :step="step",
-        :minLength="minLength",
-        :maxLength="maxLength",
-        :spellCheck="spellCheck",
+        :minlength="minLength",
+        :maxlength="maxLength",
+        :spellcheck="spellCheck",
         :pattern="pattern",
         :inputMode="inputMode",
         :rows="rows",
@@ -64,9 +64,10 @@ Labelled(
         v-bind="normalizeAriaMultiline(multiline)",
         @input="onChange",
         @keydown="handleKeyPress",
-        @focus="comboboxTextFieldFocus",
-        @blur="comboboxTextFieldBlur",
+        @focus="$emit('focus')",
+        @blur="$emit('blur')",
       )
+        template(v-if="multiline") {{ value }}
       div(
         v-if="$slots.suffix",
         :id="`${uniqueId}Suffix`",
@@ -86,12 +87,12 @@ Labelled(
         v-if="clearButtonVisible && clearButton",
         :class="clearButtonClassName",
         :disabled="disabled",
-        @click="$emit('clear-btn-clicked')",
+        @click="$emit('clear-button-click', id)",
       )
         VisuallyHidden
           p Clear button
         Icon(:source="clearIcon", color="base")
-      Spinner(
+      TextFieldSpinner(
         v-if="type === 'number' && step !== 0 && !disabled && !readOnly",
         @change="handleNumberChange",
         @mousedown="handleButtonPress",
@@ -101,8 +102,8 @@ Labelled(
       Resizer(
         v-if="multiline",
         :contents="normalizedValue || placeholder",
-        :current-height="height",
-        :minimum-lines="typeof multiline === 'number' ? multiline : 1",
+        :currentHeight="height",
+        :minimumLines="typeof multiline === 'number' ? multiline : 1",
         @height-change="handleExpandingResize",
       )
 </template>
@@ -118,42 +119,16 @@ import {
 } from 'vue-property-decorator';
 import CircleCancelMinor from '@shopify/polaris-icons/dist/svg/CircleCancelMinor.svg';
 import { classNames, variationName } from 'polaris-react/src/utilities/css';
-import type { Error, Action } from 'types/type';
+import type { ComboboxTextFieldType } from 'polaris-react/src/utilities/combobox';
 import styles from '@/classes/TextField.json';
 import { UseUniqueId } from '@/mixins';
+import { TextFieldProps } from './utils';
 import { VisuallyHidden } from '../VisuallyHidden';
 import { Connected } from '../Connected';
 import { Icon } from '../Icon';
 import { Labelled } from '../Labelled';
 import { helpTextID, labelID } from '../Labelled/utils';
-import { Resizer, Spinner } from './components';
-
-type Type =
-  | 'text'
-  | 'email'
-  | 'number'
-  | 'password'
-  | 'search'
-  | 'tel'
-  | 'url'
-  | 'date'
-  | 'datetime-local'
-  | 'month'
-  | 'time'
-  | 'week'
-  | 'currency';
-
-type Alignment = 'left' | 'center' | 'right';
-
-type InputMode =
-  | 'none'
-  | 'text'
-  | 'decimal'
-  | 'numeric'
-  | 'tel'
-  | 'search'
-  | 'email'
-  | 'url';
+import { Resizer, Spinner as TextFieldSpinner } from './components';
 
 @Component({
   components: {
@@ -162,15 +137,11 @@ type InputMode =
     Connected,
     Icon,
     Resizer,
-    Spinner,
+    TextFieldSpinner,
   },
 })
 export default class TextField extends Mixins(UseUniqueId) {
-  @Inject({ default: Function }) comboboxTextFieldFocus!: () => void;
-
-  @Inject({ default: Function }) comboboxTextFieldBlur!: () => void;
-
-  @Inject({ default: Function }) comboboxTextFieldChange!: () => void;
+  @Inject({ default: {} }) comboboxTextFieldContext!: ComboboxTextFieldType;
 
   @Ref('prefixRef') prefixRef!: HTMLDivElement;
 
@@ -178,41 +149,40 @@ export default class TextField extends Mixins(UseUniqueId) {
 
   @Ref('inputRef') inputRef!: HTMLInputElement;
 
-  /** Hint text to display */
   @Prop({ type: String })
-  public placeholder!: string;
+  public placeholder?: TextFieldProps['placeholder'];
 
   /** Initial value for the input */
   @Prop({ type: String })
-  public value!: string;
+  public value?: TextFieldProps['value'];
 
   /** Adds an action to the label */
-  @Prop({ type: Array })
-  public labelAction!: Action;
+  @Prop({ type: Object })
+  public labelAction?: TextFieldProps['labelAction'];
 
   /** Visually hide the label */
   @Prop({ type: Boolean })
-  public labelHidden!: boolean;
+  public labelHidden?: TextFieldProps['labelHidden'];
 
   /** Disable the input */
   @Prop({ type: Boolean })
-  public disabled!: boolean;
+  public disabled?: TextFieldProps['disabled'];
 
   /** Show a clear text button in the input */
   @Prop({ type: Boolean })
-  public clearButton!: boolean;
+  public clearButton?: TextFieldProps['clearButton'];
 
   /** Disable editing of the input */
   @Prop({ type: Boolean })
-  public readOnly!: boolean;
+  public readOnly?: TextFieldProps['readOnly'];
 
   /** Automatically focus the input */
   @Prop({ type: Boolean })
-  public autoFocus!: boolean;
+  public autoFocus?: TextFieldProps['autoFocus'];
 
   /** Force the focus state on the input */
   @Prop({ type: Boolean })
-  public focused!: boolean;
+  public focused?: TextFieldProps['focused'];
 
   /** Allow for multiple lines of input */
   @Prop({ type: [Number, Boolean] })
@@ -220,104 +190,104 @@ export default class TextField extends Mixins(UseUniqueId) {
 
   /** Error to display beneath the label */
   @Prop({ type: [String, Boolean, Array, Object, Function] })
-  public error!: Error | boolean;
+  public error?: TextFieldProps['error'];
 
   /** Determine type of input */
   @Prop({ type: String })
-  public type!: Type;
+  public type?: TextFieldProps['type'];
 
   /** Name of the input */
   @Prop({ type: String })
-  public name!: string;
+  public name?: TextFieldProps['name'];
 
   /** ID for the input */
   @Prop({ type: String })
-  public id!: string;
+  public id?: TextFieldProps['id'];
 
   /** Defines a specific role attribute for the input */
   @Prop({ type: String })
-  public role!: string;
+  public role?: TextFieldProps['role'];
 
   /** Limit increment value for numeric and date-time inputs */
   @Prop({ type: Number })
-  public step!: number;
+  public step?: TextFieldProps['step'];
 
   /**
    * Enable automatic completion by the browser.
    * Set to "off" when you do not want the browser to fill in info
    */
-  @Prop({ type: String })
-  public autoComplete!: string;
+  @Prop({ type: [String, Boolean], required: true })
+  public autoComplete!: TextFieldProps['autoComplete'];
 
   /** Mimics the behavior of the native HTML attribute, limiting the maximum value */
   @Prop({ type: [Number, String] })
-  public max!: number | string;
+  public max?: TextFieldProps['max'];
 
   /** Maximum character length for an input */
   @Prop({ type: Number })
-  public maxLength!: number;
+  public maxLength?: TextFieldProps['maxLength'];
 
   /** Maximum height of the input element. Only applies when `multiline` is `true` */
   @Prop({ type: [Number, String] })
-  public maxHeight!: number | string;
+  public maxHeight?: TextFieldProps['maxHeight'];
 
   /** Mimics the behavior of the native HTML attribute, limiting the minimum value */
   @Prop({ type: [Number, String] })
-  public min!: number | string;
+  public min?: TextFieldProps['min'];
 
   /** Minimum character length for an input */
   @Prop({ type: Number })
-  public minLength?: number;
+  public minLength?: TextFieldProps['minLength'];
 
   /** A regular expression to check the value against */
   @Prop({ type: String })
-  public pattern!: string;
+  public pattern?: TextFieldProps['pattern'];
 
   /** Choose the keyboard that should be used on mobile devices */
   @Prop({ type: String })
-  public inputMode!: InputMode;
+  public inputMode?: TextFieldProps['inputMode'];
 
   /** Indicate whether value should have spelling checked */
   @Prop({ type: Boolean })
-  public spellCheck!: boolean;
+  public spellCheck?: TextFieldProps['spellCheck'];
 
   /** Indicates the id of a component owned by the input */
   @Prop({ type: String })
-  public ariaOwns!: string;
+  public ariaOwns?: TextFieldProps['ariaOwns'];
 
   /** Indicates whether or not a Popover is displayed */
   @Prop({ type: Boolean })
-  public ariaExpanded!: boolean;
+  public ariaExpanded?: TextFieldProps['ariaExpanded'];
 
   /** Indicates the id of a component controlled by the input */
   @Prop({ type: String })
-  public ariaControls!: string;
+  public ariaControls?: TextFieldProps['ariaControls'];
 
   /** Indicates the id of a related component’s visually focused element to the input */
   @Prop({ type: String })
-  ariaActiveDescendant!: string;
+  ariaActiveDescendant?: TextFieldProps['ariaActiveDescendant'];
 
   /** Indicates what kind of user input completion suggestions are provided */
   @Prop({ type: String })
-  ariaAutocomplete!: string;
+  ariaAutocomplete?: TextFieldProps['ariaAutocomplete'];
 
   /** Indicates whether or not the character count should be displayed */
   @Prop({ type: Boolean })
-  showCharacterCount!: boolean;
+  showCharacterCount?: TextFieldProps['showCharacterCount'];
 
   /** Determines the alignment of the text in the input */
   @Prop({ type: String })
-  align!: Alignment;
+  align?: TextFieldProps['align'];
 
   /** Visual required indicator, adds an asterisk to label */
   @Prop({ type: Boolean })
-  requiredIndicator!: boolean;
+  requiredIndicator?: TextFieldProps['requiredIndicator'];
 
   /** Indicates whether or not a monospaced font should be used */
   @Prop({ type: Boolean })
-  monospaced!: boolean;
+  monospaced?: TextFieldProps['monospaced'];
 
-  public height!: number;
+  public height = 200;
 
   public focus!: boolean;
 
@@ -333,12 +303,21 @@ export default class TextField extends Mixins(UseUniqueId) {
     return this.useUniqueId('TextField', this.id);
   }
 
-  get inputType(): string {
+  get inputType() {
     return this.type === 'currency' ? 'text' : this.type;
   }
 
   get normalizedValue(): string {
     return typeof this.value === 'string' ? this.value : '';
+  }
+
+  get normalizeAutocomplete() {
+    if (this.autoComplete === true) {
+      return 'on';
+    } if (this.autoComplete === false) {
+      return 'off';
+    }
+    return this.autoComplete;
   }
 
   get normalizedStep(): number {
@@ -355,7 +334,7 @@ export default class TextField extends Mixins(UseUniqueId) {
 
   get style() {
     return this.multiline && this.height
-      ? { height: this.height, maxHeight: this.maxHeight }
+      ? { height: `${this.height}px` }
       : null;
   }
 
@@ -485,7 +464,7 @@ export default class TextField extends Mixins(UseUniqueId) {
     );
   }
 
-  public onClick(event: InputEvent): void {
+  public handleClick(event: InputEvent): void {
     const target = event.target as HTMLInputElement;
 
     if (this.containsAffix(target) || this.focus) {
@@ -495,33 +474,31 @@ export default class TextField extends Mixins(UseUniqueId) {
     (this.$refs.inputRef as HTMLInputElement)?.focus();
   }
 
-  public onFocus(event: InputEvent): void {
+  public handleFocus(event: InputEvent): void {
     const target = event.target as HTMLInputElement;
 
     if (this.containsAffix(target)) return;
 
     this.focus = true;
-    this.$emit('focus');
   }
 
-  public onBlur(event: InputEvent): void {
+  public handleBlur(event: InputEvent): void {
     const target = event.target as HTMLInputElement;
 
     if (this.containsAffix(target)) return;
 
     this.focus = false;
-    this.$emit('blur');
   }
 
   public onChange(event: InputEvent): void {
     const target = event.target as HTMLInputElement;
 
-    if (this.comboboxTextFieldChange) {
-      this.comboboxTextFieldChange();
+    if (this.comboboxTextFieldContext.onTextFieldChange) {
+      this.comboboxTextFieldContext.onTextFieldChange();
     }
 
     this.$emit('input', target.value);
-    this.$emit('change');
+    this.$emit('change', event);
   }
 
   public handleNumberChange(payload: number): void {
@@ -531,7 +508,8 @@ export default class TextField extends Mixins(UseUniqueId) {
 
     if (typeof numericValue !== 'number') return;
 
-    /** Making sure the new value has the same length of decimal places as the
+    /**
+     * Making sure the new value has the same length of decimal places as the
      * step / value has.
      */
     const decimalPlaces = Math.max(dpl(numericValue), dpl(this.normalizedStep));
@@ -541,7 +519,7 @@ export default class TextField extends Mixins(UseUniqueId) {
       Math.max(numericValue + payload * this.normalizedStep, Number(this.normalizedMin)),
     );
 
-    // re-bind value for input el
+    // re-bind value for input
     (this.$refs.inputRef as HTMLInputElement).value = String(newValue.toFixed(decimalPlaces));
 
     this.$emit('input', String(newValue.toFixed(decimalPlaces)));

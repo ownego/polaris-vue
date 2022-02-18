@@ -36,19 +36,46 @@ import { Popover, Pane } from '../Popover';
   },
 })
 export default class Combobox extends Vue {
-  @Provide() comboboxTextFieldFocus = this.handleFocus;
+  public popoverActive = false;
 
-  @Provide() comboboxTextFieldBlur = this.handleBlur;
+  public activeOptionId = '';
 
-  @Provide() comboboxTextFieldChange = this.handleChange;
+  public listboxId = '';
+
+  public textFieldFocused = false;
+
+  public textFieldLabelId = '';
 
   @Prop({ type: Boolean })
-  public allowMultiple!: boolean;
+  public allowMultiple?: boolean;
 
   @Prop({ type: String, default: 'below' })
-  public preferredPosition!: PreferredPosition;
+  public preferredPosition?: PreferredPosition;
 
-  public popoverActive = false;
+  @Provide() comboboxTextFieldContext = {
+    activeOptionId: this.activeOptionId,
+    expanded: this.popoverActive,
+    listboxId: this.listboxId,
+    setTextFieldFocus: () => { this.textFieldFocused = true; },
+    setTextFieldLabelId: (id: string) => { this.textFieldLabelId = id; },
+    onTextFieldFocus: this.handleFocus,
+    onTextFieldChange: this.handleChange,
+    onTextFieldBlur: this.handleBlur,
+  }
+
+  @Provide() comboboxListboxContext = {
+    setActiveOptionId: (id: string) => { this.activeOptionId = id; },
+    setListboxId: (id: string) => { this.listboxId = id; },
+    listboxId: this.listboxId,
+    textFieldLabelId: this.textFieldLabelId,
+    onOptionSelected: this.onOptionSelected,
+    textFieldFocused: this.textFieldFocused,
+    onKeyToBottom: () => { this.$emit('scrolled-to-bottom'); },
+  }
+
+  @Provide() comboboxListboxOptionContext = {
+    allowMultiple: this.allowMultiple,
+  }
 
   public listboxClassName = styles.Listbox;
 
@@ -56,8 +83,16 @@ export default class Combobox extends Vue {
     return Boolean(!this.popoverActive && this.$slots.default);
   }
 
+  public onOptionSelected(): void {
+    if (!this.allowMultiple) {
+      this.popoverActive = false;
+      this.activeOptionId = '';
+    }
+  }
+
   public handleClose(): void {
     this.popoverActive = false;
+    this.activeOptionId = '';
   }
 
   public handleFocus(): void {
@@ -75,6 +110,7 @@ export default class Combobox extends Vue {
   public handleBlur(): void {
     if (this.popoverActive) {
       this.popoverActive = false;
+      this.activeOptionId = '';
     }
   }
 }

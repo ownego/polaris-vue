@@ -7,7 +7,7 @@ div(:class="wrapperClassName")
     )
       Checkbox(:checked="selected")
         template(slot="label")
-          slot(name="label")
+          slot
     slot(v-else)
 </template>
 

@@ -5,7 +5,7 @@ div(
 )
   EventListener(
     event="resize",
-    handler="handleHeightCheck",
+    :handler="handleHeightCheck",
   )
   div(
     ref="contentNode",
@@ -49,18 +49,18 @@ function replaceEntity(entity: string) {
   },
 })
 export default class Resizer extends Vue {
-  @Ref('contentNode') contentNode!: HTMLDivElement;
+  @Ref() contentNode!: HTMLDivElement;
 
-  @Ref('minimumLinesNode') minimumLinesNode!: HTMLDivElement;
+  @Ref() minimumLinesNode!: HTMLDivElement;
 
   @Prop({ type: String })
-  public contents!: string;
+  public contents?: string;
 
   @Prop({ type: Number })
-  public currentHeight?: number | null;
+  public currentHeight?: number;
 
   @Prop({ type: Number })
-  public minimumLines!: number;
+  public minimumLines?: number;
 
   public wrapperClassName = styles.Resizer;
 
@@ -69,7 +69,7 @@ export default class Resizer extends Vue {
   get minimumLinesContents(): string {
     let content = '';
 
-    for (let line = 0; line < this.minimumLines; line += 1) {
+    for (let line = 0; line < Number(this.minimumLines); line += 1) {
       content += '<br>';
     }
 
@@ -83,6 +83,10 @@ export default class Resizer extends Vue {
   }
 
   protected mounted(): void {
+    this.handleHeightCheck();
+  }
+
+  protected updated(): void {
     this.handleHeightCheck();
   }
 
