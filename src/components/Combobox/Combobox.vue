@@ -47,10 +47,10 @@ export default class Combobox extends Vue {
   public textFieldLabelId = '';
 
   @Prop({ type: Boolean })
-  public allowMultiple!: boolean;
+  public allowMultiple?: boolean;
 
   @Prop({ type: String, default: 'below' })
-  public preferredPosition!: PreferredPosition;
+  public preferredPosition?: PreferredPosition;
 
   @Provide() comboboxTextFieldContext = {
     activeOptionId: this.activeOptionId,
