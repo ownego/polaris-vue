@@ -1,9 +1,11 @@
 <template lang="pug">
 div(:class="className")
-  slot(name="left")
-  Item(position="primary")
+  Item(v-if="$slots.left", position="left")
+    slot(name="left")
+  Item(v-if="$slots.default", position="primary")
     slot
-  slot(name="right")
+  Item(v-if="$slots.right", position="right")
+    slot(name="right")
 </template>
 
 <script lang="ts">

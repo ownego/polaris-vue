@@ -30,7 +30,7 @@ export default class Item extends Vue {
       styles.Item,
       this.focused && styles['Item-focused'],
       // TODO: re-check for missing from shopify
-      this.position === 'primary' ? 'Polaris-Connected__Item--primary' : 'Polaris-Connected__Item',
+      this.position === 'primary' && styles['Item-primary'],
     );
   }
 
