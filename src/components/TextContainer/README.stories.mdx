@@ -4,7 +4,7 @@ import dedent from 'ts-dedent';
 import { TextContainer, Heading } from '@/polaris-vue';
 
 <Meta
-  title="Components / Titles and text / TextContainer"
+  title="Components / Titles and text / Text container"
   component={ TextContainer }
   argTypes={{
     spacing: {
@@ -36,62 +36,6 @@ import { TextContainer, Heading } from '@/polaris-vue';
 
 A text container is used to wrap text elements such as paragraphs, headings, and lists to give them vertical spacing.
 
-<br/><br/>
-
-### Default text container
-
-Use this component for default vertical spacing.
-
-export const defaultTextContainer = (args, { argTypes }) => ({
-  components: { TextContainer, Heading },
-  template: `
-    <TextContainer>
-      <Heading>Install the Shopify POS App</Heading>
-      <p>
-        Shopify POS is the easiest way to sell your products in person. Available
-        for iPad, iPhone, and Android.
-      </p>
-    </TextContainer>
-  `
-});
-defaultTextContainer.parameters = {
-  docs: {
-    source: false,
-  },
-}
-
-<Canvas>
-  <Story story={defaultTextContainer} name="Default text container"></Story>
-</Canvas>
-
-### Tight text container
-
-Use the tight spacing option to relate content topics to each other.
-
-export const tightTextContainer = (args, { argTypes }) => ({
-  components: { TextContainer, Heading },
-  template: `
-    <TextContainer spacing="tight">
-      <Heading>Install the Shopify POS App</Heading>
-      <p>
-        Shopify POS is the easiest way to sell your products in person. Available
-        for iPad, iPhone, and Android.
-      </p>
-    </TextContainer>
-  `
-});
-tightTextContainer.parameters = {
-  docs: {
-    source: false,
-  },
-}
-
-<Canvas>
-  <Story story={tightTextContainer} name="Tight text container"></Story>
-</Canvas>
-
-### Example
-
 export const Template = (args, { argTypes }) => ({
   components: { TextContainer },
   props: Object.keys(argTypes),
@@ -116,7 +60,7 @@ export const Template = (args, { argTypes }) => ({
 });
 
 <Canvas>
-  <Story story={Template} name="Example" height="250px"></Story>
+  <Story story={Template} name="Text container" height="250px"></Story>
 </Canvas>
 
-<ArgsTable story="Example" />
+<ArgsTable story="Text container" />
