@@ -1,38 +1,34 @@
 {
   "compilerOptions": {
-    "target": "esnext",
+    "target": "es5",
     "module": "esnext",
     "strict": true,
     "jsx": "preserve",
     "importHelpers": true,
     "moduleResolution": "node",
-    "experimentalDecorators": true,
     "skipLibCheck": true,
     "esModuleInterop": true,
     "allowSyntheticDefaultImports": true,
     "sourceMap": true,
     "resolveJsonModule": true,
+    "experimentalDecorators": true,
     "baseUrl": ".",
     "types": [
-      "node",
-      "vue",
+      "webpack-env"
     ],
-    "declaration": true,
-    "declarationMap": true,
-    "declarationDir": "dist/types",
-    "plugins": [{ "name": "typescript-plugin-css-modules" }],
     "paths": {
-      "@/*": ["./src/*"]
+      "@/*": [
+        "src/*"
+      ]
     },
     "lib": [
       "esnext",
       "dom",
       "dom.iterable",
       "scripthost"
-    ],
+    ]
   },
   "include": [
-    "types/*.ts",
     "src/**/*.ts",
     "src/**/*.tsx",
     "src/**/*.vue",
@@ -40,8 +36,6 @@
     "tests/**/*.tsx"
   ],
   "exclude": [
-    "node_modules",
-    "dist",
-    "build",
-  ],
+    "node_modules"
+  ]
 }

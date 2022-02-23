@@ -1,5 +1,5 @@
 import debounce from 'lodash/debounce';
-import { spacingLoose } from '@shopify/polaris-tokens';
+import { tokens } from 'polaris-react/src/tokens';
 import { dataPolarisTopBar, scrollable } from 'polaris-react/src/components/shared';
 import { stackedContent } from 'polaris-react/src/utilities/breakpoints';
 import { getRectForNode, Rect } from './geometry';
@@ -157,7 +157,7 @@ export class StickyManager {
     }
 
     const stickyOffset = offset
-      ? this.getOffset(stickyNode) + parseInt(spacingLoose, 10)
+      ? this.getOffset(stickyNode) + parseInt(tokens.spacing['5'], 10)
       : this.getOffset(stickyNode);
 
     const scrollPosition = scrollTop + stickyOffset;

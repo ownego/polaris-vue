@@ -45,5 +45,6 @@ module.exports = {
     'import/no-default-export': 0,
     'import/prefer-default-export': 0,
     '@typescript-eslint/array-type': ['error', { defaultOption: 'array' }],
+    "@typescript-eslint/explicit-module-boundary-types": "off",
   },
 };

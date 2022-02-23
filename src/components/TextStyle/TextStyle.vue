@@ -4,8 +4,9 @@ component(:is="element", :class="className")
 </template>
 
 <script lang="ts">
-import Vue from 'vue';
-import { Component, Prop } from 'vue-property-decorator';
+import {
+  defineComponent, ref, computed,
+} from 'vue';
 import { classNames, variationName } from 'polaris-react/src/utilities/css';
 import styles from '@/classes/TextStyle.json';
 
@@ -25,25 +26,32 @@ function variationElement(variation?: Variation) {
   return variation === VariationValue.Code ? 'code' : 'span';
 }
 
-@Component
-export default class TextStyle extends Vue {
-  /**
-   * Give text additional visual meaning
-   * @values positive | negative | strong | subdued | code
-   */
-  @Prop({ type: String })
-  public variation!: Variation;
+export default defineComponent({
+  props: {
+    /**
+     * Give text additional visual meaning
+     * @values positive | negative | strong | subdued | code
+     */
+    variation: {
+      type: String as () => Variation,
+    },
+  },
+  setup(props) {
+    const element = ref(variationElement(props.variation));
 
-  get className() {
-    const variation = this.variation && variationName('variation', this.variation) as keyof typeof styles;
+    const className = computed(() => {
+      const variation = props.variation && variationName('variation', props.variation) as keyof typeof styles;
 
-    return classNames(
-      variation && styles[variation],
-    );
-  }
+      return classNames(
+        variation && styles[variation],
+      );
+    });
 
-  public element = variationElement(this.variation);
-}
+    return {
+      element, className,
+    };
+  },
+});
 </script>
 
 <style lang="scss">
