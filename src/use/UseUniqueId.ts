@@ -5,7 +5,7 @@ import { MissingAppProviderError } from '@/utilities/errors';
 export default function UseUniqueId() {
   const idFactory = inject('uniqueIdFactory') as UniqueIdFactory;
 
-  const uniqueIdRef = ref<string | null>(null);
+  const uniqueIdRef = ref<string>('');
 
   function useUniqueId(prefix = '', overrideId = '') {
     if (!idFactory) {
@@ -21,7 +21,7 @@ export default function UseUniqueId() {
       uniqueIdRef.value = idFactory.nextId(prefix);
     }
 
-    return uniqueIdRef;
+    return uniqueIdRef.value;
   }
 
   return { uniqueIdRef, useUniqueId };
