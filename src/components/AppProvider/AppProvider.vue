@@ -56,7 +56,7 @@ onMounted(() => {
 
 provide('scrollLockManager', scrollLockManager);
 provide('portalManager', portalManager);
-provide('uniqueIdFactory', uniqueIdFactory);
+provide('uniqueIdFactory', uniqueIdFactory.value);
 provide('focusManager', focusManager);
 
 </script>
