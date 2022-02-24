@@ -12,7 +12,6 @@ div(
 <script setup lang="ts">
 import {
   provide,
-  defineProps,
   defineEmits,
   ref,
   reactive,

@@ -8,6 +8,7 @@
     "lint": "vue-cli-service lint"
   },
   "dependencies": {
+    "@shopify/polaris-icons": "^4.17.0",
     "lodash": "^4.17.21",
     "polaris-react": "https://github.com/Shopify/polaris-react.git",
     "vue": "^3.2.31"

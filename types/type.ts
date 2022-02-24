@@ -1,14 +1,14 @@
-import { VueConstructor } from 'vue';
+import { VueElementConstructor } from 'vue';
 
 export type IconSource =
-  | VueConstructor<Vue>
+  | VueElementConstructor
   | 'placeholder'
   | string;
 
 export type Error =
   | string
-  | VueConstructor<Vue>
-  | (string | VueConstructor<Vue>)[];
+  | VueElementConstructor
+  | (string | VueElementConstructor)[];
 
 export type Action = {
   id?: string;
