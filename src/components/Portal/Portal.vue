@@ -7,34 +7,32 @@ teleport(
     slot
 </template>
 
-<script lang="ts">
+<script setup lang="ts">
 import {
-  defineComponent, ref, inject, onMounted,
+  ref, inject, onMounted,
 } from 'vue';
 import { UseUniqueId } from '@/use';
 import { PortalManager } from '@/utilities/portal-manager';
 
-export default defineComponent({
-  props: {
-    idPrefix: {
-      type: String,
-    },
+const props = defineProps({
+  idPrefix: {
+    type: String,
+    default: '',
   },
-  setup(props) {
-    const portalManager = inject('portalManager') as PortalManager;
-    const portalId = ref<string>('');
-    const { useUniqueId } = UseUniqueId();
+});
 
-    onMounted(() => {
-      const uniqueId = useUniqueId('portal');
-      portalId.value = props.idPrefix ? `${props.idPrefix}-${uniqueId}` : uniqueId as string;
+const portalManager = inject('portalManager') as PortalManager;
 
-      if (portalManager) {
-        portalManager.register(portalId.value);
-      }
-    });
+const portalId = ref<string>('');
 
-    return { portalId, portalManager };
-  },
+const { useUniqueId } = UseUniqueId();
+
+onMounted(() => {
+  const uniqueId = useUniqueId('portal');
+  portalId.value = props.idPrefix ? `${props.idPrefix}-${uniqueId}` : uniqueId as string;
+
+  if (portalManager) {
+    portalManager.register(portalId.value);
+  }
 });
 </script>

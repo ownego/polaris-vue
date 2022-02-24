@@ -3,9 +3,9 @@ component(:is="element", :class="className")
   slot
 </template>
 
-<script lang="ts">
+<script setup lang="ts">
 import {
-  defineComponent, ref, computed,
+  ref, computed,
 } from 'vue';
 import { classNames, variationName } from 'polaris-react/src/utilities/css';
 import styles from '@/classes/TextStyle.json';
@@ -26,31 +26,25 @@ function variationElement(variation?: Variation) {
   return variation === VariationValue.Code ? 'code' : 'span';
 }
 
-export default defineComponent({
-  props: {
-    /**
-     * Give text additional visual meaning
-     * @values positive | negative | strong | subdued | code
-     */
-    variation: {
-      type: String as () => Variation,
-    },
+const props = defineProps({
+  /**
+    * Give text additional visual meaning
+    * @values positive | negative | strong | subdued | code
+    */
+  variation: {
+    type: String as () => Variation,
+    default: null,
   },
-  setup(props) {
-    const element = ref(variationElement(props.variation));
+});
 
-    const className = computed(() => {
-      const variation = props.variation && variationName('variation', props.variation) as keyof typeof styles;
+const element = ref(variationElement(props.variation));
 
-      return classNames(
-        variation && styles[variation],
-      );
-    });
+const className = computed(() => {
+  const variation = props.variation && variationName('variation', props.variation) as keyof typeof styles;
 
-    return {
-      element, className,
-    };
-  },
+  return classNames(
+    variation && styles[variation],
+  );
 });
 </script>
 
