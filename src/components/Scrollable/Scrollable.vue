@@ -59,6 +59,11 @@ interface Props {
   focusable?: boolean,
 }
 
+/**
+ * TODO: config for default props
+ * https://vuejs.org/guide/typescript/composition-api.html#typing-component-props
+ */
+// eslint-disable-next-line vue/no-setup-props-destructure
 const {
   vertical = true,
   horizontal,
