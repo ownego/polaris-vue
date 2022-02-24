@@ -3,10 +3,16 @@ module.exports = {
   env: {
     node: true,
   },
+  globals: {
+    defineProps: "readonly",
+    defineEmits: "readonly",
+  },
   extends: [
     'plugin:vue/essential',
     '@vue/airbnb',
     '@vue/typescript/recommended',
+    'plugin:vue/base',
+    'plugin:vue/vue3-recommended',
   ],
   parserOptions: {
     ecmaVersion: 2020,
@@ -46,5 +52,9 @@ module.exports = {
     'import/prefer-default-export': 0,
     '@typescript-eslint/array-type': ['error', { defaultOption: 'array' }],
     "@typescript-eslint/explicit-module-boundary-types": "off",
+    "@typescript-eslint/no-explicit-any": "off",
+    'vue/script-setup-uses-vars': 'error',
+    'no-unused-vars': 'off',
+    '@typescript-eslint/no-unused-vars': 'off',
   },
 };
