@@ -7,6 +7,7 @@ export * from './Image';
 export * from './KeypressListener';
 export * from './Portal';
 export * from './Scrollable';
+export * from './Spinner';
 export * from './TextStyle';
 export * from './UnstyledLink';
 export * from './VisuallyHidden';
