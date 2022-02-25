@@ -1,15 +1,8 @@
-import '!style-loader!css-loader!sass-loader!../src/scss/main.scss';
-import '!style-loader!css-loader!sass-loader!../src/scss/_vendors.scss';
-// import Vue from 'vue';
-// import VueRouter from 'vue-router';
-
-// Vue.use(VueRouter);
-// Vue.component('router-link', Vue.component('RouterLink'));
+// import { AppProvider } from '@/polaris-vue';
 
 // export const decorators = [(story) => ({
-//   components: {story},
-//   template: '<story />',
-//   router: new VueRouter()
+//   components: {AppProvider, story},
+//   template: '<AppProvider><story /></AppProvider>',
 // })];
 
 export const parameters = {

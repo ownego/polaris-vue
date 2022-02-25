@@ -1,41 +1,39 @@
 {
+  "extends": "@vue/tsconfig/tsconfig.web.json",
+  "include": [
+    "vite.config.*",
+    "package.json",
+  ],
+  "exclude": [
+    "node_modules",
+    "dist",
+    "build",
+  ],
   "compilerOptions": {
-    "target": "es5",
-    "module": "esnext",
-    "strict": true,
-    "jsx": "preserve",
-    "importHelpers": true,
-    "moduleResolution": "node",
+    "baseUrl": ".",
+    "outDir": "dist/types",
+    "paths": {
+      "@/*": ["./src/*"]
+    },
+    "types": ["node"],
+    "declaration": true,
+    "declarationMap": true,
+    "declarationDir": "dist/types",
     "skipLibCheck": true,
+    "moduleResolution": "node",
+    "experimentalDecorators": true,
+    "resolveJsonModule": true,
     "esModuleInterop": true,
     "allowSyntheticDefaultImports": true,
     "sourceMap": true,
-    "resolveJsonModule": true,
-    "experimentalDecorators": true,
-    "baseUrl": ".",
-    "types": [
-      "webpack-env"
-    ],
-    "paths": {
-      "@/*": [
-        "src/*"
-      ]
-    },
-    "lib": [
-      "esnext",
-      "dom",
-      "dom.iterable",
-      "scripthost"
-    ]
+    "strict": true,
+    "jsx": "preserve",
+    "importHelpers": true,
   },
-  "include": [
-    "src/**/*.ts",
-    "src/**/*.tsx",
-    "src/**/*.vue",
-    "tests/**/*.ts",
-    "tests/**/*.tsx"
-  ],
-  "exclude": [
-    "node_modules"
+
+  "references": [
+    {
+      "path": "./tsconfig.vite-config.json"
+    }
   ]
 }

@@ -1,0 +1,23 @@
+{
+  "extends": "@vue/tsconfig/tsconfig.node.json",
+  "include": [
+    "vite.config.*",
+    "package.json",
+    "src/polaris-vue.ts",
+    "src/components/*",
+  ],
+  "exclude": [
+    "node_modules",
+    "dist",
+    "build",
+  ],
+  "compilerOptions": {
+    "composite": true,
+    "types": ["node", "vite/client"],
+    "declarationDir": "dist/types",
+    "allowSyntheticDefaultImports": true,
+    "paths": {
+      "@/*": ["./src/*"]
+    },
+  },
+}

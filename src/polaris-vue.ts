@@ -1,18 +1,17 @@
-import { App, Plugin } from 'vue';
+import type { App, Component } from 'vue';
+import * as components from '@/components';
 
-// Import vue components
-import * as components from '@/components/index';
-
-// install function executed by Vue.use()
-const install: Exclude<Plugin['install'], undefined> = function installPolarisVue3(app: App) {
-  Object.entries(components).forEach(([componentName, component]) => {
-    app.component(componentName, component);
-  });
+const PolarisVue = {
+  install(Vue: App) {
+    for (const component in components) {
+      const componentElement = components[component as keyof typeof components] as Component;
+      Vue.component(component, componentElement);
+    }
+  },
 };
 
-// Create module definition for Vue.use()
-export default install;
+// Export all
+export default PolarisVue;
 
-// To allow individual component use, export components
-// each can be registered via Vue.component()
-export * from '@/components/index';
+// Export single component
+export * from '@/components';

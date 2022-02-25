@@ -8,11 +8,9 @@ teleport(
 </template>
 
 <script setup lang="ts">
-import {
-  ref, inject, onMounted,
-} from 'vue';
+import { ref, inject, onMounted } from 'vue';
 import { UseUniqueId } from '@/use';
-import { PortalManager } from '@/utilities/portal-manager';
+import type { PortalManager } from '@/utilities/portal-manager';
 
 const props = defineProps({
   idPrefix: {
@@ -29,7 +27,7 @@ const { useUniqueId } = UseUniqueId();
 
 onMounted(() => {
   const uniqueId = useUniqueId('portal');
-  portalId.value = props.idPrefix ? `${props.idPrefix}-${uniqueId}` : uniqueId as string;
+  portalId.value = props.idPrefix ? `${props.idPrefix}-${uniqueId}` : (uniqueId as string);
 
   if (portalManager) {
     portalManager.register(portalId.value);

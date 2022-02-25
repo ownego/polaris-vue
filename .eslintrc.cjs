@@ -1,30 +1,38 @@
+/* eslint-env node */
+require('@rushstack/eslint-patch/modern-module-resolution');
+
 module.exports = {
   root: true,
-  env: {
-    node: true,
-  },
-  globals: {
-    defineProps: "readonly",
-    defineEmits: "readonly",
-  },
   extends: [
-    'plugin:vue/essential',
-    '@vue/airbnb',
-    '@vue/typescript/recommended',
-    'plugin:vue/base',
-    'plugin:vue/vue3-recommended',
+    'plugin:vue/vue3-essential',
+    'eslint:recommended',
+    '@vue/eslint-config-typescript/recommended',
+    '@vue/eslint-config-prettier',
   ],
   parserOptions: {
     ecmaVersion: 2020,
   },
+  env: {
+    'vue/setup-compiler-macros': true,
+  },
   rules: {
+    'vue/require-default-prop': 'off',
+    'prettier/prettier': [
+      'warn',
+      {
+        singleQuote: true,
+      },
+    ],
     'no-shadow': 'off',
     '@typescript-eslint/no-shadow': ['error'],
-    'no-console': process.env.NODE_ENV === 'production' ? 'warn' : 0,
-    'no-debugger': process.env.NODE_ENV === 'production' ? 'warn' : 0,
-    'import/no-extraneous-dependencies': ['error', {
-      devDependencies: true,
-    }],
+    'no-console': import.meta.env.PROD ? 'warn' : 0,
+    'no-debugger': import.meta.env.PROD ? 'warn' : 0,
+    // 'import/no-extraneous-dependencies': [
+    //   'error',
+    //   {
+    //     devDependencies: true,
+    //   },
+    // ],
     indent: ['warn', 2],
     'interface-name': 0,
     'ordered-imports': 0,
@@ -51,10 +59,5 @@ module.exports = {
     'import/no-default-export': 0,
     'import/prefer-default-export': 0,
     '@typescript-eslint/array-type': ['error', { defaultOption: 'array' }],
-    "@typescript-eslint/explicit-module-boundary-types": "off",
-    "@typescript-eslint/no-explicit-any": "off",
-    'vue/script-setup-uses-vars': 'error',
-    'no-unused-vars': 'off',
-    '@typescript-eslint/no-unused-vars': 'off',
   },
 };
