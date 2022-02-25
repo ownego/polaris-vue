@@ -3,6 +3,7 @@ export * from './CustomProperties';
 export * from './EventListener';
 export * from './FooterHelp';
 export * from './Icon';
+export * from './Image';
 export * from './KeypressListener';
 export * from './Portal';
 export * from './Scrollable';
