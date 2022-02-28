@@ -1,5 +1,5 @@
-import { createApp } from 'vue';
+import { createApp, type Component } from 'vue';
 import Demo from './Demo.vue';
 import PolarisVue from './polaris-vue';
 
-createApp(Demo).use(PolarisVue).mount('#app');
+createApp(Demo as any).use(PolarisVue).mount('#app');
