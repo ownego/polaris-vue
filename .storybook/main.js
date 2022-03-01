@@ -5,7 +5,7 @@ const path = require('path');
 module.exports = {
   stories: [
     './stories/**/*.stories.mdx',
-    '../src/**/README.stories.mdx',
+    // '../src/**/README.stories.mdx',
   ],
   addons: [
     '@storybook/addon-links',
@@ -29,7 +29,9 @@ module.exports = {
     return mergeConfig(previousConfig, {
       ...config,
       plugins: [
-        eslintPlugin(),
+        eslintPlugin({
+          exclude: ['node_modules/**', 'src/**'],
+        }),
       ],
     });
   },

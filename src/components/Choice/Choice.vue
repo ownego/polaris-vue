@@ -55,12 +55,7 @@ interface Props {
 
 const props = defineProps<Props>();
 
-const className = classNames(
-  styles.Choice,
-  props.labelHidden && styles.labelHidden,
-  props.disabled && styles.disabled,
-);
-
+const className = classNames(styles.Choice, props.labelHidden && styles.labelHidden, props.disabled && styles.disabled);
 </script>
 
 <style lang="scss">

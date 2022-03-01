@@ -11,9 +11,10 @@ component(
 </template>
 
 <script setup lang="ts">
-const props = defineProps<{
-  to?: string | Record<string, unknown>,
-  url?: string,
-  external?: boolean,
-}>();
+const props =
+  defineProps<{
+    to?: string | Record<string, unknown>;
+    url?: string;
+    external?: boolean;
+  }>();
 </script>

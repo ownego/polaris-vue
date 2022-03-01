@@ -28,14 +28,9 @@ component(
 </template>
 
 <script setup lang="ts">
-import {
-  watch, ref, onMounted, withDefaults,
-} from 'vue';
+import { watch, ref, onMounted, withDefaults } from 'vue';
 import { portal } from 'polaris-react/src/components/shared';
-import {
-  findFirstFocusableNodeIncludingDisabled,
-  focusNextFocusableNode,
-} from '@/utilities/focus';
+import { findFirstFocusableNodeIncludingDisabled, focusNextFocusableNode } from '@/utilities/focus';
 import { UseUniqueId } from '@/use';
 import type { PopoverOverlayProps, PopoverAutofocusTarget } from './utils';
 import { PopoverCloseSource, setActivatorAttributes } from './utils';
@@ -97,9 +92,7 @@ const props = withDefaults(defineProps<PopoverProps>(), {
   preferInputActivator: true,
   autofocusTarget: 'container',
 });
-const emit = defineEmits<{(event: 'close', source: PopoverCloseSource): void,
-  (event: 'scrolled-to-bottom'): void}
-  >();
+const emit = defineEmits<{ (event: 'close', source: PopoverCloseSource): void; (event: 'scrolled-to-bottom'): void }>();
 const container = ref<HTMLElement | null>(null);
 const activator = ref<HTMLElement | null>(null);
 const { useUniqueId } = UseUniqueId();
@@ -109,8 +102,7 @@ const setAccessibilityAttributes = () => {
   if (container.value) {
     const containerNode = container.value;
     const firstFocusable = findFirstFocusableNodeIncludingDisabled(containerNode);
-    const focusableActivator: HTMLElement & { disabled?: boolean; } = firstFocusable
-      || containerNode;
+    const focusableActivator: HTMLElement & { disabled?: boolean } = firstFocusable || containerNode;
     const activatorDisabled = 'disabled' in focusableActivator && Boolean(focusableActivator.disabled);
 
     setActivatorAttributes(focusableActivator, {
@@ -122,13 +114,16 @@ const setAccessibilityAttributes = () => {
   }
 };
 
-watch(() => props.active, () => setAccessibilityAttributes());
+watch(
+  () => props.active,
+  () => setAccessibilityAttributes(),
+);
 
 const isInPortal = (element: Element) => {
   let { parentElement } = element;
 
   while (parentElement) {
-    if (parentElement.matches(portal.selector)) return false;
+    if (parentElement.matches(portal.selector)) {return false;}
     parentElement = parentElement.parentElement;
   }
 
@@ -137,14 +132,13 @@ const isInPortal = (element: Element) => {
 
 const handleClose = (source: PopoverCloseSource) => {
   emit('close', source);
-  if (!container.value || props.preventFocusOnClose) return;
+  if (!container.value || props.preventFocusOnClose) {return;}
 
-  if ((source === PopoverCloseSource.FocusOut || source === PopoverCloseSource.EscapeKeypress)
-    && activator.value
-  ) {
-    const focusableActivator = findFirstFocusableNodeIncludingDisabled(activator.value)
-      || findFirstFocusableNodeIncludingDisabled(container.value)
-      || container.value;
+  if ((source === PopoverCloseSource.FocusOut || source === PopoverCloseSource.EscapeKeypress) && activator.value) {
+    const focusableActivator =
+      findFirstFocusableNodeIncludingDisabled(activator.value) ||
+      findFirstFocusableNodeIncludingDisabled(container.value) ||
+      container.value;
     if (!focusNextFocusableNode(focusableActivator, isInPortal)) {
       focusableActivator.focus();
     }
@@ -154,7 +148,7 @@ const handleClose = (source: PopoverCloseSource) => {
 onMounted(() => {
   if (container.value) {
     const activatorNode = container.value.firstElementChild;
-    if (activatorNode) activator.value = activatorNode as HTMLElement;
+    if (activatorNode) {activator.value = activatorNode as HTMLElement;}
     setAccessibilityAttributes();
   }
 });

@@ -1,13 +1,11 @@
 <script setup lang="ts">
-import {
-  onBeforeUnmount, onMounted, watch,
-} from 'vue';
+import { onBeforeUnmount, onMounted, watch } from 'vue';
 
 interface BaseEventProps {
   event: string;
-  capture?: boolean,
+  capture?: boolean;
   passive?: boolean;
-  handler(event: Event): void,
+  handler(event: Event): void;
 }
 
 const props = defineProps({
@@ -18,9 +16,7 @@ const props = defineProps({
 });
 
 function attachListener() {
-  const {
-    event, capture, passive, handler,
-  } = props;
+  const { event, capture, passive, handler } = props;
   window.addEventListener(event, handler, { capture, passive });
 }
 
@@ -29,12 +25,15 @@ function detachListener(prevProps?: BaseEventProps) {
   window.removeEventListener(event, handler, capture);
 }
 
-watch(() => ({ ...props }), (newProps, oldProps) => {
-  if (newProps !== oldProps) {
-    detachListener(oldProps);
-    attachListener();
-  }
-});
+watch(
+  () => ({ ...props }),
+  (newProps, oldProps) => {
+    if (newProps !== oldProps) {
+      detachListener(oldProps);
+      attachListener();
+    }
+  },
+);
 
 onMounted(() => attachListener());
 

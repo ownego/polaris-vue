@@ -16,7 +16,7 @@ const { useUniqueId } = UseUniqueId();
 const id = useUniqueId('ScrollTo');
 
 onMounted(() => {
-  if (!scrollToPosition || !anchorNode.value) return;
+  if (!scrollToPosition || !anchorNode.value) {return;}
   scrollToPosition(anchorNode.value.offsetTop);
 });
 </script>

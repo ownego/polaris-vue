@@ -28,37 +28,22 @@ import styles from '@/classes/Icon.json';
 import config from '@/config';
 import { VisuallyHidden } from '../VisuallyHidden';
 
-type Color =
-  | 'base'
-  | 'subdued'
-  | 'critical'
-  | 'interactive'
-  | 'warning'
-  | 'highlight'
-  | 'success'
-  | 'primary';
+type Color = 'base' | 'subdued' | 'critical' | 'interactive' | 'warning' | 'highlight' | 'success' | 'primary';
 
-const COLORS_WITH_BACKDROPS: string[] = [
-  'base',
-  'critical',
-  'highlight',
-  'success',
-  'warning',
-];
+const COLORS_WITH_BACKDROPS: string[] = ['base', 'critical', 'highlight', 'success', 'warning'];
 
 const props = defineProps<{
   /** The contents to display in the icon */
-  source: IconSource,
+  source: IconSource;
   /** Set the color for the icon */
-  color?: Color,
+  color?: Color;
   /** Show a backdrop behind the icon */
-  backdrop?: boolean,
+  backdrop?: boolean;
   /** Descriptive text to be read to screenreaders */
-  accessibilityLabel?: string,
+  accessibilityLabel?: string;
 }>();
 
-const colorClassName = props.color
-    && styles[variationName('color', props.color) as keyof typeof styles];
+const colorClassName = props.color && styles[variationName('color', props.color) as keyof typeof styles];
 const wrapperClassName = classNames(
   styles.Icon,
   colorClassName,
@@ -76,32 +61,19 @@ if (props.source === 'placeholder') {
   sourceType = 'placeholder';
 }
 
-const encodedSvg = sourceType === 'external'
-  ? encodeURIComponent(String(props.source))
-  : '';
+const encodedSvg = sourceType === 'external' ? encodeURIComponent(String(props.source)) : '';
 
 const checkSupportedSvg = (): void => {
-  if (
-    props.color
-    && sourceType === 'external'
-    && config.env === 'development'
-  ) {
-    console.warn(
-      'Recoloring external SVGs is not supported. Set the intended color on your SVG instead.',
-    );
+  if (props.color && sourceType === 'external' && config.env === 'development') {
+    // eslint-disable-next-line no-console
+    console.warn('Recoloring external SVGs is not supported. Set the intended color on your SVG instead.');
   }
 };
 
 const checkSupportedBackdrop = (): void => {
-  if (
-    props.backdrop
-    && props.color
-    && !COLORS_WITH_BACKDROPS.includes(props.color)
-    && config.env === 'development'
-  ) {
-    console.warn(
-      `The ${props.color} variant does not have a supported backdrop color`,
-    );
+  if (props.backdrop && props.color && !COLORS_WITH_BACKDROPS.includes(props.color) && config.env === 'development') {
+    // eslint-disable-next-line no-console
+    console.warn(`The ${props.color} variant does not have a supported backdrop color`);
   }
 };
 
@@ -109,7 +81,6 @@ onMounted(() => {
   checkSupportedSvg();
   checkSupportedBackdrop();
 });
-
 </script>
 
 <style lang="scss">

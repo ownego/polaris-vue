@@ -39,14 +39,11 @@ interface SectionProps {
 
 const props = defineProps<SectionProps>();
 
-const emit = defineEmits<{(event: 'action-any-item'): void}>();
+const emit = defineEmits<{ (event: 'action-any-item'): void }>();
 
 const className = computed(() => (props.section.title ? undefined : styles['Section-withoutTitle']));
 
-const titleClass = computed(() => classNames(
-  styles.Title,
-  props.firstSection && styles.firstSectionWithTitle,
-));
+const titleClass = computed(() => classNames(styles.Title, props.firstSection && styles.firstSectionWithTitle));
 
 const sectionRole = computed(() => {
   let sectionRoleValue;

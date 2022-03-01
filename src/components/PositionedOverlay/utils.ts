@@ -30,8 +30,6 @@ export function getMarginsForNode(node: HTMLElement) {
 
 export function getZIndexForLayerFromNode(node: HTMLElement) {
   const layerNode = node.closest(layer.selector) || document.body;
-  const zIndex = layerNode === document.body
-    ? 'auto'
-    : parseInt(window.getComputedStyle(layerNode).zIndex || '0', 10);
+  const zIndex = layerNode === document.body ? 'auto' : parseInt(window.getComputedStyle(layerNode).zIndex || '0', 10);
   return zIndex === 'auto' || Number.isNaN(zIndex) ? null : zIndex;
 }

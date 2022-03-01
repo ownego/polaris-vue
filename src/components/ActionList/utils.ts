@@ -1,12 +1,6 @@
-import {
-  IconableAction, DisableableAction, BadgeAction, DestructableAction,
-} from '@/interface';
+import type { IconableAction, DisableableAction, BadgeAction, DestructableAction } from '@/utilities/interface';
 
-export interface ActionListItemDescriptor
-  extends IconableAction,
-  DisableableAction,
-  BadgeAction,
-  DestructableAction {
+export interface ActionListItemDescriptor extends IconableAction, DisableableAction, BadgeAction, DestructableAction {
   /** Visually hidden text for screen readers */
   accessibilityLabel?: string;
   /** Additional hint text to display with item */

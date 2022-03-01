@@ -37,16 +37,10 @@ import { ScrollTo } from '@/components/Scrollable';
 import { UnstyledLink } from '@/components/UnstyledLink';
 import styles from '@/classes/ActionList.json';
 import { handleMouseUpByBlurring } from '@/utilities/focus';
-import type {
-  IconableAction, DisableableAction, BadgeAction, DestructableAction,
-} from '@/interface';
+import type { IconableAction, DisableableAction, BadgeAction, DestructableAction } from '@/utilities/interface';
 import ContentElement from './ContentElement.vue';
 
-interface ActionListItemDescriptor
-  extends IconableAction,
-  DisableableAction,
-  BadgeAction,
-  DestructableAction {
+interface ActionListItemDescriptor extends IconableAction, DisableableAction, BadgeAction, DestructableAction {
   /** Visually hidden text for screen readers */
   accessibilityLabel?: string;
   /** Additional hint text to display with item */
@@ -67,14 +61,16 @@ interface ActionListItemDescriptor
 
 const props = defineProps<ActionListItemDescriptor>();
 
-const emit = defineEmits<{(event: 'action'): void}>();
+const emit = defineEmits<{ (event: 'action'): void }>();
 
-const className = computed(() => classNames(
-  styles.Item,
-  props.disabled && styles.disabled,
-  props.destructive && styles.destructive,
-  props.active && styles.active,
-));
+const className = computed(() =>
+  classNames(
+    styles.Item,
+    props.disabled && styles.disabled,
+    props.destructive && styles.destructive,
+    props.active && styles.active,
+  ),
+);
 
 const contentElementProps = computed(() => ({
   badge: props.badge,

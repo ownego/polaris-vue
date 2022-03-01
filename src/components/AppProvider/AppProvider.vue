@@ -5,9 +5,7 @@ CustomProperties(:color-scheme="colorScheme")
 </template>
 
 <script setup lang="ts">
-import {
-  provide, ref, onMounted, watch,
-} from 'vue';
+import { provide, ref, onMounted, watch } from 'vue';
 import { ScrollLockManager } from 'polaris-react/src/utilities/scroll-lock-manager/scroll-lock-manager';
 import { UniqueIdFactory, globalIdGeneratorFactory } from 'polaris-react/src/utilities/unique-id/unique-id-factory';
 import { PortalManager } from '@/utilities/portal-manager';
@@ -32,21 +30,21 @@ const uniqueIdFactory = ref(new UniqueIdFactory(globalIdGeneratorFactory));
 const focusManager = ref(new FocusManager());
 
 const setBodyStyles = () => {
-// Inlining the following custom properties to maintain backward
-// compatibility with the legacy ThemeProvider implementation.
-  document.body.setAttribute(
-    'p-color-scheme',
-    props.colorScheme || DEFAULT_COLOR_SCHEME,
-  );
+  // Inlining the following custom properties to maintain backward
+  // compatibility with the legacy ThemeProvider implementation.
+  document.body.setAttribute('p-color-scheme', props.colorScheme || DEFAULT_COLOR_SCHEME);
   document.body.style.backgroundColor = 'var(--p-background)';
   document.body.style.color = 'var(--p-text)';
 };
 
-watch(() => props.colorScheme, (newColorScheme: CustomPropertiesProps['colorScheme'], oldColorScheme: CustomPropertiesProps['colorScheme']) => {
-  if (newColorScheme !== oldColorScheme) {
-    setBodyStyles();
-  }
-});
+watch(
+  () => props.colorScheme,
+  (newColorScheme: CustomPropertiesProps['colorScheme'], oldColorScheme: CustomPropertiesProps['colorScheme']) => {
+    if (newColorScheme !== oldColorScheme) {
+      setBodyStyles();
+    }
+  },
+);
 
 onMounted(() => {
   if (document !== null) {
@@ -58,7 +56,6 @@ provide('scrollLockManager', scrollLockManager);
 provide('portalManager', portalManager);
 provide('uniqueIdFactory', uniqueIdFactory.value);
 provide('focusManager', focusManager);
-
 </script>
 
 <style lang="scss">

@@ -40,9 +40,7 @@ Choice(
 </template>
 
 <script setup lang="ts">
-import {
-  inject, ref, computed, useSlots,
-} from 'vue';
+import { inject, ref, computed, useSlots } from 'vue';
 import { classNames } from 'polaris-react/src/utilities/css';
 import { UseUniqueId } from '@/use';
 import MinusMinor from '@icons/MinusMinor.svg';

@@ -4,6 +4,7 @@ import path from 'path';
 import { replaceCodePlugin } from 'vite-plugin-replace';
 import svgLoader from 'vite-svg-loader';
 import checker from 'vite-plugin-checker';
+import eslintPlugin from 'vite-plugin-eslint';
 
 import vue from '@vitejs/plugin-vue';
 import packageJson from './package.json';
@@ -11,6 +12,7 @@ import packageJson from './package.json';
 export default defineConfig({
   plugins: [
     checker({ vueTsc: true }),
+    eslintPlugin(),
     replaceCodePlugin({
       replacements: [
         {
@@ -28,10 +30,9 @@ export default defineConfig({
     dedupe: ['vue'],
     alias: {
       '@': fileURLToPath(new URL('./src', import.meta.url)),
-      '@icons': fileURLToPath(
-        new URL('./node_modules/@shopify/polaris-icons/dist/svg', import.meta.url)
-      ),
+      '@icons': fileURLToPath(new URL('./node_modules/@shopify/polaris-icons/dist/svg', import.meta.url)),
       '~': fileURLToPath(new URL('./node_modules', import.meta.url)),
+      types: fileURLToPath(new URL('./types', import.meta.url)),
     },
   },
   build: {

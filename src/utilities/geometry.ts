@@ -23,9 +23,7 @@ export class Rect {
 
   height: number;
 
-  constructor({
-    top = 0, left = 0, width = 0, height = 0,
-  }: RectConfig = {}) {
+  constructor({ top = 0, left = 0, width = 0, height = 0 }: RectConfig = {}) {
     this.top = top;
     this.left = left;
     this.width = width;

@@ -31,15 +31,9 @@ import { TextStyle } from '@/components/TextStyle';
 import { Icon } from '@/components/Icon';
 // import { Badge } from '@/components/Badge';
 import styles from '@/classes/ActionList.json';
-import type {
-  IconableAction, DisableableAction, BadgeAction, DestructableAction,
-} from '@/interface';
+import type { IconableAction, DisableableAction, BadgeAction, DestructableAction } from '@/utilities/interface';
 
-interface ActionListItemDescriptor
-  extends IconableAction,
-  DisableableAction,
-  BadgeAction,
-  DestructableAction {
+interface ActionListItemDescriptor extends IconableAction, DisableableAction, BadgeAction, DestructableAction {
   /** Visually hidden text for screen readers */
   accessibilityLabel?: string;
   /** Additional hint text to display with item */

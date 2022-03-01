@@ -6,7 +6,7 @@ declare global {
     interface Element extends VNode {}
     interface IntrinsicElements {
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
-      [elem: string]: any
+      [elem: string]: any;
     }
   }
 }

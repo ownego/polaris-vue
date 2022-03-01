@@ -44,9 +44,7 @@ PositionedOverlay(
 </template>
 
 <script setup lang="ts">
-import {
-  computed, onBeforeUnmount, onMounted, ref, watch, withDefaults,
-} from 'vue';
+import { computed, onBeforeUnmount, onMounted, ref, watch, withDefaults } from 'vue';
 import { classNames } from 'polaris-react/src/utilities/css';
 import { tokens } from 'polaris-react/src/tokens';
 import { findFirstFocusableNode } from '@/utilities/focus';
@@ -57,9 +55,7 @@ import { CustomProperties } from '@/components/CustomProperties';
 import type { CustomPropertiesProps } from '@/components/CustomProperties/utils';
 import styles from '@/classes/Popover.json';
 import type { PositionedOverlayProps } from '@/components/PositionedOverlay/utils';
-import {
-  PopoverCloseSource, nodeContainsDescendant, TransitionStatus,
-} from '../../utils';
+import { PopoverCloseSource, nodeContainsDescendant, TransitionStatus } from '../../utils';
 import type { PopoverAutofocusTarget } from '../../utils';
 import { Pane } from '../Pane';
 
@@ -90,9 +86,7 @@ const props = withDefaults(defineProps<PopoverOverlayProps>(), {
   colorScheme: undefined,
 });
 
-const emit = defineEmits<{(event: 'close', source: PopoverCloseSource): void,
-  (event: 'scrolled-to-bottom'): void}
-  >();
+const emit = defineEmits<{ (event: 'close', source: PopoverCloseSource): void; (event: 'scrolled-to-bottom'): void }>();
 
 const transitionStatus = ref<TransitionStatus>(TransitionStatus.Exited);
 const contentRef = ref<HTMLElement | null>(null);
@@ -103,7 +97,7 @@ const contentStyles = ref<Record<string, unknown>>({});
 const changeTransitionStatus = (status: TransitionStatus) => {
   transitionStatus.value = status;
   // Forcing a reflow to enable the animation
-  if (contentRef.value) contentRef.value.getBoundingClientRect();
+  if (contentRef.value) {contentRef.value.getBoundingClientRect();}
 };
 
 const clearTransitionTimeout = () => {
@@ -116,35 +110,42 @@ const clearTransitionTimeout = () => {
   }
 };
 
-watch(() => props.active, () => {
-  const beforeStatus = props.active ? TransitionStatus.Entering : TransitionStatus.Exiting;
-  const afterStatus = props.active ? TransitionStatus.Entered : TransitionStatus.Exited;
+watch(
+  () => props.active,
+  () => {
+    const beforeStatus = props.active ? TransitionStatus.Entering : TransitionStatus.Exiting;
+    const afterStatus = props.active ? TransitionStatus.Entered : TransitionStatus.Exited;
 
-  changeTransitionStatus(beforeStatus);
-  clearTransitionTimeout();
-  const timer = window.setTimeout(() => {
-    transitionStatus.value = afterStatus;
-  }, parseInt(tokens.motion['duration-100'], 10));
+    changeTransitionStatus(beforeStatus);
+    clearTransitionTimeout();
+    const timer = window.setTimeout(() => {
+      transitionStatus.value = afterStatus;
+    }, parseInt(tokens.motion['duration-100'], 10));
 
-  if (props.active) {
-    enteringTimer.value = timer;
-  } else {
-    exitingTimer.value = timer;
-  }
-});
+    if (props.active) {
+      enteringTimer.value = timer;
+    } else {
+      exitingTimer.value = timer;
+    }
+  },
+);
 
-const className = computed(() => classNames(
-  styles.PopoverOverlay,
-  transitionStatus.value === TransitionStatus.Entering && styles['PopoverOverlay-entering'],
-  transitionStatus.value === TransitionStatus.Entered && styles['PopoverOverlay-open'],
-  transitionStatus.value === TransitionStatus.Exiting && styles['PopoverOverlay-exiting'],
-));
+const className = computed(() =>
+  classNames(
+    styles.PopoverOverlay,
+    transitionStatus.value === TransitionStatus.Entering && styles['PopoverOverlay-entering'],
+    transitionStatus.value === TransitionStatus.Entered && styles['PopoverOverlay-open'],
+    transitionStatus.value === TransitionStatus.Exiting && styles['PopoverOverlay-exiting'],
+  ),
+);
 
-const contentClassNames = computed(() => classNames(
-  styles.Content,
-  props.fullHeight && styles['Content-fullHeight'],
-  props.fluidContent && styles['Content-fluidContent'],
-));
+const contentClassNames = computed(() =>
+  classNames(
+    styles.Content,
+    props.fullHeight && styles['Content-fullHeight'],
+    props.fluidContent && styles['Content-fluidContent'],
+  ),
+);
 
 const handleScrollOut = () => {
   emit('close', PopoverCloseSource.ScrollOut);
@@ -159,8 +160,7 @@ const handleClick = (event: Event) => {
   const isDescendant = contentRef.value && nodeContainsDescendant(contentRef.value, target);
   const isActivatorDescendant = nodeContainsDescendant(props.activator, target);
 
-  if (isDescendant || isActivatorDescendant
-  || transitionStatus.value !== TransitionStatus.Entered) {
+  if (isDescendant || isActivatorDescendant || transitionStatus.value !== TransitionStatus.Entered) {
     return;
   }
 
@@ -175,7 +175,7 @@ const handleFocusLastItem = () => {
   emit('close', PopoverCloseSource.FocusOut);
 };
 
-const changeContentStyles = (value : Record<string, unknown>) => {
+const changeContentStyles = (value: Record<string, unknown>) => {
   contentStyles.value = value;
 };
 

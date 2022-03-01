@@ -29,12 +29,10 @@ export function calculateVerticalPosition(
   const verticalMargins = overlayMargins.activator + overlayMargins.container;
   const minimumSpaceToScroll = overlayMargins.container;
   const distanceToTopScroll = activatorRect.top - Math.max(scrollableContainerRect.top, 0);
-  const distanceToBottomScroll = containerRect.top
-    + Math.min(
-      containerRect.height,
-      scrollableContainerRect.top + scrollableContainerRect.height,
-    )
-    - (activatorRect.top + activatorRect.height);
+  const distanceToBottomScroll =
+    containerRect.top +
+    Math.min(containerRect.height, scrollableContainerRect.top + scrollableContainerRect.height) -
+    (activatorRect.top + activatorRect.height);
   const enoughSpaceFromTopScroll = distanceToTopScroll >= minimumSpaceToScroll;
   const enoughSpaceFromBottomScroll = distanceToBottomScroll >= minimumSpaceToScroll;
   const heightIfBelow = Math.min(spaceBelow, desiredHeight);
@@ -54,19 +52,17 @@ export function calculateVerticalPosition(
   };
 
   if (preferredPosition === 'above') {
-    return (enoughSpaceFromTopScroll
-      || (distanceToTopScroll >= distanceToBottomScroll
-        && !enoughSpaceFromBottomScroll))
-      && (spaceAbove > desiredHeight || spaceAbove > spaceBelow)
+    return (enoughSpaceFromTopScroll ||
+      (distanceToTopScroll >= distanceToBottomScroll && !enoughSpaceFromBottomScroll)) &&
+      (spaceAbove > desiredHeight || spaceAbove > spaceBelow)
       ? positionIfAbove
       : positionIfBelow;
   }
 
   if (preferredPosition === 'below') {
-    return (enoughSpaceFromBottomScroll
-      || (distanceToBottomScroll >= distanceToTopScroll
-        && !enoughSpaceFromTopScroll))
-      && (spaceBelow > desiredHeight || spaceBelow > spaceAbove)
+    return (enoughSpaceFromBottomScroll ||
+      (distanceToBottomScroll >= distanceToTopScroll && !enoughSpaceFromTopScroll)) &&
+      (spaceBelow > desiredHeight || spaceBelow > spaceAbove)
       ? positionIfBelow
       : positionIfAbove;
   }
@@ -75,9 +71,7 @@ export function calculateVerticalPosition(
     return spaceAbove > spaceBelow ? positionIfAbove : positionIfBelow;
   }
 
-  return distanceToTopScroll > minimumSpaceToScroll
-    ? positionIfAbove
-    : positionIfBelow;
+  return distanceToTopScroll > minimumSpaceToScroll ? positionIfAbove : positionIfBelow;
 }
 
 export function calculateHorizontalPosition(
@@ -90,23 +84,15 @@ export function calculateHorizontalPosition(
   const maximum = containerRect.width - overlayRect.width;
 
   if (preferredAlignment === 'left') {
-    return Math.min(
-      maximum,
-      Math.max(0, activatorRect.left - overlayMargins.horizontal),
-    );
-  } if (preferredAlignment === 'right') {
+    return Math.min(maximum, Math.max(0, activatorRect.left - overlayMargins.horizontal));
+  }
+  if (preferredAlignment === 'right') {
     const activatorRight = containerRect.width - (activatorRect.left + activatorRect.width);
 
-    return Math.min(
-      maximum,
-      Math.max(0, activatorRight - overlayMargins.horizontal),
-    );
+    return Math.min(maximum, Math.max(0, activatorRight - overlayMargins.horizontal));
   }
 
-  return Math.min(
-    maximum,
-    Math.max(0, activatorRect.center.x - overlayRect.width / 2),
-  );
+  return Math.min(maximum, Math.max(0, activatorRect.center.x - overlayRect.width / 2));
 }
 
 export function rectIsOutsideOfRect(inner: Rect, outer: Rect) {
@@ -124,10 +110,7 @@ export function windowRect() {
   });
 }
 
-export function intersectionWithViewport(
-  rect: Rect,
-  viewport: Rect = windowRect(),
-) {
+export function intersectionWithViewport(rect: Rect, viewport: Rect = windowRect()) {
   const top = Math.max(rect.top, 0);
   const left = Math.max(rect.left, 0);
   const bottom = Math.min(rect.top + rect.height, viewport.height);

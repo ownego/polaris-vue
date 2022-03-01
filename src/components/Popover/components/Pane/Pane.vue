@@ -25,12 +25,12 @@ import styles from '@/classes/Popover.json';
 import { Section } from '../Section';
 
 interface Props {
-  fixed?: boolean,
-  sectioned?: boolean,
+  fixed?: boolean;
+  sectioned?: boolean;
 }
 
 const props = defineProps<Props>();
-const emit = defineEmits<{(event: 'scrolled-to-bottom'): void}>();
+const emit = defineEmits<{ (event: 'scrolled-to-bottom'): void }>();
 
 const className = computed(() => classNames(styles.Pane, props.fixed && styles['Pane-fixed']));
 </script>

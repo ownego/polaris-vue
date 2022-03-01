@@ -33,7 +33,7 @@ defineProps({
 onMounted(() => {
   let styleSheet = document.getElementById(STYLE_SHEET_ID);
 
-  if (styleSheet) return;
+  if (styleSheet) {return;}
 
   styleSheet = document.createElement('style');
 

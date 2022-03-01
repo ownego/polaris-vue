@@ -51,10 +51,7 @@ const spanAttributes = ref({
 const className = computed(() => {
   const variation = variationName('size', props.size) as keyof typeof styles;
 
-  return classNames(
-    styles.Spinner,
-    props.size && styles[variation],
-  );
+  return classNames(styles.Spinner, props.size && styles[variation]);
 });
 </script>
 

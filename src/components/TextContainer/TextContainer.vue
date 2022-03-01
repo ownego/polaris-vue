@@ -16,8 +16,7 @@ interface Props {
 
 const props = defineProps<Props>();
 
-const spacingClassName = props.spacing
-    && styles[variationName('TextContainer', props.spacing) as keyof typeof styles];
+const spacingClassName = props.spacing && styles[variationName('TextContainer', props.spacing) as keyof typeof styles];
 const className = classNames(styles.TextContainer, spacingClassName);
 </script>
 

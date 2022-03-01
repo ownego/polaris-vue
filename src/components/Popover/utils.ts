@@ -18,10 +18,7 @@ export enum TransitionStatus {
 
 export type PopoverAutofocusTarget = 'none' | 'first-node' | 'container';
 
-export function nodeContainsDescendant(
-  rootNode: HTMLElement,
-  descendant: HTMLElement,
-): boolean {
+export function nodeContainsDescendant(rootNode: HTMLElement, descendant: HTMLElement): boolean {
   if (rootNode === descendant) {
     return true;
   }

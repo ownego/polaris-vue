@@ -48,12 +48,12 @@ import { RadioButton } from '../RadioButton';
 import { InlineError, errorTextID } from '../InlineError';
 
 interface Choice {
-  value: string,
-  label: string,
-  disabled?: boolean,
-  helpText?: string,
-  describedByError?: boolean,
-  renderChildren?: string | Record<string, unknown>,
+  value: string;
+  label: string;
+  disabled?: boolean;
+  helpText?: string;
+  describedByError?: boolean;
+  renderChildren?: string | Record<string, unknown>;
 }
 
 interface Props {

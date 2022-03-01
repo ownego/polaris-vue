@@ -34,10 +34,7 @@ components(
 <script setup lang="ts">
 import { computed, ref, withDefaults } from 'vue';
 import { classNames } from 'polaris-react/src/utilities/css';
-import {
-  wrapFocusPreviousFocusableMenuItem,
-  wrapFocusNextFocusableMenuItem,
-} from '@/utilities/focus';
+import { wrapFocusPreviousFocusableMenuItem, wrapFocusNextFocusableMenuItem } from '@/utilities/focus';
 import { KeypressListener, Key } from '@/components/KeypressListener';
 import styles from '@/classes/ActionList.json';
 import { Section } from './components/Section';
@@ -58,7 +55,7 @@ const props = withDefaults(defineProps<ActionListProps>(), {
   actionRole: undefined,
 });
 
-const emit = defineEmits<{(event: 'action-any-item'): void}>();
+const emit = defineEmits<{ (event: 'action-any-item'): void }>();
 
 const actionListRef = ref<HTMLElement | null>(null);
 
@@ -78,9 +75,13 @@ const hasMultipleSections = computed((): boolean => finalSections.value.length >
 
 const element = computed((): string => (hasMultipleSections.value ? 'ul' : 'div'));
 
-const elementRole = computed((): string | undefined => (hasMultipleSections.value && props.actionRole === 'menuitem' ? 'menu' : undefined));
+const elementRole = computed((): string | undefined =>
+  hasMultipleSections.value && props.actionRole === 'menuitem' ? 'menu' : undefined,
+);
 
-const elementTabIndex = computed((): number | undefined => (hasMultipleSections.value && props.actionRole === 'menuitem' ? -1 : undefined));
+const elementTabIndex = computed((): number | undefined =>
+  hasMultipleSections.value && props.actionRole === 'menuitem' ? -1 : undefined,
+);
 
 const handleFocusPreviousItem = (evt: KeyboardEvent) => {
   evt.preventDefault();

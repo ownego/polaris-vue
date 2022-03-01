@@ -15,7 +15,7 @@ import styles from '@/classes/Connected.json';
 type ItemPosition = 'left' | 'right' | 'primary';
 
 interface Props {
-  position: ItemPosition,
+  position: ItemPosition;
 }
 
 const props = defineProps<Props>();

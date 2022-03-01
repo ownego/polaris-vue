@@ -18,7 +18,8 @@
     "declarationDir": "dist/types",
     "allowSyntheticDefaultImports": true,
     "paths": {
-      "@/*": ["./src/*"]
+      "@/*": ["./src/*"],
+      "types/*": ["./types/*"],
     },
   },
 }

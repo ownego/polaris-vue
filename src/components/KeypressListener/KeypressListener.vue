@@ -1,7 +1,5 @@
 <script setup lang="ts">
-import {
-  onBeforeUnmount, onMounted,
-} from 'vue';
+import { onBeforeUnmount, onMounted } from 'vue';
 import type { Key } from './utils';
 
 type KeyEvent = 'keydown' | 'keyup';

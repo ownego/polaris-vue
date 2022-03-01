@@ -14,9 +14,7 @@ div(:class="className", :style="style", ref="overlayRef")
 </template>
 
 <script setup lang="ts">
-import {
-  ref, computed, onBeforeMount, onUpdated, onMounted, onBeforeUnmount,
-} from 'vue';
+import { ref, computed, onBeforeMount, onUpdated, onMounted, onBeforeUnmount } from 'vue';
 import { classNames } from 'polaris-react/src/utilities/css';
 import { dataPolarisTopBar, overlay } from 'polaris-react/src/components/shared';
 import { getRectForNode, Rect } from '@/utilities/geometry';
@@ -30,9 +28,7 @@ import {
   windowRect,
 } from './math';
 import type { PreferredPosition, PreferredAlignment } from './math';
-import {
-  isDocument, getMarginsForNode, getZIndexForLayerFromNode,
-} from './utils';
+import { isDocument, getMarginsForNode, getZIndexForLayerFromNode } from './utils';
 import { EventListener } from '../EventListener';
 import { forNode } from '../Scrollable/utils';
 
@@ -60,9 +56,10 @@ interface PositionedOverlayProps {
 
 const props = defineProps<PositionedOverlayProps>();
 
-const emit = defineEmits<{(event: 'change-content-styles', value : Record<string, unknown>): void,
-  (event: 'scroll-out'): void}
-  >();
+const emit = defineEmits<{
+  (event: 'change-content-styles', value: Record<string, unknown>): void;
+  (event: 'scroll-out'): void;
+}>();
 
 const overlayRef = ref<HTMLElement | null>(null);
 const right = ref<number | null>(null);
@@ -90,24 +87,29 @@ const className = computed(() => {
   );
 });
 
-const popoverClassName = computed(() => classNames(
-  popoverStyles.Popover,
-  positioning.value === 'above' && popoverStyles.positionedAbove,
-  props.fullWidth && popoverStyles.fullWidth,
-  measuring.value && popoverStyles.measuring,
-  props.hideOnPrint && popoverStyles['PopoverOverlay-hideOnPrint'],
-));
+const popoverClassName = computed(() =>
+  classNames(
+    popoverStyles.Popover,
+    positioning.value === 'above' && popoverStyles.positionedAbove,
+    props.fullWidth && popoverStyles.fullWidth,
+    measuring.value && popoverStyles.measuring,
+    props.hideOnPrint && popoverStyles['PopoverOverlay-hideOnPrint'],
+  ),
+);
 
-const style = computed(() => ({
-  top: top.value == null || Number.isNaN(top.value) ? undefined : `${top.value}px`,
-  left: left.value == null || Number.isNaN(left.value) ? undefined : `${left.value}px`,
-  right: right.value == null || Number.isNaN(right.value) ? undefined : `${right.value}px`,
-  width: width.value == null || Number.isNaN(width.value) ? undefined : `${width.value}px`,
-  zIndex: props.zIndexOverride || zIndex.value || undefined,
-}) as Record<string, unknown>);
+const style = computed(
+  () =>
+    ({
+      top: top.value == null || Number.isNaN(top.value) ? undefined : `${top.value}px`,
+      left: left.value == null || Number.isNaN(left.value) ? undefined : `${left.value}px`,
+      right: right.value == null || Number.isNaN(right.value) ? undefined : `${right.value}px`,
+      width: width.value == null || Number.isNaN(width.value) ? undefined : `${width.value}px`,
+      zIndex: props.zIndexOverride || zIndex.value || undefined,
+    } as Record<string, unknown>),
+);
 
 const handleMeasurement = () => {
-  if (observer.value) observer.value.disconnect();
+  if (observer.value) {observer.value.disconnect();}
   height.value = 0;
   positioning.value = 'below';
   measuring.value = true;
@@ -122,15 +124,11 @@ const handleMeasurement = () => {
       preferInputActivator = true,
     } = props;
 
-    const preferredActivator = preferInputActivator
-      ? activator.querySelector('input') || activator
-      : activator;
+    const preferredActivator = preferInputActivator ? activator.querySelector('input') || activator : activator;
 
     const activatorRectValue = getRectForNode(preferredActivator);
     const currentOverlayRect = getRectForNode(overlayRef.value);
-    const scrollableElement = isDocument(scrollableContainer.value)
-      ? document.body
-      : scrollableContainer.value;
+    const scrollableElement = isDocument(scrollableContainer.value) ? document.body : scrollableContainer.value;
     const scrollableContainerRect = getRectForNode(scrollableElement);
     const overlayRect = fullWidth
       ? new Rect({ ...currentOverlayRect, width: activatorRectValue.width })
@@ -142,16 +140,15 @@ const handleMeasurement = () => {
     }
 
     let topBarOffset = 0;
-    const topBarElement = scrollableElement.querySelector(
-      `${dataPolarisTopBar.selector}`,
-    );
+    const topBarElement = scrollableElement.querySelector(`${dataPolarisTopBar.selector}`);
     if (topBarElement) {
       topBarOffset = topBarElement.clientHeight;
     }
 
-    const overlayMargins = overlayRef.value.firstElementChild && overlayRef.value.firstChild
-      ? getMarginsForNode(overlayRef.value.firstElementChild as HTMLElement)
-      : { activator: 0, container: 0, horizontal: 0 };
+    const overlayMargins =
+      overlayRef.value.firstElementChild && overlayRef.value.firstChild
+        ? getMarginsForNode(overlayRef.value.firstElementChild as HTMLElement)
+        : { activator: 0, container: 0, horizontal: 0 };
 
     const containerRect = windowRect();
     const zIndexForLayer = getZIndexForLayerFromNode(activator);

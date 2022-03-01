@@ -14,23 +14,21 @@ img(
 
 <script setup lang="ts">
 interface SourceSet {
-  source: string,
+  source: string;
   descriptor?: string;
 }
 
 type CrossOrigin = 'anonymous' | 'use-credentials' | '' | undefined;
 
 interface Props {
-  source: string,
-  crossOrigin?: CrossOrigin,
-  sourceSet?: SourceSet[],
+  source: string;
+  crossOrigin?: CrossOrigin;
+  sourceSet?: SourceSet[];
 }
 
 const props = defineProps<Props>();
 
 const finalSourceSet = props.sourceSet
-  ? props.sourceSet
-    .map(({ source: subSource, descriptor }) => `${subSource} ${descriptor}`)
-    .join(',')
+  ? props.sourceSet.map(({ source: subSource, descriptor }) => `${subSource} ${descriptor}`).join(',')
   : null;
 </script>
