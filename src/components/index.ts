@@ -2,6 +2,7 @@ export * from './ActionList';
 export * from './AppProvider';
 export * from './Checkbox';
 export * from './Choice';
+export * from './ChoiceList';
 export * from './Connected';
 export * from './CustomProperties';
 export * from './EventListener';

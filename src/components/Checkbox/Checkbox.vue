@@ -16,7 +16,7 @@ Choice(
       :id="uniqueId",
       :role="isWithinListbox ? 'presentation' : 'checkbox'",
       :name="name",
-      :value="modelValue",
+      :value="value || modelValue",
       type="checkbox",
       :checked="isChecked",
       :disabled="disabled",
@@ -70,6 +70,8 @@ interface Props {
   /** Name for form input */
   name?: string;
   /** Value for form input */
+  value?: string | boolean;
+  /** Value for v-model binding */
   modelValue?: string | boolean;
   /** Display an error message */
   error?: Error | boolean;
@@ -96,7 +98,7 @@ const { useUniqueId } = UseUniqueId();
 const uniqueId = useUniqueId('Checkbox', props.id);
 
 const isIndeterminate = props.checked === 'indeterminate';
-const isChecked = isIndeterminate && Boolean(props.checked)
+const isChecked = (!isIndeterminate && Boolean(props.checked))
     || (typeof props.modelValue === 'boolean' && props.modelValue === true);
 
 const wrapperClassName = classNames(styles.Checkbox, props.error && styles.error);
