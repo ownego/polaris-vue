@@ -8,6 +8,7 @@ module.exports = {
     'eslint:recommended',
     '@vue/eslint-config-typescript/recommended',
     '@vue/eslint-config-prettier',
+    'plugin:storybook/recommended',
   ],
   parserOptions: {
     ecmaVersion: 2020,
@@ -16,17 +17,18 @@ module.exports = {
     'vue/setup-compiler-macros': true,
   },
   rules: {
+    '@typescript-eslint/no-unused-vars': 'off',
     'vue/require-default-prop': 'off',
     'prettier/prettier': [
-      'warn',
+      'off',
       {
         singleQuote: true,
       },
     ],
     'no-shadow': 'off',
     '@typescript-eslint/no-shadow': ['error'],
-    'no-console': import.meta.env.PROD ? 'warn' : 0,
-    'no-debugger': import.meta.env.PROD ? 'warn' : 0,
+    'no-console': 'warn',
+    'no-debugger': 'warn',
     // 'import/no-extraneous-dependencies': [
     //   'error',
     //   {
@@ -58,6 +60,11 @@ module.exports = {
     'import/export': 0,
     'import/no-default-export': 0,
     'import/prefer-default-export': 0,
-    '@typescript-eslint/array-type': ['error', { defaultOption: 'array' }],
+    '@typescript-eslint/array-type': [
+      'error',
+      {
+        defaultOption: 'array',
+      },
+    ],
   },
 };

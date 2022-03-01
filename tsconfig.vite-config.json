@@ -3,11 +3,8 @@
   "include": [
     "vite.config.*",
     "package.json",
-    // "src/polaris-vue.ts",
-    // "src/components/**/*",
-    // "src/classes/*.json",
+    "src/classes/*.json",
     "src/**/*",
-    // "src/config/*.ts",
     "types/*.ts",
   ],
   "exclude": [

@@ -12,6 +12,7 @@ export interface PositionedOverlayProps {
   preventInteraction?: boolean;
   classNames?: string;
   zIndexOverride?: number;
+  hideOnPrint?: boolean;
 }
 
 export function isDocument(node: HTMLElement | Document): node is Document {

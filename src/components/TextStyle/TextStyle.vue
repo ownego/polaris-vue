@@ -4,9 +4,7 @@ component(:is="element", :class="className")
 </template>
 
 <script setup lang="ts">
-import {
-  ref, computed,
-} from 'vue';
+import { ref, computed } from 'vue';
 import { classNames, variationName } from 'polaris-react/src/utilities/css';
 import styles from '@/classes/TextStyle.json';
 

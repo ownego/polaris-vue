@@ -1,9 +1,12 @@
-// import { AppProvider } from '@/polaris-vue';
+import PolarisVue from '@/polaris-vue';
+import { app } from '@storybook/vue3';
 
-// export const decorators = [(story) => ({
-//   components: {AppProvider, story},
-//   template: '<AppProvider><story /></AppProvider>',
-// })];
+app.use(PolarisVue);
+
+export const decorators = [(story) => ({
+  components: {AppProvider, story},
+  template: '<AppProvider><story /></AppProvider>',
+})];
 
 export const parameters = {
   viewMode: 'docs',

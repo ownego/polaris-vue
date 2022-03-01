@@ -9,7 +9,7 @@ type KeyEvent = 'keydown' | 'keyup';
 const props = defineProps({
   keyCode: { type: String as () => Key, required: true },
   keyEvent: { type: String as () => KeyEvent, default: 'keyup' },
-  handler: { type: Object as () => (event: Event) => void, required: true },
+  handler: { type: Object as () => (event: KeyboardEvent) => void, required: true },
 });
 
 function handleKeyEvent(event: KeyboardEvent) {

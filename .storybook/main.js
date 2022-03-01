@@ -1,5 +1,5 @@
 const { loadConfigFromFile, mergeConfig } = require('vite');
-// const eslintPlugin = require('vite-plugin-eslint').default;
+const eslintPlugin = require('vite-plugin-eslint').default;
 const path = require('path');
 
 module.exports = {
@@ -17,18 +17,20 @@ module.exports = {
   core: {
     builder: 'storybook-builder-vite',
   },
+  typescript: {
+    check: false,
+    checkOptions: {},
+  },
   async viteFinal(previousConfig) {
     const { config } = await loadConfigFromFile(
       path.resolve(__dirname, '../vite.config.ts')
     );
 
-    // config.plugins = [
-    //   ...config.plugins,
-    //   require('@preact/preset-vite').default()
-    // ]
-
     return mergeConfig(previousConfig, {
       ...config,
+      plugins: [
+        eslintPlugin(),
+      ],
     });
   },
 }

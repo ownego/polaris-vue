@@ -146,6 +146,7 @@ export function focusFirstFocusableNode(
   element: HTMLElement,
   onlyDescendants = true,
 ) {
+  // eslint-disable-next-line no-unused-expressions
   findFirstFocusableNode(element, onlyDescendants)?.focus();
 }
 

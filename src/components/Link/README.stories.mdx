@@ -1,0 +1,47 @@
+import { Meta, Story, Canvas, ArgsTable } from '@storybook/addon-docs';
+
+import { Link } from '@/polaris-vue';
+
+<Meta
+  title="Components / Navigation / Link"
+  component={ Link }
+  argTypes={{
+    to: {
+      name: 'to',
+      description: 'Set to for vue-router',
+      table: {
+        type: {
+          summary: 'string | object',
+        },
+      },
+    },
+    default: {
+      table: {
+        disable: true,
+      },
+    },
+  }}
+/>
+
+export const Template = (args, { argTypes }) => ({
+  props: Object.keys(argTypes),
+  components: { Link },
+  template: `<Link v-bind="$props">fulfilling orders</Link>`,
+});
+
+# Link
+
+Links take users to another place, and usually appear within or directly following a sentence.
+
+For actions that aren't related to navigation, use the [button component.](/docs/components-actions-button--button)
+
+<font color="#FF7900"><strong>Warning:</strong></font> Use component name as case-sensitive (<code>&lt;Link&gt;</code>) to prevent conflict with <code>&lt;link&gt;</code> HTML element.
+
+
+<Canvas>
+  <Story name="Link">
+    {Template.bind({})}
+  </Story>
+</Canvas>
+
+<ArgsTable story="Link" />

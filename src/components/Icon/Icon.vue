@@ -21,8 +21,7 @@ span(:class="wrapperClassName")
 </template>
 
 <script setup lang="ts">
-// TODO: need do config svg loader for using this component
-import { computed, onMounted } from 'vue';
+import { ref, computed, onMounted } from 'vue';
 import { classNames, variationName } from 'polaris-react/src/utilities/css';
 import type { IconSource } from 'types/type';
 import styles from '@/classes/Icon.json';
@@ -58,40 +57,33 @@ const props = defineProps<{
   accessibilityLabel?: string,
 }>();
 
-const wrapperClassName = computed(() => {
-  const variation = props.color
+const colorClassName = props.color
     && styles[variationName('color', props.color) as keyof typeof styles];
+const wrapperClassName = classNames(
+  styles.Icon,
+  colorClassName,
+  props.color && styles.applyColor,
+  props.backdrop && styles.hasBackdrop,
+);
 
-  return classNames(
-    styles.Icon,
-    variation,
-    props.color && styles.applyColor,
-    props.backdrop && styles.hasBackdrop,
-  );
-});
+let sourceType = 'external';
 
-const sourceType = computed(() => {
-  if (typeof props.source === 'object') {
-    return 'icon';
-  }
+if (typeof props.source === 'object') {
+  sourceType = 'icon';
+}
 
-  if (props.source === 'placeholder') {
-    return 'placeholder';
-  }
+if (props.source === 'placeholder') {
+  sourceType = 'placeholder';
+}
 
-  return 'external';
-});
-
-const encodedSvg = computed(() => (
-  typeof props.source === 'string'
-    ? encodeURIComponent(props.source)
-    : ''
-));
+const encodedSvg = sourceType === 'external'
+  ? encodeURIComponent(String(props.source))
+  : '';
 
 const checkSupportedSvg = (): void => {
   if (
     props.color
-    && sourceType.value === 'external'
+    && sourceType === 'external'
     && config.env === 'development'
   ) {
     console.warn(
