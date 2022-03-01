@@ -29,8 +29,6 @@ const {
   element = 'h2',
   id,
 } = defineProps<Props>();
-
-console.log(element);
 </script>
 
 <style lang="scss">

@@ -29,7 +29,6 @@ button(
 </template>
 
 <script setup lang="ts">
-import { computed } from 'vue';
 import { classNames } from 'polaris-react/src/utilities/css';
 import styles from '@/classes/Link.json';
 import ExternalSmallMinor from '@icons/ExternalSmallMinor.svg';
@@ -37,20 +36,27 @@ import { UnstyledLink } from '../UnstyledLink';
 import { Icon } from '../Icon';
 
 const props = defineProps<{
-  id?: string,
-  url?: string,
-  to?: string,
-  external?: boolean,
-  monochrome?: boolean,
-  removeUnderline?: boolean,
-  accessibilityLabel?: string,
+  /** ID for the link */
+  id?: string;
+  /** The url to link to */
+  url?: string;
+  /** Using with vue-router */
+  to?: string | Record<string, unknown>;
+  /** Makes the link open in a new tab */
+  external?: boolean;
+  /** Makes the link color the same as the current text color and adds an underline */
+  monochrome?: boolean;
+  /** Removes text decoration underline to the link */
+  removeUnderline?: boolean;
+  /** Descriptive text to be read to screenreaders */
+  accessibilityLabel?: string;
 }>();
 
-const className = computed(() => classNames(
+const className = classNames(
   styles.Link,
   props.monochrome && styles.monochrome,
   props.removeUnderline && styles.removeUnderline,
-));
+);
 </script>
 
 <style lang="scss">

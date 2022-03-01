@@ -13,8 +13,6 @@ img(
 </template>
 
 <script setup lang="ts">
-import { computed } from 'vue';
-
 interface SourceSet {
   source: string,
   descriptor?: string;
@@ -30,10 +28,9 @@ interface Props {
 
 const props = defineProps<Props>();
 
-const finalSourceSet = computed(() => (
-  props.sourceSet
-    ? props.sourceSet
-      .map(({ source: subSource, descriptor }) => `${subSource} ${descriptor}`)
-      .join(',')
-    : null));
+const finalSourceSet = props.sourceSet
+  ? props.sourceSet
+    .map(({ source: subSource, descriptor }) => `${subSource} ${descriptor}`)
+    .join(',')
+  : null;
 </script>

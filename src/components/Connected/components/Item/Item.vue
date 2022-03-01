@@ -20,10 +20,12 @@ interface Props {
 
 const props = defineProps<Props>();
 
+/* eslint-disable */
 const emits = defineEmits<{
   (event: 'focus'): void
   (event: 'blur') : void
 }>();
+/* eslint-disable */
 
 const focused = ref(false);
 

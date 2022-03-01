@@ -9,7 +9,6 @@ div(:class="styles.Connected")
 </template>
 
 <script setup lang="ts">
-import { classNames } from 'polaris-react/src/utilities/css';
 import styles from '@/classes/Connected.json';
 import { Item } from './components';
 </script>

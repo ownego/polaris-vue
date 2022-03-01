@@ -28,8 +28,6 @@ interface Props {
 }
 
 const props = defineProps<Props>();
-
-console.log(typeof props.message);
 </script>
 
 <style lang="scss">

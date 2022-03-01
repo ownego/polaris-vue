@@ -73,11 +73,13 @@ const { useUniqueId } = UseUniqueId();
 const uniqueId = useUniqueId('RadioButton', props.id);
 const name = props.name || uniqueId;
 
-const backdropClassName = classNames(styles.Backdrop, mouseOver.value && styles.hover);
-const inputClassName = classNames(styles.Input, keyFocused.value && styles.keyFocused);
+const isChecked = props.checked || props.modelValue === props.value;
 
-const isChecked = computed(() => {
-  return props.checked || props.modelValue === props.value;
+const backdropClassName = computed(() => {
+  return classNames(styles.Backdrop, mouseOver.value && styles.hover);
+});
+const inputClassName = computed(() => {
+  return classNames(styles.Input, keyFocused.value && styles.keyFocused);
 });
 
 const formattedAriaDescribedBy = computed(() => {

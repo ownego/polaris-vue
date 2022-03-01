@@ -78,14 +78,14 @@ const topShadow = ref(false);
 const bottomShadow = ref(false);
 const canScroll = ref(false);
 const scrollPosition = ref(0);
-const state = reactive({ stickyManager: new StickyManager() });
 
-provide('stickyManagerContext', state.stickyManager);
+const state = reactive({ stickyManager: new StickyManager() });
 
 const scrollToPosition = (scrollY: number): void => {
   scrollPosition.value = scrollY;
 };
 
+provide('stickyManagerContext', state.stickyManager);
 provide('scrollToPositionContext', scrollToPosition);
 
 const finalClassName = computed(() => classNames(

@@ -4,7 +4,6 @@ div(:class="className")
 </template>
 
 <script setup lang="ts">
-import { computed } from 'vue';
 import { classNames, variationName } from 'polaris-react/src/utilities/css';
 import styles from '@/classes/TextContainer.json';
 
@@ -17,15 +16,9 @@ interface Props {
 
 const props = defineProps<Props>();
 
-const className = computed(() => {
-  const spacingClassName = props.spacing
+const spacingClassName = props.spacing
     && styles[variationName('TextContainer', props.spacing) as keyof typeof styles];
-
-  return classNames(
-    styles.TextContainer,
-    spacingClassName,
-  );
-});
+const className = classNames(styles.TextContainer, spacingClassName);
 </script>
 
 <style lang="scss">
