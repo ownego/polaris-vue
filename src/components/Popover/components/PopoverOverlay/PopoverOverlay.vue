@@ -11,22 +11,21 @@ PositionedOverlay(
   :preferredAlignment="preferredAlignment",
   :zIndexOverride="zIndexOverride",
   @scroll-out="handleScrollOut",
-  @on-click="handleClick",
   @change-content-styles="changeContentStyles",
 )
   template(
-    slot="overlay",
+    #overlay,
     slot-scope="props",
   )
-    div(:class="focusTrackerClasses", tabIndex="0", @focus="handleFocusFirstItem")
+    div(:class="styles.FocusTracker", tabIndex="0", @focus="handleFocusFirstItem")
     CustomProperties(:color-scheme="colorScheme")
-      div(:class="popoverWrapperClasses")
+      div(:class="styles.Wrapper")
         div(
           :id="id",
           :tabIndex="autofocusTarget === 'none' ? undefined : -1",
           :style="contentStyles",
           :class="contentClassNames",
-          ref="content",
+          ref="contentRef",
         )
           slot(name="extra-content")
           Pane(
@@ -38,201 +37,152 @@ PositionedOverlay(
               name="overlay",
               :data="props",
             )
-    div(:class="focusTrackerClasses", tabIndex="0", @focus="handleFocusLastItem")
+    div(:class="styles.FocusTracker", tabIndex="0", @focus="handleFocusLastItem")
     EventListener(event="click", :handler="handleClick")
     EventListener(event="touchstart", :handler="handleClick")
-    KeypressListener(:keyCode="keyEscape", :handler="handleEscape")
+    KeypressListener(:keyCode="Key.Escape", :handler="handleEscape")
 </template>
 
-<script lang="ts">
-import Vue from 'vue';
+<script setup lang="ts">
 import {
-  Component, Prop, Watch, Ref,
-} from 'vue-property-decorator';
+  computed, onBeforeUnmount, onMounted, ref, watch, withDefaults,
+} from 'vue';
 import { classNames } from 'polaris-react/src/utilities/css';
 import { tokens } from 'polaris-react/src/tokens';
 import { findFirstFocusableNode } from '@/utilities/focus';
-import { PositionedOverlay, PreferredAlignment, PreferredPosition } from '@/components/PositionedOverlay';
-import styles from '@/classes/Popover.json';
+import { PositionedOverlay } from '@/components/PositionedOverlay';
 import { EventListener } from '@/components/EventListener';
 import { KeypressListener, Key } from '@/components/KeypressListener';
 import { CustomProperties } from '@/components/CustomProperties';
 import { CustomPropertiesProps } from '@/components/CustomProperties/utils';
+import styles from '@/classes/Popover.json';
 import {
-  PopoverCloseSource, PopoverAutofocusTarget, nodeContainsDescendant, TransitionStatus,
+  PopoverCloseSource, nodeContainsDescendant, TransitionStatus, PopoverOverlayProps,
 } from '../../utils';
 import { Pane } from '../Pane';
 
-@Component({
-  components: {
-    PositionedOverlay,
-    Pane,
-    EventListener,
-    KeypressListener,
-    CustomProperties,
-  },
-})
-export default class PopoverOverlay extends Vue {
-  @Prop({ type: Boolean }) public fullWidth?: boolean;
+const props = withDefaults(defineProps<PopoverOverlayProps>(), {
+  preferredPosition: 'below',
+  preferredAlignment: 'center',
+  preferInputActivator: true,
+  autofocusTarget: 'container',
+});
 
-  @Prop({ type: Boolean }) public fullHeight?: boolean;
+const emit = defineEmits<{(event: 'close', source: PopoverCloseSource): void,
+  (event: 'scrolled-to-bottom'): void}
+  >();
 
-  @Prop({ type: Boolean }) public fluidContent?: boolean;
+const transitionStatus = ref<TransitionStatus>(TransitionStatus.Exited);
+const contentRef = ref<HTMLElement | null>(null);
+const enteringTimer = ref<number | null>(null);
+const exitingTimer = ref<number | null>(null);
+const contentStyles = ref<Record<string, unknown>>({});
 
-  @Prop({ type: String }) public id?: string;
+const changeTransitionStatus = (status: TransitionStatus) => {
+  transitionStatus.value = status;
+  // Forcing a reflow to enable the animation
+  if (contentRef.value) contentRef.value.getBoundingClientRect();
+};
 
-  @Prop({ type: String, default: 'below' }) public preferredPosition?: PreferredPosition;
-
-  @Prop({ type: String, default: 'center' }) public preferredAlignment?: PreferredAlignment;
-
-  @Prop({ type: Boolean }) public active!: boolean;
-
-  @Prop({ type: Number }) public zIndexOverride?: number;
-
-  @Prop({ type: HTMLElement }) public activator!: HTMLElement;
-
-  @Prop({ type: Boolean, default: true }) public preferInputActivator?: boolean;
-
-  @Prop({ type: Boolean }) public sectioned?: boolean;
-
-  @Prop({ type: Boolean }) public fixed?: boolean;
-
-  @Prop({ type: Boolean }) public hideOnPrint?: boolean;
-
-  @Prop({ type: String, default: 'container' }) public autofocusTarget?: PopoverAutofocusTarget;
-
-  @Prop({ type: String })
-  public colorScheme?: CustomPropertiesProps['colorScheme'];
-
-  @Watch('active')
-  onActiveChanged() {
-    const beforeStatus = this.active ? TransitionStatus.Entering : TransitionStatus.Exiting;
-    const afterStatus = this.active ? TransitionStatus.Entered : TransitionStatus.Exited;
-
-    this.changeTransitionStatus(beforeStatus);
-
-    this.clearTransitionTimeout();
-    const timer = window.setTimeout(() => {
-      this.transitionStatus = afterStatus;
-    }, parseInt(tokens.motion['duration-100'], 10));
-
-    if (this.active) {
-      this.enteringTimer = timer;
-    } else {
-      this.exitingTimer = timer;
-    }
+const clearTransitionTimeout = () => {
+  if (enteringTimer.value) {
+    window.clearTimeout(enteringTimer.value);
   }
 
-  @Ref('content') contentNode!: HTMLElement;
+  if (exitingTimer.value) {
+    window.clearTimeout(exitingTimer.value);
+  }
+};
 
-  get className() {
-    return classNames(
-      styles.PopoverOverlay,
-      this.transitionStatus === TransitionStatus.Entering && styles['PopoverOverlay-entering'],
-      this.transitionStatus === TransitionStatus.Entered && styles['PopoverOverlay-open'],
-      this.transitionStatus === TransitionStatus.Exiting && styles['PopoverOverlay-exiting'],
-    );
+watch(() => props.active, () => {
+  const beforeStatus = props.active ? TransitionStatus.Entering : TransitionStatus.Exiting;
+  const afterStatus = props.active ? TransitionStatus.Entered : TransitionStatus.Exited;
+
+  changeTransitionStatus(beforeStatus);
+  clearTransitionTimeout();
+  const timer = window.setTimeout(() => {
+    transitionStatus.value = afterStatus;
+  }, parseInt(tokens.motion['duration-100'], 10));
+
+  if (props.active) {
+    enteringTimer.value = timer;
+  } else {
+    exitingTimer.value = timer;
+  }
+});
+
+const className = computed(() => classNames(
+  styles.PopoverOverlay,
+  transitionStatus.value === TransitionStatus.Entering && styles['PopoverOverlay-entering'],
+  transitionStatus.value === TransitionStatus.Entered && styles['PopoverOverlay-open'],
+  transitionStatus.value === TransitionStatus.Exiting && styles['PopoverOverlay-exiting'],
+));
+
+const contentClassNames = computed(() => classNames(
+  styles.Content,
+  props.fullHeight && styles['Content-fullHeight'],
+  props.fluidContent && styles['Content-fluidContent'],
+));
+
+const handleScrollOut = () => {
+  emit('close', PopoverCloseSource.ScrollOut);
+};
+
+const handleEscape = () => {
+  emit('close', PopoverCloseSource.EscapeKeypress);
+};
+
+const handleClick = (event: Event) => {
+  const target = event.target as HTMLElement;
+  const isDescendant = contentRef.value && nodeContainsDescendant(contentRef.value, target);
+  const isActivatorDescendant = nodeContainsDescendant(props.activator, target);
+
+  if (isDescendant || isActivatorDescendant
+  || transitionStatus.value !== TransitionStatus.Entered) {
+    return;
   }
 
-  get contentClassNames() {
-    return classNames(
-      styles.Content,
-      this.fullHeight && styles['Content-fullHeight'],
-      this.fluidContent && styles['Content-fluidContent'],
-    );
+  emit('close', PopoverCloseSource.Click);
+};
+
+const handleFocusFirstItem = () => {
+  emit('close', PopoverCloseSource.FocusOut);
+};
+
+const handleFocusLastItem = () => {
+  emit('close', PopoverCloseSource.FocusOut);
+};
+
+const changeContentStyles = (value : Record<string, unknown>) => {
+  contentStyles.value = value;
+};
+
+const focusContent = () => {
+  if (props.autofocusTarget === 'none' || !contentRef.value) {
+    return;
   }
 
-  public keyEscape = Key.Escape;
+  requestAnimationFrame(() => {
+    if (contentRef.value) {
+      const focusableChild = findFirstFocusableNode(contentRef.value);
 
-  public contentStyles: null | Record<string, unknown> = {};
-
-  public popoverWrapperClasses = styles.Wrapper;
-
-  public focusTrackerClasses = styles.FocusTracker;
-
-  public transitionStatus : TransitionStatus = TransitionStatus.Exited;
-
-  private enteringTimer?: number;
-
-  private exitingTimer?: number;
-
-  private changeTransitionStatus(transitionStatus: TransitionStatus) {
-    this.transitionStatus = transitionStatus;
-    // Forcing a reflow to enable the animation
-    if (this.contentNode) this.contentNode.getBoundingClientRect();
-  }
-
-  private clearTransitionTimeout() {
-    if (this.enteringTimer) {
-      window.clearTimeout(this.enteringTimer);
-    }
-
-    if (this.exitingTimer) {
-      window.clearTimeout(this.exitingTimer);
-    }
-  }
-
-  public handleScrollOut() {
-    this.$emit('close', PopoverCloseSource.ScrollOut);
-  }
-
-  public handleEscape() {
-    this.$emit('close', PopoverCloseSource.EscapeKeypress);
-  }
-
-  public handleClick(event: Event) {
-    const target = event.target as HTMLElement;
-    const isDescendant = this.contentNode && nodeContainsDescendant(this.contentNode, target);
-    const isActivatorDescendant = nodeContainsDescendant(this.activator, target);
-
-    if (isDescendant || isActivatorDescendant
-    || this.transitionStatus !== TransitionStatus.Entered) return;
-    this.$emit('close', PopoverCloseSource.Click);
-  }
-
-  public handleFocusFirstItem() {
-    this.$emit('close', PopoverCloseSource.FocusOut);
-  }
-
-  public handleFocusLastItem() {
-    this.$emit('close', PopoverCloseSource.FocusOut);
-  }
-
-  public changeContentStyles(contentStyles : null | Record<string, unknown>) {
-    this.contentStyles = contentStyles;
-  }
-
-  private focusContent() {
-    const { autofocusTarget = 'container' } = this;
-
-    if (autofocusTarget === 'none' || this.contentNode == null) {
-      return;
-    }
-
-    requestAnimationFrame(() => {
-      if (this.contentNode == null) {
-        return;
-      }
-
-      const focusableChild = findFirstFocusableNode(this.contentNode);
-
-      if (focusableChild && autofocusTarget === 'first-node') {
+      if (focusableChild && props.autofocusTarget === 'first-node') {
         focusableChild.focus();
       } else {
-        this.contentNode.focus();
+        contentRef.value.focus();
       }
-    });
-  }
-
-  mounted(): void {
-    if (this.active) {
-      this.focusContent();
-      this.changeTransitionStatus(TransitionStatus.Entered);
     }
-  }
+  });
+};
 
-  beforeDestroy(): void {
-    this.clearTransitionTimeout();
+onMounted(() => {
+  if (props.active) {
+    focusContent();
+    changeTransitionStatus(TransitionStatus.Entered);
   }
-}
+});
+
+onBeforeUnmount(() => {
+  clearTransitionTimeout();
+});
 </script>
