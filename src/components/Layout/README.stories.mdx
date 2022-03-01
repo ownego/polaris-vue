@@ -1,0 +1,289 @@
+import { Meta, Story, Canvas, ArgsTable } from '@storybook/addon-docs';
+
+import { Layout, LayoutSection, AnnotatedSection, TextField, FormLayout, FormItem } from '@/polaris-vue';
+
+<Meta
+  title="Components / Structure / Layout"
+  component={ Layout }
+  argTypes={{
+    default: {
+      table: {
+        disable: true,
+      },
+    },
+    secondary: {
+      description: 'Secondary width',
+      table: {
+        category: 'section props',
+        type: {
+          summary: 'boolean',
+        }
+      }
+    },
+    fullWidth: {
+      description: 'Make section have full width',
+      table: {
+        category: 'section props',
+        type: {
+          summary: 'boolean',
+        }
+      }
+    },
+    oneHalf: {
+      description: 'Use for 1/2 + 1/2 layout',
+      table: {
+        category: 'section props',
+        type: {
+          summary: 'boolean',
+        }
+      }
+    },
+    oneThird: {
+      description: 'use for 1/3 + 1/3 + 1/3 layout',
+      table: {
+        category: 'section props',
+        type: {
+          summary: 'boolean',
+        }
+      }
+    },
+  }}
+/>
+
+# Layout
+
+The layout component is used to create the main layout on a page.
+Layouts sections come in three main configurations: one-column, two-column, and annotated.
+One and two column layouts can be combined in the same page.
+Annotated layouts should be used on their own and only on settings pages.
+
+<br/><br/>
+
+### One-column layout
+
+Use to have a single section on its own in a full-width container.
+Use for simple pages and as a container for banners and other full-width content.
+
+export const OneColLayout = (args, { argTypes }) => ({
+  props: Object.keys(argTypes),
+  components: { Layout, LayoutSection, AnnotatedSection, TextField },
+  template: `
+  <Layout>
+    <LayoutSection>
+      <TextField>
+        <template slot="label">Text field</template>
+      </TextField>
+    </LayoutSection>
+  </Layout>`,
+});
+
+<Canvas>
+  <Story name="One column layout">
+    {OneColLayout.bind({})}
+  </Story>
+</Canvas>
+
+### Two columns with primary and secondary widths
+
+Use to follow a normal section with a secondary section to create a 2/3 + 1/3 layout on detail pages (such as individual product or order pages).
+Can also be used on any page that needs to structure a lot of content. This layout stacks the columns on small screens.
+
+export const TwoColLayoutDW = (args, { argTypes }) => ({
+  props: Object.keys(argTypes),
+  components: { Layout, LayoutSection, AnnotatedSection, TextField },
+  template: `
+  <Layout>
+    <LayoutSection>
+      <TextField>
+        <template slot="label">Text field</template>
+      </TextField>
+    </LayoutSection>
+    <LayoutSection secondary="true">
+      <TextField>
+        <template slot="label">Text field</template>
+      </TextField>
+    </LayoutSection>
+  </Layout>`,
+});
+
+
+<Canvas>
+  <Story name="Two columns (different width)">
+    {TwoColLayoutDW.bind({})}
+  </Story>
+</Canvas>
+
+### Two columns with equal width
+
+Use to create a ½ + ½ layout. Can be used to display content of equal importance.
+This layout will stack the columns on small screens.
+
+export const TwoColLayoutSW = (args, { argTypes }) => ({
+  props: Object.keys(argTypes),
+  components: { Layout, LayoutSection, AnnotatedSection, TextField },
+  template: `
+  <Layout>
+    <LayoutSection oneHalf="true">
+      <TextField>
+        <template slot="label">Text field</template>
+      </TextField>
+    </LayoutSection>
+    <LayoutSection oneHalf="true">
+      <TextField>
+        <template slot="label">Text field</template>
+      </TextField>
+    </LayoutSection>
+  </Layout>`,
+});
+
+
+<Canvas>
+  <Story name="Two columns (same width)">
+    {TwoColLayoutSW.bind({})}
+  </Story>
+</Canvas>
+
+### Three columns with equal width
+
+Use to create a ⅓ + ⅓ + ⅓ layout. Can be used to display content of equal importance.
+This layout will stack the columns on small screens.
+
+export const ThreeColLayoutSW = (args, { argTypes }) => ({
+  props: Object.keys(argTypes),
+  components: { Layout, LayoutSection, AnnotatedSection, TextField },
+  template: `
+  <Layout>
+    <LayoutSection oneThird="true">
+      <TextField>
+        <template slot="label">Text field</template>
+      </TextField>
+    </LayoutSection>
+    <LayoutSection oneThird="true">
+      <TextField>
+        <template slot="label">Text field</template>
+      </TextField>
+    </LayoutSection>
+    <LayoutSection oneThird="true">
+      <TextField>
+        <template slot="label">Text field</template>
+      </TextField>
+    </LayoutSection>
+  </Layout>`,
+});
+
+
+<Canvas>
+  <Story name="Three columns (same width)">
+    {ThreeColLayoutSW.bind({})}
+  </Story>
+</Canvas>
+
+### Annotated layout
+
+Use for settings pages. When settings are grouped thematically in annotated sections,
+the title and description on each section helps merchants quickly find the setting they're looking for.
+
+export const AnnotatedLayout = (args, { argTypes }) => ({
+  props: Object.keys(argTypes),
+  components: { Layout, LayoutSection, AnnotatedSection, TextField, FormLayout, FormItem },
+  template: `
+  <Layout>
+    <AnnotatedSection>
+      <template slot="title">Store details</template>
+      <template slot="description">
+        Shopify and your customers will use this information to contact you.
+      </template>
+      <FormLayout>
+        <FormItem>
+          <TextField autoComplete="off">
+            <template slot="label">
+              Store name
+            </template>
+          </TextField>
+        </FormItem>
+        <FormItem>
+          <TextField type="email" autoComplete="email">
+            <template slot="label">
+              Account email
+            </template>
+          </TextField>
+        </FormItem>
+      </FormLayout>
+    </AnnotatedSection>
+  </Layout>`,
+});
+
+
+<Canvas>
+  <Story name="Annotated layout">
+    {AnnotatedLayout.bind({})}
+  </Story>
+</Canvas>
+
+### Annotated layout with Banner at the top
+
+Use for settings pages that need a banner or other content at the top.
+
+export const AnnotatedBannerLayout = (args, { argTypes }) => ({
+  props: Object.keys(argTypes),
+  components: { Layout, LayoutSection, AnnotatedSection, TextField, FormLayout, FormItem },
+  template: `
+  <Layout>
+    <LayoutSection>
+      Banner content
+    </LayoutSection>
+    <AnnotatedSection>
+      <template slot="title">Store details</template>
+      <template slot="description">
+        Shopify and your customers will use this information to contact you.
+      </template>
+      <FormLayout>
+        <FormItem>
+          <TextField autoComplete="off">
+            <template slot="label">
+              Store name
+            </template>
+          </TextField>
+        </FormItem>
+        <FormItem>
+          <TextField type="email" autoComplete="email">
+            <template slot="label">
+              Account email
+            </template>
+          </TextField>
+        </FormItem>
+      </FormLayout>
+    </AnnotatedSection>
+  </Layout>`,
+});
+
+
+<Canvas>
+  <Story name="Annotated layout (with Banner)">
+    {AnnotatedBannerLayout.bind({})}
+  </Story>
+</Canvas>
+
+### Example
+
+export const Example = (args, { argTypes }) => ({
+  props: Object.keys(argTypes),
+  components: { Layout, LayoutSection, AnnotatedSection, TextField },
+  template: `
+  <Layout v-bind="$props">
+    <LayoutSection>
+      <TextField>
+        <template slot="label">Text field</template>
+      </TextField>
+    </LayoutSection>
+  </Layout>`,
+});
+
+
+<Canvas>
+  <Story name="Example" height="100px">
+    {Example.bind({})}
+  </Story>
+</Canvas>
+
+<ArgsTable story="Example"/>

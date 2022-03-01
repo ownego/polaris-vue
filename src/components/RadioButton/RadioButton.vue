@@ -69,6 +69,8 @@ const keyFocused = ref(false);
 const mouseOver = ref(false);
 
 const slots = useSlots();
+const helpTextSlot = computed(() => slots['help-text']!());
+
 const { useUniqueId } = UseUniqueId();
 const uniqueId = useUniqueId('RadioButton', props.id);
 const name = props.name || uniqueId;
@@ -89,7 +91,7 @@ const formattedAriaDescribedBy = computed(() => {
     describedBy.push(props.ariaDescribedBy);
   }
 
-  if (slots['help-text']) {
+  if (helpTextSlot.value) {
     describedBy.push(helpTextID(uniqueId));
   }
 

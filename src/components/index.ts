@@ -12,6 +12,7 @@ export * from './Icon';
 export * from './Image';
 export * from './InlineError';
 export * from './KeypressListener';
+export * from './Layout';
 export * from './Link';
 export * from './Popover';
 export * from './Portal';

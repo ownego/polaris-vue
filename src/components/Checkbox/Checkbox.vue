@@ -92,6 +92,8 @@ const mouseOver = ref(false);
 const keyFocused = ref(false);
 
 const slots = useSlots();
+const helpTextSlot = computed(() => slots['help-text']?.());
+
 const { useUniqueId } = UseUniqueId();
 const uniqueId = useUniqueId('Checkbox', props.id);
 
@@ -125,7 +127,7 @@ const formattedAriaDescribedBy = computed(() => {
     describedBy.push(errorTextID(uniqueId));
   }
 
-  if (slots['help-text']) {
+  if (helpTextSlot.value) {
     describedBy.push(helpTextID(uniqueId));
   }
 
