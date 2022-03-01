@@ -101,8 +101,9 @@ const isChecked = isIndeterminate && Boolean(props.checked)
 
 const wrapperClassName = classNames(styles.Checkbox, props.error && styles.error);
 const backdropClassName = computed(() => {
-  classNames(styles.Backdrop, mouseOver.value && styles.hover);
+  return classNames(styles.Backdrop, mouseOver.value && styles.hover);
 });
+
 const inputClassName = computed(() => classNames(
   styles.Input,
   isIndeterminate && styles['Input-indeterminate'],
