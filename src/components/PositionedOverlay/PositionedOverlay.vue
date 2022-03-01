@@ -29,8 +29,9 @@ import {
   intersectionWithViewport,
   windowRect,
 } from './math';
+import type { PreferredPosition, PreferredAlignment } from './math';
 import {
-  isDocument, getMarginsForNode, getZIndexForLayerFromNode, PositionedOverlayProps,
+  isDocument, getMarginsForNode, getZIndexForLayerFromNode,
 } from './utils';
 import { EventListener } from '../EventListener';
 import { forNode } from '../Scrollable/utils';
@@ -42,6 +43,20 @@ const OBSERVER_CONFIG = {
 };
 
 type Positioning = 'above' | 'below';
+
+interface PositionedOverlayProps {
+  active: boolean;
+  activator: HTMLElement;
+  preferInputActivator?: boolean;
+  preferredPosition?: PreferredPosition;
+  preferredAlignment?: PreferredAlignment;
+  fullWidth?: boolean;
+  fixed?: boolean;
+  preventInteraction?: boolean;
+  classNames?: string;
+  zIndexOverride?: number;
+  hideOnPrint?: boolean;
+}
 
 const props = defineProps<PositionedOverlayProps>();
 

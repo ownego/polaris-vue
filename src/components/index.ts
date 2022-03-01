@@ -1,3 +1,4 @@
+export * from './ActionList';
 export * from './AppProvider';
 export * from './Checkbox';
 export * from './Choice';
@@ -11,9 +12,9 @@ export * from './Image';
 export * from './InlineError';
 export * from './KeypressListener';
 export * from './Link';
-// export * from './Popover';
+export * from './Popover';
 export * from './Portal';
-// export * from './PositionedOverlay';
+export * from './PositionedOverlay';
 export * from './RadioButton';
 export * from './Scrollable';
 export * from './Spinner';

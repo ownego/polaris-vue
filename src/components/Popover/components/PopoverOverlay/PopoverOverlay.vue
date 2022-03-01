@@ -54,18 +54,40 @@ import { PositionedOverlay } from '@/components/PositionedOverlay';
 import { EventListener } from '@/components/EventListener';
 import { KeypressListener, Key } from '@/components/KeypressListener';
 import { CustomProperties } from '@/components/CustomProperties';
-import { CustomPropertiesProps } from '@/components/CustomProperties/utils';
+import type { CustomPropertiesProps } from '@/components/CustomProperties/utils';
 import styles from '@/classes/Popover.json';
+import type { PositionedOverlayProps } from '@/components/PositionedOverlay/utils';
 import {
-  PopoverCloseSource, nodeContainsDescendant, TransitionStatus, PopoverOverlayProps,
+  PopoverCloseSource, nodeContainsDescendant, TransitionStatus,
 } from '../../utils';
+import type { PopoverAutofocusTarget } from '../../utils';
 import { Pane } from '../Pane';
+
+export interface PopoverOverlayProps {
+  fullWidth?: boolean;
+  fullHeight?: boolean;
+  fluidContent?: boolean;
+  preferredPosition?: PositionedOverlayProps['preferredPosition'];
+  preferredAlignment?: PositionedOverlayProps['preferredAlignment'];
+  active: boolean;
+  id: string;
+  zIndexOverride?: number;
+  activator: HTMLElement;
+  preferInputActivator?: PositionedOverlayProps['preferInputActivator'];
+  sectioned?: boolean;
+  fixed?: boolean;
+  hideOnPrint?: boolean;
+  colorScheme?: CustomPropertiesProps['colorScheme'];
+  autofocusTarget?: PopoverAutofocusTarget;
+}
 
 const props = withDefaults(defineProps<PopoverOverlayProps>(), {
   preferredPosition: 'below',
   preferredAlignment: 'center',
   preferInputActivator: true,
   autofocusTarget: 'container',
+  zIndexOverride: undefined,
+  colorScheme: undefined,
 });
 
 const emit = defineEmits<{(event: 'close', source: PopoverCloseSource): void,

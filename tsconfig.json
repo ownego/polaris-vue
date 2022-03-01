@@ -13,6 +13,7 @@
     "resolveJsonModule": true,
     "experimentalDecorators": true,
     "baseUrl": ".",
+    "downlevelIteration": true,
     "types": [
       "webpack-env"
     ],
