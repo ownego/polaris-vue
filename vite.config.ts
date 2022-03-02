@@ -4,15 +4,20 @@ import path from 'path';
 import { replaceCodePlugin } from 'vite-plugin-replace';
 import svgLoader from 'vite-svg-loader';
 import checker from 'vite-plugin-checker';
-import eslintPlugin from 'vite-plugin-eslint';
+import dts from 'vite-plugin-dts';
 
 import vue from '@vitejs/plugin-vue';
 import packageJson from './package.json';
 
 export default defineConfig({
   plugins: [
-    checker({ vueTsc: true }),
-    eslintPlugin(),
+    checker({
+      vueTsc: true,
+      typescript: true,
+      eslint: {
+        lintCommand: 'eslint . --ext .vue,.js,.jsx,.cjs,.mjs,.ts,.tsx,.cts,.mts --fix --ignore-path .gitignore',
+      },
+    }),
     replaceCodePlugin({
       replacements: [
         {
@@ -21,10 +26,14 @@ export default defineConfig({
         },
       ],
     }),
+    svgLoader(),
     vue({
       reactivityTransform: true,
     }),
-    svgLoader(),
+    dts({
+      exclude: ['node_modules'],
+      outputDir: 'dist/types',
+    }),
   ],
   resolve: {
     dedupe: ['vue'],
@@ -39,6 +48,7 @@ export default defineConfig({
     lib: {
       entry: path.resolve(__dirname, 'src/polaris-vue.ts'),
       name: 'Polaris Vue',
+      formats: ['es'],
       fileName: (format) => `polaris-vue.${format}.js`,
     },
     cssCodeSplit: true,
@@ -49,6 +59,7 @@ export default defineConfig({
         globals: {
           vue: 'Vue',
         },
+        sourcemap: false,
         exports: 'named',
       },
     },

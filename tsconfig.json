@@ -1,8 +1,9 @@
 {
   "extends": "@vue/tsconfig/tsconfig.web.json",
   "include": [
-    "vite.config.*",
-    "package.json",
+    "src/classes/*.json",
+    "src/**/*",
+    "types/*.ts",
   ],
   "exclude": [
     "node_modules",
@@ -11,7 +12,6 @@
   ],
   "compilerOptions": {
     "baseUrl": ".",
-    "outDir": "dist/types",
     "paths": {
       "@/*": ["./src/*"]
     },
@@ -24,11 +24,11 @@
     "experimentalDecorators": true,
     "resolveJsonModule": true,
     "esModuleInterop": true,
-    "allowSyntheticDefaultImports": true,
     "sourceMap": true,
     "strict": true,
     "jsx": "preserve",
     "importHelpers": true,
+    "isolatedModules": false,
   },
 
   "references": [

@@ -3,9 +3,6 @@
   "include": [
     "vite.config.*",
     "package.json",
-    "src/classes/*.json",
-    "src/**/*",
-    "types/*.ts",
   ],
   "exclude": [
     "node_modules",
@@ -15,11 +12,24 @@
   "compilerOptions": {
     "composite": true,
     "types": ["node", "vite/client"],
+    "declaration": true,
+    "declarationMap": true,
     "declarationDir": "dist/types",
     "allowSyntheticDefaultImports": true,
-    "paths": {
-      "@/*": ["./src/*"],
-      "types/*": ["./types/*"],
-    },
+    "skipLibCheck": true,
+    "moduleResolution": "node",
+    "experimentalDecorators": true,
+    "resolveJsonModule": true,
+    "esModuleInterop": true,
+    "sourceMap": true,
+    "strict": true,
+    "jsx": "preserve",
+    "importHelpers": true,
+    "lib": [
+      "esnext",
+      "dom",
+      "dom.iterable",
+      "scripthost"
+    ],
   },
 }
