@@ -1,6 +1,6 @@
 import type { IconSource, BaseButton } from 'types/type';
-import { ActionListItemDescriptor } from '@/components/ActionList/utils';
-import { UnstyledButtonProps } from '../UnstyledButton/utils';
+import type { ActionListItemDescriptor } from '@/components/ActionList/utils';
+import type { UnstyledButtonProps } from '../UnstyledButton/utils';
 
 export interface ConnectedDisclosure {
   /** Visually hidden label for the connected disclosure button.
@@ -36,11 +36,6 @@ export interface CommonButtonProps
   | 'accessibilityLabel'
   | 'ariaDescribedBy'
   | 'role'
-  | 'onClick'
-  | 'onFocus'
-  | 'onBlur'
-  | 'onMouseEnter'
-  | 'onTouchStart'
   > {
   className: UnstyledButtonProps['className'];
   onMouseUp: (event: MouseEvent)=> void;
@@ -56,7 +51,4 @@ export type ActionButtonProps = Pick<
   | 'ariaControls'
   | 'ariaExpanded'
   | 'pressed'
-  | 'onKeyDown'
-  | 'onKeyUp'
-  | 'onKeyPress'
   >;

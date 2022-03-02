@@ -4,7 +4,6 @@ div(
   :class="styles.ConnectedDisclosureWrapper"
 )
   ButtonMarkup(
-    v-on="{...$listeners, mouseup: handleMouseUpByBlurring}",
     v-bind="buttonMarkupProps",
   )
     slot
@@ -35,7 +34,6 @@ div(
         slot(v-if="suffixId", :name="`suffix-${suffixId}`", :slot="`suffix-${suffixId}`")
 ButtonMarkup(
   v-else,
-  v-on="{...$listeners, mouseup: handleMouseUpByBlurring}",
   v-bind="buttonMarkupProps",
 )
   slot
@@ -51,7 +49,6 @@ import { handleMouseUpByBlurring } from '@/utilities/focus';
 import type { IconSource, BaseButton } from 'types/type';
 import styles from '@/classes/Button.json';
 import type { ConnectedDisclosure } from './utils';
-import { VisuallyHidden } from '../VisuallyHidden';
 import { Popover } from '../Popover';
 import { ActionList } from '../ActionList';
 import { Icon } from '../Icon';
@@ -75,6 +72,9 @@ interface Props extends BaseButton {
 
 const props = withDefaults(defineProps<Props>(), {
   size: 'medium',
+  children: undefined,
+  disclosure: undefined,
+  textAlign: undefined,
 });
 
 const slots = useSlots();
@@ -154,14 +154,15 @@ const buttonMarkupProps = computed(() => {
     removeUnderline, disclosure, loading, icon,
   } = props;
   return {
-    commonProps: commonProps.value,
-    linkProps: linkProps.value,
-    actionProps: actionProps.value,
-    removeUnderline,
-    children: children.value,
-    disclosure,
-    loading,
-    icon,
+    // commonProps: commonProps.value,
+    // linkProps: linkProps.value,
+    // actionProps: actionProps.value,
+    // removeUnderline,
+    // children: children.value,
+    // disclosure,
+    // loading,
+    // icon,
+    // mouseup: handleMouseUpByBlurring,
   };
 });
 

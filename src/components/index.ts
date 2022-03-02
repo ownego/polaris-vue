@@ -1,5 +1,6 @@
 export * from './ActionList';
 export * from './AppProvider';
+export * from './Button';
 export * from './Checkbox';
 export * from './Choice';
 export * from './ChoiceList';
@@ -22,5 +23,6 @@ export * from './Scrollable';
 export * from './Spinner';
 export * from './TextContainer';
 export * from './TextStyle';
+export * from './UnstyledButton';
 export * from './UnstyledLink';
 export * from './VisuallyHidden';

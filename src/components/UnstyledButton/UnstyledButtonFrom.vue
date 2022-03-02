@@ -1,6 +1,6 @@
 <template lang="pug">
 UnstyledButton(
-  :key="key",
+  :key="keyProp",
   v-bind="bindProps",
   @click="action.onAction",
 ) {{ action.content }}
@@ -8,14 +8,14 @@ UnstyledButton(
 
 <script setup lang="ts">
 import { computed } from 'vue';
-import { ComplexAction } from '@/interface';
-import { UnstyledButtonProps } from './utils';
+import type { ComplexAction } from '@/utilities/interface';
+import type { UnstyledButtonProps } from './utils';
 import UnstyledButton from './UnstyledButton.vue';
 
 interface Props {
   action: ComplexAction;
   overrides?: Partial<UnstyledButtonProps>;
-  key?: any;
+  keyProp?: any;
 }
 
 const props = defineProps<Props>();
