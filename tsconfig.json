@@ -6,29 +6,31 @@
     "types/*.ts",
   ],
   "exclude": [
-    "node_modules",
     "dist",
     "build",
+    "node_modules",
   ],
   "compilerOptions": {
     "baseUrl": ".",
     "paths": {
-      "@/*": ["./src/*"]
+      "@/*": ["./src/*"],
+      "types/type": ["./types/type.ts"],
     },
     "types": ["node"],
     "declaration": true,
     "declarationMap": true,
     "declarationDir": "dist/types",
-    "skipLibCheck": true,
     "moduleResolution": "node",
     "experimentalDecorators": true,
     "resolveJsonModule": true,
+    "noImplicitAny": false,
     "esModuleInterop": true,
     "sourceMap": true,
     "strict": true,
     "jsx": "preserve",
     "importHelpers": true,
     "isolatedModules": false,
+    "plugins": [{ "name": "typescript-plugin-css-modules" }],
   },
 
   "references": [

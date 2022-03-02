@@ -4,7 +4,7 @@ import path from 'path';
 import { replaceCodePlugin } from 'vite-plugin-replace';
 import svgLoader from 'vite-svg-loader';
 import checker from 'vite-plugin-checker';
-import dts from 'vite-plugin-dts';
+import typescript from '@rollup/plugin-typescript';
 
 import vue from '@vitejs/plugin-vue';
 import packageJson from './package.json';
@@ -30,15 +30,14 @@ export default defineConfig({
     vue({
       reactivityTransform: true,
     }),
-    dts({
-      exclude: ['node_modules'],
-      outputDir: 'dist/types',
-    }),
+    // dts({
+    //   outputDir: 'dist/types',
+    // }),
   ],
   resolve: {
     dedupe: ['vue'],
     alias: {
-      '@': fileURLToPath(new URL('./src', import.meta.url)),
+      '@/': fileURLToPath(new URL('./src/', import.meta.url)),
       '@icons': fileURLToPath(new URL('./node_modules/@shopify/polaris-icons/dist/svg', import.meta.url)),
       '~': fileURLToPath(new URL('./node_modules', import.meta.url)),
       types: fileURLToPath(new URL('./types', import.meta.url)),
@@ -48,7 +47,6 @@ export default defineConfig({
     lib: {
       entry: path.resolve(__dirname, 'src/polaris-vue.ts'),
       name: 'Polaris Vue',
-      formats: ['es'],
       fileName: (format) => `polaris-vue.${format}.js`,
     },
     cssCodeSplit: true,
@@ -62,6 +60,11 @@ export default defineConfig({
         sourcemap: false,
         exports: 'named',
       },
+      plugins: [
+        typescript({
+          tsconfig: 'tsconfig.json',
+        }),
+      ],
     },
   },
 });

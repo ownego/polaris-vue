@@ -17,6 +17,7 @@
     "LICENSE",
     "README.md"
   ],
+  "types": "./dist/types/src/polaris-vue.d.ts",
   "main": "./dist/polaris-vue.umd.js",
   "module": "./dist/polaris-vue.es.js",
   "exports": {
@@ -27,7 +28,7 @@
   },
   "scripts": {
     "dev": "vite",
-    "build": "vue-tsc --noEmit && vite build && rimraf dist/index.html dist/favicon.ico dist/images",
+    "build": "rimraf dist && vue-tsc --noEmit && vite build && rimraf dist/index.html dist/favicon.ico dist/images",
     "preview": "vite preview --port 5050",
     "typecheck": "vue-tsc --noEmit",
     "lint": "eslint . --ext .vue,.js,.jsx,.cjs,.mjs,.ts,.tsx,.cts,.mts --fix --ignore-path .gitignore",
@@ -43,6 +44,7 @@
   "devDependencies": {
     "@babel/core": "^7.17.5",
     "@preact/preset-vite": "^2.1.7",
+    "@rollup/plugin-typescript": "^8.3.1",
     "@rushstack/eslint-patch": "^1.1.0",
     "@shopify/typescript-configs": "^5.1.0",
     "@storybook/addon-a11y": "^6.4.19",
@@ -78,7 +80,6 @@
     "typescript": "~4.5.5",
     "vite": "^2.8.4",
     "vite-plugin-checker": "^0.4.2",
-    "vite-plugin-dts": "^0.9.9",
     "vite-plugin-eslint": "^1.3.0",
     "vite-plugin-replace": "^0.1.1",
     "vue-loader": "^16.8.3",
