@@ -4,6 +4,7 @@ import path from 'path';
 import { replaceCodePlugin } from 'vite-plugin-replace';
 import svgLoader from 'vite-svg-loader';
 import checker from 'vite-plugin-checker';
+import babel from '@rollup/plugin-babel';
 import typescript from '@rollup/plugin-typescript';
 
 import vue from '@vitejs/plugin-vue';
@@ -37,8 +38,8 @@ export default defineConfig({
   resolve: {
     dedupe: ['vue'],
     alias: {
-      '@/': fileURLToPath(new URL('./src/', import.meta.url)),
       '@icons': fileURLToPath(new URL('./node_modules/@shopify/polaris-icons/dist/svg', import.meta.url)),
+      '@': fileURLToPath(new URL('./src/', import.meta.url)),
       '~': fileURLToPath(new URL('./node_modules', import.meta.url)),
       types: fileURLToPath(new URL('./types', import.meta.url)),
     },
@@ -57,12 +58,17 @@ export default defineConfig({
         globals: {
           vue: 'Vue',
         },
-        sourcemap: false,
+        sourcemap: true,
         exports: 'named',
       },
       plugins: [
         typescript({
           tsconfig: 'tsconfig.json',
+        }),
+        babel({
+          exclude: 'node_modules/**',
+          extensions: ['.ts', '.vue'],
+          babelHelpers: 'bundled',
         }),
       ],
     },
