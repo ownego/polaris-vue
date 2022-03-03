@@ -15,6 +15,7 @@ export * from './InlineError';
 export * from './KeypressListener';
 export * from './Layout';
 export * from './Link';
+export * from './Listbox';
 export * from './Popover';
 export * from './Portal';
 export * from './PositionedOverlay';

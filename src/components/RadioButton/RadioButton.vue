@@ -56,20 +56,18 @@ interface Props {
 
 const props = defineProps<Props>();
 
-/* eslint-disable */
 const emits = defineEmits<{
   (event: 'focus'): void
   (event: 'change', changeEvent: Event): void
   (event: 'update:modelValue', value: string): void
   (event: 'blur'): void
 }>();
-/* eslint-disable */
 
 const keyFocused = ref(false);
 const mouseOver = ref(false);
 
 const slots = useSlots();
-const helpTextSlot = computed(() => slots['help-text']!());
+const helpTextSlot = computed(() => slots['help-text']?.());
 
 const { useUniqueId } = UseUniqueId();
 const uniqueId = useUniqueId('RadioButton', props.id);
@@ -111,7 +109,9 @@ const handleBlur = (): void => {
 };
 
 const handleKeyup = (): void => {
-  if (!keyFocused.value) keyFocused.value = true;
+  if (!keyFocused.value) {
+    keyFocused.value = true;
+  }
 };
 </script>
 

@@ -75,12 +75,10 @@ interface Props {
 
 const props = defineProps<Props>();
 
-/* eslint-disable */
 const emits = defineEmits<{
   (event: 'change', changeEvent: Event): void
   (event: 'update:modelValue', value: string | string[]): void
 }>();
-/* eslint-disable */
 
 const { useUniqueId } = UseUniqueId();
 const uniqueId = useUniqueId('ChoiceList', props.name);
@@ -98,17 +96,17 @@ const isChoiceSelected = (choice: Choice): boolean => (
 );
 
 const updateSelectedChoices = (event: Event): string | string[] => {
-   const target = event.target as HTMLInputElement;
+  const target = event.target as HTMLInputElement;
 
-   if (target.checked) {
-     return props.allowMultiple && Array.isArray(props.modelValue)
+  if (target.checked) {
+    return props.allowMultiple && Array.isArray(props.modelValue)
       ? [...props.modelValue, target.value]
       : target.value;
-   }
+  }
 
-    return Array.isArray(props.modelValue)
-      ? props.modelValue.filter((val) => val !== target.value)
-      : []; 
+  return Array.isArray(props.modelValue)
+    ? props.modelValue.filter((val) => val !== target.value)
+    : []; 
 };
 
 const handleChange = (event: Event): void => {

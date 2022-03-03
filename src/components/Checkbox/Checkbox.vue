@@ -79,14 +79,12 @@ const isWithinListbox = inject<boolean>('withinListboxContext', false);
 
 const props = defineProps<Props>();
 
-/* eslint-disable */
 const emits = defineEmits<{
   (event: 'focus'): void
   (event: 'change', changeEvent: Event): void
   (event: 'update:modelValue', value: string | boolean): void
   (event: 'blur'): void
 }>();
-/* eslint-disable */
 
 const mouseOver = ref(false);
 const keyFocused = ref(false);
@@ -155,7 +153,9 @@ const handleKeyup = (event: KeyboardEvent): void => {
   const { key } = event;
 
   if (key === Key.Space || key === Key.Tab) {
-    if (!keyFocused.value) keyFocused.value = true;
+    if (!keyFocused.value) {
+      keyFocused.value = true;
+    }
   }
 };
 

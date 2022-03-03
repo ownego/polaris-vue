@@ -8,7 +8,7 @@ component(
 </template>
 
 <script setup lang="ts">
-import type { HeadingTagName } from 'types/type';
+import type { HeadingTagName } from 'polaris-react/src/types';
 import styles from '@/classes/Heading.json';
 
 interface Props {

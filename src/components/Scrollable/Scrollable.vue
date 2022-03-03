@@ -86,7 +86,9 @@ const finalClassName = computed(() =>
 );
 
 const handleScroll = (): void => {
-  if (!scrollArea.value) {return;}
+  if (!scrollArea.value) {
+    return;
+  }
 
   const { scrollTop, scrollHeight, clientHeight } = scrollArea.value;
   const shouldBottomShadow = Boolean(shadow && !(scrollTop + clientHeight >= scrollHeight));
@@ -113,7 +115,9 @@ const handleResize = debounce(
 );
 
 const toggleLock = (shouldLock = true): void => {
-  if (!scrollArea.value) {return;}
+  if (!scrollArea.value) {
+    return;
+  }
 
   EVENTS_TO_LOCK.forEach((eventName) => {
     if (shouldLock) {
@@ -137,7 +141,9 @@ const scrollStep = (): void => {
 };
 
 const scrollHint = (): void => {
-  if (!scrollArea.value) {return;}
+  if (!scrollArea.value) {
+    return;
+  }
 
   const { clientHeight, scrollHeight } = scrollArea.value;
 
@@ -154,7 +160,9 @@ const scrollHint = (): void => {
 };
 
 onMounted(() => {
-  if (!scrollArea.value) {return;}
+  if (!scrollArea.value) {
+    return;
+  }
 
   state.stickyManager.setContainer(scrollArea.value);
   scrollArea.value.scrollTop = scrollPosition.value;
@@ -177,7 +185,9 @@ onUpdated(() => {
 });
 
 onBeforeUnmount(() => {
-  if (!scrollArea.value) {return;}
+  if (!scrollArea.value) {
+    return;
+  }
 
   scrollArea.value.removeEventListener('scroll', handleScroll);
   window.removeEventListener('resize', handleResize);
