@@ -48,7 +48,8 @@ import {
 import { UseUniqueId } from '@/use';
 import styles from '@/classes/Listbox.json';
 import type { ComboboxListboxType, NavigableOption } from '@/utilities/interface';
-import { Key, KeypressListener } from '../KeypressListener';
+import { KeypressListener } from '../KeypressListener';
+import { Key } from '../KeypressListener/utils';
 import { VisuallyHidden } from '../VisuallyHidden';
 
 export type ArrowKeys = 'up' | 'down';
@@ -173,7 +174,7 @@ const findNextValidOption = (type: ArrowKeys): HTMLElement | null => {
         (currentNavItem) => currentNavItem.id === currentId,
       );
       let increment = isUp ? -1 : 1;
-    
+
       if (currentIndex === 0 && isUp) {
         increment = navItems.length - 1;
       } else if (currentIndex === navItems.length - 1 && !isUp) {

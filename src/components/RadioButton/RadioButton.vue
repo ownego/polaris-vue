@@ -33,7 +33,8 @@ import { ref, computed, useSlots } from 'vue';
 import { classNames } from 'polaris-react/src/utilities/css';
 import styles from '@/classes/RadioButton.json';
 import { UseUniqueId } from '@/use';
-import { Choice, helpTextID } from '../Choice';
+import { Choice } from '../Choice';
+import { helpTextID } from '../Choice/utils';
 
 interface Props {
   /** Indicates the ID of the element that describes the the radio button */

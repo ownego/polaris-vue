@@ -35,7 +35,8 @@ components(
 import { computed, ref, withDefaults } from 'vue';
 import { classNames } from 'polaris-react/src/utilities/css';
 import { wrapFocusPreviousFocusableMenuItem, wrapFocusNextFocusableMenuItem } from '@/utilities/focus';
-import { KeypressListener, Key } from '@/components/KeypressListener';
+import { KeypressListener } from '@/components/KeypressListener';
+import { Key } from '@/components/KeypressListener/utils';
 import styles from '@/classes/ActionList.json';
 import { Section } from './components/Section';
 import type { ActionListItemDescriptor, ActionListSection } from './utils';

@@ -47,9 +47,10 @@ import MinusMinor from '@icons/MinusMinor.svg';
 import TickSmallMinor from '@icons/TickSmallMinor.svg';
 import styles from '@/classes/Checkbox.json';
 import type { Error } from 'types/type';
-import { Key } from '../KeypressListener';
-import { errorTextID } from '../InlineError';
-import { Choice, helpTextID } from '../Choice';
+import { Key } from '../KeypressListener/utils';
+import { errorTextID } from '../InlineError/utils';
+import { Choice } from '../Choice';
+import { helpTextID } from '../Choice/utils';
 import { Icon } from '../Icon';
 
 interface Props {

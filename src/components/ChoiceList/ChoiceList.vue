@@ -45,7 +45,8 @@ import styles from '@/classes/ChoiceList.json';
 import type { Error } from 'types/type';
 import { Checkbox } from '../Checkbox';
 import { RadioButton } from '../RadioButton';
-import { InlineError, errorTextID } from '../InlineError';
+import { InlineError } from '../InlineError';
+import { errorTextID } from '../InlineError/utils';
 
 interface Choice {
   value: string;
@@ -106,7 +107,7 @@ const updateSelectedChoices = (event: Event): string | string[] => {
 
   return Array.isArray(props.modelValue)
     ? props.modelValue.filter((val) => val !== target.value)
-    : []; 
+    : [];
 };
 
 const handleChange = (event: Event): void => {
