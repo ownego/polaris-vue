@@ -25,6 +25,7 @@ export * from './PositionedOverlay';
 export * from './RadioButton';
 export * from './Scrollable';
 export * from './Spinner';
+export * from './Subheading';
 export * from './TextContainer';
 export * from './TextStyle';
 export * from './UnstyledButton';
