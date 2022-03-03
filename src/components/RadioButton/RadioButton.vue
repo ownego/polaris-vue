@@ -13,7 +13,7 @@ Choice(
   span(:class="styles.RadioButton")
     input(
       :id="uniqueId",
-      :name="name",
+      :name="name || uniqueId",
       :value="value",
       type="radio",
       :checked="isChecked",
@@ -72,7 +72,6 @@ const helpTextSlot = computed(() => slots['help-text']?.());
 
 const { useUniqueId } = UseUniqueId();
 const uniqueId = computed(() => useUniqueId('RadioButton', props.id));
-const name = computed(() => props.name || uniqueId);
 
 const isChecked = computed(() => props.checked || props.modelValue === props.value);
 
