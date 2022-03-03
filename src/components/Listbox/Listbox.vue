@@ -90,7 +90,7 @@ const state = reactive({
   currentActiveOption: {
     domId: '',
     value: '',
-    element: new HTMLElement(),
+    element: Object.create(HTMLElement.prototype, {}),
     disabled: false,
   },
 });

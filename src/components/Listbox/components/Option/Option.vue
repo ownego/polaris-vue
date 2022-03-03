@@ -48,7 +48,6 @@ import type { ListboxContextType, NavigableOption } from '@/utilities/interface'
 import type { MappedActionContextType } from '@/utilities/autocomplete';
 import { UseUniqueId } from '@/use';
 import styles from '@/classes/Listbox-Option.json';
-import type { OptionProps } from './utils';
 import { TextOption } from '../TextOption';
 import { UnstyledLink } from '../../../UnstyledLink';
 
@@ -61,10 +60,20 @@ const listboxContext = inject<ListboxContextType>('listboxContext', {
   setLoading(label?: string) {},
 });
 
-// eslint-disable-next-line @typescript-eslint/no-empty-interface
-interface LocalProps extends OptionProps {}
+interface OptionProps {
+  // Unique item value
+  value: string;
+  // Visually hidden text for screen readers
+  accessibilityLabel?: string;
+  // Option is selected
+  selected?: boolean;
+  // Option is disabled
+  disabled?: boolean;
+  // Adds a border-bottom to the Option
+  divider?: boolean;
+}
 
-const props = defineProps<LocalProps>();
+const props = defineProps<OptionProps>();
 
 const slots = useSlots();
 const defaultSlot = computed(() => slots.default?.());
