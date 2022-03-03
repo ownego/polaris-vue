@@ -10,7 +10,7 @@ li(:class="styles.ListItem", role="presentation")
 
 <script setup lang="ts">
 import { inject, watch } from 'vue';
-import type { ListboxContextType, NavigableOption } from 'polaris-react/src/utilities/listbox';
+import type { ListboxContextType, NavigableOption } from '@/utilities/interface';
 import styles from '@/classes/Listbox-Loading.json';
 import { Spinner } from '../../../Spinner';
 

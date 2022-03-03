@@ -44,7 +44,7 @@ import { classNames } from 'polaris-react/src/utilities/css';
 import {
   listboxWithinSectionDataSelector,
 } from 'polaris-react/src/components/Listbox/components/Section/selectors';
-import type { ListboxContextType, NavigableOption } from 'polaris-react/src/utilities/listbox';
+import type { ListboxContextType, NavigableOption } from '@/utilities/interface';
 import type { MappedActionContextType } from '@/utilities/autocomplete';
 import { UseUniqueId } from '@/use';
 import styles from '@/classes/Listbox-Option.json';

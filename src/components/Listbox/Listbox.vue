@@ -41,14 +41,13 @@ import debounce from 'lodash/debounce';
 import { classNames } from 'polaris-react/src/utilities/css';
 import { scrollIntoView } from 'polaris-react/src/utilities/scroll-into-view';
 import { scrollable } from 'polaris-react/src/components/shared';
-import type { NavigableOption } from 'polaris-react/src/utilities/listbox';
 import { closestParentMatch } from 'polaris-react/src/utilities/closest-parent-match';
 import {
   listboxSectionDataSelector,
 } from 'polaris-react/src/components/Listbox/components/Section/selectors';
-import type { ComboboxListboxType } from 'polaris-react/src/utilities/combobox/context';
-import styles from '@/classes/Listbox.json';
 import { UseUniqueId } from '@/use';
+import styles from '@/classes/Listbox.json';
+import type { ComboboxListboxType, NavigableOption } from '@/utilities/interface';
 import { Key, KeypressListener } from '../KeypressListener';
 import { VisuallyHidden } from '../VisuallyHidden';
 

@@ -4,6 +4,8 @@ export type IconSource = VueElementConstructor | 'placeholder' | string;
 
 export type Error = string | VueElementConstructor | (string | VueElementConstructor)[];
 
+export type HeadingTagName = 'h1' | 'h2' | 'h3' | 'h4' | 'h5' | 'h6' | 'p';
+
 export type Action = {
   id?: string;
   content?: string;

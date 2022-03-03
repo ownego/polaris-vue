@@ -14,7 +14,7 @@ div(:class="textOptionClassName")
 <script setup lang="ts">
 import { inject } from 'vue';
 import { classNames } from 'polaris-react/src/utilities/css';
-import type { ComboboxListboxOptionType } from 'polaris-react/src/utilities/combobox';
+import type { ComboboxListboxOptionType } from '@/utilities/interface';
 import styles from '@/classes/Listbox-TextOption.json';
 import { Checkbox } from '../../../Checkbox';
 
