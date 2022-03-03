@@ -1,0 +1,109 @@
+<template lang="pug">
+span(:class="className")
+  template(v-if="hasAccessibilityLabel")
+    span(
+      v-if="progressLabel",
+      :class="styles.Pip",
+    )
+      VisuallyHidden {{ accessibilityLabel }}
+    VisuallyHidden(v-else) {{ accessibilityLabel }}
+  slot
+</template>
+
+<script setup lang="ts">
+import { inject, ref, computed, onMounted } from 'vue';
+import { classNames, variationName } from 'polaris-react/src/utilities/css';
+import styles from '@/classes/Badge.json';
+import { VisuallyHidden } from '../VisuallyHidden';
+
+type Status = 'info' | 'success' | 'attention' | 'warning' | 'critical' | 'new';
+type Progress = 'incomplete' | 'partiallyComplete' | 'complete';
+type Size = 'small' | 'medium';
+
+interface BadgeProps {
+  /** Colors and labels the badge with the given status. */
+  status?: Status;
+  /** Render a pip showing the progress of a given task. */
+  progress?: Progress;
+  /**
+   * Medium or small size.
+   * @default 'medium'
+   */
+  size?: Size;
+  /** Pass a custom accessibilityLabel */
+  statusAndProgressLabelOverride?: string;
+}
+
+// eslint-disable-next-line vue/no-setup-props-destructure
+const {
+  status,
+  progress,
+  size = 'medium',
+  statusAndProgressLabelOverride,
+} = defineProps<BadgeProps>();
+
+const withinFilter =  inject<boolean>('withinFilterContext', false);
+
+const DEFAULT_SIZE = 'medium';
+
+const progressLabel = ref('');
+const statusLabel = ref('');
+
+const className = computed(() => classNames(
+  styles.Badge,
+  status && styles[variationName('status', status) as keyof typeof styles],
+  progress && styles[variationName('progress', progress) as keyof typeof styles],
+  size && size !== DEFAULT_SIZE && styles[variationName('size', size) as keyof typeof styles],
+  withinFilter && styles.withinFilter,
+));
+
+const hasAccessibilityLabel= computed(() =>statusAndProgressLabelOverride
+  || statusLabel.value
+  || progressLabel.value,
+);
+const accessibilityLabel = computed(() => statusAndProgressLabelOverride
+  || `${statusLabel.value} ${progressLabel.value}`);
+
+onMounted(() => {
+  switch (progress) {
+  case 'incomplete':
+    progressLabel.value = 'incomplete';
+    break;
+  case 'partiallyComplete':
+    progressLabel.value = 'partiallyComplete';
+    break;
+  case 'complete':
+    progressLabel.value = 'complete';
+    break;
+  default:
+    break;
+  }
+
+  switch (status) {
+  case 'info':
+    statusLabel.value = 'info';
+    break;
+  case 'success':
+    statusLabel.value = 'success';
+    break;
+  case 'warning':
+    statusLabel.value = 'warning';
+    break;
+  case 'critical':
+    statusLabel.value = 'critical';
+    break;
+  case 'attention':
+    statusLabel.value = 'attention';
+    break;
+  case 'new':
+    statusLabel.value = 'new';
+    break;
+  default:
+    break;
+  }
+});
+</script>
+
+<style lang="scss">
+@import 'polaris-react/src/components/Badge/Badge.scss';
+</style>
