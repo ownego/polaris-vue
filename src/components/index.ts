@@ -28,6 +28,7 @@ export * from './Spinner';
 export * from './Subheading';
 export * from './TextContainer';
 export * from './TextStyle';
+export * from './Truncate';
 export * from './UnstyledButton';
 export * from './UnstyledLink';
 export * from './VisuallyHidden';

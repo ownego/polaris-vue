@@ -1,0 +1,42 @@
+import { Meta, Story, Canvas, ArgsTable } from '@storybook/addon-docs';
+import { Subheading } from '@/polaris-vue';
+
+<Meta
+  title="Components / Titles and text  / Subheading"
+  component={ Subheading }
+  argTypes={{
+    element: {
+      control: {
+        type: 'text',
+      },
+      table: {
+        type: {
+          summary: 'Tag name'
+        }
+      }
+    },
+    default: {
+      table: {
+        disable: true,
+      },
+    },
+  }}
+/>
+
+export const Template = (args, { argTypes }) => ({
+  props: Object.keys(argTypes),
+  components: { Subheading },
+  template: `<Subheading v-bind="$props">Accounts</Subheading>`,
+});
+
+# Subheading
+
+Subheadings are used for the title of any sub-sections in top-level page sections.
+
+<Canvas>
+  <Story name="Subheading" height="30px">
+    {Template.bind({})}
+  </Story>
+</Canvas>
+
+<ArgsTable story="Subheading" />
