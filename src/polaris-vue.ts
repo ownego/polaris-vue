@@ -1,5 +1,5 @@
 import type { App, Component } from 'vue';
-import * as components from '@/components';
+import * as components from './components';
 
 const PolarisVue = {
   install(Vue: App) {
@@ -14,4 +14,4 @@ const PolarisVue = {
 export default PolarisVue;
 
 // Export single component
-export * from '@/components';
+export * from './components';

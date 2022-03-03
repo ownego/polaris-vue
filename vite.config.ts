@@ -4,9 +4,8 @@ import path from 'path';
 import { replaceCodePlugin } from 'vite-plugin-replace';
 import svgLoader from 'vite-svg-loader';
 import checker from 'vite-plugin-checker';
-import babel from '@rollup/plugin-babel';
-import typescript from '@rollup/plugin-typescript';
 import vue from '@vitejs/plugin-vue';
+import dts from 'vite-plugin-dts';
 import packageJson from './package.json';
 
 export default defineConfig({
@@ -30,6 +29,7 @@ export default defineConfig({
     vue({
       reactivityTransform: true,
     }),
+    dts(),
   ],
   resolve: {
     alias: {
@@ -56,16 +56,6 @@ export default defineConfig({
         },
         exports: 'named',
       },
-      plugins: [
-        typescript({
-          tsconfig: 'tsconfig.json',
-        }),
-        babel({
-          exclude: 'node_modules/**',
-          extensions: ['.ts', '.tsx', '.vue'],
-          babelHelpers: 'bundled',
-        }),
-      ],
     },
   },
 });

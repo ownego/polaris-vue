@@ -25,7 +25,7 @@
   "module": "./dist/polaris-vue.es.js",
   "scripts": {
     "dev": "vite",
-    "build": "rimraf dist && vue-tsc --noEmit && vite build && rimraf dist/index.html dist/favicon.ico dist/images",
+    "build": "rimraf dist && vue-tsc --noEmit && vite build && rimraf dist/index.html dist/favicon.ico dist/images && mv dist/src dist/types",
     "preview": "vite preview --port 5050",
     "typecheck": "vue-tsc --noEmit",
     "lint": "eslint . --ext .vue,.js,.jsx,.cjs,.mjs,.ts,.tsx,.cts,.mts --fix --ignore-path .gitignore",
@@ -40,8 +40,6 @@
   },
   "devDependencies": {
     "@babel/core": "^7.17.5",
-    "@rollup/plugin-babel": "^5.3.1",
-    "@rollup/plugin-typescript": "^8.3.1",
     "@rushstack/eslint-patch": "^1.1.0",
     "@shopify/typescript-configs": "^5.1.0",
     "@storybook/addon-a11y": "^6.4.19",
@@ -77,6 +75,7 @@
     "typescript": "~4.5.5",
     "vite": "^2.8.6",
     "vite-plugin-checker": "^0.4.2",
+    "vite-plugin-dts": "^0.9.9",
     "vite-plugin-eslint": "^1.3.0",
     "vite-plugin-replace": "^0.1.1",
     "vue-tsc": "^0.32.1"

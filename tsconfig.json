@@ -2,7 +2,8 @@
   "extends": "@vue/tsconfig/tsconfig.web.json",
   "include": [
     "src/classes/*.json",
-    "src/**/*",
+    "src/**/*.ts",
+    "src/**/*.vue",
     "types/*.ts",
   ],
   "exclude": [
@@ -14,7 +15,6 @@
     "baseUrl": ".",
     "paths": {
       "@/*": ["./src/*"],
-      "types/type": ["./types/type.ts"],
     },
     "types": ["node"],
     "declaration": true,
