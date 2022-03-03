@@ -19,21 +19,19 @@ export interface LoadingProps {
 }
 
 const listboxContext = inject<ListboxContextType>('listboxContext', {
-  // eslint-disable-next-line @typescript-eslint/no-empty-function
-  onOptionSelect(option: NavigableOption): void {},
-  // eslint-disable-next-line @typescript-eslint/no-empty-function
-  setLoading(label?: string): void {},
+  onOptionSelect(option: NavigableOption): void { return },
+  setLoading(label?: string): void { return },
 });
+
+const { setLoading } = listboxContext;
 
 const props = defineProps<LoadingProps>();
 
 watch(
   () => props.accessibilityLabel,
   () => {
-    listboxContext.setLoading(props.accessibilityLabel);
-    return () => {
-      listboxContext.setLoading(undefined);
-    };
+    setLoading(props.accessibilityLabel);
+    return () => setLoading(undefined);
   },
 )
 </script>

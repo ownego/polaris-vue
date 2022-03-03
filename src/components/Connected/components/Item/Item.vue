@@ -27,13 +27,11 @@ const emits = defineEmits<{
 
 const focused = ref(false);
 
-const className = computed(() => {
-  return classNames(
-    styles.Item,
-    focused.value && styles['Item-focused'],
-    props.position === 'primary' && styles['Item-primary'],
-  );
-});
+const className = computed(() => classNames(
+  styles.Item,
+  focused.value && styles['Item-focused'],
+  props.position === 'primary' && styles['Item-primary'],
+));
 
 const handleFocus = (): void => {
   focused.value = true;

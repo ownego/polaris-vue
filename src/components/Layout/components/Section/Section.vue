@@ -4,6 +4,7 @@ div(:class="className")
 </template>
 
 <script setup lang="ts">
+import { computed } from 'vue';
 import { classNames } from 'polaris-react/src/utilities/css';
 import styles from '@/classes/Layout.json';
 
@@ -16,11 +17,11 @@ interface SectionProps {
 
 const props = defineProps<SectionProps>();
 
-const className = classNames(
+const className = computed(() => classNames(
   styles.Section,
   props.secondary && styles['Section-secondary'],
   props.fullWidth && styles['Section-fullWidth'],
   props.oneHalf && styles['Section-oneHalf'],
   props.oneThird && styles['Section-oneThird'],
-);
+));
 </script>

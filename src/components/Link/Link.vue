@@ -29,6 +29,7 @@ button(
 </template>
 
 <script setup lang="ts">
+import { computed } from 'vue';
 import { classNames } from 'polaris-react/src/utilities/css';
 import styles from '@/classes/Link.json';
 import ExternalSmallMinor from '@icons/ExternalSmallMinor.svg';
@@ -52,11 +53,11 @@ const props = defineProps<{
   accessibilityLabel?: string;
 }>();
 
-const className = classNames(
+const className = computed(() => classNames(
   styles.Link,
   props.monochrome && styles.monochrome,
   props.removeUnderline && styles.removeUnderline,
-);
+));
 </script>
 
 <style lang="scss">

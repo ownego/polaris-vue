@@ -14,11 +14,12 @@ const sectionContext = inject<string>('sectionContext', '');
 const slots = useSlots();
 const defaultSlot = computed(() => slots.default?.());
 
-const isSlotContainHTMLTag = Boolean(
+const isSlotContainHTMLTag = computed(() => Boolean(
   defaultSlot.value
-  && (defaultSlot.value.length >= 2
-    || (defaultSlot.value[0].el?.nodeType !== 3)),
-);
+    && (defaultSlot.value.length >= 2
+      || (defaultSlot.value[0]
+        && defaultSlot.value[0].el?.nodeType !== 3)),
+)); 
 </script>
 
 <style lang="scss">

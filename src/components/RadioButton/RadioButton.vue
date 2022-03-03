@@ -71,17 +71,19 @@ const slots = useSlots();
 const helpTextSlot = computed(() => slots['help-text']?.());
 
 const { useUniqueId } = UseUniqueId();
-const uniqueId = useUniqueId('RadioButton', props.id);
-const name = props.name || uniqueId;
+const uniqueId = computed(() => useUniqueId('RadioButton', props.id));
+const name = computed(() => props.name || uniqueId);
 
-const isChecked = props.checked || props.modelValue === props.value;
+const isChecked = computed(() => props.checked || props.modelValue === props.value);
 
-const backdropClassName = computed(() => {
-  return classNames(styles.Backdrop, mouseOver.value && styles.hover);
-});
-const inputClassName = computed(() => {
-  return classNames(styles.Input, keyFocused.value && styles.keyFocused);
-});
+const backdropClassName = computed(() => classNames(
+  styles.Backdrop,
+  mouseOver.value && styles.hover,
+));
+const inputClassName = computed(() => classNames(
+  styles.Input,
+  keyFocused.value && styles.keyFocused,
+));
 
 const formattedAriaDescribedBy = computed(() => {
   const describedBy: string[] = [];
@@ -91,7 +93,7 @@ const formattedAriaDescribedBy = computed(() => {
   }
 
   if (helpTextSlot.value) {
-    describedBy.push(helpTextID(uniqueId));
+    describedBy.push(helpTextID(uniqueId.value));
   }
 
   return describedBy.length ? describedBy.join(' ') : undefined;

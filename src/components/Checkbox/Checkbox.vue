@@ -94,27 +94,31 @@ const slots = useSlots();
 const helpTextSlot = computed(() => slots['help-text']?.());
 
 const { useUniqueId } = UseUniqueId();
-const uniqueId = useUniqueId('Checkbox', props.id);
+const uniqueId = computed(() => useUniqueId('Checkbox', props.id));
 
-const isIndeterminate = props.checked === 'indeterminate';
-const isChecked = (!isIndeterminate && Boolean(props.checked))
-    || (typeof props.modelValue === 'boolean' && props.modelValue === true);
+const isIndeterminate = computed(() => props.checked === 'indeterminate');
+const isChecked = computed(() => (!isIndeterminate.value && Boolean(props.checked))
+    || (typeof props.modelValue === 'boolean' && props.modelValue === true));
 
-const wrapperClassName = classNames(styles.Checkbox, props.error && styles.error);
-const backdropClassName = computed(() => {
-  return classNames(styles.Backdrop, mouseOver.value && styles.hover);
-});
+const iconSource = computed(() => isIndeterminate.value ? MinusMinor : TickSmallMinor);
 
+const wrapperClassName = computed(() => classNames(
+  styles.Checkbox,
+  props.error && styles.error,
+));
+const backdropClassName = computed(() => classNames(
+  styles.Backdrop,
+  mouseOver.value && styles.hover,
+));
 const inputClassName = computed(() => classNames(
   styles.Input,
-  isIndeterminate && styles['Input-indeterminate'],
+  isIndeterminate.value && styles['Input-indeterminate'],
   keyFocused.value && styles.keyFocused,
 ));
 
-const iconSource = isIndeterminate ? MinusMinor : TickSmallMinor;
-const indeterminateAttributes = isIndeterminate
+const indeterminateAttributes = computed(() => isIndeterminate.value
   ? { indeterminate: 'true', 'aria-checked': 'mixed' as const }
-  : { 'aria-checked': isChecked };
+  : { 'aria-checked': isChecked.value });
 const formattedAriaDescribedBy = computed(() => {
   const describedBy: string[] = [];
 
@@ -123,11 +127,11 @@ const formattedAriaDescribedBy = computed(() => {
   }
 
   if (props.error && typeof props.error !== 'boolean') {
-    describedBy.push(errorTextID(uniqueId));
+    describedBy.push(errorTextID(uniqueId.value));
   }
 
   if (helpTextSlot.value) {
-    describedBy.push(helpTextID(uniqueId));
+    describedBy.push(helpTextID(uniqueId.value));
   }
 
   return describedBy.length ? describedBy.join(' ') : undefined;

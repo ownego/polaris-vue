@@ -29,9 +29,10 @@ const props = defineProps<Props>();
 const slots = useSlots();
 const descriptionSlot = computed(() => slots.description?.());
 
-const isDescriptionSlotContainHTMLTag = Boolean(
+const isDescriptionSlotContainHTMLTag = computed(() => Boolean(
   descriptionSlot.value
-  && (descriptionSlot.value.length >= 2
-    || descriptionSlot.value[0].el?.nodeType !== 3),
-);
+    && (descriptionSlot.value.length >= 2
+      || (descriptionSlot.value[0]
+        && descriptionSlot.value[0].el?.nodeType !== 3)),
+));
 </script>

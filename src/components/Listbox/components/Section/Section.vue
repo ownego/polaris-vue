@@ -13,7 +13,7 @@ li(
 </template>
 
 <script setup lang="ts">
-import { provide } from 'vue';
+import { provide, computed } from 'vue';
 import { classNames } from 'polaris-react/src/utilities/css';
 import {
   listboxSectionDataSelector,
@@ -32,10 +32,10 @@ const sectionId = useUniqueId('ListboxSection');
 
 provide('sectionContext', sectionId);
 
-const className = classNames(
+const className = computed(() => classNames(
   styles.SectionGroup,
   !props.divider && styles.noDivider,
-);
+));
 </script>
 
 <style lang="scss">

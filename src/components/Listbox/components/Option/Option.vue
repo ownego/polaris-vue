@@ -7,7 +7,7 @@ li(
   :role="legacyRoleSupport",
   :data-within-section="isWithinSection",
   :data-listbox-option-value="value",
-  :data-listbox-option-destructive="mappedActionContext.destructive",
+  :data-listbox-option-destructive="destructive",
   :aria-disabled="disabled",
   :aria-label="accessibilityLabel",
   :aria-selected="selected",
@@ -17,9 +17,9 @@ li(
   data-listbox-option,
 )
   UnstyledLink(
-    v-if="mappedActionContext.url",
-    :url="mappedActionContext.url",
-    :external="mappedActionContext.external",
+    v-if="url",
+    :url="url",
+    :external="external",
   )
     TextOption(
       v-if="!isSlotContainHTMLTag",
@@ -51,15 +51,6 @@ import styles from '@/classes/Listbox-Option.json';
 import { TextOption } from '../TextOption';
 import { UnstyledLink } from '../../../UnstyledLink';
 
-const mappedActionContext = inject<MappedActionContextType>('mappedActionContext', {});
-const sectionContext = inject<string>('sectionContext', '');
-const listboxContext = inject<ListboxContextType>('listboxContext', {
-  // eslint-disable-next-line @typescript-eslint/no-empty-function
-  onOptionSelect(option: NavigableOption) {},
-  // eslint-disable-next-line @typescript-eslint/no-empty-function
-  setLoading(label?: string) {},
-});
-
 interface OptionProps {
   // Unique item value
   value: string;
@@ -73,6 +64,16 @@ interface OptionProps {
   divider?: boolean;
 }
 
+const mappedActionContext = inject<MappedActionContextType>('mappedActionContext', {});
+const sectionContext = inject<string>('sectionContext', '');
+const listboxContext = inject<ListboxContextType>('listboxContext', {
+  onOptionSelect(option: NavigableOption) { return },
+  setLoading(label?: string) { return },
+});
+
+const { role, url, external, onAction, destructive } = mappedActionContext;
+const { onOptionSelect } = listboxContext;
+
 const props = defineProps<OptionProps>();
 
 const slots = useSlots();
@@ -83,20 +84,25 @@ const listItemRef = ref<HTMLLIElement | null>(null);
 const { useUniqueId } = UseUniqueId();
 const domId = useUniqueId('ListboxOption');
 
-const isWithinSection = Boolean(sectionContext);
-const isSlotContainHTMLTag = Boolean(
-  defaultSlot.value
-  && ( defaultSlot.value.length >= 2
-    || defaultSlot.value[0].el?.nodeType !== 3),
-);
-
-const className = classNames(styles.Option, props.divider && styles.divider);
+const isWithinSection = computed(() => Boolean(sectionContext));
 
 const sectionAttributes = {
-  [listboxWithinSectionDataSelector.attribute]: isWithinSection,
+  [listboxWithinSectionDataSelector.attribute]: isWithinSection.value,
 };
 
-const legacyRoleSupport = mappedActionContext.role || 'option';
+const isSlotContainHTMLTag = computed(() => Boolean(
+  defaultSlot.value
+    && (defaultSlot.value.length >= 2
+      || (defaultSlot.value[0]
+        && defaultSlot.value[0].el?.nodeType !== 3)),
+));
+
+const legacyRoleSupport = computed(() => role || 'option');
+
+const className = computed(() => classNames(
+  styles.Option,
+  props.divider && styles.divider,
+));
 
 const handleOptionClick = (event: MouseEvent) => {
   event.preventDefault();
@@ -105,11 +111,11 @@ const handleOptionClick = (event: MouseEvent) => {
     return;
   }
 
-  if (mappedActionContext.onAction) {
-    mappedActionContext.onAction();
+  if (onAction) {
+    onAction();
   }
 
-  if (listItemRef.value && mappedActionContext.onAction) {
+  if (listItemRef.value && !onAction) {
     const params = {
       domId,
       value: props.value,
@@ -117,8 +123,8 @@ const handleOptionClick = (event: MouseEvent) => {
       disabled: props.disabled || false,
     };
 
-    listboxContext.onOptionSelect(params);
-  }
+    onOptionSelect(params);
+  }  
 }
 
 const handleMouseDown = (event: MouseEvent): void => {

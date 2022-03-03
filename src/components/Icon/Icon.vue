@@ -1,5 +1,5 @@
 <template lang="pug">
-span(:class="wrapperClassName")
+span(:class="className")
   VisuallyHidden
     span {{ accessibilityLabel }}
   component(
@@ -21,18 +21,18 @@ span(:class="wrapperClassName")
 </template>
 
 <script setup lang="ts">
-import { ref, computed, onMounted } from 'vue';
+import { computed, onMounted } from 'vue';
 import { classNames, variationName } from 'polaris-react/src/utilities/css';
-import type { IconSource } from 'types/type';
 import styles from '@/classes/Icon.json';
 import config from '@/config';
+import type { IconSource } from 'types/type';
 import { VisuallyHidden } from '../VisuallyHidden';
 
 type Color = 'base' | 'subdued' | 'critical' | 'interactive' | 'warning' | 'highlight' | 'success' | 'primary';
 
 const COLORS_WITH_BACKDROPS: string[] = ['base', 'critical', 'highlight', 'success', 'warning'];
 
-const props = defineProps<{
+interface Props {
   /** The contents to display in the icon */
   source: IconSource;
   /** Set the color for the icon */
@@ -41,38 +41,55 @@ const props = defineProps<{
   backdrop?: boolean;
   /** Descriptive text to be read to screenreaders */
   accessibilityLabel?: string;
-}>();
+}
 
-const colorClassName = props.color && styles[variationName('color', props.color) as keyof typeof styles];
-const wrapperClassName = classNames(
+const props = defineProps<Props>();
+
+const colorClassName = computed(() => props.color
+    && styles[variationName('color', props.color) as keyof typeof styles]);
+const className = computed(() => classNames(
   styles.Icon,
-  colorClassName,
+  colorClassName.value,
   props.color && styles.applyColor,
   props.backdrop && styles.hasBackdrop,
+));
+
+const sourceType = computed(() => {
+  if (typeof props.source === 'object') {
+    return 'icon';
+  }
+
+  if (props.source === 'placeholder') {
+    return 'placeholder';
+  }
+
+  return 'external';
+});
+
+const encodedSvg = computed(() => sourceType.value === 'external' 
+  ? encodeURIComponent(String(props.source))
+  : '',
 );
 
-let sourceType = 'external';
-
-if (typeof props.source === 'object') {
-  sourceType = 'icon';
-}
-
-if (props.source === 'placeholder') {
-  sourceType = 'placeholder';
-}
-
-const encodedSvg = sourceType === 'external' ? encodeURIComponent(String(props.source)) : '';
-
 const checkSupportedSvg = (): void => {
-  if (props.color && sourceType === 'external' && config.env === 'development') {
-    // eslint-disable-next-line no-console
-    console.warn('Recoloring external SVGs is not supported. Set the intended color on your SVG instead.');
+  if (
+    props.color
+    && sourceType.value === 'external'
+    && config.env === 'development'
+  ) {
+    console.warn(
+      'Recoloring external SVGs is not supported. Set the intended color on your SVG instead.',
+    );
   }
 };
 
 const checkSupportedBackdrop = (): void => {
-  if (props.backdrop && props.color && !COLORS_WITH_BACKDROPS.includes(props.color) && config.env === 'development') {
-    // eslint-disable-next-line no-console
+  if (
+    props.backdrop
+    && props.color
+    && !COLORS_WITH_BACKDROPS.includes(props.color)
+    && config.env === 'development'
+  ) {
     console.warn(`The ${props.color} variant does not have a supported backdrop color`);
   }
 };

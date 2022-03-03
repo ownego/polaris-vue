@@ -1,5 +1,5 @@
 <template lang="pug">
-template(v-if="keyboardEventsEnabled || comboboxListboxContext.textFieldFocused")
+template(v-if="keyboardEventsEnabled || textFieldFocused")
   KeypressListener(
     keyEvent="keydown",
     :keyCode="Key.ArrowDown",
@@ -23,7 +23,7 @@ ul(
     role="listbox",
     :class="classNames(styles.Listbox)",
     :aria-label="inCombobox ? undefined : accessibilityLabel",
-    :aria-labelledby="comboboxListboxContext.textFieldLabelId || ''",
+    :aria-labelledby="textFieldLabelId || undefined",
     :aria-busy="Boolean(loading)",
     :id="listId",
     @focus="handleFocus",
@@ -35,7 +35,7 @@ ul(
 
 <script setup lang="ts">
 import {
-  provide, inject, ref, reactive, watch, onMounted,
+  provide, inject, ref, computed, watch, onMounted,
 } from 'vue';
 import debounce from 'lodash/debounce';
 import { classNames } from 'polaris-react/src/utilities/css';
@@ -71,6 +71,16 @@ provide('withinListboxContext', true);
 
 const comboboxListboxContext = inject<ComboboxListboxType>('comboboxListboxContext', {});
 
+const {
+  setActiveOptionId,
+  setListboxId,
+  listboxId,
+  textFieldLabelId,
+  onOptionSelected,
+  onKeyToBottom,
+  textFieldFocused,
+} = comboboxListboxContext;
+
 const props = defineProps<ListboxProps>();
 
 const emits = defineEmits<{
@@ -79,22 +89,17 @@ const emits = defineEmits<{
 
 const { useUniqueId  } = UseUniqueId();
 const listId = useUniqueId('Listbox');
-const inCombobox = Boolean(comboboxListboxContext.setActiveOptionId);
-const listBoxId = comboboxListboxContext.listboxId || '';
+
+const inCombobox = computed(() => Boolean(setActiveOptionId));
+const listBoxId = computed(() => listboxId || '');
 
 const listboxRef = ref<HTMLUListElement | null>(null);
 const scrollableRef = ref<HTMLElement | null>(null);
 
 const loading = ref('');
 const keyboardEventsEnabled = ref(props.enableKeyboardControl);
-const state = reactive({
-  currentActiveOption: {
-    domId: '',
-    value: '',
-    element: Object.create(HTMLElement.prototype, {}),
-    disabled: false,
-  },
-});
+
+let currentActiveOption: NavigableOption;
 
 watch(
   [
@@ -102,17 +107,17 @@ watch(
     () => listBoxId,
   ],
   () => {
-    if (comboboxListboxContext.setListboxId && !comboboxListboxContext.listboxId) {
-      comboboxListboxContext.setListboxId(listId);
+    if (setListboxId && !listboxId) {
+      setListboxId(listId);
     }
   },
 )
 
 watch(
-  () => state.currentActiveOption,
+  () => currentActiveOption,
   () => {
-    if (comboboxListboxContext.setActiveOptionId) {
-      comboboxListboxContext.setActiveOptionId(state.currentActiveOption.domId);
+    if (setActiveOptionId) {
+      setActiveOptionId(currentActiveOption.domId);
     }
   },
 )
@@ -140,7 +145,9 @@ const handleScrollIntoView = (option: NavigableOption, first: boolean): void => 
 };
 
 const handleChangeActiveOption = (nextOption?: NavigableOption): void => {
-  state.currentActiveOption.element.removeAttribute(DATA_ATTRIBUTE);
+  if (currentActiveOption && currentActiveOption.element) {
+    currentActiveOption.element.removeAttribute(DATA_ATTRIBUTE);
+  }
 
   if (nextOption) {
     nextOption.element.setAttribute(DATA_ATTRIBUTE, 'true');
@@ -155,18 +162,18 @@ const handleChangeActiveOption = (nextOption?: NavigableOption): void => {
       handleScrollIntoView(nextOption, first);
     }
 
-    state.currentActiveOption = nextOption;
+    currentActiveOption = nextOption;
   }
 };
 
 const findNextValidOption = (type: ArrowKeys): HTMLElement | null => {
   const isUp = type === 'up';
   const navItems = getNavigableOptions();
-  let nextElement: HTMLElement | null | undefined = state.currentActiveOption.element;
+  let nextElement: HTMLElement | null | undefined = currentActiveOption.element;
   let count = -1;
 
   while (count++ < navItems.length) {
-    let nextIndex;
+    let nextIndex: number;
 
     if (nextElement) {
       const currentId = nextElement?.id;
@@ -192,8 +199,8 @@ const findNextValidOption = (type: ArrowKeys): HTMLElement | null => {
       continue;
     }
 
-    if (nextIndex === navItems.length - 1 && comboboxListboxContext.onKeyToBottom) {
-      comboboxListboxContext.onKeyToBottom();
+    if (nextIndex === navItems.length - 1 && onKeyToBottom) {
+      onKeyToBottom();
     }
 
     return nextElement;
@@ -237,8 +244,8 @@ const onSelect = (value: string): void => {
 const onOptionSelect = (option: NavigableOption): void => {
   handleChangeActiveOption(option);
 
-  if (comboboxListboxContext.onOptionSelected) {
-    comboboxListboxContext.onOptionSelected();
+  if (onOptionSelected) {
+    onOptionSelected();
   }
 
   onSelect(option.value);
@@ -254,7 +261,7 @@ const handleEnter = (event: KeyboardEvent): void => {
   event.preventDefault();
   event.stopPropagation();
 
-  onOptionSelect(state.currentActiveOption);
+  onOptionSelect(currentActiveOption);
 };
 
 const handleFocus = () => {

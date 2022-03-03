@@ -12,7 +12,7 @@ div(:class="textOptionClassName")
 </template>
 
 <script setup lang="ts">
-import { inject } from 'vue';
+import { inject, computed } from 'vue';
 import { classNames } from 'polaris-react/src/utilities/css';
 import type { ComboboxListboxOptionType } from '@/utilities/interface';
 import styles from '@/classes/Listbox-TextOption.json';
@@ -30,16 +30,16 @@ interface Props {
 
 const props = defineProps<Props>();
 
-const allowMultiple = Boolean(comboboxListboxOptionContext.allowMultiple);
-const isAction = Boolean(actionContext);
+const allowMultiple = computed(() => Boolean(comboboxListboxOptionContext.allowMultiple));
+const isAction = computed(() => actionContext);
 
-const textOptionClassName = classNames(
+const textOptionClassName = computed(() => classNames(
   styles.TextOption,
-  props.selected && !allowMultiple && styles.selected,
+  props.selected && !allowMultiple.value && styles.selected,
   props.disabled && styles.disabled,
-  allowMultiple && styles.allowMultiple,
-  isAction && styles.isAction,
-);
+  allowMultiple.value && styles.allowMultiple,
+  isAction.value && styles.isAction,
+));
 </script>
 
 <style lang="scss">

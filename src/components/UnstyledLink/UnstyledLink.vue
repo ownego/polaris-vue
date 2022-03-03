@@ -11,10 +11,11 @@ component(
 </template>
 
 <script setup lang="ts">
-const props =
-  defineProps<{
-    to?: string | Record<string, unknown>;
-    url?: string;
-    external?: boolean;
-  }>();
+interface Props {
+  to?: string | Record<string, unknown>;
+  url?: string;
+  external?: boolean;
+}
+
+const props = defineProps<Props>();
 </script>

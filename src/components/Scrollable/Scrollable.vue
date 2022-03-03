@@ -10,7 +10,9 @@ div(
 </template>
 
 <script setup lang="ts">
-import { provide, ref, reactive, computed, onMounted, onUpdated, onBeforeUnmount } from 'vue';
+import {
+  provide, ref, reactive, computed, onMounted, onUpdated, onBeforeUnmount,
+} from 'vue';
 import debounce from 'lodash/debounce';
 import { classNames } from 'polaris-react/src/utilities/css';
 import { scrollable } from 'polaris-react/src/components/shared';
@@ -49,10 +51,6 @@ interface Props {
   focusable?: boolean;
 }
 
-/**
- * TODO: config for default props
- * https://vuejs.org/guide/typescript/composition-api.html#typing-component-props
- */
 // eslint-disable-next-line vue/no-setup-props-destructure
 const { vertical = true, horizontal, shadow, hint, focusable } = defineProps<Props>();
 
@@ -62,8 +60,8 @@ const scrollArea = ref<HTMLDivElement | null>(null);
 
 const topShadow = ref(false);
 const bottomShadow = ref(false);
-const canScroll = ref(false);
 const scrollPosition = ref(0);
+const canScroll = ref(false);
 
 const state = reactive({ stickyManager: new StickyManager() });
 
@@ -74,16 +72,14 @@ const scrollToPosition = (scrollY: number): void => {
 provide('stickyManagerContext', state.stickyManager);
 provide('scrollToPositionContext', scrollToPosition);
 
-const finalClassName = computed(() =>
-  classNames(
-    styles.Scrollable,
-    vertical && styles.vertical,
-    horizontal && styles.horizontal,
-    topShadow.value && styles.hasTopShadow,
-    bottomShadow.value && styles.hasBottomShadow,
-    vertical && canScroll.value && styles.verticalHasScrolling,
-  ),
-);
+const finalClassName = computed(() => classNames(
+  styles.Scrollable,
+  vertical && styles.vertical,
+  horizontal && styles.horizontal,
+  topShadow.value && styles.hasTopShadow,
+  bottomShadow.value && styles.hasBottomShadow,
+  vertical && canScroll.value && styles.verticalHasScrolling,
+));
 
 const handleScroll = (): void => {
   if (!scrollArea.value) {
@@ -101,8 +97,8 @@ const handleScroll = (): void => {
   }
 
   topShadow.value = shouldTopShadow;
-  scrollPosition.value = scrollTop;
   bottomShadow.value = shouldBottomShadow;
+  scrollPosition.value = scrollTop;
   canScroll.value = scrollAble;
 };
 
@@ -121,9 +117,9 @@ const toggleLock = (shouldLock = true): void => {
 
   EVENTS_TO_LOCK.forEach((eventName) => {
     if (shouldLock) {
-      (scrollArea.value as HTMLDivElement).addEventListener(eventName, prevent);
+      scrollArea.value?.addEventListener(eventName, prevent);
     } else {
-      (scrollArea.value as HTMLDivElement).removeEventListener(eventName, prevent);
+      scrollArea.value?.removeEventListener(eventName, prevent);
     }
   });
 };
@@ -147,7 +143,11 @@ const scrollHint = (): void => {
 
   const { clientHeight, scrollHeight } = scrollArea.value;
 
-  if (PREFERS_REDUCED_MOTION || scrollPosition.value > 0 || scrollHeight <= clientHeight) {
+  if (
+    PREFERS_REDUCED_MOTION
+    || scrollPosition.value > 0
+    || scrollHeight <= clientHeight
+  ) {
     return;
   }
 
@@ -155,7 +155,9 @@ const scrollHint = (): void => {
 
   toggleLock();
 
-  scrollPosition.value = scrollDistance > MAX_SCROLL_DISTANCE ? MAX_SCROLL_DISTANCE : scrollDistance;
+  scrollPosition.value = scrollDistance > MAX_SCROLL_DISTANCE
+    ? MAX_SCROLL_DISTANCE
+    : scrollDistance;
   window.requestAnimationFrame(scrollStep);
 };
 
@@ -172,6 +174,7 @@ onMounted(() => {
   window.addEventListener('resize', handleResize);
   window.requestAnimationFrame(() => {
     handleScroll();
+  
     if (hint) {
       scrollHint();
     }

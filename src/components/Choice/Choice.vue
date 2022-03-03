@@ -36,6 +36,7 @@ label(
 </template>
 
 <script setup lang="ts">
+import { computed } from 'vue';
 import { classNames } from 'polaris-react/src/utilities/css';
 import styles from '@/classes/Choice.json';
 import type { Error } from 'types/type';
@@ -55,7 +56,11 @@ interface Props {
 
 const props = defineProps<Props>();
 
-const className = classNames(styles.Choice, props.labelHidden && styles.labelHidden, props.disabled && styles.disabled);
+const className = computed(() => classNames(
+  styles.Choice,
+  props.labelHidden && styles.labelHidden,
+  props.disabled && styles.disabled,
+));
 </script>
 
 <style lang="scss">

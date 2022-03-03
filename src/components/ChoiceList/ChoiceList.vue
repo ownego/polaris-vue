@@ -39,6 +39,7 @@ fieldset(
 </template>
 
 <script setup lang="ts">
+import { computed } from 'vue';
 import { classNames } from 'polaris-react/src/utilities/css';
 import { UseUniqueId } from '@/use';
 import styles from '@/classes/ChoiceList.json';
@@ -82,13 +83,16 @@ const emits = defineEmits<{
 }>();
 
 const { useUniqueId } = UseUniqueId();
-const uniqueId = useUniqueId('ChoiceList', props.name);
-const finalName = props.allowMultiple ? `${uniqueId}Multiple` : uniqueId;
+const uniqueId = computed(() => useUniqueId('ChoiceList', props.name));
+const finalName = computed(() => props.allowMultiple
+  ? `${uniqueId.value}Multiple`
+  : uniqueId.value,
+);
 
-const className = classNames(
+const className = computed(() => classNames(
   styles.ChoiceList,
   props.titleHidden && styles.titleHidden,
-);
+));
 
 const isChoiceSelected = (choice: Choice): boolean => (
   props.allowMultiple
@@ -100,7 +104,7 @@ const updateSelectedChoices = (event: Event): string | string[] => {
   const target = event.target as HTMLInputElement;
 
   if (target.checked) {
-    return props.allowMultiple && Array.isArray(props.modelValue)
+    return props.allowMultiple
       ? [...props.modelValue, target.value]
       : target.value;
   }
