@@ -6,7 +6,6 @@ import svgLoader from 'vite-svg-loader';
 import checker from 'vite-plugin-checker';
 import babel from '@rollup/plugin-babel';
 import typescript from '@rollup/plugin-typescript';
-
 import vue from '@vitejs/plugin-vue';
 import packageJson from './package.json';
 
@@ -31,18 +30,15 @@ export default defineConfig({
     vue({
       reactivityTransform: true,
     }),
-    // dts({
-    //   outputDir: 'dist/types',
-    // }),
   ],
   resolve: {
-    dedupe: ['vue'],
     alias: {
       '@icons': fileURLToPath(new URL('./node_modules/@shopify/polaris-icons/dist/svg', import.meta.url)),
       '@': fileURLToPath(new URL('./src/', import.meta.url)),
       '~': fileURLToPath(new URL('./node_modules', import.meta.url)),
       types: fileURLToPath(new URL('./types', import.meta.url)),
     },
+    dedupe: ['vue'],
   },
   build: {
     lib: {
@@ -50,7 +46,7 @@ export default defineConfig({
       name: 'Polaris Vue',
       fileName: (format) => `polaris-vue.${format}.js`,
     },
-    cssCodeSplit: true,
+    cssCodeSplit: false,
     cssTarget: 'chrome61',
     rollupOptions: {
       external: ['vue'],
@@ -58,7 +54,6 @@ export default defineConfig({
         globals: {
           vue: 'Vue',
         },
-        sourcemap: true,
         exports: 'named',
       },
       plugins: [
@@ -67,7 +62,7 @@ export default defineConfig({
         }),
         babel({
           exclude: 'node_modules/**',
-          extensions: ['.ts', '.vue'],
+          extensions: ['.ts', '.tsx', '.vue'],
           babelHelpers: 'bundled',
         }),
       ],

@@ -22,6 +22,7 @@
     "resolveJsonModule": true,
     "esModuleInterop": true,
     "sourceMap": true,
+    "skipLibCheck": true,
     "strict": true,
     "jsx": "preserve",
     "importHelpers": true,
