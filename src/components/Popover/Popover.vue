@@ -28,7 +28,7 @@ component(
 </template>
 
 <script setup lang="ts">
-import { watch, ref, onMounted, withDefaults } from 'vue';
+import { watch, ref, onMounted } from 'vue';
 import { portal } from 'polaris-react/src/components/shared';
 import { findFirstFocusableNodeIncludingDisabled, focusNextFocusableNode } from '@/utilities/focus';
 import { UseUniqueId } from '@/use';

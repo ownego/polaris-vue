@@ -44,7 +44,7 @@ PositionedOverlay(
 </template>
 
 <script setup lang="ts">
-import { computed, onBeforeUnmount, onMounted, ref, watch, withDefaults } from 'vue';
+import { computed, onBeforeUnmount, onMounted, ref, watch } from 'vue';
 import { classNames } from 'polaris-react/src/utilities/css';
 import { tokens } from 'polaris-react/src/tokens';
 import { findFirstFocusableNode } from '@/utilities/focus';

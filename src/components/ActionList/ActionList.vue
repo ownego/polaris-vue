@@ -32,7 +32,7 @@ components(
 </template>
 
 <script setup lang="ts">
-import { computed, ref, withDefaults } from 'vue';
+import { computed, ref } from 'vue';
 import { classNames } from 'polaris-react/src/utilities/css';
 import { wrapFocusPreviousFocusableMenuItem, wrapFocusNextFocusableMenuItem } from '@/utilities/focus';
 import { KeypressListener } from '@/components/KeypressListener';

@@ -41,7 +41,7 @@ ButtonMarkup(
 
 <script setup lang="ts">
 import {
-  computed, ref, withDefaults, useSlots,
+  computed, ref, useSlots,
 } from 'vue';
 import { classNames, variationName } from 'polaris-react/src/utilities/css';
 import CaretDownMinor from '@icons/CaretDownMinor.svg';
