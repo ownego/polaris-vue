@@ -14,7 +14,6 @@ export interface ConnectedDisclosure {
 }
 
 export interface ButtonProps extends BaseButton {
-  children?: string | string[];
   primary?: boolean;
   destructive?: boolean;
   size?: 'slim' | 'medium' | 'large';
@@ -38,7 +37,6 @@ export interface CommonButtonProps
   | 'role'
   > {
   className: UnstyledButtonProps['className'];
-  onMouseUp: (event: MouseEvent)=> void;
 }
 
 export type LinkButtonProps = Pick<ButtonProps, 'url' | 'external' | 'download'>;

@@ -5,6 +5,7 @@ div(
 )
   ButtonMarkup(
     v-bind="buttonMarkupProps",
+    v-on="buttonMarkupEvents",
   )
     slot
   Popover(
@@ -35,18 +36,19 @@ div(
 ButtonMarkup(
   v-else,
   v-bind="buttonMarkupProps",
+  v-on="buttonMarkupEvents",
 )
   slot
 </template>
 
 <script setup lang="ts">
 import {
-  computed, ref, useSlots,
+  computed, onMounted, ref, useSlots,
 } from 'vue';
 import { classNames, variationName } from 'polaris-react/src/utilities/css';
 import CaretDownMinor from '@icons/CaretDownMinor.svg';
 import { handleMouseUpByBlurring } from '@/utilities/focus';
-import type { IconSource, BaseButton } from 'types/type';
+import type { IconSource } from 'types/type';
 import styles from '@/classes/Button.json';
 import type { ConnectedDisclosure } from './utils';
 import { Popover } from '../Popover';
@@ -54,34 +56,112 @@ import { ActionList } from '../ActionList';
 import { Icon } from '../Icon';
 import ButtonMarkup from './ButtonMarkup.vue';
 
-interface Props extends BaseButton {
-  children?: string | string[];
+interface Props {
+  /** A unique identifier for the button */
+  id?: string;
+  /** A destination to link to, rendered in the href attribute of a link */
+  url?: string;
+  /** Forces url to open in a new tab */
+  external?: boolean;
+  /** Tells the browser to download the url instead of opening it.
+   * Provides a hint for the downloaded filename if it is a string value */
+  download?: string | boolean;
+  /** Allows the button to submit a form */
+  submit?: boolean;
+  /** Disables the button, disallowing merchant interaction */
+  disabled?: boolean;
+  /** Replaces button text with a spinner while a background action is being performed */
+  loading?: boolean;
+  /** Sets the button in a pressed state */
+  pressed?: boolean;
+  /** Visually hidden text for screen readers */
+  accessibilityLabel?: string;
+  /** A valid WAI-ARIA role to define the semantic value of this element */
+  role?: string;
+  /** Id of the element the button controls */
+  ariaControls?: string;
+  /** Tells screen reader the controlled element is expanded */
+  ariaExpanded?: boolean;
+  /** Indicates the ID of the element that describes the button */
+  ariaDescribedBy?: string;
+  /**
+   * Provides extra visual weight and identifies the primary action in a set of buttons
+   */
   primary?: boolean;
+  /**
+   * Indicates a dangerous or potentially negative action
+   */
   destructive?: boolean;
+  /**
+   * Changes the size of the button, giving it more or less padding
+   * @values slim | medium | large
+   */
   size?: 'slim' | 'medium' | 'large';
+  /**
+   * Changes the inner text alignment of the button
+   * @values left | center | right
+   */
   textAlign?: 'left' | 'right' | 'center';
+  /**
+   * Gives the button a subtle alternative to the default button styling,
+   * appropriate for certain backdrops
+   */
   outline?: boolean;
+  /**
+   * Indicates a dangerous or potentially negative action
+   */
   fullWidth?: boolean;
+  /**
+   * Displays the button with a disclosure icon. Defaults to `down` when set to true
+   * @values down | up | select | boolean
+   */
   disclosure?: 'down' | 'up' | 'select' | boolean;
+  /**
+   * Renders a button that looks like a link
+   */
   plain?: boolean;
+  /**
+   * Makes plain and outline Button colors (text, borders, icons) the same as the current text color
+   * Also adds an underline to `plain` Buttons
+   */
   monochrome?: boolean;
+  /**
+   * Removes underline from button text (including on interaction)when monochrome and plain are true
+   */
   removeUnderline?: boolean;
+  /**
+   * Icon to display to the left of the button content.
+   */
   icon?: IconSource;
+  /**
+   * Disclosure button connected right of the button. Toggles a popover action list.
+   */
   connectedDisclosure?: ConnectedDisclosure;
 }
 
 const props = withDefaults(defineProps<Props>(), {
   size: 'medium',
-  children: undefined,
   disclosure: undefined,
   textAlign: undefined,
+  url: '',
 });
+
+const emit = defineEmits<{
+  (event: 'blur'): void;
+  (event: 'click'): void;
+  (event: 'focus'): void;
+  (event: 'keydown'): void;
+  (event: 'keypress'): void;
+  (event: 'keyup'): void;
+  (event: 'mouseover'): void;
+  (event: 'touchstart'): void;
+}>();
 
 const slots = useSlots();
 
-const disclosureActive = ref<boolean>(false);
+const hasChildren = !!slots.default
 
-const children = ref<boolean>(!!slots.default);
+const disclosureActive = ref<boolean>(false);
 
 const isDisabled = computed(() => props.disabled || props.loading);
 
@@ -103,7 +183,7 @@ const className = computed(() => {
     props.size !== 'medium' && sizeVariation && styles[sizeVariation],
     textAlignVariation && styles[textAlignVariation],
     props.fullWidth && styles.fullWidth,
-    props.icon && !props.children && styles.iconOnly,
+    props.icon && !hasChildren && styles.iconOnly,
     props.connectedDisclosure && styles.connectedDisclosure,
     props.removeUnderline && styles.removeUnderline,
   );
@@ -154,15 +234,27 @@ const buttonMarkupProps = computed(() => {
     removeUnderline, disclosure, loading, icon,
   } = props;
   return {
-    // commonProps: commonProps.value,
-    // linkProps: linkProps.value,
-    // actionProps: actionProps.value,
-    // removeUnderline,
-    // children: children.value,
-    // disclosure,
-    // loading,
-    // icon,
-    // mouseup: handleMouseUpByBlurring,
+    commonProps: commonProps.value,
+    linkProps: linkProps.value,
+    actionProps: actionProps.value,
+    removeUnderline,
+    children: hasChildren,
+    disclosure,
+    loading,
+    icon,
+  };
+});
+
+const buttonMarkupEvents = computed(() => {
+  return {
+    blur: emit('blur'),
+    click: emit('click'),
+    focus: emit('focus'),
+    keydown: emit('keydown'),
+    keypress: emit('keypress'),
+    keyup: emit('keyup'),
+    mouseover: emit('mouseover'),
+    touchstart: emit('touchstart'),
   };
 });
 

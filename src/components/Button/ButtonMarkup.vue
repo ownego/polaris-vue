@@ -1,6 +1,7 @@
 <template lang="pug">
 UnstyledButton(
   v-bind="{...commonProps, ...linkProps, ...actionProps}",
+  v-on="events",
 )
   span(:class="styles.Content")
     span(
@@ -47,13 +48,37 @@ interface Props {
   linkProps?: LinkButtonProps;
   actionProps?: ActionButtonProps;
   removeUnderline?: ButtonProps['removeUnderline'];
-  children?: ButtonProps['children'];
+  children?: boolean;
   disclosure?: ButtonProps['disclosure'];
   loading?: ButtonProps['loading'];
   icon?: ButtonProps['icon'];
 }
 
+const emit = defineEmits<{
+  (event: 'blur'): void;
+  (event: 'click'): void;
+  (event: 'focus'): void;
+  (event: 'keydown'): void;
+  (event: 'keypress'): void;
+  (event: 'keyup'): void;
+  (event: 'mouseover'): void;
+  (event: 'touchstart'): void;
+}>();
+
 const props = defineProps<Props>();
+
+const events = computed(() => {
+  return {
+    blur: emit('blur'),
+    click: emit('click'),
+    focus: emit('focus'),
+    keydown: emit('keydown'),
+    keypress: emit('keypress'),
+    keyup: emit('keyup'),
+    mouseover: emit('mouseover'),
+    touchstart: emit('touchstart'),
+  };
+});
 
 const iconClass = computed(() => {
   return classNames(styles.Icon, props.loading && styles.hidden);

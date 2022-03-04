@@ -92,10 +92,18 @@ const props = withDefaults(defineProps<PopoverProps>(), {
   preferInputActivator: true,
   autofocusTarget: 'container',
 });
-const emit = defineEmits<{ (event: 'close', source: PopoverCloseSource): void; (event: 'scrolled-to-bottom'): void }>();
+
+const emit = defineEmits<{
+  (event: 'close', source: PopoverCloseSource): void;
+  (event: 'scrolled-to-bottom'): void
+}>();
+
 const container = ref<HTMLElement | null>(null);
+
 const activator = ref<HTMLElement | null>(null);
+
 const { useUniqueId } = UseUniqueId();
+
 const id = ref<string>(useUniqueId('popover'));
 
 const setAccessibilityAttributes = () => {

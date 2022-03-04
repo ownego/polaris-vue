@@ -9,7 +9,7 @@ ButtonGroupItem(v-if="action")
 <script setup lang="ts">
 import { computed } from 'vue';
 import type { ComplexAction } from '@/utilities/interface';
-// import { ButtonGroupItem } from '@/components/ButtonGroup';
+import { ButtonGroupItem } from '@/components/ButtonGroup';
 import { Button } from '@/components/Button';
 import type { ButtonProps } from './utils';
 
