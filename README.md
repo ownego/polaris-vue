@@ -1,5 +1,7 @@
 # Polaris Vue
 
+Polaris Vue by qikify only supports **Vue 3.0.0+**.
+
 Polaris Vue by Qikify based on [Shopify Polaris style guide](https://polaris.shopify.com/), built especially for Vue 3.
 We're trying to make it mostly close with Shopify style guide and get a better performance.
 

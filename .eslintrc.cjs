@@ -35,7 +35,6 @@ module.exports = {
     'id-match': ['error', '^[A-Za-z0-9-_$]+$', { properties: true }], // To prevent cyrillic letters etc.
     'vue/html-closing-bracket-spacing': 'error',
     'vue/no-multiple-template-root': 'off',
-    // remove when this issue will be resolved: https://github.com/import-js/eslint-plugin-import/issues/2228
     'no-void': 'off',
     'import/named': 0,
     'import/export': 0,
