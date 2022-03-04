@@ -30,6 +30,7 @@ export * from './RadioButton';
 export * from './Scrollable';
 export * from './Spinner';
 export * from './Subheading';
+export * from './Tag';
 export * from './TextContainer';
 export * from './TextStyle';
 export * from './Truncate';
