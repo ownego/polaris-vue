@@ -12,7 +12,7 @@
   "compilerOptions": {
     "baseUrl": ".",
     "composite": true,
-    "types": ["node", "vite/client"],
+    "types": ["node", "vite-svg-loader", "vite/client"],
     "declaration": true,
     "declarationMap": true,
     "declarationDir": "dist/types",

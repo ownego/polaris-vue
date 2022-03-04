@@ -17,6 +17,7 @@ module.exports = {
   },
   rules: {
     'vue/require-default-prop': 'off',
+    "vue/multi-word-component-names": 'off',
     'no-console': 'off',
     'no-debugger': 'off',
     'comma-dangle': ['error', 'always-multiline'],

@@ -1,3 +1,4 @@
+const svgLoader = require('vite-svg-loader');
 const { loadConfigFromFile, mergeConfig } = require('vite');
 const eslintPlugin = require('vite-plugin-eslint').default;
 const path = require('path');
@@ -29,6 +30,7 @@ module.exports = {
     return mergeConfig(previousConfig, {
       ...config,
       plugins: [
+        svgLoader(),
         eslintPlugin({
           exclude: ['node_modules/**', 'src/**'],
         }),
