@@ -1,0 +1,56 @@
+import { Meta, Story, Canvas, ArgsTable } from '@storybook/addon-docs';
+
+import { KeyboardKey } from '@/polaris-vue';
+
+<Meta
+  title="Components / Images and icons / Keyboard Key"
+  component={ KeyboardKey }
+  argTypes={{
+    default: {
+      name: 'default',
+      description: 'The content to display inside the key',
+      control: {
+        type: 'text',
+      },
+      table: {
+        category: 'Slots',
+        type: {
+          summary: null,
+        },
+      },
+    },
+  }}
+/>
+
+export const Template = (args) => ({
+  components: { KeyboardKey },
+  setup() {
+    return { args };
+  },
+  template: '<KeyboardKey>{{ args.default }}</KeyboardKey>',
+});
+
+# Keyboard Key
+
+Keyboard key is used to educate merchants about keyboard shortcuts.
+
+<Canvas>
+  <Story
+    name="Keyboard Key"
+    height="50px"
+    args={{
+      default: 'Ctrl',
+    }}
+    parameters={{
+      docs: {
+        source: {
+          code: '<KeyboardKey>ctrl</KeyboardKey>',
+        }
+      },
+    }}
+  >
+    {Template.bind({})}
+  </Story>
+</Canvas>
+
+<ArgsTable story="Keyboard Key" />
