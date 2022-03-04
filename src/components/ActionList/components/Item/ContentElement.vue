@@ -25,11 +25,10 @@ span(:class="styles.Content")
 </template>
 
 <script setup lang="ts">
-// TODO: update badge
 import { computed } from 'vue';
 import { TextStyle } from '@/components/TextStyle';
 import { Icon } from '@/components/Icon';
-// import { Badge } from '@/components/Badge';
+import { Badge } from '@/components/Badge';
 import styles from '@/classes/ActionList.json';
 import type { IconableAction, DisableableAction, BadgeAction, DestructableAction } from '@/utilities/interface';
 
