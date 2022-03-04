@@ -1,7 +1,4 @@
-import PolarisVue from '@/polaris-vue';
-import { app } from '@storybook/vue3';
-
-app.use(PolarisVue);
+import { AppProvider } from '@/polaris-vue';
 
 export const decorators = [(story) => ({
   components: {AppProvider, story},

@@ -14,7 +14,7 @@ export default defineConfig({
       vueTsc: true,
       typescript: true,
       eslint: {
-        lintCommand: 'eslint . --ext .vue,.js,.cjs,.ts,.tsx --ignore-path .eslintignore --quiet',
+        lintCommand: 'eslint . --ext .vue,.js,.cjs,.ts,.tsx --ignore-path .eslintignore --quiet .',
       },
     }),
     replaceCodePlugin({
