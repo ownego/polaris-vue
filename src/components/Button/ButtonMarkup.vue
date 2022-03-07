@@ -1,7 +1,7 @@
 <template lang="pug">
 UnstyledButton(
   v-bind="{...commonProps, ...linkProps, ...actionProps}",
-  v-on="events",
+  v-on="listeners",
 )
   span(:class="styles.Content")
     span(
@@ -28,8 +28,14 @@ UnstyledButton(
         Icon(:source="loading ? 'placeholder' : getDisclosureIconSource")
 </template>
 
+<script lang="ts">
+export default {
+  inheritAttrs: false,
+}
+</script>
+
 <script setup lang="ts">
-import { computed } from 'vue';
+import { computed, useAttrs } from 'vue';
 import { classNames } from 'polaris-react/src/utilities/css';
 import SelectMinor from '@icons/SelectMinor.svg';
 import CaretUpMinor from '@icons/CaretUpMinor.svg';
@@ -42,6 +48,7 @@ import { UnstyledButton } from '../UnstyledButton';
 import { Icon } from '../Icon';
 import { Spinner } from '../Spinner';
 import type { IconSource } from 'types/type';
+import { capitalize } from 'lodash';
 
 interface Props {
   commonProps?: CommonButtonProps;
@@ -54,30 +61,20 @@ interface Props {
   icon?: ButtonProps['icon'];
 }
 
-const emit = defineEmits<{
-  (event: 'blur'): void;
-  (event: 'click'): void;
-  (event: 'focus'): void;
-  (event: 'keydown'): void;
-  (event: 'keypress'): void;
-  (event: 'keyup'): void;
-  (event: 'mouseover'): void;
-  (event: 'touchstart'): void;
-}>();
-
 const props = defineProps<Props>();
 
-const events = computed(() => {
-  return {
-    blur: emit('blur'),
-    click: emit('click'),
-    focus: emit('focus'),
-    keydown: emit('keydown'),
-    keypress: emit('keypress'),
-    keyup: emit('keyup'),
-    mouseover: emit('mouseover'),
-    touchstart: emit('touchstart'),
-  };
+const attrs = useAttrs();
+
+const listeners = computed(() => {
+  const events = ['blur', 'click', 'focus', 'keydown', 'keypress', 'keyup', 'mouseover', 'touchstart'];
+  const eventBindings: Record<string, unknown> = {};
+  events.forEach((event) => {
+    const eventName = `on${capitalize(event)}`;
+    if (attrs[eventName]) {
+      eventBindings[event] = attrs[eventName];
+    }
+  });
+  return eventBindings;
 });
 
 const iconClass = computed(() => {

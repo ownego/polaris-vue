@@ -6,6 +6,12 @@ ButtonGroupItem(v-if="action")
   ) {{ action.content }}
 </template>
 
+<script lang="ts">
+export default {
+  inheritAttrs: false,
+}
+</script>
+
 <script setup lang="ts">
 import { computed } from 'vue';
 import type { ComplexAction } from '@/utilities/interface';

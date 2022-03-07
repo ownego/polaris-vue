@@ -5,7 +5,7 @@ div(
 )
   ButtonMarkup(
     v-bind="buttonMarkupProps",
-    v-on="buttonMarkupEvents",
+    v-on="listeners",
   )
     slot
   Popover(
@@ -36,18 +36,25 @@ div(
 ButtonMarkup(
   v-else,
   v-bind="buttonMarkupProps",
-  v-on="buttonMarkupEvents",
+  v-on="listeners",
 )
   slot
 </template>
 
+<script lang="ts">
+export default {
+  inheritAttrs: false,
+}
+</script>
+
 <script setup lang="ts">
 import {
-  computed, onMounted, ref, useSlots,
+  computed, ref, useAttrs, useSlots,
 } from 'vue';
 import { classNames, variationName } from 'polaris-react/src/utilities/css';
 import CaretDownMinor from '@icons/CaretDownMinor.svg';
 import { handleMouseUpByBlurring } from '@/utilities/focus';
+import { capitalize } from 'lodash';
 import type { IconSource } from 'types/type';
 import styles from '@/classes/Button.json';
 import type { ConnectedDisclosure } from './utils';
@@ -146,18 +153,20 @@ const props = withDefaults(defineProps<Props>(), {
   url: '',
 });
 
-const emit = defineEmits<{
-  (event: 'blur'): void;
-  (event: 'click'): void;
-  (event: 'focus'): void;
-  (event: 'keydown'): void;
-  (event: 'keypress'): void;
-  (event: 'keyup'): void;
-  (event: 'mouseover'): void;
-  (event: 'touchstart'): void;
-}>();
-
 const slots = useSlots();
+const attrs = useAttrs();
+
+const listeners = computed(() => {
+  const events = ['blur', 'click', 'focus', 'keydown', 'keypress', 'keyup', 'mouseover', 'touchstart'];
+  const eventBindings: Record<string, unknown> = {};
+  events.forEach((event) => {
+    const eventName = `on${capitalize(event)}`;
+    if (attrs[eventName]) {
+      eventBindings[event] = attrs[eventName];
+    }
+  });
+  return eventBindings;
+});
 
 const hasChildren = !!slots.default
 
@@ -245,19 +254,6 @@ const buttonMarkupProps = computed(() => {
   };
 });
 
-const buttonMarkupEvents = computed(() => {
-  return {
-    blur: emit('blur'),
-    click: emit('click'),
-    focus: emit('focus'),
-    keydown: emit('keydown'),
-    keypress: emit('keypress'),
-    keyup: emit('keyup'),
-    mouseover: emit('mouseover'),
-    touchstart: emit('touchstart'),
-  };
-});
-
 const connectedDisclosureData = computed(() => {
   if (props.connectedDisclosure) {
     const {
@@ -273,6 +269,7 @@ const connectedDisclosureData = computed(() => {
 const toggleDisclosureActive = () => {
   disclosureActive.value = !disclosureActive.value;
 };
+
 </script>
 
 <style lang="scss">

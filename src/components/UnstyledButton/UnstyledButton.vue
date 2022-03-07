@@ -7,12 +7,7 @@ UnstyledLink(
   :url="url",
   :external="external",
   :download="download",
-  @click="emit('click')",
-  @focus="emit('focus')",
-  @blur="emit('blur')",
-  @mouseup="handleMouseUpByBlurring",
-  @mouseover="emit('mouseover')",
-  @touchstart="emit('touchstart')",
+  v-on="linkListeners",
 )
   slot
 button(
@@ -26,15 +21,22 @@ button(
   :aria-expanded="ariaExpanded",
   :aria-describedby="ariaDescribedBy",
   :aria-pressed="pressed",
-  v-on="events",
+  v-on="buttonListeners",
 )
   slot
 </template>
 
+<script lang="ts">
+export default {
+  inheritAttrs: false,
+}
+</script>
+
 <script setup lang="ts">
-import { computed } from 'vue';
+import { computed, onMounted, useAttrs } from 'vue';
 import { UnstyledLink } from '@/components/UnstyledLink';
 import { handleMouseUpByBlurring } from '@/utilities/focus';
+import { capitalize } from 'lodash';
 
 interface Props {
   id?: string;
@@ -56,30 +58,24 @@ interface Props {
 
 const props = defineProps<Props>();
 
-const emit = defineEmits<{
-  (event: 'blur'): void;
-  (event: 'click'): void;
-  (event: 'focus'): void;
-  (event: 'keydown'): void;
-  (event: 'keypress'): void;
-  (event: 'keyup'): void;
-  (event: 'mouseover'): void;
-  (event: 'touchstart'): void;
-}>();
+const attrs = useAttrs();
 
-const events = computed(() => {
-  return {
-    blur: emit('blur'),
-    click: emit('click'),
-    focus: emit('focus'),
-    keydown: emit('keydown'),
-    keypress: emit('keypress'),
-    keyup: emit('keyup'),
-    mouseover: emit('mouseover'),
-    touchstart: emit('touchstart'),
-    mouseup: handleMouseUpByBlurring,
-  };
-});
+const getEventList = (events) => {
+  const eventBindings = { mouseup: handleMouseUpByBlurring };
+  events.forEach((event) => {
+    const eventName = `on${capitalize(event)}`;
+    if (attrs[eventName]) {
+      eventBindings[event] = attrs[eventName];
+    }
+  });
+  return eventBindings;
+}
+
+const buttonListeners = getEventList(
+  ['blur', 'click', 'focus', 'keydown', 'keypress', 'keyup', 'mouseover', 'touchstart'],
+);
+
+const linkListeners = getEventList(['blur', 'click', 'focus', 'mouseover', 'touchstart']);
 
 const commonProps = computed(() => ({
   id: props.id,
