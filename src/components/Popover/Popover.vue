@@ -22,13 +22,20 @@ component(
       @close="handleClose",
       @scrolled-to-bottom="emit('scrolled-to-bottom')",
     )
-      template(v-slot:overlay="props")
+      template(#overlay="attrs")
         slot(name="content")
-      //- slot(name="extra-content", slot="extra-content")
+      template(#extra-content)
+        slot(name="extra-content")
 </template>
 
+<script lang="ts">
+export default {
+  inheritAttrs: false,
+}
+</script>
+
 <script setup lang="ts">
-import { watch, ref, onMounted } from 'vue';
+import { watch, ref, onMounted, useAttrs } from 'vue';
 import { portal } from 'polaris-react/src/components/shared';
 import { findFirstFocusableNodeIncludingDisabled, focusNextFocusableNode } from '@/utilities/focus';
 import { UseUniqueId } from '@/use';
@@ -93,6 +100,8 @@ const props = withDefaults(defineProps<PopoverProps>(), {
   autofocusTarget: 'container',
 });
 
+const attrs = useAttrs();
+
 const emit = defineEmits<{
   (event: 'close', source: PopoverCloseSource): void;
   (event: 'scrolled-to-bottom'): void
@@ -107,6 +116,7 @@ const { useUniqueId } = UseUniqueId();
 const id = ref<string>(useUniqueId('popover'));
 
 const setAccessibilityAttributes = () => {
+  console.log('active', props.active);
   if (container.value) {
     const containerNode = container.value;
     const firstFocusable = findFirstFocusableNodeIncludingDisabled(containerNode);
@@ -154,9 +164,12 @@ const handleClose = (source: PopoverCloseSource) => {
 };
 
 onMounted(() => {
+  console.log('this is mounted', container.value);
+  console.log('this is mounted', props);
   if (container.value) {
     const activatorNode = container.value.firstElementChild;
     if (activatorNode) {activator.value = activatorNode as HTMLElement;}
+    console.log('activator', activator.value);
     setAccessibilityAttributes();
   }
 });

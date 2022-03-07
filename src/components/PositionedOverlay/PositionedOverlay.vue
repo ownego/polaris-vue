@@ -2,7 +2,6 @@
 div(:class="className", :style="style", ref="overlayRef")
   div(:class="popoverClassName", v-bind="{...overlay.props}")
     slot(
-      name="overlay",
       :measuring="measuring",
       :left="left",
       :right="right",
@@ -12,6 +11,12 @@ div(:class="className", :style="style", ref="overlayRef")
     )
   EventListener(event="resize", :handler="handleMeasurement")
 </template>
+
+<script lang="ts">
+export default {
+  inheritAttrs: false,
+}
+</script>
 
 <script setup lang="ts">
 import { ref, computed, onBeforeMount, onUpdated, onMounted, onBeforeUnmount } from 'vue';

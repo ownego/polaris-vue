@@ -13,35 +13,36 @@ PositionedOverlay(
   @scroll-out="handleScrollOut",
   @change-content-styles="changeContentStyles",
 )
-  template(
-    #overlay,
-    slot-scope="props",
-  )
-    div(:class="styles.FocusTracker", tabIndex="0", @focus="handleFocusFirstItem")
-    CustomProperties(:color-scheme="colorScheme")
-      div(:class="styles.Wrapper")
-        div(
-          :id="id",
-          :tabIndex="autofocusTarget === 'none' ? undefined : -1",
-          :style="contentStyles",
-          :class="contentClassNames",
-          ref="contentRef",
+  div(:class="styles.FocusTracker", tabIndex="0", @focus="handleFocusFirstItem")
+  CustomProperties(:color-scheme="colorScheme")
+    div(:class="styles.Wrapper")
+      div(
+        :id="id",
+        :tabIndex="autofocusTarget === 'none' ? undefined : -1",
+        :style="contentStyles",
+        :class="contentClassNames",
+        ref="contentRef",
+      )
+        slot(name="extra-content")
+        Pane(
+          :sectioned="sectioned",
+          :fixed="fixed",
+          @scrolled-to-bottom="$emit('scrolled-to-bottom')",
         )
-          slot(name="extra-content")
-          Pane(
-            :sectioned="sectioned",
-            :fixed="fixed",
-            @scrolled-to-bottom="$emit('scrolled-to-bottom')",
+          slot(
+            name="overlay",
           )
-            slot(
-              name="overlay",
-              :data="props",
-            )
     div(:class="styles.FocusTracker", tabIndex="0", @focus="handleFocusLastItem")
     EventListener(event="click", :handler="handleClick")
     EventListener(event="touchstart", :handler="handleClick")
     KeypressListener(:keyCode="Key.Escape", :handler="handleEscape")
 </template>
+
+<script lang="ts">
+export default {
+  inheritAttrs: false,
+}
+</script>
 
 <script setup lang="ts">
 import { computed, onBeforeUnmount, onMounted, ref, watch } from 'vue';
