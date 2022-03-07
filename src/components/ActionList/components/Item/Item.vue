@@ -30,6 +30,12 @@ li(:role="roleName")
       slot(name="prefix", slot="prefix")
 </template>
 
+<script lang="ts">
+export default {
+  inheritAttrs: false,
+}
+</script>
+
 <script setup lang="ts">
 import { computed } from 'vue';
 import { classNames } from 'polaris-react/src/utilities/css';

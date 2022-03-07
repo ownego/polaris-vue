@@ -19,6 +19,12 @@ div(:class="className")
       slot(v-if="item.suffixId", :name="`suffix-${item.suffixId}`", slot="suffix")
 </template>
 
+<script lang="ts">
+export default {
+  inheritAttrs: false,
+}
+</script>
+
 <script setup lang="ts">
 import { computed } from 'vue';
 import { classNames } from 'polaris-react/src/utilities/css';

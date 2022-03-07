@@ -17,6 +17,12 @@ SectionMarkup(
     slot(v-if="suffixId", :name="`suffix-${suffixId}`", :slot="`suffix-${suffixId}`")
 </template>
 
+<script lang="ts">
+export default {
+  inheritAttrs: false,
+}
+</script>
+
 <script setup lang="ts">
 import { computed } from 'vue';
 import styles from '@/classes/ActionList.json';

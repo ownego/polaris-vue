@@ -24,6 +24,12 @@ span(:class="styles.Content")
     slot(name="suffix")
 </template>
 
+<script lang="ts">
+export default {
+  inheritAttrs: false,
+}
+</script>
+
 <script setup lang="ts">
 import { computed } from 'vue';
 import { TextStyle } from '@/components/TextStyle';

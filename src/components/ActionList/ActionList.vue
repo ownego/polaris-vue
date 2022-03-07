@@ -31,6 +31,12 @@ components(
     )
 </template>
 
+<script lang="ts">
+export default {
+  inheritAttrs: false,
+}
+</script>
+
 <script setup lang="ts">
 import { computed, ref } from 'vue';
 import { classNames } from 'polaris-react/src/utilities/css';
