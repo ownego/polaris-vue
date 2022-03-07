@@ -2,7 +2,7 @@
 ButtonGroupItem(v-if="action")
   Button(
     v-bind="bindProps",
-    @click="action.onAction",
+    @click="handleClick",
   ) {{ action.content }}
 </template>
 
@@ -21,6 +21,12 @@ interface Props {
 const props = withDefaults(defineProps<Props>(), {
   overrides: () => ({}),
 });
+
+const handleClick = () => {
+  if (props.action.onAction) {
+    props.action.onAction();
+  }
+};
 
 const bindProps = computed(() => {
   // eslint-disable-next-line @typescript-eslint/no-unused-vars

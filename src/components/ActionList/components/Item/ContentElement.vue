@@ -30,28 +30,34 @@ import { TextStyle } from '@/components/TextStyle';
 import { Icon } from '@/components/Icon';
 import { Badge } from '@/components/Badge';
 import styles from '@/classes/ActionList.json';
-import type { IconableAction, DisableableAction, BadgeAction, DestructableAction } from '@/utilities/interface';
+import type { IconSource } from 'types/type';
 
-interface ActionListItemDescriptor extends IconableAction, DisableableAction, BadgeAction, DestructableAction {
-  /** Visually hidden text for screen readers */
+interface Props {
+  id?: string;
+  content?: string;
+  url?: string;
+  external?: boolean;
+  badge?: {
+    status: 'new';
+    content: string;
+  };
+  destructive?: boolean;
+  disabled?: boolean;
+  icon?: IconSource;
   accessibilityLabel?: string;
-  /** Additional hint text to display with item */
   helpText?: string;
-  /** Image source */
   image?: string;
-  /** Prefix source */
   prefixId?: string;
-  /** Suffix source */
   suffixId?: string;
-  /**  Add an ellipsis suffix to action content */
   ellipsis?: boolean;
-  /** Whether the action is active or not */
   active?: boolean;
-  /** Defines a role for the action */
   role?: string;
+  onAction?(): void;
+  onMouseEnter?(): void;
+  onTouchStart?(): void;
 }
 
-const props = defineProps<ActionListItemDescriptor>();
+const props = defineProps<Props>();
 
 const contentText = computed(() => (props.ellipsis && props.content ? `${props.content}…` : props.content));
 </script>
