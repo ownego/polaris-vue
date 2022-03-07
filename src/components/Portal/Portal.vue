@@ -7,10 +7,16 @@ teleport(
     slot
 </template>
 
+<script lang="ts">
+export default {
+  inheritAttrs: false,
+}
+</script>
+
 <script setup lang="ts">
 import { ref, inject, onMounted } from 'vue';
 import { UseUniqueId } from '@/use';
-import type { PortalManager } from '@/utilities/portal-manager';
+import { PortalManager } from '@/utilities/portal-manager';
 
 const props = defineProps({
   idPrefix: {
@@ -19,7 +25,7 @@ const props = defineProps({
   },
 });
 
-const portalManager = inject('portalManager') as PortalManager;
+const portalManager = inject('portalManager', new PortalManager());
 
 const portalId = ref<string>('');
 

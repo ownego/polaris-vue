@@ -23,7 +23,7 @@ const props = defineProps({
 
 const scrollLockManager = ref(new ScrollLockManager());
 
-const portalManager = ref(new PortalManager());
+const portalManager = new PortalManager();
 
 const uniqueIdFactory = ref(new UniqueIdFactory(globalIdGeneratorFactory));
 
