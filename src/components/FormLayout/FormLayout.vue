@@ -1,8 +1,8 @@
 <template lang="pug">
 div(:class="styles.FormLayout")
   template(
-    v-if="$slots.default",
-    v-for="(item, index) in $slots.default()",
+    v-if="slots.default",
+    v-for="(item, index) in slots.default()",
   )
     Item(
       v-if="!itemGroupIndexes[index]",
@@ -22,13 +22,15 @@ div(:class="styles.FormLayout")
 </template>
 
 <script setup lang="ts">
-import { onBeforeUpdate, onMounted, ref } from 'vue';
+import { onBeforeUpdate, onMounted, ref, useSlots } from 'vue';
 import { Item } from './components';
 import styles from '@/classes/FormLayout.json';
 
 const itemRefs = ref<any[]>([]);
 
 const itemGroupIndexes = ref<boolean[]>([]);
+
+const slots = useSlots();
 
 onBeforeUpdate(() => {
   itemRefs.value = [];

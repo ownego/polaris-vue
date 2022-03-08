@@ -4,7 +4,6 @@ button(
   type="button",
   :disabled="disabled",
   :class="className",
-  @click="$emit('click')",
 )
   slot
 span(

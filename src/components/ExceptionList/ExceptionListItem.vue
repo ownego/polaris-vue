@@ -9,7 +9,7 @@ li(:class="classItem")
       :class="styles.Title",
     ) {{ title }}
     span(
-      v-if="$slots.default",
+      v-if="slots.default",
       :class="styles.Description",
     )
       slot
@@ -19,14 +19,14 @@ li(:class="classItem")
       :class="styles.Title",
     ) {{ title }}
     span(
-      v-if="$slots.default",
+      v-if="slots.default",
       :class="styles.Description",
     )
       slot
 </template>
 
 <script setup lang="ts">
-import { computed } from 'vue';
+import { computed, useSlots } from 'vue';
 import type { IconSource } from 'types/type';
 import { classNames, variationName } from 'polaris-react/src/utilities/css';
 import styles from '@/classes/ExceptionList.json';
@@ -48,6 +48,9 @@ interface Props {
 }
 
 const props = defineProps<Props>();
+
+const slots = useSlots();
+
 /**
  * Computed
  */

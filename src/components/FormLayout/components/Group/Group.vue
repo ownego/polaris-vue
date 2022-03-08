@@ -6,21 +6,21 @@ div(
   :aria-describedby="helpTextId",
 )
   div(
-    v-if="$slots.title",
+    v-if="slots.title",
     :id="titleId",
     :class="styles.Title",
   )
     slot(name="title")
   div(:class="styles.Items")
-    template(v-if="$slots.default")
+    template(v-if="slots.default")
       Item(
-        v-for="(item, index) in $slots.default()",
+        v-for="(item, index) in slots.default()",
         :key="index",
       )
         component(:is="item")
     slot(v-else)
   div(
-    v-if="$slots['help-text']",
+    v-if="slots['help-text']",
     :id="helpTextId",
     :class="styles.HelpText",
   )
@@ -28,7 +28,7 @@ div(
 </template>
 
 <script setup lang="ts">
-import { computed } from 'vue';
+import { computed, useSlots } from 'vue';
 import { classNames } from 'polaris-react/src/utilities/css';
 import { Item } from '../Item';
 import styles from '@/classes/FormLayout.json';
@@ -42,6 +42,8 @@ interface Props {
 }
 
 const props = defineProps<Props>();
+
+const slots = useSlots();
 
 const { useUniqueId } = UseUniqueId();
 const id = useUniqueId('FormLayoutGroup');
