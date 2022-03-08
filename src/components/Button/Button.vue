@@ -13,26 +13,27 @@ div(
     preferredAlignment="right",
     @close="toggleDisclosureActive",
   )
-    button(
-      slot="activator",
-      type="button",
-      :class="connectedDisclosureClassName",
-      :disabled="connectedDisclosureData.disabled",
-      :aria-label="connectedDisclosureData.disclosureLabel",
-      :aria-describedby="ariaDescribedBy",
-      @click="toggleDisclosureActive",
-      @mouseup="handleMouseUpByBlurring",
-    )
-      span
-        Icon(:source="CaretDownMinor")
-    ActionList(
-      slot="content",
-      :items="connectedDisclosure.actions",
-      @action-any-item="toggleDisclosureActive",
-    )
-      template(v-for="{prefixId, suffixId} in connectedDisclosure.actions")
-        slot(v-if="prefixId", :name="`prefix-${prefixId}`", :slot="`prefix-${prefixId}`")
-        slot(v-if="suffixId", :name="`suffix-${suffixId}`", :slot="`suffix-${suffixId}`")
+    template(#activator)
+      button(
+        type="button",
+        :class="connectedDisclosureClassName",
+        :disabled="connectedDisclosureData.disabled",
+        :aria-label="connectedDisclosureData.disclosureLabel",
+        :aria-describedby="ariaDescribedBy",
+        @click="toggleDisclosureActive",
+        @mouseup="handleMouseUpByBlurring",
+      )
+        span
+          Icon(:source="CaretDownMinor")
+    template(#content)
+      ActionList(
+        :items="connectedDisclosure.actions",
+        @action-any-item="toggleDisclosureActive",
+      )
+        template(v-for="{prefixId} in connectedDisclosure.actions" #[`prefix-${prefixId}`])
+          slot(:name="`prefix-${prefixId}`")
+        template(v-for="{suffixId} in connectedDisclosure.actions" #[`suffix-${suffixId}`])
+          slot(:name="`suffix-${suffixId}`")
 ButtonMarkup(
   v-else,
   v-bind="buttonMarkupProps",
