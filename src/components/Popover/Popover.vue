@@ -111,6 +111,8 @@ const activator = ref<HTMLElement | null>(null);
 
 const { useUniqueId } = UseUniqueId();
 
+const attrs = useAttrs();
+
 const id = ref<string>(useUniqueId('popover'));
 
 const setAccessibilityAttributes = () => {

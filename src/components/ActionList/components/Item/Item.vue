@@ -12,8 +12,10 @@ li(:role="roleName")
     @click="onClick",
   )
     ContentElement(v-bind="contentElementProps")
-      slot(name="suffix", slot="suffix")
-      slot(name="prefix", slot="prefix")
+      template(#suffix)
+        slot(name="suffix")
+      template(#prefix)
+        slot(name="prefix")
   button(
     v-else,
     :id="id",
@@ -26,8 +28,10 @@ li(:role="roleName")
     @mouseup="handleMouseUpByBlurring",
   )
     ContentElement(v-bind="contentElementProps")
-      slot(name="suffix", slot="suffix")
-      slot(name="prefix", slot="prefix")
+      template(#suffix)
+        slot(name="suffix")
+      template(#prefix)
+        slot(name="prefix")
 </template>
 
 <script lang="ts">

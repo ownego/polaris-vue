@@ -15,8 +15,10 @@ div(:class="className")
       v-bind="{...item}",
       @action="handleAction(onAction)",
     )
-      slot(v-if="item.prefixId", :name="`prefix-${item.prefixId}`", slot="prefix")
-      slot(v-if="item.suffixId", :name="`suffix-${item.suffixId}`", slot="suffix")
+      template(v-if="item.prefixId", #prefix)
+        slot(:name="`prefix-${item.prefixId}`")
+      template(v-if="item.suffixId", #suffix)
+        slot(:name="`suffix-${item.suffixId}`")
 </template>
 
 <script lang="ts">

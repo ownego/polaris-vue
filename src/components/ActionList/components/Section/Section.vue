@@ -4,17 +4,19 @@ li(v-if="hasMultipleSections", :class="styles.Section", role="presentation")
     v-bind="sectionMarkupProps",
     @action-any-item="emit('action-any-item')",
   )
-    template(v-for="{prefixId, suffixId} in section.items")
-        slot(v-if="prefixId", :name="`prefix-${prefixId}`", :slot="`prefix-${prefixId}`")
-        slot(v-if="suffixId", :name="`suffix-${suffixId}`", :slot="`suffix-${suffixId}`")
+    template(v-for="{prefixId} in section.items" #[`prefix-${prefixId}`])
+        slot(:name="`prefix-${prefixId}`")
+    template(v-for="{suffixId} in section.items" #[`suffix-${suffixId}`])
+      slot(:name="`suffix-${suffixId}`")
 SectionMarkup(
   v-else,
   v-bind="sectionMarkupProps",
   @action-any-item="emit('action-any-item')",
 )
-  template(v-for="{prefixId, suffixId} in section.items")
-    slot(v-if="prefixId", :name="`prefix-${prefixId}`", :slot="`prefix-${prefixId}`")
-    slot(v-if="suffixId", :name="`suffix-${suffixId}`", :slot="`suffix-${suffixId}`")
+  template(v-for="{prefixId} in section.items" #[`prefix-${prefixId}`])
+    slot(:name="`prefix-${prefixId}`")
+  template(v-for="{suffixId} in section.items" #[`suffix-${suffixId}`])
+    slot(:name="`suffix-${suffixId}`")
 </template>
 
 <script lang="ts">

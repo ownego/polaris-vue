@@ -7,6 +7,12 @@ div(
   slot
 </template>
 
+<script lang="ts">
+export default {
+  inheritAttrs: false,
+}
+</script>
+
 <script setup lang="ts">
 import { computed, ref, useSlots } from 'vue';
 import { classNames } from 'polaris-react/src/utilities/css';
@@ -18,7 +24,7 @@ const focused = ref<boolean>(false);
 const slots = useSlots();
 
 const slotProps = computed(() => {
-  return slots.default && slots.default[0].componentOptions?.propsData as anyKey;
+  return slots.default && slots.default()[0].props as anyKey;
 });
 
 const className = computed(() => {
