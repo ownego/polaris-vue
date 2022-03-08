@@ -1,3 +1,12 @@
+<script lang="ts">
+export default {
+  inheritAttrs: false,
+  render() {
+    return null;
+  },
+}
+</script>
+
 <script setup lang="ts">
 import { onBeforeUnmount, onMounted, watch } from 'vue';
 
@@ -12,7 +21,7 @@ const props = defineProps({
   event: { type: String, required: true },
   capture: { type: Boolean },
   passive: { type: Boolean },
-  handler: { type: Object as () => BaseEventProps['handler'], required: true },
+  handler: { type: Function as unknown as () => BaseEventProps['handler'], required: true },
 });
 
 function attachListener() {

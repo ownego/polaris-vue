@@ -1,3 +1,12 @@
+<script lang="ts">
+export default {
+  inheritAttrs: false,
+  render() {
+    return null;
+  },
+}
+</script>
+
 <script setup lang="ts">
 import { onBeforeUnmount, onMounted } from 'vue';
 import type { Key } from './utils';
@@ -7,7 +16,7 @@ type KeyEvent = 'keydown' | 'keyup';
 const props = defineProps({
   keyCode: { type: String as () => Key, required: true },
   keyEvent: { type: String as () => KeyEvent, default: 'keyup' },
-  handler: { type: Object as () => (event: KeyboardEvent) => void, required: true },
+  handler: { type: Function, required: true },
 });
 
 function handleKeyEvent(event: KeyboardEvent) {
