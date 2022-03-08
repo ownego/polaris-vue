@@ -7,9 +7,9 @@ Choice(
   @mouseover="mouseOver = true",
   @mouseout="mouseOver = false",
 )
-  template(#label)
+  template(#label, v-if="slots.label")
     slot(name="label")
-  template(#help-text)
+  template(#help-text, v-if="slots['help-text']")
     slot(name="help-text")
   span(:class="wrapperClassName")
     input(
