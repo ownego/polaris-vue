@@ -27,10 +27,12 @@ import ChevronRightMinor from "@icons/ChevronRightMinor.svg";
       },
       defaultValue: [
         {
-          content: "Import file",
+          content: "Action 1",
+          onAction: () => alert("Action 1"),
         },
         {
-          content: "Export file",
+          content: "Action 2",
+          onAction: () => alert("Action 2"),
         },
       ],
       table: {
@@ -92,11 +94,13 @@ import ChevronRightMinor from "@icons/ChevronRightMinor.svg";
   }}
 />
 
-export const Template = (args, { argTypes }) => ({
-  props: Object.keys(argTypes),
+export const Template = (args) => ({
   components: { ActionList },
+  setup() {
+    return { args };
+  },
   template: `<div :style="{width: '200px', background: '#fff'}" data-style="{width: '200px', background: '#fff'}">
-    <ActionList v-bind="$props"></ActionList>
+    <ActionList :items="args.default.items"></ActionList>
   </div>`,
 });
 
@@ -155,20 +159,20 @@ export const itemExamples = (args, { argTypes }) => ({
       this.active = !this.active;
     },
     handleImportedAction() {
-      console.log("Imported!");
+      alert("Imported!");
     },
     handleExportedAction() {
-      console.log("Exported!");
+      alert("Exported!");
     },
   },
   template: ` <div :style="{display: 'flex', flexDirection: 'row', gap: '40px', justifyContent: 'center'}">
     <Popover
       :active="active"
       autofocusTarget="first-node"
-      v-on:click="toggle"
+      @click="toggle"
     >
       <template #activator>
-        <Button :disclosure="true" v-on:click="toggle">
+        <Button disclosure @click="toggle">
           In a Popover
         </Button>
       </template>
@@ -176,17 +180,17 @@ export const itemExamples = (args, { argTypes }) => ({
         <ActionList :items="inAPopoverItems"/>
       </template>
     </Popover>
-    <Popover :active="true">
-      <tempalte #activator>
-        <Button :disclosure="true"> With Icons or image </Button>
+    <Popover active>
+      <template #activator>
+        <Button disclosure> With Icons or image </Button>
       </template>
       <template #content>
         <ActionList :items="iconsOrImagesItems"/>
       </template>
     </Popover>
-    <Popover :active="true">
-      <tempalte #activator>
-        <Button :disclosure="true"> With an icon and a suffix </Button>
+    <Popover active>
+      <template #activator>
+        <Button disclosure> With an icon and a suffix </Button>
       </template>
       <template #content>
         <ActionList :items="iconAndSuffixItems">
@@ -196,9 +200,9 @@ export const itemExamples = (args, { argTypes }) => ({
         </ActionList>
       </template>
     </Popover>
-    <Popover :active="true">
+    <Popover active>
       <template #activator>
-        <Button slot="activator" :disclosure="true"> With suffix and prefix </Button>
+        <Button disclosure> With suffix and prefix </Button>
       </template>
       <template #content>
         <ActionList :items="suffixAndPrefixItems">
@@ -225,10 +229,10 @@ itemExamples.parameters = {
           <Popover
             :active="active"
             autofocusTarget="first-node"
-            v-on:click="toggle"
+            @click="toggle"
           >
             <template #activator>
-              <Button :disclosure="true" v-on:click="toggle">
+              <Button disclosure @click="toggle">
                 In a Popover
               </Button>
             </template>
@@ -236,17 +240,17 @@ itemExamples.parameters = {
               <ActionList :items="inAPopoverItems"/>
             </template>
           </Popover>
-          <Popover :active="true">
-            <tempalte #activator>
-              <Button :disclosure="true"> With Icons or image </Button>
+          <Popover active>
+            <template #activator>
+              <Button disclosure> With Icons or image </Button>
             </template>
             <template #content>
               <ActionList :items="iconsOrImagesItems"/>
             </template>
           </Popover>
-          <Popover :active="true">
-            <tempalte #activator>
-              <Button :disclosure="true"> With an icon and a suffix </Button>
+          <Popover active>
+            <template #activator>
+              <Button disclosure> With an icon and a suffix </Button>
             </template>
             <template #content>
               <ActionList :items="iconAndSuffixItems">
@@ -256,9 +260,9 @@ itemExamples.parameters = {
               </ActionList>
             </template>
           </Popover>
-          <Popover :active="true">
+          <Popover active>
             <template #activator>
-              <Button slot="activator" :disclosure="true"> With suffix and prefix </Button>
+              <Button disclosure> With suffix and prefix </Button>
             </template>
             <template #content>
               <ActionList :items="suffixAndPrefixItems">
@@ -276,6 +280,10 @@ itemExamples.parameters = {
           </Popover>
         </template>
         <script>
+          import ExportMinor from '@shopify/polaris-icons/dist/svg/ExportMinor.svg';
+          import ImportMinor from '@shopify/polaris-icons/dist/svg/ImportMinor.svg';
+          import TickSmallMinor from '@shopify/polaris-icons/dist/svg/TickSmallMinor.svg';
+          import ChevronRightMinor from '@shopify/polaris-icons/dist/svg/ChevronRightMinor.svg';
           components: { ActionList, Button, Popover, Icon },
           data() {
             return {
@@ -330,11 +338,186 @@ itemExamples.parameters = {
               this.active = !this.active;
             },
             handleImportedAction() {
-              console.log("Imported!");
+              alert("Imported!");
             },
             handleExportedAction() {
-              console.log("Exported!");
+              alert("Exported!");
             },
+          },
+        </script>
+        `,
+    },
+  },
+};
+
+export const sectionExamples = (args, { argTypes }) => ({
+  components: { ActionList, Button, Popover, Icon },
+  data() {
+    return {
+      sections: [
+        {
+          title: "File options",
+          items: [
+            { content: "Import file", icon: ImportMinor },
+            { content: "Export file", icon: ExportMinor },
+          ],
+        },
+        {
+          title: "Bulk actions",
+          items: [
+            { content: "Edit", icon: EditMinor },
+            { content: "Delete", icon: DeleteMinor },
+          ],
+        },
+      ],
+      destructiveItemSections: [
+        {
+          title: "File options",
+          items: [
+            {
+              active: true,
+              content: "Import file",
+              icon: ImportMinor,
+            },
+            { content: "Export file", icon: ExportMinor },
+            {
+              destructive: true,
+              content: "Delete file",
+              icon: DeleteMinor,
+            },
+          ],
+        },
+      ],
+      helpTextSections: [
+        {
+          items: [
+            {
+              content: "Blog posts",
+              helpText: "Manage your blog articles",
+            },
+            {
+              content: "Blogs",
+              helpText: "Manage blogs published to your Online Store",
+            },
+          ],
+        },
+      ],
+    };
+  },
+  template: ` <div :style="{display: 'flex', flexDirection: 'row', gap: '120px', justifyContent: 'center'}">
+    <Popover active>
+      <template #activator>
+        <Button disclosure> Sections </Button>
+      </template>
+      <template #content>
+        <ActionList :sections="sections" />
+      </template>
+    </Popover>
+    <Popover active>
+      <template #activator>
+        <Button disclosure> With Destructive Item </Button>
+      </template>
+      <template #content>
+        <ActionList :sections="destructiveItemSections"/>
+      </template>
+    </Popover>
+    <Popover active>
+      <template #activator>
+        <Button slot="activator" disclosure> With Help Text </Button>
+      </template>
+      <template #content>
+        <ActionList :sections="helpTextSections"/>
+      </template>
+    </Popover>
+  </div>`,
+});
+sectionExamples.storyName = "Sections";
+sectionExamples.parameters = {
+  docs: {
+    source: {
+      code: dedent`
+        <template>
+          <Popover active>
+            <template #activator>
+              <Button disclosure> Sections </Button>
+            </template>
+            <template #content>
+              <ActionList :sections="sections" />
+            </template>
+          </Popover>
+          <Popover active>
+            <template #activator>
+              <Button disclosure> With Destructive Item </Button>
+            </template>
+            <template #content>
+              <ActionList :sections="destructiveItemSections"/>
+            </template>
+          </Popover>
+          <Popover active>
+            <template #activator>
+              <Button slot="activator" disclosure> With Help Text </Button>
+            </template>
+            <template #content>
+              <ActionList :sections="helpTextSections"/>
+            </template>
+          </Popover>
+        </template>
+        <script>
+          import ExportMinor from '@shopify/polaris-icons/dist/svg/ExportMinor.svg';
+          import ImportMinor from '@shopify/polaris-icons/dist/svg/ImportMinor.svg';
+          import EditMinor from '@shopify/polaris-icons/dist/svg/EditMinor.svg';
+          import DeleteMinor from '@shopify/polaris-icons/dist/svg/DeleteMinor.svg';
+          data() {
+            return {
+              sections: [
+                {
+                  title: 'File options',
+                  items: [
+                    {content: 'Import file', icon: ImportMinor},
+                    {content: 'Export file', icon: ExportMinor},
+                  ],
+                },
+                {
+                  title: 'Bulk actions',
+                  items: [
+                    {content: 'Edit', icon: EditMinor},
+                    {content: 'Delete', icon: DeleteMinor},
+                  ],
+                },
+              ],
+              destructiveItemSections: [
+                {
+                  title: 'File options',
+                  items: [
+                    {
+                      active: true,
+                      content: 'Import file',
+                      icon: ImportMinor,
+                    },
+                    {content: 'Export file', icon: ExportMinor},
+                    {
+                      destructive: true,
+                      content: 'Delete file',
+                      icon: DeleteMinor,
+                    },
+                  ],
+                },
+              ],
+              helpTextSections: [
+                {
+                  items: [
+                    {
+                      content: 'Blog posts',
+                      helpText: 'Manage your blog articles',
+                    },
+                    {
+                      content: 'Blogs',
+                      helpText: 'Manage blogs published to your Online Store',
+                    },
+                  ],
+                },
+              ],
+            }
           },
         </script>
         `,
@@ -357,12 +540,32 @@ For Icon usages, use the [Icon component.](/docs/components-images-and-icons-ico
   <Story story={itemExamples} height="250px" inline={false} />
 </Canvas>
 
+### Sections
+
+<Canvas style={{ backgroundColor: "#f6f6f7" }} withSource="close">
+  <Story story={sectionExamples} height="300px" inline={false} />
+</Canvas>
+
 ### ActionList
 
 <Canvas>
   <Story
     name="ActionList"
     height="40px"
+    args={{
+      default: {
+        items: [
+          {
+            content: "Action 1",
+            onAction: () => alert("Action 1"),
+          },
+          {
+            content: "Action 2",
+            onAction: () => alert("Action 2"),
+          },
+        ],
+      },
+    }}
     parameters={{
       docs: {
         source: {
