@@ -26,6 +26,8 @@ Labelled(
       :aria-invalid="!!error",
       :aria-describedby="describedBy.join(' ') || undefined",
       :aria-required="requiredIndicator",
+      @focus="$emit('focus')",
+      @blur="$emit('blur')",
       @change="handleChange",
     )
       template(
@@ -220,6 +222,7 @@ const isGroup = (option: SelectOption | SelectGroup): boolean => {
 
 const handleChange = (event: Event) => {
   emits('update:modelValue', (event.target as HTMLSelectElement).value);
+  emits('change', (event.target as HTMLSelectElement).value);
 }
 
 const getOptionTitle = (option: StrictOption | StrictGroup): string => {
