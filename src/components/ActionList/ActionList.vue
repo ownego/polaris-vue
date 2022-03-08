@@ -1,7 +1,8 @@
 <template lang="pug">
-components(
+component(
   :is="element",
   ref="actionListRef",
+  :role="elementRole",
   :class="classNames(styles.ActionList)",
   :tabIndex="elementTabIndex",
 )
@@ -38,7 +39,7 @@ export default {
 </script>
 
 <script setup lang="ts">
-import { computed, ref } from 'vue';
+import { computed, onMounted, ref } from 'vue';
 import { classNames } from 'polaris-react/src/utilities/css';
 import { wrapFocusPreviousFocusableMenuItem, wrapFocusNextFocusableMenuItem } from '@/utilities/focus';
 import { KeypressListener } from '@/components/KeypressListener';

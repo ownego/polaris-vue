@@ -33,7 +33,7 @@ export default {
 </script>
 
 <script setup lang="ts">
-import { computed, onMounted, useAttrs } from 'vue';
+import { computed, useAttrs } from 'vue';
 import { UnstyledLink } from '@/components/UnstyledLink';
 import { handleMouseUpByBlurring } from '@/utilities/focus';
 import { capitalize } from 'lodash';

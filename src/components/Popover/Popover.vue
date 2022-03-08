@@ -100,8 +100,6 @@ const props = withDefaults(defineProps<PopoverProps>(), {
   autofocusTarget: 'container',
 });
 
-const attrs = useAttrs();
-
 const emit = defineEmits<{
   (event: 'close', source: PopoverCloseSource): void;
   (event: 'scrolled-to-bottom'): void
@@ -116,7 +114,6 @@ const { useUniqueId } = UseUniqueId();
 const id = ref<string>(useUniqueId('popover'));
 
 const setAccessibilityAttributes = () => {
-  console.log('active', props.active);
   if (container.value) {
     const containerNode = container.value;
     const firstFocusable = findFirstFocusableNodeIncludingDisabled(containerNode);
@@ -164,12 +161,9 @@ const handleClose = (source: PopoverCloseSource) => {
 };
 
 onMounted(() => {
-  console.log('this is mounted', container.value);
-  console.log('this is mounted', props);
   if (container.value) {
     const activatorNode = container.value.firstElementChild;
     if (activatorNode) {activator.value = activatorNode as HTMLElement;}
-    console.log('activator', activator.value);
     setAccessibilityAttributes();
   }
 });
