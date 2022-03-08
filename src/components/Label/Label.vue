@@ -1,10 +1,11 @@
 <template lang="pug">
-label(
-  :id="labelID(id)",
-  :for="id",
-  :class="className",
-)
-  slot
+div(:class="className")
+  label(
+    :id="labelID(id)",
+    :for="id",
+    :class="labelClassName",
+  )
+    slot
 </template>
 
 <script setup lang="ts">
@@ -27,6 +28,10 @@ const props = defineProps<LabelProps>();
 const className = computed(() => classNames(
   styles.Label,
   props.hidden && styles.hidden,
+));
+const labelClassName = computed(() => classNames(
+  styles.Text,
+  props.requiredIndicator && styles.RequiredIndicator,
 ));
 
 </script>

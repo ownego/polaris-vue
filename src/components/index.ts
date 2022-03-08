@@ -38,6 +38,7 @@ export * from './Spinner';
 export * from './Subheading';
 export * from './Tag';
 export * from './TextContainer';
+export * from './TextField';
 export * from './TextStyle';
 export * from './Truncate';
 export * from './UnstyledButton';

@@ -83,3 +83,23 @@ export interface ListboxContextType {
   onOptionSelect(option: NavigableOption): void;
   setLoading(label?: string): void;
 }
+
+export interface ComboboxTextFieldType {
+  // Value for the TextField aria-activedescendant. (also on list context when not in combobox)
+  activeOptionId?: string;
+  // Value for the Combobox aria-owns and TextField aria-control
+  listboxId?: string;
+  // Value for aria-expanded on TextField
+  expanded?: boolean;
+  // Sets the value for the Listbox aria-labelledby
+  setTextFieldLabelId?(id: string): void;
+  // Sets a boolean to enable/disable keyboard control for the Listbox
+  setTextFieldFocused?(value: boolean): void;
+  // Callback when TextField is focused
+  onTextFieldFocus?(): void;
+  // Callback when TextField is blured
+  onTextFieldBlur?(): void;
+  // Callback when TextField is changed
+  onTextFieldChange?(): void;
+}
+

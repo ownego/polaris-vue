@@ -2,7 +2,7 @@
 div(:class="styles.Connected")
   Item(v-if="$slots.left", position="left")
     slot(name="left")
-  Item(v-if="$slots.default" ,position="primary")
+  Item(v-if="$slots.default", position="primary")
     slot
   Item(v-if="$slots.right", position="right")
     slot(name="right")
