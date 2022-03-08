@@ -5,8 +5,6 @@ Polaris Vue by qikify only supports **Vue 3.0.0+**.
 Polaris Vue by Qikify based on [Shopify Polaris style guide](https://polaris.shopify.com/), built especially for Vue 3.
 We're trying to make it mostly close with Shopify style guide and get a better performance.
 
-#### Progress: 70% (We're working very hard to make it 99%)
-
 **Follow Polaris React version:** [9.0.0](https://github.com/Shopify/polaris-react/releases/tag/v9.0.0) - Release date: *Feb 15th, 2022*.
 
 <br/>
