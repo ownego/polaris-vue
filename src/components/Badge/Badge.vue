@@ -35,12 +35,9 @@ interface BadgeProps {
 }
 
 // eslint-disable-next-line vue/no-setup-props-destructure
-const {
-  status,
-  progress,
-  size = 'medium',
-  statusAndProgressLabelOverride,
-} = defineProps<BadgeProps>();
+const props = withDefaults(defineProps<BadgeProps>(), {
+  size: 'medium',
+});
 
 const withinFilter =  inject<boolean>('withinFilterContext', false);
 
@@ -51,21 +48,21 @@ const statusLabel = ref('');
 
 const className = computed(() => classNames(
   styles.Badge,
-  status && styles[variationName('status', status) as keyof typeof styles],
-  progress && styles[variationName('progress', progress) as keyof typeof styles],
-  size && size !== DEFAULT_SIZE && styles[variationName('size', size) as keyof typeof styles],
+  props.status && styles[variationName('status', props.status) as keyof typeof styles],
+  props.progress && styles[variationName('progress', props.progress) as keyof typeof styles],
+  props.size && props.size !== DEFAULT_SIZE && styles[variationName('size', props.size) as keyof typeof styles],
   withinFilter && styles.withinFilter,
 ));
 
-const hasAccessibilityLabel= computed(() =>statusAndProgressLabelOverride
+const hasAccessibilityLabel= computed(() => props.statusAndProgressLabelOverride
   || statusLabel.value
   || progressLabel.value,
 );
-const accessibilityLabel = computed(() => statusAndProgressLabelOverride
+const accessibilityLabel = computed(() => props.statusAndProgressLabelOverride
   || `${statusLabel.value} ${progressLabel.value}`);
 
 onMounted(() => {
-  switch (progress) {
+  switch (props.progress) {
   case 'incomplete':
     progressLabel.value = 'incomplete';
     break;
@@ -79,7 +76,7 @@ onMounted(() => {
     break;
   }
 
-  switch (status) {
+  switch (props.status) {
   case 'info':
     statusLabel.value = 'info';
     break;

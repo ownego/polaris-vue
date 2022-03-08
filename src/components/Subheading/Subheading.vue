@@ -18,8 +18,9 @@ interface SubheadingProps {
   element?: HeadingTagName;
 }
 
-// eslint-disable-next-line vue/no-setup-props-destructure
-const { element = 'h3' } = defineProps<SubheadingProps>();
+const props = withDefaults(defineProps<SubheadingProps>(), {
+  element: 'h3',
+});
 </script>
 
 <style lang="scss">

@@ -27,12 +27,14 @@ interface DisplayTextProps {
   size?: Size;
 }
 
-// eslint-disable-next-line vue/no-setup-props-destructure
-const { element = 'p', size = 'medium' } = defineProps<DisplayTextProps>();
+const props = withDefaults(defineProps<DisplayTextProps>(), {
+  element: 'p',
+  size: 'medium',
+});
 
 const className = computed(() => classNames(
   styles.DisplayText,
-  size && styles[variationName('size', size) as keyof typeof styles],
+  props.size && styles[variationName('size', props.size) as keyof typeof styles],
 ));
 </script>
 
