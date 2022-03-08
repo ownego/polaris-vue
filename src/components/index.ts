@@ -33,6 +33,7 @@ export * from './Portal';
 export * from './PositionedOverlay';
 export * from './RadioButton';
 export * from './Scrollable';
+export * from './Select';
 export * from './Spinner';
 export * from './Subheading';
 export * from './Tag';

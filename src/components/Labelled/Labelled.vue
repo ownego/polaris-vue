@@ -1,8 +1,10 @@
 <template lang="pug">
 div(:class="className")
-  div(:class="styles.LabelWrapper")
+  div(
+    v-if="slots.label",
+    :class="styles.LabelWrapper"
+  )
     Label(
-      v-if="$slots.label",
       :id="id",
       :requiredIndicator="requiredIndicator",
       :hidden="false",
@@ -30,7 +32,7 @@ div(:class="className")
       :is="error",
     )
   div(
-    v-if="$slots['help-text']",
+    v-if="slots['help-text']",
     :class="styles.HelpText",
     :id="helpTextID(id)",
   )
@@ -38,13 +40,13 @@ div(:class="className")
 </template>
 
 <script setup lang="ts">
-import { computed } from 'vue';
+import { computed, useSlots } from 'vue';
 import { classNames } from 'polaris-react/src/utilities/css';
 import styles from '@/classes/Labelled.json';
 import type { Action, Error } from 'types/type';
 import type { LabelProps } from "../Label/utils";
 import { Label } from '../Label';
-import {InlineError} from '../InlineError';
+import { InlineError } from '../InlineError';
 import { helpTextID, errorID } from './utils';
 
 interface LabelledProps {
@@ -61,6 +63,8 @@ interface LabelledProps {
 }
 
 const props = defineProps<LabelledProps>();
+
+const slots = useSlots();
 
 const isError = computed(() => props.error && typeof props.error !== 'boolean');
 
