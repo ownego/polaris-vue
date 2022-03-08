@@ -20,9 +20,9 @@ fieldset(
         :ariaDescribedBy="error && choice.describedByError ? errorTextID(finalName) : null",
         @change="handleChange",
       )
-        template(#label)
+        template(#label, v-if="$slots.label")
           span {{ choice.label }}
-        template(#help-text)
+        template(#help-text, v-if="$slots['help-text']")
           span {{ choice.helpText }}
       div(
         v-if="typeof choice.renderChildren === 'string'",
