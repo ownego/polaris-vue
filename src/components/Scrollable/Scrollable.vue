@@ -51,8 +51,9 @@ interface Props {
   focusable?: boolean;
 }
 
-// eslint-disable-next-line vue/no-setup-props-destructure
-const { vertical = true, horizontal, shadow, hint, focusable } = defineProps<Props>();
+const props = withDefaults(defineProps<Props>(), {
+  vertical: true,
+});
 
 const emits = defineEmits<{ (event: 'scrolled-to-bottom'): void }>();
 
@@ -74,11 +75,11 @@ provide('scrollToPositionContext', scrollToPosition);
 
 const finalClassName = computed(() => classNames(
   styles.Scrollable,
-  vertical && styles.vertical,
-  horizontal && styles.horizontal,
+  props.vertical && styles.vertical,
+  props.horizontal && styles.horizontal,
   topShadow.value && styles.hasTopShadow,
   bottomShadow.value && styles.hasBottomShadow,
-  vertical && canScroll.value && styles.verticalHasScrolling,
+  props.vertical && canScroll.value && styles.verticalHasScrolling,
 ));
 
 const handleScroll = (): void => {
@@ -87,8 +88,8 @@ const handleScroll = (): void => {
   }
 
   const { scrollTop, scrollHeight, clientHeight } = scrollArea.value;
-  const shouldBottomShadow = Boolean(shadow && !(scrollTop + clientHeight >= scrollHeight));
-  const shouldTopShadow = Boolean(shadow && scrollTop > 0 && scrollPosition.value > 0);
+  const shouldBottomShadow = Boolean(props.shadow && !(scrollTop + clientHeight >= scrollHeight));
+  const shouldTopShadow = Boolean(props.shadow && scrollTop > 0 && scrollPosition.value > 0);
   const scrollAble = scrollHeight > clientHeight;
   const hasScrolledToBottom = scrollHeight - scrollTop <= clientHeight + LOW_RES_BUFFER;
 
@@ -175,7 +176,7 @@ onMounted(() => {
   window.requestAnimationFrame(() => {
     handleScroll();
   
-    if (hint) {
+    if (props.hint) {
       scrollHint();
     }
   });

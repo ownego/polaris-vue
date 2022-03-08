@@ -24,8 +24,9 @@ interface Props {
   id?: string;
 }
 
-// eslint-disable-next-line vue/no-setup-props-destructure
-const { element = 'h2', id } = defineProps<Props>();
+const props = withDefaults(defineProps<Props>(), {
+  element: 'h2',
+});
 </script>
 
 <style lang="scss">
