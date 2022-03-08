@@ -8,6 +8,7 @@ export * from './Caption';
 export * from './Checkbox';
 export * from './Choice';
 export * from './ChoiceList';
+export * from './ColorPicker';
 export * from './Connected';
 export * from './CustomProperties';
 export * from './DisplayText';

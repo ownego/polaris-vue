@@ -1,0 +1,78 @@
+import { Meta, Story, Canvas, ArgsTable } from '@storybook/addon-docs';
+import dedent from 'ts-dedent';
+import { ref } from 'vue';
+import { ColorPicker } from '@/polaris-vue';
+
+<Meta
+  title="Components / Forms / Color Picker"
+  component={ ColorPicker }
+  argTypes={{
+    change: {
+      description: 'Callback when the color is changed. Return selected color.',
+      control: false,
+    },
+    modelValue: {
+      table: {
+        disable: true,
+      },
+    },
+    'update:modelValue': {
+      table: {
+        disable: true,
+      },
+    },
+    outputType: {
+      options: ['hex', 'rgb', 'hsb'],
+      control: {
+        type: 'select',
+      },
+      table: {
+        type: { summary: null },
+        defaultValue: { summary: 'hsb' },
+      },
+    },
+  }}
+/>
+
+# Color picker
+
+The color picker is used to let merchants select a color visually.
+For example, merchants use the color picker to customize the accent color of the email templates for their shop.
+
+export const Template = (args) => ({
+  components: { ColorPicker },
+  setup() {
+    const color = ref('#000000');
+    return { color, args };
+  },
+  template: dedent`
+  <ColorPicker v-bind="args" v-model="color" /><br/>
+  <strong>Output:</strong> <span>{{ color }}</span>`,
+});
+
+<Canvas>
+  <Story
+    name="Color Picker"
+    height="210px"
+    parameters={{
+      docs: {
+        source: {
+          code: dedent`
+            <ColorPicker v-bind="args" @change="setColor" v-model="color" />\n
+            setup() {
+              const color = ref('#000000');
+              const setColor = (newColor) => {
+                console.log(newColor);
+              };
+              return { color, setColor };
+            },
+          `,
+        },
+      },
+    }}
+  >
+    {Template.bind({})}
+  </Story>
+</Canvas>
+
+<ArgsTable story="Color Picker"/>
