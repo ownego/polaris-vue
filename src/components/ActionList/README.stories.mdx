@@ -1,1 +1,380 @@
+import {
+  Meta,
+  Story,
+  Canvas,
+  ArgsTable,
+  Source,
+  Preview,
+} from "@storybook/addon-docs";
+import dedent from "ts-dedent";
+
+import { ActionList, Button, Popover, Icon } from "@/polaris-vue";
+import ExportMinor from "@icons/ExportMinor.svg";
+import ImportMinor from "@icons/ImportMinor.svg";
+import EditMinor from "@icons/EditMinor.svg";
+import DeleteMinor from "@icons/DeleteMinor.svg";
+import TickSmallMinor from "@icons/TickSmallMinor.svg";
+import ChevronRightMinor from "@icons/ChevronRightMinor.svg";
+
+<Meta
+  title="Components / Actions / ActionList"
+  component={ActionList}
+  argTypes={{
+    items: {
+      name: "items",
+      control: {
+        type: "object",
+      },
+      defaultValue: [
+        {
+          content: "Import file",
+        },
+        {
+          content: "Export file",
+        },
+      ],
+      table: {
+        type: {
+          summary: null,
+        },
+      },
+    },
+    actionRole: {
+      control: {
+        type: "select",
+        options: ["menuitem"],
+      },
+      table: {
+        type: {
+          summary: null,
+        },
+      },
+    },
+    "action-any-item": {
+      name: "action-any-item",
+      description: "Callback when any item is clicked or keypressed",
+      control: { disable: true },
+      table: {
+        type: {
+          summary: '"() => void"',
+        },
+      },
+    },
+    prefix: {
+      name: "prefix-{prefixId}",
+      description:
+        "Slot to custom prefix for each item of ActionList by `prefixId`",
+      control: { disable: true },
+      table: {
+        category: "Slots",
+        type: {
+          summary: null,
+        },
+      },
+    },
+    suffix: {
+      name: "suffix-{suffixId}",
+      description:
+        "Slot to custom suffix for each item of ActionList by `suffixId`",
+      control: { disable: true },
+      table: {
+        category: "Slots",
+        type: {
+          summary: null,
+        },
+      },
+    },
+    default: {
+      table: {
+        disable: "true",
+      },
+    },
+  }}
+/>
+
+export const Template = (args, { argTypes }) => ({
+  props: Object.keys(argTypes),
+  components: { ActionList },
+  template: `<div :style="{width: '200px', background: '#fff'}" data-style="{width: '200px', background: '#fff'}">
+    <ActionList v-bind="$props"></ActionList>
+  </div>`,
+});
+
+export const itemExamples = (args, { argTypes }) => ({
+  components: { ActionList, Button, Popover, Icon },
+  data() {
+    return {
+      active: false,
+      iconTickSmallMinor: TickSmallMinor,
+      iconChevronRightMinor: ChevronRightMinor,
+      inAPopoverItems: [
+        {
+          content: "Import file",
+          onAction: this.handleImportedAction,
+        },
+        {
+          content: "Export file",
+          onAction: this.handleExportedAction,
+        },
+      ],
+      iconsOrImagesItems: [
+        {
+          content: "Import file",
+          image:
+            "https://user-images.githubusercontent.com/31103446/150456962-80f99435-aa6b-459f-be78-4b89a03417a7.png",
+        },
+        {
+          content: "Export file",
+          icon: ExportMinor,
+        },
+      ],
+      iconAndSuffixItems: [
+        {
+          active: true,
+          content: "Import file",
+          icon: ImportMinor,
+          suffixId: "import",
+        },
+        { content: "Export file", icon: ExportMinor },
+      ],
+      suffixAndPrefixItems: [
+        {
+          content: "Go here",
+          prefixId: "here",
+          suffixId: "here",
+        },
+        {
+          content: "Or there",
+          suffixId: "there",
+        },
+      ],
+    };
+  },
+  methods: {
+    toggle() {
+      this.active = !this.active;
+    },
+    handleImportedAction() {
+      console.log("Imported!");
+    },
+    handleExportedAction() {
+      console.log("Exported!");
+    },
+  },
+  template: ` <div :style="{display: 'flex', flexDirection: 'row', gap: '40px', justifyContent: 'center'}">
+    <Popover
+      :active="active"
+      autofocusTarget="first-node"
+      v-on:click="toggle"
+    >
+      <template #activator>
+        <Button :disclosure="true" v-on:click="toggle">
+          In a Popover
+        </Button>
+      </template>
+      <template #content>
+        <ActionList :items="inAPopoverItems"/>
+      </template>
+    </Popover>
+    <Popover :active="true">
+      <tempalte #activator>
+        <Button :disclosure="true"> With Icons or image </Button>
+      </template>
+      <template #content>
+        <ActionList :items="iconsOrImagesItems"/>
+      </template>
+    </Popover>
+    <Popover :active="true">
+      <tempalte #activator>
+        <Button :disclosure="true"> With an icon and a suffix </Button>
+      </template>
+      <template #content>
+        <ActionList :items="iconAndSuffixItems">
+          <template #suffix-import>
+            <Icon :source="iconTickSmallMinor" />
+          </template>
+        </ActionList>
+      </template>
+    </Popover>
+    <Popover :active="true">
+      <template #activator>
+        <Button slot="activator" :disclosure="true"> With suffix and prefix </Button>
+      </template>
+      <template #content>
+        <ActionList :items="suffixAndPrefixItems">
+          <template #prefix-here>
+            <img width="30" height="30" src="https://user-images.githubusercontent.com/31103446/150456962-80f99435-aa6b-459f-be78-4b89a03417a7.png"/>
+          </template>
+          <template #suffix-here>
+            <Icon :source="iconChevronRightMinor" />
+          </template>
+          <template #suffix-there>
+            <Icon :source="iconChevronRightMinor" />
+          </template>
+        </ActionList>
+      </template>
+    </Popover>
+  </div>`,
+});
+itemExamples.storyName = "Items";
+itemExamples.parameters = {
+  docs: {
+    source: {
+      code: dedent`
+        <template>
+          <Popover
+            :active="active"
+            autofocusTarget="first-node"
+            v-on:click="toggle"
+          >
+            <template #activator>
+              <Button :disclosure="true" v-on:click="toggle">
+                In a Popover
+              </Button>
+            </template>
+            <template #content>
+              <ActionList :items="inAPopoverItems"/>
+            </template>
+          </Popover>
+          <Popover :active="true">
+            <tempalte #activator>
+              <Button :disclosure="true"> With Icons or image </Button>
+            </template>
+            <template #content>
+              <ActionList :items="iconsOrImagesItems"/>
+            </template>
+          </Popover>
+          <Popover :active="true">
+            <tempalte #activator>
+              <Button :disclosure="true"> With an icon and a suffix </Button>
+            </template>
+            <template #content>
+              <ActionList :items="iconAndSuffixItems">
+                <template #suffix-import>
+                  <Icon :source="iconTickSmallMinor" />
+                </template>
+              </ActionList>
+            </template>
+          </Popover>
+          <Popover :active="true">
+            <template #activator>
+              <Button slot="activator" :disclosure="true"> With suffix and prefix </Button>
+            </template>
+            <template #content>
+              <ActionList :items="suffixAndPrefixItems">
+                <template #prefix-here>
+                  <img width="30" height="30" src="https://user-images.githubusercontent.com/31103446/150456962-80f99435-aa6b-459f-be78-4b89a03417a7.png"/>
+                </template>
+                <template #suffix-here>
+                  <Icon :source="iconChevronRightMinor" />
+                </template>
+                <template #suffix-there>
+                  <Icon :source="iconChevronRightMinor" />
+                </template>
+              </ActionList>
+            </template>
+          </Popover>
+        </template>
+        <script>
+          components: { ActionList, Button, Popover, Icon },
+          data() {
+            return {
+              active: false,
+              iconTickSmallMinor: TickSmallMinor,
+              iconChevronRightMinor: ChevronRightMinor,
+              inAPopoverItems: [
+                {
+                  content: "Import file",
+                  onAction: this.handleImportedAction,
+                },
+                {
+                  content: "Export file",
+                  onAction: this.handleExportedAction,
+                },
+              ],
+              iconsOrImagesItems: [
+                {
+                  content: "Import file",
+                  image:
+                    "https://user-images.githubusercontent.com/31103446/150456962-80f99435-aa6b-459f-be78-4b89a03417a7.png",
+                },
+                {
+                  content: "Export file",
+                  icon: ExportMinor,
+                },
+              ],
+              iconAndSuffixItems: [
+                {
+                  active: true,
+                  content: "Import file",
+                  icon: ImportMinor,
+                  suffixId: "import",
+                },
+                { content: "Export file", icon: ExportMinor },
+              ],
+              suffixAndPrefixItems: [
+                {
+                  content: "Go here",
+                  prefixId: "here",
+                  suffixId: "here",
+                },
+                {
+                  content: "Or there",
+                  suffixId: "there",
+                },
+              ],
+            };
+          },
+          methods: {
+            toggle() {
+              this.active = !this.active;
+            },
+            handleImportedAction() {
+              console.log("Imported!");
+            },
+            handleExportedAction() {
+              console.log("Exported!");
+            },
+          },
+        </script>
+        `,
+    },
+  },
+};
+
 # ActionList
+
+Action lists render a list of actions or selectable options. This component is usually placed inside a popover container to create a dropdown menu or to let merchants select from a list of options.
+
+For Icon usages, use the [Icon component.](/docs/components-images-and-icons-icon--icon)
+
+<br />
+<br />
+
+### Items
+
+<Canvas style={{ backgroundColor: "#f6f6f7" }} withSource="close">
+  <Story story={itemExamples} height="250px" inline={false} />
+</Canvas>
+
+### ActionList
+
+<Canvas>
+  <Story
+    name="ActionList"
+    height="40px"
+    parameters={{
+      docs: {
+        source: {
+          code: dedent`
+            <ActionList v-bind="props"></ActionList>
+          `,
+        },
+      },
+    }}
+  >
+    {Template.bind({})}
+  </Story>
+</Canvas>
+
+<ArgsTable story="ActionList" />
