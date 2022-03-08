@@ -21,11 +21,10 @@ import { Meta } from '@storybook/addon-docs';
 # Get Started
 
 <br/>
+
+Polaris Vue by Qikify is a component library for [Vue 3](https://vuejs.org/) based on [Shopify Polaris style guide](https://polaris.shopify.com/). We try to keep the package light-weight and easy to use (mostly similar with original Polaris Library).
+
 Polaris Vue by qikify only supports **Vue 3.0.0+**.
-
-Polaris Vue by Qikify is a component library for [Vue 3](https://vuejs.org/) based on [Shopify Polaris style guide](https://polaris.shopify.com/).
-
-We try to keep the package light-weight and easy to use (mostly similar with original Polaris Library).
 
 **Follow Polaris React version:** [9.0.0](https://github.com/Shopify/polaris-react/releases/tag/v9.0.0) - Release date: *Feb 15th, 2022*.
 
@@ -55,13 +54,14 @@ Use as a Vue plugin (globally registers all components):
 ```js
 //main.js
 import { createApp } from 'vue'
+import PolarisVue from '@qikify/polaris-vue' // (✓)
+import '@qikify/polaris-vue/dist/style.css' // (✓) This will be deprecated in the future, right after Vue 3 supports css injections.
 import App from './App.vue'
-import PolarisVue from '@qikify/polaris-vue' //(✓)
-import '@qikify/polaris-vue/dist/style.css' //(✓)
+
 //...
 const app = createApp(App)
-app.use(PolarisVue) //(✓)
-//...
+app.use(PolarisVue) // (✓)
+...
 ```
 
 OR use individual component (for better bundle size):
