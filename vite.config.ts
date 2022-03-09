@@ -11,6 +11,7 @@ import packageJson from './package.json';
 export default defineConfig({
   plugins: [
     checker({
+      overlay: false,
       vueTsc: true,
       typescript: true,
       eslint: {
