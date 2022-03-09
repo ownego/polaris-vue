@@ -11,6 +11,7 @@ export * from './ChoiceList';
 export * from './ColorPicker';
 export * from './Connected';
 export * from './CustomProperties';
+export * from './DatePicker';
 export * from './DisplayText';
 export * from './EventListener';
 export * from './ExceptionList';

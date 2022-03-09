@@ -4,3 +4,5 @@ node_modules
 build
 classes/*.json
 src/**/*.stories.mdx
+src/**/*.scss
+src/**/*.css
