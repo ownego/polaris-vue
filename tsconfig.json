@@ -1,47 +1,42 @@
 {
+  "extends": "@vue/tsconfig/tsconfig.web.json",
+  "include": [
+    "src/classes/*.json",
+    "src/**/*.ts",
+    "src/**/*.vue",
+    "types/*.ts",
+  ],
+  "exclude": [
+    "dist",
+    "build",
+    "node_modules",
+  ],
   "compilerOptions": {
-    "target": "esnext",
-    "module": "esnext",
-    "strict": true,
-    "jsx": "preserve",
-    "importHelpers": true,
-    "moduleResolution": "node",
-    "experimentalDecorators": true,
-    "skipLibCheck": true,
-    "esModuleInterop": true,
-    "allowSyntheticDefaultImports": true,
-    "sourceMap": true,
-    "resolveJsonModule": true,
     "baseUrl": ".",
-    "types": [
-      "node",
-      "vue",
-    ],
+    "paths": {
+      "@/*": ["./src/*"],
+    },
+    "types": ["node"],
     "declaration": true,
     "declarationMap": true,
     "declarationDir": "dist/types",
+    "moduleResolution": "node",
+    "experimentalDecorators": true,
+    "skipLibCheck": true,
+    "resolveJsonModule": true,
+    "noImplicitAny": false,
+    "esModuleInterop": true,
+    "sourceMap": true,
+    "strict": true,
+    "jsx": "preserve",
+    "importHelpers": true,
+    "isolatedModules": false,
     "plugins": [{ "name": "typescript-plugin-css-modules" }],
-    "paths": {
-      "@/*": ["./src/*"]
-    },
-    "lib": [
-      "esnext",
-      "dom",
-      "dom.iterable",
-      "scripthost"
-    ],
   },
-  "include": [
-    "types/*.ts",
-    "src/**/*.ts",
-    "src/**/*.tsx",
-    "src/**/*.vue",
-    "tests/**/*.ts",
-    "tests/**/*.tsx"
-  ],
-  "exclude": [
-    "node_modules",
-    "dist",
-    "build",
-  ],
+
+  "references": [
+    {
+      "path": "./tsconfig.vite-config.json"
+    }
+  ]
 }

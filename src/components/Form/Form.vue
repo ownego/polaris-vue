@@ -12,31 +12,32 @@ form(@submit="submitHandle")
       | Submit
 </template>
 
-<script lang="ts">
-import Vue from 'vue';
-import { Component, Prop } from 'vue-property-decorator';
+<script setup lang="ts">
 import { VisuallyHidden } from '../VisuallyHidden';
 
-@Component({
-  components: {
-    VisuallyHidden,
-  },
-})
-export default class Form extends Vue {
+/**
+ * Setup
+ */
+interface Props {
   /** Toggles if form submits on Enter keypress. Defaults to true. */
-  @Prop({ type: Boolean, default: true })
-  public implicitSubmit?: boolean;
-
+  implicitSubmit?: boolean;
   /** Blocks the default form action */
-  @Prop({ type: Boolean })
-  public preventDefault?: boolean;
+  preventDefault?: boolean;
+}
 
-  submitHandle(e: Event) {
-    if (this.preventDefault) {
-      e.preventDefault();
-    }
+const props = withDefaults(defineProps<Props>(),{
+  implicitSubmit: true,
+});
 
-    this.$emit('submit', e);
+const emit = defineEmits<{ (event: 'submit', submitEvent: Event): void }>();
+
+/**
+ * Methods
+ */
+const submitHandle = (e: Event) => {
+  if (props.preventDefault) {
+    e.preventDefault();
   }
+  emit('submit', e);
 }
 </script>

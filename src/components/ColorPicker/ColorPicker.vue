@@ -2,14 +2,14 @@
 div(
   :id="id",
   :class="className",
-  @mousedown="handlePickerDrag",
+  @mousedown.prevent="handlePickerDrag",
 )
   div(
-    ref="mainColor",
-    :class="classMainColor",
+    ref="mainColorRef",
+    :class="styles.MainColor",
   )
     div(
-      :class="classColorLayer",
+      :class="styles.ColorLayer",
       :style="{ backgroundColor: colorString }",
     ) &nbsp;
     Slidable(
@@ -33,10 +33,9 @@ div(
   )
 </template>
 
-<script lang="ts">
-import Vue from 'vue';
+<script setup lang="ts">
+import { computed, onMounted, reactive, ref } from 'vue';
 import debounce from 'lodash/debounce';
-import { Component, Prop } from 'vue-property-decorator';
 import { classNames } from 'polaris-react/src/utilities/css';
 import { clamp } from 'polaris-react/src/utilities/clamp';
 import type { HSBColor, HSBAColor, RGBAColor } from 'polaris-react/src/utilities/color-types';
@@ -57,171 +56,161 @@ interface Color extends HSBColor {
 
 const RESIZE_DEBOUNCE_TIME_MS = 200;
 
-@Component({
-  components: {
-    AlphaPicker,
-    HuePicker,
-    Slidable,
-    EventListener,
-  },
-})
-export default class ColorPicker extends Vue {
+interface Props {
   /** ID for the element */
-  @Prop({ type: String })
   id?: string;
-
-  /** The currently selected color.
+  /**
+   * The currently selected color.
    * The color can be HSB object (same with Shopify) or RGB, Hex string
    */
-  @Prop({ type: [Object, String], required: true })
-  color!: Color | string;
-
+  modelValue: Color | string;
   /** Allow user to select an alpha value */
-  @Prop({ type: Boolean })
   allowAlpha?: boolean;
-
   /** Allow HuePicker to take the full width */
-  @Prop({ type: Boolean })
   fullWidth?: boolean;
-
   /** Color output format */
-  @Prop({ type: String })
   outputType?: 'hsb' | 'rgb' | 'hex';
+}
 
-  // Default input color
-  public colorHsb: Color = {
-    hue: 0,
-    saturation: 0,
-    brightness: 0,
-    alpha: 1,
-  };
+const props = defineProps<Props>();
 
-  public pickerSize = { width: 0, height: 0 };
+const emits = defineEmits<{
+  (event: 'change', value: Color | string): void
+  (event: 'update:modelValue', value: Color | string): void
+}>();
 
-  public classMainColor = classNames(styles.MainColor);
+const mainColorRef = ref(null);
 
-  public classColorLayer = classNames(styles.ColorLayer);
+// Default input color
+const colorHsb = reactive<Color>({
+  hue: 0,
+  saturation: 0,
+  brightness: 0,
+  alpha: 1,
+});
 
-  public handlePickerDrag = (event: MouseEvent) => {
-    // prevents external elements from being selected
-    event.preventDefault();
-  };
+const pickerSize = reactive({ width: 0, height: 0 });
 
-  get className() {
-    return classNames(
-      styles.ColorPicker,
-      this.fullWidth && styles.fullWidth,
-    );
-  }
+const handlePickerDrag = (event: MouseEvent) => {
+  // prevents external elements from being selected
+  event.preventDefault();
+};
 
-  get alpha() {
-    return this.colorHsb.alpha !== undefined && this.allowAlpha ? this.colorHsb.alpha : 1;
-  }
-
-  get colorString() {
-    const { red, green, blue } = hsbToRgb({ hue: this.colorHsb.hue, saturation: 1, brightness: 1 });
-    return `rgba(${red}, ${green}, ${blue}, ${this.alpha})`;
-  }
-
-  get draggerX() {
-    return clamp(this.colorHsb.saturation * this.pickerSize.width, 0, this.pickerSize.width);
-  }
-
-  get draggerY() {
-    return clamp(
-      this.pickerSize.height - this.colorHsb.brightness * this.pickerSize.height,
-      0,
-      this.pickerSize.height,
-    );
-  }
-
-  get outputColor() {
-    if (this.outputType === 'hex') {
-      return hsbToHex(this.colorHsb);
-    }
-
-    if (this.outputType === 'rgb') {
-      const rgbColor = hsbToRgb(this.colorHsb);
-      return `rgba(${rgbColor.red}, ${rgbColor.green}, ${rgbColor.blue}, ${this.alpha})`;
-    }
-
-    return this.colorHsb;
-  }
-
-  private handleResize = debounce(
-    () => {
-      const mainColorEl = this.$refs.mainColor as HTMLElement;
-
-      if (!mainColorEl) return;
-
-      this.pickerSize = {
-        width: mainColorEl.clientWidth,
-        height: mainColorEl.clientHeight,
-      };
-    },
-    RESIZE_DEBOUNCE_TIME_MS,
-    { leading: true, trailing: true, maxWait: RESIZE_DEBOUNCE_TIME_MS },
+const className = computed(() => {
+  return classNames(
+    styles.ColorPicker,
+    props.fullWidth && styles.fullWidth,
   );
+});
 
-  created() {
-    /**
-     * Set the initial color
-     * The input color maybe Hex or RGB
-     * Convert it to hsb
-     */
+const alpha = computed(() => {
+  return colorHsb.alpha !== undefined && props.allowAlpha ? colorHsb.alpha : 1;
+});
 
-    // Default hsb
-    if (typeof this.color === 'object') {
-      this.colorHsb = this.color;
-    }
+const colorString = computed(() => {
+  const { red, green, blue } = hsbToRgb({
+    hue: colorHsb.hue,
+    saturation: 1,
+    brightness: 1,
+  });
 
-    // Hex or RGB
-    if (typeof this.color === 'string') {
-      let colorRgb: RGBAColor;
+  return `rgba(${red}, ${green}, ${blue}, ${alpha.value})`;
+});
 
-      // Convert from hex to rgba object
-      if (/#[0-9abcdef]{3,6}/.test(this.color)) {
-        colorRgb = { ...hexToRgb(this.color), alpha: 1 };
-      } else { // Conver from rgba string to object
-        const colorRgbArr = this.color.replace(/^rgba?\(|\s+|\)$/g, '').split(',');
-        colorRgb = {
-          red: parseInt(colorRgbArr[0], 10),
-          green: parseInt(colorRgbArr[1], 10),
-          blue: parseInt(colorRgbArr[2], 10),
-          alpha: colorRgbArr[2] ? parseFloat(colorRgbArr[3]) : 1,
-        };
-      }
+const draggerX = computed(() => {
+  return clamp(colorHsb.saturation * pickerSize.width, 0, pickerSize.width);
+});
 
-      this.colorHsb = { ...rgbToHsb(colorRgb), alpha: colorRgb.alpha };
-    }
+const draggerY = computed(() => {
+  return clamp(
+    pickerSize.height - colorHsb.brightness * pickerSize.height,
+    0,
+    pickerSize.height,
+  );
+})
+
+const outputColor = computed(() => {
+  if (props.outputType === 'hex') {
+    return hsbToHex(colorHsb);
   }
 
-  mounted() {
-    const mainColorEl = this.$refs.mainColor as HTMLElement;
-    if (!mainColorEl) return;
+  if (props.outputType === 'rgb') {
+    const rgbColor = hsbToRgb(colorHsb);
+    return `rgba(${rgbColor.red}, ${rgbColor.green}, ${rgbColor.blue}, ${alpha.value})`;
+  }
 
-    this.pickerSize = {
-      width: mainColorEl.clientWidth,
-      height: mainColorEl.clientHeight,
+  return colorHsb;
+});
+
+const handleResize = debounce(
+  () => {
+    if (mainColorRef.value) {
+      pickerSize.width = (mainColorRef.value as HTMLElement).clientWidth;
+      pickerSize.height = (mainColorRef.value as HTMLElement).clientHeight;
+    }
+  },
+  RESIZE_DEBOUNCE_TIME_MS,
+  { leading: true, trailing: true, maxWait: RESIZE_DEBOUNCE_TIME_MS },
+);
+
+/**
+ * CREATED()
+ * Set the initial color
+ * The input color maybe Hex or RGB
+ * Convert it to hsb
+ */
+
+// Default hsb
+if (typeof props.modelValue === 'object') {
+  Object.assign(colorHsb, props.modelValue);
+}
+
+// Hex or RGB
+if (typeof props.modelValue === 'string') {
+  let colorRgb: RGBAColor;
+
+  // Convert from hex to rgba object
+  if (/#[0-9abcdef]{3,6}/.test(props.modelValue)) {
+    colorRgb = { ...hexToRgb(props.modelValue), alpha: 1 };
+  } else {
+    // Convert from rgba string to object
+    const colorRgbArr = props.modelValue.replace(/^rgba?\(|\s+|\)$/g, '').split(',');
+    colorRgb = {
+      red: parseInt(colorRgbArr[0], 10),
+      green: parseInt(colorRgbArr[1], 10),
+      blue: parseInt(colorRgbArr[2], 10),
+      alpha: colorRgbArr[2] ? parseFloat(colorRgbArr[3]) : 1,
     };
   }
 
-  handleHueChange(hue: number) {
-    this.colorHsb.hue = hue;
-    this.$emit('change', this.outputColor);
-  }
-
-  handleAlphaChange(alpha: number) {
-    this.colorHsb.alpha = alpha;
-    this.$emit('change', this.outputColor);
-  }
-
-  handleDraggerMove({ x, y }: { x: number, y: number }): void {
-    this.colorHsb.saturation = clamp(x / this.pickerSize.width, 0, 1);
-    this.colorHsb.brightness = clamp(1 - y / this.pickerSize.height, 0, 1);
-    this.$emit('change', this.outputColor);
-  }
+  Object.assign(colorHsb, { ...rgbToHsb(colorRgb), alpha: colorRgb.alpha });
 }
+
+onMounted(() => {
+  if (mainColorRef.value) {
+    pickerSize.width = (mainColorRef.value as HTMLElement).clientWidth;
+    pickerSize.height = (mainColorRef.value as HTMLElement).clientHeight;
+  }
+});
+
+const handleHueChange = (hue: number) => {
+  colorHsb.hue = hue;
+  emits('change', outputColor.value);
+  emits('update:modelValue', outputColor.value);
+}
+
+const handleAlphaChange = (value: number) => {
+  colorHsb.alpha = value;
+  emits('change', outputColor.value);
+  emits('update:modelValue', outputColor.value);
+}
+
+const handleDraggerMove = ({ x, y }: { x: number, y: number }): void => {
+  colorHsb.saturation = clamp(x / pickerSize.width, 0, 1);
+  colorHsb.brightness = clamp(1 - y / pickerSize.height, 0, 1);
+  emits('change', outputColor.value);
+  emits('update:modelValue', outputColor.value);
+};
 </script>
 
 <style lang="scss">

@@ -1,32 +1,36 @@
 import { Meta, Story, Canvas, ArgsTable } from '@storybook/addon-docs';
 import dedent from 'ts-dedent';
-
+import { ref } from 'vue';
 import { ColorPicker } from '@/polaris-vue';
 
 <Meta
   title="Components / Forms / Color Picker"
   component={ ColorPicker }
   argTypes={{
-    color: {
-      control: {
-        type: 'color'
-      },
-      table: {
-        type: {
-          summary: 'HSB object, RGB string, Hex string',
-        },
-      },
-    },
     change: {
       description: 'Callback when the color is changed. Return selected color.',
       control: false,
     },
+    modelValue: {
+      table: {
+        disable: true,
+      },
+    },
+    'update:modelValue': {
+      table: {
+        disable: true,
+      },
+    },
     outputType: {
+      options: ['hex', 'rgb', 'hsb'],
       control: {
         type: 'select',
       },
       table: {
-        defaultValue: { summary: 'hsb' },
+        type: {
+          summary: null,
+          default: 'hsb',
+        },
       },
     },
   }}
@@ -37,25 +41,15 @@ import { ColorPicker } from '@/polaris-vue';
 The color picker is used to let merchants select a color visually.
 For example, merchants use the color picker to customize the accent color of the email templates for their shop.
 
-export const Template = (args, { argTypes }) => ({
-  props: Object.keys(argTypes),
+export const Template = (args) => ({
   components: { ColorPicker },
-  data() {
-    return {
-      color: '#000000',
-    };
+  setup() {
+    const color = ref('#000000');
+    return { color, args };
   },
-  methods: {
-    setColor(color) {
-      this.color = color;
-    },
-  },
-  template: dedent`<div>
-  <ColorPicker v-bind="$props" data-color="color" :color="color" @change="setColor" data-change="setColor" />
-  <br/>
-  <strong>Output:</strong>
-  <span>{{ color }}</span>
-  </div>`,
+  template: dedent`
+  <ColorPicker v-bind="args" v-model="color" /><br/>
+  <strong>Output:</strong> <span>{{ color }}</span>`,
 });
 
 <Canvas>
@@ -64,30 +58,17 @@ export const Template = (args, { argTypes }) => ({
     height="210px"
     parameters={{
       docs: {
-        transformSource: (source) => {
-          const tmpSource = source
-            .replace(/<template>/, '')
-            .replace(/<\/template>/, '')
-            .replace(/\s\s<div>/, '')
-            .replace(/\s\s<\/div>/, '')
-            .replace(/data-color/, ':color')
-            .replace(/data-change/, '@change')
-            .replace(/color="#.*?"\s/, '')
-            .replace(/\s*<strong>(.*)<\/strong>/, '')
-            .replace(/\s*<span>(.*)<\/span>\s*/, '')
-            .replace(/\s*<br\s\/>/, '');
-          return dedent`${tmpSource}\n
-            data() {
-              return {
-                color: '#000',
+        source: {
+          code: dedent`
+            <ColorPicker v-bind="args" @change="setColor" v-model="color" />\n
+            setup() {
+              const color = ref('#000000');
+              const setColor = (newColor) => {
+                console.log(newColor);
               };
+              return { color, setColor };
             },
-            methods: {
-              setColor(color) {
-                this.color = color;
-              },
-            },
-          `;
+          `,
         },
       },
     }}
@@ -97,4 +78,3 @@ export const Template = (args, { argTypes }) => ({
 </Canvas>
 
 <ArgsTable story="Color Picker"/>
-

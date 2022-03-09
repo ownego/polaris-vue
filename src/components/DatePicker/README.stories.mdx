@@ -1,0 +1,149 @@
+import { Meta, Story, Canvas, ArgsTable } from '@storybook/addon-docs';
+import dedent from 'ts-dedent';
+
+import { ref, reactive } from 'vue';
+import { DatePicker } from '@/polaris-vue';
+
+<Meta
+  title="Components / Forms / Date Picker"
+  component={ DatePicker }
+  argTypes={{
+    disableDatesAfter: {
+      control: {
+        type: 'date',
+      },
+    },
+    disableDatesBefore: {
+      control: {
+        type: 'date',
+      },
+    },
+    change: {
+      description: 'Callback when date is selected',
+      table: {
+        type: {
+          summary: 'date',
+        },
+      },
+      control: {
+        disable: true,
+      },
+    },
+    selectedDate: {
+      table: {
+        disable: true,
+      },
+    },
+    'update:modelValue': {
+      table: {
+        disable: true,
+      },
+    },
+    modelValue: {
+      table: {
+        disable: true,
+      },
+    },
+    'month-change': {
+      description: 'Callback when month is changed',
+      control: {
+        disable: true,
+      },
+      table: {
+        type: {
+          summary: '{month, year}'
+        }
+      }
+    }
+  }}
+/>
+
+# Date picker
+
+Date pickers let merchants choose dates from a visual calendar that's consistently applied wherever dates need to be selected across Shopify.
+
+export const Template = (args) => ({
+  components: { DatePicker },
+  setup() {
+    const selectedDate = ref(args.selectedDate);
+    const pickerView = reactive({
+      month: args.month,
+      year: args.year,
+    });
+    const handleChange = (date) => {
+      console.log(date);
+    };
+    const handleMonthChange = ({ month, year }) => {
+      pickerView.month = month;
+      pickerView.year = year;
+    };
+    return { args, selectedDate, pickerView, handleChange, handleMonthChange };
+  },
+  template: dedent`<div>
+  <DatePicker
+    v-bind="args"
+    :disableDatesBefore="new Date(args.disableDatesBefore)"
+    :disableDatesAfter="new Date(args.disableDatesAfter)"
+    @change="handleChange"
+    @month-change="handleMonthChange"
+    :month="pickerView.month"
+    :year="pickerView.year"
+    v-model="selectedDate"
+  />
+  <br/>
+  <span><strong>Output:</strong> {{ selectedDate }}</span>
+  </div>`,
+});
+
+<Canvas>
+  <Story
+    name="Date Picker"
+    height="320px"
+    args={{
+      selectedDate: {
+        start: new Date('2022/01/16'),
+        end: new Date('2022/01/19'),
+      },
+      month: 0,
+      year: 2022,
+      allowRange: true,
+    }}
+    parameters={{
+      docs: {
+        source: {
+          code: dedent`
+            <DatePicker
+              v-model="selectedDate"
+              :month="pickerView.month"
+              :year="pickerView.year"
+              @change="handleChange"
+              @month-change="handleMonthChange"
+            />\n
+            setup() {
+              const selectedDate = ref({
+                start: new Date('2022/01/16'),
+                end: new Date('2022/01/19'),
+              });
+              const pickerView = reactive({
+                month: 0,
+                year: 2022,
+              });
+              const handleChange = (date) => {
+                console.log(date);
+              };
+              const handleMonthChange = ({ month, year }) => {
+                pickerView.month = month;
+                pickerView.year = year;
+              };
+              return { selectedDate, pickerView, handleChange, handleMonthChange };
+            },
+          `,
+        },
+      },
+    }}
+  >
+    {Template.bind({})}
+  </Story>
+</Canvas>
+
+<ArgsTable story="Date Picker"/>

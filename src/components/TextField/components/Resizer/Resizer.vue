@@ -1,30 +1,35 @@
 <template lang="pug">
 div(
   aria-hidden="true",
-  :class="wrapperClassName",
+  :class="styles.Resizer",
 )
   EventListener(
     event="resize",
-    handler="handleHeightCheck",
+    :handler="handleHeightCheck",
   )
   div(
     ref="contentNode",
-    :class="dummyInputClassName",
-    v-html="finalContents",
+    :class="styles.DummyInput",
+    v-html="getFinalContents(contents)",
   )
   div(
     v-if="minimumLines",
     ref="minimumLinesNode",
-    :class="dummyInputClassName",
-    v-html="minimumLinesContents",
+    :class="styles.DummyInput",
+    v-html="getContentsForMinimumLines(minimumLines)",
   )
 </template>
 
-<script lang="ts">
-import Vue from 'vue';
-import { Component, Prop, Ref } from 'vue-property-decorator';
+<script setup lang="ts">
+import { ref, onMounted, onUpdated } from 'vue';
 import styles from '@/classes/TextField.json';
-import { EventListener } from '@/components/EventListener';
+import { EventListener } from '../../../EventListener';
+
+interface ResizerProps {
+  contents?: string;
+  currentHeight?: number | null;
+  minimumLines?: number;
+}
 
 const ENTITIES_TO_REPLACE = {
   '&': '&amp;',
@@ -39,66 +44,67 @@ const REPLACE_REGEX = new RegExp(
   'g',
 );
 
-function replaceEntity(entity: string) {
+const props = defineProps<ResizerProps>();
+
+const emits = defineEmits<{
+  (event: 'height-change', value: number): void
+}>();
+
+const contentNode = ref<HTMLDivElement | null>(null);
+const minimumLinesNode = ref<HTMLDivElement | null>(null);
+
+const animationFrame = ref<number>();
+const currentHeight = ref<number | null | undefined>(props.currentHeight);
+
+const replaceEntity = (entity: string) => {
   return ENTITIES_TO_REPLACE[entity as keyof typeof ENTITIES_TO_REPLACE];
-}
+};
 
-@Component({
-  components: {
-    EventListener,
-  },
-})
-export default class Resizer extends Vue {
-  @Ref('contentNode') contentNode!: HTMLDivElement;
+const getFinalContents = (contents?: string): string => {
+  return contents
+    ? `${contents.replace(REPLACE_REGEX, replaceEntity)}<br>`
+    : '<br>';
+};
 
-  @Ref('minimumLinesNode') minimumLinesNode!: HTMLDivElement;
+const getContentsForMinimumLines = (minimumLines: number): string => {
+  let content = '';
 
-  @Prop({ type: String })
-  public contents!: string;
-
-  @Prop({ type: Number })
-  public currentHeight?: number | null;
-
-  @Prop({ type: Number })
-  public minimumLines!: number;
-
-  public wrapperClassName = styles.Resizer;
-
-  public dummyInputClassName = styles.DummyInput;
-
-  get minimumLinesContents(): string {
-    let content = '';
-
-    for (let line = 0; line < this.minimumLines; line += 1) {
-      content += '<br>';
-    }
-
-    return content;
+  for (let line = 0; line < minimumLines; line++) {
+    content += '<br>';
   }
 
-  get finalContents(): string {
-    return this.contents
-      ? `${this.contents.replace(REPLACE_REGEX, replaceEntity)}<br>`
-      : '</br>';
+  return content;
+};
+
+const handleHeightCheck = (): void => {
+  if (animationFrame.value) {
+    cancelAnimationFrame(animationFrame.value);
   }
 
-  protected mounted(): void {
-    this.handleHeightCheck();
-  }
-
-  public handleHeightCheck() {
-    if (!this.contentNode || !this.minimumLinesNode) {
+  animationFrame.value = requestAnimationFrame(() => {
+    if (!contentNode.value || !minimumLinesNode.value) {
       return;
     }
 
     const newHeight = Math.max(
-      this.contentNode.offsetHeight,
-      this.minimumLinesNode.offsetHeight,
+      contentNode.value.offsetHeight,
+      minimumLinesNode.value.offsetHeight,
     );
 
-    if (newHeight !== this.currentHeight) {
-      this.$emit('height-change', newHeight);
+    if (newHeight !== currentHeight.value) {
+      emits('height-change', newHeight);
     }
+  });
+};
+
+onMounted(() => {
+  if (animationFrame.value) {
+    cancelAnimationFrame(animationFrame.value);
   }
-}
+});
+
+onUpdated(() => {
+  handleHeightCheck();
+});
 </script>
+

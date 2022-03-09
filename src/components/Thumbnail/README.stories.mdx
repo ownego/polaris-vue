@@ -1,23 +1,20 @@
-import { Meta, Story, Canvas, ArgsTable } from '@storybook/addon-docs';
-import { Thumbnail } from '@/polaris-vue';
-import CirclePlusMinor from '@icons/CirclePlusMinor.svg';
+import { Meta, Story, Canvas, ArgsTable } from "@storybook/addon-docs";
+import { Thumbnail } from "@/polaris-vue";
+import CirclePlusMinor from "@icons/CirclePlusMinor.svg";
+import dedent from "ts-dedent";
 
 <Meta
   title="Components / Images and Icons / Thumbnail"
-  component={ Thumbnail }
+  component={Thumbnail}
   argTypes={{
     size: {
-      name: 'size',
-      description: 'Size of Thumbnail',
-      options: [
-        'large',
-        'medium',
-        'small',
-      ],
-      control: { type: 'select' },
+      name: "size",
+      description: "Size of Thumbnail",
+      options: ["large", "medium", "small"],
+      control: { type: "select" },
       table: {
         defaultValue: {
-          summary: 'medium'
+          summary: "medium",
         },
         type: {
           summary: null,
@@ -25,20 +22,20 @@ import CirclePlusMinor from '@icons/CirclePlusMinor.svg';
       },
     },
     source: {
-      name: 'source',
+      name: "source",
       options: [
-        'CirclePlusMinor',
-        'https://burst.shopifycdn.com/photos/black-leather-choker-necklace_373x@2x.jpg',
+        "CirclePlusMinor",
+        "https://burst.shopifycdn.com/photos/black-leather-choker-necklace_373x@2x.jpg",
       ],
       control: {
-        type: 'select',
+        type: "select",
         labels: {
-          null: 'default',
+          null: "default",
         },
       },
       table: {
         type: {
-          summary: 'image url String | SVG Component',
+          summary: "image url String | SVG Component",
         },
       },
     },
@@ -51,17 +48,26 @@ import CirclePlusMinor from '@icons/CirclePlusMinor.svg';
 />
 
 export const Template = (args, { argTypes }) => ({
-  props: Object.keys(argTypes),
   components: { Thumbnail },
+  setup() {
+    return { args };
+  },
   computed: {
     thumbnailSource() {
-      if (args.source === 'CirclePlusMinor') {
+      if (args.source === "CirclePlusMinor") {
         return CirclePlusMinor;
       }
       return args.source;
     },
+    bindProps() {
+      return {
+        size: args.size,
+        source: this.thumbnailSource,
+        alt: args.alt,
+      };
+    },
   },
-  template: `<Thumbnail :source="thumbnailSource" v-bind="$props" icon-name="${args.source}" />`,
+  template: `<Thumbnail v-bind="bindProps" />`,
 });
 
 # Thumbnail
@@ -73,20 +79,17 @@ Use thumbnails as a visual anchor and identifier for an object. They should be u
     name="Thumbnail"
     height="60px"
     args={{
-      alt: 'Thumbnail example',
-      size: 'medium',
-      source: 'https://burst.shopifycdn.com/photos/black-leather-choker-necklace_373x@2x.jpg'
+      alt: "Thumbnail example",
+      size: "medium",
+      source:
+        "https://burst.shopifycdn.com/photos/black-leather-choker-necklace_373x@2x.jpg",
     }}
     parameters={{
       docs: {
-        transformSource: (source) => {
-          const tmpSource = source
-            .replace(/<template>/, '')
-            .replace(/<\/template>/, '')
-            .replace(/source="(.*)"\s*/, '')
-            .replace(/:source='(.*)'\s*/, '')
-            .replace(/icon-name/, ':source');
-          return tmpSource;
+        source: {
+          code: dedent`
+            <Thumbnail v-bind="props" />
+          `,
         },
       },
     }}

@@ -1,7 +1,7 @@
 <template lang="pug">
 div(
-  ref="slidable",
-  :class="className",
+  ref="slidableRef",
+  :class="styles.Slidable",
   :data-dragging="isDragging",
   @mousedown="startDrag",
   @touchstart="startDrag",
@@ -35,118 +35,104 @@ div(
   )
   div(
     :style="draggerPositioning",
-    :class="classDragger",
-    ref="dragger",
+    :class="styles.Dragger",
+    ref="draggerRef",
   )
 </template>
 
-<script lang="ts">
-import Vue from 'vue';
-import { Component, Prop } from 'vue-property-decorator';
+<script setup lang="ts">
+import { computed, onMounted, ref, useAttrs } from 'vue';
 import { classNames } from 'polaris-react/src/utilities/css';
 import { isServer } from 'polaris-react/src/utilities/target';
 import styles from '@/classes/ColorPicker.json';
 import { EventListener } from '@/components/EventListener';
 
-interface SlidableProps {
+interface Props {
   draggerX?: number;
   draggerY?: number;
 }
 
-@Component({
-  components: {
-    EventListener,
-  },
-})
-export default class Slidable extends Vue {
-  @Prop({ type: Number, default: 0 })
-  public draggerX?: SlidableProps['draggerX'];
+const props = withDefaults(defineProps<Props>(), {
+  draggerX: 0,
+  draggerY: 0,
+});
 
-  @Prop({ type: Number, default: 0 })
-  public draggerY?: SlidableProps['draggerY'];
+const emits = defineEmits<{
+  (event: 'change', value: { x: number; y: number; }): void
+  (event: 'dragger-height', value: number): void
+}>();
 
-  public isDragging = false;
+const attrs = useAttrs();
 
-  public className = styles.Slidable;
+const isDragging = ref(false);
+const slidableRef = ref(null);
+const draggerRef = ref(null);
 
-  public classDragger = classNames(styles.Dragger);
+const positionX = ref(0);
+const positionY = ref(0);
 
-  public isMouseMoveEvent = (event: Event) => event.type === 'mousemove';
+const draggerPositioning = computed(() => {
+  return { transform: `translate3d(${positionX.value || props.draggerX}px, ${positionY.value || props.draggerY}px, 0)` };
+});
 
-  public isMouseDownEvent = (event: Event) => event.type === 'mousedown';
+if (!isServer) {
+  window.addEventListener('touchmove', (e) => {
+    if (isDragging.value) {
+      e.preventDefault();
+    }
+  }, { passive: false });
+}
 
-  public positionX = 0;
+onMounted(() => {
+  if (draggerRef.value) {
+    emits('dragger-height', (draggerRef.value as HTMLElement).clientWidth);
+  }
+});
 
-  public positionY = 0;
-
-  get draggerPositioning() {
-    return { transform: `translate3d(${this.positionX || this.draggerX}px, ${this.positionY || this.draggerY}px, 0)` };
+const startDrag = (event: Event) =>{
+  if (isMouseDownEvent(event)) {
+    const { clientX, clientY } = event as MouseEvent;
+    handleDraggerMove(clientX, clientY);
   }
 
-  created() {
-    if (!isServer) {
-      window.addEventListener('touchmove', (e) => {
-        if (!this.isDragging) return;
-        e.preventDefault();
-      }, { passive: false });
-    }
+  isDragging.value = true;
+}
+
+const handleDragEnd = () => {
+  isDragging.value = false;
+}
+
+const handleMove = (event: MouseEvent | TouchEvent) => {
+  event.stopImmediatePropagation();
+  event.stopPropagation();
+  if (event.cancelable) {
+    event.preventDefault();
   }
 
-  mounted() {
-    const draggerHeight = this.$listeners['dragger-height'];
-    if (!draggerHeight) {
-      return;
-    }
-
-    const draggerNode = this.$refs.dragger as HTMLElement;
-    if (draggerNode == null) {
-      return;
-    }
-
-    this.$emit('dragger-height', draggerNode.clientWidth);
+  if (isMouseMoveEvent(event)) {
+    const eventMouse = event as MouseEvent;
+    handleDraggerMove(eventMouse.clientX, eventMouse.clientY);
+    return;
   }
 
-  startDrag(event: Event) {
-    if (this.isMouseDownEvent(event)) {
-      const { clientX, clientY } = event as MouseEvent;
-      this.handleDraggerMove(clientX, clientY);
-    }
+  const eventTouch = event as TouchEvent;
+  handleDraggerMove(eventTouch.touches[0].clientX, eventTouch.touches[0].clientY);
+}
 
-    this.isDragging = true;
-  }
-
-  handleDragEnd() {
-    this.isDragging = false;
-  }
-
-  handleMove(event: MouseEvent | TouchEvent) {
-    event.stopImmediatePropagation();
-    event.stopPropagation();
-
-    if (event.cancelable) {
-      event.preventDefault();
-    }
-
-    if (this.isMouseMoveEvent(event)) {
-      const eventMouse = event as MouseEvent;
-      this.handleDraggerMove(eventMouse.clientX, eventMouse.clientY);
-      return;
-    }
-
-    const eventTouch = event as TouchEvent;
-    this.handleDraggerMove(eventTouch.touches[0].clientX, eventTouch.touches[0].clientY);
-  }
-
-  handleDraggerMove(x: number, y: number) {
-    const $el = this.$refs.slidable as HTMLElement;
-
-    if (!$el) return;
-
-    const rect = $el.getBoundingClientRect();
+const handleDraggerMove = (x: number, y: number) => {
+  if (slidableRef.value) {
+    const rect = (slidableRef.value as HTMLElement).getBoundingClientRect();
     const offsetX = x - rect.left;
     const offsetY = y - rect.top;
-
-    this.$emit('change', { x: offsetX, y: offsetY });
+    emits('change', { x: offsetX, y: offsetY });
   }
+}
+
+function isMouseMoveEvent(event: Event) {
+  return event.type === 'mousemove';
+}
+
+function isMouseDownEvent(event: Event) {
+  return event.type === 'mousedown';
 }
 </script>

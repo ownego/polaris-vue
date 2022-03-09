@@ -1,6 +1,6 @@
 <template lang="pug">
 span(:class="className")
-  PImage(
+  Image(
     v-if="typeof source === 'string'",
     :alt="alt",
     :source="source",
@@ -8,52 +8,40 @@ span(:class="className")
   Icon(v-else, :accessibilityLabel="alt", :source="source")
 </template>
 
-<script lang="ts">
-import Vue from 'vue';
-import { Component, Prop } from 'vue-property-decorator';
+<script setup lang="ts">
+import { computed } from 'vue';
 import { classNames, variationName } from 'polaris-react/src/utilities/css';
 import type { IconSource } from 'types/type';
 import styles from '@/classes/Thumbnail.json';
-import { PImage } from '../Image';
+import { Image } from '../Image';
 import { Icon } from '../Icon';
 
 type Size = 'small' | 'medium' | 'large';
 
-@Component({
-  components: {
-    PImage,
-    Icon,
-  },
-})
-export default class Thumbnail extends Vue {
+interface Props {
   /**
    * Size of thumbnail
-   * @values small | medium | large
+   * @default 'medium'
    */
-  @Prop({ type: String, default: 'medium' })
-  public size!: Size;
-
-  /**
-   * URL for the image
-   */
-  @Prop({ required: true })
-  public source!: string | IconSource;
-
-  /**
-   * Alt text for the thumbnail image
-   */
-  @Prop({ type: String, required: true })
-  public alt!: string;
-
-  get className() {
-    const size = variationName('size', this.size) as keyof typeof styles;
-
-    return classNames(
-      styles.Thumbnail,
-      size && styles[size],
-    );
-  }
+  size?: Size;
+  /** URL for the image */
+  source: string | IconSource;
+  /** Alt text for the thumbnail image */
+  alt: string;
 }
+
+const props = withDefaults(defineProps<Props>(), {
+  size: 'medium',
+});
+
+const className = computed(() => {
+  const size = variationName('size', props.size) as keyof typeof styles;
+
+  return classNames(
+    styles.Thumbnail,
+    size && styles[size],
+  );
+})
 </script>
 
 <style lang="scss">

@@ -7,302 +7,287 @@ Labelled(
   :required-indicator="requiredIndicator",
 )
   template(
-    v-if="!labelInline",
-    slot="label",
+    v-if="!labelInline && slots['label']",
+    #label,
   )
-    <!-- @slot Label for the select -->
     slot(name="label")
-  template(slot="help-text")
-    <!-- @slot Slot for additional text to aide in use -->
+  template(
+    #help-text
+    v-if="slots['help-text']",
+  )
     slot(name="help-text")
   div(:class="className")
     select(
       :id="selectId",
       :name="name",
-      :class="classInput",
+      :class="styles.Input",
       :disabled="disabled",
-      v-model="selectValue",
+      :value="modelValue",
+      :aria-invalid="!!error",
+      :aria-describedby="describedBy.join(' ') || undefined",
+      :aria-required="requiredIndicator",
       @focus="$emit('focus')",
       @blur="$emit('blur')",
-      :aria-invalid="error",
-      :aria-describedby="describedBy",
-      :aria-required="requiredIndicator",
+      @change="handleChange",
     )
       template(
         v-for="option in optionsMarkup",
       )
         optgroup(
           v-if="isGroup(option)",
-          :label="option.title",
-          :key="option.title",
+          :label="getOptionTitle(option)",
+          :key="getOptionTitle(option)",
         )
           template(
-            v-for="option, index in option.options",
+            v-for="opt in getGroupOptions(option)",
+            :key="opt.value",
           )
             option(
-              :key="option.value",
-              :value="option.value",
-              :disabled="option.disabled",
-            ) {{ option.label }}
+              :value="opt.value",
+              :disabled="opt.disabled",
+            ) {{ opt.label }}
         option(
-          :key="option.value",
-          :value="option.value",
-          :disabled="option.disabled",
-        ) {{ option.label }}
+          v-else,
+          :key="getHideableStrictOption(option).value",
+          :value="getHideableStrictOption(option).value",
+          :disabled="getHideableStrictOption(option).disabled",
+        ) {{ getHideableStrictOption(option).label }}
 
     div(
-      :class="classContent",
+      :class="styles.Content",
       aria-hidden,
       :aria-disabled="disabled",
     )
       span(
         v-if="labelInline",
-        :class="classInlineLabel"
+        :class="styles.InlineLabel"
       )
         slot(name="label")
       div(
         v-if="$slots[`prefix-${selectedOption.id}`]",
-        :class="classPrefix",
+        :class="styles.Prefix",
       )
         slot(:name="`prefix-${selectedOption.id}`")
-      span(:class="classSelectedOption")
+      span(:class="styles.SelectedOption")
         slot(
           v-if="$slots[`label-${selectedOption.id}`]",
           :name="`label-${selectedOption.id}`"
         )
         template(v-else) {{ selectedOption.label }}
-      span(:class="classIcon")
-        Icon(:source="iconSelectMinor")
-    div(:class="classBackdrop")
+      span(:class="styles.Icon")
+        Icon(:source="SelectMinor")
+    div(:class="styles.Backdrop")
 </template>
 
-<script lang="ts">
-import { Component, Prop, Vue } from 'vue-property-decorator';
-import type { Action } from 'types/type';
+<script setup lang="ts">
+import { computed, useSlots, isProxy } from 'vue';
+import type { Action, Error } from 'types/type';
 import { classNames } from 'polaris-react/src/utilities/css';
-import SelectMinor from '@icons/SelectMinor.svg';
-import { useUniqueId } from '@/utilities/unique-id';
+import { UseUniqueId } from '@/use';
 import styles from '@/classes/Select.json';
-import { StrictOption, SelectOption, SelectGroup } from './utils';
+import SelectMinor from '@icons/SelectMinor.svg';
+import type { StrictOption, SelectOption, SelectGroup, HideableStrictOption, StrictGroup } from './utils';
 import { Icon } from '../Icon';
 import { Labelled } from '../Labelled';
 import { helpTextID } from '../Labelled/utils';
 
-interface HideableStrictOption extends StrictOption {
-  hidden?: boolean;
-}
-
-interface StrictGroup {
-  /** Title for the group */
-  title: string;
-  /** List of options */
-  options: StrictOption[];
-}
-
-@Component({
-  components: {
-    Icon,
-    Labelled,
-  },
-})
-export default class Select extends Vue {
-  /** Disable input */
-  @Prop({ type: Boolean })
-  disabled!: boolean;
-
+/**
+ * Setup
+ */
+interface SelectProps {
   /** List of options or option groups to choose from */
-  @Prop({ type: Array })
-  options!: (SelectOption | SelectGroup)[];
-
+  options: (SelectOption | SelectGroup)[];
+  /** Label for the select */
   /** Adds an action to the label */
-  @Prop({ type: [String, Array, Object, Function] })
   labelAction?: Action;
-
   /** Visually hide the label */
-  @Prop({ type: Boolean })
   labelHidden?: boolean;
-
   /** Show the label to the left of the value, inside the control */
-  @Prop({ type: Boolean })
   labelInline?: boolean;
-
+  /** Disable input */
+  disabled?: boolean;
   /** Example text to display as placeholder */
-  @Prop({ type: String })
   placeholder?: string;
-
   /** ID for form input */
-  @Prop({ type: String })
   id?: string;
-
   /** Name for form input */
-  @Prop({ type: String })
-  name!: string;
-
+  name?: string;
   /** Value for form input */
-  @Prop({ type: [String, Object, Array, Boolean, Number] })
-  value?: string | object | boolean | number;
-
-  /**
-   * Display an error state
-   * @type {Boolean}
-  */
-  @Prop({ type: [String, Array, Object, Function] })
+  value?: string;
+  /** Display an error state */
   error?: Error | boolean;
-
   /** Visual required indicator, add an asterisk to label */
-  @Prop({ type: Boolean })
   requiredIndicator?: boolean;
+  /** Value for v-model binding */
+  modelValue?: string;
+}
 
-  iconSelectMinor = SelectMinor;
+const props = defineProps<SelectProps>();
 
-  selected: string | object | boolean | number | undefined = '';
+const emits = defineEmits<{
+  (event: 'focus'): void
+  (event: 'blur'): void
+  (event: 'change', value: SelectProps['modelValue']): void
+  (event: 'update:modelValue', value: SelectProps['modelValue']): void
+}>();
 
-  selectId = '';
+const slots = useSlots();
 
-  optionsMarkup: (HideableStrictOption | StrictGroup)[] = [];
+const { useUniqueId } = UseUniqueId();
 
-  describedBy: string[] = [];
+const describedBy: string[] = [];
 
-  classInput = classNames(styles.Input);
+/**
+ * Computed
+ */
+const selectId = computed(() => useUniqueId('Select', props.id));
 
-  classContent = classNames(styles.Content);
+const selectLabelHidden = computed(() => props.labelInline ? true : props.labelHidden);
 
-  classInlineLabel = classNames(styles.InlineLabel);
+const className = computed(() => classNames(
+  styles.Select,
+  props.error && styles.error,
+  props.disabled && styles.disabled,
+));
 
-  classPrefix = classNames(styles.Prefix);
+// Ungroups an options array
+const flattenOptions = computed(() => {
+  let flatOptions: HideableStrictOption[] = [];
 
-  classSelectedOption = classNames(styles.SelectedOption);
+  normalizedOptions.value.forEach((optionOrGroup) => {
+    if (isGroup(optionOrGroup)) {
+      const optionGroup = optionOrGroup as StrictGroup;
+      flatOptions = flatOptions.concat(optionGroup.options);
+    } else {
+      flatOptions.push(optionOrGroup as HideableStrictOption);
+    }
+  });
+  return flatOptions;
+});
 
-  classIcon = classNames(styles.Icon);
+// Gets the text to display in the UI, for the currently selected option
+const selectedOption = computed(() => {
+  let selected = flattenOptions.value.find((option) => props.modelValue === option.value);
 
-  classBackdrop = classNames(styles.Backdrop);
-
-  normalizedOptions: (StrictOption | StrictGroup)[] = [];
-
-  get selectLabelHidden() {
-    return this.labelInline ? true : this.labelHidden;
+  if (selected === undefined) {
+    // Get the first visible option (not the hidden placeholder)
+    selected = flattenOptions.value.find((option) => !option.hidden);
   }
 
-  get className() {
-    return classNames(
-      styles.Select,
-      this.error && styles.error,
-      this.disabled && styles.disabled,
-    );
-  }
+  return selected || { value: '', label: '' };
+});
 
-  get selectValue() {
-    return this.selected;
-  }
+const optionsMarkup = computed(() => {
+  return normalizedOptions.value.map((opt) => normalizeOption(opt));
+});
 
-  set selectValue(value) {
-    this.selected = value;
-    /**
-    * Callback when selection is changed
-    * @property {string} value the value of the selected option
-    */
-    this.$emit('change', value);
+const normalizedOptions = computed(() => {
+  let nOptions: (StrictOption | StrictGroup)[] = props.options.map(normalizeOption);
 
-    /**
-    * Callback when input is triggered
-    * @property {string} value the value of the selected option
-    */
-    this.$emit('input', value);
-  }
-
-  /**
-   * Ungroups an options array
-   */
-  get flattenOptions() {
-    let flatOptions: HideableStrictOption[] = [];
-
-    this.normalizedOptions.forEach((optionOrGroup) => {
-      if (this.isGroup(optionOrGroup)) {
-        const optionGroup = optionOrGroup as StrictGroup;
-        flatOptions = flatOptions.concat(optionGroup.options);
-      } else {
-        flatOptions.push(optionOrGroup as HideableStrictOption);
-      }
+  // Add placeholder option to the first of the list
+  if (props.placeholder) {
+    nOptions.unshift({
+      label: props.placeholder,
+      value: '',
+      disabled: true,
     });
-
-    return flatOptions;
   }
 
-  /**
-   * Gets the text to display in the UI, for the currently selected option
-   */
-  get selectedOption() {
-    const selectedOption = this.flattenOptions.find((option) => this.value === option.value);
-    return selectedOption || { value: '', label: '' };
+  return nOptions;
+});
+
+/**
+ * Created
+ */
+if (slots['help-text']) {
+  describedBy.push(helpTextID(props.id || ''));
+}
+
+if (props.error) {
+  describedBy.push(`${props.id}Error`);
+}
+
+/**
+ * Methods
+ */
+const isString = (option: SelectOption | SelectGroup): boolean => {
+  return typeof option === 'string';
+}
+
+const isGroup = (option: SelectOption | SelectGroup): boolean => {
+  return typeof option === 'object'
+    && 'options' in option
+    && option.options != null;
+}
+
+const handleChange = (event: Event) => {
+  emits('update:modelValue', (event.target as HTMLSelectElement).value);
+  emits('change', (event.target as HTMLSelectElement).value);
+}
+
+const getOptionTitle = (option: StrictOption | StrictGroup): string => {
+  if (isGroup(option)) {
+    return (option as StrictGroup).title;
   }
 
-  created() {
-    this.selected = this.value;
+  return (option as HideableStrictOption).label;
+}
 
-    this.selectId = useUniqueId('Select', this.id);
-
-    if (this.$slots['help-text']) {
-      this.describedBy.push(helpTextID(this.id || ''));
-    }
-
-    if (this.error) {
-      this.describedBy.push(`${this.id}Error`);
-    }
-
-    this.normalizedOptions = this.options.map(this.normalizeOption);
-
-    // Add placeholder option to the first of the list
-    if (this.placeholder) {
-      this.normalizedOptions.unshift({
-        label: this.placeholder,
-        value: '',
-        disabled: true,
-      });
-    }
-
-    this.optionsMarkup = this.normalizedOptions.map((opt) => this.normalizeOption(opt));
+const getHideableStrictOption = (option: StrictOption | StrictGroup): HideableStrictOption => {
+  if (isGroup(option)) {
+    return {
+      label: (option as StrictGroup).title,
+      value: '',
+      disabled: true,
+      hidden: true,
+    };
   }
 
-  isString = (option: SelectOption | SelectGroup): boolean => typeof option === 'string';
+  return option as HideableStrictOption;
+}
 
-  isGroup = (option: SelectOption | SelectGroup): boolean => (
-    typeof option === 'object'
-      && 'options' in option
-      && option.options != null
-  );
+const getGroupOptions = (option: StrictGroup | HideableStrictOption): StrictOption[] => {
+  if (isGroup(option)) {
+    return (option as StrictGroup).options;
+  }
 
-  normalizeStringOption = (option: string): StrictOption => ({
+  return [];
+}
+
+function normalizeStringOption(option: string): StrictOption {
+  return {
     label: option,
     value: option,
-  });
-
-  /**
-   * Converts a string option (and each string option in a Group) into
-   * an Option object.
-   */
-  normalizeOption = (
-    option: SelectOption | SelectGroup,
-  ): HideableStrictOption | StrictGroup => {
-    if (this.isString(option)) {
-      return this.normalizeStringOption(option as string);
-    }
-
-    if (this.isGroup(option)) {
-      const { title, options } = option as SelectGroup;
-      return {
-        title,
-        options: options.map((opt) => (
-          this.isString(opt)
-            ? this.normalizeStringOption(opt as string)
-            : opt
-        )) as StrictOption[],
-      };
-    }
-
-    return option as StrictOption;
   }
 }
+
+/**
+ * Converts a string option (and each string option in a Group) into
+ * an Option object.
+ */
+function normalizeOption(
+  option: SelectOption | SelectGroup,
+): HideableStrictOption | StrictGroup {
+  if (isString(option)) {
+    return normalizeStringOption(option as string);
+  }
+
+  if (isGroup(option)) {
+    const { title, options } = option as SelectGroup;
+    return {
+      title,
+      options: options.map((opt) => (
+        isString(opt)
+          ? normalizeStringOption(opt as string)
+          : opt
+      )) as StrictOption[],
+    };
+  }
+  return option as HideableStrictOption;
+}
+
 </script>
+
 <style lang="scss">
 @import 'polaris-react/src/components/Select/Select.scss';
 </style>

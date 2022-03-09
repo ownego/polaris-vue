@@ -1,25 +1,28 @@
-import { Meta, Story, Canvas, ArgsTable } from '@storybook/addon-docs';
-import dedent from 'ts-dedent';
+import { Meta, Story, Canvas, ArgsTable } from "@storybook/addon-docs";
+import dedent from "ts-dedent";
 import {
-  Popover, ActionList, Button, Pane, PopoverSection, FormLayout, FormItem, Select, TextField
-} from '@/polaris-vue';
+  Popover,
+  ActionList,
+  Button,
+  Pane,
+  PopoverSection,
+  FormLayout,
+  Select,
+  TextField,
+} from "@/polaris-vue";
 
 <Meta
   title="Components / Overlays / Popover"
-  component={ Popover }
+  component={Popover}
   argTypes={{
     preferredPosition: {
-      name: 'preferredPosition',
-      description: 'The preferred direction to open the popover',
-      options: [
-        'above',
-        'below',
-        'mostSpace'
-      ],
-      control: { type: 'select' },
+      name: "preferredPosition",
+      description: "The preferred direction to open the popover",
+      options: ["above", "below", "mostSpace"],
+      control: { type: "select" },
       table: {
         defaultValue: {
-          summary: 'below'
+          summary: "below",
         },
         type: {
           summary: null,
@@ -27,17 +30,14 @@ import {
       },
     },
     preferredAlignment: {
-      name: 'preferredAlignment',
-      description: 'The preferred alignment of the popover relative to its activator',
-      options: [
-        'left',
-        'center',
-        'right'
-      ],
-      control: { type: 'select' },
+      name: "preferredAlignment",
+      description:
+        "The preferred alignment of the popover relative to its activator",
+      options: ["left", "center", "right"],
+      control: { type: "select" },
       table: {
         defaultValue: {
-          summary: 'center'
+          summary: "center",
         },
         type: {
           summary: null,
@@ -45,26 +45,35 @@ import {
       },
     },
     autofocusTarget: {
-      name: 'autofocusTarget',
-      description: 'The preferred auto focus target defaulting to the popover container',
-      options: [
-        'container',
-        'none',
-        'first-node'
-      ],
-      control: { type: 'select' },
+      name: "autofocusTarget",
+      description:
+        "The preferred auto focus target defaulting to the popover container",
+      options: ["container", "none", "first-node"],
+      control: { type: "select" },
       table: {
         defaultValue: {
-          summary: 'container'
+          summary: "container",
         },
         type: {
           summary: null,
         },
       },
     },
-    'close': {
-      name: 'close',
-      description: 'Callback when popover is closed',
+    colorScheme: {
+      options: ["light", "dark"],
+      control: { type: "select" },
+      table: {
+        defaultValue: {
+          summary: "light",
+        },
+        type: {
+          summary: "dark | light",
+        },
+      },
+    },
+    close: {
+      name: "close",
+      description: "Callback when popover is closed",
       control: { disable: true },
       table: {
         type: {
@@ -72,9 +81,10 @@ import {
         },
       },
     },
-    'scrolled-to-bottom': {
-      name: 'scrolled-to-bottom',
-      description: 'Callback when the bottom of the popover is reached by mouse or keyboard',
+    "scrolled-to-bottom": {
+      name: "scrolled-to-bottom",
+      description:
+        "Callback when the bottom of the popover is reached by mouse or keyboard",
       control: { disable: true },
       table: {
         type: {
@@ -83,8 +93,8 @@ import {
       },
     },
     activator: {
-      name: 'activator',
-      description: 'The element to activate the Popover',
+      name: "activator",
+      description: "The element to activate the Popover",
       control: { disable: true },
       table: {
         type: {
@@ -93,8 +103,8 @@ import {
       },
     },
     content: {
-      name: 'content',
-      description: 'The content to display inside the popover',
+      name: "content",
+      description: "The content to display inside the popover",
       control: { disable: true },
       table: {
         type: {
@@ -102,9 +112,10 @@ import {
         },
       },
     },
-    'extra-content': {
-      name: 'extra-content',
-      description: 'The content to display inside the popover parallel with content slot',
+    "extra-content": {
+      name: "extra-content",
+      description:
+        "The content to display inside the popover parallel with content slot",
       control: { disable: true },
       table: {
         type: {
@@ -125,10 +136,7 @@ export const Template = (args, { argTypes }) => ({
   data() {
     return {
       active: true,
-      items: [
-        { content: 'Import file' },
-        { content: 'Export file' },
-      ]
+      items: [{ content: "Import file" }, { content: "Export file" }],
     };
   },
   methods: {
@@ -136,23 +144,18 @@ export const Template = (args, { argTypes }) => ({
       this.active = !this.active;
     },
   },
-  template: ` <div>
+  template: `
     <Popover
       :active="active"
       autofocusTarget="first-node"
-      v-on:close="toggleActive"
-      on-close="toggleActive"
+      @close="toggleActive"
+      :colorScheme="'${args.colorScheme}'"
     >
-      <Button
-        slot="activator"
-        :disclosure="true"
-        v-on:click="toggleActive"
-        on-click="toggleActive"
-      > More actions
-      </Button>
-      <ActionList slot="content" :items="items" data-items="items" />
-    </Popover>
-  </div>`,
+      <template #activator>
+        <Button disclosure @click="toggleActive"> More actions </Button>
+      </template>
+      <template #content> <ActionList :items="items"/> </template>
+    </Popover>`,
 });
 
 export const ContentAndActions = (args, { argTypes }) => ({
@@ -161,10 +164,10 @@ export const ContentAndActions = (args, { argTypes }) => ({
     return {
       active: true,
       items: [
-        {content: 'Online store'},
-        {content: 'Facebook'},
-        {content: 'Shopify POS'},
-      ]
+        { content: "Online store" },
+        { content: "Facebook" },
+        { content: "Shopify POS" },
+      ],
     };
   },
   methods: {
@@ -176,68 +179,73 @@ export const ContentAndActions = (args, { argTypes }) => ({
     <Popover
       :active="active"
       autofocusTarget="first-node"
-      v-on:close="toggleActive"
-      on-close="toggleActive"
+      @close="toggleActive"
     >
-      <Button
-        slot="activator"
-        :disclosure="true"
-        v-on:click="toggleActive"
-        on-click="toggleActive"
-      > Sales channels
-      </Button>
-      <Pane slot="extra-content" :fixed="true">
-        <PopoverSection>
-          <p>Available sales channels</p>
-        </PopoverSection>
-      </Pane>
-      <ActionList slot="content" actionRole="menuitem" :items="items" data-items="items" />
+      <template #activator>
+        <Button disclosure @click="toggleActive"> Sales channels </Button>
+      </template>
+      <template #extra-content>
+        <Pane fixed> <PopoverSection> <p>Available sales channels</p> </PopoverSection> </Pane>
+      </template>
+      <template #content>
+        <ActionList actionRole="menuitem" :items="items" />
+      </template>
     </Popover>
   </div>`,
 });
-ContentAndActions.storyName = 'With content and actions';
+ContentAndActions.storyName = "With content and actions";
 ContentAndActions.parameters = {
   docs: {
-    source: false,
-    transformSource: (source) => {
-      const tmpSource = source
-        .replace(/<template>\s*/, '')
-        .replace(/\s*<\/template>/, '')
-        .replace(/on-/g, 'v-on:')
-        .replace(/:items='(.*)'\s*/g, '')
-        .replace(/active/, ':active="active"')
-        .replace(/data-items/g, ':items')
-      const fullSource = dedent`
-        data() {
-          return {
-            active: true,
-            items: [
-              {content: 'Online store'},
-              {content: 'Facebook'},
-              {content: 'Shopify POS'},
-            ]
-          };
-        },
-        methods: {
-          toggleActive() {
-            this.active = !this.active;
+    source: {
+      code: dedent`
+        <template>
+          <Popover
+            :active="active"
+            autofocusTarget="first-node"
+            @close="toggleActive"
+          >
+            <template #activator>
+              <Button disclosure @click="toggleActive"> Sales channels </Button>
+            </template>
+            <template #extra-content>
+              <Pane fixed> <PopoverSection> <p>Available sales channels</p> </PopoverSection> </Pane>
+            </template>
+            <template #content>
+              <ActionList actionRole="menuitem" :items="items" />
+            </template>
+          </Popover>
+        </template>
+        <script>
+          components: { ActionList, Button, Popover, Pane, PopoverSection },
+          data() {
+            return {
+              active: true,
+              items: [
+                {content: 'Online store'},
+                {content: 'Facebook'},
+                {content: 'Shopify POS'},
+              ]
+            };
           },
-        },
-        ${tmpSource}
-      `;
-      return fullSource;
+          methods: {
+            toggleActive() {
+              this.active = !this.active;
+            },
+          },
+        </script>
+        `,
     },
   },
-}
+};
 
 export const FormComponents = (args, { argTypes }) => ({
-  components: { Button, Popover, FormLayout, FormItem, TextField, Select },
+  components: { Button, Popover, FormLayout, TextField, Select },
   data() {
     return {
       active: true,
-      options: [{label: 'Tagged with', value: 'Tagged with'}],
-      selectedValue: 'Tagged with',
-      tagValue: '',
+      options: [{ label: "Tagged with", value: "Tagged with" }],
+      selectedValue: "Tagged with",
+      tagValue: "",
     };
   },
   methods: {
@@ -252,76 +260,77 @@ export const FormComponents = (args, { argTypes }) => ({
     <Popover
       :active="active"
       aria-haspopup="false"
-      :sectioned="true"
-      v-on:close="toggleActive"
-      on-close="toggleActive"
+      sectioned
+      @close="toggleActive"
     >
-      <Button
-        slot="activator"
-        :disclosure="true"
-        v-on:click="toggleActive"
-        on-click="toggleActive"
-      > Filter
-      </Button>
-      <FormLayout slot="content">
-        <FormItem>
-          <Select :options="options" v-model="selectedValue" data-model="selectedValue">
-            <template slot="label">Show all customers where:</template>
+      <template #activator>
+        <Button disclosure @click="toggleActive"> Filter </Button>
+      </template>
+      <template #content>
+        <FormLayout>
+          <Select :options="options" v-model="selectedValue">
+            <template #label>Show all customers where:</template>
           </Select>
-        </FormItem>
-        <FormItem>
-          <TextField
-            :value="tagValue"
-            data-Value="tagValue"
-            @change="handleTagValueChange"
-            on-change="handleTagValueChange"
-            autoComplete="off"
-          >
-            <template slot="label">Tags</template>
+          <TextField :value="tagValue" @change="handleTagValueChange" autoComplete="off">
+            <template #label>Tags</template>
           </TextField>
-        </FormItem>
-        <FormItem>
           <Button size="slim">Add filter</Button>
-        </FormItem>
-      </FormLayout>
+        </FormLayout>
+      </template>
     </Popover>
   </div>`,
 });
-FormComponents.storyName = 'With form components';
+FormComponents.storyName = "With form components";
 FormComponents.parameters = {
   docs: {
-    source: false,
-    transformSource: (source) => {
-      const tmpSource = source
-        .replace(/on-/g, 'v-on:')
-        .replace(/value=".*"\s*/g, '')
-        .replace(/data-Value/g, ':value')
-        .replace(/data-model/g, 'v-model')
-        .replace(/active/, ':active="active"')
-        .replace(/data-items/g, ':items')
-      const fullSource = dedent`
-        data() {
-          return {
-            active: true,
-            options: [{label: 'Tagged with', value: 'Tagged with'}],
-            selectedValue: 'Tagged with',
-            tagValue: '',
-          };
-        },
-        methods: {
-          toggleActive() {
-            this.active = !this.active;
+    source: {
+      code: dedent`
+        <template>
+          <Popover
+            :active="active"
+            aria-haspopup="false"
+            sectioned
+            @close="toggleActive"
+          >
+            <template #activator>
+              <Button disclosure @click="toggleActive"> Filter </Button>
+            </template>
+            <template #content>
+              <FormLayout>
+                <Select :options="options" v-model="selectedValue">
+                  <template #label>Show all customers where:</template>
+                </Select>
+                <TextField :value="tagValue" @change="handleTagValueChange" autoComplete="off">
+                  <template #label>Tags</template>
+                </TextField>
+                <Button size="slim">Add filter</Button>
+              </FormLayout>
+            </template>
+          </Popover>
+        </template>
+        <script>
+          components: { Button, Popover, FormLayout, TextField, Select },
+          data() {
+            return {
+              active: true,
+              options: [{label: 'Tagged with', value: 'Tagged with'}],
+              selectedValue: 'Tagged with',
+              tagValue: '',
+            };
           },
-          handleTagValueChange(value) {
-            this.tagValue = value;
+          methods: {
+            toggleActive() {
+              this.active = !this.active;
+            },
+            handleTagValueChange(value) {
+              this.tagValue = value;
+            },
           },
-        },
-        ${tmpSource}
-      `;
-      return fullSource;
+        </script>
+        `,
     },
   },
-}
+};
 
 # Popover
 
@@ -329,57 +338,70 @@ Popovers are small overlays that open on demand. They let merchants access addit
 
 For ActionList usages, use the [ActionList component.](/docs/components-actions-actionlist--action-list)
 
-<font color="red"> Can not test props on this component due to inline Story. Try it on your own project. </font>
+<font color="red">
+  {" "}
+  Can not test props on this component due to inline Story. Try it on your own project.{" "}
+</font>
 
-<br/><br/><br/>
+<br />
+<br />
+<br />
 
 ### With Content and Actions
 
-<Canvas style={{ backgroundColor: '#f6f6f7' }}>
+<Canvas style={{ backgroundColor: "#f6f6f7" }} withSource="close">
   <Story story={ContentAndActions} height="280px" inline={false} />
 </Canvas>
 
 ### With Form Components
 
-<Canvas style={{ backgroundColor: '#f6f6f7' }}>
+<Canvas style={{ backgroundColor: "#f6f6f7" }} withSource="close">
   <Story story={FormComponents} height="280px" inline={false} />
 </Canvas>
 
 ### Example
 
-<Canvas style={{ backgroundColor: '#f6f6f7' }}>
+<Canvas style={{ backgroundColor: "#f6f6f7" }}>
   <Story
     name="Popover"
     inline={false}
     height="300px"
+    args={{
+      colorScheme: "light",
+    }}
     parameters={{
       docs: {
-        transformSource: (source) => {
-          const tmpSource = source
-            .replace(/<template>\s*/, '')
-            .replace(/\s*<\/template>/, '')
-            .replace(/on-/g, 'v-on:')
-            .replace(/:items='(.*)'\s*/g, '')
-            .replace(/active/, ':active="active"')
-            .replace(/data-items/g, ':items');
-          const fullSource = dedent`
-            data() {
-              return {
-                active: true,
-                items: [
-                  { content: 'Import file' },
-                  { content: 'Export file' },
-                ]
-              };
-            },
-            methods: {
-              toggleActive() {
-                this.active = !this.active;
+        source: {
+          code: dedent`
+            <template>
+              <Popover
+                :active="active"
+                autofocusTarget="first-node"
+                @close="toggleActive"
+              >
+                <template #activator>
+                  <Button disclosure @click="toggleActive"> More actions </Button>
+                </template>
+                <template #content> <ActionList :items="items"/> </template>
+              </Popover>
+            </template>
+            <script>
+              data() {
+                return {
+                  active: true,
+                  items: [
+                    { content: 'Import file' },
+                    { content: 'Export file' },
+                  ]
+                };
               },
-            },
-            ${tmpSource}
-          `;
-          return fullSource;
+              methods: {
+                toggleActive() {
+                  this.active = !this.active;
+                },
+              },
+            </script>
+          `,
         },
       },
     }}

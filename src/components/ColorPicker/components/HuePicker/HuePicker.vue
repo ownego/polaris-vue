@@ -1,7 +1,7 @@
 <template lang="pug">
 div(
-  :class="className",
-  ref="huePicker",
+  :class="styles.HuePicker",
+  ref="huePickerRef",
 )
   Slidable(
     :draggerY="draggerY",
@@ -11,52 +11,47 @@ div(
   )
 </template>
 
-<script lang="ts">
-import Vue from 'vue';
-import { Component, Prop } from 'vue-property-decorator';
+<script setup lang="ts">
+import { ref, computed, onMounted } from 'vue';
 import { classNames } from 'polaris-react/src/utilities/css';
 import { calculateDraggerY, hueForDraggerY } from 'polaris-react/src/components/ColorPicker/components/HuePicker/utilities';
 import styles from '@/classes/ColorPicker.json';
 import { Slidable } from '../Slidable';
 
-@Component({
-  components: {
-    Slidable,
-  },
-})
-export default class HuePicker extends Vue {
-  @Prop({ type: Number, required: true })
-  public hue!: number;
+interface Props {
+  hue: number;
+}
 
-  public sliderHeight = 0;
+const props = defineProps<Props>();
 
-  public draggerHeight = 0;
+const emit = defineEmits<{
+  (event: 'change', value: number): void
+}>();
 
-  public className = classNames(styles.HuePicker);
+const huePickerRef = ref(null);
+const sliderHeight = ref(0);
+const draggerHeight = ref(0);
 
-  get draggerY() {
-    return calculateDraggerY(this.hue, this.sliderHeight, this.draggerHeight);
+const draggerY = computed(() => {
+  return calculateDraggerY(props.hue, sliderHeight.value, draggerHeight.value);
+});
+
+onMounted(() => {
+  setSliderHeight();
+});
+
+const setSliderHeight = () => {
+  if (huePickerRef.value) {
+    sliderHeight.value = (huePickerRef.value as HTMLElement).clientHeight;
   }
+}
 
-  mounted() {
-    this.setSliderHeight();
-  }
+const setDraggerHeight = (height: number) => {
+  draggerHeight.value = height;
+}
 
-  setSliderHeight() {
-    const huePicker = this.$refs.huePicker as HTMLElement;
-
-    if (!huePicker) return;
-
-    this.sliderHeight = huePicker.clientHeight;
-  }
-
-  setDraggerHeight(height: number) {
-    this.draggerHeight = height;
-  }
-
-  handleChange({ y }: { y: number }) {
-    const hue = hueForDraggerY(y, this.sliderHeight);
-    this.$emit('change', hue);
-  }
+const handleChange = ({ y }: { y: number }) => {
+  const hue = hueForDraggerY(y, sliderHeight.value);
+  emit('change', hue);
 }
 </script>

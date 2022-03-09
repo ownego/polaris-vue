@@ -1,7 +1,7 @@
 <template lang="pug">
 div(
   ref="scrollArea",
-  v-bind="scrollableAttr",
+  v-bind="scrollable.props",
   :class="finalClassName",
   :tabindex="focusable ? 0 : undefined",
 )
@@ -9,31 +9,27 @@ div(
   slot
 </template>
 
-<script lang="ts">
-import Vue from 'vue';
+<script setup lang="ts">
 import {
-  Component,
-  Prop,
-  Ref,
-  Provide,
-} from 'vue-property-decorator';
+  provide, ref, reactive, computed, onMounted, onUpdated, onBeforeUnmount,
+} from 'vue';
 import debounce from 'lodash/debounce';
 import { classNames } from 'polaris-react/src/utilities/css';
 import { scrollable } from 'polaris-react/src/components/shared';
 import { StickyManager } from '@/utilities/sticky-manager';
 import styles from '@/classes/Scrollable.json';
 
-function prevent(evt: Event) {
-  evt.preventDefault();
-}
+const prevent = (event: Event): void => {
+  event.preventDefault();
+};
 
-function prefersReducedMotion() {
+const prefersReducedMotion = (): boolean => {
   try {
     return window.matchMedia('(prefers-reduced-motion: reduce)').matches;
   } catch (err) {
     return false;
   }
-}
+};
 
 const MAX_SCROLL_DISTANCE = 100;
 const DELTA_THRESHOLD = 0.2;
@@ -42,183 +38,165 @@ const EVENTS_TO_LOCK = ['scroll', 'touchmove', 'wheel'];
 const PREFERS_REDUCED_MOTION = prefersReducedMotion();
 const LOW_RES_BUFFER = 2;
 
-@Component
-export default class Scrollable extends Vue {
-  @Provide() 'stickyManager' = new StickyManager();
-
-  @Provide() 'scrollToPositionContext' = this.scrollToPosition;
-
-  @Ref('scrollArea') scrollArea!: HTMLDivElement;
-
-  /**
-   * Scroll content vertically
-   */
-  @Prop({ type: Boolean, default: true })
-  public vertical!: boolean;
-
-  /**
-   * Scroll content horizontally
-   */
-  @Prop({ type: Boolean })
-  public horizontal!: boolean;
-
-  /**
-   * Add a shadow when content is scrollable
-   */
-  @Prop({ type: Boolean })
-  public shadow!: boolean;
-
-  /**
-   * Slightly hints content upon mounting when scrollable
-   */
-  @Prop({ type: Boolean })
-  public hint!: boolean;
-
-  /**
-   * Adds a tabIndex to scrollable when children are not focusable
-   */
-  @Prop({ type: Boolean })
-  public focusable!: boolean;
-
-  public topShadow = false;
-
-  public bottomShadow = false;
-
-  public scrollPosition = 0;
-
-  public canScroll = false;
-
-  public scrollableAttr = scrollable.props;
-
-  get finalClassName(): string {
-    return classNames(
-      styles.Scrollable,
-      this.vertical && styles.vertical,
-      this.horizontal && styles.horizontal,
-      this.topShadow && styles.hasTopShadow,
-      this.bottomShadow && styles.hasBottomShadow,
-      this.vertical && this.canScroll && styles.verticalHasScrolling,
-    );
-  }
-
-  protected mounted() {
-    if (!this.scrollArea) return;
-
-    (this.$refs.scrollArea as HTMLDivElement).addEventListener('scroll', () => {
-      window.requestAnimationFrame(this.handleScroll);
-    });
-    window.addEventListener('resize', this.handleResize);
-    window.requestAnimationFrame(() => {
-      this.handleScroll();
-      if (this.hint) {
-        this.scrollHint();
-      }
-    });
-  }
-
-  protected updated() {
-    if (this.scrollPosition && this.scrollArea && this.scrollPosition > 0) {
-      (this.$refs.scrollArea as HTMLDivElement).scrollTop = this.scrollPosition;
-    }
-  }
-
-  protected destroyed() {
-    if (!this.scrollArea) return;
-
-    (this.$refs.scrollArea as HTMLDivElement)
-      .removeEventListener('scroll', this.handleScroll);
-    window.removeEventListener('resize', this.handleResize);
-  }
-
-  private handleResize = debounce(
-    () => {
-      this.handleScroll();
-    },
-    50,
-    { trailing: true },
-  );
-
-  private handleScroll() {
-    if (!this.scrollArea) return;
-
-    const { scrollTop, clientHeight, scrollHeight } = this.scrollArea;
-    const shouldBottomShadow = Boolean(
-      this.shadow && !(scrollTop + clientHeight >= scrollHeight),
-    );
-    const shouldTopShadow = Boolean(
-      this.shadow && scrollTop > 0 && this.scrollPosition > 0,
-    );
-
-    const canScroll = scrollHeight > clientHeight;
-    const hasScrolledToBottom = scrollHeight - scrollTop <= clientHeight + LOW_RES_BUFFER;
-
-    if (canScroll && hasScrolledToBottom) {
-      /**
-       * Called when scrolled to the bottom of the scroll area
-       */
-      this.$emit('scrolled-to-bottom');
-    }
-
-    this.topShadow = shouldTopShadow;
-    this.bottomShadow = shouldBottomShadow;
-    this.scrollPosition = scrollTop;
-    this.canScroll = canScroll;
-  }
-
-  private scrollHint() {
-    if (!this.scrollArea) return;
-
-    const { clientHeight, scrollHeight } = this.scrollArea;
-
-    if (
-      PREFERS_REDUCED_MOTION
-      || this.scrollPosition > 0
-      || scrollHeight <= clientHeight
-    ) {
-      return;
-    }
-
-    const scrollDistance = scrollHeight - clientHeight;
-
-    this.toggleLock();
-    this.scrollPosition = scrollDistance > MAX_SCROLL_DISTANCE
-      ? MAX_SCROLL_DISTANCE
-      : scrollDistance;
-
-    window.requestAnimationFrame(this.scrollStep);
-  }
-
-  private scrollStep(): void {
-    const delta = this.scrollPosition * DELTA_PERCENTAGE;
-    this.scrollPosition = delta < DELTA_THRESHOLD
-      ? 0
-      : this.scrollPosition - delta;
-
-    if (this.scrollPosition > 0) {
-      window.requestAnimationFrame(this.scrollStep);
-    } else {
-      this.toggleLock(false);
-    }
-  }
-
-  private toggleLock(shouldLock = true): void {
-    if (this.scrollArea) {
-      EVENTS_TO_LOCK.forEach((eventName) => {
-        if (shouldLock) {
-          (this.$refs.scrollArea as HTMLDivElement)
-            .addEventListener(eventName, prevent);
-        } else {
-          (this.$refs.scrollArea as HTMLDivElement)
-            .removeEventListener(eventName, prevent);
-        }
-      });
-    }
-  }
-
-  private scrollToPosition(scrollY: number): void {
-    this.scrollPosition = scrollY;
-  }
+interface Props {
+  /** Scroll content vertically */
+  vertical?: boolean;
+  /** Scroll content horizontally */
+  horizontal?: boolean;
+  /** Add a shadow when content is scrollable */
+  shadow?: boolean;
+  /** Slightly hints content upon mounting when scrollable */
+  hint?: boolean;
+  /** Adds a tabIndex to scrollable when children are not focusable */
+  focusable?: boolean;
 }
+
+const props = withDefaults(defineProps<Props>(), {
+  vertical: true,
+});
+
+const emits = defineEmits<{ (event: 'scrolled-to-bottom'): void }>();
+
+const scrollArea = ref<HTMLDivElement | null>(null);
+
+const topShadow = ref(false);
+const bottomShadow = ref(false);
+const scrollPosition = ref(0);
+const canScroll = ref(false);
+
+const state = reactive({ stickyManager: new StickyManager() });
+
+const scrollToPosition = (scrollY: number): void => {
+  scrollPosition.value = scrollY;
+};
+
+provide('stickyManagerContext', state.stickyManager);
+provide('scrollToPositionContext', scrollToPosition);
+
+const finalClassName = computed(() => classNames(
+  styles.Scrollable,
+  props.vertical && styles.vertical,
+  props.horizontal && styles.horizontal,
+  topShadow.value && styles.hasTopShadow,
+  bottomShadow.value && styles.hasBottomShadow,
+  props.vertical && canScroll.value && styles.verticalHasScrolling,
+));
+
+const handleScroll = (): void => {
+  if (!scrollArea.value) {
+    return;
+  }
+
+  const { scrollTop, scrollHeight, clientHeight } = scrollArea.value;
+  const shouldBottomShadow = Boolean(props.shadow && !(scrollTop + clientHeight >= scrollHeight));
+  const shouldTopShadow = Boolean(props.shadow && scrollTop > 0 && scrollPosition.value > 0);
+  const scrollAble = scrollHeight > clientHeight;
+  const hasScrolledToBottom = scrollHeight - scrollTop <= clientHeight + LOW_RES_BUFFER;
+
+  if (scrollAble && hasScrolledToBottom) {
+    emits('scrolled-to-bottom');
+  }
+
+  topShadow.value = shouldTopShadow;
+  bottomShadow.value = shouldBottomShadow;
+  scrollPosition.value = scrollTop;
+  canScroll.value = scrollAble;
+};
+
+const handleResize = debounce(
+  () => {
+    handleScroll();
+  },
+  50,
+  { trailing: true },
+);
+
+const toggleLock = (shouldLock = true): void => {
+  if (!scrollArea.value) {
+    return;
+  }
+
+  EVENTS_TO_LOCK.forEach((eventName) => {
+    if (shouldLock) {
+      scrollArea.value?.addEventListener(eventName, prevent);
+    } else {
+      scrollArea.value?.removeEventListener(eventName, prevent);
+    }
+  });
+};
+
+const scrollStep = (): void => {
+  const delta = scrollPosition.value * DELTA_PERCENTAGE;
+
+  scrollPosition.value = delta < DELTA_THRESHOLD ? 0 : scrollPosition.value - delta;
+
+  if (scrollPosition.value > 0) {
+    window.requestAnimationFrame(scrollStep);
+  } else {
+    toggleLock(false);
+  }
+};
+
+const scrollHint = (): void => {
+  if (!scrollArea.value) {
+    return;
+  }
+
+  const { clientHeight, scrollHeight } = scrollArea.value;
+
+  if (
+    PREFERS_REDUCED_MOTION
+    || scrollPosition.value > 0
+    || scrollHeight <= clientHeight
+  ) {
+    return;
+  }
+
+  const scrollDistance = scrollHeight - clientHeight;
+
+  toggleLock();
+
+  scrollPosition.value = scrollDistance > MAX_SCROLL_DISTANCE
+    ? MAX_SCROLL_DISTANCE
+    : scrollDistance;
+  window.requestAnimationFrame(scrollStep);
+};
+
+onMounted(() => {
+  if (!scrollArea.value) {
+    return;
+  }
+
+  state.stickyManager.setContainer(scrollArea.value);
+  scrollArea.value.scrollTop = scrollPosition.value;
+  scrollArea.value.addEventListener('scroll', () => {
+    window.requestAnimationFrame(handleScroll);
+  });
+  window.addEventListener('resize', handleResize);
+  window.requestAnimationFrame(() => {
+    handleScroll();
+  
+    if (props.hint) {
+      scrollHint();
+    }
+  });
+});
+
+onUpdated(() => {
+  if (scrollArea.value && scrollPosition.value > 0) {
+    (scrollArea.value as HTMLDivElement).scrollTop = scrollPosition.value;
+  }
+});
+
+onBeforeUnmount(() => {
+  if (!scrollArea.value) {
+    return;
+  }
+
+  scrollArea.value.removeEventListener('scroll', handleScroll);
+  window.removeEventListener('resize', handleResize);
+  state.stickyManager.removeScrollListener();
+});
 </script>
 
 <style lang="scss">

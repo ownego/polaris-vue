@@ -1,143 +1,120 @@
 <template lang="pug">
 Choice(
   :id="uniqueId",
-  :labelHidden="labelHidden",
   :disabled="disabled",
-  @mouseover.native="mouseOver = true",
-  @mouseout.native="mouseOver = false",
+  :labelHidden="labelHidden",
+  @mouseover="mouseOver = true",
+  @mouseout="mouseOver = false",
 )
-  template(slot="label")
+  template(#label, v-if="slots.label")
     slot(name="label")
-  template(slot="help-text")
+  template(#help-text, v-if="slots['help-text']")
     slot(name="help-text")
-  span(:class="wrapperClassName")
+  span(:class="styles.RadioButton")
     input(
       :id="uniqueId",
-      :name="name",
+      :name="name || uniqueId",
       :value="value",
       type="radio",
       :checked="isChecked",
       :disabled="disabled",
       :class="inputClassName",
       :aria-describedby="formattedAriaDescribedBy",
-      @change="onChange",
       @focus="$emit('focus')",
-      @blur="$emit('blur')",
+      @change="handleChange",
+      @blur="handleBlur",
+      @keyup="handleKeyup",
     )
     span(:class="backdropClassName")
 </template>
 
-<script lang="ts">
-import Vue from 'vue';
-import { Component, Prop } from 'vue-property-decorator';
+<script setup lang="ts">
+import { ref, computed, useSlots } from 'vue';
 import { classNames } from 'polaris-react/src/utilities/css';
 import styles from '@/classes/RadioButton.json';
-import { useUniqueId } from '@/utilities/unique-id';
-import { Choice, helpTextID } from '../Choice';
+import { UseUniqueId } from '@/use';
+import { Choice } from '../Choice';
+import { helpTextID } from '../Choice/utils';
 
-@Component({
-  model: {
-    prop: 'modelValue',
-    event: 'input',
-  },
-
-  components: {
-    Choice,
-  },
-})
-export default class RadioButton extends Vue {
-  /**
-   * Indicates the ID of the element that describes the the radio button
-   */
-  @Prop({ type: String })
-  public ariaDescribedBy!: string;
-
-  /**
-   * Visually hide the label
-   */
-  @Prop({ type: Boolean })
-  public labelHidden!: boolean;
-
-  /**
-   * Radio button is selected
-   */
-  @Prop({ type: Boolean })
-  public checked!: boolean;
-
-  /**
-   * Disable input
-   */
-  @Prop({ type: Boolean })
-  public disabled!: boolean;
-
-  /**
-   * ID for form input
-   */
-  @Prop({ type: String })
-  public id!: string;
-
-  /**
-   * Name for form input
-   */
-  @Prop({ type: String })
-  public name!: string;
-
-  /**
-   * Value for form input
-   */
-  @Prop({ type: String })
-  public value!: string;
-
-  /**
-   * Model value using for v-model
-   */
-  @Prop({ type: String })
-  public modelValue!: string;
-
-  public mouseOver = false;
-
-  public wrapperClassName: string = styles.RadioButton;
-
-  public inputClassName: string = styles.Input;
-
-  get uniqueId(): string {
-    return useUniqueId('RadioButton', this.id);
-  }
-
-  get isChecked(): boolean {
-    return this.checked || this.modelValue === this.value;
-  }
-
-  get backdropClassName(): string {
-    return classNames(
-      styles.Backdrop,
-      this.mouseOver && styles.hover,
-    );
-  }
-
-  get formattedAriaDescribedBy(): string | undefined {
-    const describedBy: string[] = [];
-
-    if (this.ariaDescribedBy) {
-      describedBy.push(this.ariaDescribedBy);
-    }
-
-    if (this.$slots.helpText) {
-      describedBy.push(helpTextID(this.uniqueId));
-    }
-
-    return describedBy.length
-      ? describedBy.join(' ')
-      : undefined;
-  }
-
-  onChange(event: InputEvent): void {
-    const target = event.target as HTMLInputElement;
-
-    this.$emit('input', target.value);
-    this.$emit('change', event);
-  }
+interface Props {
+  /** Indicates the ID of the element that describes the the radio button */
+  ariaDescribedBy?: string;
+  /** Visually hide the label */
+  labelHidden?: boolean;
+  /** Radio button is selected */
+  checked?: boolean;
+  /** Disable input */
+  disabled?: boolean;
+  /** ID for form input */
+  id?: string;
+  /** Name for form input */
+  name?: string;
+  /** Value for form input */
+  value?: string;
+  /** Value for v-model binding */
+  modelValue?: string;
 }
+
+const props = defineProps<Props>();
+
+const emits = defineEmits<{
+  (event: 'focus'): void
+  (event: 'change', changeEvent: Event): void
+  (event: 'update:modelValue', value: string): void
+  (event: 'blur'): void
+}>();
+
+const keyFocused = ref(false);
+const mouseOver = ref(false);
+
+const slots = useSlots();
+const helpTextSlot = computed(() => slots['help-text']?.());
+
+const { useUniqueId } = UseUniqueId();
+const uniqueId = computed(() => useUniqueId('RadioButton', props.id));
+
+const isChecked = computed(() => props.checked || props.modelValue === props.value);
+
+const backdropClassName = computed(() => classNames(
+  styles.Backdrop,
+  mouseOver.value && styles.hover,
+));
+const inputClassName = computed(() => classNames(
+  styles.Input,
+  keyFocused.value && styles.keyFocused,
+));
+
+const formattedAriaDescribedBy = computed(() => {
+  const describedBy: string[] = [];
+
+  if (props.ariaDescribedBy) {
+    describedBy.push(props.ariaDescribedBy);
+  }
+
+  if (helpTextSlot.value) {
+    describedBy.push(helpTextID(uniqueId.value));
+  }
+
+  return describedBy.length ? describedBy.join(' ') : undefined;
+});
+
+const handleChange = (event: Event): void => {
+  const target = event.target as HTMLInputElement;
+
+  emits('change', event);
+  emits('update:modelValue', target.value);
+}
+
+const handleBlur = (): void => {
+  emits('blur');
+  keyFocused.value = false;
+};
+
+const handleKeyup = (): void => {
+  if (!keyFocused.value) {
+    keyFocused.value = true;
+  }
+};
 </script>
 
 <style lang="scss">

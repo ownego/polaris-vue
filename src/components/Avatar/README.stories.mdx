@@ -1,23 +1,19 @@
-import { Meta, Story, Canvas, ArgsTable } from '@storybook/addon-docs';
-import { Avatar } from '@/polaris-vue';
+import { Meta, Story, Canvas, ArgsTable } from "@storybook/addon-docs";
+import { Avatar } from "@/polaris-vue";
+import dedent from "ts-dedent";
 
 <Meta
   title="Components / Images and Icons / Avatar"
-  component={ Avatar }
+  component={Avatar}
   argTypes={{
     size: {
-      name: 'size',
-      description: 'Size of Avatar',
-      options: [
-        'extraSmall',
-        'small',
-        'medium',
-        'large',
-      ],
-      control: { type: 'select' },
+      name: "size",
+      description: "Size of Avatar",
+      options: ["extraSmall", "small", "medium", "large"],
+      control: { type: "select" },
       table: {
         defaultValue: {
-          summary: 'medium'
+          summary: "medium",
         },
         type: {
           summary: null,
@@ -25,8 +21,8 @@ import { Avatar } from '@/polaris-vue';
       },
     },
     error: {
-      name: 'error',
-      description: 'Callback fired when the image fails to load',
+      name: "error",
+      description: "Callback fired when the image fails to load",
       control: { disable: true },
       table: {
         type: {
@@ -43,9 +39,11 @@ import { Avatar } from '@/polaris-vue';
 />
 
 export const Template = (args, { argTypes }) => ({
-  props: Object.keys(argTypes),
-  components: { Avatar},
-  template: `<Avatar v-bind="$props"/>`,
+  components: { Avatar },
+  setup() {
+    return { args };
+  },
+  template: `<Avatar v-bind="args"/>`,
 });
 
 # Avatar
@@ -58,11 +56,10 @@ Avatars are used to show a thumbnail representation of an individual or business
     height="60px"
     parameters={{
       docs: {
-        transformSource: (source) => {
-          const tmpSource = source
-            .replace(/<template>/, '')
-            .replace(/<\/template>/, '');
-          return tmpSource;
+        source: {
+          code: dedent`
+            <Avatar v-bind="props"/>
+          `,
         },
       },
     }}

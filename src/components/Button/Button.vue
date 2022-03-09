@@ -1,11 +1,11 @@
 <template lang="pug">
 div(
   v-if="connectedDisclosure",
-  :class="connectedDisclosureWrapperClass"
+  :class="styles.ConnectedDisclosureWrapper"
 )
   ButtonMarkup(
-    v-on="{...$listeners, mouseup: onMouseUp}",
     v-bind="buttonMarkupProps",
+    v-on="listeners",
   )
     slot
   Popover(
@@ -13,292 +13,264 @@ div(
     preferredAlignment="right",
     @close="toggleDisclosureActive",
   )
-    button(
-      slot="activator",
-      type="button",
-      :class="connectedDisclosureClassName",
-      :disabled="connectedDisclosureData.disabled",
-      :aria-label="connectedDisclosureData.disclosureLabel",
-      :aria-describedby="ariaDescribedBy",
-      @click="toggleDisclosureActive",
-      @mouseup="onMouseUp",
-    )
-      span
-        Icon(:source="activatorSourceIcon")
-    ActionList(
-      slot="content",
-      :items="connectedDisclosure.actions",
-      @action-any-item="toggleDisclosureActive",
-    )
-      template(v-for="{prefixId, suffixId} in connectedDisclosure.actions")
-        slot(v-if="prefixId", :name="`prefix-${prefixId}`", :slot="`prefix-${prefixId}`")
-        slot(v-if="suffixId", :name="`suffix-${suffixId}`", :slot="`suffix-${suffixId}`")
+    template(#activator)
+      button(
+        type="button",
+        :class="connectedDisclosureClassName",
+        :disabled="connectedDisclosureData.disabled",
+        :aria-label="connectedDisclosureData.disclosureLabel",
+        :aria-describedby="ariaDescribedBy",
+        @click="toggleDisclosureActive",
+        @mouseup="handleMouseUpByBlurring",
+      )
+        span
+          Icon(:source="CaretDownMinor")
+    template(#content)
+      ActionList(
+        :items="connectedDisclosure.actions",
+        @action-any-item="toggleDisclosureActive",
+      )
+        template(v-for="{prefixId} in connectedDisclosure.actions" #[`prefix-${prefixId}`])
+          slot(:name="`prefix-${prefixId}`")
+        template(v-for="{suffixId} in connectedDisclosure.actions" #[`suffix-${suffixId}`])
+          slot(:name="`suffix-${suffixId}`")
 ButtonMarkup(
   v-else,
-  v-on="{...$listeners, mouseup: onMouseUp}",
   v-bind="buttonMarkupProps",
+  v-on="listeners",
 )
   slot
 </template>
 
 <script lang="ts">
-import Vue from 'vue';
-import { Component, Prop } from 'vue-property-decorator';
+export default {
+  inheritAttrs: false,
+}
+</script>
+
+<script setup lang="ts">
+import {
+  computed, ref, useAttrs, useSlots,
+} from 'vue';
 import { classNames, variationName } from 'polaris-react/src/utilities/css';
 import CaretDownMinor from '@icons/CaretDownMinor.svg';
-import styles from '@/classes/Button.json';
 import { handleMouseUpByBlurring } from '@/utilities/focus';
-import { ButtonProps } from './utils';
-import { VisuallyHidden } from '../VisuallyHidden';
+import { capitalize } from 'lodash';
+import type { IconSource } from 'types/type';
+import styles from '@/classes/Button.json';
+import type { ConnectedDisclosure } from './utils';
 import { Popover } from '../Popover';
 import { ActionList } from '../ActionList';
 import { Icon } from '../Icon';
 import ButtonMarkup from './ButtonMarkup.vue';
 
-@Component({
-  components: {
-    VisuallyHidden,
-    ButtonMarkup,
-    ActionList,
-    Popover,
-    Icon,
-  },
-})
-export default class Button extends Vue {
-  /**
-   * A unique identifier for the button
-   */
-  @Prop({ type: String }) public id?: string;
-
-  /**
-   * A destination to link to, rendered in the href attribute of a link
-   */
-  @Prop({ type: String }) public url?: string;
-
-  /**
-   * Forces url to open in a new tab
-   */
-  @Prop({ type: Boolean }) public external?: boolean;
-
-  /**
-   * Tells the browser to download the url instead of opening it.
-   * Provides a hint for the downloaded filename if it is a string value
-   */
-  @Prop({ type: String }) public download?: string | boolean;
-
-  /**
-   * Allows the button to submit a form
-   */
-  @Prop({ type: Boolean }) public submit?: boolean;
-
-  /**
-   * Disables the button, disallowing merchant interaction
-   */
-  @Prop({ type: Boolean }) public disabled?: boolean;
-
-  /**
-   * Replaces button text with a spinner while a background action is being performed
-   */
-  @Prop({ type: Boolean }) public loading?: boolean;
-
-  /**
-   * Sets the button in a pressed state
-   */
-  @Prop({ type: Boolean }) public pressed?: boolean;
-
-  /**
-   * Visually hidden text for screen readers
-   */
-  @Prop({ type: String }) public accessibilityLabel?: string;
-
-  /**
-   * A valid WAI-ARIA role to define the semantic value of this element
-   */
-  @Prop({ type: String }) public role?: string;
-
-  /**
-   * Id of the element the button controls
-   */
-  @Prop({ type: String }) public ariaControls?: string;
-
-  /**
-   * Tells screen reader the controlled element is expanded
-   */
-  @Prop({ type: Boolean }) public ariaExpanded?: boolean;
-
-  /**
-   * Indicates the ID of the element that describes the button
-   */
-  @Prop({ type: String }) public ariaDescribedBy?: string;
-
+interface Props {
+  /** A unique identifier for the button */
+  id?: string;
+  /** A destination to link to, rendered in the href attribute of a link */
+  url?: string;
+  /** Forces url to open in a new tab */
+  external?: boolean;
+  /** Tells the browser to download the url instead of opening it.
+   * Provides a hint for the downloaded filename if it is a string value */
+  download?: string | boolean;
+  /** Allows the button to submit a form */
+  submit?: boolean;
+  /** Disables the button, disallowing merchant interaction */
+  disabled?: boolean;
+  /** Replaces button text with a spinner while a background action is being performed */
+  loading?: boolean;
+  /** Sets the button in a pressed state */
+  pressed?: boolean;
+  /** Visually hidden text for screen readers */
+  accessibilityLabel?: string;
+  /** A valid WAI-ARIA role to define the semantic value of this element */
+  role?: string;
+  /** Id of the element the button controls */
+  ariaControls?: string;
+  /** Tells screen reader the controlled element is expanded */
+  ariaExpanded?: boolean;
+  /** Indicates the ID of the element that describes the button */
+  ariaDescribedBy?: string;
   /**
    * Provides extra visual weight and identifies the primary action in a set of buttons
    */
-  @Prop({ type: Boolean }) public primary?: boolean;
-
+  primary?: boolean;
   /**
    * Indicates a dangerous or potentially negative action
    */
-  @Prop({ type: Boolean }) public destructive?: boolean;
-
+  destructive?: boolean;
   /**
    * Changes the size of the button, giving it more or less padding
    * @values slim | medium | large
    */
-  @Prop({ default: 'medium' }) public size?: ButtonProps['size'];
-
+  size?: 'slim' | 'medium' | 'large';
   /**
    * Changes the inner text alignment of the button
    * @values left | center | right
    */
-  @Prop({ type: String }) public textAlign?: ButtonProps['textAlign'];
-
+  textAlign?: 'left' | 'right' | 'center';
   /**
    * Gives the button a subtle alternative to the default button styling,
    * appropriate for certain backdrops
    */
-  @Prop({ type: Boolean }) public outline?: boolean;
-
+  outline?: boolean;
   /**
    * Indicates a dangerous or potentially negative action
    */
-  @Prop({ type: Boolean }) public fullWidth?: boolean;
-
+  fullWidth?: boolean;
   /**
    * Displays the button with a disclosure icon. Defaults to `down` when set to true
    * @values down | up | select | boolean
    */
-  @Prop({ type: [String, Boolean] }) public disclosure?: ButtonProps['disclosure'];
-
+  disclosure?: 'down' | 'up' | 'select' | boolean;
   /**
    * Renders a button that looks like a link
    */
-  @Prop({ type: Boolean }) public plain?: boolean;
-
+  plain?: boolean;
   /**
    * Makes plain and outline Button colors (text, borders, icons) the same as the current text color
    * Also adds an underline to `plain` Buttons
    */
-  @Prop({ type: Boolean }) public monochrome?: boolean;
-
+  monochrome?: boolean;
   /**
    * Removes underline from button text (including on interaction)when monochrome and plain are true
    */
-  @Prop({ type: Boolean }) public removeUnderline?: boolean;
-
+  removeUnderline?: boolean;
+  /**
+   * Icon to display to the left of the button content.
+   */
+  icon?: IconSource;
   /**
    * Disclosure button connected right of the button. Toggles a popover action list.
    */
-  @Prop() public connectedDisclosure?: ButtonProps['connectedDisclosure'];
-
-  /**
-   * Disclosure button connected right of the button. Toggles a popover action list.
-   */
-  @Prop() public icon?: ButtonProps['icon'];
-
-  get isDisabled() {
-    return this.disabled || this.loading;
-  }
-
-  get className() {
-    const textAlignVariation = this.textAlign
-      && variationName('textAlign', this.textAlign) as keyof typeof styles;
-    const sizeVariation = this.size && variationName('size', this.size) as keyof typeof styles;
-
-    return classNames(
-      styles.Button,
-      this.primary && styles.primary,
-      this.outline && styles.outline,
-      this.destructive && styles.destructive,
-      this.isDisabled && styles.disabled,
-      this.loading && styles.loading,
-      this.plain && styles.plain,
-      this.pressed && !this.disabled && !this.url && styles.pressed,
-      this.monochrome && styles.monochrome,
-      this.size !== 'medium' && sizeVariation && styles[sizeVariation],
-      textAlignVariation && styles[textAlignVariation],
-      this.fullWidth && styles.fullWidth,
-      this.icon && this.children == null && styles.iconOnly,
-      this.connectedDisclosure && styles.connectedDisclosure,
-      this.removeUnderline && styles.removeUnderline,
-    );
-  }
-
-  get connectedDisclosureClassName() {
-    const textAlignVariantion = this.textAlign
-      && variationName('textAlign', this.textAlign) as keyof typeof styles;
-    const sizeVariantion = this.size && variationName('size', this.size) as keyof typeof styles;
-
-    return classNames(
-      styles.Button,
-      this.primary && styles.primary,
-      this.outline && styles.outline,
-      this.size !== 'medium' && sizeVariantion && styles[sizeVariantion],
-      textAlignVariantion && styles[textAlignVariantion],
-      this.destructive && styles.destructive,
-      this.connectedDisclosure && this.connectedDisclosure.disabled && styles.disabled,
-      styles.iconOnly,
-      styles.ConnectedDisclosure,
-      this.monochrome && styles.monochrome,
-    );
-  }
-
-  get commonProps() {
-    const {
-      id, className, accessibilityLabel, role, ariaDescribedBy,
-    } = this;
-    return {
-      id, className, accessibilityLabel, role, ariaDescribedBy,
-    };
-  }
-
-  get linkProps() {
-    const { url, external, download } = this;
-    return { url, external, download };
-  }
-
-  get actionProps() {
-    const { submit, loading, pressed } = this;
-    return {
-      submit, loading, pressed, disabled: this.isDisabled,
-    };
-  }
-
-  get buttonMarkupProps() {
-    const {
-      commonProps, linkProps, actionProps, removeUnderline, children, disclosure, loading, icon,
-    } = this;
-    return {
-      commonProps, linkProps, actionProps, removeUnderline, children, disclosure, loading, icon,
-    };
-  }
-
-  get connectedDisclosureData() {
-    if (this.connectedDisclosure) {
-      const {
-        disabled,
-        accessibilityLabel: disclosureLabel = 'Related actions',
-      } = this.connectedDisclosure;
-
-      return { disabled, disclosureLabel };
-    }
-    return {};
-  }
-
-  public onMouseUp = handleMouseUpByBlurring;
-
-  public connectedDisclosureWrapperClass = styles.ConnectedDisclosureWrapper;
-
-  public disclosureActive = false;
-
-  public toggleDisclosureActive() {
-    this.disclosureActive = !this.disclosureActive;
-  }
-
-  public activatorSourceIcon = CaretDownMinor;
-
-  public children = !!this.$slots.default;
+  connectedDisclosure?: ConnectedDisclosure;
 }
+
+const props = withDefaults(defineProps<Props>(), {
+  size: 'medium',
+  disclosure: undefined,
+  textAlign: undefined,
+  url: '',
+});
+
+const slots = useSlots();
+const attrs = useAttrs();
+
+const listeners = computed(() => {
+  const events = ['blur', 'click', 'focus', 'keydown', 'keypress', 'keyup', 'mouseover', 'touchstart'];
+  const eventBindings: Record<string, unknown> = {};
+  events.forEach((event) => {
+    const eventName = `on${capitalize(event)}`;
+    if (attrs[eventName]) {
+      eventBindings[event] = attrs[eventName];
+    }
+  });
+  return eventBindings;
+});
+
+const hasChildren = !!slots.default
+
+const disclosureActive = ref<boolean>(false);
+
+const isDisabled = computed(() => props.disabled || props.loading);
+
+const className = computed(() => {
+  const textAlignVariation = props.textAlign
+    && variationName('textAlign', props.textAlign) as keyof typeof styles;
+  const sizeVariation = props.size && variationName('size', props.size) as keyof typeof styles;
+
+  return classNames(
+    styles.Button,
+    props.primary && styles.primary,
+    props.outline && styles.outline,
+    props.destructive && styles.destructive,
+    isDisabled.value && styles.disabled,
+    props.loading && styles.loading,
+    props.plain && styles.plain,
+    props.pressed && !props.disabled && !props.url && styles.pressed,
+    props.monochrome && styles.monochrome,
+    props.size !== 'medium' && sizeVariation && styles[sizeVariation],
+    textAlignVariation && styles[textAlignVariation],
+    props.fullWidth && styles.fullWidth,
+    props.icon && !hasChildren && styles.iconOnly,
+    props.connectedDisclosure && styles.connectedDisclosure,
+    props.removeUnderline && styles.removeUnderline,
+  );
+});
+
+const connectedDisclosureClassName = computed(() => {
+  const textAlignVariantion = props.textAlign
+    && variationName('textAlign', props.textAlign) as keyof typeof styles;
+  const sizeVariantion = props.size && variationName('size', props.size) as keyof typeof styles;
+
+  return classNames(
+    styles.Button,
+    props.primary && styles.primary,
+    props.outline && styles.outline,
+    props.size !== 'medium' && sizeVariantion && styles[sizeVariantion],
+    textAlignVariantion && styles[textAlignVariantion],
+    props.destructive && styles.destructive,
+    props.connectedDisclosure && props.connectedDisclosure.disabled && styles.disabled,
+    styles.iconOnly,
+    styles.ConnectedDisclosure,
+    props.monochrome && styles.monochrome,
+  );
+});
+
+const commonProps = computed(() => {
+  const {
+    id, accessibilityLabel, role, ariaDescribedBy,
+  } = props;
+  return {
+    id, className: className.value, accessibilityLabel, role, ariaDescribedBy,
+  };
+});
+
+const linkProps = computed(() => {
+  const { url, external, download } = props;
+  return { url, external, download };
+});
+
+const actionProps = computed(() => {
+  const { submit, loading, pressed } = props;
+  return {
+    submit, loading, pressed, disabled: isDisabled.value,
+  };
+});
+
+const buttonMarkupProps = computed(() => {
+  const {
+    removeUnderline, disclosure, loading, icon,
+  } = props;
+  return {
+    commonProps: commonProps.value,
+    linkProps: linkProps.value,
+    actionProps: actionProps.value,
+    removeUnderline,
+    children: hasChildren,
+    disclosure,
+    loading,
+    icon,
+  };
+});
+
+const connectedDisclosureData = computed(() => {
+  if (props.connectedDisclosure) {
+    const {
+      disabled,
+      accessibilityLabel: disclosureLabel = 'Related actions',
+    } = props.connectedDisclosure;
+
+    return { disabled, disclosureLabel };
+  }
+  return {};
+});
+
+const toggleDisclosureActive = () => {
+  disclosureActive.value = !disclosureActive.value;
+};
+
 </script>
 
 <style lang="scss">

@@ -1,5 +1,6 @@
 import { Meta, Story, Canvas, ArgsTable } from '@storybook/addon-docs';
 import { List, ListItem } from '@/polaris-vue';
+import dedent from 'ts-dedent';
 
 <Meta
   title="Components / Lists and tables / List"
@@ -14,10 +15,8 @@ import { List, ListItem } from '@/polaris-vue';
       ],
       control: { type: 'select' },
       table: {
-        defaultValue: {
-          summary: 'bullet'
-        },
         type: {
+          default: 'bullet',
           summary: null,
         },
       },
@@ -30,10 +29,10 @@ import { List, ListItem } from '@/polaris-vue';
   }}
 />
 
-export const Template = (args, { argTypes }) => ({
-  props: Object.keys(argTypes),
+export const Template = (args) => ({
   components: { List, ListItem },
-  template: `<List v-bind="$props">
+  setup() { return { args }; },
+  template: `<List v-bind="args">
     <ListItem>Yellow shirt</ListItem>
     <ListItem>Red shirt</ListItem>
     <ListItem>Green shirt</ListItem>
@@ -45,7 +44,23 @@ export const Template = (args, { argTypes }) => ({
 Lists display a set of related text-only content. Each list item begins with a bullet or a number.
 
 <Canvas>
-  <Story name="List" height="80px">
+  <Story
+    name="List"
+    height="80px"
+    parameters={{
+      docs: {
+        source: {
+          code: dedent`
+            <List type="bullet">
+              <ListItem>Yellow shirt</ListItem>
+              <ListItem>Red shirt</ListItem>
+              <ListItem>Green shirt</ListItem>
+            </List>
+          `,
+        },
+      },
+    }}
+  >
     {Template.bind({})}
   </Story>
 </Canvas>

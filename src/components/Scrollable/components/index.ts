@@ -1,1 +1,1 @@
-export * from './ScrollTo';
+export { default as ScrollTo } from './ScrollTo.vue';

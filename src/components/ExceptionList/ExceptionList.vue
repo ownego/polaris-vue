@@ -1,24 +1,10 @@
 <template lang="pug">
-ul(:class="className")
+ul(:class="styles.ExceptionList")
   slot
 </template>
 
-<script lang="ts">
-import Vue from 'vue';
-import { Component } from 'vue-property-decorator';
+<script setup lang="ts">
 import styles from '@/classes/ExceptionList.json';
-import { Icon } from '../Icon';
-import { Truncate } from '../Truncate';
-
-@Component({
-  components: {
-    Icon,
-    Truncate,
-  },
-})
-export default class ExceptionList extends Vue {
-  public className = styles.ExceptionList;
-}
 </script>
 
 <style lang="scss">

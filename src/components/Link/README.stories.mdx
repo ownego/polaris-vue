@@ -1,3 +1,4 @@
+import dedent from 'ts-dedent';
 import { Meta, Story, Canvas, ArgsTable } from '@storybook/addon-docs';
 
 import { Link } from '@/polaris-vue';
@@ -9,9 +10,24 @@ import { Link } from '@/polaris-vue';
     to: {
       name: 'to',
       description: 'Set to for vue-router',
+      control: {
+        type: 'text',
+      },
       table: {
         type: {
           summary: 'string | object',
+        },
+      },
+    },
+    click: {
+      name: 'click',
+      description: 'Callback when a link is clicked',
+      control: {
+        disable: true,
+      },
+      table: {
+        type: {
+          summary: '() => void',
         },
       },
     },
@@ -23,23 +39,32 @@ import { Link } from '@/polaris-vue';
   }}
 />
 
-export const Template = (args, { argTypes }) => ({
-  props: Object.keys(argTypes),
+export const Template = (args) => ({
   components: { Link },
-  template: `<Link v-bind="$props">fulfilling orders</Link>`,
+  setup() { return { args }; },
+  template: `<Link v-bind="args">Fulfilling orders</Link>`,
 });
 
 # Link
 
 Links take users to another place, and usually appear within or directly following a sentence.
 
-For actions that aren’t related to navigation, use the [button component.](/docs/components-actions-button--button)
-
-<font color="#FF7900">Use component with camel case for prevent conflict with <b>link</b> element in html.</font>
+For actions that aren't related to navigation, use the [button component.](/docs/components-actions-button--button)
 
 
 <Canvas>
-  <Story name="Link">
+  <Story
+    name="Link"
+    parameters={{
+      docs: {
+        source: {
+          code: dedent`
+            <Link>Fulfilling orders</Link>
+          `,
+        },
+      },
+    }}
+  >
     {Template.bind({})}
   </Story>
 </Canvas>

@@ -1,39 +1,31 @@
 <script lang="ts">
-import Vue from 'vue';
-import { Component, Prop } from 'vue-property-decorator';
+export default {
+  inheritAttrs: false,
+  render() {
+    return null;
+  },
+}
+</script>
+
+<script setup lang="ts">
+import { onBeforeUnmount, onMounted } from 'vue';
 import type { Key } from './utils';
 
 type KeyEvent = 'keydown' | 'keyup';
 
-@Component
-export default class KeypressListener extends Vue {
-  @Prop({ type: String })
-  public keyCode!: Key;
+const props = defineProps({
+  keyCode: { type: String as () => Key, required: true },
+  keyEvent: { type: String as () => KeyEvent, default: 'keyup' },
+  handler: { type: Function, required: true },
+});
 
-  @Prop({ type: Function })
-  public handler!: (event: KeyboardEvent) => void;
-
-  @Prop({ type: String, default: 'keyup' })
-  public keyEvent!: KeyEvent;
-
-  public handleKeyEvent(event: KeyboardEvent) {
-    if (event.key === this.keyCode) {
-      this.handler(event);
-    }
-  }
-
-  // eslint-disable-next-line class-methods-use-this
-  render() {
-    return null;
-  }
-
-  mounted(): void {
-    document.addEventListener(this.keyEvent, this.handleKeyEvent);
-  }
-
-  beforeDestroy(): void {
-    document.removeEventListener(this.keyEvent, this.handleKeyEvent);
+function handleKeyEvent(event: KeyboardEvent) {
+  if (event.key === props.keyCode) {
+    props.handler(event);
   }
 }
 
+onMounted(() => document.addEventListener(props.keyEvent, handleKeyEvent));
+
+onBeforeUnmount(() => document.removeEventListener(props.keyEvent, handleKeyEvent));
 </script>

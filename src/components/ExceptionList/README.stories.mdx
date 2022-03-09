@@ -3,7 +3,6 @@ import dedent from 'ts-dedent';
 
 import { ExceptionList, ExceptionListItem } from '@/polaris-vue';
 import NoteMinor from '@icons/NoteMinor.svg';
-import CircleCancelMajor from '@icons/CircleCancelMajor.svg';
 import DiscountsMajor from '@icons/DiscountsMajor.svg';
 
 <Meta
@@ -18,21 +17,14 @@ import DiscountsMajor from '@icons/DiscountsMajor.svg';
   }}
 />
 
-export const Template = (args, { argTypes }) => ({
-  props: Object.keys(argTypes),
-  components: { ExceptionList, ExceptionListItem },
-  data() {
-    return {
-      iconNoteMinor: NoteMinor,
-      iconCircleCancelMajor: CircleCancelMajor,
-      iconDiscountsMajor: DiscountsMajor,
-    };
-  },
+export const Template = (args) => ({
+  components: { NoteMinor, ExceptionList, ExceptionListItem },
+  setup() { return { args, NoteMinor, DiscountsMajor }; },
   template: `<ExceptionList>
-    <ExceptionListItem :icon="iconNoteMinor">This customer is awesome. Make sure to treat them right!</ExceptionListItem>
+    <ExceptionListItem :icon="NoteMinor">This customer is awesome. Make sure to treat them right!</ExceptionListItem>
     <ExceptionListItem title="Required" status="critical">This order need to be fulfilled ASAP.</ExceptionListItem>
-    <ExceptionListItem title="Warning" status="warning" :icon="iconDiscountsMajor">This order was applied discount code.</ExceptionListItem>
-    <ExceptionListItem v-bind="$props">Example Exception List Item</ExceptionListItem>
+    <ExceptionListItem title="Warning" status="warning" :icon="DiscountsMajor">This order was applied discount code.</ExceptionListItem>
+    <ExceptionListItem v-bind="args">Example Exception List Item</ExceptionListItem>
   </ExceptionList>`,
 });
 
@@ -46,24 +38,20 @@ Use exception lists to help merchants notice important, standout information tha
     height="120px"
     parameters={{
       docs: {
-        transformSource: (source) => {
-          const tmpSource = source
-            .replace(/\s*:items='.*'\s*/,' :items="items"')
-            .replace(/\s*:icon='.*'\s*/,' :icon="iconNoteMinor"')
-            .replace(/\s:icon='.*'/,' :icon="iconDiscountsMajor"');
-          const fullSource = dedent`
-            ${tmpSource}\n
+        source: {
+          code: dedent`
+            <ExceptionList>
+              <ExceptionListItem :icon="NoteMinor">This customer is awesome. Make sure to treat them right!</ExceptionListItem>
+              <ExceptionListItem title="Required" status="critical">This order need to be fulfilled ASAP.</ExceptionListItem>
+              <ExceptionListItem title="Warning" status="warning" :icon="DiscountsMajor">This order was applied discount code.</ExceptionListItem>
+              <ExceptionListItem>Example Exception List Item</ExceptionListItem>
+            </ExceptionList>\n
+            <script setup>
             import NoteMinor from '@shopify/polaris-icons/dist/svg/NoteMinor.svg';
-            import DiscountsMajor from '@shopify/polaris-icons/dist/svg/DiscountsMajor.svg';\n
-            data() {
-              return {
-                iconNoteMinor: NoteMinor,
-                iconDiscountsMajor: DiscountsMajor,
-              };
-            }
-          `;
-          return fullSource;
-        },
+            import DiscountsMajor from '@shopify/polaris-icons/dist/svg/DiscountsMajor.svg';
+            </script>
+          `,
+        }
       },
     }}
   >

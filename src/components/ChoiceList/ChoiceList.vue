@@ -4,161 +4,119 @@ fieldset(
   :class="className",
   :aria-invalid="error !== null",
 )
-  legend(:class="titleClassName")
+  legend(:class="styles.Title")
     slot
-  ul(:class="listClassName")
+  ul(:class="styles.Choices")
     li(
       v-for="choice, index in choices",
       :key="index",
     )
       component(
-        :is="allowMultiple ? 'Checkbox' : 'RadioButton'",
+        :is="allowMultiple ? Checkbox : RadioButton",
         :name="finalName",
         :value="choice.value",
         :checked="isChoiceSelected(choice)",
-        :disabled="choice.disabledField || disabled",
-        :ariaDescribedBy="generateAriaDescribedBy(choice.describedByErrorField)",
-        @change="onChange($event, choice)",
+        :disabled="choice.disabled || disabled",
+        :ariaDescribedBy="error && choice.describedByError ? errorTextID(finalName) : null",
+        @change="handleChange",
       )
-        template(slot="label")
+        template(#label, v-if="choice.label")
           span {{ choice.label }}
-        template(slot="helpText")
+        template(#help-text, v-if="choice.helpText")
           span {{ choice.helpText }}
-      component(choice
-        v-if="choice.renderChildrenField",
-        :is="choice.renderChildrenField",
-        :class="childrenClassName",
+      div(
+        v-if="typeof choice.renderChildren === 'string'",
+        v-html="choice.renderChildren",
+        :class="styles.ChoiceChildren",
       )
-  div(
-    v-if="error",
-    :class="errorClassName",
-  )
-    InlineError(
-      :fieldID="finalName",
-      :message="error",
-    )
+      component(
+        v-else
+        :is="choice.renderChildren",
+        :class="styles.ChoiceChildren",
+      )
+  div(v-if="error", :class="styles.ChoiceError")
+    InlineError(:fieldID="finalName", :message="error")
 </template>
 
-<script lang="ts">
-import Vue, { VueConstructor } from 'vue';
-import { Component, Prop } from 'vue-property-decorator';
+<script setup lang="ts">
+import { computed, useSlots } from 'vue';
 import { classNames } from 'polaris-react/src/utilities/css';
-import type { Error } from 'types/type';
+import { UseUniqueId } from '@/use';
 import styles from '@/classes/ChoiceList.json';
-import { useUniqueId } from '@/utilities/unique-id';
+import type { Error } from 'types/type';
 import { Checkbox } from '../Checkbox';
 import { RadioButton } from '../RadioButton';
-import { InlineError, errorTextID } from '../InlineError';
+import { InlineError } from '../InlineError';
+import { errorTextID } from '../InlineError/utils';
 
-interface choiceProps {
-  value: string | boolean,
-  label: string,
-  disabledField?: boolean,
-  helpText?: string,
-  describedByErrorField?: boolean,
-  renderChildrenField?: string | VueConstructor<Vue>,
+interface Choice {
+  value: string;
+  label: string;
+  disabled?: boolean;
+  helpText?: string;
+  describedByError?: boolean;
+  renderChildren?: string | Record<string, unknown>;
 }
 
-@Component({
-  components: {
-    Checkbox,
-    RadioButton,
-    InlineError,
-  },
-})
-export default class ChoiceList extends Vue {
-  /**
-   * Collection of choices
-   */
-  @Prop({ type: Array, required: true })
-  public choices!: choiceProps[];
+interface Props {
+  /** Collection of choices */
+  choices: Choice[];
+  /** V-model will automatically bind to this prop */
+  modelValue: string | string[];
+  /** Name for form input */
+  name?: string;
+  /** Allow merchants to select multiple options at once */
+  allowMultiple?: boolean;
+  /** Toggles display of the title */
+  titleHidden?: boolean;
+  /** Display an error message */
+  error?: Error;
+  /** Disable all choices */
+  disabled?: boolean;
+}
 
-  /**
-   * V-model will automatically bind to this prop
-   */
-  @Prop({ type: [String, Array], required: true })
-  public value!: string | string[];
+const props = defineProps<Props>();
 
-  /**
-   * Name for form input
-   */
-  @Prop({ type: String })
-  public name!: string;
+const emits = defineEmits<{
+  (event: 'change', changeEvent: Event): void
+  (event: 'update:modelValue', value: string | string[]): void
+}>();
 
-  /**
-   * Allow merchants to select multiple options at once
-   */
-  @Prop({ type: Boolean })
-  public allowMultiple!: boolean;
+const { useUniqueId } = UseUniqueId();
+const uniqueId = computed(() => useUniqueId('ChoiceList', props.name));
+const finalName = computed(() => props.allowMultiple
+  ? `${uniqueId.value}Multiple`
+  : uniqueId.value,
+);
 
-  /**
-   * Toggles display of the title
-   */
-  @Prop({ type: Boolean })
-  public titleHidden!: boolean;
+const className = computed(() => classNames(
+  styles.ChoiceList,
+  props.titleHidden && styles.titleHidden,
+));
 
-  /**
-   * Display an error message
-   */
-  @Prop({ type: [String, Object, Function, Array] })
-  public error!: Error;
+const isChoiceSelected = (choice: Choice): boolean => (
+  props.allowMultiple
+    ? props.modelValue.includes(choice.value)
+    : props.modelValue === choice.value
+);
 
-  /**
-   * Disable all choices
-   */
-  @Prop({ type: Boolean })
-  public disabled!: boolean;
+const updateSelectedChoices = (event: Event): string | string[] => {
+  const target = event.target as HTMLInputElement;
 
-  public titleClassName: string = styles.Title;
-
-  public errorClassName: string = styles.ChoiceError;
-
-  public listClassName: string = styles.Choices;
-
-  public childrenClassName: string = styles.ChoiceChildren;
-
-  get className(): string {
-    return classNames(
-      styles.ChoiceList,
-      this.titleHidden && styles.titleHidden,
-    );
+  if (target.checked) {
+    return props.allowMultiple
+      ? [...props.modelValue, target.value]
+      : target.value;
   }
 
-  get finalName(): string {
-    const name = useUniqueId('ChoiceList', this.name);
-    return this.allowMultiple ? `${this.name}Multiple` : name;
-  }
+  return Array.isArray(props.modelValue)
+    ? props.modelValue.filter((val) => val !== target.value)
+    : [];
+};
 
-  public generateAriaDescribedBy(describedByErrorField: boolean): string {
-    return this.error && describedByErrorField
-      ? errorTextID(this.finalName)
-      : '';
-  }
-
-  protected isChoiceSelected(choice: choiceProps): boolean {
-    return this.allowMultiple
-      ? this.value.includes(choice.value as string)
-      : choice.value === this.value;
-  }
-
-  public updateSelectedChoices(event: InputEvent): string | string[] {
-    const target = event.target as HTMLInputElement;
-
-    if (target.checked) {
-      return this.allowMultiple
-        ? [...this.value, target.value]
-        : target.value;
-    }
-
-    return Array.isArray(this.value)
-      ? this.value.filter((val) => val !== target.value)
-      : [];
-  }
-
-  public onChange(event: InputEvent, choice: choiceProps): void {
-    this.$emit('input', this.updateSelectedChoices(event));
-    this.$emit('change', choice);
-  }
+const handleChange = (event: Event): void => {
+  emits('update:modelValue', updateSelectedChoices(event));
+  emits('change', event);
 }
 </script>
 

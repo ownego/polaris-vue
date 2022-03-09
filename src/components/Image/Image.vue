@@ -12,9 +12,8 @@ img(
 )
 </template>
 
-<script lang="ts">
-import Vue from 'vue';
-import { Component, Prop } from 'vue-property-decorator';
+<script setup lang="ts">
+import { computed } from 'vue';
 
 interface SourceSet {
   source: string;
@@ -23,28 +22,17 @@ interface SourceSet {
 
 type CrossOrigin = 'anonymous' | 'use-credentials' | '' | undefined;
 
-@Component({
-  /**
-   * Name property using for prevent 'built-in or reserved HTML elements' warn
-   */
-  name: 'PImage',
-})
-export default class Image extends Vue {
-  @Prop({ type: String, required: true })
-  public source!: string;
-
-  @Prop({ type: String })
-  public crossOrigin!: CrossOrigin;
-
-  @Prop({ type: Array })
-  public sourceSet!: SourceSet[];
-
-  get finalSourceSet(): string | null {
-    return this.sourceSet
-      ? this.sourceSet
-        .map(({ source: subSource, descriptor }) => `${subSource} ${descriptor}`)
-        .join(',')
-      : null;
-  }
+interface Props {
+  source: string;
+  crossOrigin?: CrossOrigin;
+  sourceSet?: SourceSet[];
 }
+
+const props = defineProps<Props>();
+
+const finalSourceSet = computed(() => props.sourceSet
+  ? props.sourceSet
+    .map(({ source: subSource, descriptor }) => `${subSource} ${descriptor}`).join(',')
+  : null,
+);
 </script>

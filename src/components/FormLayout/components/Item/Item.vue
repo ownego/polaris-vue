@@ -1,15 +1,8 @@
 <template lang="pug">
-div(:class="className")
+div(:class="styles.Item")
   slot
 </template>
-<script lang="ts">
-import Vue from 'vue';
-import { Component } from 'vue-property-decorator';
-import { classNames } from 'polaris-react/src/utilities/css';
-import styles from '@/classes/FormLayout.json';
 
-@Component
-export default class Item extends Vue {
-  public className = classNames(styles.Item);
-}
+<script setup lang="ts">
+import styles from '@/classes/FormLayout.json';
 </script>

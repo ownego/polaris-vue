@@ -1,6 +1,8 @@
-import { labelID, LabelProps } from '../Label';
+import type { Action, Error } from 'types/type';
+import { labelID } from '../Label/utils';
+import type { LabelProps } from "../Label/utils";
 
-export { labelID };
+export { labelID }
 
 export function errorID(id: string) {
   return `${id}Error`;
@@ -15,8 +17,10 @@ export interface LabelledProps {
   id: LabelProps['id'];
   /** Error to display beneath the label */
   error?: Error | boolean;
+  /** An action */
+  action?: Action;
   /** Visually hide the label */
   labelHidden?: boolean;
   /** Visual required indicator for the label */
-  requiredIndicator?: LabelProps['requiredIndicator'];
+  requiredIndicator?: boolean;
 }

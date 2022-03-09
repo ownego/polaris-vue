@@ -1,22 +1,16 @@
-import { Meta, Story, Canvas, ArgsTable } from '@storybook/addon-docs';
-import { TextStyle } from '@/polaris-vue';
+import { Meta, Story, Canvas, ArgsTable } from "@storybook/addon-docs";
+import { TextStyle } from "@/polaris-vue";
+import dedent from "ts-dedent";
 
 <Meta
   title="Components / Titles and text / TextStyle"
-  component={ TextStyle }
+  component={TextStyle}
   argTypes={{
     variation: {
-      name: 'variation',
-      description: 'Give text additional visual meaning',
-      options: [
-        'positive',
-        'negative',
-        'warning',
-        'strong',
-        'subdued',
-        'code',
-      ],
-      control: { type: 'select' },
+      name: "variation",
+      description: "Give text additional visual meaning",
+      options: ["positive", "negative", "warning", "strong", "subdued", "code"],
+      control: { type: "select" },
       table: {
         type: {
           summary: null,
@@ -32,9 +26,11 @@ import { TextStyle } from '@/polaris-vue';
 />
 
 export const Template = (args, { argTypes }) => ({
-  props: Object.keys(argTypes),
-  components: { TextStyle},
-  template: `<TextStyle v-bind="$props"> Hello </TextStyle>`,
+  components: { TextStyle },
+  setup() {
+    return { args };
+  },
+  template: `<TextStyle v-bind="args"> Hello </TextStyle>`,
 });
 
 # TextStyle
@@ -47,11 +43,10 @@ Text style enhances text with additional visual meaning. For example, using subd
     height="60px"
     parameters={{
       docs: {
-        transformSource: (source) => {
-          const tmpSource = source
-            .replace(/<template>/, '')
-            .replace(/<\/template>/, '');
-          return tmpSource;
+        source: {
+          code: dedent`
+            <TextStyle v-bind="props"> Hello </TextStyle>
+          `,
         },
       },
     }}

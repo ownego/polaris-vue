@@ -19,6 +19,7 @@ import { Badge } from '@/polaris-vue';
       },
     },
     progress: {
+      options: ['incomplete', 'partiallyComplete', 'complete'],
       control: {
         type: 'select',
       },
@@ -29,6 +30,10 @@ import { Badge } from '@/polaris-vue';
       },
     },
     size: {
+      options: ['small', 'medium'],
+      control: {
+        type: 'select',
+      },
       table: {
         type: {
           summary: null,
@@ -50,25 +55,27 @@ import { Badge } from '@/polaris-vue';
   }}
 />
 
-export const Template = (args, { argTypes }) => ({
-  props: Object.keys(argTypes),
+export const Template = (args) => ({
   components: { Badge },
-  template: `<Badge v-bind="$props">Fulfilled</Badge>`,
+  setup() {
+    return { args };
+  },
+  template: `<Badge v-bind="args">Fulfilled</Badge>`,
 });
 
 export const Variants = (args, { argTypes }) => ({
   components: { Badge },
-  template: ` <div>
-  <Badge>Fulfilled</Badge>
-  <Badge status="info">Published</Badge>
-  <Badge status="success">Funds recovered</Badge>
-  <Badge status="attention">Inactive</Badge>
-  <Badge status="warning">Expired</Badge>
-  <Badge status="critical">Action required</Badge>
+  template: dedent`<div>
+  <Badge>Fulfilled</Badge>&nbsp;
+  <Badge status="info">Published</Badge>&nbsp;
+  <Badge status="success">Funds recovered</Badge>&nbsp;
+  <Badge status="attention">Inactive</Badge>&nbsp;
+  <Badge status="warning">Expired</Badge>&nbsp;
+  <Badge status="critical">Action required</Badge>&nbsp;
   <br/><br/>
-  <Badge progress="incomplete" status="warning">Unfulfilled</Badge>
-  <Badge progress="partiallyComplete">Partially fulfilled</Badge>
-  <Badge progress="complete">Fulfilled</Badge>
+  <Badge progress="incomplete" status="warning">Unfulfilled</Badge>&nbsp;
+  <Badge progress="partiallyComplete">Partially fulfilled</Badge>&nbsp;
+  <Badge progress="complete">Fulfilled</Badge>&nbsp;
   <Badge
     status="success"
     progress="complete"
@@ -79,16 +86,24 @@ export const Variants = (args, { argTypes }) => ({
 Variants.storyName = 'Variants';
 Variants.parameters = {
   docs: {
-    source: false,
-    transformSource: (source) => {
-      const tmpSource = source
-        .replace(/<template>\s*/, '')
-        .replace(/\s*<\/template>/, '')
-        .replace(/<div>\s*/, '')
-        .replace(/<br\s*\/>\s*/g, '')
-        .replace(/\s*<\/div>/, '')
-        .replace(/>\s*</gi, '>\n<') // line breaks
-      return tmpSource;
+    source: {
+      state: 'close',
+      code: dedent`
+      <Badge>Fulfilled</Badge>
+      <Badge status="info">Published</Badge>
+      <Badge status="success">Funds recovered</Badge>
+      <Badge status="attention">Inactive</Badge>
+      <Badge status="warning">Expired</Badge>
+      <Badge status="critical">Action required</Badge>
+      <Badge progress="incomplete" status="warning">Unfulfilled</Badge>
+      <Badge progress="partiallyComplete">Partially fulfilled</Badge>
+      <Badge progress="complete">Fulfilled</Badge>
+      <Badge
+        status="success"
+        progress="complete"
+        statusAndProgressLabelOverride="Status: Published. Your online store is visible."
+      >Published</Badge>
+      `
     },
   },
 }
@@ -102,7 +117,18 @@ Badges are used to inform merchants of the status of an object or of an action t
 </Canvas>
 
 <Canvas>
-  <Story name="Badge" height="30px">
+  <Story
+    name="Badge"
+    height="30px"
+    parameters={{
+      docs: {
+        source: {
+          code: dedent`
+          `,
+        },
+      },
+    }}
+  >
     {Template.bind({})}
   </Story>
 </Canvas>

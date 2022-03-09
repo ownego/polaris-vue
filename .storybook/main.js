@@ -1,3 +1,6 @@
+const svgLoader = require('vite-svg-loader');
+const { loadConfigFromFile, mergeConfig } = require('vite');
+const eslintPlugin = require('vite-plugin-eslint').default;
 const path = require('path');
 
 module.exports = {
@@ -5,58 +8,33 @@ module.exports = {
     './stories/**/*.stories.mdx',
     '../src/**/README.stories.mdx',
   ],
-  framework: '@storybook/vue',
   addons: [
-    {
-      name: '@storybook/preset-typescript',
-      options: {
-        tsLoaderOptions: {
-          configFile: path.resolve(__dirname, '../tsconfig.json'),
-        },
-        include: [path.resolve(__dirname, '../src')],
-        exclude: ['*.mdx'],
-      },
-    },
     '@storybook/addon-links',
     '@storybook/addon-essentials',
+    '@storybook/addon-a11y',
+    'storybook-dark-mode',
   ],
-  webpackFinal: async (config, { configType }) => {
-    let rule = config.module.rules.find(r =>
-      // it can be another rule with file loader
-      // we should get only svg related
-      r.test && r.test.toString().includes('svg') &&
-      // file-loader might be resolved to js file path so "endsWith" is not reliable enough
-      r.loader && r.loader.includes('file-loader')
-    );
-    rule.test = /\.(ico|jpg|jpeg|png|gif|eot|otf|webp|ttf|woff|woff2|cur|ani)(\?.*)?$/;
-
-    config.module.rules.push(
-      {
-        test: /\.pug$/,
-        use: ['pug-plain-loader'],
-      },
-      {
-        test: /\.(scss)$/,
-        use: [
-          'style-loader',
-          'css-loader',
-          'postcss-loader',
-          'sass-loader',
-        ],
-        include: path.resolve(__dirname, '../src/components'),
-      },
-      {
-        test: /\.svg$/,
-        use: ['vue-svg-loader']
-      }
+  framework: '@storybook/vue3',
+  core: {
+    builder: 'storybook-builder-vite',
+  },
+  typescript: {
+    check: false,
+    checkOptions: {},
+  },
+  async viteFinal(previousConfig) {
+    const { config } = await loadConfigFromFile(
+      path.resolve(__dirname, '../vite.config.ts')
     );
 
-    config.resolve.alias = {
-      '@icons': path.resolve(__dirname, '../node_modules/@shopify/polaris-icons/dist/svg'),
-      '@': path.resolve(__dirname, '../src'),
-      'vue': 'vue/dist/vue.js',
-    };
-
-    return config;
+    return mergeConfig(previousConfig, {
+      ...config,
+      plugins: [
+        svgLoader(),
+        eslintPlugin({
+          exclude: ['node_modules/**', 'src/**'],
+        }),
+      ],
+    });
   },
 }

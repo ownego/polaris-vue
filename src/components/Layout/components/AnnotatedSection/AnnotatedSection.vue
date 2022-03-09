@@ -1,56 +1,38 @@
 <template lang="pug">
-div(:class="annotatedSectionClassName")
-  div(:class="annotationWrapperClassName")
-    div(:class="annotationClassName")
+div(:class="styles.AnnotatedSection")
+  div(:class="styles.AnnotationWrapper")
+    div(:class="styles.Annotation")
       TextContainer
         Heading(:id="id")
           slot(name="title")
         div(
           v-if="!isDescriptionSlotContainHTMLTag",
-          :class="AnnotationDescriptionClassName",
+          :class="styles.AnnotationDescription",
         )
           slot(name="description")
         slot(v-else, name="description")
-
-    div(
-      :class="annotationContentClassName",
-    )
-      slot
+    div(:class="styles.AnnotationContent")
 </template>
 
-<script lang="ts">
-import Vue from 'vue';
-import { Component, Prop } from 'vue-property-decorator';
+<script setup lang="ts">
+import { useSlots, computed } from 'vue';
 import styles from '@/classes/Layout.json';
 import { TextContainer } from '../../../TextContainer';
 import { Heading } from '../../../Heading';
 
-@Component({
-  components: {
-    TextContainer,
-    Heading,
-  },
-})
-export default class AnnotatedSection extends Vue {
-  @Prop({ type: String })
-  public id?: string;
-
-  public annotatedSectionClassName = styles.AnnotatedSection;
-
-  public annotationWrapperClassName = styles.AnnotationWrapper;
-
-  public annotationClassName = styles.Annotation;
-
-  public annotationContentClassName = styles.AnnotationContent;
-
-  public AnnotationDescriptionClassName = styles.AnnotationDescription;
-
-  get isDescriptionSlotContainHTMLTag(): boolean {
-    return Boolean(
-      this.$slots.description
-      && this.$slots.description.length < 2
-      && this.$slots.description[0]?.tag,
-    );
-  }
+interface Props {
+  id?: string;
 }
+
+const props = defineProps<Props>();
+
+const slots = useSlots();
+const descriptionSlot = computed(() => slots.description?.());
+
+const isDescriptionSlotContainHTMLTag = computed(() => Boolean(
+  descriptionSlot.value
+    && (descriptionSlot.value.length >= 2
+      || (descriptionSlot.value[0]
+        && descriptionSlot.value[0].el?.nodeType !== 3)),
+));
 </script>

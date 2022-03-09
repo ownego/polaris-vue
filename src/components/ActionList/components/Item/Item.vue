@@ -4,7 +4,7 @@ li(:role="roleName")
   UnstyledLink(
     v-if="url",
     :id="id",
-    :url="disable ? null: url",
+    :url="disabled ? undefined : url",
     :class="className",
     :external="external",
     :aria-label="accessibilityLabel",
@@ -12,8 +12,10 @@ li(:role="roleName")
     @click="onClick",
   )
     ContentElement(v-bind="contentElementProps")
-      slot(name="suffix", slot="suffix")
-      slot(name="prefix", slot="prefix")
+      template(#suffix)
+        slot(name="suffix")
+      template(#prefix)
+        slot(name="prefix")
   button(
     v-else,
     :id="id",
@@ -23,100 +25,87 @@ li(:role="roleName")
     :aria-label="accessibilityLabel",
     :role="role",
     @click="onClick",
-    @mouseup="onMouseUp",
+    @mouseup="handleMouseUpByBlurring",
   )
     ContentElement(v-bind="contentElementProps")
-      slot(name="suffix", slot="suffix")
-      slot(name="prefix", slot="prefix")
+      template(#suffix)
+        slot(name="suffix")
+      template(#prefix)
+        slot(name="prefix")
 </template>
 
 <script lang="ts">
-import Vue from 'vue';
-import { Component, Prop } from 'vue-property-decorator';
+export default {
+  inheritAttrs: false,
+}
+</script>
+
+<script setup lang="ts">
+import { computed } from 'vue';
 import { classNames } from 'polaris-react/src/utilities/css';
-import { Scrollable } from '@/components/Scrollable';
-import { ScrollTo } from '@/components/Scrollable/components/ScrollTo';
+import { ScrollTo } from '@/components/Scrollable';
 import { UnstyledLink } from '@/components/UnstyledLink';
 import styles from '@/classes/ActionList.json';
 import { handleMouseUpByBlurring } from '@/utilities/focus';
 import ContentElement from './ContentElement.vue';
-import { ItemProps } from '../../utils';
+import type { IconSource } from 'types/type';
 
-@Component({
-  components: {
-    Scrollable,
-    UnstyledLink,
-    ContentElement,
-    ScrollTo,
-  },
-})
-export default class Item extends Vue {
-  @Prop() public id?: ItemProps['id'];
-
-  @Prop() public badge?: ItemProps['badge'];
-
-  @Prop() public content?: ItemProps['content'];
-
-  @Prop() public accessibilityLabel?: ItemProps['accessibilityLabel'];
-
-  @Prop() public helpText?: ItemProps['helpText'];
-
-  @Prop() public url?: ItemProps['url'];
-
-  @Prop() public icon?: ItemProps['icon'];
-
-  @Prop() public prefixId?: ItemProps['prefixId'];
-
-  @Prop() public suffixId?: ItemProps['suffixId'];
-
-  @Prop() public image?: ItemProps['image'];
-
-  @Prop() public disabled?: ItemProps['disabled'];
-
-  @Prop() public external?: ItemProps['external'];
-
-  @Prop() public destructive?: ItemProps['destructive'];
-
-  @Prop() public ellipsis?: ItemProps['ellipsis'];
-
-  @Prop() public active?: ItemProps['active'];
-
-  @Prop() public role?: ItemProps['role'];
-
-  get className() {
-    return classNames(
-      styles.Item,
-      this.disabled && styles.disabled,
-      this.destructive && styles.destructive,
-      this.active && styles.active,
-    );
-  }
-
-  get contentElementProps() {
-    return {
-      badge: this.badge,
-      content: this.content,
-      helpText: this.helpText,
-      icon: this.icon,
-      prefixId: this.prefixId,
-      suffixId: this.suffixId,
-      image: this.image,
-      disabled: this.disabled,
-      ellipsis: this.ellipsis,
-      role: this.role,
-    };
-  }
-
-  get roleName() {
-    return this.role === 'menuitem' ? 'presentation' : undefined;
-  }
-
-  public onMouseUp = handleMouseUpByBlurring;
-
-  public onClick() {
-    if (!this.disabled) {
-      this.$emit('action');
-    }
-  }
+interface Props {
+  id?: string;
+  content?: string;
+  url?: string;
+  external?: boolean;
+  badge?: {
+    status: 'new';
+    content: string;
+  };
+  destructive?: boolean;
+  disabled?: boolean;
+  icon?: IconSource;
+  accessibilityLabel?: string;
+  helpText?: string;
+  image?: string;
+  prefixId?: string;
+  suffixId?: string;
+  ellipsis?: boolean;
+  active?: boolean;
+  role?: string;
+  onAction?(): void;
+  onMouseEnter?(): void;
+  onTouchStart?(): void;
 }
+
+const props = defineProps<Props>();
+
+const emit = defineEmits<{ (event: 'action'): void }>();
+
+const className = computed(() =>
+  classNames(
+    styles.Item,
+    props.disabled && styles.disabled,
+    props.destructive && styles.destructive,
+    props.active && styles.active,
+  ),
+);
+
+const contentElementProps = computed(() => ({
+  badge: props.badge,
+  content: props.content,
+  helpText: props.helpText,
+  icon: props.icon,
+  prefixId: props.prefixId,
+  suffixId: props.suffixId,
+  image: props.image,
+  disabled: props.disabled,
+  ellipsis: props.ellipsis,
+  role: props.role,
+}));
+
+const roleName = computed(() => (props.role === 'menuitem' ? 'presentation' : undefined));
+
+const onClick = () => {
+  if (!props.disabled) {
+    emit('action');
+  }
+};
 </script>

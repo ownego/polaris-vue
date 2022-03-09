@@ -1,3 +1,4 @@
+import { ref } from 'vue';
 import { Meta, Story, Canvas, ArgsTable } from '@storybook/addon-docs';
 import { Select, Icon } from '@/polaris-vue';
 import dedent from 'ts-dedent';
@@ -13,13 +14,6 @@ import HintMajor from '@icons/HintMajor.svg';
       control: {
         type: 'object',
       },
-      defaultValue: [
-        { "label": "Today", "value": "today" },
-        { "label": "Yesterday", "value": "yesterday" },
-        { "label": "Last 7 days", "value": "lastWeek" },
-        { "id": "hint", "label": "Option with icon", "value": "hint" },
-        { "label": "Option disabled", "value": "disabled", "disabled": true },
-      ],
       table: {
         type: {
           summary: null,
@@ -102,6 +96,11 @@ import HintMajor from '@icons/HintMajor.svg';
         disable: true,
       },
     },
+    'update:modelValue': {
+      table: {
+        disable: true,
+      },
+    },
     prefix: {
       name: 'prefix-{option-id}',
       description: 'Slot to custom prefix for each option by `option-id`',
@@ -116,35 +115,22 @@ import HintMajor from '@icons/HintMajor.svg';
   }}
 />
 
-export const Template = (args, { argTypes }) => ({
-  props: Object.keys(argTypes),
+export const Template = (args) => ({
   components: { Select, Icon },
-  data() {
-    return {
-      selectValue: 'today',
-      iconHintMajor: HintMajor,
-      propsExtend: {
-        ...this.$props,
-        options: [
-          ...this.$props.options,
-        ],
-      },
-      helpText: argTypes['help-text'],
-      label: argTypes['label'],
-    };
+  setup() {
+    const iconHintMajor = HintMajor;
+    const selectValue = ref('');
+    return { args, selectValue, iconHintMajor };
   },
-  created() {
-    delete this.propsExtend['helpText'];
-    delete this.propsExtend['label'];
-  },
-  template: `<div><Select v-bind="propsExtend" v-model="selectValue">
-    <template slot="label">{{ label || 'Date Range' }}</template>
-    <template v-if="helpText" slot="help-text">{{ helpText }}</template>
-    <Icon :source="iconHintMajor" slot="prefix-hint" />
+  template: `<Select v-bind="args" v-model="selectValue">
+    <template #label>{{ args.label }}</template>
+    <template #help-text>{{ args['help-text'] }}</template>
+    <template #prefix-hint>
+      <Icon :source="iconHintMajor" />
+    </template>
   </Select>
   <br/>
-  <strong>Value selected:</strong> {{ selectValue }}
-  </div>`,
+  <strong>Value selected:</strong> {{ selectValue }}`,
 });
 
 # Select
@@ -156,20 +142,40 @@ Select lets merchants choose one option from an options menu. Consider select wh
 <Canvas>
   <Story
     name="Select"
+    args={{
+      placeholder: 'Select an option',
+      options: [
+        { "label": "Today", "value": "today" },
+        { "label": "Yesterday", "value": "yesterday" },
+        { "label": "Last 7 days", "value": "lastWeek" },
+        { "id": "hint", "label": "Option with icon", "value": "hint" },
+        { "label": "Option disabled", "value": "disabled", "disabled": true },
+      ],
+      label: 'Date Range',
+      'help-text': 'This is some help text',
+    }}
     parameters={{
       docs: {
-        transformSource: (source) => {
-          const tmpSource = source
-            .replace(/<div>\s*/,'')
-            .replace(/\s*<\/div>/,'')
-            .replace(/\s*<br\s\/>\s*<strong>(.*)<\/strong>\s*today/,'')
-            .replace(/value=".*"\s*/, '')
-            .replace(/:source='.*'\s*/, ':source="iconHintMajor"')
-            .replace(/:options='(.*)'/, ':options="options" v-model="selectValue"');
-          const fullSource = dedent`
-            ${tmpSource}
-          `;
-          return fullSource;
+        source: {
+          code: dedent`<Select placeholder="Select an option" v-model="selectValue" :options="options">
+              <template #label>Date Range</template>
+              <template #help-text>This is some help text</template>
+              <template #prefix-hint>
+                <Icon :source="iconHintMajor" />
+              </template>
+            </Select>\n
+            setup() {
+              const options: [
+                { "label": "Today", "value": "today" },
+                { "label": "Yesterday", "value": "yesterday" },
+                { "label": "Last 7 days", "value": "lastWeek" },
+                { "id": "hint", "label": "Option with icon", "value": "hint" },
+                { "label": "Option disabled", "value": "disabled", "disabled": true },
+              ],
+              const selectValue = ref('');
+              return { options, selectValue };
+            }
+          `,
         },
       },
     }}

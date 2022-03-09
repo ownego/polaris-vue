@@ -1,19 +1,16 @@
-import { Meta, Story, Canvas, ArgsTable } from '@storybook/addon-docs';
-import { ButtonGroup, ButtonGroupItem, Button } from '@/polaris-vue';
+import { Meta, Story, Canvas, ArgsTable } from "@storybook/addon-docs";
+import { ButtonGroup, Button } from "@/polaris-vue";
+import dedent from "ts-dedent";
 
 <Meta
   title="Components / Actions / ButtonGroup"
-  component={ ButtonGroup }
+  component={ButtonGroup}
   argTypes={{
     spacing: {
-      name: 'spacing',
-      description: 'Determines the space between button group items',
-      options: [
-        'extraTight',
-        'tight',
-        'loose',
-      ],
-      control: { type: 'select' },
+      name: "spacing",
+      description: "Determines the space between button group items",
+      options: ["extraTight", "tight", "loose"],
+      control: { type: "select" },
       table: {
         type: {
           summary: null,
@@ -29,41 +26,44 @@ import { ButtonGroup, ButtonGroupItem, Button } from '@/polaris-vue';
 />
 
 export const Template = (args, { argTypes }) => ({
-  props: Object.keys(argTypes),
-  components: { ButtonGroup, ButtonGroupItem, Button },
-  template: `<ButtonGroup v-bind="$props">
-    <ButtonGroupItem> <Button> Cancel </Button> </ButtonGroupItem>
-    <ButtonGroupItem> <Button :primary="true"> Save </Button> </ButtonGroupItem>
+  components: { ButtonGroup, Button },
+  setup() {
+    return { args };
+  },
+  template: `<ButtonGroup v-bind="args">
+    <Button> Cancel </Button>
+    <Button primary> Save </Button>
   </ButtonGroup>`,
 });
 
 export const SegmentedButtons = (args, { argTypes }) => ({
-  components: { ButtonGroup, ButtonGroupItem, Button },
-  template: `<ButtonGroup :segmented="true">
-    <ButtonGroupItem> <Button> Bold </Button> </ButtonGroupItem>
-    <ButtonGroupItem> <Button> Italic </Button> </ButtonGroupItem>
-    <ButtonGroupItem> <Button> Underline </Button> </ButtonGroupItem>
+  components: { ButtonGroup, Button },
+  template: `<ButtonGroup segmented>
+    <Button> Bold </Button>
+    <Button> Italic </Button>
+    <Button> Underline </Button>
   </ButtonGroup>`,
 });
-SegmentedButtons.storyName = 'With segmented buttons';
+SegmentedButtons.storyName = "With segmented buttons";
 SegmentedButtons.parameters = {
   docs: {
-    source: false,
-    transformSource: (source) => {
-      const tmpSource = source
-        .replace(/<template>\s*/, '')
-        .replace(/\s*<\/template>/, '')
-      return tmpSource;
+    source: {
+      code: dedent`
+        <ButtonGroup segmented>
+          <Button> Bold </Button>
+          <Button> Italic </Button>
+          <Button> Underline </Button>
+        </ButtonGroup>
+      `,
     },
   },
-}
-
+};
 
 # ButtonGroup
 
 Button group displays multiple related actions stacked or in a horizontal row to help with arrangement and spacing.
 
-<br/>
+<br />
 
 ### With segmented buttons
 
@@ -79,11 +79,13 @@ Button group displays multiple related actions stacked or in a horizontal row to
     height="60px"
     parameters={{
       docs: {
-        transformSource: (source) => {
-          const tmpSource = source
-            .replace(/<template>/, '')
-            .replace(/<\/template>/, '');
-          return tmpSource;
+        source: {
+          code: dedent`
+            <ButtonGroup v-bind="props">
+              <Button> Cancel </Button>
+              <Button primary> Save </Button>
+            </ButtonGroup>
+          `,
         },
       },
     }}

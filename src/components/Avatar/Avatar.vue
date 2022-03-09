@@ -4,8 +4,8 @@ span(
   role="img",
   :class="className",
 )
-  span(v-if="!hasImage", :class="initialsClass")
-    svg(:class="svgClass", viewBox="0 0 40 40")
+  span(v-if="!hasImage", :class="styles.Initials")
+    svg(:class="styles.Svg", viewBox="0 0 40 40")
       path(v-if="customer || !initials", fill="currentColor", :d="svgPath")
       text(
         v-else,
@@ -16,9 +16,9 @@ span(
         fontSize="20",
         textAnchor="middle",
       ) {{ initials }}
-  PImage(
+  Image(
     v-if="source && status !== Status.Errored",
-    :class="imageClass",
+    :class="styles.Image",
     :source="source",
     alt="",
     role="presentation",
@@ -27,13 +27,12 @@ span(
   )
 </template>
 
-<script lang="ts">
-import Vue from 'vue';
-import { Component, Prop } from 'vue-property-decorator';
+<script setup lang="ts">
+import { computed, ref } from 'vue';
 import { classNames, variationName } from 'polaris-react/src/utilities/css';
 import styles from '@/classes/Avatar.json';
 import { styleClass } from './utils';
-import { PImage } from '../Image';
+import { Image } from '../Image';
 
 type Size = 'extraSmall' | 'small' | 'medium' | 'large';
 
@@ -43,98 +42,78 @@ enum Status {
   Errored = 'ERRORED',
 }
 
-@Component({
-  components: {
-    PImage,
-  },
-})
-export default class Avatar extends Vue {
+interface Props {
   /**
-   * Size of Avatar
+   * Size of avatar
+   * @default 'medium'
    */
-  @Prop({ type: String, default: 'medium' })
-  public size!: Size;
+  size?: Size;
+  /** The name of the person */
+  name?: string;
+  /** Initials of person to display */
+  initials?: string;
+  /** Whether the avatar is for a customer */
+  customer?: boolean;
+  /** URL of the avatar image which falls back to initials if the image fails to load */
+  source?: string;
+  /** Accessible label for the avatar image */
+  accessibilityLabel?: string;
+}
 
-  /**
-   * The name of the person
-   */
-  @Prop({ type: String })
-  public name?: string;
+const props = withDefaults(defineProps<Props>(),{
+  size: 'medium',
+  name: undefined,
+  initials: undefined,
+  customer: undefined,
+  source: undefined,
+  accessibilityLabel: undefined,
+});
 
-  /**
-   * Initials of person to display
-   */
-  @Prop({ type: String })
-  public initials?: string;
+const emit = defineEmits<{ (event: 'error'): void }>();
 
-  /**
-   * Whether the avatar is for a customer
-   */
-  @Prop({ type: Boolean })
-  public customer!: boolean;
+const status = ref<Status>(Status.Pending);
 
-  /**
-   * URL of the avatar image which falls back to initials if the image fails to load
-   */
-  @Prop({ type: String })
-  public source?: string;
+const svgPath = 'M8.28 27.5A14.95 14.95 0 0120 21.8c4.76 0 8.97 2.24 11.72 5.7a14.02 14.02 0 01-8.25 5.91 14.82 14.82 0 01-6.94 0 14.02 14.02 0 01-8.25-5.9zM13.99 12.78a6.02 6.02 0 1112.03 0 6.02 6.02 0 01-12.03 0z';
 
-  /**
-   * Accessible label for the avatar image
-   */
-  @Prop({ type: String })
-  public accessibilityLabel?: string;
+// Use `dominant-baseline: central` instead of `dy` when Edge supports it.
+const verticalOffset = '0.35em';
 
-  public status = Status.Pending;
+const hasImage = computed(() => {
+  return props.source && status.value !== Status.Errored;
+});
 
-  public initialsClass = styles.Initials;
+const className =  computed(() => {
+  const size = variationName('size', props.size) as keyof typeof styles;
+  const style = variationName('style', styleClass(props.name || props.initials)) as keyof typeof styles;
 
-  public svgClass = styles.Svg;
+  return classNames(
+    styles.Avatar,
+    size && styles[size],
+    !props.customer && styles[style],
+    (hasImage.value || (props.initials && props.initials.length === 0))
+    && status.value !== Status.Loaded
+    && styles.hidden,
+    hasImage.value && styles.hasImage,
+  );
+});
 
-  public imageClass = styles.Image;
-
-  public svgPath = 'M8.28 27.5A14.95 14.95 0 0120 21.8c4.76 0 8.97 2.24 11.72 5.7a14.02 14.02 0 01-8.25 5.91 14.82 14.82 0 01-6.94 0 14.02 14.02 0 01-8.25-5.9zM13.99 12.78a6.02 6.02 0 1112.03 0 6.02 6.02 0 01-12.03 0z';
-
-  // Use `dominant-baseline: central` instead of `dy` when Edge supports it.
-  public verticalOffset = '0.35em';
-
-  get hasImage() {
-    return this.source && this.status !== Status.Errored;
+const label = computed(() => {
+  if (props.accessibilityLabel) {return props.accessibilityLabel;}
+  if (props.name) {return props.name;}
+  if (props.initials) {
+    const splitInitials = props.initials.split('').join(' ');
+    return `Avatar with initials ${splitInitials}`;
   }
+  return 'Avatar';
+});
 
-  get className() {
-    const size = variationName('size', this.size) as keyof typeof styles;
-    const style = variationName('style', styleClass(this.name || this.initials)) as keyof typeof styles;
+const handleLoad = () => {
+  status.value = Status.Loaded;
+}
 
-    return classNames(
-      styles.Avatar,
-      size && styles[size],
-      !this.customer && styles[style],
-      (this.hasImage || (this.initials && this.initials.length === 0))
-      && this.status !== Status.Loaded
-      && styles.hidden,
-      this.hasImage && styles.hasImage,
-    );
-  }
-
-  get label() {
-    if (this.accessibilityLabel) return this.accessibilityLabel;
-    if (this.name) return this.name;
-    if (this.initials) {
-      const splitInitials = this.initials.split('').join(' ');
-      return `Avatar with initials ${splitInitials}`;
-    }
-    return 'Avatar';
-  }
-
-  public handleLoad() {
-    this.status = Status.Loaded;
-  }
-
-  public handleError() {
-    this.status = Status.Errored;
-    this.$emit('error');
-  }
+const handleError = () => {
+  status.value = Status.Errored;
+  emit('error');
 }
 </script>
 

@@ -1,1 +1,1 @@
-export { default as PImage } from './Image.vue';
+export { default as Image } from './Image.vue';

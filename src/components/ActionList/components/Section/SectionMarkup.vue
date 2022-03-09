@@ -2,7 +2,7 @@
 div(:class="className")
   p(v-if="section.title", :class="titleClass") {{ section.title }}
   ul(
-    :class="actionsClass",
+    :class="styles.Actions",
     :role="sectionRole",
     :tabIndex="!hasMultipleSections ? -1 : undefined"
   )
@@ -15,68 +15,66 @@ div(:class="className")
       v-bind="{...item}",
       @action="handleAction(onAction)",
     )
-      slot(v-if="item.prefixId", :name="`prefix-${item.prefixId}`", slot="prefix")
-      slot(v-if="item.suffixId", :name="`suffix-${item.suffixId}`", slot="suffix")
+      template(v-if="item.prefixId", #prefix)
+        slot(:name="`prefix-${item.prefixId}`")
+      template(v-if="item.suffixId", #suffix)
+        slot(:name="`suffix-${item.suffixId}`")
 </template>
 
 <script lang="ts">
-import Vue from 'vue';
-import { Component, Prop } from 'vue-property-decorator';
+export default {
+  inheritAttrs: false,
+}
+</script>
+
+<script setup lang="ts">
+import { computed } from 'vue';
 import { classNames } from 'polaris-react/src/utilities/css';
 import styles from '@/classes/ActionList.json';
 import { Item } from '../Item';
-import { ActionListSection, ActionListItemDescriptor } from '../../utils';
+import type { ActionListItemDescriptor, ActionListSection } from '../../utils';
 
-@Component({
-  components: {
-    Item,
-  },
-})
-export default class SectionMarkup extends Vue {
-  @Prop() public section!: ActionListSection;
-
-  @Prop({ type: Boolean }) public hasMultipleSections!: boolean;
-
-  @Prop({ type: String }) public actionRole?: 'option' | 'menuitem' | string;
-
-  @Prop({ type: Boolean }) public firstSection?: boolean;
-
-  get className() {
-    return this.section.title ? undefined : styles['Section-withoutTitle'];
-  }
-
-  get titleClass() {
-    return classNames(
-      styles.Title,
-      this.firstSection && styles.firstSectionWithTitle,
-    );
-  }
-
-  get sectionRole() {
-    let sectionRole;
-
-    switch (this.actionRole) {
-    case 'option':
-      sectionRole = 'presentation';
-      break;
-    case 'menuitem':
-      sectionRole = !this.hasMultipleSections ? 'menu' : 'presentation';
-      break;
-    default:
-      sectionRole = undefined;
-      break;
-    }
-
-    return sectionRole;
-  }
-
-  public actionsClass = styles.Actions;
-
-  public handleAction(onAction: ActionListItemDescriptor['onAction']) {
-    if (onAction) {
-      onAction();
-    }
-    this.$emit('action-any-item');
-  }
+interface SectionProps {
+  /** Section of action items */
+  section: ActionListSection;
+  /** Should there be multiple sections */
+  hasMultipleSections: boolean;
+  /** Defines a specific role attribute for each action in the list */
+  actionRole?: 'option' | 'menuitem' | string;
+  /** Whether or not the section is the first to appear */
+  firstSection?: boolean;
 }
+
+const props = defineProps<SectionProps>();
+
+const emit = defineEmits<{ (event: 'action-any-item'): void }>();
+
+const className = computed(() => (props.section.title ? undefined : styles['Section-withoutTitle']));
+
+const titleClass = computed(() => classNames(styles.Title, props.firstSection && styles.firstSectionWithTitle));
+
+const sectionRole = computed(() => {
+  let sectionRoleValue;
+
+  switch (props.actionRole) {
+  case 'option':
+    sectionRoleValue = 'presentation';
+    break;
+  case 'menuitem':
+    sectionRoleValue = !props.hasMultipleSections ? 'menu' : 'presentation';
+    break;
+  default:
+    sectionRoleValue = undefined;
+    break;
+  }
+
+  return sectionRoleValue;
+});
+
+const handleAction = (onAction: ActionListItemDescriptor['onAction']) => {
+  if (onAction) {
+    onAction();
+  }
+  emit('action-any-item');
+};
 </script>

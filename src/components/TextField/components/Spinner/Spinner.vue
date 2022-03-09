@@ -1,57 +1,45 @@
 <template lang="pug">
 div(
   aria-hidden="true",
-  :class="wrapperClassName",
+  :class="styles.Spinner",
 )
   div(
     role="button",
     tabindex="-1",
-    :class="segmentClassName",
+    :class="styles.Segment",
     @click="handleStep(1)",
     @mousedown="$emit('mousedown')",
     @mouseup="$emit('mouseup')",
   )
-    div(:class="iconClassName")
-      Icon(:source="iconCaretUpMinor")
+    div(:class="styles.SpinnerIcon")
+      Icon(:source="CaretUpMinor")
   div(
     role="button",
     tabindex="-1",
-    :class="segmentClassName",
+    :class="styles.Segment",
     @click="handleStep(-1)",
     @mousedown="$emit('mousedown')",
     @mouseup="$emit('mouseup')",
   )
-    div(:class="iconClassName")
-      Icon(:source="iconCaretDownMinor")
+    div(:class="styles.SpinnerIcon")
+      Icon(:source="CaretDownMinor")
 </template>
 
-<script lang="ts">
-import Vue from 'vue';
-import { Component } from 'vue-property-decorator';
-import CaretDownMinor from '@shopify/polaris-icons/dist/svg/CaretDownMinor.svg';
-import CaretUpMinor from '@shopify/polaris-icons/dist/svg/CaretUpMinor.svg';
-import { Icon } from '@/components/Icon';
+<script setup lang="ts">
+import CaretDownMinor from '@icons/CaretDownMinor.svg';
+import CaretUpMinor from '@icons/CaretUpMinor.svg';
 import styles from '@/classes/TextField.json';
+import { Icon } from '../../../Icon';
 
-@Component({
-  components: {
-    Icon,
-  },
-})
-export default class Spinner extends Vue {
- public wrapperClassName = styles.Spinner;
+const emits = defineEmits<{
+  (event: 'click'): void
+  (event: 'change', value: number): void
+  (event: 'mouseup'): void
+  (event: 'mousedown'): void
+}>();
 
- public segmentClassName = styles.Segment;
-
- public iconClassName = styles.SpinnerIcon;
-
- public iconCaretUpMinor = CaretUpMinor;
-
- public iconCaretDownMinor = CaretDownMinor;
-
- public handleStep(value: number): void {
-   this.$emit('click');
-   this.$emit('change', value);
- }
-}
+const handleStep = (step: number): void => {
+  emits('click');
+  emits('change', step);
+};
 </script>

@@ -40,9 +40,9 @@ import { Tag } from '@/polaris-vue';
   }}
 />
 
-export const Template = (args, { argTypes }) => ({
-  props: Object.keys(argTypes),
+export const Template = (args) => ({
   components: { Tag },
+  setup() { return { args }; },
   methods: {
     removeHandle() {
       alert('Removed');
@@ -52,9 +52,9 @@ export const Template = (args, { argTypes }) => ({
     },
   },
   template: `<div>
-  <Tag v-bind="$props">Wholesale</Tag>
-  <Tag @remove="removeHandle" data-remove="removeHandle">Removable</Tag>
-  <Tag @click="clickHandle" data-click="clickHandle">Clickable</Tag>
+  <Tag v-bind="args">Wholesale</Tag>&nbsp;
+  <Tag @remove="removeHandle">Removable</Tag>&nbsp;
+  <Tag @click="clickHandle">Clickable</Tag>&nbsp;
   <Tag url="https://github.com/qikify/polaris-vue">With link</Tag>
   </div>`,
 });
@@ -67,18 +67,26 @@ Tags represent a set of interactive, merchant-supplied keywords that help label,
   <Story
     name="Tag"
     height="30px"
+    args={{
+      disabled: false,
+    }}
     parameters={{
       docs: {
-        transformSource: (source) => {
-          const tmpSource = source
-            .replace(/<div>\s\s\s/,'')
-            .replace(/\s*<\/div>/,'')
-            .replace(/data-remove/,'@remove')
-            .replace(/data-click/,'@click')
-          const fullSource = dedent`
-            ${tmpSource}
-          `;
-          return fullSource;
+        source: {
+          code: dedent`
+            <Tag>Wholesale</Tag>
+            <Tag v-on:remove="removeHandle">Removable</Tag>
+            <Tag v-on:click="clickHandle">Clickable</Tag>
+            <Tag url="https://github.com/qikify/polaris-vue">With link</Tag>\n
+            <script setup>
+              const removeHandle = () => {
+                alert('Removed');
+              };
+              const clickHandle = () => {
+                alert('Clicked');
+              };
+            </script>
+          `,
         },
       },
     }}

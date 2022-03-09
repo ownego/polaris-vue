@@ -1,16 +1,23 @@
-import { Meta, Story, Canvas, ArgsTable, Source, Preview } from '@storybook/addon-docs';
-import dedent from 'ts-dedent';
+import {
+  Meta,
+  Story,
+  Canvas,
+  ArgsTable,
+  Source,
+  Preview,
+} from "@storybook/addon-docs";
+import dedent from "ts-dedent";
 
-import { Button, ButtonGroup, ButtonGroupItem } from '@/polaris-vue';
+import { Button, ButtonGroup } from "@/polaris-vue";
 
 <Meta
   title="Components / Actions / Button"
-  component={ Button }
+  component={Button}
   argTypes={{
     disclosure: {
       control: {
-        type: 'select',
-        options: ['down', 'up', 'select', 'boolean'],
+        type: "select",
+        options: ["down", "up", "select", "boolean"],
       },
       table: {
         type: {
@@ -20,8 +27,8 @@ import { Button, ButtonGroup, ButtonGroupItem } from '@/polaris-vue';
     },
     size: {
       control: {
-        type: 'select',
-        options: ['slim', 'medium', 'large'],
+        type: "select",
+        options: ["slim", "medium", "large"],
       },
       table: {
         type: {
@@ -31,8 +38,8 @@ import { Button, ButtonGroup, ButtonGroupItem } from '@/polaris-vue';
     },
     textAlign: {
       control: {
-        type: 'select',
-        options: ['left', 'right', 'center'],
+        type: "select",
+        options: ["left", "right", "center"],
       },
       table: {
         type: {
@@ -41,12 +48,12 @@ import { Button, ButtonGroup, ButtonGroupItem } from '@/polaris-vue';
       },
     },
     icon: {
-      name: 'icon',
+      name: "icon",
       control: {
-        type: 'select',
-        options: ['placeholder'],
+        type: "select",
+        options: ["placeholder"],
         labels: {
-          null: 'default',
+          null: "default",
         },
       },
       table: {
@@ -56,110 +63,112 @@ import { Button, ButtonGroup, ButtonGroupItem } from '@/polaris-vue';
       },
     },
     blur: {
-      name: 'blur',
-      description: 'Callback when focus leaves button',
+      name: "blur",
+      description: "Callback when focus leaves button",
       control: { disable: true },
       table: {
-        category: 'Events',
+        category: "Events",
         type: {
           summary: '"() => void"',
         },
       },
     },
     click: {
-      name: 'click',
-      description: 'Callback when clicked',
+      name: "click",
+      description: "Callback when clicked",
       control: { disable: true },
       table: {
-        category: 'Events',
+        category: "Events",
         type: {
           summary: '"() => void"',
         },
       },
     },
     focus: {
-      name: 'focus',
-      description: 'Callback when button becomes focussed',
+      name: "focus",
+      description: "Callback when button becomes focussed",
       control: { disable: true },
       table: {
-        category: 'Events',
+        category: "Events",
         type: {
           summary: '"() => void"',
         },
       },
     },
     keydown: {
-      name: 'keydown',
-      description: 'Callback when a keydown event is registered on the button',
+      name: "keydown",
+      description: "Callback when a keydown event is registered on the button",
       control: { disable: true },
       table: {
-        category: 'Events',
+        category: "Events",
         type: {
           summary: '"(event: KeyboardEvent) => void"',
         },
       },
     },
     keypress: {
-      name: 'keypress',
-      description: 'Callback when a keypress event is registered on the button',
+      name: "keypress",
+      description: "Callback when a keypress event is registered on the button",
       control: { disable: true },
       table: {
-        category: 'Events',
+        category: "Events",
         type: {
           summary: '"(event: KeyboardEvent) => void"',
         },
       },
     },
     keyup: {
-      name: 'keyup',
-      description: 'Callback when a keyup event is registered on the button',
+      name: "keyup",
+      description: "Callback when a keyup event is registered on the button",
       control: { disable: true },
       table: {
-        category: 'Events',
+        category: "Events",
         type: {
           summary: '"(event: KeyboardEvent) => void"',
         },
       },
     },
     mouseover: {
-      name: 'mouseover',
-      description: 'Callback when mouse enter',
+      name: "mouseover",
+      description: "Callback when mouse enter",
       control: { disable: true },
       table: {
-        category: 'Events',
+        category: "Events",
         type: {
           summary: '"() => void"',
         },
       },
     },
     touchstart: {
-      name: 'touchstart',
-      description: 'Callback when element is touched',
+      name: "touchstart",
+      description: "Callback when element is touched",
       control: { disable: true },
       table: {
-        category: 'Events',
+        category: "Events",
         type: {
           summary: '"() => void"',
         },
       },
     },
     prefix: {
-      name: 'prefix-{prefixId}',
-      description: 'Slot to custom prefix for each item of actions on connectedDisclosure by `prefixId`',
+      name: "prefix-{prefixId}",
+      description:
+        "Slot to custom prefix for each item of actions on connectedDisclosure by `prefixId`",
       control: { disable: true },
       table: {
-        category: 'Slots',
+        category: "Slots",
         type: {
           summary: null,
         },
       },
     },
     suffix: {
-      name: 'suffix-{suffixId}',
-      description: 'Slot to custom suffix for each item of actions on connectedDisclosure by `suffixId`',
+      name: "suffix-{suffixId}",
+      description:
+        "Slot to custom suffix for each item of actions on connectedDisclosure by `suffixId`",
       control: { disable: true },
       table: {
-        category: 'Slots',
+        category: "Slots",
         type: {
           summary: null,
         },
@@ -167,16 +176,18 @@ import { Button, ButtonGroup, ButtonGroupItem } from '@/polaris-vue';
     },
     default: {
       table: {
-        disable: 'true',
-      }
+        disable: "true",
+      },
     },
   }}
 />
 
 export const Template = (args, { argTypes }) => ({
-  props: Object.keys(argTypes),
   components: { Button },
-  template: `<Button v-bind="$props">Add Product</Button>`,
+  setup() {
+    return { args };
+  },
+  template: `<Button v-bind="args">Add Product</Button>`,
 });
 
 export const Variants = (args, { argTypes }) => ({
@@ -211,23 +222,44 @@ export const Variants = (args, { argTypes }) => ({
   </Button>
   </div>`,
 });
-Variants.storyName = 'Variants';
+Variants.storyName = "Variants";
 Variants.parameters = {
   docs: {
-    source: false,
-    transformSource: (source) => {
-      const tmpSource = source
-        .replace(/<template>\s*/, '')
-        .replace(/\s*<\/template>/, '')
-        .replace(/<div.*>\s*/, '')
-        .replace(/\s*<\/div>/, '')
-        .replace(/<br\s*\/>\s*/g, '')
-        .replace(/data-style/, ':style')
-        .replace(/>\s*</gi, '>\n<') // line breaks
-      return tmpSource;
+    source: {
+      code: dedent`
+        <template>
+          <Button>Basic</Button>
+          <Button outline>Outline</Button>
+          <span style="color: #bf0711;">
+            <Button monochrome outline>Outline monochrome</Button>
+          </span>
+          <Button primary>Primary</Button>
+          <Button destructive>Destructive</Button>
+          <Button size="slim">Size slim</Button>
+          <Button size="large">Size large</Button>
+          <Button loading>Loading</Button>
+          <Button disabled>Disabled</Button>
+          <br/>
+          <br/>
+          <Button fullWidth>Fullwidth</Button>
+          <br/>
+          <Button plain>View shipping settings</Button>
+          <br/>
+          <span>
+            Could not retrieve data. <Button plain monochrome=> Try again </Button>
+          </span>
+          <br/>
+          <Button plain destructive>Remove</Button>
+          <Button plain textAlign="left">
+            This is a really long string of text that overflows onto the next line we need
+            to put in a lot of words now you can see the alignment. It is very long but a
+            customer could potentially name something this long.
+          </Button>
+        </template>
+        `,
     },
   },
-}
+};
 
 export const Disclosure = (args, { argTypes }) => ({
   components: { Button },
@@ -238,10 +270,10 @@ export const Disclosure = (args, { argTypes }) => ({
   },
   computed: {
     disclosure() {
-      return this.expanded ? 'up' : 'down';
+      return this.expanded ? "up" : "down";
     },
     disclosureText() {
-      return this.expanded ? 'Show less' : 'Show more';
+      return this.expanded ? "Show less" : "Show more";
     },
   },
   template: `<div>
@@ -249,19 +281,17 @@ export const Disclosure = (args, { argTypes }) => ({
       :plain="true"
       :disclosure="disclosure"
       v-on:click="expanded = !expanded"
-      on-click="expanded = !expanded"
     >
       {{disclosureText}}
     </Button>
     <br/>
     <br/>
-    <div :style="{width: '200px'}" data-style="{width: '200px'}">
+    <div :style="{width: '200px'}">
       <Button
         :fullWidth="true"
         textAlign="left"
         :disclosure="disclosure"
         v-on:click="expanded = !expanded"
-        on-click="expanded = !expanded"
       >
         {{disclosureText}}
       </Button>
@@ -270,89 +300,96 @@ export const Disclosure = (args, { argTypes }) => ({
     <Button disclosure="select">Disclosure select</Button>
   </div>`,
 });
-Disclosure.storyName = 'Disclosure';
+Disclosure.storyName = "Disclosure";
 Disclosure.parameters = {
   docs: {
-    source: false,
-    transformSource: (source) => {
-      const tmpSource = source
-        .replace(/<template>/, '')
-        .replace(/<\/template>/, '')
-        .replace(/disclosure="down"/g, ':disclosure="disclosure"')
-        .replace(/Show more/g, '{{disclosureText}}')
-        .replace(/on-click/g, 'v-on:click')
-        .replace(/data-style/g, ':style')
-        .replace(/<br\s*\/>\s*/g, '')
-      const fullSource = dedent`
-        data() {
-          return {
-            expanded: false,
-          };
-        },\n
-        computed: {
-          disclosure() {
-            return this.expanded ? 'up' : 'down';
+    source: {
+      code: dedent`
+        <template>
+          <Button
+            plain
+            disclosure="disclosure"
+            @click="expanded = !expanded"
+          >
+            {{disclosureText}}
+          </Button>
+          <div :style="{width: '200px'}">
+            <Button
+              fullWidth
+              textAlign="left"
+              :disclosure="disclosure"
+              @click="expanded = !expanded"
+            >
+              {{disclosureText}}
+            </Button>
+          </div>
+          <br/>
+          <Button disclosure="select">Disclosure select</Button>
+        </template>
+        <script>
+          components: { Button },
+          data() {
+            return {
+              expanded: false,
+            };
           },
-          buttonText() {
-            return this.expanded ? 'Show less' : 'Show more';
+          computed: {
+            disclosure() {
+              return this.expanded ? "up" : "down";
+            },
+            disclosureText() {
+              return this.expanded ? "Show less" : "Show more";
+            },
           },
-        },
-        ${tmpSource}
-      `;
-      return fullSource;
+        </script>
+        `,
     },
   },
-}
+};
 
 export const SplitButton = (args, { argTypes }) => ({
   components: { Button },
   data() {
     return {
       connectedDisclosure: {
-        accessibilityLabel: 'Other save actions',
-        actions: [
-          { content: 'Save as draft' },
-        ],
-      }
+        accessibilityLabel: "Other save actions",
+        actions: [{ content: "Save as draft" }],
+      },
     };
   },
-  template: ` <div >
-    <Button :connectedDisclosure="connectedDisclosure" :primary="true"> Save </Button>
-  </div>`,
+  template: `<Button :connectedDisclosure="connectedDisclosure" :primary="true"> Save </Button>`,
 });
-SplitButton.storyName = 'Split Button';
+SplitButton.storyName = "Split Button";
 SplitButton.parameters = {
   docs: {
-    source: false,
-    transformSource: (source) => {
-      const tmpSource = source
-        .replace(/<template>/, '')
-        .replace(/<\/template>/, '')
-        .replace( /(?<=:connectedDisclosure=).+/, '"connectedDisclosure"');
-      const fullSource = dedent`
-        data() {
-          return {
-            connectedDisclosure: {
-              accessibilityLabel: 'Other save actions',
-              actions: [
-                { content: 'Save as draft' },
-              ],
-            },
-          };
-        },
-        ${tmpSource}
-      `;
-      return fullSource;
+    source: {
+      code: dedent`
+        <template>
+          <Button primary :connectedDisclosure="connectedDisclosure">Save</Button>
+        </template>
+        <script>
+          data() {
+            return {
+              connectedDisclosure: {
+                accessibilityLabel: 'Other save actions',
+                actions: [
+                  { content: 'Save as draft' },
+                ],
+              },
+            };
+          }
+        </script>
+        `,
     },
   },
-}
+};
 
 export const PressedButton = (args, { argTypes }) => ({
-  components: { ButtonGroup, ButtonGroupItem, Button },
+  components: { ButtonGroup, Button },
   data() {
     return {
       isFirstButtonActive: true,
-    }
+    };
   },
   methods: {
     handleFirstButtonActive() {
@@ -362,63 +399,66 @@ export const PressedButton = (args, { argTypes }) => ({
     handleSecondButtonActive() {
       if (!this.isFirstButtonActive) return;
       this.isFirstButtonActive = false;
-    }
-  },
-  template: `<ButtonGroup :segmented="true">
-    <ButtonGroupItem>
-      <Button
-        on-click="handleFirstButtonActive"
-        :pressed="isFirstButtonActive"
-        @click="handleFirstButtonActive"
-      >
-        First button
-      </Button>
-    </ButtonGroupItem>
-    <ButtonGroupItem>
-      <Button
-        on-click="handleSecondButtonActive"
-        @click="handleSecondButtonActive"
-        :pressed="!isFirstButtonActive"
-      >
-        Second button
-      </Button>
-    </ButtonGroupItem>
-  </ButtonGroup>`,
-});
-PressedButton.storyName = 'Pressed Button';
-PressedButton.parameters = {
-  docs: {
-    source: false,
-    transformSource: (source) => {
-      const tmpSource = source
-        .replace(/<template>\s*/, '')
-        .replace(/\s*<\/template>/, '')
-        .replace(/on-/g, 'v-on:')
-        .replace(/:pressed="false"/, ':pressed="!isFirstButtonActive"')
-        .replace(/pressed/, ':pressed="isFirstButtonActive"');
-      const fullSource = dedent`
-        data() {
-          return {
-            isFirstButtonActive: true,
-          }
-        },
-        methods: {
-          handleFirstButtonActive() {
-            if (this.isFirstButtonActive) return;
-            this.isFirstButtonActive = true;
-          },
-          handleSecondButtonActive() {
-            if (!this.isFirstButtonActive) return;
-            this.isFirstButtonActive = false;
-          }
-        },
-        ${tmpSource}
-      `;
-      return fullSource;
     },
   },
-}
-
+  template: `<ButtonGroup :segmented="true">
+    <Button
+      :pressed="isFirstButtonActive"
+      @click="handleFirstButtonActive"
+    >
+      First button
+    </Button>
+    <Button
+      @click="handleSecondButtonActive"
+      :pressed="!isFirstButtonActive"
+    >
+      Second button
+    </Button>
+  </ButtonGroup>`,
+});
+PressedButton.storyName = "Pressed Button";
+PressedButton.parameters = {
+  docs: {
+    source: {
+      code: dedent`
+        <template>
+          <ButtonGroup segmented>
+            <Button
+              :pressed="isFirstButtonActive"
+              @click="handleFirstButtonActive"
+            >
+              First button
+            </Button>
+            <Button
+              @click="handleSecondButtonActive"
+              :pressed="!isFirstButtonActive"
+            >
+              Second button
+            </Button>
+          </ButtonGroup>
+        </template>
+        <script>
+          components: { ButtonGroup, Button },
+          data() {
+            return {
+              isFirstButtonActive: true,
+            };
+          },
+          methods: {
+            handleFirstButtonActive() {
+              if (this.isFirstButtonActive) return;
+              this.isFirstButtonActive = true;
+            },
+            handleSecondButtonActive() {
+              if (!this.isFirstButtonActive) return;
+              this.isFirstButtonActive = false;
+            },
+          },
+        </script>
+        `,
+    },
+  },
+};
 
 # Button
 
@@ -428,40 +468,53 @@ For navigational actions that appear within or directly following a sentence, us
 
 For connectedDisclosure actions, use the [ActionList component.](/docs/components-actions-actionlist--actionlist)
 
-<font color="#FF7900">Use component with camel case for prevent conflict with <b>button</b> element in html.</font>
-<br/><br/>
+<font color="#FF7900">
+  Use component with camel case for prevent conflict with <b>button</b> element
+  in html.
+</font>
+<br />
+<br />
 
 ### Button Variants
 
-<Canvas style={{ backgroundColor: '#f6f6f7' }}>
+<Canvas style={{ backgroundColor: "#f6f6f7" }} withSource="close">
   <Story story={Variants} height="280px" />
 </Canvas>
 
 ### Pressed Button
 
-<Canvas style={{ backgroundColor: '#f6f6f7' }}>
+<Canvas style={{ backgroundColor: "#f6f6f7" }} withSource="close">
   <Story story={PressedButton} height="60px" />
 </Canvas>
 
 ### Disclosure Button
 
-<Canvas style={{ backgroundColor: '#f6f6f7' }}>
+<Canvas style={{ backgroundColor: "#f6f6f7" }} withSource="close">
   <Story story={Disclosure} height="140px" />
 </Canvas>
 
 ### Split Button
 
-<Canvas style={{ backgroundColor: '#f6f6f7' }}>
-  <Story
-    story={SplitButton}
-    height="120px"
-    inline={false}
-  />
+<Canvas style={{ backgroundColor: "#f6f6f7" }} withSource="close">
+  <Story story={SplitButton} height="120px" inline={false} />
 </Canvas>
 
 ### Example
-<Canvas style={{ backgroundColor: '#f6f6f7' }}>
-  <Story name="Button" height="40px">
+
+<Canvas style={{ backgroundColor: "#f6f6f7" }}>
+  <Story
+    name="Button"
+    height="40px"
+    parameters={{
+      docs: {
+        source: {
+          code: dedent`
+            <Button>Add Product</Button>
+          `,
+        },
+      },
+    }}
+  >
     {Template.bind({})}
   </Story>
 </Canvas>

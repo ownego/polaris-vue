@@ -1,14 +1,10 @@
-import { VueConstructor } from 'vue';
+import type { VueElementConstructor } from 'vue';
 
-export type IconSource =
-  | VueConstructor<Vue>
-  | 'placeholder'
-  | string;
+export type IconSource = VueElementConstructor | 'placeholder' | string;
 
-export type Error =
-  | string
-  | VueConstructor<Vue>
-  | (string | VueConstructor<Vue>)[];
+export type Error = string | VueElementConstructor | (string | VueElementConstructor)[];
+
+export type HeadingTagName = 'h1' | 'h2' | 'h3' | 'h4' | 'h5' | 'h6' | 'p';
 
 export type Action = {
   id?: string;
@@ -49,20 +45,4 @@ export interface BaseButton {
   ariaExpanded?: boolean;
   /** Indicates the ID of the element that describes the button */
   ariaDescribedBy?: string;
-  /** Callback when clicked */
-  onClick?(): void;
-  /** Callback when button becomes focussed */
-  onFocus?(): void;
-  /** Callback when focus leaves button */
-  onBlur?(): void;
-  /** Callback when a keypress event is registered on the button */
-  onKeyPress?(event: KeyboardEvent): void;
-  /** Callback when a keyup event is registered on the button */
-  onKeyUp?(event: KeyboardEvent): void;
-  /** Callback when a keydown event is registered on the button */
-  onKeyDown?(event: KeyboardEvent): void;
-  /** Callback when mouse enter */
-  onMouseEnter?(): void;
-  /** Callback when element is touched */
-  onTouchStart?(): void;
 }

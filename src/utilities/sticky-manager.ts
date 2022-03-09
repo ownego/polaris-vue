@@ -1,5 +1,5 @@
 import debounce from 'lodash/debounce';
-import { spacingLoose } from '@shopify/polaris-tokens';
+import { tokens } from 'polaris-react/src/tokens';
 import { dataPolarisTopBar, scrollable } from 'polaris-react/src/components/shared';
 import { stackedContent } from 'polaris-react/src/utilities/breakpoints';
 import { getRectForNode, Rect } from './geometry';
@@ -16,12 +16,7 @@ interface StickyItem {
   /** Should the element remain in a fixed position when the layout is stacked (smaller screens)  */
   disableWhenStacked: boolean;
   /** Method to handle positioning */
-  handlePositioning(
-    stick: boolean,
-    top?: number,
-    left?: number,
-    width?: string | number,
-  ): void;
+  handlePositioning(stick: boolean, top?: number, left?: number, width?: string | number): void;
 }
 
 const SIXTY_FPS = 1000 / 60;
@@ -31,9 +26,7 @@ function isDocument(node: HTMLElement | Document): node is Document {
 }
 
 function scrollTopFor(container: HTMLElement | Document) {
-  return isDocument(container)
-    ? document.body.scrollTop || document.documentElement.scrollTop
-    : container.scrollTop;
+  return isDocument(container) ? document.body.scrollTop || document.documentElement.scrollTop : container.scrollTop;
 }
 
 function horizontallyOverlaps(rect1: Rect, rect2: Rect) {
@@ -81,9 +74,7 @@ export class StickyManager {
   }
 
   unregisterStickyItem(nodeToRemove: HTMLElement) {
-    const nodeIndex = this.stickyItems.findIndex(
-      ({ stickyNode }) => nodeToRemove === stickyNode,
-    );
+    const nodeIndex = this.stickyItems.findIndex(({ stickyNode }) => nodeToRemove === stickyNode);
     this.stickyItems.splice(nodeIndex, 1);
   }
 
@@ -115,13 +106,7 @@ export class StickyManager {
     this.stickyItems.forEach((stickyItem) => {
       const { handlePositioning } = stickyItem;
 
-      const {
-        sticky, top, left, width,
-      } = this.evaluateStickyItem(
-        stickyItem,
-        scrollTop,
-        containerTop,
-      );
+      const { sticky, top, left, width } = this.evaluateStickyItem(stickyItem, scrollTop, containerTop);
 
       this.updateStuckItems(stickyItem, sticky);
 
@@ -139,13 +124,7 @@ export class StickyManager {
     left: number;
     width: string | number;
   } {
-    const {
-      stickyNode,
-      placeHolderNode,
-      boundingElement,
-      offset,
-      disableWhenStacked,
-    } = stickyItem;
+    const { stickyNode, placeHolderNode, boundingElement, offset, disableWhenStacked } = stickyItem;
 
     if (disableWhenStacked && stackedContent().matches) {
       return {
@@ -157,12 +136,11 @@ export class StickyManager {
     }
 
     const stickyOffset = offset
-      ? this.getOffset(stickyNode) + parseInt(spacingLoose, 10)
+      ? this.getOffset(stickyNode) + parseInt(tokens.spacing['5'], 10)
       : this.getOffset(stickyNode);
 
     const scrollPosition = scrollTop + stickyOffset;
-    const placeHolderNodeCurrentTop = placeHolderNode
-      .getBoundingClientRect().top - containerTop + scrollTop;
+    const placeHolderNodeCurrentTop = placeHolderNode.getBoundingClientRect().top - containerTop + scrollTop;
     const top = containerTop + stickyOffset;
     const { width } = placeHolderNode.getBoundingClientRect();
     const { left } = placeHolderNode.getBoundingClientRect();
@@ -172,16 +150,12 @@ export class StickyManager {
     if (boundingElement == null) {
       sticky = scrollPosition >= placeHolderNodeCurrentTop;
     } else {
-      const stickyItemHeight = stickyNode.getBoundingClientRect().height
-        || stickyNode.firstElementChild?.getBoundingClientRect().height
-        || 0;
-      const stickyItemBottomPosition = boundingElement.getBoundingClientRect().bottom
-        - stickyItemHeight
-        + scrollTop
-        - containerTop;
+      const stickyItemHeight =
+        stickyNode.getBoundingClientRect().height || stickyNode.firstElementChild?.getBoundingClientRect().height || 0;
+      const stickyItemBottomPosition =
+        boundingElement.getBoundingClientRect().bottom - stickyItemHeight + scrollTop - containerTop;
 
-      sticky = scrollPosition >= placeHolderNodeCurrentTop
-        && scrollPosition < stickyItemBottomPosition;
+      sticky = scrollPosition >= placeHolderNodeCurrentTop && scrollPosition < stickyItemBottomPosition;
     }
 
     return {
@@ -207,9 +181,7 @@ export class StickyManager {
 
   private removeStuckItem(stickyItem: StickyItem) {
     const { stickyNode: nodeToRemove } = stickyItem;
-    const nodeIndex = this.stuckItems.findIndex(
-      ({ stickyNode }) => nodeToRemove === stickyNode,
-    );
+    const nodeIndex = this.stuckItems.findIndex(({ stickyNode }) => nodeToRemove === stickyNode);
     this.stuckItems.splice(nodeIndex, 1);
   }
 
@@ -242,17 +214,13 @@ export class StickyManager {
   }
 
   private isNodeStuck(node: HTMLElement): boolean {
-    const nodeFound = this.stuckItems.findIndex(
-      ({ stickyNode }) => node === stickyNode,
-    );
+    const nodeFound = this.stuckItems.findIndex(({ stickyNode }) => node === stickyNode);
 
     return nodeFound >= 0;
   }
 
   private setTopBarOffset(container: Document) {
-    const topbarElement = container.querySelector(
-      `:not(${scrollable.selector}) ${dataPolarisTopBar.selector}`,
-    );
+    const topbarElement = container.querySelector(`:not(${scrollable.selector}) ${dataPolarisTopBar.selector}`);
     this.topBarOffset = topbarElement ? topbarElement.clientHeight : 0;
   }
 }

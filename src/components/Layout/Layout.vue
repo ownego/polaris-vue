@@ -1,30 +1,20 @@
 <template lang="pug">
-div(:class="className")
+div(:class="styles.Layout")
   Section(v-if="sectioned")
     slot
   slot(v-else)
 </template>
 
-<script lang="ts">
-import Vue from 'vue';
-import { Component, Prop } from 'vue-property-decorator';
+<script setup lang="ts">
 import styles from '@/classes/Layout.json';
 import { Section } from './components';
 
-@Component({
-  components: {
-    Section,
-  },
-})
-export default class Layout extends Vue {
-  /**
-   * Automatically adds sections to layout
-   */
-  @Prop({ type: Boolean })
-  public sectioned?: boolean;
-
-  public className = styles.Layout
+interface Props {
+  /** Automatically adds sections to layout */
+  sectioned?: boolean;
 }
+
+const props = defineProps<Props>();
 </script>
 
 <style lang="scss">

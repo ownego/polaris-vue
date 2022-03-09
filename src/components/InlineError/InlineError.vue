@@ -1,51 +1,33 @@
 <template lang="pug">
-div(:id="wrapperID", :class="wrapperClassName")
-  div(:class="iconClassName")
-    Icon(:source="iconAlertMinor")
+div(
+  v-if="message",
+  :id="errorTextID(fieldID)",
+  :class="styles.InlineError",
+)
+  div(:class="styles.Icon")
+    Icon(:source="AlertMinor")
   component(
-    v-if="['object', 'function'].includes(typeof message)",
+    v-if="typeof message === 'object'",
     :is="message",
   )
   div(v-else) {{ message }}
 </template>
 
-<script lang="ts">
-import Vue from 'vue';
-import { Component, Prop } from 'vue-property-decorator';
-import type { Error } from 'types/type';
+<script setup lang="ts">
 import AlertMinor from '@icons/AlertMinor.svg';
 import styles from '@/classes/InlineError.json';
+import type { Error } from 'types/type';
 import { errorTextID } from './utils';
 import { Icon } from '../Icon';
 
-@Component({
-  components: {
-    Icon,
-  },
-})
-export default class InlineError extends Vue {
-  /**
-   * Content briefly explaining how to resolve the invalid form field input.
-   */
-  @Prop({ type: [String, Array, Object, Function], required: true })
-  public message!: Error;
-
-  /**
-   * Unique identifier of the invalid form field that the message describes
-   */
-  @Prop({ type: String, required: true })
-  public fieldID!: string;
-
-  public wrapperClassName: string = styles.InlineError;
-
-  public iconClassName: string = styles.Icon;
-
-  public iconAlertMinor = AlertMinor;
-
-  get wrapperID(): string {
-    return errorTextID(this.fieldID);
-  }
+interface Props {
+  /** Content briefly explaining how to resolve the invalid form field input. */
+  message: Error;
+  /** Unique identifier of the invalid form field that the message describes */
+  fieldID: string;
 }
+
+const props = defineProps<Props>();
 </script>
 
 <style lang="scss">

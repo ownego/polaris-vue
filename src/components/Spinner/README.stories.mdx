@@ -1,9 +1,10 @@
-import { Meta, Story, Canvas, ArgsTable } from '@storybook/addon-docs';
-import { Spinner } from '@/polaris-vue';
+import { Meta, Story, Canvas, ArgsTable } from "@storybook/addon-docs";
+import { Spinner } from "@/polaris-vue";
+import dedent from "ts-dedent";
 
 <Meta
   title="Components / Feedback indicators / Spinner"
-  component={ Spinner }
+  component={Spinner}
   argTypes={{
     accessibilityLabel: {
       table: {
@@ -16,16 +17,13 @@ import { Spinner } from '@/polaris-vue';
       },
     },
     size: {
-      name: 'size',
-      description: 'Size of Spinner',
-      options: [
-        'large',
-        'small',
-      ],
-      control: { type: 'select' },
+      name: "size",
+      description: "Size of Spinner",
+      options: ["large", "small"],
+      control: { type: "select" },
       table: {
         defaultValue: {
-          summary: 'large'
+          summary: "large",
         },
         type: {
           summary: null,
@@ -41,9 +39,11 @@ import { Spinner } from '@/polaris-vue';
 />
 
 export const Template = (args, { argTypes }) => ({
-  props: Object.keys(argTypes),
-  components: { Spinner},
-  template: `<Spinner v-bind="$props"/>`,
+  components: { Spinner },
+  setup() {
+    return { args };
+  },
+  template: `<Spinner v-bind="args"/>`,
 });
 
 # Spinner
@@ -55,16 +55,15 @@ Spinners are used to notify merchants that their action is being processed. For 
     name="Spinner"
     height="60px"
     args={{
-      accessibilityLabel: 'Spinner example',
-      size: 'large',
+      accessibilityLabel: "Spinner example",
+      size: "large",
     }}
     parameters={{
       docs: {
-        transformSource: (source) => {
-          const tmpSource = source
-            .replace(/<template>/, '')
-            .replace(/<\/template>/, '');
-          return tmpSource;
+        source: {
+          code: dedent`
+            <Spinner v-bind="props"/>
+          `,
         },
       },
     }}

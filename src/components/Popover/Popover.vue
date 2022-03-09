@@ -1,209 +1,176 @@
 <template lang="pug">
 // TODO: Update lazy loaded docs
-div(ref="container")
+component(
+  :is="activatorWrapper",
+  ref="container"
+)
   slot(name="activator")
-  Portal(v-if="activatorNode && active", :to="portalId")
-    div(:data-portal-id="portalId")
-      PopoverOverlay(
-        :activator="activatorNode",
-        :fullWidth="fullWidth",
-        :active="active",
-        :preferInputActivator="preferInputActivator",
-        :fixed="fixed",
-        :preferredPosition="preferredPosition",
-        :preferredAlignment="preferredAlignment",
-        :zIndexOverride="zIndexOverride",
-        :autofocusTarget="autofocusTarget",
-        :sectioned="sectioned",
-        @close="handleClose",
-        @scrolled-to-bottom="$emit('scrolled-to-bottom')",
-      )
-        template(v-slot:overlay="props")
-          slot(name="content")
-        slot(name="extra-content", slot="extra-content")
-  PortalTarget(:name="portalId")
+  Portal(v-if="activator && active", idPrefix="popover")
+    PopoverOverlay(
+      :id="id",
+      :activator="activator",
+      :fullWidth="fullWidth",
+      :active="active",
+      :preferInputActivator="preferInputActivator",
+      :fixed="fixed",
+      :preferredPosition="preferredPosition",
+      :preferredAlignment="preferredAlignment",
+      :zIndexOverride="zIndexOverride",
+      :autofocusTarget="autofocusTarget",
+      :sectioned="sectioned",
+      :colorScheme="colorScheme",
+      @close="handleClose",
+      @scrolled-to-bottom="emit('scrolled-to-bottom')",
+    )
+      template(#overlay="attrs")
+        slot(name="content")
+      template(#extra-content)
+        slot(name="extra-content")
 </template>
 
 <script lang="ts">
-import Vue from 'vue';
-import { Portal, PortalTarget } from 'portal-vue';
-import {
-  Component, Prop, Watch, Ref,
-} from 'vue-property-decorator';
-import {
-  findFirstFocusableNodeIncludingDisabled,
-  focusNextFocusableNode,
-} from '@/utilities/focus';
-import { useUniqueId } from '@/utilities/unique-id';
-import type { PreferredAlignment, PreferredPosition } from '../PositionedOverlay';
-import { PopoverCloseSource, PopoverAutofocusTarget, setActivatorAttributes } from './utils';
+export default {
+  inheritAttrs: false,
+}
+</script>
+
+<script setup lang="ts">
+import { watch, ref, onMounted, useAttrs } from 'vue';
+import { portal } from 'polaris-react/src/components/shared';
+import { findFirstFocusableNodeIncludingDisabled, focusNextFocusableNode } from '@/utilities/focus';
+import { UseUniqueId } from '@/use';
+import type { PopoverOverlayProps, PopoverAutofocusTarget } from './utils';
+import { PopoverCloseSource, setActivatorAttributes } from './utils';
 import { PopoverOverlay } from './components';
+import { Portal } from '../Portal';
 
-@Component({
-  components: {
-    PopoverOverlay,
-    Portal,
-    PortalTarget,
-  },
-})
-export default class Popover extends Vue {
-  /**
-   * The preferred direction to open the popover
-   * @values above | below | mostSpace
-   */
-  @Prop()
-  public preferredPosition?: PreferredPosition;
-
-  /**
-   * The preferred alignment of the popover relative to its activator
-   * @values left | center | right
-   */
-  @Prop()
-  public preferredAlignment?: PreferredAlignment;
-
-  /**
-   * Show or hide the Popover
-   */
-  @Prop({ type: Boolean, required: true })
-  public active!: boolean;
-
+interface PopoverProps {
+  /** The preferred direction to open the popover */
+  preferredPosition?: PopoverOverlayProps['preferredPosition'];
+  /** The preferred alignment of the popover relative to its activator */
+  preferredAlignment?: PopoverOverlayProps['preferredAlignment'];
+  /** Show or hide the Popover */
+  active: boolean;
   /**
    * Use the activator's input element to calculate the Popover position
    * @default true
    */
-  @Prop({ type: Boolean, default: true })
-  public preferInputActivator?: boolean;
-
+  preferInputActivator?: PopoverOverlayProps['preferInputActivator'];
   /**
-   * Override on the default z-index of 400
+   * The element type to wrap the activator with
+   * @default 'div'
    */
-  @Prop({ type: Number })
-  public zIndexOverride?: number;
-
-  /**
-   * Prevents focusing the activator or the next focusable element when the popover is deactivated
-   */
-  @Prop({ type: Boolean })
-  public preventFocusOnClose?: boolean;
-
-  /**
-   * Automatically add wrap content in a section
-   */
-  @Prop({ type: Boolean })
-  public sectioned?: boolean;
-
-  /**
-   * Allow popover to stretch to the full width of its activator
-   */
-  @Prop({ type: Boolean })
-  public fullWidth?: boolean;
-
-  /**
-   * Allow popover to stretch to fit content vertically
-   */
-  @Prop({ type: Boolean })
-  public fullHeight?: boolean;
-
-  /**
-   * Allow popover content to determine the overlay width and height
-   */
-  @Prop({ type: Boolean })
-  public fluidContent?: boolean;
-
-  /**
-   * Remains in a fixed position
-   */
-  @Prop({ type: Boolean })
-  public fixed?: boolean;
-
-  /**
-   * Used to illustrate the type of popover element
-   */
-  @Prop({ type: String })
-  public ariaHaspopup!: string;
-
-  /**
-   * Allow the popover overlay to be hidden when printing
-   */
-  @Prop({ type: Boolean })
-  public hideOnPrint?: boolean;
-
+  activatorWrapper?: string;
+  /** Override on the default z-index of 400 */
+  zIndexOverride?: number;
+  /** Prevents focusing the activator or the next focusable element
+   * when the popover is deactivated */
+  preventFocusOnClose?: boolean;
+  /** Automatically add wrap content in a section */
+  sectioned?: boolean;
+  /** Allow popover to stretch to the full width of its activator */
+  fullWidth?: boolean;
+  /** Allow popover to stretch to fit content vertically */
+  fullHeight?: boolean;
+  /** Allow popover content to determine the overlay width and height */
+  fluidContent?: boolean;
+  /** Remains in a fixed position */
+  fixed?: boolean;
+  /** Used to illustrate the type of popover element */
+  ariaHaspopup?: string;
+  /** Allow the popover overlay to be hidden when printing */
+  hideOnPrint?: boolean;
+  /** Accepts a color scheme for the contents of the popover */
+  colorScheme?: PopoverOverlayProps['colorScheme'];
   /**
    * The preferred auto focus target defaulting to the popover container
    * @default 'container'
    */
-  @Prop({ type: String, default: 'container' })
-  public autofocusTarget?: PopoverAutofocusTarget;
+  autofocusTarget?: PopoverAutofocusTarget;
+}
 
-  @Watch('active')
-  onActiveChanged() {
-    this.setAccessibilityAttributes();
-  }
+const props = withDefaults(defineProps<PopoverProps>(), {
+  preferredPosition: undefined,
+  preferredAlignment: undefined,
+  zIndexOverride: undefined,
+  ariaHaspopup: undefined,
+  colorScheme: undefined,
+  activatorWrapper: 'div',
+  preferInputActivator: true,
+  autofocusTarget: 'container',
+});
 
-  @Ref('container') containerNode!: HTMLElement;
+const emit = defineEmits<{
+  (event: 'close', source: PopoverCloseSource): void;
+  (event: 'scrolled-to-bottom'): void
+}>();
 
-  public isInPortal = (element: Element) => {
-    let { parentElement } = element;
+const container = ref<HTMLElement | null>(null);
 
-    while (parentElement) {
-      if (parentElement.matches('.vue-portal-target')) return false;
-      parentElement = parentElement.parentElement;
-    }
+const activator = ref<HTMLElement | null>(null);
 
-    return true;
-  }
+const { useUniqueId } = UseUniqueId();
 
-  public handleClose(source: PopoverCloseSource) {
-    this.$emit('close', source);
-    if (!this.containerNode || this.preventFocusOnClose) return;
+const attrs = useAttrs();
 
-    if ((source === PopoverCloseSource.FocusOut || source === PopoverCloseSource.EscapeKeypress)
-      && this.activatorNode
-    ) {
-      const focusableActivator = findFirstFocusableNodeIncludingDisabled(
-        this.activatorNode as HTMLElement,
-      )
-        || findFirstFocusableNodeIncludingDisabled(this.containerNode)
-        || this.containerNode;
-      if (!focusNextFocusableNode(focusableActivator, this.isInPortal)) {
-        focusableActivator.focus();
-      }
-    }
-  }
+const id = ref<string>(useUniqueId('popover'));
 
-  public activatorNode: HTMLElement | Element | null = null;
-
-  public id = useUniqueId('popover');
-
-  public portalId = `popover-${useUniqueId('portal')}`;
-
-  public setAccessibilityAttributes() {
-    if (!this.containerNode) {
-      return;
-    }
-
-    const firstFocusable = findFirstFocusableNodeIncludingDisabled(this.containerNode);
-    const focusableActivator: HTMLElement & { disabled?: boolean; } = firstFocusable
-      || this.containerNode;
+const setAccessibilityAttributes = () => {
+  if (container.value) {
+    const containerNode = container.value;
+    const firstFocusable = findFirstFocusableNodeIncludingDisabled(containerNode);
+    const focusableActivator: HTMLElement & { disabled?: boolean } = firstFocusable || containerNode;
     const activatorDisabled = 'disabled' in focusableActivator && Boolean(focusableActivator.disabled);
 
     setActivatorAttributes(focusableActivator, {
-      id: this.id,
-      active: this.active,
-      ariaHaspopup: this.ariaHaspopup,
+      id: id.value,
+      active: props.active,
+      ariaHaspopup: props.ariaHaspopup as string,
       activatorDisabled,
     });
   }
+};
 
-  mounted(): void {
-    if (this.containerNode) {
-      const activatorNode = this.containerNode.firstElementChild;
-      if (activatorNode) this.activatorNode = activatorNode;
-      this.setAccessibilityAttributes();
+watch(
+  () => props.active,
+  () => setAccessibilityAttributes(),
+);
+
+const isInPortal = (element: Element) => {
+  let { parentElement } = element;
+
+  while (parentElement) {
+    if (parentElement.matches(portal.selector)) {return false;}
+    parentElement = parentElement.parentElement;
+  }
+
+  return true;
+};
+
+const handleClose = (source: PopoverCloseSource) => {
+  emit('close', source);
+  if (!container.value || props.preventFocusOnClose) {return;}
+
+  if ((source === PopoverCloseSource.FocusOut || source === PopoverCloseSource.EscapeKeypress) && activator.value) {
+    const focusableActivator =
+      findFirstFocusableNodeIncludingDisabled(activator.value) ||
+      findFirstFocusableNodeIncludingDisabled(container.value) ||
+      container.value;
+    if (!focusNextFocusableNode(focusableActivator, isInPortal)) {
+      focusableActivator.focus();
     }
   }
-}
+};
+
+onMounted(() => {
+  if (container.value) {
+    const activatorNode = container.value.firstElementChild;
+    if (activatorNode) {activator.value = activatorNode as HTMLElement;}
+    setAccessibilityAttributes();
+  }
+});
 </script>
+
 <style lang="scss">
 @import 'polaris-react/src/components/Popover/Popover.scss';
 </style>

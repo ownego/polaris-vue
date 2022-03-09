@@ -3,34 +3,25 @@ div(:class="className")
   slot
 </template>
 
-<script lang="ts">
-import Vue from 'vue';
-import { Component, Prop } from 'vue-property-decorator';
+<script setup lang="ts">
+import { computed } from 'vue';
 import { classNames } from 'polaris-react/src/utilities/css';
 import styles from '@/classes/Layout.json';
 
-@Component
-export default class Section extends Vue {
-  @Prop({ type: Boolean })
-  public secondary?: boolean;
-
-  @Prop({ type: Boolean })
-  public fullWidth?: boolean;
-
-  @Prop({ type: Boolean })
-  public oneHalf?: boolean;
-
-  @Prop({ type: Boolean })
-  public oneThird?: boolean;
-
-  get className(): string {
-    return classNames(
-      styles.Section,
-      this.secondary && styles['Section-secondary'],
-      this.fullWidth && styles['Section-fullWidth'],
-      this.oneHalf && styles['Section-oneHalf'],
-      this.oneThird && styles['Section-oneThird'],
-    );
-  }
+interface SectionProps {
+  secondary?: boolean;
+  fullWidth?: boolean;
+  oneHalf?: boolean;
+  oneThird?: boolean;
 }
+
+const props = defineProps<SectionProps>();
+
+const className = computed(() => classNames(
+  styles.Section,
+  props.secondary && styles['Section-secondary'],
+  props.fullWidth && styles['Section-fullWidth'],
+  props.oneHalf && styles['Section-oneHalf'],
+  props.oneThird && styles['Section-oneThird'],
+));
 </script>

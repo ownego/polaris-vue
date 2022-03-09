@@ -1,8 +1,7 @@
 <template lang="pug">
 div(:class="className")
-  div(:class="classLabelWrapper")
+  div(v-if="$slots.label", :class="styles.LabelWrapper")
     Label(
-      v-if="hasLabelSlot",
       :id="id",
       :requiredIndicator="requiredIndicator",
       :hidden="false",
@@ -11,97 +10,62 @@ div(:class="className")
       slot(name="label")
     div(
       v-if="action",
-      :class="classAction"
+      :class="styles.Action"
     )
       //- TODO
       //- buttonFrom(action, {plain: true})
   slot
   div(
     v-if="isError",
-    :class="classError",
+    :class="styles.Error",
   )
     InlineError(
       v-if="typeof error === 'string'",
       :message="error",
-      :fieldID="errorId",
+      :fieldID="errorID(id)",
     )
     component(
       v-else,
       :is="error",
     )
   div(
-    v-if="hasHelpTextSlot",
-    :class="classHelpText",
-    :id="helpTextId",
+    v-if="$slots['help-text']",
+    :class="styles.HelpText",
+    :id="helpTextID(id)",
   )
     slot(name="help-text")
 </template>
 
-<script lang="ts">
-import Vue from 'vue';
-import { Component, Prop } from 'vue-property-decorator';
+<script setup lang="ts">
+import { computed } from 'vue';
 import { classNames } from 'polaris-react/src/utilities/css';
-import type { Action } from 'types/type';
 import styles from '@/classes/Labelled.json';
+import type { Action, Error } from 'types/type';
+import type { LabelProps } from "../Label/utils";
 import { Label } from '../Label';
-import { helpTextID, errorID, LabelledProps } from './utils';
 import { InlineError } from '../InlineError';
+import { helpTextID, errorID } from './utils';
 
-@Component({
-  components: {
-    Label,
-    InlineError,
-  },
-})
-export default class Labelled extends Vue {
-  @Prop({ type: String })
-  public id!: LabelledProps['id'];
-
-  @Prop({ type: Boolean })
-  public labelHidden?: LabelledProps['labelHidden'];
-
-  @Prop({ type: Boolean })
-  public requiredIndicator?: LabelledProps['requiredIndicator'];
-
-  @Prop({ type: [Boolean, String, Array, Object, Function] })
-  public error?: LabelledProps['error'];
-
-  @Prop({ type: Object })
-  public action?: Action;
-
-  classLabelWrapper = classNames(styles.LabelWrapper);
-
-  classAction = classNames(styles.Action);
-
-  classError = classNames(styles.Error);
-
-  classHelpText = classNames(styles.HelpText);
-
-  get className() {
-    return classNames(this.labelHidden && styles.hidden);
-  }
-
-  get hasLabelSlot() {
-    return !!this.$slots.label;
-  }
-
-  get hasHelpTextSlot() {
-    return !!this.$slots['help-text'];
-  }
-
-  get helpTextId() {
-    return helpTextID(this.id);
-  }
-
-  get errorId() {
-    return errorID(this.id);
-  }
-
-  get isError() {
-    return this.error && typeof this.error !== 'boolean';
-  }
+interface LabelledProps {
+  /** A unique identifier for the label */
+  id: LabelProps['id'];
+  /** Error to display beneath the label */
+  error?: Error | boolean;
+  /** An action */
+  action?: Action;
+  /** Visually hide the label */
+  labelHidden?: boolean;
+  /** Visual required indicator for the label */
+  requiredIndicator?: boolean;
 }
+
+const props = defineProps<LabelledProps>();
+
+const isError = computed(() => props.error && typeof props.error !== 'boolean');
+
+const className = computed(() => classNames(props.labelHidden && styles.hidden));
 </script>
+
 <style lang="scss">
 @import 'polaris-react/src/components/Labelled/Labelled.scss';
 </style>

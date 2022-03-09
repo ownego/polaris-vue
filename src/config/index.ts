@@ -1,3 +1,3 @@
 export default {
-  env: process.env.NODE_ENV,
+  env: import.meta.env.MODE,
 };

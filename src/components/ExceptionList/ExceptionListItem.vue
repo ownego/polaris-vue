@@ -1,72 +1,67 @@
 <template lang="pug">
-li(:class="classItem(status)")
-  span(:class="classIcon")
+li(:class="classItem")
+  span(:class="styles.Icon")
     Icon(v-if="icon", :source="icon")
-    span(v-else, :class="classBullet")
+    span(v-else, :class="styles.Bullet")
   Truncate(v-if="truncate")
     span(
       v-if="title",
-      :class="classTitle",
+      :class="styles.Title",
     ) {{ title }}
     span(
-      v-if="$slots.default",
-      :class="classDescription",
+      v-if="slots.default",
+      :class="styles.Description",
     )
       slot
   template(v-else)
     span(
       v-if="title",
-      :class="classTitle",
+      :class="styles.Title",
     ) {{ title }}
     span(
-      v-if="$slots.default",
-      :class="classDescription",
+      v-if="slots.default",
+      :class="styles.Description",
     )
       slot
 </template>
-<script lang="ts">
-import Vue from 'vue';
-import { Component, Prop } from 'vue-property-decorator';
+
+<script setup lang="ts">
+import { computed, useSlots } from 'vue';
 import type { IconSource } from 'types/type';
 import { classNames, variationName } from 'polaris-react/src/utilities/css';
 import styles from '@/classes/ExceptionList.json';
 import { Icon } from '../Icon';
 import { Truncate } from '../Truncate';
 
-@Component({
-  components: {
-    Icon,
-    Truncate,
-  },
-})
-export default class ExceptionList extends Vue {
+/**
+ * Setup
+ */
+interface Props {
   /** Set the color of the icon and title for the given item. */
-  @Prop({ type: String })
-  public status?: 'critical' | 'warning';
-
+  status?: 'critical' | 'warning';
   /** Icon displayed by the list item */
-  @Prop({ type: [String, Object, Function] })
-  public icon?: IconSource;
-
+  icon?: IconSource;
   /** Text displayed beside the icon */
-  @Prop({ type: String })
-  public title?: string;
-
+  title?: string;
   /** Should the description be truncated at end of line */
-  @Prop({ type: Boolean })
-  public truncate?: boolean;
-
-  public classIcon = styles.Icon;
-
-  public classBullet = styles.Bullet;
-
-  public classTitle = styles.Title;
-
-  public classDescription = styles.Description;
-
-  public classItem = (status?: 'critical' | 'warning') => classNames(
-    styles.Item,
-    status && styles[variationName('status', status) as keyof typeof styles],
-  );
+  truncate?: boolean;
 }
+
+const props = defineProps<Props>();
+
+const slots = useSlots();
+
+/**
+ * Computed
+ */
+const classItem = computed(() => {
+  return classNames(
+    styles.Item,
+    props.status && styles[variationName('status', props.status) as keyof typeof styles],
+  );
+})
 </script>
+
+<style lang="scss">
+@import 'polaris-react/src/components/ExceptionList/ExceptionList.scss';
+</style>

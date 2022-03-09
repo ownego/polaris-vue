@@ -1,30 +1,28 @@
 <template lang="pug">
 component(
   :is="element",
-  :class="className",
+  :class="styles.Subheading",
 )
   slot
 </template>
 
-<script lang="ts">
-import Vue from 'vue';
-import { Component, Prop } from 'vue-property-decorator';
-import { classNames } from 'polaris-react/src/utilities/css';
-import type { HeadingTagName } from 'polaris-react/src/types';
+<script setup lang="ts">
+import type { HeadingTagName } from 'types/type';
 import styles from '@/classes/Subheading.json';
 
-@Component
-export default class Subheading extends Vue {
+interface SubheadingProps {
   /**
    * The element name to use for the subheading
    * @default 'h3'
    */
-  @Prop({ type: String, default: 'h3' })
-  public element?: HeadingTagName;;
-
-  public className = classNames(styles.Subheading);
+  element?: HeadingTagName;
 }
+
+const props = withDefaults(defineProps<SubheadingProps>(), {
+  element: 'h3',
+});
 </script>
+
 <style lang="scss">
 @import 'polaris-react/src/components/Subheading/Subheading.scss';
 </style>

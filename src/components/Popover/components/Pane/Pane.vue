@@ -8,36 +8,29 @@ div(
   slot(v-else)
 Scrollable(
   v-else,
-  shadow=true,
+  shadow,
   :class="className",
-  @scrolled-to-bottom="$emit('scrolled-to-bottom')",
+  @scrolled-to-bottom="emit('scrolled-to-bottom')",
 )
   Section(v-if="sectioned")
     slot
   slot(v-else)
 </template>
 
-<script lang="ts">
-import Vue from 'vue';
-import { Component, Prop } from 'vue-property-decorator';
+<script setup lang="ts">
+import { computed } from 'vue';
 import { classNames } from 'polaris-react/src/utilities/css';
-import styles from '@/classes/Popover.json';
 import { Scrollable } from '@/components/Scrollable';
+import styles from '@/classes/Popover.json';
 import { Section } from '../Section';
 
-@Component({
-  components: {
-    Scrollable,
-    Section,
-  },
-})
-export default class Pane extends Vue {
-  @Prop({ type: Boolean }) public fixed?: boolean;
-
-  @Prop({ type: Boolean }) public sectioned?: boolean;
-
-  get className() {
-    return classNames(styles.Pane, this.fixed && styles['Pane-fixed']);
-  }
+interface Props {
+  fixed?: boolean;
+  sectioned?: boolean;
 }
+
+const props = defineProps<Props>();
+const emit = defineEmits<{ (event: 'scrolled-to-bottom'): void }>();
+
+const className = computed(() => classNames(styles.Pane, props.fixed && styles['Pane-fixed']));
 </script>

@@ -1,15 +1,17 @@
-import _Vue from 'vue';
-import * as components from '@/components';
+import type { App, Component } from 'vue';
+import * as components from './components';
 
-// install function executed by Vue.use()
-const PolarisVue = function installPolarisVue(Vue: typeof _Vue) {
-  Object.entries(components).forEach(([componentName, component]) => {
-    Vue.component(componentName, component);
-  });
+const PolarisVue = {
+  install(Vue: App) {
+    for (const component in components) {
+      const componentElement = components[component] as Component;
+      Vue.component(component, componentElement);
+    }
+  },
 };
 
 // Export all
 export default PolarisVue;
 
 // Export single component
-export * from '@/components';
+export * from './components';

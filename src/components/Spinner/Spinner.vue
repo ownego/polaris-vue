@@ -8,57 +8,51 @@ div
       span {{ accessibilityLabel }}
 </template>
 
-<script lang="ts">
-import Vue from 'vue';
-import { Component, Prop } from 'vue-property-decorator';
+<script setup lang="ts">
+import { ref, computed } from 'vue';
 import { classNames, variationName } from 'polaris-react/src/utilities/css';
-import styles from '@/classes/Spinner.json';
 import SpinnerIconLarge from '@/assets/spinner-large.svg';
 import SpinnerIconSmall from '@/assets/spinner-small.svg';
+import styles from '@/classes/Spinner.json';
 import { VisuallyHidden } from '../VisuallyHidden';
 
 type Size = 'small' | 'large';
 
-@Component({
-  components: {
-    VisuallyHidden,
-    SpinnerIconLarge,
-    SpinnerIconSmall,
-  },
-})
-export default class Spinner extends Vue {
+const props = defineProps({
   /**
-   * Size of Spinner
+   * Size of the spinner
    * @values small | large
    */
-  @Prop({ type: String, default: 'large' })
-  public size!: Size;
+  size: {
+    type: String as () => Size,
+    default: 'large',
+  },
 
   /**
    * Accessible label for the spinner
    */
-  @Prop({ type: String })
-  public accessibilityLabel!: string;
+  accessibilityLabel: {
+    type: String,
+    default: null,
+  },
 
   /**
    * Allows the component to apply the correct accessibility roles based on focus
    */
-  @Prop({ type: Boolean })
-  public hasFocusableParent!: boolean;
+  hasFocusableParent: {
+    type: Boolean,
+  },
+});
 
-  get className() {
-    const variation = variationName('size', this.size) as keyof typeof styles;
+const spanAttributes = ref({
+  ...(!props.hasFocusableParent && { role: 'status' }),
+});
 
-    return classNames(
-      styles.Spinner,
-      this.size && styles[variation],
-    );
-  }
+const className = computed(() => {
+  const variation = variationName('size', props.size) as keyof typeof styles;
 
-  public spanAttributes = {
-    ...(!this.hasFocusableParent && { role: 'status' }),
-  };
-}
+  return classNames(styles.Spinner, props.size && styles[variation]);
+});
 </script>
 
 <style lang="scss">

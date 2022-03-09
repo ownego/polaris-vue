@@ -1,17 +1,10 @@
 <template lang="pug">
-span(:class="className")
+component(:class="styles.Truncate")
   slot
 </template>
 
-<script lang="ts">
-import Vue from 'vue';
-import { Component } from 'vue-property-decorator';
+<script setup lang="ts">
 import styles from '@/classes/Truncate.json';
-
-@Component
-export default class Truncate extends Vue {
-  public className = styles.Truncate;
-}
 </script>
 
 <style lang="scss">

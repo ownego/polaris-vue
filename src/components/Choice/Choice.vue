@@ -1,18 +1,20 @@
 <template lang="pug">
-div
-  label(:class="wrapperClassName", :for="id")
-    span(:class="controlClass")
-      slot
-    span(:class="labelClass")
-      slot(name="label")
-  div(
-    v-if="error || $slots.helpText",
-    :class="descriptionMarkupClass",
+div(v-if="error && typeof error !== 'boolean' || $slots['help-text']")
+  label(
+    :class="className",
+    @click="$emit('click')",
+    @mouseover="$emit('mouseover')",
+    @mouseout="$emit('mouseout')",
   )
+    span(:class="styles.Control")
+      slot
+    span(:class="styles.Label")
+      slot(name="label")
+  div(:class="styles.Descriptions")
     div(
-      v-if="$slots.helpText",
-      :id="helpTextID",
-      :class="helpTextClass",
+      v-if="$slots['help-text']",
+      :id="helpTextID(id)",
+      :class="styles.HelpText",
     )
       slot(name="help-text")
     InlineError(
@@ -20,67 +22,45 @@ div
       :fieldID="id",
       :message="error",
     )
+label(
+  v-else
+  :class="className",
+  @click="$emit('click')",
+  @mouseover="$emit('mouseover')",
+  @mouseout="$emit('mouseout')",
+)
+  span(:class="styles.Control")
+    slot
+  span(:class="styles.Label")
+    slot(name="label")
 </template>
 
-<script lang="ts">
-import Vue from 'vue';
-import { Component, Prop } from 'vue-property-decorator';
+<script setup lang="ts">
+import { computed } from 'vue';
 import { classNames } from 'polaris-react/src/utilities/css';
-import type { Error } from 'types/type';
 import styles from '@/classes/Choice.json';
+import type { Error } from 'types/type';
 import { helpTextID } from './utils';
 import { InlineError } from '../InlineError';
 
-@Component({
-  components: {
-    InlineError,
-  },
-})
-export default class Choice extends Vue {
-  /**
-   * A unique identifier for the choice
-   */
-  @Prop({ type: String, required: true })
-  public id!: string;
-
-  /**
-   * Whether the associated form control is disabled
-   */
-  @Prop({ type: Boolean })
-  public disabled!: boolean;
-
-  /**
-   * Display an error message
-   */
-  @Prop({ type: [String, Array, Object, Function, Boolean] })
-  public error!: Error | boolean;
-
-  /**
-   * Visually hide the label
-   */
-  @Prop({ type: Boolean })
-  public labelHidden!: boolean;
-
-  public controlClass: string = styles.Control;
-
-  public labelClass: string = styles.Label;
-
-  public descriptionMarkupClass: string = styles.Descriptions;
-
-  public helpTextClass: string = styles.HelpText;
-
-  get wrapperClassName(): string {
-    return classNames(
-      styles.Choice,
-      this.labelHidden && styles.labelHidden,
-      this.disabled && styles.disabled,
-    );
-  }
-
-  get helpTextID(): string {
-    return helpTextID(this.id);
-  }
+interface Props {
+  /** A unique identifier for the choice */
+  id: string;
+  /** Whether the associated form control is disabled */
+  disabled?: boolean;
+  /** Display an error message */
+  error?: Error | boolean;
+  /** Visually hide the label */
+  labelHidden?: boolean;
 }
+
+const props = defineProps<Props>();
+
+const className = computed(() => classNames(
+  styles.Choice,
+  props.labelHidden && styles.labelHidden,
+  props.disabled && styles.disabled,
+));
 </script>
 
 <style lang="scss">

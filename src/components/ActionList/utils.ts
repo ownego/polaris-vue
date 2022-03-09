@@ -1,12 +1,6 @@
-import {
-  IconableAction, DisableableAction, BadgeAction, DestructableAction,
-} from '@/interface';
+import type { IconableAction, DisableableAction, BadgeAction, DestructableAction } from '@/utilities/interface';
 
-export interface ActionListItemDescriptor
-  extends IconableAction,
-  DisableableAction,
-  BadgeAction,
-  DestructableAction {
+export interface ActionListItemDescriptor extends IconableAction, DisableableAction, BadgeAction, DestructableAction {
   /** Visually hidden text for screen readers */
   accessibilityLabel?: string;
   /** Additional hint text to display with item */
@@ -33,3 +27,23 @@ export interface ActionListSection {
 }
 
 export type ItemProps = ActionListItemDescriptor;
+
+export interface ActionListProps {
+  /** Collection of actions for list */
+  items?: readonly ActionListItemDescriptor[];
+  /** Collection of sectioned action items */
+  sections?: readonly ActionListSection[];
+  /** Defines a specific role attribute for each action in the list */
+  actionRole?: 'menuitem' | string;
+}
+
+export interface SectionProps {
+  /** Section of action items */
+  section: ActionListSection;
+  /** Should there be multiple sections */
+  hasMultipleSections: boolean;
+  /** Defines a specific role attribute for each action in the list */
+  actionRole?: 'option' | 'menuitem' | string;
+  /** Whether or not the section is the first to appear */
+  firstSection?: boolean;
+}

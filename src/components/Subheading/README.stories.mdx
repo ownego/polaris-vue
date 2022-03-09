@@ -1,3 +1,4 @@
+import dedent from 'ts-dedent';
 import { Meta, Story, Canvas, ArgsTable } from '@storybook/addon-docs';
 import { Subheading } from '@/polaris-vue';
 
@@ -23,10 +24,10 @@ import { Subheading } from '@/polaris-vue';
   }}
 />
 
-export const Template = (args, { argTypes }) => ({
-  props: Object.keys(argTypes),
+export const Template = (args) => ({
   components: { Subheading },
-  template: `<Subheading v-bind="$props">Accounts</Subheading>`,
+  setup() { return { args }; },
+  template: `<Subheading v-bind="args">Accounts</Subheading>`,
 });
 
 # Subheading
@@ -34,7 +35,22 @@ export const Template = (args, { argTypes }) => ({
 Subheadings are used for the title of any sub-sections in top-level page sections.
 
 <Canvas>
-  <Story name="Subheading" height="30px">
+  <Story
+    name="Subheading"
+    height="30px"
+    args={{
+      element: 'h3',
+    }}
+    parameters={{
+      docs: {
+        source: {
+          code: dedent`
+            <Subheading>Accounts</Subheading>
+          `,
+        },
+      },
+    }}
+  >
     {Template.bind({})}
   </Story>
 </Canvas>

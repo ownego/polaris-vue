@@ -4,7 +4,6 @@ button(
   type="button",
   :disabled="disabled",
   :class="className",
-  @click="$emit('click')",
 )
   slot
 span(
@@ -18,13 +17,13 @@ span(
   )
     span(
       :title="tagTitle",
-      :class="classLinkText",
+      :class="styles.LinkText",
     )
       slot
   span(
     v-else,
     :title="tagTitle",
-    :class="classTagText",
+    :class="styles.TagText",
   )
     slot
   button(
@@ -36,87 +35,79 @@ span(
     @click="$emit('remove')",
     @mouseup="onMouseUp",
   )
-    Icon(:source="iconCancelSmallMinor")
+    Icon(:source="CancelSmallMinor")
 </template>
 
-<script lang="ts">
-import Vue from 'vue';
-import { Component, Prop } from 'vue-property-decorator';
+<script setup lang="ts">
+import { computed, useAttrs, useSlots } from 'vue';
+import { handleMouseUpByBlurring } from '@/utilities/focus';
 import { classNames } from 'polaris-react/src/utilities/css';
 import CancelSmallMinor from '@icons/CancelSmallMinor.svg';
-import { handleMouseUpByBlurring } from '@/utilities/focus';
 import styles from '@/classes/Tag.json';
 import { Icon } from '../Icon';
 
-@Component({
-  components: {
-    Icon,
-  },
-})
-export default class Tag extends Vue {
+/**
+ * Setup
+ */
+interface Props {
   /** Disables the tag  */
-  @Prop({ type: Boolean, default: false })
-  public disabled?: boolean;
-
+  disabled?: boolean;
   /** A string to use when tag has more than textual content */
-  @Prop({ type: String })
-  public accessibilityLabel?: string;
-
+  accessibilityLabel?: string;
   /** Url to navigate to when tag is clicked or keypressed. */
-  @Prop({ type: String })
-  public url?: string;
-
-  public classLinkText = classNames(styles.LinkText);
-
-  public classTagText = classNames(styles.TagText);
-
-  public iconCancelSmallMinor = CancelSmallMinor;
-
-  public onMouseUp = handleMouseUpByBlurring;
-
-  get hasEventClick() {
-    return !!this.$listeners.click;
-  }
-
-  get hasEventRemove() {
-    return !!this.$listeners.remove;
-  }
-
-  get segmented() {
-    return this.hasEventClick && this.url;
-  }
-
-  get className() {
-    return classNames(
-      styles.Tag,
-      this.disabled && styles.disabled,
-      this.hasEventClick && styles.clickable,
-      this.hasEventRemove && styles.removable,
-      this.url && !this.disabled && styles.linkable,
-      this.segmented && styles.segmented,
-    );
-  }
-
-  get classLink() {
-    return classNames(styles.Link, this.segmented && styles.segmented);
-  }
-
-  get classRemove() {
-    return classNames(styles.Button, this.segmented && styles.segmented);
-  }
-
-  get tagTitle() {
-    if (this.accessibilityLabel) return this.accessibilityLabel;
-
-    if (this.$slots.default && this.$slots.default[0].text) return this.$slots.default[0].text;
-
-    return undefined;
-  }
-
-  get ariaLabel() {
-    return `Remove ${this.tagTitle || ''}`;
-  }
+  url?: string;
 }
+
+const props = defineProps<Props>();
+
+const attrs = useAttrs();
+
+const slots = useSlots();
+
+/**
+ * Computed
+ */
+const hasEventClick = computed(() => Boolean(attrs['onClick']));
+
+const hasEventRemove = computed(() => Boolean(attrs['onRemove']));
+
+const segmented = computed(() => hasEventClick.value && props.url);
+
+const className = computed(() => {
+  return classNames(
+    styles.Tag,
+    props.disabled && styles.disabled,
+    hasEventClick.value && styles.clickable,
+    hasEventRemove.value && styles.removable,
+    props.url && !props.disabled && styles.linkable,
+    segmented.value && styles.segmented,
+  );
+});
+
+const classLink = computed(() => classNames(styles.Link, segmented.value && styles.segmented));
+
+const classRemove = computed(() => classNames(styles.Button, segmented.value && styles.segmented));
+
+const tagTitle = computed(() => {
+  if (props.accessibilityLabel) {
+    return props.accessibilityLabel;
+  }
+
+  if (slots.default && slots.default()[0].children) {
+    return slots.default()[0].children as string;
+  }
+
+  return '';
+});
+
+const ariaLabel = computed(() => {
+  return `Remove ${tagTitle.value || ''}`;
+});
+
+/**
+ * Methods
+ */
+const onMouseUp = handleMouseUpByBlurring;
 </script>
 
 <style lang="scss">

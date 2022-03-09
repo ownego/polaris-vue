@@ -6,35 +6,43 @@ component(
   slot
 </template>
 
-<script lang="ts">
-import Vue from 'vue';
-import { Component, Prop } from 'vue-property-decorator';
+<script setup lang="ts">
+import { computed } from 'vue';
 import { classNames, variationName } from 'polaris-react/src/utilities/css';
 import styles from '@/classes/List.json';
 
+/**
+ * Setup
+ */
 type Type = 'bullet' | 'number';
 
-@Component
-export default class List extends Vue {
+interface Props {
   /**
    * Type of list to display
    * @values bullet | number
+   * @default bullet
    */
-  @Prop({ type: String, default: 'bullet' })
-  public type!: Type;
-
-  get className() {
-    const variation = variationName('type', this.type) as keyof typeof styles;
-
-    return classNames(
-      styles.List,
-      this.type && styles[variation],
-    );
-  }
-
-  public element = this.type === 'bullet' ? 'ul' : 'ol';
+  type: Type;
 }
+
+const props = withDefaults(defineProps<Props>(), {
+  type: 'bullet',
+});
+
+/**
+ * Computed
+ */
+const className = computed(() => {
+  const variation = variationName('type', props.type) as keyof typeof styles;
+  return classNames(
+    styles.List,
+    props.type && styles[variation],
+  );
+})
+
+const element = props.type === 'bullet' ? 'ul' : 'ol';
 </script>
+
 <style lang="scss">
 @import 'polaris-react/src/components/List/List.scss';
 </style>

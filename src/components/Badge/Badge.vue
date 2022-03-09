@@ -3,126 +3,104 @@ span(:class="className")
   template(v-if="hasAccessibilityLabel")
     span(
       v-if="progressLabel",
-      :class="classPip",
+      :class="styles.Pip",
     )
       VisuallyHidden {{ accessibilityLabel }}
     VisuallyHidden(v-else) {{ accessibilityLabel }}
   slot
 </template>
 
-<script lang="ts">
-import Vue from 'vue';
-import { Component, Prop } from 'vue-property-decorator';
+<script setup lang="ts">
+import { inject, ref, computed, onMounted } from 'vue';
 import { classNames, variationName } from 'polaris-react/src/utilities/css';
 import styles from '@/classes/Badge.json';
 import { VisuallyHidden } from '../VisuallyHidden';
 
+type Status = 'info' | 'success' | 'attention' | 'warning' | 'critical' | 'new';
+type Progress = 'incomplete' | 'partiallyComplete' | 'complete';
+type Size = 'small' | 'medium';
+
+interface BadgeProps {
+  /** Colors and labels the badge with the given status. */
+  status?: Status;
+  /** Render a pip showing the progress of a given task. */
+  progress?: Progress;
+  /**
+   * Medium or small size.
+   * @default 'medium'
+   */
+  size?: Size;
+  /** Pass a custom accessibilityLabel */
+  statusAndProgressLabelOverride?: string;
+}
+
+// eslint-disable-next-line vue/no-setup-props-destructure
+const props = withDefaults(defineProps<BadgeProps>(), {
+  size: 'medium',
+});
+
+const withinFilter =  inject<boolean>('withinFilterContext', false);
+
 const DEFAULT_SIZE = 'medium';
 
-type StatusDeprecated = 'attention';
+const progressLabel = ref('');
+const statusLabel = ref('');
 
-@Component({
-  components: {
-    VisuallyHidden,
-  },
-})
-export default class Badge extends Vue {
-  /**
-   * Set the color of the badge for the given status.
-   */
-  @Prop({ type: String })
-  public status?: 'success' | 'info' | 'critical' | 'warning' | 'new' | StatusDeprecated;
+const className = computed(() => classNames(
+  styles.Badge,
+  props.status && styles[variationName('status', props.status) as keyof typeof styles],
+  props.progress && styles[variationName('progress', props.progress) as keyof typeof styles],
+  props.size && props.size !== DEFAULT_SIZE && styles[variationName('size', props.size) as keyof typeof styles],
+  withinFilter && styles.withinFilter,
+));
 
-  /**
-   * Render a pip showing the progress of a given task.
-   */
-  @Prop({ type: String })
-  public progress?: 'incomplete' | 'partiallyComplete' | 'complete';
+const hasAccessibilityLabel= computed(() => props.statusAndProgressLabelOverride
+  || statusLabel.value
+  || progressLabel.value,
+);
+const accessibilityLabel = computed(() => props.statusAndProgressLabelOverride
+  || `${statusLabel.value} ${progressLabel.value}`);
 
-  /**
-   * Medium or small size. Use `small` only in the main navigation of an app frame.
-   */
-  @Prop({ type: String })
-  public size?: 'medium' | 'small';
-
-  /**
-   * Medium or small size. Use `small` only in the main navigation of an app frame.
-   * @ignore
-   */
-  @Prop({ type: Boolean, default: false })
-  public isWithinFilter?: boolean;
-
-  /**
-   * Pass a custom accessibilityLabel
-   */
-  @Prop({ type: String })
-  statusAndProgressLabelOverride?: string;
-
-  public progressLabel = '';
-
-  public statusLabel = '';
-
-  public classPip = classNames(styles.Pip);
-
-  get className() {
-    return classNames(
-      styles.Badge,
-      this.status && styles[variationName('status', this.status) as keyof typeof styles],
-      this.progress && styles[variationName('progress', this.progress) as keyof typeof styles],
-      this.size && this.size !== DEFAULT_SIZE && styles[variationName('size', this.size) as keyof typeof styles],
-      this.isWithinFilter && styles.withinFilter,
-    );
+onMounted(() => {
+  switch (props.progress) {
+  case 'incomplete':
+    progressLabel.value = 'incomplete';
+    break;
+  case 'partiallyComplete':
+    progressLabel.value = 'partiallyComplete';
+    break;
+  case 'complete':
+    progressLabel.value = 'complete';
+    break;
+  default:
+    break;
   }
 
-  get accessibilityLabel() {
-    return this.statusAndProgressLabelOverride || `${this.statusLabel} ${this.progressLabel}`;
+  switch (props.status) {
+  case 'info':
+    statusLabel.value = 'info';
+    break;
+  case 'success':
+    statusLabel.value = 'success';
+    break;
+  case 'warning':
+    statusLabel.value = 'warning';
+    break;
+  case 'critical':
+    statusLabel.value = 'critical';
+    break;
+  case 'attention':
+    statusLabel.value = 'attention';
+    break;
+  case 'new':
+    statusLabel.value = 'new';
+    break;
+  default:
+    break;
   }
-
-  get hasAccessibilityLabel() {
-    return this.progressLabel || this.statusLabel || this.statusAndProgressLabelOverride;
-  }
-
-  created() {
-    switch (this.progress) {
-    case 'incomplete':
-      this.progressLabel = 'incomplete';
-      break;
-    case 'partiallyComplete':
-      this.progressLabel = 'partiallyComplete';
-      break;
-    case 'complete':
-      this.progressLabel = 'complete';
-      break;
-
-    default:
-      break;
-    }
-
-    switch (this.status) {
-    case 'info':
-      this.statusLabel = 'info';
-      break;
-    case 'success':
-      this.statusLabel = 'success';
-      break;
-    case 'warning':
-      this.statusLabel = 'warning';
-      break;
-    case 'critical':
-      this.statusLabel = 'critical';
-      break;
-    case 'attention':
-      this.statusLabel = 'attention';
-      break;
-    case 'new':
-      this.statusLabel = 'new';
-      break;
-    default:
-      break;
-    }
-  }
-}
+});
 </script>
+
 <style lang="scss">
 @import 'polaris-react/src/components/Badge/Badge.scss';
 </style>

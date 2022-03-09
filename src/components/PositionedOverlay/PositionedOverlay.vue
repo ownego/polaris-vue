@@ -1,8 +1,7 @@
 <template lang="pug">
-div(:class="className", :style="style", ref="overlay")
-  div(:class="popoverClassName", v-bind="{...overlayAttr}")
+div(:class="className", :style="style", ref="overlayRef")
+  div(:class="popoverClassName", v-bind="{...overlay.props}")
     slot(
-      name="overlay",
       :measuring="measuring",
       :left="left",
       :right="right",
@@ -14,23 +13,26 @@ div(:class="className", :style="style", ref="overlay")
 </template>
 
 <script lang="ts">
-import Vue from 'vue';
-import { Component, Prop, Ref } from 'vue-property-decorator';
+export default {
+  inheritAttrs: false,
+}
+</script>
+
+<script setup lang="ts">
+import { ref, computed, onBeforeMount, onUpdated, onMounted, onBeforeUnmount } from 'vue';
 import { classNames } from 'polaris-react/src/utilities/css';
 import { dataPolarisTopBar, overlay } from 'polaris-react/src/components/shared';
 import { getRectForNode, Rect } from '@/utilities/geometry';
 import styles from '@/classes/PositionedOverlay.json';
 import popoverStyles from '@/classes/Popover.json';
-import { PopoverAutofocusTarget } from '../Popover/utils';
 import {
-  PreferredPosition,
-  PreferredAlignment,
   calculateVerticalPosition,
   calculateHorizontalPosition,
   rectIsOutsideOfRect,
   intersectionWithViewport,
   windowRect,
 } from './math';
+import type { PreferredPosition, PreferredAlignment } from './math';
 import { isDocument, getMarginsForNode, getZIndexForLayerFromNode } from './utils';
 import { EventListener } from '../EventListener';
 import { forNode } from '../Scrollable/utils';
@@ -43,112 +45,81 @@ const OBSERVER_CONFIG = {
 
 type Positioning = 'above' | 'below';
 
-@Component({
-  components: {
-    EventListener,
-  },
-})
-export default class PositionedOverlay extends Vue {
-  @Prop({ type: Boolean }) public active!: boolean;
+interface PositionedOverlayProps {
+  active: boolean;
+  activator: HTMLElement;
+  preferInputActivator?: boolean;
+  preferredPosition?: PreferredPosition;
+  preferredAlignment?: PreferredAlignment;
+  fullWidth?: boolean;
+  fixed?: boolean;
+  preventInteraction?: boolean;
+  classNames?: string;
+  zIndexOverride?: number;
+  hideOnPrint?: boolean;
+}
 
-  @Prop({ type: HTMLElement }) public activator!: HTMLElement;
+const props = defineProps<PositionedOverlayProps>();
 
-  @Prop({ type: Boolean }) public preferInputActivator!: boolean;
+const emit = defineEmits<{
+  (event: 'change-content-styles', value: Record<string, unknown>): void;
+  (event: 'scroll-out'): void;
+}>();
 
-  @Prop({ type: String }) public preferredPosition!: PreferredPosition;
+const overlayRef = ref<HTMLElement | null>(null);
+const right = ref<number | null>(null);
+const left = ref<number | null>(null);
+const top = ref<number>(0);
+const height = ref<number>(0);
+const width = ref<number | null>(null);
+const zIndex = ref<number | null>(null);
+const measuring = ref<boolean>(true);
+const positioning = ref<Positioning>('below');
+const activatorRect = ref<Rect>(getRectForNode(props.activator));
+const lockPosition = ref<boolean>(false);
+const outsideScrollableContainer = ref<boolean>(false);
+const scrollableContainer = ref<HTMLElement | Document | null>(null);
+const observer = ref<MutationObserver | null>(null);
 
-  @Prop({ type: String }) public preferredAlignment!: PreferredAlignment;
+const className = computed(() => {
+  const propClassNames = props.classNames;
 
-  @Prop({ type: Boolean }) public fullWidth!: boolean;
+  return classNames(
+    styles.PositionedOverlay,
+    props.fixed && styles.fixed,
+    props.preventInteraction && styles.preventInteraction,
+    propClassNames,
+  );
+});
 
-  @Prop({ type: Boolean }) public fullHeight?: boolean;
+const popoverClassName = computed(() =>
+  classNames(
+    popoverStyles.Popover,
+    positioning.value === 'above' && popoverStyles.positionedAbove,
+    props.fullWidth && popoverStyles.fullWidth,
+    measuring.value && popoverStyles.measuring,
+    props.hideOnPrint && popoverStyles['PopoverOverlay-hideOnPrint'],
+  ),
+);
 
-  @Prop({ type: Boolean }) public fluidContent?: boolean;
+const style = computed(
+  () =>
+    ({
+      top: top.value == null || Number.isNaN(top.value) ? undefined : `${top.value}px`,
+      left: left.value == null || Number.isNaN(left.value) ? undefined : `${left.value}px`,
+      right: right.value == null || Number.isNaN(right.value) ? undefined : `${right.value}px`,
+      width: width.value == null || Number.isNaN(width.value) ? undefined : `${width.value}px`,
+      zIndex: props.zIndexOverride || zIndex.value || undefined,
+    } as Record<string, unknown>),
+);
 
-  @Prop({ type: Boolean }) public fixed!: boolean;
+const handleMeasurement = () => {
+  if (observer.value) {observer.value.disconnect();}
+  height.value = 0;
+  positioning.value = 'below';
+  measuring.value = true;
 
-  @Prop({ type: Boolean }) public preventInteraction!: boolean;
-
-  @Prop({ type: String }) public classNames!: string;
-
-  @Prop({ type: Number }) public zIndexOverride!: number;
-
-  @Prop({ type: String, default: 'container' }) public autofocusTarget?: PopoverAutofocusTarget;
-
-  @Prop({ type: Boolean }) public hideOnPrint?: boolean;
-
-  @Ref('overlay') overlayNode!: HTMLElement;
-
-  get className() {
-    const propClassNames = this.classNames;
-
-    return classNames(
-      styles.PositionedOverlay,
-      this.fixed && styles.fixed,
-      this.preventInteraction && styles.preventInteraction,
-      propClassNames,
-    );
-  }
-
-  get popoverClassName() {
-    return classNames(
-      popoverStyles.Popover,
-      this.positioning === 'above' && popoverStyles.positionedAbove,
-      this.fullWidth && popoverStyles.fullWidth,
-      this.measuring && popoverStyles.measuring,
-      this.hideOnPrint && popoverStyles['PopoverOverlay-hideOnPrint'],
-    );
-  }
-
-  public right ?: number | null = null;
-
-  public left ?: number | null = null;
-
-  public top = 0;
-
-  public height = 0;
-
-  public width : number | null = null;
-
-  public zIndex: number | null = null;
-
-  public measuring = true;
-
-  public positioning = 'below';
-
-  public activatorRect = getRectForNode(this.activator);
-
-  public lockPosition = false;
-
-  public outsideScrollableContainer = false;
-
-  private scrollableContainer: HTMLElement | Document | null = null;
-
-  private observer!: MutationObserver;
-
-  public overlayAttr = overlay.props;
-
-  get style() {
-    return {
-      top: this.top == null || Number.isNaN(this.top) ? undefined : `${this.top}px`,
-      left: this.left == null || Number.isNaN(this.left) ? undefined : `${this.left}px`,
-      right: this.right == null || Number.isNaN(this.right) ? undefined : `${this.right}px`,
-      width: this.width == null || Number.isNaN(this.width) ? undefined : `${this.width}px`,
-      zIndex: this.zIndexOverride || this.zIndex || undefined,
-    };
-  }
-
-  public handleMeasurement() {
-    const { lockPosition, top } = this;
-
-    this.observer.disconnect();
-    this.height = 0;
-    this.positioning = 'below';
-    this.measuring = true;
-
-    if (this.overlayNode == null || this.scrollableContainer == null) {
-      return;
-    }
+  if (overlayRef.value && scrollableContainer.value) {
     const {
       activator,
       preferredPosition = 'below',
@@ -156,20 +127,16 @@ export default class PositionedOverlay extends Vue {
       fullWidth,
       fixed,
       preferInputActivator = true,
-    } = this;
+    } = props;
 
-    const preferredActivator = preferInputActivator
-      ? activator.querySelector('input') || activator
-      : activator;
+    const preferredActivator = preferInputActivator ? activator.querySelector('input') || activator : activator;
 
-    const activatorRect = getRectForNode(preferredActivator);
-    const currentOverlayRect = getRectForNode(this.overlayNode);
-    const scrollableElement = isDocument(this.scrollableContainer)
-      ? document.body
-      : this.scrollableContainer;
+    const activatorRectValue = getRectForNode(preferredActivator);
+    const currentOverlayRect = getRectForNode(overlayRef.value);
+    const scrollableElement = isDocument(scrollableContainer.value) ? document.body : scrollableContainer.value;
     const scrollableContainerRect = getRectForNode(scrollableElement);
     const overlayRect = fullWidth
-      ? new Rect({ ...currentOverlayRect, width: activatorRect.width })
+      ? new Rect({ ...currentOverlayRect, width: activatorRectValue.width })
       : currentOverlayRect;
 
     // If `body` is 100% height, it still acts as though it were not constrained to that size.
@@ -178,23 +145,21 @@ export default class PositionedOverlay extends Vue {
     }
 
     let topBarOffset = 0;
-    const topBarElement = scrollableElement.querySelector(
-      `${dataPolarisTopBar.selector}`,
-    );
+    const topBarElement = scrollableElement.querySelector(`${dataPolarisTopBar.selector}`);
     if (topBarElement) {
       topBarOffset = topBarElement.clientHeight;
     }
 
-    const overlayMargins = this.overlayNode.firstElementChild
-          && this.overlayNode.firstChild instanceof HTMLElement
-      ? getMarginsForNode(this.overlayNode.firstElementChild as HTMLElement)
-      : { activator: 0, container: 0, horizontal: 0 };
+    const overlayMargins =
+      overlayRef.value.firstElementChild && overlayRef.value.firstChild
+        ? getMarginsForNode(overlayRef.value.firstElementChild as HTMLElement)
+        : { activator: 0, container: 0, horizontal: 0 };
 
     const containerRect = windowRect();
     const zIndexForLayer = getZIndexForLayerFromNode(activator);
-    const zIndex = zIndexForLayer == null ? zIndexForLayer : zIndexForLayer + 1;
+    const zIndexValue = zIndexForLayer == null ? zIndexForLayer : zIndexForLayer + 1;
     const verticalPosition = calculateVerticalPosition(
-      activatorRect,
+      activatorRectValue,
       overlayRect,
       overlayMargins,
       scrollableContainerRect,
@@ -204,58 +169,60 @@ export default class PositionedOverlay extends Vue {
       topBarOffset,
     );
     const horizontalPosition = calculateHorizontalPosition(
-      activatorRect,
+      activatorRectValue,
       overlayRect,
       containerRect,
       overlayMargins,
       preferredAlignment,
     );
 
-    this.measuring = false;
-    this.activatorRect = getRectForNode(activator);
-    this.left = preferredAlignment !== 'right' ? horizontalPosition : undefined;
-    this.right = preferredAlignment === 'right' ? horizontalPosition : undefined;
-    this.top = lockPosition ? top : verticalPosition.top;
-    this.lockPosition = Boolean(fixed);
-    this.height = verticalPosition.height || 0;
-    this.width = fullWidth ? overlayRect.width : null;
-    this.positioning = verticalPosition.positioning as Positioning;
-    this.outsideScrollableContainer = rectIsOutsideOfRect(
-      activatorRect,
+    measuring.value = false;
+    activatorRect.value = getRectForNode(activator);
+    left.value = preferredAlignment !== 'right' ? horizontalPosition : null;
+    right.value = preferredAlignment === 'right' ? horizontalPosition : null;
+    top.value = lockPosition.value ? top.value : verticalPosition.top;
+    lockPosition.value = Boolean(fixed);
+    height.value = verticalPosition.height || 0;
+    width.value = fullWidth ? overlayRect.width : null;
+    positioning.value = verticalPosition.positioning as Positioning;
+    outsideScrollableContainer.value = rectIsOutsideOfRect(
+      activatorRectValue,
       intersectionWithViewport(scrollableContainerRect),
     );
-    this.zIndex = zIndex;
-    this.$emit('change-content-styles', { height: `${this.height}px` });
-    if (!this.overlayNode) return;
-    this.observer.observe(this.overlayNode, OBSERVER_CONFIG);
-    this.observer.observe(activator, OBSERVER_CONFIG);
-  }
-
-  created(): void {
-    this.observer = new MutationObserver(this.handleMeasurement);
-  }
-
-  updated(): void {
-    if (this.active && this.top !== 0 && this.outsideScrollableContainer) {
-      this.$emit('scroll-out');
+    zIndex.value = zIndexValue;
+    emit('change-content-styles', { height: `${height.value}px` });
+    if (observer.value) {
+      observer.value.observe(overlayRef.value, OBSERVER_CONFIG);
+      observer.value.observe(activator, OBSERVER_CONFIG);
     }
   }
+};
 
-  mounted(): void {
-    this.scrollableContainer = forNode(this.activator);
-    if (this.scrollableContainer && !this.fixed) {
-      this.scrollableContainer.addEventListener('scroll', this.handleMeasurement);
-    }
-    this.handleMeasurement();
-  }
+onBeforeMount(() => {
+  observer.value = new MutationObserver(handleMeasurement);
+});
 
-  beforeDestroy(): void {
-    if (this.scrollableContainer && !this.fixed) {
-      this.scrollableContainer.removeEventListener('scroll', this.handleMeasurement);
-    }
+onUpdated(() => {
+  if (props.active && top.value !== 0 && outsideScrollableContainer.value) {
+    emit('scroll-out');
   }
-}
+});
+
+onMounted(() => {
+  scrollableContainer.value = forNode(props.activator);
+  if (scrollableContainer.value && !props.fixed) {
+    scrollableContainer.value.addEventListener('scroll', handleMeasurement);
+  }
+  handleMeasurement();
+});
+
+onBeforeUnmount(() => {
+  if (scrollableContainer.value && !props.fixed) {
+    scrollableContainer.value.removeEventListener('scroll', handleMeasurement);
+  }
+});
 </script>
+
 <style lang="scss">
 @import 'polaris-react/src/components/PositionedOverlay/PositionedOverlay.scss';
 </style>

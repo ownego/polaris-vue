@@ -1,0 +1,38 @@
+{
+  "extends": "@vue/tsconfig/tsconfig.node.json",
+  "include": [
+    "vite.config.*",
+    "package.json",
+  ],
+  "exclude": [
+    "dist",
+    "build",
+    "node_modules",
+  ],
+  "compilerOptions": {
+    "baseUrl": ".",
+    "composite": true,
+    "types": ["node", "vite-svg-loader", "vite/client"],
+    "declaration": true,
+    "declarationMap": true,
+    "declarationDir": "dist/types",
+    "allowSyntheticDefaultImports": true,
+    "moduleResolution": "node",
+    "experimentalDecorators": true,
+    "resolveJsonModule": true,
+    "esModuleInterop": true,
+    "sourceMap": true,
+    "skipLibCheck": true,
+    "strict": true,
+    "jsx": "preserve",
+    "importHelpers": true,
+    "isolatedModules": false,
+    "plugins": [{ "name": "typescript-plugin-css-modules" }],
+    "lib": [
+      "esnext",
+      "dom",
+      "dom.iterable",
+      "scripthost",
+    ],
+  },
+}

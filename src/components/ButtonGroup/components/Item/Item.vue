@@ -8,34 +8,39 @@ div(
 </template>
 
 <script lang="ts">
-import Vue from 'vue';
-import { Component } from 'vue-property-decorator';
+export default {
+  inheritAttrs: false,
+}
+</script>
+
+<script setup lang="ts">
+import { computed, ref, useSlots } from 'vue';
 import { classNames } from 'polaris-react/src/utilities/css';
 import styles from '@/classes/ButtonGroup.json';
-import { anyKey } from '@/interface';
+import type { anyKey } from '@/utilities/interface';
 
-@Component
-export default class Item extends Vue {
-  public focused = false;
+const focused = ref<boolean>(false);
 
-  public forceTrueFocused() {
-    this.focused = true;
-  }
+const slots = useSlots();
 
-  public forceFalseFocused() {
-    this.focused = false;
-  }
+const slotProps = computed(() => {
+  return slots.default && slots.default()[0].props as anyKey;
+});
 
-  get slotProps() {
-    return this.$slots.default && this.$slots.default[0].componentOptions?.propsData as anyKey;
-  }
+const className = computed(() => {
+  const plain = slotProps.value && (slotProps.value.plain === '' || slotProps.value.plain);
+  return classNames(
+    styles.Item,
+    focused.value && styles['Item-focused'],
+    plain && styles['Item-plain'],
+  );
+});
 
-  get className() {
-    return classNames(
-      styles.Item,
-      this.focused && styles['Item-focused'],
-      this.slotProps && this.slotProps.plain && styles['Item-plain'],
-    );
-  }
+const forceTrueFocused = () => {
+  focused.value = true;
+}
+
+const forceFalseFocused = () => {
+  focused.value = false;
 }
 </script>

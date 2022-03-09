@@ -1,52 +1,58 @@
 <template lang="pug">
-li(v-if="hasMultipleSections", :class="className", role="presentation")
+li(v-if="hasMultipleSections", :class="styles.Section", role="presentation")
   SectionMarkup(
     v-bind="sectionMarkupProps",
-    @action-any-item="$emit('action-any-item')",
+    @action-any-item="emit('action-any-item')",
   )
-    template(v-for="{prefixId, suffixId} in section.items")
-        slot(v-if="prefixId", :name="`prefix-${prefixId}`", :slot="`prefix-${prefixId}`")
-        slot(v-if="suffixId", :name="`suffix-${suffixId}`", :slot="`suffix-${suffixId}`")
+    template(v-for="{prefixId} in section.items" #[`prefix-${prefixId}`])
+        slot(:name="`prefix-${prefixId}`")
+    template(v-for="{suffixId} in section.items" #[`suffix-${suffixId}`])
+      slot(:name="`suffix-${suffixId}`")
 SectionMarkup(
   v-else,
   v-bind="sectionMarkupProps",
-  @action-any-item="$emit('action-any-item')",
+  @action-any-item="emit('action-any-item')",
 )
-  template(v-for="{prefixId, suffixId} in section.items")
-    slot(v-if="prefixId", :name="`prefix-${prefixId}`", :slot="`prefix-${prefixId}`")
-    slot(v-if="suffixId", :name="`suffix-${suffixId}`", :slot="`suffix-${suffixId}`")
+  template(v-for="{prefixId} in section.items" #[`prefix-${prefixId}`])
+    slot(:name="`prefix-${prefixId}`")
+  template(v-for="{suffixId} in section.items" #[`suffix-${suffixId}`])
+    slot(:name="`suffix-${suffixId}`")
 </template>
 
 <script lang="ts">
-import Vue from 'vue';
-import { Component, Prop } from 'vue-property-decorator';
+export default {
+  inheritAttrs: false,
+}
+</script>
+
+<script setup lang="ts">
+import { computed } from 'vue';
 import styles from '@/classes/ActionList.json';
 import SectionMarkup from './SectionMarkup.vue';
-import { ActionListSection } from '../../utils';
+import type { ActionListSection } from '../../utils';
 
-@Component({
-  components: {
-    SectionMarkup,
-  },
-})
-export default class Section extends Vue {
-  @Prop() public section!: ActionListSection;
-
-  @Prop({ type: Boolean }) public hasMultipleSections!: boolean;
-
-  @Prop({ type: String }) public actionRole?: 'option' | 'menuitem' | string;
-
-  @Prop({ type: Boolean }) public firstSection?: boolean;
-
-  public className = styles.Section;
-
-  get sectionMarkupProps() {
-    const {
-      section, hasMultipleSections, actionRole, firstSection,
-    } = this;
-    return {
-      section, hasMultipleSections, actionRole, firstSection,
-    };
-  }
+interface SectionProps {
+  /** Section of action items */
+  section: ActionListSection;
+  /** Should there be multiple sections */
+  hasMultipleSections: boolean;
+  /** Defines a specific role attribute for each action in the list */
+  actionRole?: 'option' | 'menuitem' | string;
+  /** Whether or not the section is the first to appear */
+  firstSection?: boolean;
 }
+
+const props = defineProps<SectionProps>();
+
+const emit = defineEmits<{ (event: 'action-any-item'): void }>();
+
+const sectionMarkupProps = computed(() => {
+  const { section, hasMultipleSections, actionRole, firstSection } = props;
+  return {
+    section,
+    hasMultipleSections,
+    actionRole,
+    firstSection,
+  };
+});
 </script>

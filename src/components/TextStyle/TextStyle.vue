@@ -3,13 +3,12 @@ component(:is="element", :class="className")
   slot
 </template>
 
-<script lang="ts">
-import Vue from 'vue';
-import { Component, Prop } from 'vue-property-decorator';
+<script setup lang="ts">
+import { ref, computed } from 'vue';
 import { classNames, variationName } from 'polaris-react/src/utilities/css';
 import styles from '@/classes/TextStyle.json';
 
-type Variation = 'positive' | 'negative'| 'warning' | 'strong' | 'subdued' | 'code';
+type Variation = 'positive' | 'negative' | 'warning' | 'strong' | 'subdued' | 'code';
 
 // eslint-disable-next-line no-shadow
 enum VariationValue {
@@ -25,25 +24,24 @@ function variationElement(variation?: Variation) {
   return variation === VariationValue.Code ? 'code' : 'span';
 }
 
-@Component
-export default class TextStyle extends Vue {
+const props = defineProps({
   /**
    * Give text additional visual meaning
    * @values positive | negative | strong | subdued | code
    */
-  @Prop({ type: String })
-  public variation!: Variation;
+  variation: {
+    type: String as () => Variation,
+    default: null,
+  },
+});
 
-  get className() {
-    const variation = this.variation && variationName('variation', this.variation) as keyof typeof styles;
+const element = ref(variationElement(props.variation));
 
-    return classNames(
-      variation && styles[variation],
-    );
-  }
+const className = computed(() => {
+  const variation = props.variation && (variationName('variation', props.variation) as keyof typeof styles);
 
-  public element = variationElement(this.variation);
-}
+  return classNames(variation && styles[variation]);
+});
 </script>
 
 <style lang="scss">

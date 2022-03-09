@@ -1,1 +1,48 @@
+import { Meta, Story, Canvas, ArgsTable, Source, Preview } from '@storybook/addon-docs';
+import dedent from 'ts-dedent';
+
+import { Heading } from '@/polaris-vue';
+
 # Heading
+
+Headings are used as the titles of each major section of a page in the interface.
+For example, card components generally use headings as their title.
+
+<Meta
+  title="Components / Titles and text / Heading"
+  component={ Heading }
+  argTypes={{
+    element: {
+      control: {
+        type: 'select',
+        options: ['h1', 'h2', 'h3', 'h4', 'h5', 'h6', 'p'],
+      },
+      table: {
+        type: {
+          summary: "'h1' | 'h2' | 'h3' | 'h4' | 'h5' | 'h6' | 'p'",
+        },
+      }
+    },
+    default: {
+      table: {
+        disable: 'true',
+      }
+    },
+  }}
+/>
+
+export const Template = (args, { argTypes }) => ({
+  props: Object.keys(argTypes),
+  components: { Heading },
+  template: `
+    <Heading v-bind="$props">
+      Online store dashboard
+    </Heading>
+  `,
+});
+
+<Canvas>
+  <Story story={Template} name="Heading" height="50px"></Story>
+</Canvas>
+
+<ArgsTable story="Heading" />

@@ -1,184 +1,171 @@
 <template lang="pug">
 Choice(
   :id="uniqueId",
-  :labelHidden="labelHidden",
   :error="error",
   :disabled="disabled",
-  @mouseover.native="mouseOver = true",
-  @mouseout.native="mouseOver = false",
+  :labelHidden="labelHidden",
+  @mouseover="mouseOver = true",
+  @mouseout="mouseOver = false",
 )
-  template(slot="label")
+  template(#label, v-if="slots.label")
     slot(name="label")
-  template(slot="help-text")
+  template(#help-text, v-if="slots['help-text']")
     slot(name="help-text")
   span(:class="wrapperClassName")
     input(
       :id="uniqueId",
+      :role="isWithinListbox ? 'presentation' : 'checkbox'",
       :name="name",
-      :value="value",
+      :value="value || modelValue",
       type="checkbox",
       :checked="isChecked",
       :disabled="disabled",
       :class="inputClassName",
       :aria-invalid="error !== null",
-      :aria-controls="ariaControl",
+      :aria-controls="ariaControls",
       :aria-describedby="formattedAriaDescribedBy",
-      @change="onChange",
-      @focus="$emit('focus')",
-      @blur="$emit('blur')",
+      @focus="handleFocus",
+      @change="handleChange",
+      @blur="handleBlur",
+      @keyup="handleKeyup",
+      v-bind="indeterminateAttributes",
     )
     span(
       :class="backdropClassName",
       @click="stopPropagation",
+      @mouseup="stopPropagation",
     )
-    span(:class="checkboxIconClassName")
+    span(:class="styles.Icon")
       Icon(:source="iconSource")
 </template>
 
-<script lang="ts">
-import Vue from 'vue';
-import { Component, Prop } from 'vue-property-decorator';
+<script setup lang="ts">
+import { inject, ref, computed, useSlots } from 'vue';
 import { classNames } from 'polaris-react/src/utilities/css';
-import MinusMinor from '@shopify/polaris-icons/dist/svg/MinusMinor.svg';
-import TickSmallMinor from '@shopify/polaris-icons/dist/svg/TickSmallMinor.svg';
-import type { IconSource, Error } from 'types/type';
+import { UseUniqueId } from '@/use';
+import MinusMinor from '@icons/MinusMinor.svg';
+import TickSmallMinor from '@icons/TickSmallMinor.svg';
 import styles from '@/classes/Checkbox.json';
-import { useUniqueId } from '@/utilities/unique-id';
-import { errorTextID } from '../InlineError';
-import { Choice, helpTextID } from '../Choice';
+import type { Error } from 'types/type';
+import { Key } from '../KeypressListener/utils';
+import { errorTextID } from '../InlineError/utils';
+import { Choice } from '../Choice';
+import { helpTextID } from '../Choice/utils';
 import { Icon } from '../Icon';
 
-@Component({
-  components: {
-    Choice,
-    Icon,
-  },
-})
-export default class Checkbox extends Vue {
-  /**
-   * Indicates the ID of the element that is controlled by the checkbox
-   */
-  @Prop({ type: String })
-  public ariaControl!: string;
+interface Props {
+  /** Indicates the ID of the element that is controlled by the checkbox */
+  ariaControls?: string;
+  /** Indicates the ID of the element that describes the checkbox */
+  ariaDescribedBy?: string;
+  /** Visually hide the label */
+  labelHidden?: boolean;
+  /** Checkbox is selected. `indeterminate` shows a horizontal line in the checkbox */
+  checked?: boolean | 'indeterminate';
+  /** Disable input */
+  disabled?: boolean;
+  /** ID for form input */
+  id?: string;
+  /** Name for form input */
+  name?: string;
+  /** Value for form input */
+  value?: string | boolean;
+  /** Value for v-model binding */
+  modelValue?: string | boolean;
+  /** Display an error message */
+  error?: Error | boolean;
+}
 
-  /**
-   * Indicates the ID of the element that is controlled by the checkbox
-   */
-  @Prop({ type: String })
-  public ariaDescribedBy!: string;
+const isWithinListbox = inject<boolean>('withinListboxContext', false);
 
-  /**
-   * Visually hide the label
-   */
-  @Prop({ type: Boolean })
-  public labelHidden!: boolean;
+const props = defineProps<Props>();
 
-  /**
-   * Checkbox is selected. `indeterminate` shows a horizontal line in the checkbox
-   */
-  @Prop({ type: [Boolean, String] })
-  public checked!: boolean | 'indeterminate';
+const emits = defineEmits<{
+  (event: 'focus'): void
+  (event: 'change', changeEvent: Event): void
+  (event: 'update:modelValue', value: string | boolean): void
+  (event: 'blur'): void
+}>();
 
-  /**
-   * ID for form input
-   */
-  @Prop({ type: Boolean })
-  public disabled!: boolean;
+const mouseOver = ref(false);
+const keyFocused = ref(false);
 
-  /**
-   * Name for form input
-   */
-  @Prop({ type: String })
-  public id!: string;
+const slots = useSlots();
+const helpTextSlot = computed(() => slots['help-text']?.());
 
-  /**
-   * Value for form input
-   */
-  @Prop({ type: String })
-  public name!: string;
+const { useUniqueId } = UseUniqueId();
+const uniqueId = computed(() => useUniqueId('Checkbox', props.id));
 
-  /**
-   * Value for form input
-   */
-  @Prop({ type: [String, Boolean] })
-  public value!: string | boolean;
+const isIndeterminate = computed(() => props.checked === 'indeterminate');
+const isChecked = computed(() => (!isIndeterminate.value && Boolean(props.checked))
+    || (typeof props.modelValue === 'boolean' && props.modelValue === true));
 
-  /**
-   * Display an error message
-   */
-  @Prop({ type: [String, Boolean, Array, Object, Function] })
-  public error!: Error | boolean;
+const iconSource = computed(() => isIndeterminate.value ? MinusMinor : TickSmallMinor);
 
-  public mouseOver = false;
+const wrapperClassName = computed(() => classNames(
+  styles.Checkbox,
+  props.error && styles.error,
+));
+const backdropClassName = computed(() => classNames(
+  styles.Backdrop,
+  mouseOver.value && styles.hover,
+));
+const inputClassName = computed(() => classNames(
+  styles.Input,
+  isIndeterminate.value && styles['Input-indeterminate'],
+  keyFocused.value && styles.keyFocused,
+));
 
-  get wrapperClassName(): string {
-    return classNames(styles.Checkbox, this.error && styles.error);
+const indeterminateAttributes = computed(() => isIndeterminate.value
+  ? { indeterminate: 'true', 'aria-checked': 'mixed' as const }
+  : { 'aria-checked': isChecked.value });
+const formattedAriaDescribedBy = computed(() => {
+  const describedBy: string[] = [];
+
+  if (props.ariaDescribedBy) {
+    describedBy.push(props.ariaDescribedBy);
   }
 
-  get inputClassName(): string {
-    return classNames(
-      styles.Input,
-      this.isIndeterminate && styles['Input-indeterminate'],
-    );
+  if (props.error && typeof props.error !== 'boolean') {
+    describedBy.push(errorTextID(uniqueId.value));
   }
 
-  get backdropClassName(): string {
-    return classNames(
-      styles.Backdrop,
-      this.mouseOver && styles.hover,
-    );
+  if (helpTextSlot.value) {
+    describedBy.push(helpTextID(uniqueId.value));
   }
 
-  public checkboxIconClassName: string = styles.Icon;
+  return describedBy.length ? describedBy.join(' ') : undefined;
+});
 
-  get uniqueId(): string {
-    return useUniqueId('Checkbox', this.id);
-  }
+const handleFocus = (): void => {
+  keyFocused.value = true;
+  emits('focus');
+};
 
-  get isIndeterminate(): boolean {
-    return this.checked === 'indeterminate';
-  }
+const handleChange = (event: Event): void => {
+  const target = event.target as HTMLInputElement;
 
-  get isChecked(): boolean {
-    return (!this.isIndeterminate && Boolean(this.checked))
-      || (typeof this.value === 'boolean' && this.value === true);
-  }
+  emits('change', event);
+  emits('update:modelValue', target.checked);
+};
 
-  get iconSource(): IconSource {
-    return this.isIndeterminate ? MinusMinor : TickSmallMinor;
-  }
+const handleBlur = (): void => {
+  keyFocused.value = false;
+  emits('blur');
+};
 
-  get formattedAriaDescribedBy(): string | undefined {
-    const describedBy: string[] = [];
+const handleKeyup = (event: KeyboardEvent): void => {
+  const { key } = event;
 
-    if (this.ariaDescribedBy) {
-      describedBy.push(this.ariaDescribedBy);
+  if (key === Key.Space || key === Key.Tab) {
+    if (!keyFocused.value) {
+      keyFocused.value = true;
     }
-
-    if (this.error && typeof this.error !== 'boolean') {
-      describedBy.push(errorTextID(this.uniqueId));
-    }
-
-    if (this.$slots.helpText) {
-      describedBy.push(helpTextID(this.uniqueId));
-    }
-
-    return describedBy.length
-      ? describedBy.join(' ')
-      : undefined;
   }
+};
 
-  onChange(event: InputEvent): void {
-    const target = event.target as HTMLInputElement;
-
-    this.$emit('input', target.checked);
-    this.$emit('change', event);
-  }
-
-  // eslint-disable-next-line class-methods-use-this
-  public stopPropagation(event: MouseEvent): void {
-    event.stopPropagation();
-  }
+function stopPropagation(event: MouseEvent | KeyboardEvent) {
+  event.stopPropagation();
 }
 </script>
 

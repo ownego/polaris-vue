@@ -1,50 +1,41 @@
 <template lang="pug">
 div(:class="className")
   label(
-    :id="labelID",
+    :id="labelID(id)",
     :for="id",
     :class="labelClassName",
   )
     slot
 </template>
 
-<script lang="ts">
-import Vue from 'vue';
-import { Component, Prop } from 'vue-property-decorator';
+<script setup lang="ts">
+import { computed } from 'vue';
 import { classNames } from 'polaris-react/src/utilities/css';
 import styles from '@/classes/Label.json';
-import { labelID, LabelProps } from './utils';
+import { labelID } from './utils';
 
-@Component
-export default class Label extends Vue {
-  @Prop({ type: String, required: true })
-  public id!: LabelProps['id'];
-
-  @Prop({ type: Boolean })
-  public hidden?: LabelProps['hidden'];
-
-  @Prop({ type: Boolean })
-  public requiredIndicator?: LabelProps['requiredIndicator'];
-
-  get className() {
-    return classNames(
-      styles.Label,
-      this.hidden && styles.hidden,
-    );
-  }
-
-  get labelClassName() {
-    return classNames(
-      styles.Text,
-      this.requiredIndicator && styles.RequiredIndicator,
-    );
-  }
-
-  get labelID() {
-    return labelID(this.id);
-  }
+interface LabelProps {
+  /** A unique identifier for the label */
+  id: string;
+  /** Visually hide the label */
+  hidden?: boolean;
+  /** Visual required indicator for the label */
+  requiredIndicator?: boolean;
 }
+
+const props = defineProps<LabelProps>();
+
+const className = computed(() => classNames(
+  styles.Label,
+  props.hidden && styles.hidden,
+));
+const labelClassName = computed(() => classNames(
+  styles.Text,
+  props.requiredIndicator && styles.RequiredIndicator,
+));
+
 </script>
+
 <style lang="scss">
-@import 'polaris-react/src/components/Label/Label.scss';
+
 </style>

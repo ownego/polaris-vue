@@ -1,32 +1,32 @@
 <template lang="pug">
-component(:is="element" :class="className" :id="id")
+component(
+  :is="element",
+  :id="id",
+  :class="styles.Heading",
+)
   slot
 </template>
 
-<script lang="ts">
-import Vue from 'vue';
-import { Component, Prop } from 'vue-property-decorator';
+<script setup lang="ts">
+import type { HeadingTagName } from 'types/type';
 import styles from '@/classes/Heading.json';
-import type { HeadingTagName } from 'polaris-react/src/types';
 
-@Component
-export default class Heading extends Vue {
+interface Props {
   /**
    * The element name to use for the heading
    * @default 'h2'
    */
-  @Prop({ type: String, default: 'h2' })
-  public element?: HeadingTagName
-
+  element?: HeadingTagName;
   /**
    * A unique identifier for the heading,
    * used for reference in anchor links
    */
-  @Prop({ type: String })
-  public id?: string;
-
-  public className = styles.Heading;
+  id?: string;
 }
+
+const props = withDefaults(defineProps<Props>(), {
+  element: 'h2',
+});
 </script>
 
 <style lang="scss">

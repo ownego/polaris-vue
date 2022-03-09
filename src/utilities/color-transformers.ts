@@ -83,9 +83,10 @@ function rgbToHsbl(color: RGBAColor, type: 'b' | 'l' = 'b'): HSBLAColor {
   } else if (type === 'b') {
     saturation = delta / largestComponent;
   } else if (type === 'l') {
-    const baseSaturation = lightness > 0.5
-      ? delta / (2 - largestComponent - smallestComponent)
-      : delta / (largestComponent + smallestComponent);
+    const baseSaturation =
+      lightness > 0.5
+        ? delta / (2 - largestComponent - smallestComponent)
+        : delta / (largestComponent + smallestComponent);
     saturation = Number.isNaN(baseSaturation) ? 0 : baseSaturation;
   }
 
@@ -119,13 +120,17 @@ function rgbToHsbl(color: RGBAColor, type: 'b' | 'l' = 'b'): HSBLAColor {
 function getColorType(color: string): ColorType {
   if (color.includes('#')) {
     return 'hex';
-  } if (color.includes('rgb')) {
+  }
+  if (color.includes('rgb')) {
     return 'rgb';
-  } if (color.includes('rgba')) {
+  }
+  if (color.includes('rgba')) {
     return 'rgba';
-  } if (color.includes('hsl')) {
+  }
+  if (color.includes('hsl')) {
     return 'hsl';
-  } if (color.includes('hsla')) {
+  }
+  if (color.includes('hsla')) {
     return 'hsla';
   }
 
@@ -138,7 +143,10 @@ function rgbToObject(color: string): RGBAColor {
 
   if (!colorMatch) {
     return {
-      red: 0, green: 0, blue: 0, alpha: 0,
+      red: 0,
+      green: 0,
+      blue: 0,
+      alpha: 0,
     };
   }
 
@@ -153,18 +161,16 @@ function rgbToObject(color: string): RGBAColor {
 }
 
 export function rgbToHsl(color: RGBAColor): HSLAColor {
-  const {
-    hue,
-    saturation: rawSaturation,
-    lightness: rawLightness,
-    alpha = 1,
-  } = rgbToHsbl(color, 'l');
+  const { hue, saturation: rawSaturation, lightness: rawLightness, alpha = 1 } = rgbToHsbl(color, 'l');
 
   const saturation = roundNumberToDecimalPlaces(rawSaturation * 100, 2);
   const lightness = roundNumberToDecimalPlaces(rawLightness * 100, 2);
 
   return {
-    hue, saturation, lightness, alpha,
+    hue,
+    saturation,
+    lightness,
+    alpha,
   };
 }
 
@@ -199,7 +205,10 @@ function hslToObject(color: string): HSLAColor {
 
   if (!colorMatch) {
     return {
-      hue: 0, saturation: 0, lightness: 0, alpha: 0,
+      hue: 0,
+      saturation: 0,
+      lightness: 0,
+      alpha: 0,
     };
   }
 
@@ -224,16 +233,12 @@ export function rgbString(color: RGBColor | RGBAColor) {
 export const rgbaString = rgbString;
 
 export function rgbToHex({ red, green, blue }: RGBColor) {
-  return `#${componentToHex(red)}${componentToHex(green)}${componentToHex(
-    blue,
-  )}`;
+  return `#${componentToHex(red)}${componentToHex(green)}${componentToHex(blue)}`;
 }
 
 // implements https://en.wikipedia.org/wiki/HSL_and_HSV#From_HSV
 export function hsbToRgb(color: HSBColor | HSBAColor): RGBColor | RGBAColor {
-  const {
-    hue, saturation, brightness,
-  } = color;
+  const { hue, saturation, brightness } = color;
   const colorAlpha = color as HSBAColor;
   const alpha = colorAlpha.alpha || 1;
   const chroma = brightness * saturation;
@@ -259,9 +264,7 @@ export function hsbToHex(color: HSBColor) {
 
 // implements https://en.wikipedia.org/wiki/HSL_and_HSV#From_HSV
 export function hslToRgb(color: HSLColor | HSLAColor): RGBAColor | RGBColor {
-  const {
-    hue, saturation, lightness,
-  } = color;
+  const { hue, saturation, lightness } = color;
 
   const colorAlpha = color as HSLAColor;
 
@@ -285,11 +288,12 @@ export function hslToRgb(color: HSLColor | HSLAColor): RGBAColor | RGBColor {
 }
 
 export function rgbToHsb(color: RGBAColor): HSBAColor {
-  const {
-    hue, saturation, brightness, alpha = 1,
-  } = rgbToHsbl(color, 'b');
+  const { hue, saturation, brightness, alpha = 1 } = rgbToHsbl(color, 'b');
   return {
-    hue, saturation, brightness, alpha,
+    hue,
+    saturation,
+    brightness,
+    alpha,
   };
 }
 
@@ -306,8 +310,6 @@ export function colorToHsla(color: string): HSLAColor {
     return hslToObject(color);
   case 'default':
   default:
-    throw new Error(
-      'Accepted color formats are: hex, rgb, rgba, hsl and hsla',
-    );
+    throw new Error('Accepted color formats are: hex, rgb, rgba, hsl and hsla');
   }
 }

@@ -6,25 +6,25 @@ Labelled(
   :labelHidden="labelHidden",
   :requiredIndicator="requiredIndicator",
 )
-  template(slot="label")
+  template(#label, v-if="slots.label")
     slot(name="label")
-  template(slot="help-text")
+  template(#help-text, v-if="slots['help-text']")
     slot(name="help-text")
   Connected
-    template(slot="left")
+    template(#left, v-if="slots.left")
       slot(name="connected-left")
-    template(slot="right")
+    template(#right, v-if="slots.right")
       slot(name="connected-right")
     div(
-      :class="wrapperClassName",
-      @focus="onFocus",
-      @click="onClick",
-      @blur="onBlur",
+      :class="className",
+      @focus="handleFocus",
+      @click="handleClick",
+      @blur="handleBlur",
     )
       div(
-        v-if="$slots.prefix",
+        v-if="slots.prefix",
         :id="`${uniqueId}Prefix`",
-        :class="prefixClassName",
+        :class="styles.Prefix",
         ref="prefixRef",
       )
         slot(name="prefix")
@@ -33,23 +33,24 @@ Labelled(
         :id="uniqueId",
         :name="name",
         :disabled="disabled",
-        :readOnly="readOnly",
+        :readonly="readOnly",
         :role="role",
-        :autoFocus="autoFocus",
-        :value="value",
+        :autofocus="autoFocus",
+        :value="modelValue",
         :placeholder="placeholder",
         :style="style",
-        :autoComplete="autoComplete",
+        :autocomplete="normalizedAutocomplete",
         :class="inputClassName",
         ref="inputRef",
         :min="min",
         :max="max",
         :step="step",
-        :minLength="minLength",
-        :maxLength="maxLength",
-        :spellCheck="spellCheck",
+        :minlength="minLength",
+        :maxlength="maxLength",
+        :spellcheck="spellCheck",
         :pattern="pattern",
         :inputMode="inputMode",
+        :rows="rows",
         :type="inputType",
         :aria-describedby="formattedDescribedBy",
         :aria-labelledby="formattedLabelledBy",
@@ -60,16 +61,17 @@ Labelled(
         :aria-controls="ariaControls",
         :aria-expanded="ariaExpanded",
         :aria-required="requiredIndicator",
-        v-bind="normalizeAriaMultiline(multiline)",
-        @input="onChange",
+        v-bind="normalizeAriaMultiline",
+        @input="handleChange",
         @keydown="handleKeyPress",
-        @focus="comboboxTextFieldFocus",
-        @blur="comboboxTextFieldBlur",
+        @focus="$emit('focus')",
+        @blur="$emit('blur')",
       )
+        template(v-if="multiline") {{ modelValue }}
       div(
-        v-if="$slots.suffix",
+        v-if="slots.suffix",
         :id="`${uniqueId}Suffix`",
-        :class="suffixClassName",
+        :class="styles.Suffix",
         ref="suffixRef",
       )
         slot(name="suffix")
@@ -77,7 +79,7 @@ Labelled(
         v-if="showCharacterCount",
         :class="characterCountClassName",
         aria-label=characterCountLabel,
-        aria-live=focus ? 'polite' : 'off',
+        :aria-live="focus ? 'polite' : 'off'",
         aria-atomic="true",
       )
         p {{ characterCountText }}
@@ -85,12 +87,12 @@ Labelled(
         v-if="clearButtonVisible && clearButton",
         :class="clearButtonClassName",
         :disabled="disabled",
-        @click="$emit('clear-btn-clicked')",
+        @click="$emit('clear-button-click', id)",
       )
         VisuallyHidden
           p Clear button
-        Icon(:source="clearIcon" color="base")
-      Spinner(
+        Icon(:source="CircleCancelMinor", color="base")
+      TextFieldSpinner(
         v-if="type === 'number' && step !== 0 && !disabled && !readOnly",
         @change="handleNumberChange",
         @mousedown="handleButtonPress",
@@ -100,32 +102,27 @@ Labelled(
       Resizer(
         v-if="multiline",
         :contents="normalizedValue || placeholder",
-        :current-height="height",
-        :minimum-lines="typeof multiline === 'number' ? multiline : 1",
+        :currentHeight="height",
+        :minimumLines="typeof multiline === 'number' ? multiline : 1",
         @height-change="handleExpandingResize",
       )
 </template>
 
-<script lang="ts">
-import Vue from 'vue';
-import {
-  Component,
-  Prop,
-  Ref,
-  Inject,
-  Watch,
-} from 'vue-property-decorator';
-import CircleCancelMinor from '@shopify/polaris-icons/dist/svg/CircleCancelMinor.svg';
+<script setup lang="ts">
+import { inject, useSlots, ref, computed, watch } from 'vue';
 import { classNames, variationName } from 'polaris-react/src/utilities/css';
-import type { Error, Action } from 'types/type';
+import { UseUniqueId } from '@/use';
 import styles from '@/classes/TextField.json';
-import { useUniqueId } from '@/utilities/unique-id';
-import { VisuallyHidden } from '../VisuallyHidden';
+import CircleCancelMinor from '@icons/CircleCancelMinor.svg'; 
+import type { ComboboxTextFieldType } from '@/utilities/interface';
+import type { LabelledProps } from '../Labelled/utils';
+import type { Error } from 'types/type';
+import { helpTextID, labelID } from '../Labelled/utils';
+import { Resizer, Spinner as TextFieldSpinner } from './components';
 import { Connected } from '../Connected';
 import { Icon } from '../Icon';
 import { Labelled } from '../Labelled';
-import { helpTextID, labelID } from '../Labelled/utils';
-import { Resizer, Spinner } from './components';
+import { VisuallyHidden } from '../VisuallyHidden';
 
 type Type =
   | 'text'
@@ -154,437 +151,343 @@ type InputMode =
   | 'email'
   | 'url';
 
-@Component({
-  components: {
-    VisuallyHidden,
-    Labelled,
-    Connected,
-    Icon,
-    Resizer,
-    Spinner,
-  },
-})
-export default class TextField extends Vue {
-  @Inject({ default: Function }) comboboxTextFieldFocus!: () => void;
-
-  @Inject({ default: Function }) comboboxTextFieldBlur!: () => void;
-
-  @Inject({ default: Function }) comboboxTextFieldChange!: () => void;
-
-  @Ref('prefixRef') prefixRef!: HTMLDivElement;
-
-  @Ref('suffixRef') suffixRef!: HTMLDivElement;
-
-  @Ref('inputRef') inputRef!: HTMLInputElement;
-
+interface TextFieldProps {
   /** Hint text to display */
-  @Prop({ type: String })
-  public placeholder!: string;
-
+  placeholder?: string;
   /** Initial value for the input */
-  @Prop({ type: String })
-  public value!: string;
-
+  modelValue?: string;
   /** Adds an action to the label */
-  @Prop({ type: Array })
-  public labelAction!: Action;
-
+  labelAction?: LabelledProps['action'];
   /** Visually hide the label */
-  @Prop({ type: Boolean })
-  public labelHidden!: boolean;
-
+  labelHidden?: boolean;
   /** Disable the input */
-  @Prop({ type: Boolean })
-  public disabled!: boolean;
-
+  disabled?: boolean;
   /** Show a clear text button in the input */
-  @Prop({ type: Boolean })
-  public clearButton!: boolean;
-
+  clearButton?: boolean;
   /** Disable editing of the input */
-  @Prop({ type: Boolean })
-  public readOnly!: boolean;
-
+  readOnly?: boolean;
   /** Automatically focus the input */
-  @Prop({ type: Boolean })
-  public autoFocus!: boolean;
-
+  autoFocus?: boolean;
   /** Force the focus state on the input */
-  @Prop({ type: Boolean })
-  public focused!: boolean;
-
+  focused?: boolean;
   /** Allow for multiple lines of input */
-  @Prop({ type: Boolean })
-  public multiline!: boolean;
-
+  multiline?: boolean | number;
   /** Error to display beneath the label */
-  @Prop({ type: [String, Boolean, Array, Object, Function] })
-  public error!: Error | boolean;
-
+  error?: Error | boolean;
   /** Determine type of input */
-  @Prop({ type: String })
-  public type!: Type;
-
+  type?: Type;
   /** Name of the input */
-  @Prop({ type: String })
-  public name!: string;
-
+  name?: string;
   /** ID for the input */
-  @Prop({ type: String })
-  public id!: string;
-
+  id?: string;
   /** Defines a specific role attribute for the input */
-  @Prop({ type: String })
-  public role!: string;
-
+  role?: string;
   /** Limit increment value for numeric and date-time inputs */
-  @Prop({ type: Number })
-  public step!: number;
-
-  /**
-   * Enable automatic completion by the browser.
-   * Set to "off" when you do not want the browser to fill in info
-   */
-  @Prop({ type: String })
-  public autoComplete!: string;
-
+  step?: number;
+  /** Enable automatic completion by the browser. Set to "off" when you do not want the browser to fill in info */
+  autoComplete: string | boolean;
   /** Mimics the behavior of the native HTML attribute, limiting the maximum value */
-  @Prop({ type: [Number, String] })
-  public max!: number | string;
-
+  max?: number | string;
   /** Maximum character length for an input */
-  @Prop({ type: Number })
-  public maxLength!: number;
-
+  maxLength?: number;
   /** Maximum height of the input element. Only applies when `multiline` is `true` */
-  @Prop({ type: [Number, String] })
-  public maxHeight!: number | string;
-
+  maxHeight?: number | string;
   /** Mimics the behavior of the native HTML attribute, limiting the minimum value */
-  @Prop({ type: [Number, String] })
-  public min!: number | string;
-
+  min?: number | string;
   /** Minimum character length for an input */
-  @Prop({ type: Number })
-  public minLength?: number;
-
+  minLength?: number;
   /** A regular expression to check the value against */
-  @Prop({ type: String })
-  public pattern!: string;
-
+  pattern?: string;
   /** Choose the keyboard that should be used on mobile devices */
-  @Prop({ type: String })
-  public inputMode!: InputMode;
-
+  inputMode?: InputMode;
   /** Indicate whether value should have spelling checked */
-  @Prop({ type: Boolean })
-  public spellCheck!: boolean;
-
+  spellCheck?: boolean;
   /** Indicates the id of a component owned by the input */
-  @Prop({ type: String })
-  public ariaOwns!: string;
-
+  ariaOwns?: string;
   /** Indicates whether or not a Popover is displayed */
-  @Prop({ type: Boolean })
-  public ariaExpanded!: boolean;
-
+  ariaExpanded?: boolean;
   /** Indicates the id of a component controlled by the input */
-  @Prop({ type: String })
-  public ariaControls!: string;
-
+  ariaControls?: string;
   /** Indicates the id of a related component’s visually focused element to the input */
-  @Prop({ type: String })
-  ariaActiveDescendant!: string;
-
+  ariaActiveDescendant?: string;
   /** Indicates what kind of user input completion suggestions are provided */
-  @Prop({ type: String })
-  ariaAutocomplete!: string;
-
+  ariaAutocomplete?: string;
   /** Indicates whether or not the character count should be displayed */
-  @Prop({ type: Boolean })
-  showCharacterCount!: boolean;
-
+  showCharacterCount?: boolean;
   /** Determines the alignment of the text in the input */
-  @Prop({ type: String })
-  align!: Alignment;
-
+  align?: Alignment;
   /** Visual required indicator, adds an asterisk to label */
-  @Prop({ type: Boolean })
-  requiredIndicator!: boolean;
-
+  requiredIndicator?: boolean;
   /** Indicates whether or not a monospaced font should be used */
-  @Prop({ type: Boolean })
-  monospaced!: boolean;
-
-  public height!: number;
-
-  public focus!: boolean;
-
-  public clearIcon = CircleCancelMinor;
-
-  public prefixClassName = styles.Prefix;
-
-  public suffixClassName = styles.Suffix;
-
-  public clearButtonClassName = styles.ClearButton;
-
-  public buttonPressTimer?: number;
-
-  get uniqueId(): string {
-    return useUniqueId('TextField', this.id);
-  }
-
-  get inputType(): string {
-    return this.type === 'currency' ? 'text' : this.type;
-  }
-
-  get normalizedValue(): string {
-    return typeof this.value === 'string' ? this.value : '';
-  }
-
-  get normalizedStep(): number {
-    return this.step ? this.step : 1;
-  }
-
-  get normalizedMax(): number | string {
-    return this.max ? this.max : Infinity;
-  }
-
-  get normalizedMin(): number | string {
-    return this.min ? this.min : -Infinity;
-  }
-
-  get style() {
-    return this.multiline && this.height
-      ? { height: this.height, maxHeight: this.maxHeight }
-      : null;
-  }
-
-  get wrapperClassName(): string {
-    return classNames(
-      styles.TextField,
-      Boolean(this.normalizedValue) && styles.hasValue,
-      this.disabled && styles.disabled,
-      this.readOnly && styles.readOnly,
-      this.error && styles.error,
-      this.multiline && styles.multiline,
-      this.focus && styles.focus,
-    );
-  }
-
-  get inputClassName(): string {
-    const inputAlignVariation = this.align && styles[
-      variationName('Input-align', this.align) as keyof typeof styles
-    ];
-
-    return classNames(
-      styles.Input,
-      inputAlignVariation,
-      this.$slots.suffix && styles['Input-suffixed'],
-      this.clearButton && styles['Input-hasClearButton'],
-      this.monospaced && styles.monospaced,
-    );
-  }
-
-  get characterCountClassName(): string {
-    return classNames(
-      styles.CharacterCount,
-      this.multiline && styles.AlignFieldBottom,
-    );
-  }
-
-  get backdropClassName(): string {
-    const leftVariation = styles['Backdrop-connectedLeft' as keyof typeof styles];
-    const rightVariation = styles['Backdrop-connectedRight' as keyof typeof styles];
-
-    return classNames(
-      styles.Backdrop,
-      this.$slots['connected-left'] && leftVariation,
-      this.$slots['connected-right'] && rightVariation,
-    );
-  }
-
-  get characterCount(): number {
-    return this.normalizedValue.length;
-  }
-
-  get characterCountText(): string | number {
-    return !this.maxLength
-      ? this.characterCount
-      : `${this.characterCount}/${this.maxLength}`;
-  }
-
-  get clearButtonVisible(): boolean {
-    return this.normalizedValue !== '';
-  }
-
-  get formattedDescribedBy(): string | undefined {
-    const describedBy: string[] = [];
-
-    if (this.error) {
-      describedBy.push(`${this.uniqueId}Error`);
-    }
-
-    if (this.$slots['help-text']) {
-      describedBy.push(helpTextID(this.uniqueId));
-    }
-
-    if (this.showCharacterCount) {
-      describedBy.push(`${this.uniqueId}CharacterCounter`);
-    }
-
-    return describedBy.length
-      ? describedBy.join(' ')
-      : undefined;
-  }
-
-  get formattedLabelledBy(): string {
-    const labelledBy: string[] = [];
-
-    if (this.$slots.prefix) {
-      labelledBy.push(`${this.uniqueId}Prefix`);
-    }
-
-    if (this.$slots.suffix) {
-      labelledBy.push(`${this.uniqueId}Suffix`);
-    }
-
-    labelledBy.unshift(labelID(this.uniqueId));
-
-    return labelledBy.join(' ');
-  }
-
-  @Watch('focused')
-  onFocusedChanged() {
-    if (!this.inputRef) return;
-
-    if (this.focused) {
-      (this.$refs.inputRef as HTMLInputElement).focus();
-    } else {
-      (this.$refs.inputRef as HTMLInputElement).blur();
-    }
-  }
-
-  public containsAffix(target: HTMLElement | EventTarget) {
-    return (
-      target instanceof HTMLElement
-      && ((this.prefixRef && this.prefixRef.contains(target))
-      || (this.suffixRef && this.suffixRef.contains(target)))
-    );
-  }
-
-  public onClick(event: InputEvent): void {
-    const target = event.target as HTMLInputElement;
-
-    if (this.containsAffix(target) || this.focus) {
-      return;
-    }
-
-    (this.$refs.inputRef as HTMLInputElement).focus();
-  }
-
-  public onFocus(event: InputEvent): void {
-    const target = event.target as HTMLInputElement;
-
-    if (this.containsAffix(target)) return;
-
-    this.focus = true;
-    this.$emit('focus');
-  }
-
-  public onBlur(event: InputEvent): void {
-    const target = event.target as HTMLInputElement;
-
-    if (this.containsAffix(target)) return;
-
-    this.focus = false;
-    this.$emit('blur');
-  }
-
-  public onChange(event: InputEvent): void {
-    const target = event.target as HTMLInputElement;
-
-    if (this.comboboxTextFieldChange) {
-      this.comboboxTextFieldChange();
-    }
-
-    this.$emit('input', target.value);
-    this.$emit('change');
-  }
-
-  public handleNumberChange(payload: number): void {
-    // Returns the length of decimal places in a number
-    const dpl = (num: number) => (num.toString().split('.')[1] || []).length;
-    const numericValue = this.value ? parseFloat(this.value) : 0;
-
-    if (typeof numericValue !== 'number') return;
-
-    /** Making sure the new value has the same length of decimal places as the
-     * step / value has.
-     */
-    const decimalPlaces = Math.max(dpl(numericValue), dpl(this.normalizedStep));
-
-    const newValue = Math.min(
-      Number(this.normalizedMax),
-      Math.max(numericValue + payload * this.normalizedStep, Number(this.normalizedMin)),
-    );
-
-    // re-bind value for input el
-    (this.$refs.inputRef as HTMLInputElement).value = String(newValue.toFixed(decimalPlaces));
-
-    this.$emit('input', String(newValue.toFixed(decimalPlaces)));
-  }
-
-  // eslint-disable-next-line class-methods-use-this
-  public handleKeyPress(event: KeyboardEvent): void {
-    const { key, which } = { ...event };
-    const numbersSpec = /[\d.eE+-]$/;
-
-    if (this.type !== 'number' || which !== 13 || numbersSpec.test(key)) {
-      return;
-    }
-
-    event.preventDefault();
-  }
-
-  public handleButtonPress(): void {
-    const minInterval = 50;
-    const decrementBy = 10;
-    let interval = 200;
-
-    const onChangeInterval = () => {
-      if (interval > minInterval) interval -= decrementBy;
-      this.handleNumberChange(0);
-      this.buttonPressTimer = window.setTimeout(
-        onChangeInterval,
-        interval,
-      );
-    };
-
-    this.buttonPressTimer = window.setTimeout(onChangeInterval, interval);
-
-    document.addEventListener('mouseup', this.handleButtonRelease, {
-      once: true,
-    });
-  }
-
-  public handleButtonRelease(): void {
-    clearTimeout(this.buttonPressTimer);
-  }
-
-  // eslint-disable-next-line class-methods-use-this
-  public normalizeAriaMultiline(multiline?: boolean | number) {
-    if (!multiline) return undefined;
-
-    return Boolean(multiline) || multiline > 0
-      ? { 'aria-multiline': true }
-      : undefined;
-  }
-
-  public handleExpandingResize(height: number): void {
-    this.height = height;
-  }
+  monospaced?: boolean;
 }
+
+const comboboxTextFieldContext = inject<ComboboxTextFieldType>('comboboxTextFieldContext', {});
+
+const props = defineProps<TextFieldProps>();
+
+const emits = defineEmits<{
+  (event: 'focus'): void
+  (event: 'click'): void
+  (event: 'blur'): void
+  (event: 'change', changeEvent: Event): void
+  (event: 'update:modelValue', value: string): void
+  (event: 'clear-button-click', id?: string): void
+}>();
+
+const prefixRef = ref<HTMLDivElement | null>(null);
+const suffixRef = ref<HTMLDivElement | null>(null);
+const inputRef = ref<HTMLDivElement | null>(null);
+
+const slots = useSlots();
+const connectedLeftSlot = computed(() => slots['connected-left']?.());
+const connectedRightSlot = computed(() => slots['connected-right']?.());
+const helpTextSlot = computed(() => slots['help-text']?.());
+const prefixSlot = computed(() => slots.prefix?.());
+const suffixSlot = computed(() => slots.suffix?.());
+
+const height = ref<number>();
+const focus = ref<boolean>();
+const buttonPressTimer = ref<number>();
+
+watch(
+  () => props.focused,
+  () => {
+    if (!inputRef.value || !props.focused === undefined) {
+      return;
+    }
+
+    props.focused ? inputRef.value.focus() : inputRef.value.blur();
+  },
+)
+
+const { useUniqueId } = UseUniqueId();
+const uniqueId = computed(() => useUniqueId('TextField', props.id));
+
+const inputType = computed(() => props.type === 'currency' ? 'text' : props.type);
+const rows = computed(() => {
+  if (!props.multiline) {
+    return undefined;
+  }
+
+  return typeof props.multiline === 'number' ? props.multiline : 1;
+});
+
+const clearButtonVisible = computed(() => normalizedValue.value !== '');
+const style = computed(() => props.multiline && height.value
+  ? { height: `${height.value}px` }
+  : {},
+);
+const className = computed(() => classNames(
+  styles.TextField,
+  Boolean(normalizedValue.value) && styles.hasValue,
+  props.disabled && styles.disabled,
+  props.readOnly && styles.readOnly,
+  props.error && styles.error,
+  props.multiline && styles.multiline,
+  focus.value && styles.focus,
+));
+const inputClassName = computed(() => {
+  const inputAlignmentStyle = props.align
+    && styles[variationName('Input-align', props.align) as keyof typeof styles];
+
+  return classNames(
+    styles.Input,
+    inputAlignmentStyle,
+    suffixSlot.value && styles['Input-suffixed'],
+    props.clearButton && styles['Input-hasClearButton'],
+    props.monospaced && styles.monospaced)
+});
+const characterCountClassName = computed(() => classNames(
+  styles.CharacterCount,
+  props.multiline && styles.AlignFieldBottom,
+));
+const backdropClassName = computed(() => classNames(
+  styles.Backdrop,
+  connectedLeftSlot.value &&  styles['Backdrop-connectedLeft'],
+  connectedRightSlot.value && styles['Backdrop-connectedRight'],
+));
+const clearButtonClassName = computed(() => classNames(
+  styles.ClearButton,
+  !clearButtonVisible.value && styles.AlignFieldBottom,
+));
+
+const normalizedValue = computed(() => typeof props.modelValue === 'string'
+  ? props.modelValue
+  : '',
+);
+const normalizedStep = computed(() => props.step ? props.step : 1);
+const normalizedMax = computed(() => props.max ? props.max : Infinity);
+const normalizedMin = computed(() => props.min ? props.min : -Infinity);
+const normalizeAriaMultiline = computed(() => {
+  if (!props.multiline) {
+    return undefined;
+  }
+
+  return Boolean(props.multiline) || props.multiline > 0
+    ? {'aria-multiline': true}
+    : undefined;
+});
+const normalizedAutocomplete = computed(() => {
+  if (props.autoComplete === true) {
+    return 'on';
+  } 
+  
+  if (props.autoComplete === false) {
+    return 'off';
+  }
+
+  return props.autoComplete;
+});
+
+const characterCount = computed(() => normalizedValue.value.length);
+const characterCountText = computed(() => props.maxLength
+  ? characterCount.value
+  : `${characterCount.value}/${props.maxLength}`,
+);
+
+const formattedDescribedBy = computed(() => {
+  const describedBy: string[] = [];
+  if (props.error) {
+    describedBy.push(`${uniqueId.value}Error`);
+  }
+  if (helpTextSlot.value) {
+    describedBy.push(helpTextID(uniqueId.value));
+  }
+  if (props.showCharacterCount) {
+    describedBy.push(`${uniqueId.value}CharacterCounter`);
+  }
+  return describedBy.length
+    ? describedBy.join(' ')
+    : undefined;
+});
+
+const formattedLabelledBy = computed(() => {
+  const labelledBy: string[] = [];
+
+  if (prefixSlot.value) {
+    labelledBy.push(`${uniqueId.value}Prefix`);
+  }
+
+  if (suffixSlot.value) {
+    labelledBy.push(`${uniqueId.value}Suffix`);
+  }
+
+  labelledBy.unshift(labelID(uniqueId.value));
+
+  return labelledBy.join(' ');
+});
+
+const handleExpandingResize = (value: number): void => {
+  height.value = value;
+};
+
+const containsAffix = (target: HTMLElement | EventTarget) => {
+  return (
+    target instanceof HTMLElement
+      && ((prefixRef.value && prefixRef.value.contains(target))
+        || (suffixRef.value && suffixRef.value.contains(target)))
+  );
+};
+
+const handleClick = (event: Event): void => {
+  const target = event.target as HTMLInputElement;
+  
+  if (containsAffix(target) || focus.value) {
+    return;
+  }
+
+  inputRef.value?.focus();
+};
+
+const handleFocus = (event: Event): void => {
+  const target = event.target as HTMLInputElement;
+  
+  if (containsAffix(target)) {
+    return;
+  }
+
+  focus.value = true;
+};
+
+const handleBlur = (event: Event) => {
+  const target = event.target as HTMLInputElement;
+
+  if (containsAffix(target)) {
+    return;
+  }
+
+  focus.value = false;
+};
+
+const handleChange = (event: Event) => {
+  const target = event.target as HTMLInputElement;
+  
+  if (comboboxTextFieldContext.onTextFieldChange) {
+    comboboxTextFieldContext.onTextFieldChange();
+  }
+  
+  emits('update:modelValue', target.value);
+  emits('change', event);
+};
+
+const handleNumberChange = (payload: number): void => {
+  // Returns the length of decimal places in a number
+  const dpl = (num: number) => (num.toString().split('.')[1] || []).length;
+  const numericValue = props.modelValue ? parseFloat(props.modelValue) : 0;
+
+  if (typeof numericValue !== 'number') {
+    return;
+  }
+
+  /** Making sure the new value has the same length of decimal places as the
+   * step / value has.
+   */
+  const decimalPlaces = Math.max(dpl(numericValue), dpl(normalizedStep.value));
+  const newValue = Math.min(
+    Number(normalizedMax.value),
+    Math.max(numericValue + payload * normalizedStep.value, Number(normalizedMin.value)),
+  );
+
+  emits('update:modelValue', String(newValue.toFixed(decimalPlaces)));
+};
+
+const handleButtonRelease = (): void => {
+  clearTimeout(buttonPressTimer.value);
+};
+
+const handleButtonPress = (): void => {
+  const minInterval = 50;
+  const decrementBy = 10;
+  let interval = 200;
+  const onChangeInterval = () => {
+    if (interval > minInterval) {
+      interval -= decrementBy;
+    }
+
+    handleNumberChange(0);
+    buttonPressTimer.value = window.setTimeout(
+      onChangeInterval,
+      interval,
+    );
+  };
+
+  buttonPressTimer.value = window.setTimeout(onChangeInterval, interval);
+  document.addEventListener('mouseup', handleButtonRelease, {
+    once: true,
+  });
+};
+
+const handleKeyPress = (event: KeyboardEvent): void => {
+  const { key, which } = { ...event };
+  const numbersSpec = /[\d.eE+-]$/;
+
+  if (props.type !== 'number' || which !== 13 || numbersSpec.test(key)) {
+    return;
+  }
+
+  event.preventDefault();
+};
 </script>
 
 <style lang="scss">

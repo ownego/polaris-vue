@@ -1,15 +1,8 @@
 <template lang="pug">
-div(:class="className")
+div(:class="styles.Section")
   slot
 </template>
 
-<script lang="ts">
-import Vue from 'vue';
-import { Component } from 'vue-property-decorator';
+<script setup lang="ts">
 import styles from '@/classes/Popover.json';
-
-@Component
-export default class Section extends Vue {
-  public className = styles.Section;
-}
 </script>

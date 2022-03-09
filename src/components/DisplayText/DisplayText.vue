@@ -6,37 +6,38 @@ component(
   slot
 </template>
 
-<script lang="ts">
-import Vue from 'vue';
-import { Component, Prop } from 'vue-property-decorator';
+<script setup lang="ts">
+import { computed } from 'vue';
 import { classNames, variationName } from 'polaris-react/src/utilities/css';
-import type { HeadingTagName } from 'polaris-react/src/types';
+import type { HeadingTagName } from 'types/type';
 import styles from '@/classes/DisplayText.json';
 
-@Component
-export default class DisplayText extends Vue {
+type Size = 'small' | 'medium' | 'large' | 'extraLarge';
+
+interface DisplayTextProps {
   /**
    * Name of element to use for text
    * @default 'p'
    */
-  @Prop({ type: String, default: 'p' })
-  public element?: HeadingTagName;
-
+  element?: HeadingTagName;
   /**
    * Size of the text
    * @default 'medium'
    */
-  @Prop({ type: String, default: 'medium' })
-  public size!: 'small' | 'medium' | 'large' | 'extraLarge';
-
-  get className() {
-    return classNames(
-      styles.DisplayText,
-      this.size && styles[variationName('size', this.size) as keyof typeof styles],
-    );
-  }
+  size?: Size;
 }
+
+const props = withDefaults(defineProps<DisplayTextProps>(), {
+  element: 'p',
+  size: 'medium',
+});
+
+const className = computed(() => classNames(
+  styles.DisplayText,
+  props.size && styles[variationName('size', props.size) as keyof typeof styles],
+));
 </script>
+
 <style lang="scss">
 @import 'polaris-react/src/components/DisplayText/DisplayText.scss';
 </style>

@@ -1,10 +1,10 @@
 <template lang="pug">
 div(
-  :class="className",
-  ref="alphaPicker",
+  :class="styles.AlphaPicker",
+  ref="alphaPickerRef",
 )
   div(
-    :class="classColorLayer",
+    :class="styles.ColorLayer",
     :style="{ background }",
   ) &nbsp;
   Slidable(
@@ -15,65 +15,56 @@ div(
   )
 </template>
 
-<script lang="ts">
-import Vue from 'vue';
-import { Component, Prop } from 'vue-property-decorator';
+<script setup lang="ts">
+import { computed, onMounted, ref } from 'vue';
 import { classNames } from 'polaris-react/src/utilities/css';
 import type { HSBColor } from 'polaris-react/src/utilities/color-types';
-import { hsbToRgb } from '@/utilities/color-transformers';
 import { calculateDraggerY, alphaForDraggerY } from 'polaris-react/src/components/ColorPicker/components/AlphaPicker/utilities';
+import { hsbToRgb } from '@/utilities/color-transformers';
 import styles from '@/classes/ColorPicker.json';
 import { Slidable } from '../Slidable';
 
-@Component({
-  components: {
-    Slidable,
-  },
+interface Props {
+  color: HSBColor;
+  alpha: number;
+}
+
+const props = defineProps<Props>();
+
+const emits = defineEmits<{
+  (event: 'change', value: number): void
+}>();
+
+const alphaPickerRef = ref(null);
+const sliderHeight = ref(0);
+const draggerHeight = ref(0);
+
+const draggerY = computed(() => {
+  return calculateDraggerY(props.alpha, sliderHeight.value, draggerHeight.value);
+});
+
+const background = computed(() => {
+  const { red, green, blue } = hsbToRgb(props.color);
+  const rgb = `${red}, ${green}, ${blue}`;
+  return `linear-gradient(to top, rgba(${rgb}, 0) 18px, rgba(${rgb}, 1) calc(100% - 18px))`;
+});
+
+onMounted(() => {
+  setSliderHeight();
 })
-export default class AlphaPicker extends Vue {
-  @Prop({ type: Object, required: true })
-  public color!: HSBColor;
 
-  @Prop({ type: Number, required: true })
-  public alpha!: number;
-
-  public className = classNames(styles.AlphaPicker);
-
-  public classColorLayer = classNames(styles.ColorLayer);
-
-  public sliderHeight = 0;
-
-  public draggerHeight = 0;
-
-  get draggerY() {
-    return calculateDraggerY(this.alpha, this.sliderHeight, this.draggerHeight);
+const setSliderHeight = () => {
+  if (alphaPickerRef.value) {
+    sliderHeight.value = (alphaPickerRef.value as HTMLElement).clientHeight;
   }
+}
 
-  get background() {
-    const { red, green, blue } = hsbToRgb(this.color);
-    const rgb = `${red}, ${green}, ${blue}`;
-    return `linear-gradient(to top, rgba(${rgb}, 0) 18px, rgba(${rgb}, 1) calc(100% - 18px))`;
-  }
+const setDraggerHeight = (height: number) => {
+  draggerHeight.value = height;
+}
 
-  mounted() {
-    this.setSliderHeight();
-  }
-
-  setSliderHeight() {
-    const alphaPicker = this.$refs.alphaPicker as HTMLElement;
-
-    if (!alphaPicker) return;
-
-    this.sliderHeight = alphaPicker.clientHeight;
-  }
-
-  setDraggerHeight(height: number) {
-    this.draggerHeight = height;
-  }
-
-  handleChange({ y }: { y: number }) {
-    const alpha = alphaForDraggerY(y, this.sliderHeight);
-    this.$emit('change', alpha);
-  }
+const handleChange = ({ y }: { y: number }) => {
+  const alpha = alphaForDraggerY(y, sliderHeight.value);
+  emits('change', alpha);
 }
 </script>
