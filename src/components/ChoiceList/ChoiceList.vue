@@ -20,9 +20,9 @@ fieldset(
         :ariaDescribedBy="error && choice.describedByError ? errorTextID(finalName) : null",
         @change="handleChange",
       )
-        template(#label, v-if="$slots.label")
+        template(#label, v-if="choice.label")
           span {{ choice.label }}
-        template(#help-text, v-if="$slots['help-text']")
+        template(#help-text, v-if="choice.helpText")
           span {{ choice.helpText }}
       div(
         v-if="typeof choice.renderChildren === 'string'",
@@ -39,7 +39,7 @@ fieldset(
 </template>
 
 <script setup lang="ts">
-import { computed } from 'vue';
+import { computed, useSlots } from 'vue';
 import { classNames } from 'polaris-react/src/utilities/css';
 import { UseUniqueId } from '@/use';
 import styles from '@/classes/ChoiceList.json';

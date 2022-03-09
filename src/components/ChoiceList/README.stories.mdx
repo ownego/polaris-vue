@@ -15,21 +15,21 @@ import { ChoiceList } from '@/polaris-vue';
         },
       },
     },
-    value: {
+    error: {
+      control: { type: 'text' },
+      table: {
+        type: {
+          summary: 'string',
+        },
+      },
+    },
+    modelValue: {
       control: {
         disable: true,
       },
       table: {
         type: {
           summary: 'string | array',
-        },
-      },
-    },
-    error: {
-      control: { type: 'text' },
-      table: {
-        type: {
-          summary: 'string',
         },
       },
     },
@@ -44,15 +44,6 @@ import { ChoiceList } from '@/polaris-vue';
           summary: '"(event) => void"',
         }
       }
-    },
-    input: {
-      description: 'Event for using with v-model',
-      control: { disable: true },
-      table: {
-        type: {
-          summary: '"(newVal: string | array) => void"',
-        },
-      },
     },
     focus: {
       description: 'Callback when checkbox is focussed',
@@ -157,7 +148,7 @@ Allows merchants to select one option from a list.
 
 * Make sure all options are an either/or choice.
 
-export const singleChoiceList = (args, { argTypes }) => ({
+export const singleChoiceList = (args) => ({
   components: { ChoiceList },
   template: `
   <div>
@@ -182,31 +173,6 @@ export const singleChoiceList = (args, { argTypes }) => ({
     };
   },
 });
-singleChoiceList.parameters = {
-  docs: {
-    source: false,
-    transformSource: (source) => {
-      const tmpSource = source
-        .replace(/value="hidden"/, 'v-model="value"')
-        .replace(/\'\[.*\]\'/, '"choices"')
-        .replace(/Value: hidden/, 'Value: {{ value }}');
-      const fullSource = dedent`
-        ${tmpSource}\n
-        data() {
-          return {
-            value: 'hidden',
-            choices: [
-              {label: 'Hidden', value: 'hidden'},
-              {label: 'Optional', value: 'optional'},
-              {label: 'Required', value: 'required'},
-            ]
-          };
-        },
-      `;
-      return fullSource;
-    }
-  },
-}
 
 <Canvas>
   <Story story={singleChoiceList} name="Single choice list"></Story>
@@ -216,7 +182,7 @@ singleChoiceList.parameters = {
 
 Allows for accessible error handling by connecting the error message to the field with the error.
 
-export const errorSingleChoiceList = (args, { argTypes }) => ({
+export const errorSingleChoiceList = (args) => ({
   components: { ChoiceList },
   template: `
    <div>
@@ -241,30 +207,6 @@ export const errorSingleChoiceList = (args, { argTypes }) => ({
     };
   },
 });
-errorSingleChoiceList.parameters = {
-  docs: {
-    source: false,
-    transformSource: (source) => {
-      const tmpSource = source
-        .replace(/\'\[.*\]\'/, '"choices"')
-        .replace(/value="hidden"/, 'v-model="value"')
-      const fullSource = dedent`
-        ${tmpSource}\n
-        data() {
-          return {
-            value: 'hidden',
-            choices: [
-              {label: 'Hidden', value: 'hidden'},
-              {label: 'Optional', value: 'optional'},
-              {label: 'Required', value: 'required'},
-            ]
-          };
-        },
-      `;
-      return fullSource;
-    }
-  },
-}
 
 <Canvas>
   <Story story={errorSingleChoiceList} name="Single choice list with error"></Story>
@@ -276,7 +218,7 @@ Allows merchants to select multiple options from a list.
 
 * Avoid options that are an either/or choice.
 
-export const multiChoiceList = (args, { argTypes }) => ({
+export const multiChoiceList = (args) => ({
   components: { ChoiceList },
   template: `
   <div>
@@ -309,31 +251,6 @@ export const multiChoiceList = (args, { argTypes }) => ({
     };
   },
 });
-multiChoiceList.parameters = {
-  docs: {
-    source: false,
-    transformSource: (source) => {
-      const tmpSource = source
-        .replace(/:value=\'\[\"shipping\"\]\'/, 'v-model="value"')
-        .replace(/\'\[.*\]\'/, '"choices"')
-        .replace(/<p>.*<\/p>/s, '<p> Value: {{ value }} </p>')
-      const fullSource = dedent`
-        ${tmpSource}\n
-        data() {
-          return {
-            value: ['hidden'],
-            choices: [
-              {label: 'Hidden', value: 'hidden'},
-              {label: 'Optional', value: 'optional'},
-              {label: 'Required', value: 'required'},
-            ]
-          };
-        },
-      `;
-      return fullSource; 
-    }
-  },
-}
 
 <Canvas>
   <Story story={multiChoiceList} name="Multi-choice list"></Story>
@@ -372,39 +289,10 @@ export const renderChildChoiceList = (args, { argTypes }) => ({
     };
   },
 });
-renderChildChoiceList.parameters = {
-  docs: {
-    source: false,
-    transformSource: (source) => {
-      const tmpSource = source
-        .replace(/value="none"/, 'v-model="value"')
-        .replace(/\'\[.*\]\'/, '"choices"')
-      const fullSource = dedent`
-        ${tmpSource}\n
-        data() {
-          return {
-            value: 'none',
-            choices: [
-              {label: 'None', value: 'none'},
-              {label: 'Minimum purchase', value: 'minimum_purchase'},
-              {
-                label: 'Minimum quantity',
-                value: 'minimum_quantity',
-                renderChildren: '<p>This is child content of Minimum quantity option</p>',
-              },
-            ],
-          };
-        },
-      `;
-      return fullSource;
-    }
-  },
-}
 
 <Canvas>
   <Story story={renderChildChoiceList} name="Single-choice or multi-choice list with children content (always rendered)"></Story>
 </Canvas>
-
 
 ### Single-choice or multi-choice list with children content (rendered only when selected)
 
@@ -420,7 +308,6 @@ export const renderChildWithConditional = (args, { argTypes }) => ({
       v-model="selected"
       :choices="choices"
       @change="handleChange"
-      onChange=""
     >
       Company name
     </ChoiceList>
@@ -442,52 +329,12 @@ export const renderChildWithConditional = (args, { argTypes }) => ({
   },    
   methods: {
     handleChange() {
-      const renderFieldPosition = this.choices
-        .findIndex(obj => obj.value === 'minimum_quantity');
-      this.choices[renderFieldPosition].renderChildren = this.selected === 'minimum_quantity'
+      this.choices[2].renderChildren = this.selected === 'minimum_quantity'
         ? '<p>This is child content of Minimum quantity option</p>'
         : '';
     }
   },
 });
-renderChildWithConditional.parameters = {
-  docs: {
-    source: false,
-    transformSource: (source) => {
-      const tmpSource = source
-        .replace(/value="none"/, 'v-model="selected"')
-        .replace(/\'\[.*\]\'/, '"choices"')
-        .replace(/onChange=""/, '@change="handleChange"')
-      const fullSource = dedent`
-        ${tmpSource}\n
-        data() {
-          return {
-            selected: 'none',
-            choices: [
-              {label: 'None', value: 'none'},
-              {label: 'Minimum purchase', value: 'minimum_purchase'},
-              {
-                label: 'Minimum quantity',
-                value: 'minimum_quantity',
-                renderChildren: '',
-              },
-            ],
-          };
-        },
-        methods: {
-          handleChange() {
-            const renderFieldPosition = this.choices
-              .findIndex(obj => obj.value === 'minimum_quantity');
-            this.choices[renderFieldPosition].renderChildren = this.selected === 'minimum_quantity'
-              ? '<p>This is child content of Minimum quantity option</p>'
-              : '';
-          },
-        },
-      `;
-      return fullSource;
-    },
-  },
-}
 
 <Canvas>
   <Story story={renderChildWithConditional} name="Single-choice or multi-choice list with children content (rendered only when selected)"></Story>
@@ -495,12 +342,12 @@ renderChildWithConditional.parameters = {
 
 ### Example
 
-export const ExampleChoiceList = (args, { argTypes }) => ({
-  props: Object.keys(argTypes),
+export const Example = (args) => ({
   components: { ChoiceList },
+  setup () { return {args}; },
   template: `
   <ChoiceList
-    v-bind="$props"
+    v-bind="args"
     v-model="selected"
     :choices="options"
   >
@@ -518,32 +365,33 @@ export const ExampleChoiceList = (args, { argTypes }) => ({
     };
   },
 });
-ExampleChoiceList.parameters = {
+Example.parameters = {
   docs: {
-    transformSource: (source) => {
-      const tmpSource = source
-        .replace(/\'\[.*\]\'/, '"options"')
-        .replace(/value="hidden"/, 'v-model="selected"')
-      const fullSource = dedent`
-        ${tmpSource}\n
-        data() {
-          return {
-            selected: 'hidden',
-            options: [
-              {label: 'Hidden', value: 'hidden'},
-              {label: 'Optional', value: 'optional'},
-              {label: 'Required', value: 'required'},
-            ],
-          };
-        },
-      `;
-      return fullSource;
-    }
-  }
-}
+    source: {
+      code: dedent`
+      <ChoiceList
+        v-model="selected"
+        :choices="options"
+      >
+        Example choice list
+      </ChoiceList>\n
+      data() {
+        return {
+          selected: 'hidden',
+          options: [
+            {label: 'Hidden', value: 'hidden'},
+            {label: 'Optional', value: 'optional'},
+            {label: 'Required', value: 'required'},
+          ]
+        };
+      },
+      `
+    },
+  },
+};
 
 <Canvas>
-  <Story story={ExampleChoiceList} name="Example" height="160px"></Story>
+  <Story story={Example} name="Example" height="160px"></Story>
 </Canvas>
 
 <ArgsTable story="Example"/>
