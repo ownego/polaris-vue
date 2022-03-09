@@ -8,7 +8,7 @@ import {
 } from "@storybook/addon-docs";
 import dedent from "ts-dedent";
 
-import { Button, ButtonGroup, ButtonGroupItem } from "@/polaris-vue";
+import { Button, ButtonGroup } from "@/polaris-vue";
 
 <Meta
   title="Components / Actions / Button"
@@ -383,7 +383,7 @@ SplitButton.parameters = {
 };
 
 export const PressedButton = (args, { argTypes }) => ({
-  components: { ButtonGroup, ButtonGroupItem, Button },
+  components: { ButtonGroup, Button },
   data() {
     return {
       isFirstButtonActive: true,
@@ -400,22 +400,18 @@ export const PressedButton = (args, { argTypes }) => ({
     },
   },
   template: `<ButtonGroup :segmented="true">
-    <ButtonGroupItem>
-      <Button
-        :pressed="isFirstButtonActive"
-        @click="handleFirstButtonActive"
-      >
-        First button
-      </Button>
-    </ButtonGroupItem>
-    <ButtonGroupItem>
-      <Button
-        @click="handleSecondButtonActive"
-        :pressed="!isFirstButtonActive"
-      >
-        Second button
-      </Button>
-    </ButtonGroupItem>
+    <Button
+      :pressed="isFirstButtonActive"
+      @click="handleFirstButtonActive"
+    >
+      First button
+    </Button>
+    <Button
+      @click="handleSecondButtonActive"
+      :pressed="!isFirstButtonActive"
+    >
+      Second button
+    </Button>
   </ButtonGroup>`,
 });
 PressedButton.storyName = "Pressed Button";
@@ -425,26 +421,22 @@ PressedButton.parameters = {
       code: dedent`
         <template>
           <ButtonGroup segmented>
-            <ButtonGroupItem>
-              <Button
-                :pressed="isFirstButtonActive"
-                @click="handleFirstButtonActive"
-              >
-                First button
-              </Button>
-            </ButtonGroupItem>
-            <ButtonGroupItem>
-              <Button
-                @click="handleSecondButtonActive"
-                :pressed="!isFirstButtonActive"
-              >
-                Second button
-              </Button>
-            </ButtonGroupItem>
+            <Button
+              :pressed="isFirstButtonActive"
+              @click="handleFirstButtonActive"
+            >
+              First button
+            </Button>
+            <Button
+              @click="handleSecondButtonActive"
+              :pressed="!isFirstButtonActive"
+            >
+              Second button
+            </Button>
           </ButtonGroup>
         </template>
         <script>
-          components: { ButtonGroup, ButtonGroupItem, Button },
+          components: { ButtonGroup, Button },
           data() {
             return {
               isFirstButtonActive: true,

@@ -5,12 +5,26 @@ div(
   :data-buttongroup-connected-top="connectedTop",
   :data-buttongroup-full-width="fullWidth",
 )
-  slot
+  template(
+    v-if="slots.default",
+  )
+    Item(
+      v-for="(item, index) in slots.default()",
+      :key="index"
+    )
+      component(:is="item")
 </template>
 
+<script lang="ts">
+export default {
+  inheritAttrs: false,
+}
+</script>
+
 <script setup lang="ts">
-import { computed } from 'vue';
+import { computed, useSlots } from 'vue';
 import { classNames } from 'polaris-react/src/utilities/css';
+import { Item } from './components';
 import styles from '@/classes/ButtonGroup.json';
 
 type Spacing = 'extraTight' | 'tight' | 'loose';
@@ -26,7 +40,9 @@ interface Props {
   connectedTop?: boolean;
 }
 
-const props = defineProps<Props>()
+const props = defineProps<Props>();
+
+const slots = useSlots();
 
 const className = computed(() => {
   return classNames(

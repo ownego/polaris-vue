@@ -28,10 +28,11 @@ const slotProps = computed(() => {
 });
 
 const className = computed(() => {
+  const plain = slotProps.value && (slotProps.value.plain === '' || slotProps.value.plain);
   return classNames(
     styles.Item,
     focused.value && styles['Item-focused'],
-    slotProps.value && slotProps.value.plain && styles['Item-plain'],
+    plain && styles['Item-plain'],
   );
 });
 
