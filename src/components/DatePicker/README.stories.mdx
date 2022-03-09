@@ -8,6 +8,16 @@ import { DatePicker } from '@/polaris-vue';
   title="Components / Forms / Date Picker"
   component={ DatePicker }
   argTypes={{
+    disableDatesAfter: {
+      control: {
+        type: 'date',
+      },
+    },
+    disableDatesBefore: {
+      control: {
+        type: 'date',
+      },
+    },
     change: {
       description: 'Callback when date is selected',
       table: {
@@ -72,6 +82,8 @@ export const Template = (args) => ({
   template: dedent`<div>
   <DatePicker
     v-bind="args"
+    :disableDatesBefore="new Date(args.disableDatesBefore)"
+    :disableDatesAfter="new Date(args.disableDatesAfter)"
     @change="handleChange"
     @month-change="handleMonthChange"
     :month="pickerView.month"
