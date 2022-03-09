@@ -35,6 +35,7 @@ export * from './PositionedOverlay';
 export * from './RadioButton';
 export * from './Scrollable';
 export * from './Select';
+export * from './SettingAction';
 export * from './Spinner';
 export * from './Subheading';
 export * from './Tag';
