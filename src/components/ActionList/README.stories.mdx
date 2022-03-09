@@ -100,7 +100,7 @@ export const Template = (args) => ({
     return { args };
   },
   template: `<div :style="{width: '200px', background: '#fff'}" data-style="{width: '200px', background: '#fff'}">
-    <ActionList :items="args.default.items"></ActionList>
+    <ActionList v-bind="args"></ActionList>
   </div>`,
 });
 

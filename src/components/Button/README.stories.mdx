@@ -183,9 +183,11 @@ import { Button, ButtonGroup } from "@/polaris-vue";
 />
 
 export const Template = (args, { argTypes }) => ({
-  props: Object.keys(argTypes),
   components: { Button },
-  template: `<Button v-bind="$props">Add Product</Button>`,
+  setup() {
+    return { args };
+  },
+  template: `<Button v-bind="args">Add Product</Button>`,
 });
 
 export const Variants = (args, { argTypes }) => ({
