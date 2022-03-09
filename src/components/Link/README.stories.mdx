@@ -39,10 +39,10 @@ import { Link } from '@/polaris-vue';
   }}
 />
 
-export const Template = (args, { argTypes }) => ({
-  props: Object.keys(argTypes),
+export const Template = (args) => ({
   components: { Link },
-  template: `<Link v-bind="$props">Fulfilling orders</Link>`,
+  setup() { return { args }; },
+  template: `<Link v-bind="args">Fulfilling orders</Link>`,
 });
 
 # Link

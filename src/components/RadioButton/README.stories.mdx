@@ -39,15 +39,6 @@ import { RadioButton } from '@/polaris-vue';
         },
       },
     },
-    input: {
-      description: 'v-model available',
-      control: { disable: true },
-      table: {
-        type: {
-          summary: '"(newVal: string) => void"',
-        },
-      },
-    },
     'help-text': {
       description: 'Additional text to aide in use',
       control: { disable: true },
@@ -66,6 +57,11 @@ import { RadioButton } from '@/polaris-vue';
         },
       },
     },
+    'update:modelValue': {
+      table: {
+        disable: true,
+      },
+    },
     default: {
       table: {
         disable: true,
@@ -74,28 +70,27 @@ import { RadioButton } from '@/polaris-vue';
   }}
 />
 
-export const Template = (args, { argTypes }) => ({
-  props: Object.keys(argTypes),
+export const Template = (args) => ({
   components: { RadioButton },
+  setup () { return { args }; },
   template: `
   <div>
     <RadioButton
-      v-bind="$props"
       name="demoRadioButton"
       value="disabled"
       v-model="demoValue"
     >
-      <template slot="label">Accounts are disabled</template>
-      <template slot="help-text">Customers will only be able to check out as guests.</template>
+      <template #label>Accounts are disabled</template>
+      <template #help-text>Customers will only be able to check out as guests.</template>
     </RadioButton>
     <RadioButton
-      v-bind="$props"
+      v-bind="args"
       name="demoRadioButton"
       value="optional"
       v-model="demoValue"
     >
-      <template slot="label">Accounts are optional</template>
-      <template slot="help-text">Customers will be able to check out with a customer account or as a guests.</template>
+      <template #label>Accounts are optional</template>
+      <template #help-text>Customers will be able to check out with a customer account or as a guests.</template>
     </RadioButton>
     <p style="margin-top: 30px"> Selected: {{ demoValue }} </p>
   </div>`,
@@ -107,22 +102,31 @@ export const Template = (args, { argTypes }) => ({
 });
 Template.parameters = {
   docs: {
-    transformSource: (source) => {
-      const tmpSource = source
-        .replace(/modelValue="disabled"/, 'v-model="demoValue"')
-        .replace(/Selected: disabled/,'Selected: {{ isChecked }}')
-      const fullSource = dedent`
-        ${tmpSource}\n
-        data() {
-          return: {
-            demoValue: false,
-          };
-        },
-      `;
-      return fullSource;
-    }
+    source: {
+      code: dedent`
+        <div>
+          <RadioButton
+            name="demoRadioButton"
+            value="disabled"
+            v-model="demoValue"
+          >
+            <template #label>Accounts are disabled</template>
+            <template #help-text>Customers will only be able to check out as guests.</template>
+          </RadioButton>
+          <RadioButton
+            name="demoRadioButton"
+            value="optional"
+            v-model="demoValue"
+          >
+            <template #label>Accounts are optional</template>
+            <template #help-text>Customers will be able to check out with a customer account or as a guests.</template>
+          </RadioButton>
+          <p> Selected: {{ demoValue }} </p>
+        </div>
+      `,
+    },
   },
-}
+};
 
 # Radio button
 
