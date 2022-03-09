@@ -42,6 +42,7 @@ export * from './Tag';
 export * from './TextContainer';
 export * from './TextField';
 export * from './TextStyle';
+export * from './Thumbnail';
 export * from './Truncate';
 export * from './UnstyledButton';
 export * from './UnstyledLink';
