@@ -1,4 +1,4 @@
-# Polaris Vue
+# Polaris Vue (Support Vue 3.0)
 
 Polaris Vue by qikify only supports **Vue 3.0.0+**.
 
@@ -36,102 +36,63 @@ yarn add @qikify/polaris-vue
 Use as a Vue 3 plugin (globally registers all components):
 
 ```js
-import Vue from 'vue';
-import PolarisVue from '@qikify/polaris-vue';
-import '@qikify/polaris-vue/dist/polaris-vue.css';
+//main.js
+import { createApp } from 'vue'
+import PolarisVue from '@qikify/polaris-vue' // (✓)
+import '@qikify/polaris-vue/dist/style.css' // (✓) This will be deprecated in the future, right after Vue 3 supports css injections.
+import App from './App.vue'
 
-Vue.use(PolarisVue);
-
-new Vue({
-  components: {
-    // all Polaris Vue components already registered
-  }
-});
+//...
+const app = createApp(App)
+app.use(PolarisVue) // (✓)
+...
 ```
 
 **OR** use individual component:
 
 ```js
-import Vue from 'vue';
 import { List, Icon } from '@qikify/polaris-vue';
-
-new Vue({
-  components: {
-    List,
-    Icon
-  }
-});
 ```
 
 <br/>
 
-## **Styles**
-
-Polaris Vue supports both **CSS** & **SCSS**, you can find the neccessary styles files in `node_modules/@qikify/polaris-vue/dist/`.
-
-#### **SCSS**
-
-To use scss, you can import the `main.scss` file in your `.vue` or `.scss` file.
-
-Or you can import separated scss files from dist to your project scss file.
-
-Example:
+### **AppProvider**
+The AppProvider component is `required` to use PolarisVue. Without it, the components in your application will not function correctly. You must wrap the root (the top) of your application in the app provider component.
 
 ```javascript
-<style lang="scss">
-@import '@qikify/polaris-vue/dist/scss/main.scss';
-</style>
+// App.vue
+<template>
+<AppProvider>
+  ...
+</AppProvider>
+</template>
+
+<script></script>
 ```
 
 <br/>
 
-## Aliasing Vue import
+## De-duplicating Vue version
 
-`PolarisVue` and `PortalVue` require access to the global Vue reference (via `import Vue from 'vue'`).
+`PolarisVue`, other packages and your project may require access to the global Vue reference. So sometimes, you may get the runtime error message like:
 
-If you are using a specific build of Vue (i.e. runtime-only vs. compiler + runtime), you will need to set up an alias to `vue` in your bundler config to ensure that your project, **PolarisVue** and **PortalVue** are all using the same build version of Vue. If you are seeing an error such as `$attr and $listeners is readonly`, or `Multiple instances of Vue detected`, then you will need to set up an alias.
+```bash
+TypeError: Cannot read properties of null (reading 'isCE')
+renderSlot(...)
+...
+```
 
-<br/>
+To avoid this, simply add `dedupe: ['vue']` to your `vite.config.ts` file, like below:
 
-Example: Vue alias for `Vue CLI` in `vue.config.js`
-
-```js
-module.exports = {
-  // ...
+```bash
+export default defineConfig({
   resolve: {
-    alias: {
-      // If using the runtime only build
-      vue$: 'vue/dist/vue.runtime.esm.js' // 'vue/dist/vue.runtime.common.js' for webpack 1
-      // Or if using full build of Vue (runtime + compiler)
-      // vue$: 'vue/dist/vue.esm.js'      // 'vue/dist/vue.common.js' for webpack 1
-    }
-  }
-}
+    ...
+    dedupe: ['vue'],
+  },
+  ...
+});
 ```
-
-Example: Vue alias in `webpack.config.js`
-
-```js
-const path = require('path')
-
-module.exports = {
-  chainWebpack: config => {
-    config.resolve.alias.set(
-      'vue$',
-      // If using the runtime only build
-      path.resolve(__dirname, 'node_modules/vue/dist/vue.runtime.esm.js')
-      // Or if using full build of Vue (runtime + compiler)
-      // path.resolve(__dirname, 'node_modules/vue/dist/vue.esm.js')
-    )
-  }
-}
-```
-
-<br/>
-
-## Components List
-
-See [Component Status](https://qikify.github.io/polaris-vue/?path=/docs/component-status--page) in documentation.
 
 ---
 
@@ -146,8 +107,8 @@ yarn
 
 # Create a Demo.vue file to test
 
-# Development & Demo - http://localhost:1902
-yarn serve
+# Development & Demo
+yarn dev
 ```
 
 ## Contributing

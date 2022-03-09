@@ -28,7 +28,7 @@ module.exports = {
     );
 
     return mergeConfig(previousConfig, {
-      ...config,
+      resolve: { ...config.resolve },
       plugins: [
         svgLoader(),
         eslintPlugin({

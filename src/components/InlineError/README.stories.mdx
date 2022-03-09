@@ -1,3 +1,4 @@
+import dedent from 'ts-dedent';
 import { Meta, Story, Canvas, ArgsTable } from '@storybook/addon-docs';
 
 import { InlineError } from '@/polaris-vue';
@@ -9,7 +10,7 @@ import { InlineError } from '@/polaris-vue';
     message: {
       control: { type: 'text' },
       table: {
-        type: { summary: 'String | Vue Component' },
+        type: { summary: 'string | component' },
       },
     },
     default: {
@@ -20,10 +21,10 @@ import { InlineError } from '@/polaris-vue';
   }}
 />
 
-export const Template = (args, { argTypes }) => ({
-  props: Object.keys(argTypes),
+export const Template = (args) => ({
   components: { InlineError },
-  template: `<InlineError v-bind="$props"/>`,
+  setup() { return { args }; },
+  template: `<InlineError v-bind="args"/>`,
 });
 
 # Inline error
@@ -38,13 +39,12 @@ Use inline errors to help merchants understand why a form input may not be valid
       message: 'Store name is required',
       fieldID: 'myFieldID'
     }}
-    parameters={{
+    parameters = {{
       docs: {
-        transformSource: (source) => {
-          const tmpSource = source
-            .replace(/<template>/, '')
-            .replace(/<\/template>/, '');
-          return tmpSource;
+        source: {
+          code: dedent`
+            <InlineError fieldID="myFieldID" message="Store name is required"/>
+          `,
         },
       },
     }}
