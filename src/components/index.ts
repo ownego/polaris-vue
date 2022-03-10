@@ -1,6 +1,7 @@
 export * from './ActionList';
 export * from './AppProvider';
 export * from './Avatar';
+export * from './Backdrop';
 export * from './Badge';
 export * from './Button';
 export * from './ButtonGroup';
@@ -35,6 +36,7 @@ export * from './Portal';
 export * from './PositionedOverlay';
 export * from './RadioButton';
 export * from './Scrollable';
+export * from './ScrollLock';
 export * from './Select';
 export * from './SettingAction';
 export * from './Spinner';
