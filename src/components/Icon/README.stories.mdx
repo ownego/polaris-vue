@@ -21,7 +21,6 @@ import BehaviorMajor from '@icons/BehaviorMajor.svg';
     },
     source: {
       name: 'source',
-      defaultValue: 'CirclePlusMinor',
       options: [
         'CirclePlusMinor',
         'BehaviorMajor',
@@ -72,21 +71,18 @@ import BehaviorMajor from '@icons/BehaviorMajor.svg';
   }}
 />
 
-export const Template = (args, { argTypes }) => ({
-  props: Object.keys(argTypes),
+export const Template = (args) => ({
   components: { Icon },
-  computed: {
-    iconSource() {
-      if (args.source === 'CirclePlusMinor') {
-        return CirclePlusMinor;
-      }
-      if (args.source === 'BehaviorMajor') {
-        return BehaviorMajor;
-      }
-      return args.source;
-    },
+  setup() {
+    if (args.source === 'CirclePlusMinor') {
+      return { args, source: CirclePlusMinor };
+    } else if (args.source === 'BehaviorMajor') {
+      return { args, source: BehaviorMajor };
+    } else if (args.source === 'placeholder') {
+      return { args, source: 'placeholder' };
+    }
   },
-  template: `<Icon :source="iconSource" v-bind="$props" icon-name="${args.source || 'CirclePlusMinor'}" />`,
+  template: `<Icon :source="source" :color="args.color" :backdrop="args.backdrop" :accessibility-label="args.accessibilityLabel" />`,
 });
 
 # Icon
@@ -95,36 +91,47 @@ Icons are used to visually communicate core parts of the product and available a
 They can act as wayfinding tools to help merchants more easily understand where they are in the product,
 and common interaction patterns that are available.
 
-**How to use:**
+<br/>
 
-To use icons, you need to import svg icon as Vue component by `vue-svg-loader` then bind it to `data`.<br/>
-*WHY we do that?* To reduce the size (a lot) of the bundle.
+### **Usage:**
+
+To use icons, you need to import svg icon as Vue component by using Vite plugin `vite-svg-loader`. Follow [this instruction](?path=/docs/polaris-icons--page).<br/>
 
 You can find icon list from **Shopify Icon Library**: [here](https://polaris-icons.shopify.com/).
 
-See example:
+<br/>
 
-<Source
-  language="javascript"
-  code={dedent`
-  <template>
-    <Icon :source="iconCirclePlusMinor" />
-  </template>\n
-  <script>
-  \/\/ Change \`CirclePlusMinor\` to icon name from Shopify Icon Library
-  import CirclePlusMinor from '!vue-svg-loader!@shopify/polaris-icons/dist/svg/CirclePlusMinor.svg';\n
-  \/\/ OR if you config \`vue-svg-loader\` in vue.config.js
-  \/\/ import CirclePlusMinor from '@shopify/polaris-icons/dist/svg/CirclePlusMinor.svg';\n
-  export default {
-    data() {
-      return {
-        iconCirclePlusMinor: CirclePlusMinor,
-      };
-    },
-  };
-  </script>
-  `}
-/>
+### **Example:**
+
+With Composition API:
+
+```javascript
+<template>
+  <Icon :source="CirclePlusMinor" />
+</template>
+
+<script setup>
+import CirclePlusMinor from '@shopify/polaris-icons/dist/svg/CirclePlusMinor.svg';
+</script>
+```
+
+With Options API:
+
+```javascript
+<script>
+import CirclePlusMinor from '@shopify/polaris-icons/dist/svg/CirclePlusMinor.svg';
+
+export default {
+  setup() {
+    return { CirclePlusMinor };
+  },
+}
+</script>
+
+<template>
+  <Icon :source="CirclePlusMinor">
+</template>
+```
 
 ### **Demo & Properties**
 
@@ -132,28 +139,18 @@ See example:
   <Story
     name="Icon"
     height="30px"
+    args={{
+      source: 'CirclePlusMinor',
+    }}
     parameters={{
       docs: {
-        transformSource: (source) => {
-          const iconName = source.match(/icon-name="(.*?)"/)[1];
-          const tmpSource = source
-            .replace(/<template>/, '')
-            .replace(/<\/template>/, '')
-            .replace(/icon-name=".*?"/, '')
-            .replace(/source='(.*)'/, `source="icon${iconName}"`);
-          if (iconName === 'placeholder') {
-            return tmpSource;
-          }
-          const fullSource = dedent`
-          import ${iconName} from '@shopify/polaris-icons/dist/svg/${iconName}.svg';\n
-            data() {
-              return {
-                icon${iconName}: ${iconName},
-              };
-            },
-          ${tmpSource}
-          `;
-          return fullSource;
+        source: {
+          code: dedent`
+            <Icon :source="CirclePlusMinor" />
+            <script setup>
+            import CirclePlusMinor from '@shopify/polaris-icons/dist/svg/CirclePlusMinor.svg';
+            </script>
+          `,
         },
       },
     }}
