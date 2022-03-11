@@ -21,7 +21,7 @@ const props = defineProps({
   },
 });
 
-const scrollLockManager = ref(new ScrollLockManager());
+const scrollLockManager = new ScrollLockManager();
 
 const portalManager = new PortalManager();
 
