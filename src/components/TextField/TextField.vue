@@ -11,9 +11,9 @@ Labelled(
   template(#help-text, v-if="slots['help-text']")
     slot(name="help-text")
   Connected
-    template(#left, v-if="slots.left")
+    template(#left, v-if="slots['connected-left']")
       slot(name="connected-left")
-    template(#right, v-if="slots.right")
+    template(#right, v-if="slots['connected-right']")
       slot(name="connected-right")
     div(
       :class="className",
