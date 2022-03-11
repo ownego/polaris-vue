@@ -27,7 +27,7 @@ const portalManager = new PortalManager();
 
 const uniqueIdFactory = ref(new UniqueIdFactory(globalIdGeneratorFactory));
 
-const focusManager = ref(new FocusManager());
+const focusManager = new FocusManager();
 
 const setBodyStyles = () => {
   // Inlining the following custom properties to maintain backward
