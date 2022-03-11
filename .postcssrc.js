@@ -11,7 +11,9 @@ module.exports = {
       getJSON: (cssFileName, json) => {
         let cssName = path.basename(cssFileName, '.vue');
 
-        const pattern = /polaris\-vue\/src\/components\/(.*?)\/components/g;
+        let projectPath = path.basename(__dirname, './');
+
+        const pattern = new RegExp(`${projectPath}/src/components/(.*?)/components`, 'g');
         let parentName = cssFileName.match(pattern);
         if (parentName) {
           parentName = parentName[0].replace(pattern, '$1');
