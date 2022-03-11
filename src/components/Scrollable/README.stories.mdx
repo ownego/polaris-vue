@@ -1,5 +1,5 @@
-import { Meta, Story, Canvas, ArgsTable, Source, Preview } from '@storybook/addon-docs';
 import dedent from 'ts-dedent';
+import { Meta, Story, Canvas, ArgsTable, Source, Preview } from '@storybook/addon-docs';
 
 import { Scrollable, ScrollTo } from '@/polaris-vue';
 
@@ -45,7 +45,7 @@ such as terms of service, that allows for scrolling so merchants can expose more
 Use when you need to make a region within the page independently scrollable.
 It's often used in modals and other panes where it's helpful to provide an extra visual cue that content exists below or above the fold.
 
-export const DefaultScrollable = (args, { argTypes }) => ({
+export const DefaultScrollable = (args) => ({
   components: { Scrollable },
   template: `
   <Scrollable :shadow="true" :focusable="true" :style="{height: '100px'}">
@@ -306,11 +306,6 @@ export const DefaultScrollable = (args, { argTypes }) => ({
     </p>
   </Scrollable>`,
 });
-DefaultScrollable.parameters = {
-  docs: {
-    source: false,
-  },
-};
 
 <Canvas>
   <Story story={DefaultScrollable} name="Default scrollable container"/>
@@ -320,7 +315,7 @@ DefaultScrollable.parameters = {
 
 Use when you need to programmatically scroll a child component into view in the scrollable container.
 
-export const ScrollToExample = (args, { argTypes }) => ({
+export const ScrollToExample = (args) => ({
   components: { Scrollable, ScrollTo },
   template: `
   <Scrollable :shadow="true" :style="{height: '100px'}">
@@ -583,14 +578,81 @@ export const ScrollToExample = (args, { argTypes }) => ({
 });
 ScrollToExample.parameters = {
   docs: {
+    source: {
+      state: 'close',
+      code: dedent`
+        <Scrollable :shadow="true" :style="{height: '100px'}">
+          <p>
+            You must be 18 years or older or at least the age of majority in the
+            jurisdiction where you reside or from which you use this Service.
+          </p>
+          <p>
+            To access and use the Services, you must register for a Shopify account
+            (“Account”) by providing your full legal name, current address, phone
+            number, a valid email address, and any other information indicated as
+            required. Shopify may reject your application for an Account, or cancel an
+            existing Account, for any reason, in our sole discretion.
+          </p>
+          <p>
+            You acknowledge that Shopify will use the email address you provide as the
+            primary method for communication.
+          </p>
+          <p>
+            You are responsible for keeping your password secure. Shopify cannot and
+            will not be liable for any loss or damage from your failure to maintain
+            the security of your Account and password.
+          </p>
+          <p>
+            You are responsible for all activity and content such as photos, images,
+            videos, graphics, written content, audio files, code, information, or data
+            uploaded, collected, generated, stored, displayed, distributed,
+            transmitted or exhibited on or in connection with your Account
+            (“Materials”).
+          </p>
+          <p>
+            A breaDefaultScrollable.parameters = {
+  docs: {
     source: false,
-    transformSource: (source) => {
-      const fullSource = dedent`
-        import { ScrollTo } from '@shopify/polaris';\n
-        components: { ScrollTo },\n
-        ${source}
-      `;
-      return fullSource;
+  },
+};ch or violation of any term in the Terms of Service, including the
+            AUP, as determined in the sole discretion of Shopify will result in an
+            immediate termination of your services.
+          </p>
+          <p>Which means</p>
+          <p>
+            You are responsible for your Account and any Materials you upload to the
+            Shopify Service. Remember that with any violation of these terms we will
+            cancel your service.
+          </p>
+          <p>If we need to reach you, we will send you an email.</p>
+          <ol>
+            <li>Account Activation</li>
+          </ol>
+          <ScrollTo>
+            <p>2.1 Shopify Account</p>
+          </ScrollTo>
+          <p>
+            Subject to section 2.1.2, the person signing up for the Service will be
+            the contracting party (“Account Owner”) for the purposes of our Terms of
+            Service and will be the person who is authorized to use any corresponding
+            account we may provide to the Account Owner in connection with the
+            Service.
+          </p>
+          <p>
+            If you are signing up for the Service on behalf of your employer, your
+            employer shall be the Account Owner. If you are signing up for the Service
+            on behalf of your employer, then you represent and warrant that you have
+            the authority to bind your employer to our Terms of Service.
+          </p>
+          <p>2.2 PayPal Express Checkout and Shopify Payments Accounts</p>
+          <p>
+            Upon completion of sign up for the Service, Shopify will create a PayPal
+            Express Checkout account on your behalf, using your email address.
+            Depending on your location, Shopify may also create a Shopify Payments
+            account on your behalf.
+          </p>
+        </Scrollable>
+      `
     }
   }
 };
@@ -601,11 +663,11 @@ ScrollToExample.parameters = {
 
 ### Example
 
-export const Example = (args, { argTypes }) => ({
-  props: Object.keys(argTypes),
+export const Example = (args) => ({
   components: { Scrollable },
+  setup() { return {args}; },
   template: `
-  <Scrollable :style="{height: '100px'}" v-bind="$props">
+  <Scrollable :style="{height: '100px'}" v-bind="args">
     <p>
       You must be 18 years or older or at least the age of majority in the
       jurisdiction where you reside or from which you use this Service.
@@ -649,9 +711,91 @@ export const Example = (args, { argTypes }) => ({
 });
 Example.parameters = {
   docs: {
-    source: false,
-  }
-}
+    source: {
+      code: dedent`
+        <Scrollable :style="{height: '100px'}" v-bind="args">
+          <p>
+            You must be 18 years or older or at least the age of majority in the
+            jurisdiction where you reside or from which you use this Service.
+          </p>
+          <p>
+            To access and use the Services, you must register for a Shopify account
+            (“Account”) by providing your full legal name, current address, phone
+            number, a valid email address, and any other information indicated as
+            required. Shopify may reject your application for an Account, or cancel an
+            existing Account, for any reason, in our sole discretion.
+          </p>
+          <p>
+            You acknowledge that Shopify will use the email address you provide as the
+            primary method for communication.
+          </p>
+          <p>
+            You are responsible for keeping your password secure. Shopify cannot and
+            will not be liable for any loss or damage from your failure to maintain
+            the security of your Account and password.
+          </p>
+          <p>
+            You are responsible for all activity and content such as photos, images,
+            videos, graphics, written content, audio files, code, information, or data
+            uploaded, collected, generated, stored, displayed, distributed,
+            transmitted or exhibited on or in connection with your Account
+            (“Materials”).
+          </p>
+          <p>
+            A breach or violation of any term in the Terms of Service, including the
+            AUP, as determined in the sole discretion of Shopify will result in an
+            immediate termination of your services.
+          </p>
+          <p>Which means</p>
+          <p>
+            You are responsible for your Account and any Materials you upload to the
+            Shopify Service. Remember that with any violation of these terms we will
+            cancel your service.
+          </p>
+          <p>If we need to reach you, we will send you an email.</p>  <p>
+            You must be 18 years or older or at least the age of majority in the
+            jurisdiction where you reside or from which you use this Service.
+          </p>
+          <p>
+            To access and use the Services, you must register for a Shopify account
+            (“Account”) by providing your full legal name, current address, phone
+            number, a valid email address, and any other information indicated as
+            required. Shopify may reject your application for an Account, or cancel an
+            existing Account, for any reason, in our sole discretion.
+          </p>
+          <p>
+            You acknowledge that Shopify will use the email address you provide as the
+            primary method for communication.
+          </p>
+          <p>
+            You are responsible for keeping your password secure. Shopify cannot and
+            will not be liable for any loss or damage from your failure to maintain
+            the security of your Account and password.
+          </p>
+          <p>
+            You are responsible for all activity and content such as photos, images,
+            videos, graphics, written content, audio files, code, information, or data
+            uploaded, collected, generated, stored, displayed, distributed,
+            transmitted or exhibited on or in connection with your Account
+            (“Materials”).
+          </p>
+          <p>
+            A breach or violation of any term in the Terms of Service, including the
+            AUP, as determined in the sole discretion of Shopify will result in an
+            immediate termination of your services.
+          </p>
+          <p>Which means</p>
+          <p>
+            You are responsible for your Account and any Materials you upload to the
+            Shopify Service. Remember that with any violation of these terms we will
+            cancel your service.
+          </p>
+          <p>If we need to reach you, we will send you an email.</p>
+        </Scrollable>
+      `,
+    }
+  },
+};
 
 <Canvas style={{ backgroundColor: '#fff'}}>
   <Story story={Example} name="Example" height="150px"/>
