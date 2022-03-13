@@ -1,4 +1,4 @@
-import type { Action, IconSource } from 'types/type';
+import type { Action, IconSource } from '@/utilities/type';
 
 export interface anyKey {
   [key: string]: any;

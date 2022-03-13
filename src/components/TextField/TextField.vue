@@ -116,7 +116,7 @@ import styles from '@/classes/TextField.json';
 import CircleCancelMinor from '@icons/CircleCancelMinor.svg';
 import type { ComboboxTextFieldType } from '@/utilities/interface';
 import type { LabelledProps } from '../Labelled/utils';
-import type { Error } from 'types/type';
+import type { Error } from '@/utilities/type';
 import { helpTextID, labelID } from '../Labelled/utils';
 import { Resizer, Spinner as TextFieldSpinner } from './components';
 import { Connected } from '../Connected';

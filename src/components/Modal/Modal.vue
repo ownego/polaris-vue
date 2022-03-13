@@ -127,7 +127,6 @@ const emit = defineEmits<{
   (event: 'close'): void
 }>();
 
-
 const slots = useSlots();
 
 const activatorNode = ref<HTMLElement | null>(null);

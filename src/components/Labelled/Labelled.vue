@@ -40,7 +40,7 @@ div(:class="className")
 import { computed } from 'vue';
 import { classNames } from 'polaris-react/src/utilities/css';
 import styles from '@/classes/Labelled.json';
-import type { Action, Error } from 'types/type';
+import type { Action, Error } from '@/utilities/type';
 import type { LabelProps } from "../Label/utils";
 import { Label } from '../Label';
 import { InlineError } from '../InlineError';

@@ -48,7 +48,7 @@ import { UnstyledLink } from '@/components/UnstyledLink';
 import styles from '@/classes/ActionList.json';
 import { handleMouseUpByBlurring } from '@/utilities/focus';
 import ContentElement from './ContentElement.vue';
-import type { IconSource } from 'types/type';
+import type { IconSource } from '@/utilities/type';
 
 interface Props {
   id?: string;

@@ -47,7 +47,7 @@ import type {
 import { UnstyledButton } from '../UnstyledButton';
 import { Icon } from '../Icon';
 import { Spinner } from '../Spinner';
-import type { IconSource } from 'types/type';
+import type { IconSource } from '@/utilities/type';
 import { capitalize } from 'lodash';
 
 interface Props {

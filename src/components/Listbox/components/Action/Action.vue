@@ -16,7 +16,7 @@ Option(
 import { provide, computed } from 'vue';
 import { classNames } from 'polaris-react/src/utilities/css';
 import styles from '@/classes/Listbox-Action.json';
-import type { IconSource } from 'types/type';
+import type { IconSource } from '@/utilities/type';
 import type { OptionProps } from '../Option/utils';
 import { Option } from '../Option';
 import { TextOption } from '../TextOption';

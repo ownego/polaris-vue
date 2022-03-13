@@ -8,7 +8,7 @@ component(
 </template>
 
 <script setup lang="ts">
-import type { HeadingTagName } from 'types/type';
+import type { HeadingTagName } from '@/utilities/type';
 import styles from '@/classes/Heading.json';
 
 interface Props {

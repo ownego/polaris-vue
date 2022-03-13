@@ -39,7 +39,7 @@ label(
 import { computed } from 'vue';
 import { classNames } from 'polaris-react/src/utilities/css';
 import styles from '@/classes/Choice.json';
-import type { Error } from 'types/type';
+import type { Error } from '@/utilities/type';
 import { helpTextID } from './utils';
 import { InlineError } from '../InlineError';
 
