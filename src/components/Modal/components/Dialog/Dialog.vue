@@ -4,7 +4,7 @@ div(
   :class="styles.Container",
   data-polaris-layer,
   data-polaris-overlay,
-  ref='dialogNode',
+  ref="dialogNode",
 )
   TrapFocus
     div(

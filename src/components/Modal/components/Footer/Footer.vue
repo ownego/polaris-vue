@@ -18,7 +18,7 @@ div(:class="styles.Footer")
 <script setup lang="ts">
 import type { ComplexAction } from '@/utilities/interface';
 import styles from '@/classes/Modal-Footer.json';
-import { Stack } from '@/components/Stack';
+import { Stack, StackItem } from '@/components/Stack';
 import { ButtonGroup } from '@/components/ButtonGroup';
 import { ButtonFrom } from '@/components/Button';
 
