@@ -12,6 +12,7 @@ div(:class="styles.AnnotatedSection")
           slot(name="description")
         slot(v-else, name="description")
     div(:class="styles.AnnotationContent")
+      slot
 </template>
 
 <script setup lang="ts">
