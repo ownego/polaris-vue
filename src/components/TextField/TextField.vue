@@ -230,7 +230,6 @@ const props = defineProps<TextFieldProps>();
 
 const emits = defineEmits<{
   (event: 'focus', focusEvent: Event): void
-  (event: 'click'): void
   (event: 'blur'): void
   (event: 'change', changeEvent: Event): void
   (event: 'update:modelValue', value: string): void
