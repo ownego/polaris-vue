@@ -102,4 +102,3 @@ export interface ComboboxTextFieldType {
   // Callback when TextField is changed
   onTextFieldChange?(): void;
 }
-

@@ -10,6 +10,7 @@ export * from './Checkbox';
 export * from './Choice';
 export * from './ChoiceList';
 export * from './ColorPicker';
+export * from './Combobox';
 export * from './Connected';
 export * from './CustomProperties';
 export * from './DatePicker';

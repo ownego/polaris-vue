@@ -114,7 +114,6 @@ import { classNames, variationName } from 'polaris-react/src/utilities/css';
 import { UseUniqueId } from '@/use';
 import styles from '@/classes/TextField.json';
 import CircleCancelMinor from '@icons/CircleCancelMinor.svg';
-import type { ComboboxTextFieldType } from '@/utilities/interface';
 import type { LabelledProps } from '../Labelled/utils';
 import type { Error } from '@/utilities/type';
 import { helpTextID, labelID } from '../Labelled/utils';
@@ -223,8 +222,6 @@ interface TextFieldProps {
   /** Indicates whether or not the entire input/text area text should be selected on focus */
   selectTextOnFocus?: boolean;
 }
-
-const comboboxTextFieldContext = inject<ComboboxTextFieldType>('comboboxTextFieldContext', {});
 
 const props = defineProps<TextFieldProps>();
 
@@ -423,10 +420,6 @@ const handleBlur = (event: Event) => {
 
 const handleChange = (event: Event) => {
   const target = event.target as HTMLInputElement;
-
-  if (comboboxTextFieldContext.onTextFieldChange) {
-    comboboxTextFieldContext.onTextFieldChange();
-  }
 
   emits('update:modelValue', target.value);
   emits('change', event);
