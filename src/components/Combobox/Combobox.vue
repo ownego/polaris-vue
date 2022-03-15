@@ -29,6 +29,8 @@ interface ComboboxProps {
 
 const props = defineProps<ComboboxProps>();
 
+provide('comboboxListboxOptionContext', { allowMultiple: props.allowMultiple });
+
 const emits = defineEmits<{
   (event: 'scrolled-to-bottom'): void
 }>()
