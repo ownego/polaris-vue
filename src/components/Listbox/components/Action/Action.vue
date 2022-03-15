@@ -17,18 +17,30 @@ import { provide, computed } from 'vue';
 import { classNames } from 'polaris-react/src/utilities/css';
 import styles from '@/classes/Listbox-Action.json';
 import type { IconSource } from '@/utilities/type';
-import type { OptionProps } from '../Option/utils';
 import { Option } from '../Option';
 import { TextOption } from '../TextOption';
 import { Icon } from '../../../Icon';
 
-interface ActionProps extends OptionProps {
+interface ActionProps {
+  // Unique item value
+  value: string;
+  // Visually hidden text for screen readers
+  accessibilityLabel?: string;
+  // Option is selected
+  selected?: boolean;
+  // Option is disabled
+  disabled?: boolean;
+  // Adds a border-bottom to the Option
+  divider?: boolean;
+  // Display icon inside Action
   icon?: IconSource;
 }
 
 provide('actionContext', true);
 
 const props = defineProps<ActionProps>();
+
+console.log(props);
 
 const className = computed(() => classNames(
   styles.Action,

@@ -80,7 +80,7 @@ const comboboxTextFieldContext = {
   expanded: popoverActive.value,
   listboxId: listboxId.value,
   setTextFieldFocused: (value: boolean) => { textFieldFocused.value = value; },
-  setTextFieldLabelId: (value: string) => { textFieldLabelId.value = value; },
+  setTextFieldLabelId: (id: string) => { textFieldLabelId.value = id; },
   onTextFieldFocus: handleFocus,
   onTextFieldChange: handleChange,
   onTextFieldBlur: handleBlur,

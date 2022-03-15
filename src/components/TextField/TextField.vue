@@ -109,7 +109,7 @@ Labelled(
 </template>
 
 <script setup lang="ts">
-import { inject, useSlots, ref, computed, watch } from 'vue';
+import { useSlots, ref, computed, watch } from 'vue';
 import { classNames, variationName } from 'polaris-react/src/utilities/css';
 import { UseUniqueId } from '@/use';
 import styles from '@/classes/TextField.json';

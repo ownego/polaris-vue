@@ -1,14 +1,16 @@
 <template lang="pug">
 PolarisTextField(
+  v-bind="props",
   :id="textFieldId",
-  @focus="handleFocus",
-  @blur="handleBlur",
-  @change="handleChange",
   autoComplete="list",
   aria-haspopup="listbox",
   :ariaActiveDescendant="activeOptionId",
   :ariaControls="listboxId",
   :ariaExpanded="expanded",
+  :modelValue="modelValue",
+  @focus="handleFocus",
+  @blur="handleBlur",
+  @change="handleChange",
 )
   template(#label, v-if="$slots.label")
     slot(name="label")
@@ -28,6 +30,7 @@ PolarisTextField(
 import { inject, computed, watch } from 'vue';
 import { UseUniqueId } from '@/use';
 import type { ComboboxTextFieldType } from '@/utilities/interface';
+import type { Error } from '@/utilities/type';
 import type { LabelledProps } from '../../../Labelled/utils'
 import { labelID } from '../../../Label/utils';
 import { TextField as PolarisTextField } from '../../../TextField';
@@ -92,8 +95,6 @@ interface TextFieldProps {
   role?: string;
   /** Limit increment value for numeric and date-time inputs */
   step?: number;
-  /** Enable automatic completion by the browser. Set to "off" when you do not want the browser to fill in info */
-  autoComplete?: string | boolean;
   /** Mimics the behavior of the native HTML attribute, limiting the maximum value */
   max?: number | string;
   /** Maximum character length for an input */
@@ -112,12 +113,6 @@ interface TextFieldProps {
   spellCheck?: boolean;
   /** Indicates the id of a component owned by the input */
   ariaOwns?: string;
-  /** Indicates whether or not a Popover is displayed */
-  ariaExpanded?: boolean;
-  /** Indicates the id of a component controlled by the input */
-  ariaControls?: string;
-  /** Indicates the id of a related component’s visually focused element to the input */
-  ariaActiveDescendant?: string;
   /** Indicates what kind of user input completion suggestions are provided */
   ariaAutocomplete?: string;
   /** Indicates whether or not the character count should be displayed */
@@ -150,7 +145,7 @@ const emits = defineEmits<{
   (event: 'focus'): void
   (event: 'blur'): void
   (event: 'change', changeEvent: Event): void
-  (event: 'input', value: string): void
+  (event: 'update:modelValue', value: string): void
 }>();
 
 const { useUniqueId } = UseUniqueId();
@@ -177,6 +172,7 @@ const handleFocus = (): void => {
     onTextFieldFocus();
   }
 
+
   if (setTextFieldFocused) {
     setTextFieldFocused(true);
   }
@@ -197,7 +193,7 @@ const handleBlur = (): void => {
 const handleChange = (event: Event): void => {
   const target = event.target as HTMLInputElement;
 
-  emits('input', target.value);
+  emits('update:modelValue', target.value);
   emits('change', event);
 
   if (onTextFieldChange) {

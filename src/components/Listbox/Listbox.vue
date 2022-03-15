@@ -18,19 +18,19 @@ template(v-if="keyboardEventsEnabled || textFieldFocused")
 VisuallyHidden
   div(aria-live="polite") {{ loading ? loading : null }}
 ul(
-    v-if="$slots.default",
-    tabindex="0",
-    role="listbox",
-    :class="classNames(styles.Listbox)",
-    :aria-label="inCombobox ? undefined : accessibilityLabel",
-    :aria-labelledby="textFieldLabelId || undefined",
-    :aria-busy="Boolean(loading)",
-    :id="listId",
-    @focus="handleFocus",
-    @blur="handleBlur",
-    ref="listboxRef",
-  )
-    slot
+  v-if="$slots.default",
+  tabindex="0",
+  role="listbox",
+  :class="classNames(styles.Listbox)",
+  :aria-label="inCombobox ? undefined : accessibilityLabel",
+  :aria-labelledby="textFieldLabelId || undefined",
+  :aria-busy="Boolean(loading)",
+  :id="listId",
+  @focus="handleFocus",
+  @blur="handleBlur",
+  ref="listboxRef",
+)
+  slot
 </template>
 
 <script setup lang="ts">
