@@ -2,7 +2,7 @@
 div
   div(v-if="slots.activator", ref="activatorNode")
     slot(name="activator")
-  Portal(v-if="hasActivator && open", idPrefix="modal")
+  Portal(v-if="domReady && open", idPrefix="modal")
     Dialog(
       :instant="instant",
       :labelledBy="headerId",
@@ -137,7 +137,7 @@ const headerId = useUniqueId('modal-header');
 
 const iframeHeight = ref<number>(IFRAME_LOADING_HEIGHT);
 
-const hasActivator = ref<boolean>(false);
+const domReady = ref<boolean>(false);
 
 const handleIframeLoad = (evt: Event) => {
   const iframe = evt.target as HTMLIFrameElement;
@@ -165,7 +165,7 @@ const handleExited = () => {
 };
 
 onMounted(() => {
-  if (activatorNode.value) {hasActivator.value = true;}
+  domReady.value = true;
 })
 </script>
 
