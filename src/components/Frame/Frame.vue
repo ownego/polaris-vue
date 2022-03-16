@@ -50,13 +50,13 @@ div(
     type="fade",
   )
     ContextualSaveBar(v-bind="contextualSaveBar", v-if="contextualSaveBar")
-      template(#contextControl)
+      template(#contextControl, v-if="contextualSaveBar.contextControl")
         component(
           v-for="el, index in contextualSaveBar.contextControl",
           :key="index",
           :is="el",
         )
-      template(#secondaryMenu)
+      template(#secondaryMenu, v-if="contextualSaveBar.secondaryMenu")
         component(
           v-for="el, index in contextualSaveBar.secondaryMenu",
           :key="index",

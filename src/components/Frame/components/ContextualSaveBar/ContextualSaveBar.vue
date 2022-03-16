@@ -13,7 +13,7 @@ CustomProperties(color-scheme="dark")
     )
       Image(
         v-if="logo",
-        :style="width",
+        :style="{ width }",
         :source="logo.contextualSaveBarSource || ''",
         alt="",
       )

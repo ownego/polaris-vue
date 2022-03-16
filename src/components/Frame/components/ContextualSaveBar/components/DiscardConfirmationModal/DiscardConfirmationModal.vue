@@ -1,13 +1,13 @@
 <template lang="pug">
 Modal(
-  :title="title",
   :open="open",
   @close="onCancel",
   :primaryAction="{content: primaryActionMsg, destructive: true, onAction: onDiscard}",
   :secondaryActions="[{content: secondaryActionMsg, onAction: onCancel}]",
   sectioned,
 )
-  | {{ message }}
+  template(#title) {{ title }}
+  template(#content) {{ message }}
 </template>
 <script setup lang="ts">
 import lang from 'polaris-react/locales/en.json';
