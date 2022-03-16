@@ -22,7 +22,7 @@ td(
 )
 </template>
 <script setup lang="ts">
-import { computed, onMounted, onUpdated, ref, watch } from 'vue';
+import { computed, onUpdated, ref } from 'vue';
 import { classNames } from 'polaris-react/src/utilities/css';
 import { isSameDay } from 'polaris-react/src/utilities/dates';
 import styles from '@/classes/DatePicker.json';
