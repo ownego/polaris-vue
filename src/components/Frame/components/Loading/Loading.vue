@@ -5,7 +5,7 @@ div(
   :aria-valuemin="0",
   :aria-valuemax="100",
   role="progressbar"
-  :aria-label="lang['Polaris.Loading.label']",
+  :aria-label="lang.Polaris.Loading.label",
 )
   div(
     :class="styles.Level",

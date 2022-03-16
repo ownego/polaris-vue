@@ -7,7 +7,7 @@ div(
   slot(v-if="transitionStatus !== TransitionStatus.Exited || props.in")
 </template>
 <script setup lang="ts">
-import { onUpdated, ref } from 'vue';
+import { computed, watch, ref } from 'vue';
 import { classNames, variationName } from 'polaris-react/src/utilities/css';
 import styles from '@/classes/Frame-CssAnimation.json';
 
@@ -31,27 +31,31 @@ const frameCssAnimationRef = ref<HTMLElement | null>(null);
 
 const transitionStatus = ref(props.in ? TransitionStatus.Entering : TransitionStatus.Exited);
 
-const wrapperClassName = classNames(
+const wrapperClassName = computed(() => classNames(
   styles[variationName('start', props.type)],
   props.in && styles[variationName('end', props.type)],
+));
+
+watch(
+  () => transitionStatus.value,
+  () => {
+    transitionStatus.value === TransitionStatus.Entering && changeTransitionStatus(TransitionStatus.Entered);
+  },
 );
 
-onUpdated(() => {
-  if (transitionStatus.value === TransitionStatus.Entering) {
-    changeTransitionStatus(TransitionStatus.Entered);
-  } else if (props.in) {
-    changeTransitionStatus(TransitionStatus.Entering);
-  } else if (!props.in) {
-    changeTransitionStatus(TransitionStatus.Exiting);
-  }
-});
+watch(
+  () => props.in,
+  () => {
+    props.in && changeTransitionStatus(TransitionStatus.Entering);
+    !props.in && changeTransitionStatus(TransitionStatus.Exiting);
+  },
+);
 
 /**
  * Methods
  */
 const handleTransitionEnd = () => {
-  transitionStatus.value === TransitionStatus.Exiting &&
-    changeTransitionStatus(TransitionStatus.Exited);
+  transitionStatus.value === TransitionStatus.Exiting && changeTransitionStatus(TransitionStatus.Exited);
 }
 
 const changeTransitionStatus = (transitionStatusNew: TransitionStatus) => {

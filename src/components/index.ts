@@ -12,6 +12,7 @@ export * from './ChoiceList';
 export * from './ColorPicker';
 export * from './Combobox';
 export * from './Connected';
+export * from './ContextualSaveBar';
 export * from './CustomProperties';
 export * from './DatePicker';
 export * from './DisplayText';

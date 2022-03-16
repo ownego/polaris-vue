@@ -34,6 +34,5 @@ watch(
 
 onMounted(() => {
   focusNode();
-  console.log('focus', props.disabled);
 });
 </script>

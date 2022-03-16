@@ -24,10 +24,10 @@ const emits = defineEmits<{
   (e: 'cancel'): void;
 }>();
 
-const message = lang['Polaris.DiscardConfirmationModal.message'];
-const title = lang['Polaris.DiscardConfirmationModal.title'];
-const primaryActionMsg = lang['Polaris.DiscardConfirmationModal.primaryAction'];
-const secondaryActionMsg = lang['Polaris.DiscardConfirmationModal.secondaryAction'];
+const message = lang.Polaris.DiscardConfirmationModal.message;
+const title = lang.Polaris.DiscardConfirmationModal.title;
+const primaryActionMsg = lang.Polaris.DiscardConfirmationModal.primaryAction;
+const secondaryActionMsg = lang.Polaris.DiscardConfirmationModal.secondaryAction;
 
 const onDiscard = () => {
   emits('discard');

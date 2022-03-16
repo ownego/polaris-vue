@@ -11,7 +11,7 @@ div(
       @blur="handleBlur",
       @click="handleClick",
     )
-      | {{ lang['Polaris.Frame.skipToContent'] }}
+      | {{ lang.Polaris.Frame.skipToContent }}
   div(
     v-if="slots.topBar",
     :class="styles.TopBar",
@@ -28,7 +28,7 @@ div(
         v-bind="mobileNavAttributes",
         key="NavContent",
         :id="APP_FRAME_NAV",
-        :aria-label="lang['Polaris.Frame.navigationLabel']",
+        :aria-label="lang.Polaris.Frame.navigationLabel",
         :class="[...navClassName, { ...navTransitionClasses }]",
         ref="navigationRef",
         @keydown="handleNavKeydown",
@@ -40,7 +40,7 @@ div(
           :class="styles.NavigationDismiss",
           @click="handleNavigationDismiss",
           :aria-hidden="mobileNavHidden || (!isNavigationCollapsed && !showMobileNavigation)",
-          :aria-label="lang['Polaris.Frame.Navigation.closeMobileNavigationLabel']",
+          :aria-label="lang.Polaris.Frame.Navigation.closeMobileNavigationLabel",
           :tabIndex="tabIndex",
         )
           Icon(:source="MobileCancelMajor")
@@ -49,7 +49,19 @@ div(
     :class="styles.ContextualSaveBar",
     type="fade",
   )
-    ContextualSaveBar(v-bind="contextualSaveBar")
+    ContextualSaveBar(v-bind="contextualSaveBar", v-if="contextualSaveBar")
+      template(#contextControl)
+        component(
+          v-for="el, index in contextualSaveBar.contextControl",
+          :key="index",
+          :is="el",
+        )
+      template(#secondaryMenu)
+        component(
+          v-for="el, index in contextualSaveBar.secondaryMenu",
+          :key="index",
+          :is="el",
+        )
   div(
     v-if="loadingStack > 0",
     :class="styles.LoadingBar",
@@ -99,6 +111,8 @@ import type {
 } from '@/utilities/frame';
 import {
   Backdrop,
+  TrapFocus,
+  EventListener,
 } from '@/components';
 import {
   CssAnimation,
@@ -125,6 +139,8 @@ const APP_FRAME_MAIN = 'AppFrameMain';
 const APP_FRAME_NAV = 'AppFrameNav';
 const APP_FRAME_TOP_BAR = 'AppFrameTopBar';
 const APP_FRAME_LOADING_BAR = 'AppFrameLoadingBar';
+
+const CONTEXTUALSAVEBAR_FADE_DURATION = 400;
 
 const props = defineProps<FrameProps>();
 
@@ -224,16 +240,17 @@ const hideToast = ({ id }: ToastID) => {
 
 const setContextualSaveBar = (saveBarProps: ContextualSaveBarProps) => {
   contextualSaveBar.value = { ...saveBarProps };
-  if (showContextualSaveBar.value === true) {
-    // forceUpdate();
-  } else {
+  if (!showContextualSaveBar.value) {
     showContextualSaveBar.value = true;
   }
 };
 
 const removeContextualSaveBar = () => {
-  contextualSaveBar.value = null;
   showContextualSaveBar.value = false;
+
+  setTimeout(() => {
+    contextualSaveBar.value = null;
+  }, CONTEXTUALSAVEBAR_FADE_DURATION);
 };
 
 const startLoading = () => {
