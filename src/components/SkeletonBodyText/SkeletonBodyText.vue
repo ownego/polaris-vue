@@ -1,6 +1,7 @@
 <template lang="pug">
 div(
-  v-for="index in props.lines" :key="index",
+  v-for="index in lines",
+  :key="index",
   :class="styles.SkeletonBodyText",
 )
 </template>
@@ -16,10 +17,9 @@ interface Props {
   lines?: number;
 }
 
-const props = withDefaults(defineProps<Props>(), {lines: 3});
+withDefaults(defineProps<Props>(), {lines: 3});
 
 </script>
-
 <style lang="scss">
 @import 'polaris-react/src/components/SkeletonBodyText/SkeletonBodyText.scss';
 </style>
