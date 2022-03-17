@@ -17,6 +17,11 @@ export type Action = {
   onTouchStart?(): void;
 };
 
+export interface IconableAction extends Action {
+  /** Source of the icon */
+  icon?: IconSource;
+}
+
 export interface BaseButton {
   /** A unique identifier for the button */
   id?: string;

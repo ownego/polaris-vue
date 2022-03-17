@@ -95,7 +95,7 @@ div(
 </template>
 
 <script setup lang="ts">
-import { onMounted, onUpdated, provide, ref, useSlots, watch } from 'vue';
+import { onMounted, provide, ref, useSlots, watch } from 'vue';
 import lang from 'polaris-react/locales/en.json';
 import { classNames } from 'polaris-react/src/utilities/css';
 import { dataPolarisTopBar, layer } from 'polaris-react/src/components/shared';
@@ -113,6 +113,7 @@ import {
   Backdrop,
   TrapFocus,
   EventListener,
+  Icon,
 } from '@/components';
 import {
   CssAnimation,

@@ -11,6 +11,7 @@ import debounce from 'lodash/debounce';
 import { ScrollLockManager } from 'polaris-react/src/utilities/scroll-lock-manager/scroll-lock-manager';
 import { UniqueIdFactory, globalIdGeneratorFactory } from 'polaris-react/src/utilities/unique-id/unique-id-factory';
 import { navigationBarCollapsed } from 'polaris-react/src/utilities/breakpoints';
+import { EventListener } from '@/components';
 import { PortalManager } from '@/utilities/portal-manager';
 import { FocusManager } from '@/utilities/focus-manager';
 import { CustomProperties } from '../CustomProperties';

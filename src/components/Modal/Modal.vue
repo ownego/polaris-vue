@@ -69,6 +69,7 @@ div
 </template>
 
 <script setup lang="ts">
+import { onMounted, ref, useSlots } from 'vue';
 import type { ComplexAction } from '@/utilities/interface';
 import { UseUniqueId } from '@/use';
 import { focusFirstFocusableNode } from '@/utilities/focus';
@@ -76,11 +77,7 @@ import styles from '@/classes/Modal.json';
 import {
   Dialog, Header, Section, Footer,
 } from './components';
-import { Portal } from '../Portal';
-import { Spinner } from '../Spinner';
-import { Backdrop } from '../Backdrop';
-import { Scrollable } from '../Scrollable';
-import { onMounted, ref, useSlots } from 'vue';
+import { Portal, Spinner, Backdrop, Scrollable } from '@/components';
 
 const IFRAME_LOADING_HEIGHT = 200;
 const DEFAULT_IFRAME_CONTENT_HEIGHT = 400;

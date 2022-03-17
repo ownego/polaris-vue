@@ -29,7 +29,7 @@ CustomProperties(color-scheme="dark")
 import { onBeforeUnmount, onMounted, ref } from 'vue';
 import { classNames } from 'polaris-react/src/utilities/css';
 import styles from '@/classes/Frame-Toast.json';
-import { KeypressListener, Button as PButton, CustomProperties } from '@/components';
+import { KeypressListener, Button as PButton, CustomProperties, Icon } from '@/components';
 import type { Action } from '@/utilities/type';
 import { Key } from '@/components/KeypressListener/utils';
 import MobileCancelMajor from '@icons/MobileCancelMajor.svg';

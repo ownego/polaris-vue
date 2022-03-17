@@ -1,0 +1,219 @@
+import dedent from 'ts-dedent';
+import { Meta, Story, Canvas, ArgsTable } from '@storybook/addon-docs';
+
+import { ref } from 'vue';
+import { Frame, TopBar, TopBarUserMenu, TopBarSearchField, TopBarMenu, Icon, VisuallyHidden, ActionList } from '@/polaris-vue';
+import ArrowLeftMinor from '@icons/ArrowLeftMinor.svg';
+import QuestionMarkMajor from '@icons/QuestionMarkMajor.svg';
+
+<Meta
+  title="Components / Structure / Frame"
+  component={ Frame }
+  argTypes={{
+    default: {
+      table: {
+        disable: true,
+      },
+    },
+  }}
+/>
+
+export const Template = (args) => ({
+  components: { Frame, TopBar, TopBarUserMenu, TopBarMenu, Icon, VisuallyHidden, TopBarSearchField, ActionList },
+  setup() {
+    const logo = {
+      width: 30,
+      topBarSource: 'https://github.com/qikify/polaris-vue/raw/dev/public/images/logo.png',
+      contextualSaveBarSource: 'https://github.com/qikify/polaris-vue/raw/dev/public/images/logo.png',
+    }
+    const isUserMenuOpen = ref(false);
+    const isSecondaryMenuOpen = ref(false);
+    const isSearchActive = ref(false);
+    const searchValue = ref('');
+    const handleSearchChange = (value) => {
+      isSearchActive.value = value.length > 0;
+    }
+    const handleSearchResultsDismiss = () => {
+      searchValue.value = '';
+      isSearchActive.value = false;
+    }
+    const toggleUserMenu = () => {
+      isUserMenuOpen.value = !isUserMenuOpen.value;
+    };
+    const toggleIsSecondaryMenuOpen = () => {
+      isSecondaryMenuOpen.value = !isSecondaryMenuOpen.value;
+    };
+    const userMenuAction = ref([
+      { items: [{ content: 'Back to Shopify', icon: ArrowLeftMinor }] },
+      { items: [{ content: 'Community forums' }] }]
+    );
+    const clickHandle = () => { alert('clicked'); };
+    const userMenuMessage = ref({
+      title: 'Another Message',
+      description:'This is a description of message',
+      action: { onClick: clickHandle, content: 'This is a action' },
+      link: { to: 'https://google.com', content: 'Google Homepage' }
+    });
+    return { logo, isSearchActive, searchValue, handleSearchChange, toggleIsSecondaryMenuOpen, userMenuAction, userMenuMessage, toggleUserMenu, isUserMenuOpen, isSecondaryMenuOpen, handleSearchResultsDismiss, QuestionMarkMajor };
+  },
+  template: `
+    <Frame :logo="logo">
+      <template #topBar>
+        <TopBar showNavigationToggle
+          :searchResultsVisible="isSearchActive"
+          @search-result-dismiss="handleSearchResultsDismiss"
+        >
+          <template #userMenu>
+            <TopBarUserMenu
+              :actions="userMenuAction"
+              name="Polaris"
+              detail="qikify"
+              initials="P"
+              :message="userMenuMessage"
+              :open="isUserMenuOpen"
+              @toggle="toggleUserMenu"
+            />
+          </template>
+          <template #secondaryMenu>
+            <TopBarMenu
+              :open="isSecondaryMenuOpen"
+              @open="toggleIsSecondaryMenuOpen"
+              @close="toggleIsSecondaryMenuOpen"
+              :actions="[{ items: [{content: 'Community forums'}] }, { items: [{content: 'Blog'}] }]"
+            >
+              <template #activatorContent>
+                <span>
+                  <Icon :source="QuestionMarkMajor" />
+                  <VisuallyHidden>Secondary menu</VisuallyHidden>
+                </span>
+              </template>
+            </TopBarMenu>
+          </template>
+          <template #searchField>
+            <TopBarSearchField
+              placeholder="Search"
+              v-model="searchValue"
+              :showFocusBorder="true"
+              @change="handleSearchChange"
+            />
+          </template>
+          <template #searchResults>
+            <ActionList
+              :items="[{content: 'Shopify help center', onAction: () => alert('ok')}, {content: 'Community forums'}]"
+            />
+          </template>
+        </TopBar>
+      </template>
+    </Frame>
+  `,
+});
+
+# Frame
+
+The frame component, while not visible in the user interface itself, provides the structure for an application. It wraps the main elements and houses the primary navigation, [top bar](?path=/docs/components-navigation-top-bar--top-bar), [toast](?path=/docs/components-feedback-indicators-toast--toast), and [contextual save bar] components.
+
+<Canvas>
+  <Story
+    name="Frame"
+    inline={false}
+    height="400px"
+    width="400px"
+    parameters={{
+      docs: {
+        source: {
+          state: 'close',
+          code: dedent`
+            <Frame :logo="logo">
+              <template #topBar>
+                <TopBar showNavigationToggle
+                  :searchResultsVisible="isSearchActive"
+                  @search-result-dismiss="handleSearchResultsDismiss"
+                >\n
+                  <template #userMenu>
+                    <TopBarUserMenu
+                      :actions="userMenuAction"
+                      name="Polaris"
+                      detail="qikify"
+                      initials="P"
+                      :message="userMenuMessage"
+                      :open="isUserMenuOpen"
+                      @toggle="toggleUserMenu"
+                    />
+                  </template>\n
+                  <template #secondaryMenu>
+                    <TopBarMenu
+                      :open="isSecondaryMenuOpen"
+                      @open="toggleIsSecondaryMenuOpen"
+                      @close="toggleIsSecondaryMenuOpen"
+                      :actions="[{ items: [{content: 'Community forums'}] }, { items: [{content: 'Blog'}] }]"
+                    >
+                      <template #activatorContent>
+                        <span>
+                          <Icon :source="QuestionMarkMajor" />
+                          <VisuallyHidden>Secondary menu</VisuallyHidden>
+                        </span>
+                      </template>
+                    </TopBarMenu>
+                  </template>\n
+                  <template #searchField>
+                    <TopBarSearchField
+                      placeholder="Search"
+                      v-model="searchValue"
+                      :showFocusBorder="true"
+                      @change="handleSearchChange"
+                    />
+                  </template>\n
+                  <template #searchResults>
+                    <ActionList
+                      :items="[{content: 'Shopify help center', onAction: () => alert('ok')}, {content: 'Community forums'}]"
+                    />
+                  </template>\n
+                </TopBar>
+              </template>
+            </Frame>\n\n
+            setup() {
+              const logo = {
+                width: 30,
+                topBarSource: 'https://github.com/qikify/polaris-vue/raw/dev/public/images/logo.png',
+                contextualSaveBarSource: 'https://github.com/qikify/polaris-vue/raw/dev/public/images/logo.png',
+              }
+              const isUserMenuOpen = ref(false);
+              const isSecondaryMenuOpen = ref(false);
+              const isSearchActive = ref(false);
+              const searchValue = ref('');\n
+              const handleSearchChange = (value) => {
+                isSearchActive.value = value.length > 0;
+              }
+              const handleSearchResultsDismiss = () => {
+                searchValue.value = '';
+                isSearchActive.value = false;
+              }
+              const toggleUserMenu = () => {
+                isUserMenuOpen.value = !isUserMenuOpen.value;
+              };
+              const toggleIsSecondaryMenuOpen = () => {
+                isSecondaryMenuOpen.value = !isSecondaryMenuOpen.value;
+              };
+              const userMenuAction = ref([
+                { items: [{ content: 'Back to Shopify', icon: ArrowLeftMinor }] },
+                { items: [{ content: 'Community forums' }] }]
+              );
+              const clickHandle = () => { alert('clicked'); };
+              const userMenuMessage = ref({
+                title: 'Another Message',
+                description:'This is a description of message',
+                action: { onClick: clickHandle, content: 'This is a action' },
+                link: { to: 'https://google.com', content: 'Google Homepage' }
+              });
+              return { logo, isSearchActive, searchValue, handleSearchChange, toggleIsSecondaryMenuOpen, userMenuAction, userMenuMessage, toggleUserMenu, isUserMenuOpen, isSecondaryMenuOpen, handleSearchResultsDismiss, QuestionMarkMajor };
+            },
+          `,
+        },
+      },
+    }}
+  >
+    {Template.bind({})}
+  </Story>
+</Canvas>
+
+<ArgsTable story="Frame" />
