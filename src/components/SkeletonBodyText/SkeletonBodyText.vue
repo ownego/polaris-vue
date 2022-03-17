@@ -7,7 +7,7 @@ div(
 </template>
 
 <script setup lang="ts">
-import styles from '@/classes/SkeletonBodyText.json'
+import styles from '@/classes/SkeletonBodyText.json';
 
 interface Props {
   /**
