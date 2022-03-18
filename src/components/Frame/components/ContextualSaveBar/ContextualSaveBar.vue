@@ -55,7 +55,7 @@ DiscardConfirmationModal(
 </template>
 
 <script setup lang="ts">
-import { ref, useSlots } from 'vue';
+import { computed, ref, useSlots } from 'vue';
 import { classNames } from 'polaris-react/src/utilities/css';
 import { getWidth } from 'polaris-react/src/utilities/get-width';
 import lang from 'polaris-react/locales/en.json';
@@ -86,10 +86,12 @@ const props = defineProps<ContextualSaveBarProps>();
 
 const slots = useSlots();
 
-const contentsClassName = classNames(
-  styles.Contents,
-  props.fullWidth && styles.fullWidth,
-);
+const contentsClassName = computed(() => {
+  return classNames(
+    styles.Contents,
+    props.fullWidth && styles.fullWidth,
+  );
+});
 
 const saveLang = lang.Polaris.ContextualSaveBar.save;
 const discardLang = lang.Polaris.ContextualSaveBar.discard;

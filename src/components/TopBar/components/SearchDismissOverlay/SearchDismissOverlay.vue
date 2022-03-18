@@ -9,7 +9,7 @@ div(
 </template>
 
 <script setup lang="ts">
-import { ref } from 'vue';
+import { computed, ref } from 'vue';
 import { ScrollLock } from '@/components';
 import styles from '@/classes/TopBar-SearchDismissOverlay.json';
 import { classNames } from 'polaris-react/src/utilities/css';
@@ -27,7 +27,7 @@ const emits = defineEmits<{
 
 const nodeRef = ref(null);
 
-const className = classNames(styles.SearchDismissOverlay, props.visible && styles.visible)
+const className = computed(() => classNames(styles.SearchDismissOverlay, props.visible && styles.visible));
 
 const handleDismiss = (e: Event) => {
   const target = e.target;

@@ -26,7 +26,7 @@ CustomProperties(color-scheme="dark")
 </template>
 
 <script setup lang="ts">
-import { onBeforeUnmount, onMounted, ref } from 'vue';
+import { computed, onBeforeUnmount, onMounted, ref } from 'vue';
 import { classNames } from 'polaris-react/src/utilities/css';
 import styles from '@/classes/Frame-Toast.json';
 import { KeypressListener, Button as PButton, CustomProperties, Icon } from '@/components';
@@ -60,7 +60,7 @@ const emits = defineEmits<{
 
 const timer = ref();
 
-const className = classNames(styles.Toast, props.error && styles.error);
+const className = computed(() => classNames(styles.Toast, props.error && styles.error));
 
 onMounted(() => {
   let timeoutDuration = props.duration || DEFAULT_TOAST_DURATION;

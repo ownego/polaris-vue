@@ -1,9 +1,5 @@
 <template lang="pug">
-div(
-  :class="className",
-  @click="$emit('click')",
-  @touchstart="$emit('touchstart')",
-)
+div(:class="className")
   ScrollLock
 </template>
 

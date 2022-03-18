@@ -35,7 +35,7 @@ div(
 </template>
 
 <script setup lang="ts">
-import { onMounted, ref } from 'vue';
+import { computed, onMounted, ref } from 'vue';
 import { classNames } from 'polaris-react/src/utilities/css';
 import lang from 'polaris-react/locales/en.json';
 import SearchMinor from '@icons/SearchMinor.svg';
@@ -106,15 +106,19 @@ const onClearFocus = () => {
   forceActive.value = true;
 }
 
-const className = classNames(
-  styles.SearchField,
-  (props.focused || props.active || forceActive.value) && styles.focused,
-);
+const className = computed(() => {
+  return classNames(
+    styles.SearchField,
+    (props.focused || props.active || forceActive.value) && styles.focused,
+  );
+});
 
-const backDropClassName = classNames(
-  styles.Backdrop,
-  props.showFocusBorder && styles.BackdropShowFocusBorder,
-)
+const backDropClassName = computed(() => {
+  return classNames(
+    styles.Backdrop,
+    props.showFocusBorder && styles.BackdropShowFocusBorder,
+  );
+});
 
 onMounted(() => {
   if (!inputRef.value) {

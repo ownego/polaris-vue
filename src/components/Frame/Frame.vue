@@ -23,13 +23,21 @@ div(
     v-if="slots.navigation",
     :trapping="mobileNavShowing",
   )
-    Transition
+    transition(
+      name="custom-classes",
+      @after-enter="onTransitionAfterEnter",
+      @before-enter="onTransitionBeforeEnter",
+      @enter="onTransitionEnter",
+      @before-leave="onTransitionBeforeLeave",
+      @leave="onTransitionLeave",
+    )
       div(
+        v-if="showMobileNavigation || !isNavigationCollapsed",
         v-bind="mobileNavAttributes",
         key="NavContent",
         :id="APP_FRAME_NAV",
         :aria-label="lang.Polaris.Frame.navigationLabel",
-        :class="[...navClassName, { ...navTransitionClasses }]",
+        :class="navClassName",
         ref="navigationRef",
         @keydown="handleNavKeydown",
         :hidden="mobileNavHidden",
@@ -95,7 +103,7 @@ div(
 </template>
 
 <script setup lang="ts">
-import { onMounted, provide, ref, useSlots, watch } from 'vue';
+import { computed, onMounted, provide, ref, useSlots, watch } from 'vue';
 import lang from 'polaris-react/locales/en.json';
 import { classNames } from 'polaris-react/src/utilities/css';
 import { dataPolarisTopBar, layer } from 'polaris-react/src/components/shared';
@@ -142,6 +150,7 @@ const APP_FRAME_TOP_BAR = 'AppFrameTopBar';
 const APP_FRAME_LOADING_BAR = 'AppFrameLoadingBar';
 
 const CONTEXTUALSAVEBAR_FADE_DURATION = 400;
+const NAVIGATION_ANIMATION_DURATION = 300;
 
 const props = defineProps<FrameProps>();
 
@@ -171,13 +180,50 @@ const setGlobalRibbonHeight = () => {
   }
 };
 
-const navClassName = classNames(
-  styles.Navigation,
-  props.showMobileNavigation && styles['Navigation-visible'],
-);
+const navClassName = computed(() => {
+  return classNames(
+    styles.Navigation,
+    props.showMobileNavigation && styles['Navigation-visible'],
+  );
+});
 
-const mobileNavHidden = ref(isNavigationCollapsed && !props.showMobileNavigation);
-const mobileNavShowing = ref(isNavigationCollapsed && props.showMobileNavigation);
+const navTransitionClasses = {
+  enter: classNames(styles['Navigation-enter']),
+  enterActive: classNames(styles['Navigation-enterActive']),
+  enterDone: classNames(styles['Navigation-enterActive']),
+  exit: classNames(styles['Navigation-exit']),
+  exitActive: classNames(styles['Navigation-exitActive']),
+};
+
+const onTransitionAfterEnter = (el: Element) => {
+  el.classList.add(navTransitionClasses.enterDone);
+}
+
+const onTransitionBeforeEnter = (el: Element) => {
+  el.classList.add(navTransitionClasses.enter);
+};
+
+const onTransitionEnter = (el: Element, done) => {
+  el.classList.remove(navTransitionClasses.enter);
+  el.classList.add(navTransitionClasses.enterDone);
+
+  setTimeout(done, NAVIGATION_ANIMATION_DURATION);
+};
+
+const onTransitionBeforeLeave = (el: Element) => {
+  el.classList.remove(navTransitionClasses.enterActive);
+  el.classList.add(navTransitionClasses.exitActive);
+};
+
+const onTransitionLeave = (el: Element, done) => {
+  el.classList.add(navTransitionClasses.exit);
+
+  setTimeout(done, NAVIGATION_ANIMATION_DURATION);
+};
+
+const mobileNavHidden = computed(() => isNavigationCollapsed && !props.showMobileNavigation);
+const mobileNavShowing = computed(() => (isNavigationCollapsed && props.showMobileNavigation));
+
 const tabIndex = mobileNavShowing.value ? 0 : -1;
 
 const mobileNavAttributes = {
@@ -187,16 +233,20 @@ const mobileNavAttributes = {
   }),
 };
 
-const frameClassName = classNames(
-  styles.Frame,
-  slots.navigation && styles.hasNav,
-  slots.topBar && styles.hasTopBar,
-);
+const frameClassName = computed(() => {
+  return classNames(
+    styles.Frame,
+    slots.navigation && styles.hasNav,
+    slots.topBar && styles.hasTopBar,
+  );
+});
 
-const skipClassName = classNames(
-  styles.Skip,
-  skipFocused.value && styles.focused,
-);
+const skipClassName = computed(() => {
+  return classNames(
+    styles.Skip,
+    skipFocused.value && styles.focused,
+  );
+});
 
 const skipTarget = props.skipToContentTarget
   ? props.skipToContentTarget.id
@@ -294,14 +344,6 @@ const handleNavKeydown = (event: KeyboardEvent) => {
   if (isMobileNavShowing && key === 'Escape') {
     handleNavigationDismiss();
   }
-};
-
-const navTransitionClasses = {
-  enter: classNames(styles['Navigation-enter']),
-  enterActive: classNames(styles['Navigation-enterActive']),
-  enterDone: classNames(styles['Navigation-enterActive']),
-  exit: classNames(styles['Navigation-exit']),
-  exitActive: classNames(styles['Navigation-exitActive']),
 };
 
 provide('frameContext', {

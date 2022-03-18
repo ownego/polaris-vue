@@ -47,7 +47,7 @@ div(:class="styles.TopBar")
 </template>
 
 <script setup lang="ts">
-import { ref, useSlots } from 'vue';
+import { computed, ref, useSlots } from 'vue';
 import { classNames } from 'polaris-react/src/utilities/css';
 import { getWidth  } from 'polaris-react/src/utilities/get-width';
 import lang from 'polaris-react/locales/en.json';
@@ -90,17 +90,21 @@ const forceFalseFocused = () => {
   focused.value = false;
 };
 
-const iconClassName = classNames(
-  styles.NavigationIcon,
-  focused.value && styles.focused,
-);
+const iconClassName = computed(() => {
+  return classNames(
+    styles.NavigationIcon,
+    focused.value && styles.focused,
+  );
+});
 
-const className = classNames(
-  styles.LogoContainer,
-  props.showNavigationToggle || slots.searchField
-    ? styles.LogoDisplayControl
-    : styles.LogoDisplayContainer,
-);
+const className = computed(() => {
+  return classNames(
+    styles.LogoContainer,
+    props.showNavigationToggle || slots.searchField
+      ? styles.LogoDisplayControl
+      : styles.LogoDisplayContainer,
+  );
+});
 
 const width = getWidth(logo, 104);
 
