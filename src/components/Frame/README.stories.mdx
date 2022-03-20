@@ -1,7 +1,7 @@
 import dedent from 'ts-dedent';
 import { Meta, Story, Canvas, ArgsTable } from '@storybook/addon-docs';
 
-import { ref } from 'vue';
+import { ref, markRaw } from 'vue';
 import {
   Frame,
   TopBar,
@@ -28,71 +28,111 @@ import QuestionMarkMajor from '@icons/QuestionMarkMajor.svg';
   title="Components / Structure / Frame"
   component={ Frame }
   argTypes={{
-    default: {
+    'navigation-dismiss': {
+      description: 'A callback function to handle clicking the mobile navigation dismiss button',
       table: {
-        disable: true,
+        type: { summary: null },
       },
+      control: { disable: true },
+    },
+    default: {
+      table: { disable: true },
+    },
+    globalRibbon: {
+      description: 'Accepts a global ribbon component that will be rendered fixed to the bottom of an application frame',
+      table: {
+        type: { summary: null },
+      },
+      control: { disable: true },
+    },
+    navigation: {
+      description: 'Accepts a navigation component that will be rendered in the left sidebar of an application frame',
+      table: {
+        type: { summary: null },
+      },
+      control: { disable: true },
+    },
+    topBar: {
+      description: 'Accepts a top bar component that will be rendered at the top-most portion of an application frame',
+      table: {
+        type: { summary: null },
+      },
+      control: { disable: true },
     },
   }}
 />
 
 export const Template = (args) => ({
-  components: { Frame, TopBar, TopBarUserMenu, TopBarMenu, Icon, VisuallyHidden, TopBarSearchField, ActionList, NavigationSection, Navigation, Loading, ContextualSaveBar, Button, Toast },
+  components: {
+    Frame, TopBar, TopBarUserMenu, TopBarMenu, Icon, TopBarSearchField, VisuallyHidden,
+    ActionList, NavigationSection, Navigation, Loading, ContextualSaveBar, Button, Toast
+  },
+  data() {
+    return {
+      isUserMenuOpen: false,
+      isSecondaryMenuOpen: false,
+      isSearchActive: false,
+      searchValue: '',
+      isCollapsed: false,
+      isLoading: false,
+      isDirty: false,
+      toastActive: false,
+      userMenuAction: [
+        { items: [{ content: 'Back to Shopify', icon: ArrowLeftMinor }] },
+        { items: [{ content: 'Community forums' }] },
+      ],
+      userMenuMessage: {
+        title: 'Another Message',
+        description:'This is a description of message',
+        action: { onClick: this.clickHandle, content: 'This is a action' },
+        link: { to: 'https://google.com', content: 'Google Homepage' }
+      },
+      navItems2: [
+        { label: 'Dashboard', icon: markRaw(HomeMajor), onClick: this.toggleIsLoading },
+        { label: 'Qikify Orders', icon: markRaw(OrdersMajor), onClick: this.toggleIsLoading },
+      ],
+    };
+  },
+  methods: {
+    handleSearchChange(value) {
+      this.isSearchActive = value.length > 0;
+    },
+    handleSearchResultsDismiss() {
+      this.searchValue = '';
+      this.isSearchActive = false;
+    },
+    toggleUserMenu() {
+      this.isUserMenuOpen = !this.isUserMenuOpen;
+    },
+    toggleIsSecondaryMenuOpen() {
+      this.isSecondaryMenuOpen = !this.isSecondaryMenuOpen;
+    },
+    clickHandle() {
+      alert('clicked');
+    },
+    toggleCollapsed() {
+      this.isCollapsed = !this.isCollapsed;
+    },
+    toggleToastActive() {
+      this.toastActive = !this.toastActive;
+    },
+    toggleIsLoading() {
+      this.isLoading = !this.isLoading;
+    },
+    toggleIsDirty() {
+      this.isDirty = !this.isDirty;
+    },
+  },
   setup() {
     const logo = {
       width: 30,
       topBarSource: 'https://github.com/qikify/polaris-vue/raw/dev/public/images/logo.png',
       contextualSaveBarSource: 'https://github.com/qikify/polaris-vue/raw/dev/public/images/logo.png',
     }
-    const isUserMenuOpen = ref(false);
-    const isSecondaryMenuOpen = ref(false);
-    const isSearchActive = ref(false);
-    const searchValue = ref('');
-    const handleSearchChange = (value) => {
-      isSearchActive.value = value.length > 0;
-    }
-    const handleSearchResultsDismiss = () => {
-      searchValue.value = '';
-      isSearchActive.value = false;
-    }
-    const toggleUserMenu = () => {
-      isUserMenuOpen.value = !isUserMenuOpen.value;
-    };
-    const toggleIsSecondaryMenuOpen = () => {
-      isSecondaryMenuOpen.value = !isSecondaryMenuOpen.value;
-    };
-    const userMenuAction = ref([
-      { items: [{ content: 'Back to Shopify', icon: ArrowLeftMinor }] },
-      { items: [{ content: 'Community forums' }] }]
-    );
-    const clickHandle = () => { alert('clicked'); };
-    const userMenuMessage = ref({
-      title: 'Another Message',
-      description:'This is a description of message',
-      action: { onClick: clickHandle, content: 'This is a action' },
-      link: { to: 'https://google.com', content: 'Google Homepage' }
-    });
-    const isCollapsed = ref(false);
-    const toggleCollapsed = () => {
-      isCollapsed.value = !isCollapsed.value;
-    };
-    const isLoading = ref(false);
-    const isDirty = ref(false);
-    const toastActive = ref(false);
-    const toggleToastActive = () => {
-      toastActive.value = !toastActive.value;
-    };
-    const toggleIsLoading = () => {
-      isLoading.value = !isLoading.value;
-    };
     const navItems = [
       { label: 'Back to Shopify', icon: ArrowLeftMinor },
     ];
-    const navItems2 = [
-      { label: 'Dashboard', icon: HomeMajor, onClick: toggleIsLoading },
-      { label: 'Qikify Orders', icon: OrdersMajor, onClick: toggleIsLoading },
-    ]
-    return { logo, isSearchActive, searchValue, handleSearchChange, toggleIsSecondaryMenuOpen, userMenuAction, userMenuMessage, toggleUserMenu, isUserMenuOpen, isSecondaryMenuOpen, handleSearchResultsDismiss, QuestionMarkMajor, isCollapsed, toggleCollapsed, navItems, navItems2, isLoading, toggleIsLoading, toastActive, toggleToastActive, CirclePlusOutlineMinor, isDirty };
+    return { logo, navItems, QuestionMarkMajor, CirclePlusOutlineMinor };
   },
   template: `
     <Frame
@@ -164,24 +204,25 @@ export const Template = (args) => ({
       <ContextualSaveBar
         v-if="isDirty"
         message="Unsaved changes"
-        :saveAction="{ onAction: toggleActive }"
+        :saveAction="{ onAction: () => { toggleToastActive(); toggleIsDirty() } }"
         :discardAction="{ onAction: toggleIsDirty, discardConfirmationModal: true }"
       />
       <Toast
         v-if="toastActive"
-        content="Message sent"
+        content="Saved changes!"
         :duration="5000"
         @dismiss="toggleToastActive"
       />
       <Button @click="toggleIsLoading">Start/Stop Loading</Button>
       <Button @click="toggleToastActive">Toggle Toast</Button>
+      <Button @click="toggleIsDirty">Form change</Button>
     </Frame>
   `,
 });
 
 # Frame
 
-The frame component, while not visible in the user interface itself, provides the structure for an application. It wraps the main elements and houses the primary navigation, [top bar](?path=/docs/components-navigation-top-bar--top-bar), [toast](?path=/docs/components-feedback-indicators-toast--toast), and [contextual save bar] components.
+The frame component, while not visible in the user interface itself, provides the structure for an application. It wraps the main elements and houses the primary [navigation](?path=/docs/components-navigation-navigation--navigation), [top bar](?path=/docs/components-navigation-top-bar--top-bar), [toast](?path=/docs/components-feedback-indicators-toast--toast), and [contextual save bar](?path=/docs/components-forms-contextual-save-bar--contextual-save-bar) components.
 
 <Canvas>
   <Story
@@ -194,7 +235,22 @@ The frame component, while not visible in the user interface itself, provides th
         source: {
           state: 'close',
           code: dedent`
-            <Frame :logo="logo">
+            <template>
+            <Frame :logo="logo" :showMobileNavigation="isCollapsed" @navigation-dismiss="toggleCollapsed">
+              <template #navigation>
+                <Navigation location="/">
+                  <NavigationSection
+                    :items="navItems"
+                    :rollup="{ after: 7, view: 'view', hide: 'hide', activePath: '/' }"
+                  />
+                  <NavigationSection
+                    separator
+                    title="Sales channels"
+                    :items="navItems2"
+                    :action="{ accessibilityLabel: 'Add sales channel', icon: CirclePlusOutlineMinor, onClick: () => {}}"
+                  />
+                </Navigation>
+              </template>\n
               <template #topBar>
                 <TopBar showNavigationToggle
                   :searchResultsVisible="isSearchActive"
@@ -240,44 +296,94 @@ The frame component, while not visible in the user interface itself, provides th
                     />
                   </template>\n
                 </TopBar>
-              </template>
-            </Frame>\n\n
-            setup() {
-              const logo = {
-                width: 30,
-                topBarSource: 'https://github.com/qikify/polaris-vue/raw/dev/public/images/logo.png',
-                contextualSaveBarSource: 'https://github.com/qikify/polaris-vue/raw/dev/public/images/logo.png',
+              </template>\n
+              <Loading v-if="isLoading" />
+              <ContextualSaveBar
+                v-if="isDirty"
+                message="Unsaved changes"
+                :saveAction="{ onAction: () => { toggleToastActive(); toggleIsDirty() } }"
+                :discardAction="{ onAction: toggleIsDirty, discardConfirmationModal: true }"
+              />
+              <Toast
+                v-if="toastActive"
+                content="Saved changes!"
+                :duration="5000"
+                @dismiss="toggleToastActive"
+              />
+            </Frame>
+            <template>\n
+            <script>
+              export default {
+                components: {
+                  Frame, TopBar, TopBarUserMenu, TopBarMenu, Icon, TopBarSearchField, VisuallyHidden,
+                  ActionList, NavigationSection, Navigation, Loading, ContextualSaveBar, Button, Toast
+                },
+                data() {
+                  return {
+                    isUserMenuOpen: false,
+                    isSecondaryMenuOpen: false,
+                    isSearchActive: false,
+                    searchValue: '',
+                    isCollapsed: false,
+                    isLoading: false,
+                    isDirty: false,
+                    toastActive: false,
+                    userMenuAction: [
+                      { items: [{ content: 'Back to Shopify', icon: ArrowLeftMinor }] },
+                      { items: [{ content: 'Community forums' }] },
+                    ],
+                    userMenuMessage: {
+                      title: 'Another Message',
+                      description:'This is a description of message',
+                      action: { onClick: this.clickHandle, content: 'This is a action' },
+                      link: { to: 'https://google.com', content: 'Google Homepage' }
+                    },
+                    navItems2: [
+                      { label: 'Dashboard', icon: markRaw(HomeMajor), onClick: this.toggleIsLoading },
+                      { label: 'Qikify Orders', icon: markRaw(OrdersMajor), onClick: this.toggleIsLoading },
+                    ],
+                  };
+                },
+                methods: {
+                  handleSearchChange(value) {
+                    this.isSearchActive = value.length > 0;
+                  },
+                  handleSearchResultsDismiss() {
+                    this.searchValue = '';
+                    this.isSearchActive = false;
+                  },
+                  toggleUserMenu() {
+                    this.isUserMenuOpen = !this.isUserMenuOpen;
+                  },
+                  toggleIsSecondaryMenuOpen() {
+                    this.isSecondaryMenuOpen = !this.isSecondaryMenuOpen;
+                  },
+                  clickHandle() {
+                    alert('clicked');
+                  },
+                  toggleCollapsed() {
+                    this.isCollapsed = !this.isCollapsed;
+                  },
+                  toggleToastActive() {
+                    this.toastActive = !this.toastActive;
+                  },
+                  toggleIsLoading() {
+                    this.isLoading = !this.isLoading;
+                  },
+                },
+                setup() {
+                  const logo = {
+                    width: 30,
+                    topBarSource: 'https://github.com/qikify/polaris-vue/raw/dev/public/images/logo.png',
+                    contextualSaveBarSource: 'https://github.com/qikify/polaris-vue/raw/dev/public/images/logo.png',
+                  }
+                  const navItems = [
+                    { label: 'Back to Shopify', icon: ArrowLeftMinor },
+                  ];
+                  return { logo, navItems, QuestionMarkMajor, CirclePlusOutlineMinor };
+                },
               }
-              const isUserMenuOpen = ref(false);
-              const isSecondaryMenuOpen = ref(false);
-              const isSearchActive = ref(false);
-              const searchValue = ref('');\n
-              const handleSearchChange = (value) => {
-                isSearchActive.value = value.length > 0;
-              }
-              const handleSearchResultsDismiss = () => {
-                searchValue.value = '';
-                isSearchActive.value = false;
-              }
-              const toggleUserMenu = () => {
-                isUserMenuOpen.value = !isUserMenuOpen.value;
-              };
-              const toggleIsSecondaryMenuOpen = () => {
-                isSecondaryMenuOpen.value = !isSecondaryMenuOpen.value;
-              };
-              const userMenuAction = ref([
-                { items: [{ content: 'Back to Shopify', icon: ArrowLeftMinor }] },
-                { items: [{ content: 'Community forums' }] }]
-              );
-              const clickHandle = () => { alert('clicked'); };
-              const userMenuMessage = ref({
-                title: 'Another Message',
-                description:'This is a description of message',
-                action: { onClick: clickHandle, content: 'This is a action' },
-                link: { to: 'https://google.com', content: 'Google Homepage' }
-              });
-              return { logo, isSearchActive, searchValue, handleSearchChange, toggleIsSecondaryMenuOpen, userMenuAction, userMenuMessage, toggleUserMenu, isUserMenuOpen, isSecondaryMenuOpen, handleSearchResultsDismiss, QuestionMarkMajor };
-            },
+            </script>
           `,
         },
       },
