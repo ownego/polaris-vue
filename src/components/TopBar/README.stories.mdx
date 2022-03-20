@@ -294,3 +294,83 @@ The top bar is a header component that allows merchants to search, access menus,
 </Canvas>
 
 <ArgsTable story="Top Bar" />
+
+<a name="subcomponent-menu"></a>
+
+### **Top bar menu**
+
+A component that composes together an activator and a popover containing an action list to create a dropdown menu.
+
+| Prop             | Type                          | Description                                                                                        |
+| ---------------- | ----------------------------- | -------------------------------------------------------------------------------------------------- |
+| actions          | ActionListProps['sections']   | An array of action objects that are rendered inside of a popover triggered by this menu. Follow Action List component props          |
+| message          | [MessageProps](#type-message) | Accepts a message that facilitates direct, urgent communication with the merchant through the menu |
+| open             | boolean                       | A boolean property indicating whether the menu is currently open                                   |
+
+<br/>
+
+| Events           | Type                          | Description                                                                                        |
+| ---------------- | ----------------------------- | -------------------------------------------------------------------------------------------------- |
+| @open            | function                      | A callback function to handle opening the menu popover                                             |
+| @close           | function                      | A callback function to handle closing the menu popover                                             |
+
+<br/>
+
+| Slots             | Type                          | Description                                                                                        |
+| ----------------  | ----------------------------- | -------------------------------------------------------------------------------------------------- |
+| #activatorContent |                               | Accepts an activator component that renders inside of a button that opens the menu                 |
+
+<br/>
+<a name="subcomponent-user-menu"></a>
+
+### **Top bar user menu**
+
+A specialized menu component that is activated by a user avatar.
+
+| Prop       | Type                          | Description                                                                                             |
+| ---------- | ----------------------------- | ------------------------------------------------------------------------------------------------------- |
+| actions    | {items: IconableAction[]}[]   | An array of action objects that are rendered inside of a popover triggered by this menu                 |
+| message    | [MessageProps](#type-message) | Accepts a message that facilitates direct, urgent communication with the merchant through the user menu |
+| name       | string                        | A string detailing the merchant's full name to be displayed in the user menu                            |
+| detail     | string                        | A string allowing further details on the merchant's name displayed in the user menu                     |
+| initials   | AvatarProps['initials']       | The merchant's initials, rendered in place of an avatar image when not provided                         |
+| avatar     | AvatarProps['source']         | An avatar image representing the merchant                                                               |
+| open       | boolean                       | A boolean property indicating whether the user menu is currently open                                   |
+
+| Event       | Type                          | Description                                                                                             |
+| ----------  | ----------------------------- | ------------------------------------------------------------------------------------------------------- |
+| @toggle     | function                      | A callback function to handle opening and closing the user menu                                         |
+
+<br/>
+<a name="type-message"></a>
+
+### **Top bar menu message**
+
+| Prop        | Type                                            | Description                               |
+| ----------- | ----------------------------------------------- | ----------------------------------------- |
+| title       | string                                          | A title for the message                   |
+| description | string                                          | A description for the message             |
+| action      | {onClick(): void; content: string}              | An action to render near the message      |
+| link        | {to: string; content: string}                   | A link to view the content of the message |
+| badge       | {content: string; status: BadgeProps['status']} | A badge to render near the message        |
+
+<br/>
+<a name="subcomponent-search-field"></a>
+
+### **Top bar search field**
+
+A text field component that is tailor-made for a search use-case.
+
+| Prop                    | Type     | Description                                                                      |
+| ----------------------- | -------- | -------------------------------------------------------------------------------- |
+| value                   | string   | Initial value for the input                                                      |
+| placeholder             | string   | Hint text to display                                                             |
+| focused                 | boolean  | Force the focus state on the input                                               |
+| active                  | boolean  | Force a state where search is active but the text field component is not focused |
+
+| Events                  | Type     | Description                                                                      |
+| ----------------------- | -------- | -------------------------------------------------------------------------------- |
+| @change(value: string)  | function | Callback when value is changed                                                   |
+| @focus                  | function | Callback when input is focused                                                   |
+| @blur                   | function | Callback when focus is removed                                                   |
+

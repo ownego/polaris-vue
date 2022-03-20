@@ -1,0 +1,209 @@
+import dedent from 'ts-dedent';
+import { Meta, Story, Canvas, ArgsTable } from '@storybook/addon-docs';
+
+import { ref } from 'vue';
+import { Frame, Navigation, NavigationSection, NavigationItem } from '@/polaris-vue';
+import HomeMinor from '@icons/HomeMinor.svg';
+import OrdersMinor from '@icons/OrdersMinor.svg';
+import ProductsMinor from '@icons/ProductsMinor.svg';
+import OnlineStoreMinor from '@icons/OnlineStoreMinor.svg';
+import MarketingMinor from '@icons/MarketingMinor.svg';
+import ViewMinor from '@icons/ViewMinor.svg';
+import CirclePlusOutlineMinor from '@icons/CirclePlusOutlineMinor.svg';
+
+<Meta
+  title="Components / Navigation / Navigation"
+  component={ Navigation }
+  argTypes={{
+    default: {
+      table: {
+        disable: true,
+      },
+    },
+    contextControl: {
+      control: { disable: true },
+      table: {
+        type: {
+          summary: null,
+        },
+      },
+    },
+  }}
+/>
+
+export const Template = (args) => ({
+  components: { Frame, Navigation, NavigationSection },
+  setup() {
+    const navItems = [
+      { url: '#', label: 'Home', icon: HomeMinor },
+      { url: '#', label: 'Orders', icon: OrdersMinor },
+      { url: '#', label: 'Products', icon: ProductsMinor, selected: true,
+        subNavigationItems: [
+          { url: '#', new: true, label: 'New item' },
+          { url: '#', label: 'Active Item', selected: true},
+          { url: '#', disabled: true, label: 'New item' },
+        ],
+      },
+      { url: '#', label: 'Marketing', icon: MarketingMinor, badge: { content: 'Warn', status: 'warning' }},
+    ];
+    const navItems2 = [
+      { url: '#', label: 'Online Store', icon: OnlineStoreMinor },
+      { url: '/path/to/place', label: 'Secondary action',
+        secondaryAction: { url: '#', accessibilityLabel: 'View your online store', icon: ViewMinor },
+      },
+    ];
+    return { navItems, navItems2, CirclePlusOutlineMinor };
+  },
+  template: `
+    <Frame>
+      <template #navigation>
+        <Navigation location="/">
+          <NavigationSection
+            :items="navItems"
+            :rollup="{ after: 3, view: 'view', hide: 'hide', activePath: '/' }"
+          />
+          <NavigationSection
+            separator
+            title="Sales channels"
+            :items="navItems2"
+            :action="{ accessibilityLabel: 'Add sales channel', icon: CirclePlusOutlineMinor, onClick: () => {}}"
+          />
+        </Navigation>
+      </template>
+    </Frame>
+  `,
+});
+
+# Navigation
+
+The navigation component is used to display the primary navigation in the sidebar of the [frame](?path=/docs/components-structure-frame--frame) of an application. Navigation includes a list of links that merchants use to move between sections of the application.
+
+<Canvas>
+  <Story
+    name="Navigation"
+    inline={false}
+    height="500px"
+    parameters={{
+      docs: {
+        source: {
+          code: dedent`
+             <Frame>
+              <template #navigation>
+                <Navigation location="/">
+                  <NavigationSection
+                    :items="navItems"
+                    :rollup="{ after: 3, view: 'view', hide: 'hide', activePath: '/' }"
+                  />
+                  <NavigationSection
+                    separator
+                    title="Sales channels"
+                    :items="navItems2"
+                    :action="{ accessibilityLabel: 'Add sales channel', icon: CirclePlusOutlineMinor, onClick: () => {}}"
+                  />
+                </Navigation>
+              </template>
+            </Frame>\n
+            setup() {
+              const navItems = [
+                { url: '#', label: 'Home', icon: HomeMinor },
+                { url: '#', label: 'Orders', icon: OrdersMinor },
+                { url: '#', label: 'Products', icon: ProductsMinor, selected: true,
+                  subNavigationItems: [
+                    { url: '#', new: true, label: 'New item' },
+                    { url: '#', label: 'Active Item', selected: true},
+                    { url: '#', disabled: true, label: 'New item' },
+                  ],
+                },
+                { url: '#', label: 'Marketing', icon: MarketingMinor, badge: { content: 'Warn', status: 'warning' }},
+              ];
+              const navItems2 = [
+                { url: '#', label: 'Online Store', icon: OnlineStoreMinor },
+                { url: '/path/to/place', label: 'Secondary action',
+                  secondaryAction: { url: '#', accessibilityLabel: 'View your online store', icon: ViewMinor },
+                },
+              ];
+              return { navItems, navItems2, CirclePlusOutlineMinor };
+            },
+          `,
+        },
+      },
+    }}
+  >
+    {Template.bind({})}
+  </Story>
+</Canvas>
+
+
+<ArgsTable story="Navigation" />
+
+### **Navigation Section**
+
+A navigation section groups together related navigation items. Navigation sections can be clarified by a heading. Merchants can use a section to easily find navigation items within a specific category.
+
+| Prop      | Type                     | Description                                                                                   |
+| --------- | ------------------------ | --------------------------------------------------------------------------------------------- |
+| items     | [Item[]](#type-item)     | A collection of navigation items to be rendered inside the section                            |
+| icon      | IconProps['source']      | An icon to be displayed next to the section title                                             |
+| title     | string                   | A string property providing a title for the navigation section                                |
+| fill      | boolean                  | A boolean property indicating whether the section should take up all vertical space available |
+| rollup    | [Rollup[]](#type-rollup) | An object determining the collapsing behavior of the navigation section                       |
+| action    | [Action[]](#type-action) | Renders an icon-only action as a supplementary action next to the section title               |
+| separator | boolean                  | A boolean property indicating whether the section should have a visual separator              |
+
+<a name="type-item"></a>
+<br/>
+
+### **Navigation section item**
+
+The content of the navigation component consists of navigation items. Each item is a link or action a merchant can take.
+
+| Prop               | Type                | Description                                                                                                                                             |
+| ------------------ | ------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| url                | string              | A location for the navigation item to navigate to when clicked                                                                                          |
+| matches            | boolean             | A boolean property indicating whether the navigation item should respond to a closely matching location property                                        |
+| exactMatch         | boolean             | A boolean property indicating whether the navigation item should respond to an exactly matching location property                                       |
+| matchPaths         | string[]            | A string property providing a collection of additional paths for the navigation item to respond to                                                      |
+| excludePaths       | string[]            | A string property providing an explicit collection of paths the navigation item should not respond to                                                   |
+| icon               | IconProps['source'] | An icon to be displayed next to the navigation. Please prefer minor icons here. If a major icon has to be used, set the `shouldResizeIcon` prop to true |
+| badge              | string \| null      | A string property allowing content to be displayed in a badge next to the navigation item                                                               |
+| label              | string              | A string property allowing content to be displayed as link text in the navigation item                                                                  |
+| disabled           | boolean             | A boolean property indicating whether the navigation item is disabled                                                                                   |
+| new                | boolean             | Indicate whether the navigation item is new by adding an indicator dot to the parent and badge to the item (overwritten by the badge prop)              |
+| accessibilityLabel | string              | A visually hidden label for screen readers to understand the content of a navigation item                                                               |
+| selected           | boolean             | A boolean property indicating whether the navigation item is the currently-selected item                                                                |
+| shouldResizeIcon   | boolean             | Will allow for major icons to be displayed at the same size as minor icons                                                                              |
+| subNavigationItems | SubNavigationItem[] | A collection of navigation items rendered as nested secondary navigation items                                                                          |
+| secondaryAction    | SecondaryAction     | Renders an icon-only action as a supplementary action next to a navigation item                                                                         |
+
+<br/>
+
+| Events               | Type                | Description                                                                                                                                             |
+| ------------------ | ------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| @click          | function            | A callback function to handle clicking on a navigation item                                                                                             |
+
+<br/>
+<a name="type-rollup"></a>
+
+### **Navigation section rollup**
+
+Rollup allows items in a navigation section to roll up and be revealed when they are of use to the merchant.
+
+| Prop       | Type   | Description                                                              |
+| ---------- | ------ | ------------------------------------------------------------------------ |
+| after      | number | A number of items after which the navigation section should be collapsed |
+| view       | string | A string property providing content for the section view action          |
+| hide       | string | A string property providing content for the section hide action          |
+| activePath | string | A string property representing the current URL of your application       |
+
+<br/>
+<a name="type-action"></a>
+
+### **Navigation section action**
+
+Action allows a complementary icon-only action to render next to the section title.
+
+| Prop               | Type                | Description                                                                        |
+| ------------------ | ------------------- | ---------------------------------------------------------------------------------- |
+| icon               | IconProps['source'] | An icon to be displayed as the content of the action                               |
+| accessibilityLabel | string              | A visually hidden label for screen readers to understand the content of the action |
+| onClick()          | function            | A callback function to handle clicking on the action                               |

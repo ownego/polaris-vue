@@ -108,7 +108,6 @@ import lang from 'polaris-react/locales/en.json';
 import { classNames } from 'polaris-react/src/utilities/css';
 import { dataPolarisTopBar, layer } from 'polaris-react/src/components/shared';
 import { setRootProperty } from 'polaris-react/src/utilities/set-root-property';
-import { tokens } from 'polaris-react/src/tokens';
 import styles from '@/classes/Frame.json';
 import MobileCancelMajor from '@icons/MobileCancelMajor.svg';
 import type {
@@ -248,9 +247,11 @@ const skipClassName = computed(() => {
   );
 });
 
-const skipTarget = props.skipToContentTarget
-  ? props.skipToContentTarget.id
-  : APP_FRAME_MAIN;
+const skipTarget = computed(() => {
+  return props.skipToContentTarget
+    ? props.skipToContentTarget.id
+    : APP_FRAME_MAIN;
+});
 
 onMounted(() => {
   handleResize();

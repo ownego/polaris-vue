@@ -67,6 +67,7 @@ import { Item } from '../Item';
 import type { ItemProps } from '../Item/utils';
 
 interface SectionProps {
+  /** A collection of navigation items to be rendered inside the section */
   items: ItemProps[];
   icon?: IconProps['source'];
   title?: string;

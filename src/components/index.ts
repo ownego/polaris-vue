@@ -37,6 +37,7 @@ export * from './Layout';
 export * from './Link';
 export * from './List';
 export * from './Listbox';
+export * from './Loading';
 export * from './MessageIndicator';
 export * from './Modal';
 export * from './Navigation';

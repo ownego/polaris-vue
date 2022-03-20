@@ -15,7 +15,7 @@ div(
 </template>
 
 <script setup lang="ts">
-import { onUpdated, ref } from 'vue';
+import { computed, onMounted, ref, watch } from 'vue';
 import lang from 'polaris-react/locales/en.json';
 import styles from '@/classes/Frame-Loading.json';
 
@@ -24,11 +24,24 @@ const STUCK_THRESHOLD = 99;
 const progress = ref(0);
 const animating = ref(false);
 
-const customStyles = {
-  transform: `scaleX(${Math.floor(progress.value) / 100})`,
-};
+const customStyles = computed(() => {
+  return {
+    transform: `scaleX(${Math.floor(progress.value) / 100})`,
+  };
+});
 
-onUpdated(() => {
+onMounted(() => {
+  requestAnimation();
+});
+
+watch(
+  () => [animating.value, progress.value],
+  () => {
+    requestAnimation();
+  },
+);
+
+const requestAnimation = () => {
   if (progress.value >= STUCK_THRESHOLD || animating.value) {
     return;
   }
@@ -38,11 +51,11 @@ onUpdated(() => {
     animating.value = true;
     progress.value = progress.value + step;
   });
-});
+};
 
 const onTransitionEnd = () => {
-  animating.value = false
-}
+  animating.value = false;
+};
 </script>
 
 <style lang="scss">

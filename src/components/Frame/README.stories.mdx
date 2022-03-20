@@ -2,8 +2,26 @@ import dedent from 'ts-dedent';
 import { Meta, Story, Canvas, ArgsTable } from '@storybook/addon-docs';
 
 import { ref } from 'vue';
-import { Frame, TopBar, TopBarUserMenu, TopBarSearchField, TopBarMenu, Icon, VisuallyHidden, ActionList } from '@/polaris-vue';
+import {
+  Frame,
+  TopBar,
+  TopBarUserMenu,
+  TopBarSearchField,
+  TopBarMenu,
+  Icon,
+  VisuallyHidden,
+  ActionList,
+  NavigationSection,
+  Navigation,
+  Loading,
+  ContextualSaveBar,
+  Button,
+  Toast,
+} from '@/polaris-vue';
+import HomeMajor from '@icons/HomeMajor.svg';
+import OrdersMajor from '@icons/OrdersMajor.svg';
 import ArrowLeftMinor from '@icons/ArrowLeftMinor.svg';
+import CirclePlusOutlineMinor from '@icons/CirclePlusOutlineMinor.svg';
 import QuestionMarkMajor from '@icons/QuestionMarkMajor.svg';
 
 <Meta
@@ -19,7 +37,7 @@ import QuestionMarkMajor from '@icons/QuestionMarkMajor.svg';
 />
 
 export const Template = (args) => ({
-  components: { Frame, TopBar, TopBarUserMenu, TopBarMenu, Icon, VisuallyHidden, TopBarSearchField, ActionList },
+  components: { Frame, TopBar, TopBarUserMenu, TopBarMenu, Icon, VisuallyHidden, TopBarSearchField, ActionList, NavigationSection, Navigation, Loading, ContextualSaveBar, Button, Toast },
   setup() {
     const logo = {
       width: 30,
@@ -54,10 +72,48 @@ export const Template = (args) => ({
       action: { onClick: clickHandle, content: 'This is a action' },
       link: { to: 'https://google.com', content: 'Google Homepage' }
     });
-    return { logo, isSearchActive, searchValue, handleSearchChange, toggleIsSecondaryMenuOpen, userMenuAction, userMenuMessage, toggleUserMenu, isUserMenuOpen, isSecondaryMenuOpen, handleSearchResultsDismiss, QuestionMarkMajor };
+    const isCollapsed = ref(false);
+    const toggleCollapsed = () => {
+      isCollapsed.value = !isCollapsed.value;
+    };
+    const isLoading = ref(false);
+    const isDirty = ref(false);
+    const toastActive = ref(false);
+    const toggleToastActive = () => {
+      toastActive.value = !toastActive.value;
+    };
+    const toggleIsLoading = () => {
+      isLoading.value = !isLoading.value;
+    };
+    const navItems = [
+      { label: 'Back to Shopify', icon: ArrowLeftMinor },
+    ];
+    const navItems2 = [
+      { label: 'Dashboard', icon: HomeMajor, onClick: toggleIsLoading },
+      { label: 'Qikify Orders', icon: OrdersMajor, onClick: toggleIsLoading },
+    ]
+    return { logo, isSearchActive, searchValue, handleSearchChange, toggleIsSecondaryMenuOpen, userMenuAction, userMenuMessage, toggleUserMenu, isUserMenuOpen, isSecondaryMenuOpen, handleSearchResultsDismiss, QuestionMarkMajor, isCollapsed, toggleCollapsed, navItems, navItems2, isLoading, toggleIsLoading, toastActive, toggleToastActive, CirclePlusOutlineMinor, isDirty };
   },
   template: `
-    <Frame :logo="logo">
+    <Frame
+      :logo="logo"
+      :showMobileNavigation="isCollapsed"
+      @navigation-dismiss="toggleCollapsed"
+    >
+      <template #navigation>
+        <Navigation location="/">
+          <NavigationSection
+            :items="navItems"
+            :rollup="{ after: 7, view: 'view', hide: 'hide', activePath: '/' }"
+          />
+          <NavigationSection
+            separator
+            title="Sales channels"
+            :items="navItems2"
+            :action="{ accessibilityLabel: 'Add sales channel', icon: CirclePlusOutlineMinor, onClick: () => {}}"
+          />
+        </Navigation>
+      </template>
       <template #topBar>
         <TopBar showNavigationToggle
           :searchResultsVisible="isSearchActive"
@@ -104,6 +160,21 @@ export const Template = (args) => ({
           </template>
         </TopBar>
       </template>
+      <Loading v-if="isLoading" />
+      <ContextualSaveBar
+        v-if="isDirty"
+        message="Unsaved changes"
+        :saveAction="{ onAction: toggleActive }"
+        :discardAction="{ onAction: toggleIsDirty, discardConfirmationModal: true }"
+      />
+      <Toast
+        v-if="toastActive"
+        content="Message sent"
+        :duration="5000"
+        @dismiss="toggleToastActive"
+      />
+      <Button @click="toggleIsLoading">Start/Stop Loading</Button>
+      <Button @click="toggleToastActive">Toggle Toast</Button>
     </Frame>
   `,
 });
