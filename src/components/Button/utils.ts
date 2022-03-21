@@ -1,4 +1,4 @@
-import type { IconSource, BaseButton } from 'types/type';
+import type { IconSource, BaseButton } from '@/utilities/type';
 import type { ActionListItemDescriptor } from '@/components/ActionList/utils';
 import type { UnstyledButtonProps } from '../UnstyledButton/utils';
 

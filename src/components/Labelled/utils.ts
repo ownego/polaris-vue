@@ -1,4 +1,4 @@
-import type { Action, Error } from 'types/type';
+import type { Action, Error } from '@/utilities/type';
 import { labelID } from '../Label/utils';
 import type { LabelProps } from "../Label/utils";
 

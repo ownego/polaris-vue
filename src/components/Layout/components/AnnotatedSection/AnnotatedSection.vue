@@ -12,6 +12,7 @@ div(:class="styles.AnnotatedSection")
           slot(name="description")
         slot(v-else, name="description")
     div(:class="styles.AnnotationContent")
+      slot
 </template>
 
 <script setup lang="ts">
@@ -33,6 +34,6 @@ const isDescriptionSlotContainHTMLTag = computed(() => Boolean(
   descriptionSlot.value
     && (descriptionSlot.value.length >= 2
       || (descriptionSlot.value[0]
-        && descriptionSlot.value[0].el?.nodeType !== 3)),
+        && descriptionSlot.value[0].type.toString() !== 'Symbol(Text)')),
 ));
 </script>

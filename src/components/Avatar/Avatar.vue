@@ -13,8 +13,8 @@ span(
         y="50%",
         :dy="verticalOffset",
         fill="currentColor",
-        fontSize="20",
-        textAnchor="middle",
+        font-size="20",
+        text-anchor="middle",
       ) {{ initials }}
   Image(
     v-if="source && status !== Status.Errored",
@@ -33,8 +33,7 @@ import { classNames, variationName } from 'polaris-react/src/utilities/css';
 import styles from '@/classes/Avatar.json';
 import { styleClass } from './utils';
 import { Image } from '../Image';
-
-type Size = 'extraSmall' | 'small' | 'medium' | 'large';
+import type { Size } from './utils';
 
 enum Status {
   Pending = 'PENDING',

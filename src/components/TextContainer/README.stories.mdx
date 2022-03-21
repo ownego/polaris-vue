@@ -1,5 +1,5 @@
-import { Meta, Story, Canvas, ArgsTable, Source, Preview } from '@storybook/addon-docs';
 import dedent from 'ts-dedent';
+import { Meta, Story, Canvas, ArgsTable, Source, Preview } from '@storybook/addon-docs';
 
 import { TextContainer, Heading } from '@/polaris-vue';
 
@@ -36,11 +36,11 @@ import { TextContainer, Heading } from '@/polaris-vue';
 
 A text container is used to wrap text elements such as paragraphs, headings, and lists to give them vertical spacing.
 
-export const Template = (args, { argTypes }) => ({
+export const Template = (args) => ({
   components: { TextContainer },
-  props: Object.keys(argTypes),
+  setup() { return {args}; },
   template: `
-    <TextContainer v-bind="$props">
+    <TextContainer v-bind="args">
       <p>
         Lorem ipsum dolor sit amet, consectetur adipiscing elit.
         Donec a diam lectus. Sed sit amet ipsum mauris. Maecenas congue ligula ac quam viverra nec consectetur ante hendrerit.
@@ -58,6 +58,30 @@ export const Template = (args, { argTypes }) => ({
     </TextContainer>
   `
 });
+Template.parameters = {
+  docs: {
+    source: {
+      code: dedent`
+        <TextContainer>
+          <p>
+            Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+            Donec a diam lectus. Sed sit amet ipsum mauris. Maecenas congue ligula ac quam viverra nec consectetur ante hendrerit.
+          </p>
+          <h2>Heading</h2>
+          <p>
+            Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+            Donec a diam lectus. Sed sit amet ipsum mauris. Maecenas congue ligula ac quam viverra nec consectetur ante hendrerit.
+          </p>
+          <ul>
+            <li>List item</li>
+            <li>List item</li>
+            <li>List item</li>
+          </ul>
+        </TextContainer>
+      `,
+    },
+  },
+};
 
 <Canvas>
   <Story story={Template} name="Text container" height="250px"></Story>

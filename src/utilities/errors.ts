@@ -8,3 +8,14 @@ export class MissingAppProviderError extends Error {
     this.name = 'MissingAppProviderError';
   }
 }
+
+export class MissingFrameError extends Error {
+  constructor(message = '') {
+    super(
+      `${
+        message ? `${message} ` : message
+      }Your component must be wrapped in a <Frame> component. See https://qikify.github.io/polaris-vue/?path=/docs/components-structure-frame--page for implementation instructions.`,
+    );
+    this.name = 'MissingFrameError';
+  }
+}

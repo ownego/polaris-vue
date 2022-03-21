@@ -46,7 +46,7 @@ import { UseUniqueId } from '@/use';
 import MinusMinor from '@icons/MinusMinor.svg';
 import TickSmallMinor from '@icons/TickSmallMinor.svg';
 import styles from '@/classes/Checkbox.json';
-import type { Error } from 'types/type';
+import type { Error } from '@/utilities/type';
 import { Key } from '../KeypressListener/utils';
 import { errorTextID } from '../InlineError/utils';
 import { Choice } from '../Choice';

@@ -1,9 +1,10 @@
+import dedent from 'ts-dedent';
 import { Meta, Story, Canvas, ArgsTable } from '@storybook/addon-docs';
 
 import { VisuallyHidden } from '@/polaris-vue';
 
 <Meta
-  title="Components / Titles and text / VisuallyHidden"
+  title="Components / Titles and text / Visually Hidden"
   component={ VisuallyHidden }
   argTypes={{
     content: {
@@ -23,15 +24,14 @@ import { VisuallyHidden } from '@/polaris-vue';
   }}
 />
 
-export const Template = (args, { argTypes }) => ({
-  props: Object.keys(argTypes),
+export const Template = (args) => ({
   components: { VisuallyHidden },
-  template: `<div>
-      <VisuallyHidden>
-        <span>Hidden content</span>
-      </VisuallyHidden>
-      <p>Content passed down have been hide</p>
-    </div>`,
+  template: `
+    <VisuallyHidden>
+      <span>Hidden content</span>
+    </VisuallyHidden>
+    <p>Content passed down have been hide</p>
+  `,
 });
 
 # Visually hidden
@@ -39,9 +39,23 @@ export const Template = (args, { argTypes }) => ({
 Use when an element needs to be available to assistive technology (for example, a screen reader) but otherwise hidden.
 
 <Canvas>
-  <Story name="VisuallyHidden">
+  <Story
+    name="Visually Hidden"
+    parameters={{
+      docs: {
+        source: {
+          code: dedent`
+            <VisuallyHidden>
+              <span>Hidden content</span>
+            </VisuallyHidden>
+            <p>Content passed down have been hide</p>
+          `,
+        },
+      },
+    }}
+  >
     {Template.bind({})}
   </Story>
 </Canvas>
 
-<ArgsTable story="VisuallyHidden" />
+<ArgsTable story="Visually Hidden" />

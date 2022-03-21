@@ -25,10 +25,9 @@ import { computed, onMounted } from 'vue';
 import { classNames, variationName } from 'polaris-react/src/utilities/css';
 import styles from '@/classes/Icon.json';
 import config from '@/config';
-import type { IconSource } from 'types/type';
+import type { IconSource } from '@/utilities/type';
 import { VisuallyHidden } from '../VisuallyHidden';
-
-type Color = 'base' | 'subdued' | 'critical' | 'interactive' | 'warning' | 'highlight' | 'success' | 'primary';
+import type { Color } from './utils';
 
 const COLORS_WITH_BACKDROPS: string[] = ['base', 'critical', 'highlight', 'success', 'warning'];
 
@@ -66,7 +65,7 @@ const sourceType = computed(() => {
   return 'external';
 });
 
-const encodedSvg = computed(() => sourceType.value === 'external' 
+const encodedSvg = computed(() => sourceType.value === 'external'
   ? encodeURIComponent(String(props.source))
   : '',
 );

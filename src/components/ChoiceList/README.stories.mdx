@@ -72,7 +72,7 @@ import { ChoiceList } from '@/polaris-vue';
         category: 'slots',
       },
     },
-    'value (choice)': {
+    value: {
       description: 'Value of the choice',
       table: {
         category: 'choice props',
@@ -127,6 +127,11 @@ import { ChoiceList } from '@/polaris-vue';
         },
       },
     },
+    'update:modelValue': {
+      table: {
+        disable: true,
+      },
+    },
     default: {
       table: {
         disable: true,
@@ -173,6 +178,35 @@ export const singleChoiceList = (args) => ({
     };
   },
 });
+singleChoiceList.parameters = {
+  docs: {
+    source: {
+      state: 'close',
+      code: dedent`
+        <div>
+          <ChoiceList
+            name="singleChoiceList"
+            v-model="value"
+            :choices="choices"
+          >
+            Company name
+          </ChoiceList>
+          <p style="margin-top: 30px"> Value: {{ value }} </p>
+        </div>\n
+        data() {
+          return {
+            value: 'hidden',
+            choices: [
+              {label: 'Hidden', value: 'hidden'},
+              {label: 'Optional', value: 'optional'},
+              {label: 'Required', value: 'required'},
+            ]
+          };
+        },      
+      `
+    },
+  },
+}
 
 <Canvas>
   <Story story={singleChoiceList} name="Single choice list"></Story>
@@ -207,6 +241,35 @@ export const errorSingleChoiceList = (args) => ({
     };
   },
 });
+errorSingleChoiceList.parameters = {
+  docs: {
+    source: {
+      state: 'close',
+      code: dedent`
+      <div>
+        <ChoiceList
+          name="errSingleChoiceList"
+          v-model="value"
+          error="Company name cannot be hidden at this time"
+          :choices="choices"
+        >
+          Company name
+        </ChoiceList>
+      </div>\n
+      data() {
+        return {
+          value: 'hidden',
+          choices: [
+            {label: 'Hidden', value: 'hidden'},
+            {label: 'Optional', value: 'optional'},
+            {label: 'Required', value: 'required'},
+          ],
+        };
+      },
+      `
+    },
+  },
+}
 
 <Canvas>
   <Story story={errorSingleChoiceList} name="Single choice list with error"></Story>
@@ -251,6 +314,43 @@ export const multiChoiceList = (args) => ({
     };
   },
 });
+multiChoiceList.parameters = {
+  docs: {
+    source: {
+      state: 'close',
+      code: dedent`
+        <div>
+          <ChoiceList
+            name="multi"
+            v-model="value"
+            :allowMultiple="true"
+            :choices="choices"
+          >
+            Company name
+          </ChoiceList>
+          <p style="margin-top: 30px"> Value: {{ value }} </p>
+        </div>\n
+        data() {
+          return {
+            value: ['shipping'],
+            choices: [
+              {
+                label: 'Use the shipping address as the billing address by default',
+                helpText: 'Reduces the number of fields required to check out. The billing address can still be edited.',
+                value: 'shipping',
+              },
+              {
+                label: 'Require a confirmation step',
+                helpText: 'Customers must review their order details before purchasing.',
+                value: 'confirmation',
+              },
+            ]
+          };
+        },
+      `
+    }
+  },
+}
 
 <Canvas>
   <Story story={multiChoiceList} name="Multi-choice list"></Story>
@@ -289,6 +389,38 @@ export const renderChildChoiceList = (args, { argTypes }) => ({
     };
   },
 });
+renderChildChoiceList.parameters = {
+  docs: {
+    source: {
+      state: 'close',
+      code: dedent`
+      <div>
+        <ChoiceList
+          name="singleChild"
+          v-model="value"
+          :choices="choices"
+        >
+          Company name
+        </ChoiceList>
+      </div>\n
+      data() {
+        return {
+          value: 'none',
+          choices: [
+            {label: 'None', value: 'none'},
+            {label: 'Minimum purchase', value: 'minimum_purchase'},
+            {
+              label: 'Minimum quantity',
+              value: 'minimum_quantity',
+              renderChildren: '<p>This is child content of Minimum quantity option</p>',
+            },
+          ],
+        };
+      },
+      `
+    },
+  },
+}
 
 <Canvas>
   <Story story={renderChildChoiceList} name="Single-choice or multi-choice list with children content (always rendered)"></Story>
@@ -335,6 +467,46 @@ export const renderChildWithConditional = (args, { argTypes }) => ({
     }
   },
 });
+renderChildWithConditional.parameters = {
+  docs: {
+    source: {
+      state: 'close',
+      code: dedent`
+        <div>
+          <ChoiceList
+            name="renderChildWithConditional"
+            v-model="selected"
+            :choices="choices"
+            @change="handleChange"
+          >
+            Company name
+          </ChoiceList>
+        </div>\n
+        data() {
+          return {
+            selected: 'none',
+            choices: [
+              {label: 'None', value: 'none'},
+              {label: 'Minimum purchase', value: 'minimum_purchase'},
+              {
+                label: 'Minimum quantity',
+                value: 'minimum_quantity',
+                renderChildren: '',
+              },
+            ],
+          };
+        },    
+        methods: {
+          handleChange() {
+            this.choices[2].renderChildren = this.selected === 'minimum_quantity'
+              ? '<p>This is child content of Minimum quantity option</p>'
+              : '';
+          }
+        },
+      `
+    },
+  },
+}
 
 <Canvas>
   <Story story={renderChildWithConditional} name="Single-choice or multi-choice list with children content (rendered only when selected)"></Story>

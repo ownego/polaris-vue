@@ -94,7 +94,7 @@ const isSlotContainHTMLTag = computed(() => Boolean(
   defaultSlot.value
     && (defaultSlot.value.length >= 2
       || (defaultSlot.value[0]
-        && defaultSlot.value[0].el?.nodeType !== 3)),
+        && defaultSlot.value[0].type.toString() !== 'Symbol(Text)')),
 ));
 
 const legacyRoleSupport = computed(() => role || 'option');
@@ -124,7 +124,7 @@ const handleOptionClick = (event: MouseEvent) => {
     };
 
     onOptionSelect(params);
-  }  
+  }
 }
 
 const handleMouseDown = (event: MouseEvent): void => {

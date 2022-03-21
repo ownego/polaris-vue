@@ -36,7 +36,7 @@ import { TextStyle } from '@/components/TextStyle';
 import { Icon } from '@/components/Icon';
 import { Badge } from '@/components/Badge';
 import styles from '@/classes/ActionList.json';
-import type { IconSource } from 'types/type';
+import type { IconSource } from '@/utilities/type';
 
 interface Props {
   id?: string;

@@ -1,0 +1,564 @@
+import { Meta, Story, Canvas, ArgsTable, Source, Preview } from '@storybook/addon-docs';
+import dedent from 'ts-dedent';
+
+import {
+  Combobox,
+  ComboboxTextField,
+  Listbox,
+  ListboxOption,
+  ListboxLoading,
+  Icon,
+  TextContainer,
+  Tag,
+  Stack,
+} from '@/polaris-vue';
+import SearchMinor from '@icons/SearchMinor.svg';
+
+<Meta
+  title="Components / Forms / Combobox"
+  component={ Combobox }
+  argTypes={{
+    preferredPosition: {
+      description: 'Position to display children content',
+      control: {
+        type: 'select',
+        options: ['below', 'above', 'mostSpace'],
+      },
+      table: {
+        type: {
+          summary: 'above | below | mostSpace'
+        },
+      },
+    },
+    'scrolled-to-bottom': {
+      description: 'Callback when children scrolled to bottom',
+      control: { disable: true },
+      table: {
+        type: {
+          summary: '() => void',
+        },
+      },
+    },
+    'default slot': {
+      description: 'Children content to display',
+      table: {
+        category: 'slots',
+        type: {
+          summary: null,
+        },
+      },
+    },
+    activator: {
+      description: 'Element that will trigger content of combobox in default slot',
+      control: { disable: true },
+      table: {
+        type: {
+          summary: null,
+        },
+      },
+    },
+    default: {
+      table: {
+        disable: 'true',
+      },
+    },
+  }}
+/>
+
+# Combobox
+
+The Combobox component implements part of the [Aria 1.2 combobox](https://www.w3.org/TR/wai-aria-practices-1.2/#combobox) specs on a TextField and a popover containing a Listbox.
+Like Autocomplete, Combobox allows merchants to quickly search through and select from large collections of options.
+
+<br/><br/>
+
+### Basic autocomplete
+
+Use to help merchants complete text input quickly from a list of options.
+
+export const BasicAutocomplete = (args) => ({
+  components: { Combobox, Listbox, ListboxOption, ComboboxTextField, Icon },
+  template: `
+  <Combobox>
+    <template #activator>
+      <ComboboxTextField  :labelHidden="true" v-model="searchValue" placeholder="Search customer">
+        <template slot="prefix">
+          <Icon :source="searchIcon" color="inkLighter"></Icon>
+        </template>
+      </ComboboxTextField>
+    </template>
+    <Listbox @select="handleOptionSelected" onSelect="">
+      <ListboxOption value="" :disabled="true">
+        ListboxOptions rendered with v-for in filteredOptions
+      </ListboxOption>
+      <ListboxOption
+        v-for="option, index in filteredOptions"
+        :key="index"
+        :value="option.value"
+        :selected="isOptionSelected(option, index)"
+      >
+        {{ option.label }}
+      </ListboxOption>
+    </Listbox>
+  </Combobox>`,
+  data() {
+    return {
+      searchIcon: SearchMinor,
+      options: [
+        {value: 'rustic', label: 'Rustic'},
+        {value: 'antique', label: 'Antique'},
+        {value: 'vinyl', label: 'Vinyl'},
+        {value: 'vintage', label: 'Vintage'},
+        {value: 'refurbished', label: 'Refurbished'},
+      ],
+      searchValue: '',
+    };
+  },
+  computed: {
+    filteredOptions() {
+      return this.searchValue
+        ? this.options
+          .filter(el => el.value.includes(this.searchValue))
+        : this.options;
+    }
+  },
+  methods: {
+    handleOptionSelected(option) {
+      this.searchValue = option;
+    },
+    isOptionSelected(option, index) {
+      if (this.searchValue) return this.searchValue === option.value;
+      return index === 0;
+    }
+  },
+});
+BasicAutocomplete.parameters = {
+  docs: {
+    source: {
+      state: 'close',
+      code: dedent`
+        <Combobox>
+          <template #activator>
+            <ComboboxTextField  :labelHidden="true" v-model="searchValue" placeholder="Search customer">
+              <template #prefix>
+                <Icon :source="searchIcon" color="inkLighter"></Icon>
+              </template>
+            </ComboboxTextField>
+          </template>
+          <Listbox @select="handleOptionSelected" onSelect="">
+            <ListboxOption value="" :disabled="true">
+              ListboxOptions rendered with v-for in filteredOptions
+            </ListboxOption>
+            <ListboxOption
+              v-for="option, index in filteredOptions"
+              :key="index"
+              :value="option.value"
+              :selected="isOptionSelected(option, index)"
+            >
+              {{ option.label }}
+            </ListboxOption>
+          </Listbox>
+        </Combobox>,\n
+        data() {
+          return {
+            searchIcon: SearchMinor,
+            options: [
+              {value: 'rustic', label: 'Rustic'},
+              {value: 'antique', label: 'Antique'},
+              {value: 'vinyl', label: 'Vinyl'},
+              {value: 'vintage', label: 'Vintage'},
+              {value: 'refurbished', label: 'Refurbished'},
+            ],
+            searchValue: '',
+          };
+        },
+        computed: {
+          filteredOptions() {
+            return this.searchValue
+              ? this.options
+                .filter(el => el.value.includes(this.searchValue))
+              : this.options;
+          }
+        },
+        methods: {
+          handleOptionSelected(option) {
+            this.searchValue = option;
+          },
+          isOptionSelected(option, index) {
+            if (this.searchValue) return this.searchValue === option.value;
+            return index === 0;
+          }
+        },
+      `,
+    },
+  },
+};
+
+<Canvas>
+  <Story story={BasicAutocomplete} name="Basic Autocomplete" height="200px" inline={false}></Story>
+</Canvas>
+
+### Multiple tags autocomplete
+
+Use to help merchants select multiple options from a list curated by the text input.
+
+export const MultiTagAutocomplete = (args) => ({
+  components: {
+    Combobox,
+    Listbox,
+    ListboxOption,
+    ComboboxTextField,
+    Icon,
+    TextContainer,
+    Tag,
+    Stack,
+  },
+  template: `
+  <Combobox :allowMultiple="true">
+    <template #activator>
+      <ComboboxTextField  :labelHidden="true" v-model="searchValue" placeholder="Search customer">
+        <template #prefix>
+          <Icon :source="searchIcon" color="inkLighter"></Icon>
+        </template>
+      </ComboboxTextField>
+    </template>
+    <Listbox @select="handleOptionSelected">
+      <ListboxOption value="" :disabled="true">
+        ListboxOptions rendered with v-for in filteredOptions
+      </ListboxOption>
+      <ListboxOption
+        v-for="option, index in filteredOptions"
+        :key="index"
+        :value="option.value"
+        :selected="selectedOptions.includes(option.value)"
+      >
+        {{ option.label }}
+      </ListboxOption>
+    </Listbox>
+  </Combobox>
+  <TextContainer>
+    <p> Tag component display options in selectedOptions</p>
+    <Stack>
+      <Tag  
+        v-for="option, index in selectedOptions"
+        :key="index"
+        @remove="handleRemoveTag(option)"
+      >
+        {{ option }}
+      </Tag>
+    </Stack>
+  </TextContainer>
+  `,
+  data() {
+    return {
+      searchIcon: SearchMinor,
+      options: [
+        {value: 'rustic', label: 'Rustic'},
+        {value: 'antique', label: 'Antique'},
+        {value: 'vinyl', label: 'Vinyl'},
+        {value: 'vintage', label: 'Vintage'},
+        {value: 'refurbished', label: 'Refurbished'},
+      ],
+      searchValue: '',
+      selectedOptions: ['rustic', 'antique'],
+    };
+  },
+  computed: {
+    filteredOptions() {
+      return this.searchValue
+        ? this.options
+          .filter(el => el.value.includes(this.searchValue))
+        : this.options;
+    }
+  },
+  methods: {
+    handleOptionSelected(option) {
+      if (this.selectedOptions.includes(option)) {
+        this.selectedOptions = this.selectedOptions.filter(el => el !== option);
+      }
+      else {
+        this.selectedOptions.push(option);
+      }
+    },
+    handleRemoveTag(optionVal) {
+      this.selectedOptions = this.selectedOptions.filter(el => el !== optionVal);
+    }
+  },
+});
+MultiTagAutocomplete.parameters = {
+  docs: {
+    source: {
+      state: 'close',
+      code: dedent`
+      <Combobox :allowMultiple="true">
+        <template #activator>
+          <ComboboxTextField  :labelHidden="true" v-model="searchValue" placeholder="Search customer">
+            <template #prefix>
+              <Icon :source="searchIcon" color="inkLighter"></Icon>
+            </template>
+          </ComboboxTextField>
+        </template>
+        <Listbox @select="handleOptionSelected">
+          <ListboxOption value="" :disabled="true">
+            ListboxOptions rendered with v-for in filteredOptions
+          </ListboxOption>
+          <ListboxOption
+            v-for="option, index in filteredOptions"
+            :key="index"
+            :value="option.value"
+            :selected="selectedOptions.includes(option.value)"
+          >
+            {{ option.label }}
+          </ListboxOption>
+        </Listbox>
+      </Combobox>
+      <TextContainer>
+        <p> Tag component display options in selectedOptions</p>
+        <Stack>
+          <Tag  
+            v-for="option, index in selectedOptions"
+            :key="index"
+            @remove="handleRemoveTag(option)"
+          >
+            {{ option }}
+          </Tag>
+        </Stack>
+      </TextContainer>\n
+      data() {
+        return {
+          searchIcon: SearchMinor,
+          options: [
+            {value: 'rustic', label: 'Rustic'},
+            {value: 'antique', label: 'Antique'},
+            {value: 'vinyl', label: 'Vinyl'},
+            {value: 'vintage', label: 'Vintage'},
+            {value: 'refurbished', label: 'Refurbished'},
+          ],
+          searchValue: '',
+          selectedOptions: ['rustic', 'antique'],
+        };
+      },
+      computed: {
+        filteredOptions() {
+          return this.searchValue
+            ? this.options
+              .filter(el => el.value.includes(this.searchValue))
+            : this.options;
+        }
+      },
+      methods: {
+        handleOptionSelected(option) {
+          if (this.selectedOptions.includes(option)) {
+            this.selectedOptions = this.selectedOptions.filter(el => el !== option);
+          }
+          else {
+            this.selectedOptions.push(option);
+          }
+        },
+        handleRemoveTag(optionVal) {
+          this.selectedOptions = this.selectedOptions.filter(el => el !== optionVal);
+        }
+      },
+      `,
+    },
+  },
+};
+
+<Canvas>
+  <Story story={MultiTagAutocomplete} name="Multiple tags autocomplete" height="200px" inline={false}></Story>
+</Canvas>
+
+### Autocomplete with loading
+
+Use to indicate loading state to merchants while option data is processing.
+
+export const LoadingAutoComplete = (args) => ({
+  components: { Combobox, Listbox, ListboxOption, ComboboxTextField, Icon,  ListboxLoading},
+  template: `
+  <Combobox>
+    <template #activator>
+      <ComboboxTextField  :labelHidden="true" v-model="searchValue" placeholder="Search customer">
+        <template #prefix>
+          <Icon :source="searchIcon" color="inkLighter"></Icon>
+        </template>
+      </ComboboxTextField>
+    </template>
+    <Listbox>
+      <ListboxLoading accessibilityLabel="Loading listbox"/>
+    </Listbox>
+  </Combobox>
+  `,
+  data() {
+    return {
+      searchIcon: SearchMinor,
+      searchValue: '',
+    };
+  },
+});
+LoadingAutoComplete.parameters = {
+  docs: {
+    source: {
+      state: 'close',
+      code: dedent`
+        <Combobox>
+          <template #activator>
+            <ComboboxTextField  :labelHidden="true" v-model="searchValue" placeholder="Search customer">
+              <template #prefix>
+                <Icon :source="searchIcon" color="inkLighter"></Icon>
+              </template>
+            </ComboboxTextField>
+          </template>
+          <Listbox>
+            <ListboxLoading accessibilityLabel="Loading listbox"/>
+          </Listbox>
+        </Combobox>\n
+        data() {
+          return {
+            searchIcon: SearchMinor,
+            searchValue: '',
+          };
+        },
+      `,
+    },
+  },
+};
+
+<Canvas>
+  <Story story={LoadingAutoComplete} name="Autocomplete with loading" height="200px" inline={false}></Story>
+</Canvas>
+
+### Example
+
+<font color="red"> Can not test props on this component due to inline Story. Try it on your own project. </font>
+
+export const ExampleAutoComplete = (args) => ({
+  components: { Combobox, Listbox, ListboxOption, ComboboxTextField, Icon },
+  template: `
+  <Combobox>
+    <template #activator>
+      <ComboboxTextField  :labelHidden="true" v-model="searchValue" placeholder="Search customer">
+        <template #prefix>
+          <Icon :source="searchIcon" color="inkLighter"></Icon>
+        </template>
+      </ComboboxTextField>
+    </template>
+    <Listbox @select="handleOptionSelected">
+      <ListboxOption
+        v-for="option, index in filteredOptions"
+        :key="index"
+        :value="option.value"
+        :selected="isOptionSelected(option, index)"
+      >
+        {{ option.label }}
+      </ListboxOption>
+    </Listbox>
+  </Combobox>`,
+  data() {
+    return {
+      searchIcon: SearchMinor,
+      options: [
+        {value: 'rustic', label: 'Rustic'},
+        {value: 'antique', label: 'Antique'},
+        {value: 'vinyl', label: 'Vinyl'},
+        {value: 'vintage', label: 'Vintage'},
+        {value: 'refurbished', label: 'Refurbished'},
+      ],
+      searchValue: '',
+    };
+  },
+  computed: {
+    filteredOptions() {
+      return this.searchValue
+        ? this.options
+          .filter(el => el.value.includes(this.searchValue))
+        : this.options;
+    }
+  },
+  methods: {
+    handleOptionSelected(option) {
+      this.searchValue = option;
+    },
+    isOptionSelected(option, index) {
+      if (this.searchValue) return this.searchValue === option.value;
+      return index === 0;
+    }
+  },
+});
+ExampleAutoComplete.parameters = {
+  docs: {
+    source: {
+      code: dedent`
+        <Combobox>
+          <template #activator>
+            <ComboboxTextField  :labelHidden="true" v-model="searchValue" placeholder="Search customer">
+              <template #prefix>
+                <Icon :source="searchIcon" color="inkLighter"></Icon>
+              </template>
+            </ComboboxTextField>
+          </template>
+          <Listbox @select="handleOptionSelected">
+            <ListboxOption
+              v-for="option, index in filteredOptions"
+              :key="index"
+              :value="option.value"
+              :selected="isOptionSelected(option, index)"
+            >
+              {{ option.label }}
+            </ListboxOption>
+          </Listbox>
+        </Combobox>\n
+        import {
+          Combobox,
+          Listbox,
+          ListboxOption,
+          ComboboxTextField,
+          Icon,
+        } from '@/polaris-vue'; 
+        import SearchMinor from '@icons/SearchMinor.svg';\n
+        components: {
+          Combobox,
+          Listbox,
+          ListboxOption,
+          ComboboxTextField,
+          Icon,
+        },
+        data() {
+            return {
+              searchIcon: SearchMinor,
+              options: [
+                {value: 'rustic', label: 'Rustic'},
+                {value: 'antique', label: 'Antique'},
+                {value: 'vinyl', label: 'Vinyl'},
+                {value: 'vintage', label: 'Vintage'},
+                {value: 'refurbished', label: 'Refurbished'},
+              ],
+              searchValue: '',
+            };
+          },
+          computed: {
+            filteredOptions() {
+              return this.searchValue
+                ? this.options
+                  .filter(el => el.value.includes(this.searchValue))
+                : this.options;
+            }
+          },
+          methods: {
+            handleOptionSelected(option) {
+              this.searchValue = option;
+            },
+            isOptionSelected(option, index) {
+              if (this.searchValue) return this.searchValue === option.value;
+              return index === 0;
+            }
+          },
+      `,
+    },
+  },
+}
+
+<Canvas>
+  <Story story={ExampleAutoComplete} name="Example" height="180px" inline={false}></Story>
+</Canvas>
+
+<ArgsTable story="Example"/>

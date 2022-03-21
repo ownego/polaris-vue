@@ -31,11 +31,11 @@ For example, card components generally use headings as their title.
   }}
 />
 
-export const Template = (args, { argTypes }) => ({
-  props: Object.keys(argTypes),
+export const Template = (args) => ({
   components: { Heading },
+  setup() { return { args }; },
   template: `
-    <Heading v-bind="$props">
+    <Heading v-bind="args">
       Online store dashboard
     </Heading>
   `,

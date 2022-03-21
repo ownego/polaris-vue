@@ -80,8 +80,8 @@ Labelled(
 </template>
 
 <script setup lang="ts">
-import { computed, useSlots, isProxy } from 'vue';
-import type { Action, Error } from 'types/type';
+import { computed, useSlots } from 'vue';
+import type { Action, Error } from '@/utilities/type';
 import { classNames } from 'polaris-react/src/utilities/css';
 import { UseUniqueId } from '@/use';
 import styles from '@/classes/Select.json';

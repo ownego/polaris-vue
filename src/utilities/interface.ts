@@ -1,4 +1,4 @@
-import type { Action, IconSource } from 'types/type';
+import type { Action, IconSource } from '@/utilities/type';
 
 export interface anyKey {
   [key: string]: any;
@@ -102,4 +102,3 @@ export interface ComboboxTextFieldType {
   // Callback when TextField is changed
   onTextFieldChange?(): void;
 }
-

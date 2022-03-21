@@ -1,0 +1,74 @@
+import { Meta, Story, Canvas, ArgsTable } from '@storybook/addon-docs';
+import { DescriptionList, Dt, Dd } from '@/polaris-vue';
+import dedent from 'ts-dedent';
+
+<Meta
+  title="Components / Lists and tables  / Description List"
+  component={ DescriptionList }
+  argTypes={{
+    default: {
+      table: {
+        disable: true,
+      },
+    },
+  }}
+/>
+
+export const Template = (args) => ({
+  components: { DescriptionList, Dt, Dd },
+  setup() { return { args }; },
+  template: `<DescriptionList v-bind="args">
+    <Dt>Logistics</Dt>
+    <Dd>
+      The management of products or other resources as they travel between a point of origin and a destination.
+    </Dd>
+    <Dt>Sole proprietorship</Dt>
+    <Dd>
+      A business structure where a single individual both owns and runs the company.
+    </Dd>
+    <Dt>Discount code</Dt>
+    <Dd>
+      A series of numbers and/or letters that an online shopper may enter at checkout to get a discount or special offer.
+    </Dd>
+  </DescriptionList>`,
+});
+
+# Description List
+
+Description lists are a way to organize and explain related information.
+They're particularly useful when you need to list and define terms such as in a glossary.
+
+<font color="#FF7900"><strong>Warning:</strong></font> Use component name as case-sensitive (<code>&lt;Dt&gt;</code> &amp; <code>&lt;Dd&gt;</code>) to prevent conflict with <code>&lt;dt&gt;</code> <code>&lt;dd&gt;</code> HTML element.
+
+<Canvas>
+  <Story
+    name="Description List"
+    height="60px"
+    parameters={{
+      docs: {
+        source: {
+          code: dedent`
+            <DescriptionList>
+              <Dt>Logistics</Dt>
+              <Dd>
+                The management of products or other resources as they travel between a point of origin and a destination.
+              </Dd>
+              <Dt>Sole proprietorship</Dt>
+              <Dd>
+                A business structure where a single individual both owns and runs the company.
+              </Dd>
+              <Dt>Discount code</Dt>
+              <Dd>
+                A series of numbers and/or letters that an online shopper may enter at checkout to get a discount or special offer.
+              </Dd>
+            </DescriptionList>
+          `,
+        },
+      },
+    }}
+  >
+    {Template.bind({})}
+  </Story>
+</Canvas>
+
+<ArgsTable story="Description List" />

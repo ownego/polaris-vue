@@ -1,0 +1,54 @@
+import { Meta, Story, Canvas, ArgsTable } from '@storybook/addon-docs';
+import dedent from 'ts-dedent';
+
+import { Frame, Loading, Button } from '@/polaris-vue';
+
+<Meta
+  title="Components / Feedback indicators / Loading"
+  component={ Loading }
+  argTypes={{
+    disabled: {
+      table: {
+        type: {
+          summary: null,
+        },
+      },
+    },
+  }}
+/>
+
+export const Template = (args) => ({
+  components: { Loading, Frame, Button },
+  data() { return { isActive: false };},
+  setup() { return { args }; },
+  template: `<Frame>
+    <Loading v-if="isActive" />
+    <br/>
+    <Button @click="isActive = !isActive">Toggle loading</Button>
+  </Frame>`,
+});
+
+# Loading
+
+The loading component is used to indicate to merchants that a page is loading or an upload is processing.
+
+<Canvas>
+  <Story
+    name="Loading"
+    inline={false}
+    height="100px"
+    parameters={{
+      docs: {
+        source: {
+          code: dedent`
+            <Frame><Loading v-if="isActive" /></Frame>
+          `,
+        },
+      },
+    }}
+  >
+    {Template.bind({})}
+  </Story>
+</Canvas>
+
+<ArgsTable story="Loading" />

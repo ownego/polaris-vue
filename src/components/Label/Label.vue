@@ -37,5 +37,5 @@ const labelClassName = computed(() => classNames(
 </script>
 
 <style lang="scss">
-
+@import 'polaris-react/src/components/Label/Label.scss';
 </style>

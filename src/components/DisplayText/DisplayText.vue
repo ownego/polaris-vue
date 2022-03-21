@@ -9,7 +9,7 @@ component(
 <script setup lang="ts">
 import { computed } from 'vue';
 import { classNames, variationName } from 'polaris-react/src/utilities/css';
-import type { HeadingTagName } from 'types/type';
+import type { HeadingTagName } from '@/utilities/type';
 import styles from '@/classes/DisplayText.json';
 
 type Size = 'small' | 'medium' | 'large' | 'extraLarge';

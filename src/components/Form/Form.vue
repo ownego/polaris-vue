@@ -1,6 +1,5 @@
 <template lang="pug">
 form(@submit="submitHandle")
-  slot
   VisuallyHidden(
     v-if="implicitSubmit",
   )
@@ -10,6 +9,7 @@ form(@submit="submitHandle")
       tabIndex="-1",
     )
       | Submit
+  slot
 </template>
 
 <script setup lang="ts">

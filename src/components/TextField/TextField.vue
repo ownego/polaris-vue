@@ -11,9 +11,9 @@ Labelled(
   template(#help-text, v-if="slots['help-text']")
     slot(name="help-text")
   Connected
-    template(#left, v-if="slots.left")
+    template(#left, v-if="slots['connected-left']")
       slot(name="connected-left")
-    template(#right, v-if="slots.right")
+    template(#right, v-if="slots['connected-right']")
       slot(name="connected-right")
     div(
       :class="className",
@@ -64,7 +64,7 @@ Labelled(
         v-bind="normalizeAriaMultiline",
         @input="handleChange",
         @keydown="handleKeyPress",
-        @focus="$emit('focus')",
+        @focus="handleInputOnFocus",
         @blur="$emit('blur')",
       )
         template(v-if="multiline") {{ modelValue }}
@@ -109,14 +109,13 @@ Labelled(
 </template>
 
 <script setup lang="ts">
-import { inject, useSlots, ref, computed, watch } from 'vue';
+import { useSlots, ref, computed, watch } from 'vue';
 import { classNames, variationName } from 'polaris-react/src/utilities/css';
 import { UseUniqueId } from '@/use';
 import styles from '@/classes/TextField.json';
-import CircleCancelMinor from '@icons/CircleCancelMinor.svg'; 
-import type { ComboboxTextFieldType } from '@/utilities/interface';
+import CircleCancelMinor from '@icons/CircleCancelMinor.svg';
 import type { LabelledProps } from '../Labelled/utils';
-import type { Error } from 'types/type';
+import type { Error } from '@/utilities/type';
 import { helpTextID, labelID } from '../Labelled/utils';
 import { Resizer, Spinner as TextFieldSpinner } from './components';
 import { Connected } from '../Connected';
@@ -220,15 +219,14 @@ interface TextFieldProps {
   requiredIndicator?: boolean;
   /** Indicates whether or not a monospaced font should be used */
   monospaced?: boolean;
+  /** Indicates whether or not the entire input/text area text should be selected on focus */
+  selectTextOnFocus?: boolean;
 }
-
-const comboboxTextFieldContext = inject<ComboboxTextFieldType>('comboboxTextFieldContext', {});
 
 const props = defineProps<TextFieldProps>();
 
 const emits = defineEmits<{
-  (event: 'focus'): void
-  (event: 'click'): void
+  (event: 'focus', focusEvent: Event): void
   (event: 'blur'): void
   (event: 'change', changeEvent: Event): void
   (event: 'update:modelValue', value: string): void
@@ -237,7 +235,7 @@ const emits = defineEmits<{
 
 const prefixRef = ref<HTMLDivElement | null>(null);
 const suffixRef = ref<HTMLDivElement | null>(null);
-const inputRef = ref<HTMLDivElement | null>(null);
+const inputRef = ref<HTMLInputElement | HTMLTextAreaElement | null>(null);
 
 const slots = useSlots();
 const connectedLeftSlot = computed(() => slots['connected-left']?.());
@@ -331,8 +329,8 @@ const normalizeAriaMultiline = computed(() => {
 const normalizedAutocomplete = computed(() => {
   if (props.autoComplete === true) {
     return 'on';
-  } 
-  
+  }
+
   if (props.autoComplete === false) {
     return 'off';
   }
@@ -392,7 +390,7 @@ const containsAffix = (target: HTMLElement | EventTarget) => {
 
 const handleClick = (event: Event): void => {
   const target = event.target as HTMLInputElement;
-  
+
   if (containsAffix(target) || focus.value) {
     return;
   }
@@ -402,7 +400,7 @@ const handleClick = (event: Event): void => {
 
 const handleFocus = (event: Event): void => {
   const target = event.target as HTMLInputElement;
-  
+
   if (containsAffix(target)) {
     return;
   }
@@ -422,13 +420,16 @@ const handleBlur = (event: Event) => {
 
 const handleChange = (event: Event) => {
   const target = event.target as HTMLInputElement;
-  
-  if (comboboxTextFieldContext.onTextFieldChange) {
-    comboboxTextFieldContext.onTextFieldChange();
-  }
-  
+
   emits('update:modelValue', target.value);
   emits('change', event);
+};
+
+const handleInputOnFocus = (event: Event) => {
+  if (props.selectTextOnFocus && inputRef.value) {
+    inputRef.value.select();
+  }
+  emits('focus', event);
 };
 
 const handleNumberChange = (payload: number): void => {

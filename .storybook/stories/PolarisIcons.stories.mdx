@@ -24,7 +24,7 @@ So you don't have to install any additional packages.
 <br/>
 <br/>
 
-## Setup
+### **Setup:**
 
 You have to use `vite-svg-loader` in your project. See [Icon Component](?path=/docs/components-images-and-icons-icon--icon) for more details.
 
@@ -43,7 +43,7 @@ export default defineConfig({
 });
 ```
 
-## Usage
+### **Usage:**
 
 Composition API:
 
@@ -65,16 +65,14 @@ Options API:
 import CirclePlusMinor from '@shopify/polaris-icons/dist/svg/CirclePlusMinor.svg';
 
 export default {
-  data() {
-    return {
-      iconCirclePlusMinor: CirclePlusMinor,
-    };
+  setup() {
+    return { CirclePlusMinor };
   },
 }
 </script>
 
 <template>
-  <Icon :source="iconCirclePlusMinor">
+  <Icon :source="CirclePlusMinor">
 </template>
 ```
 

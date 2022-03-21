@@ -2,7 +2,6 @@
 component(
   :is="as",
   :p-color-scheme="colorScheme",
-  :class="className",
   :style="{ color: 'var(--p-text-color)' }",
 )
   slot
@@ -17,11 +16,6 @@ defineProps({
   colorScheme: {
     type: String as () => CustomPropertiesProps['colorScheme'],
     default: DEFAULT_COLOR_SCHEME,
-  },
-
-  className: {
-    type: String as () => CustomPropertiesProps['className'],
-    default: null,
   },
 
   as: {

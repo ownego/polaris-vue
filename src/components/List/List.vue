@@ -22,7 +22,7 @@ interface Props {
    * @values bullet | number
    * @default bullet
    */
-  type: Type;
+  type?: Type;
 }
 
 const props = withDefaults(defineProps<Props>(), {

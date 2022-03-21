@@ -1,0 +1,1047 @@
+import { Meta, Story, Canvas, ArgsTable } from '@storybook/addon-docs';
+import dedent from 'ts-dedent';
+
+import {
+  TextField,
+  ChoiceList,
+  Stack,
+  StackItem,
+  Select,
+  FormLayout,
+  FormGroup,
+  InlineError,
+} from '@/polaris-vue';
+
+<Meta
+  title="Components / Forms / TextField"
+  component={ TextField }
+  argTypes={{
+    default: {
+      control: {
+        type: 'text',
+      },
+      table: {
+        disable: true,
+      },
+    },
+    align: {
+      control: {
+        type: 'select',
+        options: ['left', 'center', 'right'],
+      },
+      table: {
+        type: {
+          summary: 'string',
+        },
+      },
+    },
+    ariaActiveDescendant: {
+      control: {
+        type: 'text',
+      },
+      table: {
+        type: {
+          summary: 'string'
+        },
+      },
+    },
+    ariaAutocomplete: {
+      control: {
+        type: 'text',
+      },
+      table: {
+        type: {
+          summary: 'string'
+        },
+      },
+    },
+    ariaControls: {
+      control: {
+        type: 'text',
+      },
+      table: {
+        type: {
+          summary: 'string'
+        },
+      },
+    },
+    ariaExpanded: {
+      control: {
+        type: 'boolean',
+      },
+      table: {
+        type: {
+          summary: 'boolean'
+        },
+      },
+    },
+    ariaOwns: {
+      control: {
+        type: 'text',
+      },
+      table: {
+        type: {
+          summary: 'string'
+        },
+      },
+    },
+    autoComplete: {
+      control: {
+        type: 'text',
+      },
+      table: {
+        type: {
+          summary: 'string'
+        },
+      },
+    },
+    autoFocus: {
+      control: {
+        type: 'boolean',
+      },
+      table: {
+        type: {
+          summary: 'boolean'
+        },
+      },
+    },
+    clearButton: {
+      control: {
+        type: 'boolean',
+      },
+      table: {
+        type: {
+          summary: 'boolean'
+        },
+      },
+    },
+    disabled: {
+      control: {
+        type: 'boolean',
+      },
+      table: {
+        type: {
+          summary: 'boolean'
+        },
+      },
+    },
+    error: {
+      control: {
+        type: 'text',
+      },
+      table: {
+        type: {
+          summary: 'string | component'
+        },
+      },
+    },
+    focused: {
+      control: {
+        type: 'boolean',
+      },
+      table: {
+        type: {
+          summary: 'boolean'
+        },
+      },
+    },
+    id: {
+      control: {
+        type: 'text',
+      },
+      table: {
+        type: {
+          summary: 'string'
+        },
+      },
+    },
+    inputMode: {
+      control: {
+        type: 'select',
+        options: ["none", "text", "decimal", "numeric", "tel", "search", "email", "url"]
+      },
+      table: {
+        type: {
+          summary: '"none" | "text" | "decimal" | "numeric" | "tel" | "search" | "email" | "url"'
+        },
+      },
+    },
+    labelAction: {
+      control: {
+        disable: true,
+      },
+      table: {
+        type: {
+          summary: 'string'
+        },
+      },
+    },
+    labelHidden: {
+      control: {
+        type: 'boolean',
+      },
+      table: {
+        type: {
+          summary: 'boolean'
+        },
+      },
+    },
+    max: {
+      control: {
+        type: 'text',
+      },
+      table: {
+        type: {
+          summary: 'string | number'
+        },
+      },
+    },
+    maxHeight: {
+      control: {
+        type: 'text',
+      },
+      table: {
+        type: {
+          summary: 'string | number'
+        },
+      },
+    },
+    maxLength: {
+      table: {
+        type: {
+          summary: 'number'
+        },
+      },
+    },
+    min: {
+      control: {
+        type: 'text',
+      },
+      table: {
+        type: {
+          summary: 'string | number'
+        },
+      },
+    },
+    minLength: {
+      control: {
+        type: 'number',
+      },
+      table: {
+        type: {
+          summary: 'number'
+        },
+      },
+    },
+    modelValue: {
+      description: 'Initial value for the input, v-model is available in this component',
+    },
+    monospaced: {
+      control: {
+        type: 'boolean',
+      },
+      table: {
+        type: {
+          summary: 'boolean'
+        },
+      },
+    },
+    multiline: {
+      control: {
+        type: 'number',
+      },
+      table: {
+        type: {
+          summary: 'boolean | number'
+        },
+      },
+    },
+    name: {
+      control: {
+        type: 'text',
+      },
+      table: {
+        type: {
+          summary: 'string'
+        },
+      },
+    },
+    pattern: {
+      control: {
+        type: 'text',
+      },
+      table: {
+        type: {
+          summary: 'string'
+        },
+      },
+    },
+    placeholder: {
+      control: {
+        type: 'text',
+      },
+      table: {
+        type: {
+          summary: 'string'
+        },
+      },
+    },
+    readOnly: {
+      control: {
+        type: 'boolean',
+      },
+      table: {
+        type: {
+          summary: 'boolean'
+        },
+      },
+    },
+    requiredIndicator: {
+      control: {
+        type: 'boolean',
+      },
+      table: {
+        type: {
+          summary: 'boolean'
+        },
+      },
+    },
+    role: {
+      control: {
+        type: 'text',
+      },
+      table: {
+        type: {
+          summary: 'string'
+        },
+      },
+    },
+    showCharacterCount: {
+      control: {
+        type: 'boolean',
+      },
+      table: {
+        type: {
+          summary: 'boolean'
+        },
+      },
+    },
+    spellCheck: {
+      control: {
+        type: 'boolean',
+      },
+      table: {
+        type: {
+          summary: 'boolean'
+        },
+      },
+    },
+    step: {
+      control: {
+        type: 'number',
+      },
+      table: {
+        type: {
+          summary: 'number'
+        },
+      },
+    },
+    type: {
+      control: {
+        type: 'select',
+        options: ["text", "password", "email", "number", "tel", "search", "url", "date", "datetime-local", "time", "month", "week", "color", "file"]
+      },
+      table: {
+        type: {
+          summary: '"text" | "password" | "email" | "number" | "tel" | "search" | "url" | "date" | "datetime-local" | "time" | "month" | "week" | "color" | "file"'
+        },
+      },
+    },
+    blur: {
+      description: 'Callback when focus is removed',
+      control: {
+        disable: true,
+      },
+      table: {
+        type: {
+          summary: '() => void'
+        },
+      },
+    },
+    change: {
+      description: 'Callback when value is changed',
+      control: {
+        disable: true,
+      },
+      table: {
+        type: {
+          summary: '(Event) => void'
+        },
+      },
+    },
+    'clear-button-click': {
+      description: 'Call back when clear button is clicked',
+      control: {
+        disable: true,
+      },
+      table: {
+        type: {
+          summary: '(id: String) => void'
+        },
+      },
+    },
+    focus: {
+      description: 'Callback when input is focused',
+      control: {
+        disable: true,
+      },
+      table: {
+        type: {
+          summary: '() => void'
+        },
+      },
+    },
+    'update:modelValue': {
+      table: {
+        disable: true,
+      },
+    },
+    'connected-left': {
+      control: {
+        disable: true,
+      },
+      description: 'An element connected to the left of the input',
+      table: {
+        type: {
+          summary: 'slot'
+        },
+      }
+    },
+    'connected-right': {
+      control: {
+        disable: true,
+      },
+      description: 'An element connected to the right of the input',
+      table: {
+        type: {
+          summary: 'slot'
+        },
+      }
+    },
+    'help-text': {
+      control: {
+        disable: true,
+      },
+      description: 'Additional hint text to display',
+      table: {
+        type: {
+          summary: 'slot'
+        },
+      }
+    },
+    label: {
+      control: {
+        disable: true,
+      },
+      description: 'Label for the input',
+      table: {
+        type: {
+          summary: 'slot'
+        },
+      }
+    },
+    prefix: {
+      control: {
+        disable: true
+      },
+      description: 'Text to display before value',
+      table: {
+        type: {
+          summary: 'slot'
+        },
+      }
+    },
+    suffix: {
+      control: {
+        disable: true
+      },
+      description: 'Text to display after value',
+      table: {
+        type: {
+          summary: 'slot'
+        },
+      }
+    },
+  }}
+/>
+
+# Text field
+
+A text field is an input field that merchants can type into. It has a range of options and supports several text formats including numbers.
+
+<br/><br/>
+
+### Default text field
+
+Use to allow merchants to provide text input when the expected input is short. For longer input, use the auto grow or multiline options.
+
+export const DefaultTextField = (args) => ({
+  components: { TextField },
+  template: `
+  <div>
+    <TextField
+      v-model="name"
+      autoComplete="off"
+    >
+      <template slot="label">
+        Your store name
+      </template>
+    </TextField>
+    <p style="margin-top: 20px">Name: {{ name }}</p>
+  </div>
+  `,
+  data() {
+    return {
+      name: 'Polaris',
+    };
+  },
+});
+DefaultTextField.parameters = {
+  docs: {
+    source: {
+      state: 'close',
+      code: dedent`
+      <div>
+        <TextField
+          v-model="name"
+          autoComplete="off"
+        >
+          <template slot="label">
+            Your store name
+          </template>
+        </TextField>
+        <p>Name: {{ name }}</p>
+      </div>\n
+      data() {
+        return {
+          name: 'Polaris',
+        };
+      },
+      `
+    },
+  },
+};
+
+<Canvas>
+  <Story story={DefaultTextField} name="Default text field"></Story>
+</Canvas>
+
+### Number field
+
+Use when input text should be a number.
+
+export const NumberField = (args, { argTypes }) => ({
+  components: { TextField },
+  template: `
+  <div>
+    <TextField
+      type="number"
+      v-model="numberData"
+      autoComplete="off"
+    >
+      <template slot="label">
+        Quantity
+      </template>
+    </TextField>
+    <p style="margin-top: 20px">Number: {{ numberData }}</p>
+  </div>`,
+  data() {
+    return {
+      numberData: '1',
+    };
+  },
+});
+NumberField.parameters = {
+  docs: {
+    source: {
+      state: 'close',
+      code: dedent`
+      <div>
+        <TextField
+          type="number"
+          v-model="numberData"
+          autoComplete="off"
+        >
+          <template slot="label">
+            Quantity
+          </template>
+        </TextField>
+        <p>Number: {{ numberData }}</p>
+      </div>\n
+      data() {
+        return {
+          numberData: '1',
+        };
+      },
+      `,
+    },
+  },
+};
+
+<Canvas>
+  <Story story={NumberField} name="Number field"></Story>
+</Canvas>
+
+### Multiline text field
+
+Use when the expected input could be more than one line.
+The field will automatically grow to accommodate additional text.
+
+export const MultiLineField = (args, { argTypes }) => ({
+  components: { TextField },
+  template: `
+  <div>
+    <TextField
+      v-model="address"
+      autoComplete="off"
+      :multiline="4"
+    >
+      <template slot="label">
+        Address
+      </template>
+    </TextField>
+    <p style="margin-top: 20px">Address: {{ address }}</p>
+  </div>`,
+  data() {
+    return {
+      address: '156 Xa Dan 2',
+    };
+  },
+});
+MultiLineField.parameters = {
+  docs: {
+    source: {
+      state: 'close',
+      code: dedent`
+      <div>
+        <TextField
+          v-model="address"
+          autoComplete="off"
+          :multiline="4"
+        >
+          <template slot="label">
+            Address
+          </template>
+        </TextField>
+        <p style="margin-top: 20px">Address: {{ address }}</p>
+      </div>\n
+      data() {
+        return {
+          address: '156 Xa Dan 2',
+        };
+      },
+      `,
+    }
+  },
+};
+
+<Canvas>
+  <Story story={MultiLineField} name="Multiline text field" height="150px"></Story>
+</Canvas>
+
+### Text field with hidden label
+
+Use to visually hide the label when the text field's purpose is clear from context.
+The label will remain available to screen readers. Use this option with care. In almost all cases, show the label.
+
+export const HiddenLabelField = (args, { argTypes }) => ({
+  components: { TextField, ChoiceList },
+  template: `
+  <div>
+    <ChoiceList :choices="choices" v-model="selected">
+      Gift card auto-expiration
+    </ChoiceList>
+    <TextField
+      type="number"
+      v-model="months"
+      autoComplete="off"
+      :disabled="selected === 'no'"
+      :labelHidden="true"
+    >
+    </TextField>
+  </div>`,
+  data() {
+    return {
+      months: '12',
+      choices: [
+        {label: 'Gift cards never expire', value: 'no'},
+        {label: 'Gift cards expire', value: 'yes'},
+      ],
+      selected: 'yes',
+    };
+  },
+});
+HiddenLabelField.parameters = {
+  docs: {
+    source: {
+      state: 'close',
+      code: dedent`
+        <div>
+          <ChoiceList :choices="choices" v-model="selected">
+            Gift card auto-expiration
+          </ChoiceList>
+          <TextField
+            type="number"
+            v-model="months"
+            autoComplete="off"
+            :disabled="selected === 'no'"
+            :labelHidden="true"
+          >
+          </TextField>
+        </div>\n
+        import { choiceList } from '@/polaris-vue';\n
+        data() {
+          return {
+            months: '12',
+            choices: [
+              {label: 'Gift cards never expire', value: 'no'},
+              {label: 'Gift cards expire', value: 'yes'},
+            ],
+            selected: 'yes',
+          };
+        },
+      `
+    },
+  },
+};
+
+<Canvas>
+  <Story story={HiddenLabelField} name="Text field with hidden label"></Story>
+</Canvas>
+
+
+### Text field with right aligned text
+
+Use when input text should be aligned right.
+
+export const RightAlignedField = (args, { argTypes }) => ({
+  components: { TextField, Stack, StackItem },
+  template: `
+  <Stack>
+    <StackItem :fill="true">
+      Price
+    </StackItem>
+    <TextField
+      v-model="price"
+      autoComplete="off"
+      align="right"
+      :labelHidden="true"
+    >
+      <template #label>
+        Price label
+      </template>
+    </TextField>
+  </Stack>`,
+  data() {
+    return {
+      price: '1',
+    };
+  },
+});
+RightAlignedField.parameters = {
+  docs: {
+    source: {
+      state: 'close',
+      code: dedent`
+      <Stack>
+        <StackItem :fill="true">
+          Price
+        </StackItem>
+        <TextField
+          v-model="price"
+          autoComplete="off"
+          align="right"
+          :labelHidden="true"
+        >
+          <template #label>
+            Price label
+          </template>
+        </TextField>
+      </Stack>\n
+      import { Stack, StackItem } from '@/polaris-vue';\n
+      data() {
+        return {
+          price: '1',
+        };
+      },
+      `,
+    },
+  },
+};
+
+<Canvas>
+  <Story story={RightAlignedField} name="Text field with right aligned text"></Story>
+</Canvas>
+
+### Text field with help text
+
+Use to show short instructional content below the text field.
+Help text works to help merchants understand how to fix errors that result from incorrect formatting (such as dates or passwords with specific character requirements).
+If more explanation is needed, link to the Shopify Help Center.
+
+export const HelpTextField = (args, { argTypes }) => ({
+  components: { TextField },
+  template: `
+  <div>
+    <TextField
+      type="email"
+      autoComplete="email"
+    >
+      <template #label>
+        Account email
+      </template>
+      <template #help-text>
+        We'll use this address if we need to contact you about your account.
+      </template>
+    </TextField>
+  </div>
+  `,
+});
+HelpTextField.parameters = {
+  docs: {
+    source: {
+      state: 'close',
+      code: dedent`
+      <div>
+        <TextField
+          type="email"
+          autoComplete="email"
+        >
+          <template #label>
+            Account email
+          </template>
+          <template #help-text>
+            We'll use this address if we need to contact you about your account.
+          </template>
+        </TextField>
+      </div>
+      `,
+    },
+  },
+};
+
+<Canvas>
+  <Story story={HelpTextField} name="Text field with help text"></Story>
+</Canvas>
+
+### Text field with prefix or suffix
+
+Use as a special form of help text that works best inline.
+
+* Use a prefix for things like currency symbols (“$”, “¥”, “£”).
+
+* Use suffix for things like units of measure (“in”, “cm”).
+
+export const PrefixSuffixField = (args, { argTypes }) => ({
+  components: { TextField },
+  template: `
+  <div>
+    <TextField
+      v-model="price"
+      type="number"
+      autoComplete="off"
+    >
+      <template #label>
+        Price
+      </template>
+      <template #prefix>
+        $
+      </template>
+    </TextField>
+  </div>
+  `,
+  data() {
+    return {
+      price: '10',
+    };
+  },
+});
+PrefixSuffixField.parameters = {
+  docs: {
+    source: {
+      state: 'close',
+      code: dedent`
+      <div>
+        <TextField
+          v-model="price"
+          type="number"
+          autoComplete="off"
+        >
+          <template #label>
+            Price
+          </template>
+          <template #prefix>
+            $
+          </template>
+        </TextField>
+      </div>
+      `,
+    },
+  },
+};
+
+<Canvas>
+  <Story story={PrefixSuffixField} name="Text field with prefix or suffix"></Story>
+</Canvas>
+
+### Text field with connected fields
+
+Use when a text field and several related fields make up a logical unit.
+
+If inputting weight as a number and a separate unit of measurement,
+use a text field with a select dropdown menu (for example “kg”, “lb”) as a connected field.
+
+export const ConnectedField = (args, { argTypes }) => ({
+  components: { TextField, Select },
+  template: `
+  <TextField
+    v-model="weight"
+    type="number"
+    autoComplete="off"
+  >
+    <template #label>Weight</template>
+    <template #connected-left>
+      <Select
+        v-model="unit"
+        :options="['kg', 'lb']"
+        :labelHidden="true"
+      >
+      </Select>
+    </template>
+  </TextField>
+  `,
+  data() {
+    return {
+      weight: '10',
+      unit: 'kg'
+    };
+  },
+});
+ConnectedField.parameters = {
+  docs: {
+    source: {
+      state: 'close',
+      code: dedent`
+        <TextField
+          v-model="weight"
+          type="number"
+          autoComplete="off"
+        >
+          <template #label>Weight</template>
+          <template #connected-left>
+            <Select
+              v-model="unit"
+              :options="['kg', 'lb']"
+              :labelHidden="true"
+            >
+            </Select>
+          </template>
+        </TextField>
+      `,
+    }
+  },
+};
+
+<Canvas>
+  <Story story={ConnectedField} name="Text field with connected fields"></Story>
+</Canvas>
+
+### Text field with clear button
+
+Use to allow merchants to clear the content from a text field.
+
+export const ClearBtnField = (args, { argTypes }) => ({
+  components: { TextField },
+  template: `
+  <div>
+    <TextField
+      v-model="storeName"
+      autoComplete="off"
+      :clearButton="true"
+      @clear-button-click="storeName = ''"
+    >
+      <template slot="label">
+        Store name
+      </template>
+    </TextField>
+  </div>
+  `,
+  data() {
+    return {
+      storeName: 'Jaded Pixel',
+    };
+  },
+});
+ClearBtnField.parameters = {
+  docs: {
+    source: {
+      state: 'close',
+      code: dedent`
+      <div>
+        <TextField
+          v-model="storeName"
+          autoComplete="off"
+          :clearButton="true"
+          @clear-button-click="storeName = ''"
+        >
+          <template slot="label">
+            Store name
+          </template>
+        </TextField>
+      </div>\n
+      data() {
+        return {
+          storeName: 'Jaded Pixel',
+        };
+      },
+      `,
+    },
+  },
+};
+
+<Canvas>
+  <Story story={ClearBtnField} name="Text field with clear button"></Story>
+</Canvas>
+
+### Example
+
+export const ExampleField = (args) => ({
+  components: { TextField },
+  setup() { return { args }; },
+  template: `
+    <TextField v-bind="args" autoComplete="off">
+      <template #label>Example text field</template>
+    </TextField>
+  `,
+});
+
+<Canvas>
+  <Story
+    story={ExampleField}
+    name="Example"
+    parameters={{
+      docs: {
+        source: {
+          code: dedent`
+          <TextField v-bind="args" autoComplete="off">
+            <template #label>Example text field</template>
+          </TextField>
+          `
+        },
+      },
+    }}
+  >
+  </Story>
+</Canvas>
+
+<ArgsTable story="Example" />

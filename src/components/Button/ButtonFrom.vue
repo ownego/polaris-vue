@@ -19,7 +19,7 @@ import { Button } from '@/components/Button';
 import type { ButtonProps } from './utils';
 
 interface Props {
-  action: ComplexAction;
+  action?: ComplexAction;
   overrides?: Partial<ButtonProps>;
 }
 
@@ -28,13 +28,15 @@ const props = withDefaults(defineProps<Props>(), {
 });
 
 const handleClick = () => {
-  if (props.action.onAction) {
+  if (props.action && props.action.onAction) {
     props.action.onAction();
   }
 };
 
 const bindProps = computed(() => {
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  if (!props.action) {
+    return {};
+  }
   const { onAction, content, ...other } = props.action;
   return { ...other, ...props.overrides };
 });
