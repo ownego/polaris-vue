@@ -16,6 +16,7 @@ export * from './Connected';
 export * from './ContextualSaveBar';
 export * from './CustomProperties';
 export * from './DatePicker';
+export * from './DescriptionList';
 export * from './DisplayText';
 export * from './EventListener';
 export * from './ExceptionList';
