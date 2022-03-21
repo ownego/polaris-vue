@@ -1,0 +1,122 @@
+import dedent from 'ts-dedent';
+import { Meta, Story, Canvas, ArgsTable } from '@storybook/addon-docs';
+
+import { ref } from 'vue';
+import { Frame, Toast, Button } from '@/polaris-vue';
+
+<Meta
+  title="Components / Feedback indicators / Toast"
+  component={ Toast }
+  argTypes={{
+    action: {
+      control: {
+        disable: true,
+      },
+    },
+    duration: {
+      table: {
+        defaultValue: {
+          summary: '5000',
+        },
+      },
+    },
+    error: {
+      table: {
+        defaultValue: {
+          summary: 'false',
+        },
+      },
+    },
+  }}
+/>
+
+export const Template = (args) => ({
+  components: { Frame, Toast, Button },
+  setup() {
+    const toastActive1 = ref(false);
+    const toastActive2 = ref(false);
+    const toastActive3 = ref(false);
+    const toggleToast1 = () => {
+      toastActive1.value = !toastActive1.value;
+    };
+    const toggleToast2 = () => {
+      toastActive2.value = !toastActive2.value;
+    };
+    const toggleToast3 = () => {
+      toastActive3.value = !toastActive3.value;
+    };
+    const undoHandler = () => {
+      alert('Undo clicked');
+    }
+    return { toastActive1, toggleToast1, toastActive2, toggleToast2, toastActive3, toggleToast3, undoHandler };
+  },
+  template: `
+    <Frame>
+      <Button @click="toggleToast1">Toast 1</Button>&nbsp;
+      <Button @click="toggleToast2">Toast 2</Button>&nbsp;
+      <Button destructive @click="toggleToast3">Toast Error</Button>
+      <Toast
+        v-if="toastActive1"
+        content="Message sent"
+        :duration="5000"
+        :action="{ content: 'Undo', onAction: undoHandler }"
+        @dismiss="toggleToast1"
+      />
+      <Toast
+        v-if="toastActive2"
+        content="Image Uploaded"
+        @dismiss="toggleToast2"
+      />
+      <Toast
+        v-if="toastActive3"
+        error
+        content="Server Error"
+        @dismiss="toggleToast3"
+      />
+    </Frame>
+  `,
+});
+
+# Toast
+
+The toast component is a non-disruptive message that appears at the bottom of the interface to provide quick, at-a-glance feedback on the outcome of an action.
+
+<Canvas>
+  <Story
+    name="Toast"
+    inline={false}
+    height="300px"
+    parameters={{
+      docs: {
+        source: {
+          code: dedent`
+            <Frame>
+              <Button @click="toggleToast">Toggle Toast</Button>\n
+              <Toast
+                v-if="toastActive"
+                content="Message sent"
+                :duration="5000"
+                :action="{ content: 'Undo', onAction: undoHandler }"
+                @dismiss="toggleToast"
+              />
+            </Frame>\n
+            setup() {
+              const toastActive = ref(false);
+              const toggleToast = () => {
+                toastActive.value = !toastActive.value;
+              };
+              const undoHandler = () => {
+                alert('Undo clicked');
+              }
+              return { toastActive, toggleToast, undoHandler };
+            },
+          `,
+        },
+      },
+    }}
+  >
+    {Template.bind({})}
+  </Story>
+</Canvas>
+
+<ArgsTable story="Toast" />

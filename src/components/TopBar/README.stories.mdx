@@ -1,0 +1,376 @@
+import dedent from 'ts-dedent';
+import { Meta, Story, Canvas, ArgsTable } from '@storybook/addon-docs';
+
+import { ref } from 'vue';
+import { Frame, TopBar, TopBarUserMenu, TopBarSearchField, TopBarMenu, Icon, VisuallyHidden, ActionList } from '@/polaris-vue';
+import ArrowLeftMinor from '@icons/ArrowLeftMinor.svg';
+import QuestionMarkMajor from '@icons/QuestionMarkMajor.svg';
+
+<Meta
+  title="Components / Navigation / Top Bar"
+  component={ TopBar }
+  argTypes={{
+    default: {
+      table: {
+        disable: true,
+      },
+    },
+    'navigation-toggle': {
+      description: 'A callback function that handles hiding and showing mobile navigation',
+      control: {
+        disable: true,
+      },
+      table: {
+        type: {
+          summary: null,
+        },
+      },
+    },
+    'search-result-dismiss': {
+      description: 'A callback function that handles the dismissal of search results',
+      control: {
+        disable: true,
+      },
+      table: {
+        type: {
+          summary: null,
+        },
+      },
+    },
+    contextControl: {
+      description: 'Accepts a component that is used to help users switch between different contexts',
+      control: {
+        disable: true,
+      },
+      table: {
+        type: {
+          summary: null,
+        },
+      },
+    },
+    searchField: {
+      description: 'Accepts a search field component that is made available as a `TextField` static member of the top bar component',
+      control: {
+        disable: true,
+      },
+      table: {
+        type: {
+          summary: null,
+        },
+      },
+    },
+    searchResults: {
+      description: 'Accepts a search results component that is ideally composed of a card component containing a list of actionable search results',
+      control: {
+        disable: true,
+      },
+      table: {
+        type: {
+          summary: null,
+        },
+      },
+    },
+    secondaryMenu: {
+      description: 'Accepts a menu component that is made available as a static member of the top bar component',
+      control: {
+        disable: true,
+      },
+      table: {
+        type: {
+          summary: null,
+        },
+      },
+    },
+    userMenu: {
+      description: 'Accepts a user component that is made available as a static member of the top bar component and renders as the primary menu',
+      control: {
+        disable: true,
+      },
+      table: {
+        type: {
+          summary: null,
+        },
+      },
+    },
+  }}
+/>
+
+export const Template = (args) => ({
+  components: { Frame, TopBar, TopBarUserMenu, TopBarMenu, Icon, VisuallyHidden, TopBarSearchField, ActionList },
+  setup() {
+    const logo = {
+      width: 30,
+      topBarSource: 'https://github.com/qikify/polaris-vue/raw/dev/public/images/logo.png',
+      contextualSaveBarSource: 'https://github.com/qikify/polaris-vue/raw/dev/public/images/logo.png',
+    }
+    const isUserMenuOpen = ref(false);
+    const isSecondaryMenuOpen = ref(false);
+    const isSearchActive = ref(false);
+    const searchValue = ref('');
+    const handleSearchChange = (value) => {
+      isSearchActive.value = value.length > 0;
+    }
+    const handleSearchResultsDismiss = () => {
+      searchValue.value = '';
+      isSearchActive.value = false;
+    }
+    const toggleUserMenu = () => {
+      isUserMenuOpen.value = !isUserMenuOpen.value;
+    };
+    const toggleIsSecondaryMenuOpen = () => {
+      isSecondaryMenuOpen.value = !isSecondaryMenuOpen.value;
+    };
+    const userMenuAction = ref([
+      { items: [{ content: 'Back to Shopify', icon: ArrowLeftMinor }] },
+      { items: [{ content: 'Community forums' }] }]
+    );
+    const clickHandle = () => { alert('clicked'); };
+    const userMenuMessage = ref({
+      title: 'Another Message',
+      description:'This is a description of message',
+      action: { onClick: clickHandle, content: 'This is a action' },
+      link: { to: 'https://google.com', content: 'Google Homepage' }
+    });
+    return { logo, isSearchActive, searchValue, handleSearchChange, toggleIsSecondaryMenuOpen, userMenuAction, userMenuMessage, toggleUserMenu, isUserMenuOpen, isSecondaryMenuOpen, handleSearchResultsDismiss, QuestionMarkMajor };
+  },
+  template: `
+    <Frame :logo="logo">
+      <template #topBar>
+        <TopBar showNavigationToggle
+          :searchResultsVisible="isSearchActive"
+          @search-result-dismiss="handleSearchResultsDismiss"
+        >
+          <template #userMenu>
+            <TopBarUserMenu
+              :actions="userMenuAction"
+              name="Polaris"
+              detail="qikify"
+              initials="P"
+              :message="userMenuMessage"
+              :open="isUserMenuOpen"
+              @toggle="toggleUserMenu"
+            />
+          </template>
+          <template #secondaryMenu>
+            <TopBarMenu
+              :open="isSecondaryMenuOpen"
+              @open="toggleIsSecondaryMenuOpen"
+              @close="toggleIsSecondaryMenuOpen"
+              :actions="[{ items: [{content: 'Community forums'}] }, { items: [{content: 'Blog'}] }]"
+            >
+              <template #activatorContent>
+                <span>
+                  <Icon :source="QuestionMarkMajor" />
+                  <VisuallyHidden>Secondary menu</VisuallyHidden>
+                </span>
+              </template>
+            </TopBarMenu>
+          </template>
+          <template #searchField>
+            <TopBarSearchField
+              placeholder="Search"
+              v-model="searchValue"
+              :showFocusBorder="true"
+              @change="handleSearchChange"
+            />
+          </template>
+          <template #searchResults>
+            <ActionList
+              :items="[{content: 'Shopify help center', onAction: () => alert('ok')}, {content: 'Community forums'}]"
+            />
+          </template>
+        </TopBar>
+      </template>
+    </Frame>
+  `,
+});
+
+# Top Bar
+
+The top bar is a header component that allows merchants to search, access menus, and navigate by clicking on the logo. It's always visible at the top of interfaces like Shopify or Shopify Plus. Third-party apps that use the top bar can customize the color to match their brand using the [app provider](?path=/docs/components-structure-appprovider--page) component and are required to use their own logo.
+
+<Canvas>
+  <Story
+    name="Top Bar"
+    inline={false}
+    height="400px"
+    width="400px"
+    parameters={{
+      docs: {
+        source: {
+          state: 'close',
+          code: dedent`
+            <Frame :logo="logo">
+              <template #topBar>
+                <TopBar showNavigationToggle
+                  :searchResultsVisible="isSearchActive"
+                  @search-result-dismiss="handleSearchResultsDismiss"
+                >\n
+                  <template #userMenu>
+                    <TopBarUserMenu
+                      :actions="userMenuAction"
+                      name="Polaris"
+                      detail="qikify"
+                      initials="P"
+                      :message="userMenuMessage"
+                      :open="isUserMenuOpen"
+                      @toggle="toggleUserMenu"
+                    />
+                  </template>\n
+                  <template #secondaryMenu>
+                    <TopBarMenu
+                      :open="isSecondaryMenuOpen"
+                      @open="toggleIsSecondaryMenuOpen"
+                      @close="toggleIsSecondaryMenuOpen"
+                      :actions="[{ items: [{content: 'Community forums'}] }, { items: [{content: 'Blog'}] }]"
+                    >
+                      <template #activatorContent>
+                        <span>
+                          <Icon :source="QuestionMarkMajor" />
+                          <VisuallyHidden>Secondary menu</VisuallyHidden>
+                        </span>
+                      </template>
+                    </TopBarMenu>
+                  </template>\n
+                  <template #searchField>
+                    <TopBarSearchField
+                      placeholder="Search"
+                      v-model="searchValue"
+                      :showFocusBorder="true"
+                      @change="handleSearchChange"
+                    />
+                  </template>\n
+                  <template #searchResults>
+                    <ActionList
+                      :items="[{content: 'Shopify help center', onAction: () => alert('ok')}, {content: 'Community forums'}]"
+                    />
+                  </template>\n
+                </TopBar>
+              </template>
+            </Frame>\n\n
+            setup() {
+              const logo = {
+                width: 30,
+                topBarSource: 'https://github.com/qikify/polaris-vue/raw/dev/public/images/logo.png',
+                contextualSaveBarSource: 'https://github.com/qikify/polaris-vue/raw/dev/public/images/logo.png',
+              }
+              const isUserMenuOpen = ref(false);
+              const isSecondaryMenuOpen = ref(false);
+              const isSearchActive = ref(false);
+              const searchValue = ref('');\n
+              const handleSearchChange = (value) => {
+                isSearchActive.value = value.length > 0;
+              }
+              const handleSearchResultsDismiss = () => {
+                searchValue.value = '';
+                isSearchActive.value = false;
+              }
+              const toggleUserMenu = () => {
+                isUserMenuOpen.value = !isUserMenuOpen.value;
+              };
+              const toggleIsSecondaryMenuOpen = () => {
+                isSecondaryMenuOpen.value = !isSecondaryMenuOpen.value;
+              };
+              const userMenuAction = ref([
+                { items: [{ content: 'Back to Shopify', icon: ArrowLeftMinor }] },
+                { items: [{ content: 'Community forums' }] }]
+              );
+              const clickHandle = () => { alert('clicked'); };
+              const userMenuMessage = ref({
+                title: 'Another Message',
+                description:'This is a description of message',
+                action: { onClick: clickHandle, content: 'This is a action' },
+                link: { to: 'https://google.com', content: 'Google Homepage' }
+              });
+              return { logo, isSearchActive, searchValue, handleSearchChange, toggleIsSecondaryMenuOpen, userMenuAction, userMenuMessage, toggleUserMenu, isUserMenuOpen, isSecondaryMenuOpen, handleSearchResultsDismiss, QuestionMarkMajor };
+            },
+          `,
+        },
+      },
+    }}
+  >
+    {Template.bind({})}
+  </Story>
+</Canvas>
+
+<ArgsTable story="Top Bar" />
+
+<a name="subcomponent-menu"></a>
+
+### **Top bar menu**
+
+A component that composes together an activator and a popover containing an action list to create a dropdown menu.
+
+| Prop             | Type                          | Description                                                                                        |
+| ---------------- | ----------------------------- | -------------------------------------------------------------------------------------------------- |
+| actions          | ActionListProps['sections']   | An array of action objects that are rendered inside of a popover triggered by this menu. Follow Action List component props          |
+| message          | [MessageProps](#type-message) | Accepts a message that facilitates direct, urgent communication with the merchant through the menu |
+| open             | boolean                       | A boolean property indicating whether the menu is currently open                                   |
+
+<br/>
+
+| Events           | Type                          | Description                                                                                        |
+| ---------------- | ----------------------------- | -------------------------------------------------------------------------------------------------- |
+| @open            | function                      | A callback function to handle opening the menu popover                                             |
+| @close           | function                      | A callback function to handle closing the menu popover                                             |
+
+<br/>
+
+| Slots             | Type                          | Description                                                                                        |
+| ----------------  | ----------------------------- | -------------------------------------------------------------------------------------------------- |
+| #activatorContent |                               | Accepts an activator component that renders inside of a button that opens the menu                 |
+
+<br/>
+<a name="subcomponent-user-menu"></a>
+
+### **Top bar user menu**
+
+A specialized menu component that is activated by a user avatar.
+
+| Prop       | Type                          | Description                                                                                             |
+| ---------- | ----------------------------- | ------------------------------------------------------------------------------------------------------- |
+| actions    | {items: IconableAction[]}[]   | An array of action objects that are rendered inside of a popover triggered by this menu                 |
+| message    | [MessageProps](#type-message) | Accepts a message that facilitates direct, urgent communication with the merchant through the user menu |
+| name       | string                        | A string detailing the merchant's full name to be displayed in the user menu                            |
+| detail     | string                        | A string allowing further details on the merchant's name displayed in the user menu                     |
+| initials   | AvatarProps['initials']       | The merchant's initials, rendered in place of an avatar image when not provided                         |
+| avatar     | AvatarProps['source']         | An avatar image representing the merchant                                                               |
+| open       | boolean                       | A boolean property indicating whether the user menu is currently open                                   |
+
+| Event       | Type                          | Description                                                                                             |
+| ----------  | ----------------------------- | ------------------------------------------------------------------------------------------------------- |
+| @toggle     | function                      | A callback function to handle opening and closing the user menu                                         |
+
+<br/>
+<a name="type-message"></a>
+
+### **Top bar menu message**
+
+| Prop        | Type                                            | Description                               |
+| ----------- | ----------------------------------------------- | ----------------------------------------- |
+| title       | string                                          | A title for the message                   |
+| description | string                                          | A description for the message             |
+| action      | {onClick(): void; content: string}              | An action to render near the message      |
+| link        | {to: string; content: string}                   | A link to view the content of the message |
+| badge       | {content: string; status: BadgeProps['status']} | A badge to render near the message        |
+
+<br/>
+<a name="subcomponent-search-field"></a>
+
+### **Top bar search field**
+
+A text field component that is tailor-made for a search use-case.
+
+| Prop                    | Type     | Description                                                                      |
+| ----------------------- | -------- | -------------------------------------------------------------------------------- |
+| value                   | string   | Initial value for the input                                                      |
+| placeholder             | string   | Hint text to display                                                             |
+| focused                 | boolean  | Force the focus state on the input                                               |
+| active                  | boolean  | Force a state where search is active but the text field component is not focused |
+
+| Events                  | Type     | Description                                                                      |
+| ----------------------- | -------- | -------------------------------------------------------------------------------- |
+| @change(value: string)  | function | Callback when value is changed                                                   |
+| @focus                  | function | Callback when input is focused                                                   |
+| @blur                   | function | Callback when focus is removed                                                   |
+

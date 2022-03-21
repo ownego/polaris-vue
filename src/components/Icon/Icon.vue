@@ -27,8 +27,7 @@ import styles from '@/classes/Icon.json';
 import config from '@/config';
 import type { IconSource } from '@/utilities/type';
 import { VisuallyHidden } from '../VisuallyHidden';
-
-type Color = 'base' | 'subdued' | 'critical' | 'interactive' | 'warning' | 'highlight' | 'success' | 'primary';
+import type { Color } from './utils';
 
 const COLORS_WITH_BACKDROPS: string[] = ['base', 'critical', 'highlight', 'success', 'warning'];
 

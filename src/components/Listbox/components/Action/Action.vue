@@ -40,8 +40,6 @@ provide('actionContext', true);
 
 const props = defineProps<ActionProps>();
 
-console.log(props);
-
 const className = computed(() => classNames(
   styles.Action,
   props.divider && styles.ActionDivider,
