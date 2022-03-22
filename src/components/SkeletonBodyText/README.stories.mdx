@@ -13,7 +13,7 @@ export const Template = (args) => ({
         return { args };
     },
     template: `
-      <SkeletonBodyText v-bind:lines="args.lines"/>
+      <SkeletonBodyText v-bind:="args"/>
     `,
 });
 
@@ -31,7 +31,7 @@ Skeleton body text is used to provide a low fidelity representation of content b
             docs: {
                 source: {
                     code: dedent`
-                        <SkeletonBodyText :lines="3"/>
+                        <SkeletonBodyText v-bind="props"/>
                     `,
                 },
             },
