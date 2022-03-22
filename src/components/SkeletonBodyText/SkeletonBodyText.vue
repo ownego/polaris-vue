@@ -17,7 +17,9 @@ interface Props {
   lines?: number;
 }
 
-withDefaults(defineProps<Props>(), {lines: 3});
+withDefaults(defineProps<Props>(), {
+  lines: 3,
+});
 
 </script>
 <style lang="scss">
