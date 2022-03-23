@@ -1,6 +1,6 @@
 <template lang="pug">
 div(
-  :class="className"
+  :class="className",
 )
 </template>
 <script setup lang="ts">
@@ -23,7 +23,7 @@ const props = withDefaults(defineProps<Props>(), {
 const className = classNames(
   styles.DisplayText,
   props.size && styles[variationName('size', props.size)],
-) ;
+);
 </script>
 <style lang="scss">
 @import 'polaris-react/src/components/SkeletonDisplayText/SkeletonDisplayText.scss';
