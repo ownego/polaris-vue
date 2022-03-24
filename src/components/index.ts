@@ -57,6 +57,7 @@ export * from './Spinner';
 export * from './Stack';
 export * from './Subheading';
 export * from './Toast';
+export * from './Tooltip';
 export * from './Tag';
 export * from './TextContainer';
 export * from './TextField';

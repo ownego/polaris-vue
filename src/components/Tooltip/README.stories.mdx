@@ -1,0 +1,166 @@
+import { Meta, Story, Canvas, ArgsTable } from "@storybook/addon-docs";
+import dedent from "ts-dedent";
+import {
+  Tooltip,
+  TextStyle,
+  Button,
+  ButtonGroup,
+  TextField,
+} from "@/polaris-vue";
+
+<Meta
+  title="Components / Overlays / Tooltip"
+  component={Tooltip}
+  argTypes={{
+    preferredPosition: {
+      name: "preferredPosition",
+      description: "The preferred direction to open the tooltip",
+      options: ["above", "below", "mostSpace"],
+      control: { type: "select" },
+      table: {
+        defaultValue: {
+          summary: "below",
+        },
+        type: {
+          summary: null,
+        },
+      },
+    },
+    content1: {
+      name: "content",
+      description: "The content to display inside the tooltip",
+      table: {
+        category: "props",
+        type: {
+          summary: null,
+        },
+      },
+    },
+    content: {
+      name: " content",
+      description: "The content to display inside the tooltip (Slot version)",
+      table: {
+        type: {
+          summary: null,
+        },
+      },
+    },
+    default: {
+      table: {
+        disable: true,
+      },
+    },
+  }}
+/>
+
+export const Template = (args) => ({
+  components: { Tooltip, TextStyle },
+  setup() {
+    return { args };
+  },
+  template: `<Tooltip v-bind="args" :content="args.content1">
+    <TextStyle variation="strong">Order #1001</TextStyle>
+  </Tooltip>`,
+});
+
+export const childInteraction = (args) => ({
+  components: { Button, ButtonGroup, Tooltip, TextField },
+  template: `
+    <div style="width: 200px">
+      <ButtonGroup segmented fullWidth>
+        <Tooltip dismissOnMouseOut>
+          <template #content>Bold Slot</template>
+          <Button>B</Button>
+        </Tooltip>
+        <Tooltip content="Italic" dismissOnMouseOut>
+          <Button>I</Button>
+        </Tooltip>
+        <Tooltip content="Underline" dismissOnMouseOut>
+          <Button>U</Button>
+        </Tooltip>
+        <Tooltip content="Strikethrough" dismissOnMouseOut>
+          <Button>S</Button>
+        </Tooltip>
+      </ButtonGroup>
+      <TextField autoComplete="off" labelHidden multiline>
+        <template #label>Product title</template>
+      </TextField>
+    </div>
+  `,
+});
+childInteraction.storyName = "Tooltip visible only with child interaction";
+childInteraction.parameters = {
+  docs: {
+    source: {
+      code: dedent`
+        <div style="width: 200px">
+          <ButtonGroup segmented fullWidth>
+            <Tooltip dismissOnMouseOut>
+              <template #content>Bold Slot</template>
+              <Button>B</Button>
+            </Tooltip>
+            <Tooltip content="Italic" dismissOnMouseOut>
+              <Button>I</Button>
+            </Tooltip>
+            <Tooltip content="Underline" dismissOnMouseOut>
+              <Button>U</Button>
+            </Tooltip>
+            <Tooltip content="Strikethrough" dismissOnMouseOut>
+              <Button>S</Button>
+            </Tooltip>
+          </ButtonGroup>
+          <TextField autoComplete="off" labelHidden multiline>
+            <template #label>Product title</template>
+          </TextField>
+        </div>
+      `,
+    },
+  },
+};
+
+# Tooltip
+
+Tooltips are floating labels that briefly explain the function of a user interface element. They can be triggered when merchants hover, focus, tap, or click.
+
+<font color="red">
+  {" "}
+  Can not test props on this component due to inline Story. Try it on your own project.{" "}
+</font>
+
+<br />
+<br />
+
+### A single item fills the remaining space
+
+<Canvas withSource="close">
+  <Story story={childInteraction} height="150px" inline={false} />
+</Canvas>
+
+### Example
+
+<Canvas>
+  <Story
+    inline={false}
+    name="Tooltip"
+    height="100px"
+    args={{
+      active: true,
+      content1: "This order has shipping labels.",
+    }}
+    parameters={{
+      docs: {
+        source: {
+          code: dedent`
+            <Tooltip active content="This order has shipping labels.">
+              <TextStyle variation="strong">Order #1001</TextStyle>
+            </Tooltip>
+          `,
+        },
+      },
+    }}
+  >
+    {Template.bind({})}
+  </Story>
+</Canvas>
+
+<ArgsTable story="Tooltip" />

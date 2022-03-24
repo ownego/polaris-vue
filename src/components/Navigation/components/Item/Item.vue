@@ -93,9 +93,8 @@ li(v-else, :class="className")
 </template>
 
 <script setup lang="ts">
-import { computed, onUpdated, ref } from 'vue';
+import { computed, inject, onUpdated, ref } from 'vue';
 import { classNames } from 'polaris-react/src/utilities/css';
-import lang from 'polaris-react/locales/en.json';
 import ExternalMinor from '@icons/ExternalMinor.svg';
 import styles from '@/classes/Navigation.json';
 import { UseUniqueId } from '@/use';
@@ -187,6 +186,8 @@ const secondaryNavigationId = useUniqueId('SecondaryNavigation');
 
 const { useNavigationContext } = UseNavigationContext();
 const { location, onNavigationDismiss } = useNavigationContext();
+
+const lang = inject('lang') as Record<string, any>;
 
 const keyFocused = ref(false);
 

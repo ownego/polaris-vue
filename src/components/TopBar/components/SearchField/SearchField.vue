@@ -35,9 +35,8 @@ div(
 </template>
 
 <script setup lang="ts">
-import { computed, onMounted, ref } from 'vue';
+import { computed, inject, onMounted, ref } from 'vue';
 import { classNames } from 'polaris-react/src/utilities/css';
-import lang from 'polaris-react/locales/en.json';
 import SearchMinor from '@icons/SearchMinor.svg';
 import CircleCancelMinor from '@icons/CircleCancelMinor.svg';
 import { VisuallyHidden, Icon } from '@/components';
@@ -66,6 +65,8 @@ const emits = defineEmits<{
   (e: 'cancel'): void;
   (e: 'update:modelValue', value: string): void
 }>();
+
+const lang = inject('lang') as Record<string, any>;
 
 const forceActive = ref(false);
 const inputRef = ref<HTMLInputElement | null>(null);

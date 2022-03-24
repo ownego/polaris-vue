@@ -178,7 +178,7 @@ const handleFocusLastItem = () => {
 };
 
 const changeContentStyles = (value: Record<string, unknown>) => {
-  contentStyles.value = value;
+  contentStyles.value = { desiredHeight: `${value.height}px` };
 };
 
 const focusContent = () => {
