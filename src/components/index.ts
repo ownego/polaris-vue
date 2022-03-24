@@ -52,6 +52,7 @@ export * from './ScrollLock';
 export * from './Select';
 export * from './SettingAction';
 export * from './SkeletonBodyText';
+export * from './SkeletonDisplayText';
 export * from './Spinner';
 export * from './Stack';
 export * from './Subheading';
