@@ -55,7 +55,7 @@ interface PositionedOverlayProps {
   classNames?: string;
   zIndexOverride?: number;
   hideOnPrint?: boolean;
-  layout: string;
+  layout?: string;
 }
 
 const props = defineProps<PositionedOverlayProps>();
