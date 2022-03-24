@@ -1,0 +1,293 @@
+import dedent from 'ts-dedent';
+import { Meta, Story, Canvas, ArgsTable } from '@storybook/addon-docs';
+import { ref } from 'vue';
+import { Card, CardSection, CardHeader, CardSubsection, Stack, ButtonGroup, Button, ActionList, Icon, Popover, Subheading, List, ListItem } from '@/polaris-vue';
+import OrdersMinor from '@icons/OrdersMinor.svg';
+
+<Meta
+  title="Components / Structure / Card"
+  component={ Card }
+  argTypes={{
+    title: {
+      description: 'Title content for the card',
+      table: { type: { summary: null } },
+      control: { disable: true },
+    },
+    default: {
+      description: 'Inner content of the card',
+      table: { type: { summary: null } },
+      control: { disable: true },
+    },
+  }}
+/>
+
+export const TemplateSimple = (args) => ({
+  components: { Card },
+  setup() { return { args }; },
+  template: `
+    <Card sectioned :actions="[{content: 'Add variant'}]">
+      <template #title>Variants</template>
+      <p>Add variants if this product comes in multiple versions, like different sizes or colors.</p>
+    </Card>
+  `,
+});
+
+export const TemplateFull = (args) => ({
+  components: { Card, CardSection, CardHeader, CardSubsection, Icon, Subheading, Popover, Button, ActionList, Stack, Subheading, List, ListItem },
+  setup() {
+    const addAccountActive = ref(false);
+    return { args, OrdersMinor, addAccountActive };
+  },
+  template: `
+    <Card
+      :secondaryFooterActions="[{ content: 'Cancel shipment', destructive: true }, { content: 'Add another shipment', disabled: true }]"
+      :primaryFooterAction="{ content: 'Add tracking number' }"
+    >
+      <template #title>Shipment</template>
+      <CardHeader :actions="[{ content: 'Preview' }]">
+        <template #title>Item Orders</template>
+        <Popover :active="addAccountActive" @close="() => {}">
+          <template #activator>
+            <Button
+              :plain="true",
+              :disclosure="true"
+              @click="() => addAccountActive = !addAccountActive">Add account</Button>
+          </template>
+          <template #content>
+            <ActionList :items="[{content: 'Member'}, {content: 'Admin'}]"></ActionList>
+          </template>
+        </Popover>
+      </CardHeader>
+      <CardSection>
+        <template #title>Items</template>
+        <List>
+          <ListItem>1 &times; Oasis Glass, 4-Pack</ListItem>
+          <ListItem>1 &times; Anubis Cup, 2-Pack</ListItem>
+        </List>
+      </CardSection>
+      <CardSection>
+        <template #title>Addresses</template>
+        <CardSubsection>123 First St<br />Somewhere<br />The Universe</CardSubsection>
+        <CardSubsection>123 Second St<br />Somewhere<br />The Universe</CardSubsection>
+      </CardSection>
+      <CardSection subdued="subdued" :actions="[{ content: 'Delete', destructive: true }, { content: 'Edit' }]">
+        <template #title>Contact Information</template>
+        <p>john.smith@example.com</p>
+      </CardSection>
+      <CardSection>
+        <template>
+          <Stack>
+            <Icon :source="OrdersMinor"></Icon>
+            <Subheading>New Products</Subheading>
+          </Stack>
+        </template>
+        <CardSubsection>A single subsection without a sibling has no visual appearance</CardSubsection>
+      </CardSection>
+    </Card>
+  `,
+});
+
+export const Template = (args) => ({
+  components: { Card, CardHeader, Stack, ButtonGroup, Button, CardSection, ActionList, Popover},
+  setup() {
+    const addAccountActive = ref(false);
+    return { args, addAccountActive };
+  },
+  template: `
+    <Card>
+      <template #title>Secure your account with 2-step authentication</template>
+      <CardHeader :actions="[{ content: 'Preview' }]">
+        <template #title>Staff accounts</template>
+        <Popover
+          :active="addAccountActive"
+          @close="() => {}"
+        >
+          <template #activator>
+            <Button @click="() => addAccountActive = !addAccountActive" :disclosure="true" plain>Add account</Button>
+          </template>
+          <template #content>
+            <ActionList :items="[{content: 'Member'}, {content: 'Admin'}]" />
+          </template>
+        </Popover>
+      </CardHeader>
+      <CardSection>
+        <Stack spacing="loose" vertical>
+          <p>
+          Two-step authentication adds an extra layer of security when logging in to your account. A special code will be required each time you log in,
+          ensuring only you can access your account.
+          </p>
+          <Stack distribution="trailing">
+            <ButtonGroup>
+              <Button>Enable two-step authentication</Button>
+              <Button plain>Learn more</Button>
+            </ButtonGroup>
+          </Stack>
+        </Stack>
+      </CardSection>
+      <CardSection
+        subdued
+        :actions="[{ content: 'Delete', destructive: true }, { content: 'Edit' }]"
+      >
+        <template #title>Contact Information</template>
+        <p>john.smith@example.com</p>
+      </CardSection>
+    </Card>
+  `,
+});
+
+# Card
+
+Cards are used to group similar concepts and tasks together to make Shopify easier for merchants to scan, read, and get things done.
+<br/>
+
+### **Simple Card**
+
+<Canvas>
+  <Story
+    name="Card - Simple"
+    height="150px"
+    parameters={{
+      docs: {
+        source: {
+          state: 'close',
+          code: dedent`
+            <Card sectioned :actions="[{content: 'Add variant'}]">
+              <template #title>Variants</template>
+              <p>Add variants if this product comes in multiple versions, like different sizes or colors.</p>
+            </Card>`,
+        },
+      },
+    }}
+  >
+    {TemplateSimple.bind({})}
+  </Story>
+</Canvas>
+
+<br/>
+
+### **Card with all of its elements**
+
+<Canvas>
+  <Story
+    name="Card - Full"
+    height="700px"
+    inline={false}
+    parameters={{
+      docs: {
+        source: {
+          state: 'close',
+          code: dedent`
+            <Card
+              :secondaryFooterActions="[{ content: 'Cancel shipment', destructive: true }, { content: 'Add another shipment', disabled: true }]"
+              :primaryFooterAction="{ content: 'Add tracking number' }"
+            >
+              <template #title>Shipment</template>
+              <CardHeader :actions="[{ content: 'Preview' }]">
+                <template #title>Item Orders</template>
+                <Popover :active="addAccountActive" @close="() => {}">
+                  <template #activator>
+                    <Button
+                      plain,
+                      :disclosure="true"
+                      @click="() => addAccountActive = !addAccountActive">Add account</Button>
+                  </template>
+                  <template #content>
+                    <ActionList :items="[{content: 'Member'}, {content: 'Admin'}]"></ActionList>
+                  </template>
+                </Popover>
+              </CardHeader>
+              <CardSection>
+                <template #title>Items</template>
+                <List>
+                  <ListItem>1 &times; Oasis Glass, 4-Pack</ListItem>
+                  <ListItem>1 &times; Anubis Cup, 2-Pack</ListItem>
+                </List>
+              </CardSection>
+              <CardSection>
+                <template #title>Addresses</template>
+                <CardSubsection>123 First St<br />Somewhere<br />The Universe</CardSubsection>
+                <CardSubsection>123 Second St<br />Somewhere<br />The Universe</CardSubsection>
+              </CardSection>
+              <CardSection subdued="subdued" :actions="[{ content: 'Delete', destructive: true }, { content: 'Edit' }]">
+                <template #title>Contact Information</template>
+                <p>john.smith@example.com</p>
+              </CardSection>
+              <CardSection>
+                <template>
+                  <Stack>
+                    <Icon :source="OrdersMinor"></Icon>
+                    <Subheading>New Products</Subheading>
+                  </Stack>
+                </template>
+                <CardSubsection>A single subsection without a sibling has no visual appearance</CardSubsection>
+              </CardSection>
+            </Card>
+          `,
+        },
+      },
+    }}
+  >
+    {TemplateFull.bind({})}
+  </Story>
+</Canvas>
+
+<br/>
+
+### **Example**
+
+<Canvas>
+  <Story
+    name="Card"
+    height="360px"
+    inline={false}
+    parameters={{
+      docs: {
+        source: {
+          state: 'close',
+          code: dedent`
+            <Card>
+              <template #title>Secure your account with 2-step authentication</template>
+              <CardHeader :actions="[{ content: 'Preview' }]">
+                <template #title>Staff accounts</template>
+                <Popover
+                  :active="addAccountActive"
+                  @close="() => {}"
+                >
+                  <template #activator>
+                    <Button @click="() => addAccountActive = !addAccountActive" :disclosure="true" plain>Add account</Button>
+                  </template>
+                  <template #content>
+                    <ActionList :items="[{content: 'Member'}, {content: 'Admin'}]" />
+                  </template>
+              </CardHeader>
+              <CardSection>
+                <Stack spacing="loose" vertical>
+                  <p>
+                  Two-step authentication adds an extra layer of security when logging in to your account. A special code will be required each time you log in,
+                  ensuring only you can access your account.
+                  </p>
+                  <Stack distribution="trailing">
+                    <ButtonGroup>
+                      <Button>Enable two-step authentication</Button>
+                      <Button plain>Learn more</Button>
+                    </ButtonGroup>
+                  </Stack>
+                </Stack>
+              </CardSection>
+              <CardSection
+                subdued
+                :actions="[{ content: 'Delete', destructive: true }, { content: 'Edit' }]"
+              >
+                <template #title>Contact Information</template>
+                <p>john.smith@example.com</p>
+              </CardSection>
+            </Card>`,
+        },
+      },
+    }}
+  >
+    {Template.bind({})}
+  </Story>
+</Canvas>
+
+<ArgsTable story="Card" />
