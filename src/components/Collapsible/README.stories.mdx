@@ -1,0 +1,124 @@
+import dedent from 'ts-dedent';
+import { Meta, Story, Canvas, ArgsTable } from '@storybook/addon-docs';
+import { ref } from 'vue';
+import { Collapsible, Card, Stack, Button, TextContainer, Link } from '@/polaris-vue';
+
+<Meta
+  title="Components / Behavior / Collapsible"
+  component={ Collapsible }
+  argTypes={{
+    default: {
+      description: 'The content to display inside the collapsible.',
+      table: { type: { summary: null } },
+      control: { disable: true },
+    },
+    expandOnPrint: {
+      control: { disable: true },
+    },
+    transition: {
+      control: { disable: true },
+      table: {
+        type: {
+          summary: '{ duration?: string, timingFunction?: string }',
+        },
+      },
+    },
+  }}
+/>
+
+export const Template = (args) => ({
+  components: { Card, Collapsible, Stack, Button, TextContainer, Link },
+  setup() {
+    const open = ref(true);
+    const handleToggle = () => {
+      open.value = !open.value;
+    };
+    return { args, open, handleToggle };
+  },
+  template: `
+    <Card sectioned>
+      <Stack vertical>
+        <Button
+          @click="handleToggle"
+          :ariaExpanded="open"
+          ariaControls="basic-collapsible"
+        >
+          Toggle
+        </Button>
+        <Collapsible
+          v-bind="args"
+          :open="open"
+          id="basic-collapsible"
+          :transition="{duration: '500ms', timingFunction: 'ease-in-out'}"
+          expandOnPrint
+        >
+          <TextContainer>
+            <p>
+              Your mailing list lets you contact customers or visitors who
+              have shown an interest in your store. Reach out to them with
+              exclusive offers or updates about your products.
+            </p>
+            <Link url="#">Test link</Link>
+          </TextContainer>
+        </Collapsible>
+      </Stack>
+    </Card>
+  `,
+});
+
+# Collapsible
+
+The collapsible component is used to put long sections of information under a block that merchants can expand or collapse.
+
+<Canvas>
+  <Story
+    name="Collapsible"
+    height="200px"
+    parameters={{
+      docs: {
+        source: {
+          state: 'close',
+          code: dedent`
+            <Card sectioned>
+              <Stack vertical>
+                <Button
+                  @click="handleToggle"
+                  :ariaExpanded="open"
+                  ariaControls="basic-collapsible"
+                >
+                  Toggle
+                </Button>
+                <Collapsible
+                  :open="open"
+                  id="basic-collapsible"
+                  :transition="{duration: '500ms', timingFunction: 'ease-in-out'}"
+                  expandOnPrint
+                >
+                  <TextContainer>
+                    <p>
+                      Your mailing list lets you contact customers or visitors who
+                      have shown an interest in your store. Reach out to them with
+                      exclusive offers or updates about your products.
+                    </p>
+                    <Link url="#">Test link</Link>
+                  </TextContainer>
+                </Collapsible>
+              </Stack>
+            </Card>\n
+            <script setup>
+              // import...
+              const open = ref(true);
+              const handleToggle = () => {
+                open.value = !open.value;
+              };
+            </script>
+          `,
+        },
+      },
+    }}
+  >
+    {Template.bind({})}
+  </Story>
+</Canvas>
+
+<ArgsTable story="Collapsible" />

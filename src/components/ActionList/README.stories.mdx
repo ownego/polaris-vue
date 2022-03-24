@@ -172,7 +172,7 @@ export const itemExamples = (args, { argTypes }) => ({
       @click="toggle"
     >
       <template #activator>
-        <Button disclosure @click="toggle">
+        <Button :disclosure="true" @click="toggle">
           In a Popover
         </Button>
       </template>
@@ -182,7 +182,7 @@ export const itemExamples = (args, { argTypes }) => ({
     </Popover>
     <Popover active>
       <template #activator>
-        <Button disclosure> With Icons or image </Button>
+        <Button :disclosure="true"> With Icons or image </Button>
       </template>
       <template #content>
         <ActionList :items="iconsOrImagesItems"/>
@@ -190,7 +190,7 @@ export const itemExamples = (args, { argTypes }) => ({
     </Popover>
     <Popover active>
       <template #activator>
-        <Button disclosure> With an icon and a suffix </Button>
+        <Button :disclosure="true"> With an icon and a suffix </Button>
       </template>
       <template #content>
         <ActionList :items="iconAndSuffixItems">
@@ -202,7 +202,7 @@ export const itemExamples = (args, { argTypes }) => ({
     </Popover>
     <Popover active>
       <template #activator>
-        <Button disclosure> With suffix and prefix </Button>
+        <Button :disclosure="true"> With suffix and prefix </Button>
       </template>
       <template #content>
         <ActionList :items="suffixAndPrefixItems">
@@ -232,7 +232,7 @@ itemExamples.parameters = {
             @click="toggle"
           >
             <template #activator>
-              <Button disclosure @click="toggle">
+              <Button :disclosure="true" @click="toggle">
                 In a Popover
               </Button>
             </template>
@@ -242,7 +242,7 @@ itemExamples.parameters = {
           </Popover>
           <Popover active>
             <template #activator>
-              <Button disclosure> With Icons or image </Button>
+              <Button :disclosure="true"> With Icons or image </Button>
             </template>
             <template #content>
               <ActionList :items="iconsOrImagesItems"/>
@@ -250,7 +250,7 @@ itemExamples.parameters = {
           </Popover>
           <Popover active>
             <template #activator>
-              <Button disclosure> With an icon and a suffix </Button>
+              <Button :disclosure="true"> With an icon and a suffix </Button>
             </template>
             <template #content>
               <ActionList :items="iconAndSuffixItems">
@@ -262,7 +262,7 @@ itemExamples.parameters = {
           </Popover>
           <Popover active>
             <template #activator>
-              <Button disclosure> With suffix and prefix </Button>
+              <Button :disclosure="true"> With suffix and prefix </Button>
             </template>
             <template #content>
               <ActionList :items="suffixAndPrefixItems">
@@ -407,7 +407,7 @@ export const sectionExamples = (args, { argTypes }) => ({
   template: ` <div :style="{display: 'flex', flexDirection: 'row', gap: '120px', justifyContent: 'center'}">
     <Popover active>
       <template #activator>
-        <Button disclosure> Sections </Button>
+        <Button :disclosure="true"> Sections </Button>
       </template>
       <template #content>
         <ActionList :sections="sections" />
@@ -415,7 +415,7 @@ export const sectionExamples = (args, { argTypes }) => ({
     </Popover>
     <Popover active>
       <template #activator>
-        <Button disclosure> With Destructive Item </Button>
+        <Button :disclosure="true"> With Destructive Item </Button>
       </template>
       <template #content>
         <ActionList :sections="destructiveItemSections"/>
@@ -423,7 +423,7 @@ export const sectionExamples = (args, { argTypes }) => ({
     </Popover>
     <Popover active>
       <template #activator>
-        <Button slot="activator" disclosure> With Help Text </Button>
+        <Button slot="activator" :disclosure="true"> With Help Text </Button>
       </template>
       <template #content>
         <ActionList :sections="helpTextSections"/>
@@ -439,7 +439,7 @@ sectionExamples.parameters = {
         <template>
           <Popover active>
             <template #activator>
-              <Button disclosure> Sections </Button>
+              <Button :disclosure="true"> Sections </Button>
             </template>
             <template #content>
               <ActionList :sections="sections" />
@@ -447,7 +447,7 @@ sectionExamples.parameters = {
           </Popover>
           <Popover active>
             <template #activator>
-              <Button disclosure> With Destructive Item </Button>
+              <Button :disclosure="true"> With Destructive Item </Button>
             </template>
             <template #content>
               <ActionList :sections="destructiveItemSections"/>
@@ -455,7 +455,7 @@ sectionExamples.parameters = {
           </Popover>
           <Popover active>
             <template #activator>
-              <Button slot="activator" disclosure> With Help Text </Button>
+              <Button slot="activator" :disclosure="true"> With Help Text </Button>
             </template>
             <template #content>
               <ActionList :sections="helpTextSections"/>
