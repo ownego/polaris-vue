@@ -103,8 +103,7 @@ div(
 </template>
 
 <script setup lang="ts">
-import { computed, onMounted, provide, ref, useSlots, watch } from 'vue';
-import lang from 'polaris-react/locales/en.json';
+import { computed, onMounted, provide, ref, useSlots, watch, inject } from 'vue';
 import { classNames } from 'polaris-react/src/utilities/css';
 import { dataPolarisTopBar, layer } from 'polaris-react/src/components/shared';
 import { setRootProperty } from 'polaris-react/src/utilities/set-root-property';
@@ -158,6 +157,8 @@ const slots = useSlots();
 const emits = defineEmits<{
   (e: 'navigation-dismiss'): void;
 }>();
+
+const lang = inject('lang') as Record<string, any>;
 
 const skipFocused = ref(false);
 const globalRibbonHeight = ref(0);

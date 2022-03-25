@@ -55,10 +55,9 @@ DiscardConfirmationModal(
 </template>
 
 <script setup lang="ts">
-import { computed, ref, useSlots } from 'vue';
+import { computed, ref, useSlots, inject } from 'vue';
 import { classNames } from 'polaris-react/src/utilities/css';
 import { getWidth } from 'polaris-react/src/utilities/get-width';
-import lang from 'polaris-react/locales/en.json';
 import { CustomProperties, Stack, Image, Button } from '@/components';
 import styles from '@/classes/Frame-ContextualSaveBar.json';
 import type { ContextualSaveBarAction, ContextualSaveBarCombinedActionProps } from '@/utilities/frame/types';
@@ -83,6 +82,8 @@ interface ContextualSaveBarProps {
 }
 
 const props = defineProps<ContextualSaveBarProps>();
+
+const lang = inject('lang') as Record<string, any>;
 
 const slots = useSlots();
 

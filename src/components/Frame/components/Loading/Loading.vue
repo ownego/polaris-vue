@@ -15,11 +15,12 @@ div(
 </template>
 
 <script setup lang="ts">
-import { computed, onMounted, ref, watch } from 'vue';
-import lang from 'polaris-react/locales/en.json';
+import { computed, onMounted, ref, watch, inject } from 'vue';
 import styles from '@/classes/Frame-Loading.json';
 
 const STUCK_THRESHOLD = 99;
+
+const lang = inject('lang') as Record<string, any>;
 
 const progress = ref(0);
 const animating = ref(false);

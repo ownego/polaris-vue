@@ -1,14 +1,11 @@
 <template lang="pug">
 div(:class="className", :style="style", ref="overlayRef")
-  div(:class="popoverClassName", v-bind="{...overlay.props}")
-    slot(
-      :measuring="measuring",
-      :left="left",
-      :right="right",
-      :desired-height="height",
-      :positioning="positioning",
-      :activator-rect="activatorRect",
-    )
+  template(v-if="layout === 'tooltip'")
+    div(:class="tooltipClassName", v-bind="{...layer.props}")
+      slot
+  template(v-else)
+    div(:class="popoverClassName", v-bind="{...overlay.props}")
+      slot
   EventListener(event="resize", :handler="handleMeasurement")
 </template>
 
@@ -21,10 +18,11 @@ export default {
 <script setup lang="ts">
 import { ref, computed, onBeforeMount, onUpdated, onMounted, onBeforeUnmount } from 'vue';
 import { classNames } from 'polaris-react/src/utilities/css';
-import { dataPolarisTopBar, overlay } from 'polaris-react/src/components/shared';
+import { dataPolarisTopBar, overlay, layer } from 'polaris-react/src/components/shared';
 import { getRectForNode, Rect } from '@/utilities/geometry';
 import styles from '@/classes/PositionedOverlay.json';
 import popoverStyles from '@/classes/Popover.json';
+import tooltipStyles from '@/classes/Tooltip-TooltipOverlay.json';
 import {
   calculateVerticalPosition,
   calculateHorizontalPosition,
@@ -57,6 +55,7 @@ interface PositionedOverlayProps {
   classNames?: string;
   zIndexOverride?: number;
   hideOnPrint?: boolean;
+  layout?: string;
 }
 
 const props = defineProps<PositionedOverlayProps>();
@@ -99,6 +98,14 @@ const popoverClassName = computed(() =>
     props.fullWidth && popoverStyles.fullWidth,
     measuring.value && popoverStyles.measuring,
     props.hideOnPrint && popoverStyles['PopoverOverlay-hideOnPrint'],
+  ),
+);
+
+const tooltipClassName = computed(() =>
+  classNames(
+    tooltipStyles.TooltipOverlay,
+    measuring.value && tooltipStyles.measuring,
+    positioning.value === 'above' && tooltipStyles.positionedAbove,
   ),
 );
 
@@ -190,7 +197,7 @@ const handleMeasurement = () => {
       intersectionWithViewport(scrollableContainerRect),
     );
     zIndex.value = zIndexValue;
-    emit('change-content-styles', { height: `${height.value}px` });
+    emit('change-content-styles', { desiredHeight: height.value });
     if (observer.value) {
       observer.value.observe(overlayRef.value, OBSERVER_CONFIG);
       observer.value.observe(activator, OBSERVER_CONFIG);

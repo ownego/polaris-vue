@@ -10,19 +10,21 @@ Modal(
   template(#content) {{ message }}
 </template>
 <script setup lang="ts">
-import lang from 'polaris-react/locales/en.json';
+import { inject } from 'vue';
 import { Modal } from '@/components';
 
 interface DiscardConfirmationModalProps {
   open: boolean;
 }
 
-const props = defineProps<DiscardConfirmationModalProps>();
+defineProps<DiscardConfirmationModalProps>();
 
 const emits = defineEmits<{
   (e: 'discard'): void;
   (e: 'cancel'): void;
 }>();
+
+const lang = inject('lang') as Record<string, any>;
 
 const message = lang.Polaris.DiscardConfirmationModal.message;
 const title = lang.Polaris.DiscardConfirmationModal.title;
