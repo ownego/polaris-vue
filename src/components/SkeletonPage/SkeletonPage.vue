@@ -60,7 +60,7 @@ const props = defineProps<Props>();
 
 const lang = inject('lang') as Record<string, any>;
 
-const className = computed(()=>classNames(
+const className = computed(() => classNames(
   styles.Page,
   props.fullWidth && styles.fullWidth,
   props.narrowWidth && styles.narrowWidth,
