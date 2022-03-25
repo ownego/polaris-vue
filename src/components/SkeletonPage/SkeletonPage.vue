@@ -38,7 +38,7 @@ div(
     slot
 </template>
 <script setup lang="ts">
-import { inject } from "vue";
+import { computed, inject } from "vue";
 import { classNames } from 'polaris-react/src/utilities/css';
 import styles from '@/classes/SkeletonPage.json';
 import { SkeletonBodyText, SkeletonDisplayText } from "@/components";
@@ -60,11 +60,11 @@ const props = defineProps<Props>();
 
 const lang = inject('lang') as Record<string, any>;
 
-const className = classNames(
+const className = computed(()=>classNames(
   styles.Page,
   props.fullWidth && styles.fullWidth,
   props.narrowWidth && styles.narrowWidth,
-);
+));
 </script>
 
 <style lang="scss">
