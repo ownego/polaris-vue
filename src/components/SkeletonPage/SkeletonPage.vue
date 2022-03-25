@@ -38,10 +38,10 @@ div(
     slot
 </template>
 <script setup lang="ts">
-import styles from '@/classes/SkeletonPage.json';
-import { classNames } from 'polaris-react/src/utilities/css';
-import { SkeletonBodyText, SkeletonDisplayText } from "@/components";
 import { inject } from "vue";
+import { classNames } from 'polaris-react/src/utilities/css';
+import styles from '@/classes/SkeletonPage.json';
+import { SkeletonBodyText, SkeletonDisplayText } from "@/components";
 
 interface Props {
   /** Page title, in large type */
