@@ -2,15 +2,15 @@
 div(
   :class="className",
   role="status",
-  aria-label="{{lang['Polaris.SkeletonPage.loadingLabel']}}",
+  :aria-label="lang.Polaris.SkeletonPage.loadingLabel",
 )
   div(
     :class="styles.Header",
   )
     div(
-      v-if="props.breadcrumbs",
+      v-if="breadcrumbs",
       :class="styles.BreadcrumbAction",
-      :style="{width: '60px'}",
+      :style="{ width: '60px' }",
     )
       SkeletonBodyText(:lines="1")
     div(
@@ -20,18 +20,18 @@ div(
         :class="styles.TitleWrapper",
       )
         h1(
-          v-if="props.title",
+          v-if="title",
           :class="styles.Title",
-        ) {{ props.title }}
+        ) {{ title }}
         div(
           v-else,
           :class="styles.SkeletonTitle",
         )
       div(
-        v-if="props.primaryAction",
+        v-if="primaryAction",
         :class="styles.PrimaryAction",
       )
-        SkeletonDisplayText(:size="`large`")
+        SkeletonDisplayText(size="large")
   div(
     :class="styles.Content",
   )
@@ -40,8 +40,8 @@ div(
 <script setup lang="ts">
 import styles from '@/classes/SkeletonPage.json';
 import { classNames } from 'polaris-react/src/utilities/css';
-import lang from 'polaris-react/locales/en.json';
-import { SkeletonBodyText, SkeletonDisplayText} from "@/components";
+import { SkeletonBodyText, SkeletonDisplayText } from "@/components";
+import { inject } from "vue";
 
 interface Props {
   /** Page title, in large type */
@@ -55,13 +55,10 @@ interface Props {
   /** Shows a skeleton over the breadcrumb */
   breadcrumbs?: boolean;
 }
-const props = withDefaults(defineProps<Props>(), {
-  title: "",
-  fullWidth: false,
-  narrowWidth: false,
-  primaryAction: false,
-  breadcrumbs: false,
-});
+
+const props = defineProps<Props>();
+
+const lang = inject('lang') as Record<string, any>;
 
 const className = classNames(
   styles.Page,
@@ -69,6 +66,7 @@ const className = classNames(
   props.narrowWidth && styles.narrowWidth,
 );
 </script>
+
 <style lang="scss">
 @import 'polaris-react/src/components/SkeletonPage/SkeletonPage.scss';
 </style>
