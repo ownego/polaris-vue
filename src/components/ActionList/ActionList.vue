@@ -8,7 +8,7 @@ component(
 )
   template(v-for="section, index in finalSections")
     Section(
-      v-if="section.items.length > 0",
+      v-if="section.items && section.items.length > 0",
       :key="section.title || index",
       :firstSection="index === 0",
       :section="section",

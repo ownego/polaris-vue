@@ -31,6 +31,12 @@ Popover(
     )
 </template>
 
+<script lang="ts">
+export default {
+  inheritAttrs: false,
+}
+</script>
+
 <script setup lang="ts">
 import { computed } from 'vue';
 import styles from '@/classes/TopBar-Menu.json';

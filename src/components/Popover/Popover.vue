@@ -148,7 +148,7 @@ const isInPortal = (element: Element) => {
 };
 
 const handleClose = (source: PopoverCloseSource) => {
-  emit('close', source);
+  // emit('close', source);
   if (!container.value || props.preventFocusOnClose) {return;}
 
   if ((source === PopoverCloseSource.FocusOut || source === PopoverCloseSource.EscapeKeypress) && activator.value) {
