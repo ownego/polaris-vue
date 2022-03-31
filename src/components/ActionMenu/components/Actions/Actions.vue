@@ -24,19 +24,15 @@ div(
         @click="action.onAction ? action.onAction() : undefined",
         @get-offset-width="handleActionsOffsetWidth",
       ) {{ action.content }}
-    template(
+    MenuGroup(
       v-for="group in filteredGroups",
       :key="group.title",
+      v-bind="menuGroupProps(group)",
+      :actions="getMenuGroupActions(group)",
+      @open="handleMenuGroupToggle",
+      @close="handleMenuGroupClose",
+      @get-offset-width="handleActionsOffsetWidth",
     )
-      MenuGroup(
-        v-if="menuGroupCondition(group)",
-        v-bind="menuGroupProps(group)",
-        :activeGroup="activeMenuGroup",
-        :actions="getMenuGroupActions(group)",
-        @open="handleMenuGroupToggle",
-        @close="handleMenuGroupClose",
-        @get-offset-width="handleActionsOffsetWidth",
-      )
   EventListener(
     event="resize",
     :handler="handleResize",
@@ -105,7 +101,6 @@ const handleActionsOffsetWidth = (width: number) => {
 }
 
 const handleMenuGroupToggle = (group: string) => {
-  console.log('toggle');
   if (activeMenuGroup.value) {
     activeMenuGroup.value = null;
   } else {
@@ -114,7 +109,6 @@ const handleMenuGroupToggle = (group: string) => {
 }
 
 const handleMenuGroupClose = () => {
-  console.log('close');
   activeMenuGroup.value = null;
 }
 
@@ -127,7 +121,6 @@ const combinedGroups = computed(() => {
 });
 
 const filteredGroups = computed(() => {
-  console.log('filter', activeMenuGroup.value);
   return combinedGroups.value.filter((group) => {
     return props.groups && props.groups.length === 0
       ? group
@@ -153,47 +146,28 @@ const finalRolledUpActions = computed(() => {
   );
 });
 
-const getMenuGroupActions = (group: MenuGroupDescriptor): ActionListItemDescriptor[] => {
-  console.log('getAction');
-  if (!isDefaultGroup(group)) {
-    if (!isLastMenuGroup(group)) {
-      return group.actions;
-    } else {
-      return [...finalRolledUpActions.value, ...group.actions];
-    }
-  } else {
-    if ((!props.groups || props.groups.length === 0)
-      && finalRolledUpActions.value.length
-    ) {
-      return finalRolledUpActions.value;
-    }
-  }
-
-  return [];
-};
-
 const menuGroupProps = (group: MenuGroupDescriptor) => {
   const { actions, ...rest } = group;
-  return { ...rest };
+  return { ...rest, active: activeMenuGroup.value === group.title };
 }
 
-const menuGroupCondition = (group: MenuGroupDescriptor): boolean => {
+const getMenuGroupActions = (group: MenuGroupDescriptor): ActionListItemDescriptor[] => {
   // The condition is `(!x && !y) || (!x && y) || (x && z && w)`
   // there are too many ways to write this condition, e.g: !x || (w && z)
   // But I want to keep it simple and readable as original conditions from polaris-react.
   if (!isDefaultGroup(group) && !isLastMenuGroup(group)) {
-    return true;
+    return group.actions;
   }
 
   if (!isDefaultGroup(group) && isLastMenuGroup(group)) {
-    return true;
+    return [...finalRolledUpActions.value, ...group.actions];
   }
 
   if (isDefaultGroup(group) && (!props.groups || props.groups.length === 0) && finalRolledUpActions.value.length) {
-    return true;
+    return finalRolledUpActions.value;
   }
 
-  return false;
+  return [];
 }
 
 const updateActions = () => {

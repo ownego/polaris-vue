@@ -1,6 +1,7 @@
 <template lang="pug">
 Popover(
-  :active="isActive",
+  v-if="actions.length",
+  :active="Boolean(active)",
   preferred-alignment="left",
   hideOnPrint,
   @close="handleClose",
@@ -32,7 +33,7 @@ export default {
 </script>
 
 <script setup lang="ts">
-import { useSlots, computed, watch } from 'vue';
+import { useSlots, watch } from 'vue';
 import styles from '@/classes/ActionMenu-MenuGroup.json';
 import { ActionList, Popover } from '@/components';
 import { SecondaryAction } from '../SecondaryAction';
@@ -55,7 +56,7 @@ interface MenuGroupProps {
   /** Visually hidden menu description for screen readers */
   accessibilityLabel?: string;
   /** Whether or not the menu is open */
-  activeGroup?: string | null;
+  active?: boolean;
 }
 
 const props = defineProps<MenuGroupProps>();
@@ -67,18 +68,6 @@ const emits = defineEmits<{
   (e: 'close', title: string): void;
   (e: 'get-offset-width', width: number): void;
 }>();
-
-const isActive = computed(() => {
-  return props.title === props.activeGroup;
-});
-
-watch(
-  () => props.activeGroup,
-  () => {
-    console.log(123, props.activeGroup);
-  },
-);
-console.log(345,props.activeGroup);
 
 const handleClose = () => {
   emits('close', props.title);
