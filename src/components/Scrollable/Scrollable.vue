@@ -5,7 +5,6 @@ div(
   :class="finalClassName",
   :tabindex="focusable ? 0 : undefined",
 )
-  <!-- Content to display in scrollable area -->
   slot
 </template>
 
@@ -64,13 +63,14 @@ const bottomShadow = ref(false);
 const scrollPosition = ref(0);
 const canScroll = ref(false);
 
-const state = reactive({ stickyManager: new StickyManager() });
+const stickyManager = new StickyManager();
+// const state = reactive({ stickyManager: { ...stickyManager } });
 
 const scrollToPosition = (scrollY: number): void => {
   scrollPosition.value = scrollY;
 };
 
-provide('stickyManagerContext', state.stickyManager);
+provide('stickyManagerContext', stickyManager);
 provide('scrollToPositionContext', scrollToPosition);
 
 const finalClassName = computed(() => classNames(
@@ -167,7 +167,7 @@ onMounted(() => {
     return;
   }
 
-  state.stickyManager.setContainer(scrollArea.value);
+  stickyManager.setContainer(scrollArea.value);
   scrollArea.value.scrollTop = scrollPosition.value;
   scrollArea.value.addEventListener('scroll', () => {
     window.requestAnimationFrame(handleScroll);
@@ -175,7 +175,7 @@ onMounted(() => {
   window.addEventListener('resize', handleResize);
   window.requestAnimationFrame(() => {
     handleScroll();
-  
+
     if (props.hint) {
       scrollHint();
     }
@@ -195,7 +195,7 @@ onBeforeUnmount(() => {
 
   scrollArea.value.removeEventListener('scroll', handleScroll);
   window.removeEventListener('resize', handleResize);
-  state.stickyManager.removeScrollListener();
+  stickyManager.removeScrollListener();
 });
 </script>
 

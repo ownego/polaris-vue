@@ -6,6 +6,15 @@ import dedent from 'ts-dedent';
   title="Components / Lists and tables  / Description List"
   component={ DescriptionList }
   argTypes={{
+    spacing: {
+      control: {
+        type: 'select',
+        options: ['loose', 'tight'],
+      },
+      table: {
+        type: { summary: null },
+      },
+    },
     default: {
       table: {
         disable: true,

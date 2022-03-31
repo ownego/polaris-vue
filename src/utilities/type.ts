@@ -51,3 +51,27 @@ export interface BaseButton {
   /** Indicates the ID of the element that describes the button */
   ariaDescribedBy?: string;
 }
+
+export interface LinkAction {
+  /** A unique identifier for the action */
+  id?: string;
+  /** Content the action displays */
+  content?: string;
+  /** Visually hidden text for screen readers */
+  accessibilityLabel?: string;
+  /** A destination to link to */
+  url: string;
+}
+
+export interface BaseCallbackAction {
+  /** A unique identifier for the action */
+  id?: string;
+  /** Content the action displays */
+  content?: string;
+  /** Visually hidden text for screen readers */
+  accessibilityLabel?: string;
+  /** Callback when an action takes place */
+  onAction(): void;
+}
+
+export type CallbackAction = BaseCallbackAction;

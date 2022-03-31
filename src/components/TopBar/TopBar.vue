@@ -47,10 +47,9 @@ div(:class="styles.TopBar")
 </template>
 
 <script setup lang="ts">
-import { computed, ref, useSlots } from 'vue';
+import { computed, inject, ref, useSlots } from 'vue';
 import { classNames } from 'polaris-react/src/utilities/css';
 import { getWidth  } from 'polaris-react/src/utilities/get-width';
-import lang from 'polaris-react/locales/en.json';
 import MobileHamburgerMajor from '@icons/MobileHamburgerMajor.svg';
 import styles from '@/classes/TopBar.json';
 import { UseFrame } from '@/utilities/frame';
@@ -69,6 +68,8 @@ export interface TopBarProps {
 const props = withDefaults(defineProps<TopBarProps>(), {
   searchResultsOverlayVisible: false,
 });
+
+const lang = inject('lang') as Record<string, any>;
 
 const { useFrame } = UseFrame();
 const { logo } = useFrame();

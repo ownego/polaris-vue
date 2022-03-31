@@ -11,10 +11,10 @@ import debounce from 'lodash/debounce';
 import { ScrollLockManager } from 'polaris-react/src/utilities/scroll-lock-manager/scroll-lock-manager';
 import { UniqueIdFactory, globalIdGeneratorFactory } from 'polaris-react/src/utilities/unique-id/unique-id-factory';
 import { navigationBarCollapsed } from 'polaris-react/src/utilities/breakpoints';
-import { EventListener } from '@/components';
+import lang from 'polaris-react/locales/en.json';
+import { EventListener, CustomProperties } from '@/components';
 import { PortalManager } from '@/utilities/portal-manager';
 import { FocusManager } from '@/utilities/focus-manager';
-import { CustomProperties } from '../CustomProperties';
 import type { CustomPropertiesProps } from '../CustomProperties/utils';
 import { DEFAULT_COLOR_SCHEME } from '../CustomProperties/utils';
 
@@ -73,6 +73,7 @@ provide('scrollLockManager', scrollLockManager);
 provide('portalManager', portalManager);
 provide('uniqueIdFactory', uniqueIdFactory.value);
 provide('focusManager', focusManager);
+provide('lang', lang);
 </script>
 
 <style lang="scss">

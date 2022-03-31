@@ -152,7 +152,7 @@ export const Template = (args, { argTypes }) => ({
       :colorScheme="'${args.colorScheme}'"
     >
       <template #activator>
-        <Button disclosure @click="toggleActive"> More actions </Button>
+        <Button :disclosure="true" @click="toggleActive"> More actions </Button>
       </template>
       <template #content> <ActionList :items="items"/> </template>
     </Popover>`,
@@ -182,7 +182,7 @@ export const ContentAndActions = (args, { argTypes }) => ({
       @close="toggleActive"
     >
       <template #activator>
-        <Button disclosure @click="toggleActive"> Sales channels </Button>
+        <Button :disclosure="true" @click="toggleActive"> Sales channels </Button>
       </template>
       <template #extra-content>
         <Pane fixed> <PopoverSection> <p>Available sales channels</p> </PopoverSection> </Pane>
@@ -205,7 +205,7 @@ ContentAndActions.parameters = {
             @close="toggleActive"
           >
             <template #activator>
-              <Button disclosure @click="toggleActive"> Sales channels </Button>
+              <Button :disclosure="true" @click="toggleActive"> Sales channels </Button>
             </template>
             <template #extra-content>
               <Pane fixed> <PopoverSection> <p>Available sales channels</p> </PopoverSection> </Pane>
@@ -264,7 +264,7 @@ export const FormComponents = (args, { argTypes }) => ({
       @close="toggleActive"
     >
       <template #activator>
-        <Button disclosure @click="toggleActive"> Filter </Button>
+        <Button :disclosure="true" @click="toggleActive"> Filter </Button>
       </template>
       <template #content>
         <FormLayout>
@@ -293,7 +293,7 @@ FormComponents.parameters = {
             @close="toggleActive"
           >
             <template #activator>
-              <Button disclosure @click="toggleActive"> Filter </Button>
+              <Button :disclosure="true" @click="toggleActive"> Filter </Button>
             </template>
             <template #content>
               <FormLayout>
@@ -380,7 +380,7 @@ For ActionList usages, use the [ActionList component.](/docs/components-actions-
                 @close="toggleActive"
               >
                 <template #activator>
-                  <Button disclosure @click="toggleActive"> More actions </Button>
+                  <Button :disclosure="true" @click="toggleActive"> More actions </Button>
                 </template>
                 <template #content> <ActionList :items="items"/> </template>
               </Popover>

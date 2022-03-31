@@ -55,10 +55,9 @@ DiscardConfirmationModal(
 </template>
 
 <script setup lang="ts">
-import { computed, ref, useSlots } from 'vue';
+import { computed, ref, useSlots, inject } from 'vue';
 import { classNames } from 'polaris-react/src/utilities/css';
 import { getWidth } from 'polaris-react/src/utilities/get-width';
-import lang from 'polaris-react/locales/en.json';
 import { CustomProperties, Stack, Image, Button } from '@/components';
 import styles from '@/classes/Frame-ContextualSaveBar.json';
 import type { ContextualSaveBarAction, ContextualSaveBarCombinedActionProps } from '@/utilities/frame/types';
@@ -76,13 +75,11 @@ interface ContextualSaveBarProps {
   discardAction?: ContextualSaveBarCombinedActionProps;
   /** Remove the normal max-width on the contextual save bar */
   fullWidth?: boolean;
-  /** Accepts a component that is used to help users switch between different contexts */
-  contextControl?: any;
-  /** Accepts a node that is rendered to the left of the discard and save actions */
-  secondaryMenu?: any;
 }
 
 const props = defineProps<ContextualSaveBarProps>();
+
+const lang = inject('lang') as Record<string, any>;
 
 const slots = useSlots();
 

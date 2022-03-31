@@ -102,3 +102,9 @@ export interface ComboboxTextFieldType {
   // Callback when TextField is changed
   onTextFieldChange?(): void;
 }
+
+export interface MenuActionDescriptor extends ComplexAction {
+  /** Zero-indexed numerical position. Overrides the action's order in the menu */
+  index?: number;
+}
+

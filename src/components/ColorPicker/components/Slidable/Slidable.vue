@@ -62,8 +62,6 @@ const emits = defineEmits<{
   (event: 'dragger-height', value: number): void
 }>();
 
-const attrs = useAttrs();
-
 const isDragging = ref(false);
 const slidableRef = ref(null);
 const draggerRef = ref(null);
