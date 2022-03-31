@@ -1,5 +1,5 @@
 <template lang="pug">
-slot(v-if="hasSlot")
+slot(v-if="hasSlot(slots.default)")
 ActionMenu(
   v-else-if="(secondaryActions && secondaryActions.length > 0) || hasGroupsWithActions(actionGroups)",
   :actions="secondaryActions",
@@ -16,6 +16,7 @@ import type { MenuActionDescriptor } from '@/utilities/interface';
 import type { ActionMenuProps } from '@/components/ActionMenu/utils';
 import type { MenuGroupDescriptor } from '@/components/ActionMenu/components/MenuGroup/utils';
 import { UseMediaQuery } from '@/utilities/media-query';
+import hasSlot from '@/utilities/has-slot';
 
 const props = defineProps<{
   title?: string;
@@ -27,16 +28,6 @@ const slots = useSlots();
 
 const { useMediaQuery } = UseMediaQuery();
 const { isNavigationCollapsed } = useMediaQuery();
-
-const hasSlot = computed(() => {
-  if (slots.default && slots.default()[0].children) {
-    if (typeof slots.default()[0].children === 'string') {
-      return slots.default()[0].children !== 'v-if';
-    }
-    return Array.isArray(slots.default()[0].children) && (slots.default()[0].children as []).length > 0;
-  }
-  return true;
-});
 
 function hasGroupsWithActions(groups: ActionMenuProps['groups'] = []) {
   return groups.length === 0

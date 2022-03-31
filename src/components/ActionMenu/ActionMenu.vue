@@ -1,6 +1,6 @@
 <template lang="pug">
 div(
-  v-if="actions && groups && actions.length && groups.length",
+  v-if="(actions && actions.length) || (groups && groups.length)",
   :class="actionMenuClassNames",
 )
   RollupActions(

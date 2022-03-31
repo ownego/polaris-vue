@@ -11,17 +11,17 @@ HeaderWrapper(v-bind="props")
     ActionMenu(v-bind="actionMenuProps")
       slot(name="secondaryActions")
     PrimaryAction(
-      v-if="!isNavigationCollapsed && !conditionDesktopCompact",
+      v-if="(slots.primaryAction || props.primaryAction) && !isNavigationCollapsed && !conditionDesktopCompact",
       v-bind="primaryActionProps",
     )
       slot(name="primaryAction")
 
   template(#slot4, v-if="conditionSlot4")
     PrimaryAction(
-      v-if="isNavigationCollapsed || conditionDesktopCompact",
+      v-if="(slots.primaryAction || props.primaryAction) && (isNavigationCollapsed || conditionDesktopCompact)",
       v-bind="primaryActionProps",
     )
-      slot(name="primaryAction", v-if="slots.primaryAction")
+      slot(name="primaryAction")
     Pagination(
       v-if="!isNavigationCollapsed && !conditionDesktopCompact",
       :pagination="pagination",
@@ -110,8 +110,8 @@ const additionalMetadataProps = computed(() => {
 
 const conditionMobileCompact = computed(() => {
   return isNavigationCollapsed
-    && (props.breadcrumbs && props.breadcrumbs.length > 0)
-    && props.title != null
+    && (!props.breadcrumbs || !props.breadcrumbs.length)
+    && props.title
     && props.title.length <= REALLY_SHORT_TITLE
 });
 

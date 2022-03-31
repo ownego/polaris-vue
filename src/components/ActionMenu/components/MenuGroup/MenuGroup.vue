@@ -8,7 +8,7 @@ Popover(
 )
   template(#activator)
     SecondaryAction(
-      disclosure,
+      :disclosure="true",
       :icon="icon",
       :accessibilityLabel="accessibilityLabel",
       @click="handleOpen",

@@ -1,20 +1,25 @@
 <template lang="pug">
 div(:class="headerClassNames")
-  template(v-if="slots.slot1 || slots.slot2 || slots.slot3 || slots.slot4")
+  template(v-if="hasSlot1 || hasSlot2 || hasSlot3 || hasSlot4")
     div(:class="styles.Row")
       slot(name="slot1")
       slot(name="slot2")
-      template(v-if="slots.slot3 || slots.slot4")
+      template(v-if="hasSlot3 || hasSlot4")
         div(:class="styles.RightAlign")
-          div(v-if="slots.slot3", :class="styles.Actions")
+          div(
+            v-if="hasSlot3 && hasSlot4",
+            :class="styles.Actions"
+          )
             slot(name="slot3")
-          div(v-if="slots.slot4", :class="styles.Actions")
             slot(name="slot4")
-  template(v-if="slots.slot5 || slots.slot6")
+          template(v-else)
+            slot(name="slot3")
+            slot(name="slot4")
+  template(v-if="hasSlot5 || hasSlot6")
     div(:class="styles.Row")
       div(:class="styles.LeftAlign")
         slot(name="slot5")
-      template(v-if="slots.slot6")
+      template(v-if="hasSlot6")
         div(:class="styles.RightAlign")
           slot(name="slot6")
 </template>
@@ -30,6 +35,7 @@ import type { MenuActionDescriptor } from '@/utilities/interface';
 import type { MenuGroupDescriptor } from '@/components/ActionMenu/components/MenuGroup/utils';
 import { UseMediaQuery } from '@/utilities/media-query';
 import type { ActionMenuProps } from '@/components/ActionMenu/utils';
+import hasSlot from '@/utilities/has-slot';
 
 const LONG_TITLE = 34;
 
@@ -101,17 +107,43 @@ const hasActionMenuMarkup = computed(() => {
   || hasGroupsWithActions(props.actionGroups))
 });
 
-const headerClassNames = classNames(
-  styles.Header,
-  isSingleRow.value && styles.isSingleRow,
-  props.titleHidden && styles.titleHidden,
-  hasNavigationMarkup.value && styles.hasNavigation,
-  hasActionMenuMarkup.value && styles.hasActionMenu,
-  isNavigationCollapsed && styles.mobileView,
-  (!props.breadcrumbs || !props.breadcrumbs.length) && styles.noBreadcrumbs,
-  props.title && props.title.length < LONG_TITLE && styles.mediumTitle,
-  props.title && props.title.length > LONG_TITLE && styles.longTitle,
-);
+const headerClassNames = computed(() => {
+  return classNames(
+    styles.Header,
+    isSingleRow.value && styles.isSingleRow,
+    props.titleHidden && styles.titleHidden,
+    hasNavigationMarkup.value && styles.hasNavigation,
+    hasActionMenuMarkup.value && styles.hasActionMenu,
+    isNavigationCollapsed && styles.mobileView,
+    (!props.breadcrumbs || !props.breadcrumbs.length) && styles.noBreadcrumbs,
+    props.title && props.title.length < LONG_TITLE && styles.mediumTitle,
+    props.title && props.title.length > LONG_TITLE && styles.longTitle,
+  );
+});
+
+const hasSlot1 = computed(() => {
+  return hasSlot(slots.slot1);
+});
+
+const hasSlot2 = computed(() => {
+  return hasSlot(slots.slot2);
+});
+
+const hasSlot3 = computed(() => {
+  return hasSlot(slots.slot3);
+});
+
+const hasSlot4 = computed(() => {
+  return hasSlot(slots.slot4);
+});
+
+const hasSlot5 = computed(() => {
+  return hasSlot(slots.slot5);
+});
+
+const hasSlot6 = computed(() => {
+  return hasSlot(slots.slot6);
+});
 
 function hasGroupsWithActions(groups: ActionMenuProps['groups'] = []) {
   return groups.length === 0

@@ -1,6 +1,6 @@
 <template lang="pug">
 div(:class="styles.PrimaryActionWrapper")
-  slot(v-if="hasSlot")
+  slot(v-if="hasSlot(slots.default)")
   ButtonFrom(
     v-else,
     :action="iconOnly",
@@ -17,6 +17,7 @@ import { ButtonFrom } from '@/components/Button';
 import styles from '@/classes/Page-Header.json';
 import { UseMediaQuery } from '@/utilities/media-query';
 import type { IconSource } from '@/utilities/type';
+import hasSlot from '@/utilities/has-slot';
 
 interface PrimaryActionProps {
   id?: string;
@@ -46,16 +47,6 @@ const primary = computed(() => !props.primary ? true : props.primary);
 
 const iconOnly = computed(() => {
   return shouldShowIconOnly(isNavigationCollapsed, props);
-});
-
-const hasSlot = computed(() => {
-  if (slots.default && slots.default()[0].children) {
-    if (typeof slots.default()[0].children === 'string') {
-      return slots.default()[0].children !== 'v-if';
-    }
-    return Array.isArray(slots.default()[0].children) && (slots.default()[0].children as []).length > 0;
-  }
-  return true;
 });
 
 function shouldShowIconOnly(

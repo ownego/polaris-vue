@@ -1,6 +1,6 @@
 <template lang="pug">
 Popover(
-  v-if="items?.length && sections?.length",
+  v-if="items?.length || sections?.length",
   :active="rollupOpen",
   preferredAlignment="right",
   @close="toggleRollupOpen",
