@@ -12,10 +12,9 @@ import { ScrollLockManager } from 'polaris-react/src/utilities/scroll-lock-manag
 import { UniqueIdFactory, globalIdGeneratorFactory } from 'polaris-react/src/utilities/unique-id/unique-id-factory';
 import { navigationBarCollapsed } from 'polaris-react/src/utilities/breakpoints';
 import lang from 'polaris-react/locales/en.json';
-import { EventListener } from '@/components';
+import { EventListener, CustomProperties } from '@/components';
 import { PortalManager } from '@/utilities/portal-manager';
 import { FocusManager } from '@/utilities/focus-manager';
-import { CustomProperties } from '../CustomProperties';
 import type { CustomPropertiesProps } from '../CustomProperties/utils';
 import { DEFAULT_COLOR_SCHEME } from '../CustomProperties/utils';
 

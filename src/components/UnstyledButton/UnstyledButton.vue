@@ -60,7 +60,7 @@ const props = defineProps<Props>();
 
 const attrs = useAttrs();
 
-const getEventList = (events) => {
+const getEventList = (events: string[]) => {
   const eventBindings = { mouseup: handleMouseUpByBlurring };
   events.forEach((event) => {
     const eventName = `on${capitalize(event)}`;
@@ -84,7 +84,7 @@ const commonProps = computed(() => ({
 }));
 
 const interactiveProps = computed(() => ({
-  ...commonProps,
+  ...commonProps.value,
   ...props.others,
   role: props.role,
 }));

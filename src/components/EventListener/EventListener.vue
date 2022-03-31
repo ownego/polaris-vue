@@ -10,7 +10,7 @@ export default {
 <script setup lang="ts">
 import { onBeforeUnmount, onMounted, watch } from 'vue';
 
-interface BaseEventProps {
+type BaseEventProps = {
   event: string;
   capture?: boolean;
   passive?: boolean;

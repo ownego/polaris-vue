@@ -6,11 +6,13 @@ div(:class="styles.Section")
       spacing="tight",
     )
       TextContainer
-        Heading {{ title }}
+        Heading
+          | {{ title }}
           Badge(
             v-if="badge",
             :status="badge.status"
-          ) {{ badge.content }}
+          )
+            | {{ badge.content }}
         p {{ description }}
 
       Link(:url="link.to") {{ link.content }}
