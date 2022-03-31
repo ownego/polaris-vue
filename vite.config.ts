@@ -30,7 +30,12 @@ export default defineConfig({
     vue({
       reactivityTransform: true,
     }),
-    dts(),
+    dts({
+      staticImport: true,
+      exclude: ['dist', 'build'],
+      // skipDiagnostics: false,
+      // logDiagnostics: true,
+    }),
   ],
   resolve: {
     alias: {

@@ -18,11 +18,11 @@ interface CSSAnimationProps {
   type: AnimationType;
 }
 
-enum TransitionStatus {
-  Entering = 'entering',
-  Entered = 'entered',
-  Exiting = 'exiting',
-  Exited = 'exited',
+const TransitionStatus = {
+  Entering: 'entering',
+  Entered: 'entered',
+  Exiting: 'exiting',
+  Exited: 'exited',
 }
 
 const props = defineProps<CSSAnimationProps>();
@@ -58,7 +58,7 @@ const handleTransitionEnd = () => {
   transitionStatus.value === TransitionStatus.Exiting && changeTransitionStatus(TransitionStatus.Exited);
 }
 
-const changeTransitionStatus = (transitionStatusNew: TransitionStatus) => {
+const changeTransitionStatus = (transitionStatusNew: string) => {
   transitionStatus.value = transitionStatusNew;
 
   // Forcing a reflow to enable the animation
@@ -66,7 +66,6 @@ const changeTransitionStatus = (transitionStatusNew: TransitionStatus) => {
     frameCssAnimationRef.value && frameCssAnimationRef.value.getBoundingClientRect();
   }
 }
-
 </script>
 <style lang="scss">
 @import 'polaris-react/src/components/Frame/components/CSSAnimation/CSSAnimation.scss';

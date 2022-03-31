@@ -10,18 +10,17 @@ import styles from '@/classes/TextStyle.json';
 
 type Variation = 'positive' | 'negative' | 'warning' | 'strong' | 'subdued' | 'code';
 
-// eslint-disable-next-line no-shadow
-enum VariationValue {
-  Positive = 'positive',
-  Negative = 'negative',
-  Warning = 'warning',
-  Strong = 'strong',
-  Subdued = 'subdued',
-  Code = 'code',
+const VariationValue = {
+  positive: 'positive',
+  negative: 'negative',
+  warning: 'warning',
+  strong: 'strong',
+  subdued: 'subdued',
+  code: 'code',
 }
 
 function variationElement(variation?: Variation) {
-  return variation === VariationValue.Code ? 'code' : 'span';
+  return variation === VariationValue.code ? 'code' : 'span';
 }
 
 const props = defineProps({

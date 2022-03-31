@@ -75,10 +75,6 @@ interface ContextualSaveBarProps {
   discardAction?: ContextualSaveBarCombinedActionProps;
   /** Remove the normal max-width on the contextual save bar */
   fullWidth?: boolean;
-  /** Accepts a component that is used to help users switch between different contexts */
-  contextControl?: any;
-  /** Accepts a node that is rendered to the left of the discard and save actions */
-  secondaryMenu?: any;
 }
 
 const props = defineProps<ContextualSaveBarProps>();
