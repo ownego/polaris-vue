@@ -1,7 +1,7 @@
 <template lang="pug">
 slot(v-if="hasSlot")
 ActionMenu(
-  v-else-if="!hasSlot && ((secondaryActions && secondaryActions.length > 0) || hasGroupsWithActions(actionGroups))",
+  v-else-if="(secondaryActions && secondaryActions.length > 0) || hasGroupsWithActions(actionGroups)",
   :actions="secondaryActions",
   :groups="actionGroups",
   :rollup="isNavigationCollapsed",

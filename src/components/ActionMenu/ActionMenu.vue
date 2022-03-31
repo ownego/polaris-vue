@@ -55,12 +55,6 @@ const rollupSections = computed(() => {
   return (props.groups || []).map((group) => convertGroupToSection(group));
 });
 
-function hasGroupsWithActions(groups: ActionMenuProps['groups'] = []) {
-  return groups.length === 0
-    ? false
-    : groups.some((group) => group.actions.length > 0);
-}
-
 function convertGroupToSection({
   title,
   actions,
