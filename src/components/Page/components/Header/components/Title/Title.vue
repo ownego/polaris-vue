@@ -1,6 +1,6 @@
 <template lang="pug">
 div(
-  v-if="slots.default",
+  v-if="hasSlot(slots.default)",
   :class="styles.TitleWithMetadataWrapper",
 )
   h1(v-if="title", :class="className") {{ title }}
@@ -19,6 +19,7 @@ div(
 import { computed, useSlots } from 'vue';
 import { classNames } from 'polaris-react/src/utilities/css';
 import styles from '@/classes/Page-Title.json';
+import { hasSlot } from '@/utilities/has-slot';
 
 interface TitleProps {
   /** Page title, in large type */

@@ -16,7 +16,7 @@ import type { MenuActionDescriptor } from '@/utilities/interface';
 import type { ActionMenuProps } from '@/components/ActionMenu/utils';
 import type { MenuGroupDescriptor } from '@/components/ActionMenu/components/MenuGroup/utils';
 import { UseMediaQuery } from '@/utilities/media-query';
-import hasSlot from '@/utilities/has-slot';
+import { hasSlot } from '@/utilities/has-slot';
 
 const props = defineProps<{
   title?: string;

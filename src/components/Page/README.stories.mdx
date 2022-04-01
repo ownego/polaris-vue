@@ -1,0 +1,243 @@
+import dedent from 'ts-dedent';
+import { Meta, Story, Canvas, ArgsTable } from '@storybook/addon-docs';
+import { Page, Badge, Card, Button } from '@/polaris-vue';
+
+<Meta
+  title="Components / Structure / Page"
+  component={ Page }
+  argTypes={{
+    paginationProp: {
+      name: 'pagination',
+      description: 'Page-level pagination, see `Pagination` component',
+      table: {
+        category: 'props',
+        type: { summary: 'PaginationProps' }
+      },
+    },
+    breadcrumbs: {
+      table: {
+        type: { summary: 'CallbackAction | LinkAction' }
+      },
+    },
+    compactTitle: {
+      table: { defaultValue: { summary: 'false' }, },
+    },
+    divider: {
+      table: { defaultValue: { summary: 'false' }, },
+    },
+    fullWidth: {
+      table: { defaultValue: { summary: 'false' }, },
+    },
+    narrowWidth: {
+      table: { defaultValue: { summary: 'false' }, },
+    },
+    titleHidden: {
+      table: { defaultValue: { summary: 'false' }, },
+    },
+    default: {
+      description: 'The contents of the page',
+      table: { type: { summary: null } },
+      control: {
+        disable: true,
+      },
+    },
+    additionalMetadata: {
+      description: 'Additional metadata underneath the sub page title',
+      table: { type: { summary: null } },
+      control: {
+        disable: true,
+      },
+    },
+    additionalNavigation: {
+      table: { type: { summary: 'Deprecated' } },
+      control: {
+        disable: true,
+      },
+    },
+    pageTitle: {
+      description: 'Important and non-interactive status information shown immediately after the title.',
+      table: { type: { summary: null } },
+      control: {
+        disable: true,
+      },
+    },
+    pagination: {
+      description: 'Label for page-level pagination',
+      table: { type: { summary: null } },
+      control: {
+        disable: true,
+      },
+    },
+    primaryAction: {
+      description: 'Primary page-level action',
+      table: { type: { summary: null } },
+      control: {
+        disable: true,
+      },
+    },
+    secondaryActions: {
+      description: 'Collection of secondary page-level actions',
+      table: { type: { summary: null } },
+      control: {
+        disable: true,
+      },
+    },
+  }}
+/>
+
+export const Template = (args) => ({
+  components: { Page, Badge, Card, Button },
+  setup() {
+    const handleClick = () => {
+      console.log('click');
+    };
+    return { args, handleClick };
+  },
+  template: `
+    <Page
+      v-bind="args"
+      :breadcrumbs="[{content: 'Products', url: '/products'}]"
+      :primaryAction="{ content: 'Save', disabled: true }"
+      :secondaryActions="[{ content: 'Duplicate', onAction: handleClick }]"
+      :actionGroups="[{ title: 'Promote', actions: [{ content: 'Share on Facebook', onAction: handleClick }] }]"
+      :pagination="{ hasPrevious: true, hasNext: true }"
+    >
+      <template #pageTitle>
+        <Badge status="success">Paid</Badge>
+      </template>
+      <template #primaryAction>
+        <Button primary :connectedDisclosure="{ accessibilityLabel: 'Other save actions', actions: [{content: 'Save as new'}] }">
+          Save
+        </Button>
+      </template>
+      <Card sectioned>
+        <template #title>Credit card</template>
+        <p>Credit card information</p>
+      </Card>
+    </Page>
+  `,
+});
+
+# Page
+
+Use pagination to let merchants move through an ordered collection of items that has been split into pages. On the web, pagination uses buttons to move back and forth between pages. On iOS and Android, pagination uses infinite scrolling.
+
+#### **Related components**
+
+- To lay out the content within a page, use the [layout component](?path=/docs/components-structure-layout).
+- To add pagination within the context of a list or other page content, use the [pagination component](?path=/docs/components-navigation-pagination).
+- To add primary and secondary calls to action at the bottom of a page, see the [page actions component](?path=/docs/components-structure-page-actions).
+
+<Canvas>
+  <Story
+    name="Page"
+    inline={false}
+    height="250px"
+    args={{
+      fullWidth: true,
+      narrowWidth: false,
+      title: '3/4 inch Leather pet collar',
+      subtitle: 'Perfect for any pet',
+      compactTitle: false,
+      titleHidden: false,
+      divider: false,
+    }}
+    parameters={{
+      docs: {
+        source: {
+          code: dedent`
+            <Page
+              :breadcrumbs="[{content: 'Products', url: '/products'}]"
+              :primaryAction="{ content: 'Save', disabled: true }"
+              :secondaryActions="[{ content: 'Duplicate', onAction: handleClick }]"
+              :actionGroups="[{ title: 'Promote', actions: [{ content: 'Share on Facebook', onAction: handleClick }] }]"
+              :pagination="{ hasPrevious: true, hasNext: true }"
+            >
+              <template #pageTitle>
+                <Badge status="success">Paid</Badge>
+              </template>
+              <template #primaryAction>
+                <Button primary :connectedDisclosure="{ accessibilityLabel: 'Other save actions', actions: [{content: 'Save as new'}] }">
+                  Save
+                </Button>
+              </template>\n
+              <Card sectioned>
+                <template #title>Credit card</template>
+                <p>Credit card information</p>
+              </Card>
+            </Page>
+          `,
+        },
+      },
+    }}
+  >
+    {Template.bind({})}
+  </Story>
+</Canvas>
+
+<ArgsTable story="Page" />
+
+---
+<br/>
+
+### **Breadcrumbs Props**
+
+**Example: **
+
+```javascript
+// CallbackAction
+<Page :breadcrumbs="[{ content: 'Order', onAction: handleAction }]"></Page>
+
+// LinkAction
+<Page :breadcrumbs="[{ content: 'Products', url: '/products' }]"></Page>
+```
+
+`CallbackAction`
+
+| Prop             | Type                          | Description                                                                                        |
+| ---------------- | ----------------------------- | -------------------------------------------------------------------------------------------------- |
+| id                  | String   | A unique identifier for the action          |
+| content             | String   | Content the action displays |
+| accessibilityLabel  | String   | Visually hidden text for screen readers                                   |
+| onAction()          | Function | Callback when an action takes place                                   |
+
+<br/>
+
+`LinkAction`
+
+| Prop             | Type                          | Description                                                                                        |
+| ---------------- | ----------------------------- | -------------------------------------------------------------------------------------------------- |
+| id                  | String   | A unique identifier for the action          |
+| content             | String   | Content the action displays |
+| accessibilityLabel  | String   | Visually hidden text for screen readers                                   |
+| url                 | String   | A destination to link to                                   |
+
+<br/>
+
+---
+<br/>
+
+### **Pagination Props**
+
+See the [pagination component](?path=/docs/components-navigation-pagination) for more details.
+
+**Example: **
+
+```javascript
+<Page :pagination="{ hasPrevious: true, hasNext: true, onPrevious: handlePrevious, onNext: handleNext }"></Page>
+```
+
+| Prop             | Type                          | Description                                                                                        |
+| ---------------- | ----------------------------- | -------------------------------------------------------------------------------------------------- |
+| nextKeys              | Key[]     | Keyboard shortcuts for the next button          |
+| previousKeys          | Key[]     | Keyboard shortcuts for the previous button      |
+| nextTooltip           | String    | Tooltip for the next button                     |
+| previousTooltip       | String    | Tooltip for the previous button                 |
+| nextURL               | String    | The URL of the next page                 |
+| previousURL           | String    | The URL of the previous page                 |
+| hasNext               | Boolean   | Whether there is a next page to show                 |
+| hasPrevious           | Boolean   | Whether there is a previous page to show                 |
+| accessibilityLabel    | String    | Accessible label for the pagination                 |
+| accessibilityLabels   | AccessibilityLabels  | Accessible labels for the buttons and UnstyledLinks                |
+| onNext()          | Function | Callback when next button is clicked                                   |
+| onPrevious()          | Function | Callback when previous button is clicked                                   |

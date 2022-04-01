@@ -35,7 +35,7 @@ import type { MenuActionDescriptor } from '@/utilities/interface';
 import type { MenuGroupDescriptor } from '@/components/ActionMenu/components/MenuGroup/utils';
 import { UseMediaQuery } from '@/utilities/media-query';
 import type { ActionMenuProps } from '@/components/ActionMenu/utils';
-import hasSlot from '@/utilities/has-slot';
+import { hasSlot } from '@/utilities/has-slot';
 
 const LONG_TITLE = 34;
 

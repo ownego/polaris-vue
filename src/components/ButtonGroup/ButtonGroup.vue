@@ -24,6 +24,7 @@ import type { VNodeArrayChildren } from 'vue';
 import { classNames } from 'polaris-react/src/utilities/css';
 import { Item } from './components';
 import styles from '@/classes/ButtonGroup.json';
+import { hasSlot } from '@/utilities/has-slot';
 
 type Spacing = 'extraTight' | 'tight' | 'loose';
 
@@ -47,6 +48,10 @@ const itemMarkup = computed(() => {
   if (slots.default) {
     slots.default().map(item => {
       const children = item.children as VNodeArrayChildren;
+      if (typeof children === 'string' && children === 'v-if') {
+        return;
+      }
+
       if (item.type.toString() === 'Symbol(Fragment)') {
         children.forEach(child => {
           items.push(child);

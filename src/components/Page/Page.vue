@@ -1,7 +1,7 @@
 <template lang="pug">
 div(:class="pageClassName")
   Header(v-if="hasHeaderContent", v-bind="headerProps")
-    template(#pageTitle, v-if="slots.pageTitle")
+    template(#pageTitle, v-if="hasSlot(slots.pageTitle)")
       slot(name="pageTitle")
     template(#secondaryActions, v-if="slots.secondaryActions")
       slot(name="secondaryActions")
@@ -11,7 +11,7 @@ div(:class="pageClassName")
       slot(name="additionalMetadata")
     template(#additionalNavigation, v-if="slots.additionalNavigation")
       slot(name="additionalNavigation")
-    template(#pagination, v-if="slots.pagination")
+    template(#pagination, v-if="hasSlot(slots.pagination)")
       slot(name="pagination")
   div(:class="contentClassName")
     slot
@@ -23,6 +23,7 @@ import { classNames } from 'polaris-react/src/utilities/css';
 import styles from '@/classes/Page.json';
 import type { PaginationProps } from '@/components/Pagination/utils';
 import type { BreadcrumbsProps } from '@/components/Breadcrumbs/utils';
+import { hasSlot } from '@/utilities/has-slot';
 import type { MenuActionDescriptor } from '@/utilities/interface';
 import type { MenuGroupDescriptor } from '@/components/ActionMenu/components/MenuGroup/utils';
 import type { PrimaryActionType } from './utils';

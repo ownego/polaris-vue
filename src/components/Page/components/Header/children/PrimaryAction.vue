@@ -17,7 +17,7 @@ import { ButtonFrom } from '@/components/Button';
 import styles from '@/classes/Page-Header.json';
 import { UseMediaQuery } from '@/utilities/media-query';
 import type { IconSource } from '@/utilities/type';
-import hasSlot from '@/utilities/has-slot';
+import { hasSlot } from '@/utilities/has-slot';
 
 type PrimaryActionProps = {
   id?: string;
