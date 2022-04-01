@@ -1,6 +1,6 @@
 import type { Key } from '../KeypressListener/utils';
 
-interface AccessibilityLabels {
+type AccessibilityLabels = {
   previous: string;
   next: string;
 }
