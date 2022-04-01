@@ -18,7 +18,7 @@ nav(
       :handler="callbackNextUrl",
     )
 
-  ButtonGroup(:segmented="!slots.label")
+  ButtonGroup(:segmented="!hasSlot(slots.default)")
     Tooltip(
       v-if="previousTooltip && hasPrevious",
       activator-wrapper="span",
@@ -44,13 +44,13 @@ nav(
       @click="$emit('previous')",
     )
     div(
-      v-if="slots.label",
+      v-if="hasSlot(slots.default)",
       aria-live="polite",
     )
       TextStyle(v-if="hasNext && hasPrevious")
-        slot(name="label")
+        slot
       TextStyle(v-else, variation="subdued")
-        slot(name="label")
+        slot
     Tooltip(
       v-if="nextTooltip && hasNext",
       activator-wrapper="span",
@@ -83,6 +83,7 @@ import { isInputFocused } from 'polaris-react/src/utilities/is-input-focused';
 import ChevronLeftMinor from '@icons/ChevronLeftMinor.svg';
 import ChevronRightMinor from '@icons/ChevronRightMinor.svg';
 import { Button, ButtonGroup, KeypressListener, TextStyle, Tooltip } from '@/components';
+import { hasSlot } from '@/utilities/has-slot';
 import type { Key } from '../KeypressListener/utils';
 
 type AccessibilityLabels = {

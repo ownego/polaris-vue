@@ -1,6 +1,6 @@
 import type { Slot } from 'vue';
 
-export default function hasSlot(slot?: Slot) {
+export function hasSlot (slot?: Slot) {
   if (slot && slot()[0].children) {
     if (typeof slot()[0].children === 'string') {
       return slot()[0].children !== 'v-if';

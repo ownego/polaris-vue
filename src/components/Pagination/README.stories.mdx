@@ -1,0 +1,107 @@
+import dedent from 'ts-dedent';
+import { Meta, Story, Canvas, ArgsTable } from '@storybook/addon-docs';
+import { Pagination } from '@/polaris-vue';
+
+<Meta
+  title="Components / Navigation / Pagination"
+  component={ Pagination }
+  argTypes={{
+    default: {
+      description: 'Text to provide more context in between the arrow buttons',
+      table: { type: { summary: null } },
+      control: {
+        disable: true,
+      },
+    },
+    next: {
+      name: '@next',
+      description: 'Callback when next button is clicked',
+      table: { type: { summary: null } },
+      control: {
+        disable: true,
+      },
+    },
+    previous: {
+      name: '@previous',
+      description: 'Callback when previous button is clicked',
+      table: { type: { summary: null } },
+      control: {
+        disable: true,
+      },
+    },
+  }}
+/>
+
+export const Template = (args) => ({
+  components: { Pagination },
+  setup() {
+    const handleNext = () => {
+      console.log('next');
+    };
+    const handlePrevious = () => {
+      console.log('previous');
+    };
+    return { args, handlePrevious, handleNext };
+  },
+  template: `
+    <Pagination
+      v-bind="args"
+      @previous="handlePrevious"
+      @next="handleNext"
+    >
+      Results
+    </Pagination>
+  `,
+});
+
+# Pagination
+
+Use pagination to let merchants move through an ordered collection of items that has been split into pages. On the web, pagination uses buttons to move back and forth between pages. On iOS and Android, pagination uses infinite scrolling.
+
+<Canvas>
+  <Story
+    name="Pagination"
+    inline={false}
+    height="100px"
+    args={{
+      hasPrevious: true,
+      hasNext: true,
+      nextKeys: ["k"],
+      previousKeys: ["j"],
+      nextTooltip: "Press K",
+      previousTooltip: "Press J",
+    }}
+    parameters={{
+      docs: {
+        source: {
+          code: dedent`
+            <Pagination
+              has-previous
+              has-next
+              :nextKeys="['k']"
+              :previousKeys="['j']"
+              nextTooltip="Press K"
+              previousTooltip="Press J"
+              @previous="handlePrevious"
+              @next="handleNext"
+            >
+              Results
+            </Pagination>\n
+            <script setup>
+              const handleNext = () => {
+                console.log('next');
+              };
+              const handlePrevious = () => {
+                console.log('previous');
+              };
+            </script>
+          `,
+        },
+      },
+    }}
+  >
+    {Template.bind({})}
+  </Story>
+</Canvas>
+
+<ArgsTable story="Pagination" />

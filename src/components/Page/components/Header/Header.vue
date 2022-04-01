@@ -26,6 +26,8 @@ HeaderWrapper(v-bind="props")
       v-if="!isNavigationCollapsed && !conditionDesktopCompact",
       :pagination="pagination",
     )
+      template(v-if="hasSlot(slots.pagination)")
+        slot(name="pagination")
 
   template(#slot5)
     AdditionalMetadata(v-bind="additionalMetadataProps")
@@ -43,6 +45,7 @@ import type { BreadcrumbsProps } from '@/components/Breadcrumbs/utils';
 import type { MenuActionDescriptor } from '@/utilities/interface';
 import type { MenuGroupDescriptor } from '@/components/ActionMenu/components/MenuGroup/utils';
 import { UseMediaQuery } from '@/utilities/media-query';
+import { hasSlot } from '@/utilities/has-slot';
 import type { PrimaryActionType } from '../../utils';
 import { HeaderWrapper } from './';
 import {
