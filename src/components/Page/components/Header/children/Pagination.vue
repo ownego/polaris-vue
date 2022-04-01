@@ -4,6 +4,7 @@ div(
   :class="styles.PaginationWrapper",
 )
   Pagination(v-bind="pagination")
+    slot
 </template>
 
 <script setup lang="ts">

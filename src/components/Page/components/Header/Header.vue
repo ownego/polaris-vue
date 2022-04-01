@@ -26,6 +26,7 @@ HeaderWrapper(v-bind="props")
       v-if="!isNavigationCollapsed && !conditionDesktopCompact",
       :pagination="pagination",
     )
+      slot(name="pagination")
 
   template(#slot5)
     AdditionalMetadata(v-bind="additionalMetadataProps")

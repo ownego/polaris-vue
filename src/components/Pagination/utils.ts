@@ -26,4 +26,8 @@ export interface PaginationProps {
   accessibilityLabel?: string;
   /** Accessible labels for the buttons and UnstyledLinks */
   accessibilityLabels?: AccessibilityLabels;
+  /** Callback when next button is clicked */
+  onNext?(): void;
+  /** Callback when previous button is clicked */
+  onPrevious?(): void;
 }

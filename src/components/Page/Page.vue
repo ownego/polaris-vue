@@ -1,6 +1,5 @@
 <template lang="pug">
 div(:class="pageClassName")
-  TextContainer
   Header(v-if="hasHeaderContent", v-bind="headerProps")
     template(#pageTitle, v-if="slots.pageTitle")
       slot(name="pageTitle")
@@ -12,6 +11,8 @@ div(:class="pageClassName")
       slot(name="additionalMetadata")
     template(#additionalNavigation, v-if="slots.additionalNavigation")
       slot(name="additionalNavigation")
+    template(#pagination, v-if="slots.pagination")
+      slot(name="pagination")
   div(:class="contentClassName")
     slot
 </template>

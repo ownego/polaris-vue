@@ -18,7 +18,7 @@ nav(
       :handler="callbackNextUrl",
     )
 
-  ButtonGroup(:segmented="!slots.label")
+  ButtonGroup(:segmented="!slots.default")
     Tooltip(
       v-if="previousTooltip && hasPrevious",
       activator-wrapper="span",
@@ -44,13 +44,13 @@ nav(
       @click="$emit('previous')",
     )
     div(
-      v-if="slots.label",
+      v-if="slots.default",
       aria-live="polite",
     )
       TextStyle(v-if="hasNext && hasPrevious")
-        slot(name="label")
+        slot
       TextStyle(v-else, variation="subdued")
-        slot(name="label")
+        slot
     Tooltip(
       v-if="nextTooltip && hasNext",
       activator-wrapper="span",
