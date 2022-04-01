@@ -85,7 +85,7 @@ import ChevronRightMinor from '@icons/ChevronRightMinor.svg';
 import { Button, ButtonGroup, KeypressListener, TextStyle, Tooltip } from '@/components';
 import type { Key } from '../KeypressListener/utils';
 
-interface AccessibilityLabels {
+type AccessibilityLabels = {
   previous: string;
   next: string;
 }

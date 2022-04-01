@@ -19,7 +19,7 @@ import { UseMediaQuery } from '@/utilities/media-query';
 import type { IconSource } from '@/utilities/type';
 import hasSlot from '@/utilities/has-slot';
 
-interface PrimaryActionProps {
+type PrimaryActionProps = {
   id?: string;
   content?: string;
   accessibilityLabel?: string;

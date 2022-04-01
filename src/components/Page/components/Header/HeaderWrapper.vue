@@ -39,7 +39,7 @@ import hasSlot from '@/utilities/has-slot';
 
 const LONG_TITLE = 34;
 
-interface PrimaryAction {
+type PrimaryAction = {
   id?: string;
   content?: string;
   accessibilityLabel?: string;
