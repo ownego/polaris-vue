@@ -33,8 +33,6 @@ export default defineConfig({
     dts({
       staticImport: true,
       exclude: ['dist', 'build'],
-      // skipDiagnostics: false,
-      // logDiagnostics: true,
     }),
   ],
   resolve: {
