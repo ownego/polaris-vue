@@ -32,6 +32,7 @@ export default defineConfig({
     }),
     dts({
       staticImport: true,
+      outputDir: 'dist/types',
       exclude: ['dist', 'build'],
     }),
   ],

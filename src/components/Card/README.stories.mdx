@@ -36,7 +36,13 @@ export const TemplateFull = (args) => ({
   components: { Card, CardSection, CardHeader, CardSubsection, Icon, Subheading, Popover, Button, ActionList, Stack, Subheading, List, ListItem },
   setup() {
     const addAccountActive = ref(false);
-    return { args, OrdersMinor, addAccountActive };
+    const toggleClick = () => {
+      console.log('clicked');
+    };
+    const toggleAccountActive = () => {
+      addAccountActive.value = !addAccountActive.value;
+    };
+    return { args, OrdersMinor, addAccountActive, toggleClick, toggleAccountActive };
   },
   template: `
     <Card
@@ -46,12 +52,12 @@ export const TemplateFull = (args) => ({
       <template #title>Shipment</template>
       <CardHeader :actions="[{ content: 'Preview' }]">
         <template #title>Item Orders</template>
-        <Popover :active="addAccountActive" @close="() => {}">
+        <Popover :active="addAccountActive" @close="toggleClick">
           <template #activator>
             <Button
               :plain="true",
               :disclosure="true"
-              @click="() => addAccountActive = !addAccountActive">Add account</Button>
+              @click="toggleAccountActive">Add account</Button>
           </template>
           <template #content>
             <ActionList :items="[{content: 'Member'}, {content: 'Admin'}]"></ActionList>
