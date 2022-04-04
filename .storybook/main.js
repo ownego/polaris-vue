@@ -16,18 +16,22 @@ module.exports = {
   ],
   framework: '@storybook/vue3',
   core: {
-    builder: 'storybook-builder-vite',
+    builder: '@storybook/builder-vite',
   },
   typescript: {
     check: false,
     checkOptions: {},
   },
-  async viteFinal(previousConfig) {
+  async viteFinal(buildConfig, { configType }) {
     const { config } = await loadConfigFromFile(
       path.resolve(__dirname, '../vite.config.ts')
     );
 
-    return mergeConfig(previousConfig, {
+    const finalConfig = mergeConfig(buildConfig, {
+      base: configType === 'PRODUCTION' ? 'polaris-vue' : '',
+      output: {
+        publicPath: '/polaris-vue',
+      },
       resolve: { ...config.resolve },
       plugins: [
         svgLoader(),
@@ -36,5 +40,7 @@ module.exports = {
         }),
       ],
     });
+
+    return finalConfig;
   },
 }
