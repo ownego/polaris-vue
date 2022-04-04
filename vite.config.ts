@@ -5,6 +5,7 @@ import { replaceCodePlugin } from 'vite-plugin-replace';
 import svgLoader from 'vite-svg-loader';
 import checker from 'vite-plugin-checker';
 import vue from '@vitejs/plugin-vue';
+import dts from 'vite-plugin-dts';
 import packageJson from './package.json';
 
 export default defineConfig({
@@ -28,6 +29,11 @@ export default defineConfig({
     svgLoader(),
     vue({
       reactivityTransform: true,
+    }),
+    dts({
+      staticImport: true,
+      outputDir: 'dist/types',
+      exclude: ['dist', 'build'],
     }),
   ],
   resolve: {
