@@ -18,8 +18,10 @@ const isSlotContainHTMLTag = computed(() => Boolean(
   defaultSlot.value
     && (defaultSlot.value.length >= 2
       || (defaultSlot.value[0]
-        && defaultSlot.value[0].type.toString() !== 'Symbol(Text)')),
-)); 
+        && (defaultSlot.value[0].type.toString() !== 'Symbol(Text)'
+        || defaultSlot.value[0].type.toString() !== 'Symbol()')
+      )),
+));
 </script>
 
 <style lang="scss">
