@@ -59,12 +59,13 @@ const className = computed(() => {
 
 const isTextOnlyTitle = computed(() => {
   if (slots.title && slots.title().length === 1) {
-    if (slots.title()[0]?.type.toString() === 'Symbol(Text)') {
+    if (slots.title()[0]?.type.toString() === 'Symbol(Text)' || slots.title()[0]?.type.toString() === 'Symbol()') {
       return true;
     } else {
       return slots.title()[0].children
         && slots.title()[0].children?.length === 1
-        && slots.title()[0].children?.[0].type.toString() === 'Symbol(Text)'
+        && (slots.title()[0].children?.[0].type.toString() === 'Symbol(Text)'
+        || slots.title()[0].children?.[0].type.toString() === 'Symbol()');
     }
   }
 

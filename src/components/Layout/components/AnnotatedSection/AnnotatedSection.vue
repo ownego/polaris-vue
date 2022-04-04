@@ -34,6 +34,8 @@ const isDescriptionSlotContainHTMLTag = computed(() => Boolean(
   descriptionSlot.value
     && (descriptionSlot.value.length >= 2
       || (descriptionSlot.value[0]
-        && descriptionSlot.value[0].type.toString() !== 'Symbol(Text)')),
+        && (descriptionSlot.value[0].type.toString() !== 'Symbol(Text)'
+        || descriptionSlot.value[0].type.toString() !== 'Symbol()')
+      )),
 ));
 </script>

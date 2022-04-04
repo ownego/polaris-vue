@@ -54,10 +54,7 @@ export const TemplateFull = (args) => ({
         <template #title>Item Orders</template>
         <Popover :active="addAccountActive" @close="toggleClick">
           <template #activator>
-            <Button
-              :plain="true",
-              :disclosure="true"
-              @click="toggleAccountActive">Add account</Button>
+            <Button :plain="true" :disclosure="true" @click="toggleAccountActive">Add account</Button>
           </template>
           <template #content>
             <ActionList :items="[{content: 'Member'}, {content: 'Admin'}]"></ActionList>
@@ -73,8 +70,8 @@ export const TemplateFull = (args) => ({
       </CardSection>
       <CardSection>
         <template #title>Addresses</template>
-        <CardSubsection>123 First St<br />Somewhere<br />The Universe</CardSubsection>
-        <CardSubsection>123 Second St<br />Somewhere<br />The Universe</CardSubsection>
+        <CardSubsection>123 First St<br/>Somewhere<br/>The Universe</CardSubsection>
+        <CardSubsection>123 Second St<br/>Somewhere<br/>The Universe</CardSubsection>
       </CardSection>
       <CardSection subdued="subdued" :actions="[{ content: 'Delete', destructive: true }, { content: 'Edit' }]">
         <template #title>Contact Information</template>
@@ -211,8 +208,8 @@ Cards are used to group similar concepts and tasks together to make Shopify easi
               </CardSection>
               <CardSection>
                 <template #title>Addresses</template>
-                <CardSubsection>123 First St<br />Somewhere<br />The Universe</CardSubsection>
-                <CardSubsection>123 Second St<br />Somewhere<br />The Universe</CardSubsection>
+                <CardSubsection>123 First St<br/>Somewhere<br/>The Universe</CardSubsection>
+                <CardSubsection>123 Second St<br/>Somewhere<br/>The Universe</CardSubsection>
               </CardSection>
               <CardSection subdued="subdued" :actions="[{ content: 'Delete', destructive: true }, { content: 'Edit' }]">
                 <template #title>Contact Information</template>
