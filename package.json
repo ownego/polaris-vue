@@ -20,7 +20,6 @@
     "LICENSE",
     "README.md"
   ],
-  "types": "./dist/types/src/polaris-vue.d.ts",
   "main": "./dist/polaris-vue.umd.js",
   "module": "./dist/polaris-vue.es.js",
   "scripts": {
