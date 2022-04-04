@@ -11,14 +11,12 @@ div(:class="styles.Header")
         slot(name="title")
     StackItem(v-if="actions")
       ButtonGroup
-        template(
+        ButtonFrom(
           v-for="action, index in actions",
           :key="index",
+          :action="action",
+          :overrides="{ plain: true }",
         )
-          ButtonFrom(
-            :action="action",
-            :overrides="{ plain: true }",
-          )
     StackItem(v-if="slots.default")
       slot
   template(v-else)
