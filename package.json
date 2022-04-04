@@ -25,7 +25,7 @@
   "module": "./dist/polaris-vue.es.js",
   "scripts": {
     "dev": "vite",
-    "build": "rimraf dist && vue-tsc --noEmit && vite build && rimraf dist/index.html dist/favicon.ico dist/images && mv dist/src dist/types",
+    "build": "rimraf dist && vue-tsc --noEmit && vite build && rimraf dist/index.html dist/favicon.ico dist/images",
     "preview": "vite preview --port 5050",
     "typecheck": "vue-tsc --noEmit",
     "lint": "eslint . --ext .vue,.js,.jsx,.cjs,.mjs,.ts,.tsx,.cts,.mts --fix --ignore-path .gitignore",
