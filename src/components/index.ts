@@ -52,6 +52,7 @@ export * from './Pagination';
 export * from './Popover';
 export * from './Portal';
 export * from './PositionedOverlay';
+export * from './ProgressBar';
 export * from './RadioButton';
 export * from './Scrollable';
 export * from './ScrollLock';
