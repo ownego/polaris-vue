@@ -29,7 +29,7 @@ export const parameters = {
       order: [
         "Get Started",
         "Polaris Icons",
-        "Component Status",
+        "FAQs",
         "Components",
         [
           "Actions",
