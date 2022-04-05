@@ -4,7 +4,7 @@ import dedent from 'ts-dedent';
 import { ChoiceList } from '@/polaris-vue';
 
 <Meta
-  title="Components / Forms / ChoiceList"
+  title="Components / Forms / Choice List"
   component={ ChoiceList }
   argTypes={{
     choices: {
@@ -202,7 +202,7 @@ singleChoiceList.parameters = {
               {label: 'Required', value: 'required'},
             ]
           };
-        },      
+        },
       `
     },
   },
@@ -458,7 +458,7 @@ export const renderChildWithConditional = (args, { argTypes }) => ({
         },
       ],
     };
-  },    
+  },
   methods: {
     handleChange() {
       this.choices[2].renderChildren = this.selected === 'minimum_quantity'
@@ -495,7 +495,7 @@ renderChildWithConditional.parameters = {
               },
             ],
           };
-        },    
+        },
         methods: {
           handleChange() {
             this.choices[2].renderChildren = this.selected === 'minimum_quantity'

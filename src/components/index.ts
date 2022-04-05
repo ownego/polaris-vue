@@ -45,6 +45,7 @@ export * from './Loading';
 export * from './MessageIndicator';
 export * from './Modal';
 export * from './Navigation';
+export * from './OptionList';
 export * from './Page';
 export * from './PageActions';
 export * from './Pagination';

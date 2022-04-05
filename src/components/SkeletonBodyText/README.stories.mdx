@@ -3,18 +3,18 @@ import {Meta, Story, Canvas, ArgsTable} from '@storybook/addon-docs'
 import {SkeletonBodyText} from '@/polaris-vue';
 
 <Meta
-    title="Components / Feedback indicators"
-    component={SkeletonBodyText}
+  title="Components / Feedback indicators"
+  component={SkeletonBodyText}
 />
 
 export const Template = (args) => ({
-    components: { SkeletonBodyText },
-    setup() {
-        return { args };
-    },
-    template: `
-      <SkeletonBodyText v-bind:="args"/>
-    `,
+  components: { SkeletonBodyText },
+  setup() {
+    return { args };
+  },
+  template: `
+    <SkeletonBodyText v-bind:="args"/>
+  `,
 });
 
 # Skeleton body text
@@ -22,23 +22,23 @@ export const Template = (args) => ({
 Skeleton body text is used to provide a low fidelity representation of content before it appears on the page, and improves load times perceived by merchants. Can be used for content in or outside of a card.
 
 <Canvas>
-    <Story
-        name="SkeletonBodyText"
-        args={{
-            lines: 3,
-        }}
-        parameters={{
-            docs: {
-                source: {
-                    code: dedent`
-                        <SkeletonBodyText v-bind="props"/>
-                    `,
-                },
-            },
-        }}
-    >
-        {Template.bind({})}
-    </Story>
+  <Story
+    name="Skeleton Body Text"
+    args={{
+      lines: 3,
+    }}
+    parameters={{
+      docs: {
+        source: {
+          code: dedent`
+            <SkeletonBodyText :lines="3"/>
+          `,
+        },
+      },
+    }}
+  >
+    {Template.bind({})}
+  </Story>
 </Canvas>
 
-<ArgsTable story="SkeletonBodyText"/>
+<ArgsTable story="Skeleton Body Text"/>
