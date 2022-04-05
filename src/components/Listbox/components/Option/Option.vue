@@ -77,7 +77,6 @@ const { onOptionSelect } = listboxContext;
 const props = defineProps<OptionProps>();
 
 const slots = useSlots();
-const defaultSlot = computed(() => slots.default?.());
 
 const listItemRef = ref<HTMLLIElement | null>(null);
 
@@ -90,14 +89,17 @@ const sectionAttributes = {
   [listboxWithinSectionDataSelector.attribute]: isWithinSection.value,
 };
 
-const isSlotContainHTMLTag = computed(() => Boolean(
-  defaultSlot.value
-    && (defaultSlot.value.length >= 2
-      || (defaultSlot.value[0]
-        && (defaultSlot.value[0].type.toString() !== 'Symbol(Text)'
-        || defaultSlot.value[0].type.toString() !== 'Symbol()')
-      )),
-));
+const isSlotContainHTMLTag = computed(() => {
+  console.log(123, slots.default && slots.default());
+  return Boolean(
+    slots.default
+      && (slots.default().length >= 2
+        || (slots.default()[0]
+          && (slots.default()[0].type.toString() !== 'Symbol(Text)'
+          && slots.default()[0].type.toString() !== 'Symbol()')
+        )),
+  );
+});
 
 const legacyRoleSupport = computed(() => role || 'option');
 
