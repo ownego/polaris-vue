@@ -6,8 +6,8 @@ div(:class="className")
     max="100",
   )
   div(
-    :class="classNames(styles.Indicator, animated, styles.Animated)"
-    :style="{ width: `${parsedProgress}%` }"
+    :class="classNames(styles.Indicator, animated, styles.Animated)",
+    :style="{ width: `${parsedProgress}%` }",
   )
     span(:class="styles.Label") {{ parsedProgress }}%
 </template>
