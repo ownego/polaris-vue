@@ -15,7 +15,7 @@ div(:class="fileUploadClassName")
 </template>
 
 <script setup lang="ts">
-import { computed, inject, onMounted, ref, toRefs, watch } from 'vue';
+import { computed, inject, toRefs } from 'vue';
 import { classNames } from 'polaris-react/src/utilities/css';
 import { capitalize } from 'polaris-react/src/utilities/capitalize';
 import uploadArrow from 'polaris-react/src/components/DropZone/images/upload-arrow.svg';

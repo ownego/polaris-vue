@@ -5,7 +5,6 @@ export function fileAccepted(file: File, accept: string | undefined) {
 }
 
 export function getDataTransferFiles(event: DragEvent | Event) {
-  console.log('ok1', event, isDragEvent(event), isChangeEvent(event));
   if (isDragEvent(event) && event.dataTransfer) {
     console.log('drag');
     const dt = event.dataTransfer;
@@ -20,7 +19,6 @@ export function getDataTransferFiles(event: DragEvent | Event) {
   } else if (isChangeEvent(event) && (event.target as HTMLInputElement).files) {
     // Return files from even when a file was selected from an upload dialog
     const target = (event.target as HTMLInputElement);
-    console.log('ok', target, target.files);
     return Array.from(target.files || []);
   }
 

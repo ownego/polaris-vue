@@ -76,6 +76,7 @@ import {
   TextStyle,
   VisuallyHidden,
   Labelled,
+  Icon,
 } from '@/components';
 import type { LabelledProps } from '@/components/Labelled/utils';
 import { UseUniqueId } from '@/use';
