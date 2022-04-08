@@ -23,8 +23,8 @@ div(:class="styles.FormLayout")
 
 <script setup lang="ts">
 import { onBeforeUpdate, onMounted, ref, useSlots } from 'vue';
-import { Item } from './components';
 import styles from '@/classes/FormLayout.json';
+import { Item } from './components';
 
 const itemRefs = ref<any[]>([]);
 
