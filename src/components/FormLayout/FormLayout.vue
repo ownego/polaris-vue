@@ -1,8 +1,8 @@
 <template lang="pug">
 div(:class="styles.FormLayout")
   template(
-    v-if="slots.default",
-    v-for="(item, index) in slots.default()",
+    v-if="slotsElms.length",
+    v-for="(item, index) in slotsElms",
   )
     Item(
       v-if="!itemGroupIndexes[index]",
@@ -22,7 +22,7 @@ div(:class="styles.FormLayout")
 </template>
 
 <script setup lang="ts">
-import { onBeforeUpdate, onMounted, ref, useSlots } from 'vue';
+import { computed, onBeforeUpdate, onMounted, ref, useSlots } from 'vue';
 import styles from '@/classes/FormLayout.json';
 import { Item } from './components';
 
@@ -31,6 +31,24 @@ const itemRefs = ref<any[]>([]);
 const itemGroupIndexes = ref<boolean[]>([]);
 
 const slots = useSlots();
+
+const slotsElms = computed(() => {
+  const elms: any[] = [];
+  const defaultSlot = slots.default && slots.default();
+
+  // Nothing in the default slot
+  if (!defaultSlot || !defaultSlot.length) { return elms; }
+
+  for (let i = 0; i < defaultSlot.length; i++) {
+    if (defaultSlot[i].type.toString() === 'Symbol()') {
+      elms.push(defaultSlot[i].children);
+    } else {
+      elms.push(defaultSlot[i]);
+    }
+  }
+
+  return elms;
+});
 
 onBeforeUpdate(() => {
   itemRefs.value = [];

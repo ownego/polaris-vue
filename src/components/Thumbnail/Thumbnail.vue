@@ -28,6 +28,8 @@ interface Props {
   source: string | IconSource;
   /** Alt text for the thumbnail image */
   alt: string;
+  /** Transparent background */
+  transparent?: boolean;
 }
 
 const props = withDefaults(defineProps<Props>(), {
@@ -40,6 +42,7 @@ const className = computed(() => {
   return classNames(
     styles.Thumbnail,
     size && styles[size],
+    props.transparent && styles.transparent,
   );
 })
 </script>
