@@ -14,7 +14,7 @@ div(:class="className")
 
 <script setup lang="ts">
 import { computed, inject } from 'vue';
-import { classNames, variationName } from 'polaris-react/src/utilities/css';
+import { classNames, variationName } from 'polaris/polaris-react/src/utilities/css';
 import styles from '@/classes/ProgressBar.json';
 
 type Size = 'small' | 'medium' | 'large';
@@ -87,5 +87,5 @@ const parsedProgress = computed(() => parseProgress(props.progress, warningMessa
 </script>
 
 <style lang="scss">
-@import 'polaris-react/src/components/ProgressBar/ProgressBar.scss';
+@import 'polaris/polaris-react/src/components/ProgressBar/ProgressBar.scss';
 </style>

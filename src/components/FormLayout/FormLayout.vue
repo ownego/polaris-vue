@@ -46,5 +46,5 @@ onMounted(() => {
 </script>
 
 <style lang="scss">
-@import 'polaris-react/src/components/FormLayout/FormLayout.scss';
+@import 'polaris/polaris-react/src/components/FormLayout/FormLayout.scss';
 </style>

@@ -8,5 +8,5 @@ import styles from '@/classes/ExceptionList.json';
 </script>
 
 <style lang="scss">
-@import 'polaris-react/src/components/ExceptionList/ExceptionList.scss';
+@import 'polaris/polaris-react/src/components/ExceptionList/ExceptionList.scss';
 </style>

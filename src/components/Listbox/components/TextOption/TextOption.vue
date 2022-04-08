@@ -5,7 +5,10 @@ div(:class="textOptionClassName")
       v-if="allowMultiple && !isAction",
       :class="styles.Checkbox",
     )
-      Checkbox(:checked="selected")
+      Checkbox(
+        :disabled="disabled",
+        :checked="selected",
+      )
         template(#label)
           slot
     slot(v-else)
@@ -13,7 +16,7 @@ div(:class="textOptionClassName")
 
 <script setup lang="ts">
 import { inject, computed } from 'vue';
-import { classNames } from 'polaris-react/src/utilities/css';
+import { classNames } from 'polaris/polaris-react/src/utilities/css';
 import type { ComboboxListboxOptionType } from '@/utilities/interface';
 import styles from '@/classes/Listbox-TextOption.json';
 import { Checkbox } from '../../../Checkbox';
@@ -43,5 +46,5 @@ const textOptionClassName = computed(() => classNames(
 </script>
 
 <style lang="scss">
-@import 'polaris-react/src/components/Listbox/components/TextOption/TextOption.scss';
+@import 'polaris/polaris-react/src/components/Listbox/components/TextOption/TextOption.scss';
 </style>

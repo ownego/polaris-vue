@@ -10,7 +10,7 @@ span(:class="className")
 
 <script setup lang="ts">
 import { computed } from 'vue';
-import { classNames, variationName } from 'polaris-react/src/utilities/css';
+import { classNames, variationName } from 'polaris/polaris-react/src/utilities/css';
 import type { IconSource } from '@/utilities/type';
 import styles from '@/classes/Thumbnail.json';
 import { Image } from '../Image';
@@ -45,5 +45,5 @@ const className = computed(() => {
 </script>
 
 <style lang="scss">
-@import 'polaris-react/src/components/Thumbnail/Thumbnail.scss';
+@import 'polaris/polaris-react/src/components/Thumbnail/Thumbnail.scss';
 </style>

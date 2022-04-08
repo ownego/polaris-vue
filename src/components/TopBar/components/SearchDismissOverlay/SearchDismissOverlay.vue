@@ -12,7 +12,7 @@ div(
 import { computed, ref } from 'vue';
 import { ScrollLock } from '@/components';
 import styles from '@/classes/TopBar-SearchDismissOverlay.json';
-import { classNames } from 'polaris-react/src/utilities/css';
+import { classNames } from 'polaris/polaris-react/src/utilities/css';
 
 interface Props {
   /** Determines whether the overlay should be visible */
@@ -38,5 +38,5 @@ const handleDismiss = (e: Event) => {
 </script>
 
 <style lang="scss">
-@import 'polaris-react/src/components/TopBar/components/SearchDismissOverlay/SearchDismissOverlay.scss';
+@import 'polaris/polaris-react/src/components/TopBar/components/SearchDismissOverlay/SearchDismissOverlay.scss';
 </style>

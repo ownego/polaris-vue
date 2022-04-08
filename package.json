@@ -64,7 +64,7 @@
     "eslint-plugin-vue": "^8.5.0",
     "hash-generator": "^0.1.0",
     "path": "^0.12.7",
-    "polaris-react": "https://github.com/Shopify/polaris-react.git",
+    "polaris": "https://github.com/juzser/polaris.git",
     "postcss": "^7",
     "postcss-modules": "^3",
     "prettier": "^2.5.1",

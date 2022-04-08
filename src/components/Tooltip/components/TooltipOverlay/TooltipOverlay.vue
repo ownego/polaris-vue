@@ -56,5 +56,5 @@ const changeContentStyles = (value: Record<string, unknown>) => {
 </script>
 
 <style lang="scss">
-@import 'polaris-react/src/components/Tooltip/components/TooltipOverlay/TooltipOverlay.scss';
+@import 'polaris/polaris-react/src/components/Tooltip/components/TooltipOverlay/TooltipOverlay.scss';
 </style>

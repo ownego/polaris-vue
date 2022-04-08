@@ -79,7 +79,7 @@ nav(
 
 <script setup lang="ts">
 import { computed, inject, ref, useAttrs, useSlots } from 'vue';
-import { isInputFocused } from 'polaris-react/src/utilities/is-input-focused';
+import { isInputFocused } from 'polaris/polaris-react/src/utilities/is-input-focused';
 import ChevronLeftMinor from '@icons/ChevronLeftMinor.svg';
 import ChevronRightMinor from '@icons/ChevronRightMinor.svg';
 import { Button, ButtonGroup, KeypressListener, TextStyle, Tooltip } from '@/components';

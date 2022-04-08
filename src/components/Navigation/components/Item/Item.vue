@@ -94,7 +94,7 @@ li(v-else, :class="className")
 
 <script setup lang="ts">
 import { computed, inject, onUpdated, ref } from 'vue';
-import { classNames } from 'polaris-react/src/utilities/css';
+import { classNames } from 'polaris/polaris-react/src/utilities/css';
 import ExternalMinor from '@icons/ExternalMinor.svg';
 import styles from '@/classes/Navigation.json';
 import { UseUniqueId } from '@/use';

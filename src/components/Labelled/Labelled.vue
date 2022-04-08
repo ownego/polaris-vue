@@ -40,7 +40,7 @@ div(:class="className")
 
 <script setup lang="ts">
 import { computed } from 'vue';
-import { classNames } from 'polaris-react/src/utilities/css';
+import { classNames } from 'polaris/polaris-react/src/utilities/css';
 import styles from '@/classes/Labelled.json';
 import type { Action, Error } from '@/utilities/type';
 import { ButtonFrom } from '@/components';
@@ -70,5 +70,5 @@ const className = computed(() => classNames(props.labelHidden && styles.hidden))
 </script>
 
 <style lang="scss">
-@import 'polaris-react/src/components/Labelled/Labelled.scss';
+@import 'polaris/polaris-react/src/components/Labelled/Labelled.scss';
 </style>

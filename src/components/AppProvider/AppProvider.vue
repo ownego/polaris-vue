@@ -8,10 +8,10 @@ CustomProperties(:color-scheme="colorScheme")
 <script setup lang="ts">
 import { provide, ref, onMounted, watch } from 'vue';
 import debounce from 'lodash/debounce';
-import { ScrollLockManager } from 'polaris-react/src/utilities/scroll-lock-manager/scroll-lock-manager';
-import { UniqueIdFactory, globalIdGeneratorFactory } from 'polaris-react/src/utilities/unique-id/unique-id-factory';
-import { navigationBarCollapsed } from 'polaris-react/src/utilities/breakpoints';
-import lang from 'polaris-react/locales/en.json';
+import { ScrollLockManager } from 'polaris/polaris-react/src/utilities/scroll-lock-manager/scroll-lock-manager';
+import { UniqueIdFactory, globalIdGeneratorFactory } from 'polaris/polaris-react/src/utilities/unique-id/unique-id-factory';
+import { navigationBarCollapsed } from 'polaris/polaris-react/src/utilities/breakpoints';
+import lang from 'polaris/polaris-react/locales/en.json';
 import { EventListener, CustomProperties } from '@/components';
 import { PortalManager } from '@/utilities/portal-manager';
 import { FocusManager } from '@/utilities/focus-manager';
@@ -77,5 +77,5 @@ provide('lang', lang);
 </script>
 
 <style lang="scss">
-@import 'polaris-react/src/components/AppProvider/AppProvider.scss';
+@import 'polaris/polaris-react/src/components/AppProvider/AppProvider.scss';
 </style>

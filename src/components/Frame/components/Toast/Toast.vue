@@ -27,7 +27,7 @@ CustomProperties(color-scheme="dark")
 
 <script setup lang="ts">
 import { computed, onBeforeUnmount, onMounted, ref } from 'vue';
-import { classNames } from 'polaris-react/src/utilities/css';
+import { classNames } from 'polaris/polaris-react/src/utilities/css';
 import styles from '@/classes/Frame-Toast.json';
 import { KeypressListener, Button as PButton, CustomProperties, Icon } from '@/components';
 import type { Action } from '@/utilities/type';
@@ -91,5 +91,5 @@ const onDismiss = () => {
 </script>
 
 <style lang="scss">
-@import 'polaris-react/src/components/Frame/components/Toast/Toast.scss';
+@import 'polaris/polaris-react/src/components/Frame/components/Toast/Toast.scss';
 </style>

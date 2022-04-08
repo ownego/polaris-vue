@@ -50,7 +50,7 @@ div(:class="styles.MonthContainer")
 </template>
 <script setup lang="ts">
 import { computed } from 'vue';
-import { classNames } from 'polaris-react/src/utilities/css';
+import { classNames } from 'polaris/polaris-react/src/utilities/css';
 import {
   isDateBefore,
   isDateAfter,
@@ -60,8 +60,8 @@ import {
   dateIsSelected,
   getNewRange,
   getOrderedWeekdays,
-} from 'polaris-react/src/utilities/dates';
-import type { Range } from 'polaris-react/src/utilities/dates';
+} from 'polaris/polaris-react/src/utilities/dates';
+import type { Range } from 'polaris/polaris-react/src/utilities/dates';
 import styles from '@/classes/DatePicker.json';
 import { Day } from '../Day';
 import { Weekday } from '../Weekday';

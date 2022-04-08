@@ -8,7 +8,7 @@ component(
 </template>
 <script setup lang="ts">
 import { onMounted } from 'vue';
-import { styles } from 'polaris-react/src/components/CustomProperties/styles';
+import { styles } from 'polaris/polaris-react/src/components/CustomProperties/styles';
 import { DEFAULT_COLOR_SCHEME, STYLE_SHEET_ID } from './utils';
 import type { CustomPropertiesProps } from './utils';
 

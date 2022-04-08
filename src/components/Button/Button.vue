@@ -52,7 +52,7 @@ export default {
 import {
   computed, ref, useAttrs, useSlots,
 } from 'vue';
-import { classNames, variationName } from 'polaris-react/src/utilities/css';
+import { classNames, variationName } from 'polaris/polaris-react/src/utilities/css';
 import CaretDownMinor from '@icons/CaretDownMinor.svg';
 import { handleMouseUpByBlurring } from '@/utilities/focus';
 import { capitalize } from 'lodash';
@@ -274,5 +274,5 @@ const toggleDisclosureActive = () => {
 </script>
 
 <style lang="scss">
-@import 'polaris-react/src/components/Button/Button.scss';
+@import 'polaris/polaris-react/src/components/Button/Button.scss';
 </style>

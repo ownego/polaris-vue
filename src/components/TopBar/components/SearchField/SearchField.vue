@@ -36,7 +36,7 @@ div(
 
 <script setup lang="ts">
 import { computed, inject, onMounted, ref } from 'vue';
-import { classNames } from 'polaris-react/src/utilities/css';
+import { classNames } from 'polaris/polaris-react/src/utilities/css';
 import SearchMinor from '@icons/SearchMinor.svg';
 import CircleCancelMinor from '@icons/CircleCancelMinor.svg';
 import { VisuallyHidden, Icon } from '@/components';
@@ -135,5 +135,5 @@ onMounted(() => {
 </script>
 
 <style lang="scss">
-@import 'polaris-react/src/components/TopBar/components/SearchField/SearchField.scss';
+@import 'polaris/polaris-react/src/components/TopBar/components/SearchField/SearchField.scss';
 </style>

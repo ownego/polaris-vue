@@ -133,5 +133,5 @@ const conditionSlot4 = computed(() => {
 </script>
 
 <style lang="scss">
-@import 'polaris-react/src/components/Page/components/Header/Header.scss';
+@import 'polaris/polaris-react/src/components/Page/components/Header/Header.scss';
 </style>

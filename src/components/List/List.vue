@@ -8,7 +8,7 @@ component(
 
 <script setup lang="ts">
 import { computed } from 'vue';
-import { classNames, variationName } from 'polaris-react/src/utilities/css';
+import { classNames, variationName } from 'polaris/polaris-react/src/utilities/css';
 import styles from '@/classes/List.json';
 
 /**
@@ -44,5 +44,5 @@ const element = props.type === 'bullet' ? 'ul' : 'ol';
 </script>
 
 <style lang="scss">
-@import 'polaris-react/src/components/List/List.scss';
+@import 'polaris/polaris-react/src/components/List/List.scss';
 </style>

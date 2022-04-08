@@ -17,8 +17,8 @@ export default {
 
 <script setup lang="ts">
 import { ref, computed, onBeforeMount, onUpdated, onMounted, onBeforeUnmount } from 'vue';
-import { classNames } from 'polaris-react/src/utilities/css';
-import { dataPolarisTopBar, overlay, layer } from 'polaris-react/src/components/shared';
+import { classNames } from 'polaris/polaris-react/src/utilities/css';
+import { dataPolarisTopBar, overlay, layer } from 'polaris/polaris-react/src/components/shared';
 import { getRectForNode, Rect } from '@/utilities/geometry';
 import styles from '@/classes/PositionedOverlay.json';
 import popoverStyles from '@/classes/Popover.json';
@@ -231,5 +231,5 @@ onBeforeUnmount(() => {
 </script>
 
 <style lang="scss">
-@import 'polaris-react/src/components/PositionedOverlay/PositionedOverlay.scss';
+@import 'polaris/polaris-react/src/components/PositionedOverlay/PositionedOverlay.scss';
 </style>

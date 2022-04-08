@@ -23,8 +23,8 @@ td(
 </template>
 <script setup lang="ts">
 import { computed, onUpdated, ref } from 'vue';
-import { classNames } from 'polaris-react/src/utilities/css';
-import { isSameDay } from 'polaris-react/src/utilities/dates';
+import { classNames } from 'polaris/polaris-react/src/utilities/css';
+import { isSameDay } from 'polaris/polaris-react/src/utilities/dates';
 import styles from '@/classes/DatePicker.json';
 import { transformedDate, monthName } from '../../utils';
 

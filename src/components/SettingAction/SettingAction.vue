@@ -11,5 +11,5 @@ import styles from '@/classes/SettingAction.json';
 </script>
 
 <style lang="scss">
-@import 'polaris-react/src/components/SettingAction/SettingAction.scss';
+@import 'polaris/polaris-react/src/components/SettingAction/SettingAction.scss';
 </style>

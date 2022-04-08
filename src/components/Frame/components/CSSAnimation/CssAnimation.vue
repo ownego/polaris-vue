@@ -8,7 +8,7 @@ div(
 </template>
 <script setup lang="ts">
 import { computed, watch, ref } from 'vue';
-import { classNames, variationName } from 'polaris-react/src/utilities/css';
+import { classNames, variationName } from 'polaris/polaris-react/src/utilities/css';
 import styles from '@/classes/Frame-CssAnimation.json';
 
 type AnimationType = 'fade';
@@ -68,5 +68,5 @@ const changeTransitionStatus = (transitionStatusNew: string) => {
 }
 </script>
 <style lang="scss">
-@import 'polaris-react/src/components/Frame/components/CSSAnimation/CSSAnimation.scss';
+@import 'polaris/polaris-react/src/components/Frame/components/CSSAnimation/CSSAnimation.scss';
 </style>

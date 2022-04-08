@@ -58,8 +58,8 @@ div(:class="className")
 
 <script setup lang="ts">
 import { computed, provide, ref, useSlots } from 'vue';
-import { classNames } from 'polaris-react/src/utilities/css';
-import lang from 'polaris-react/locales/en.json';
+import { classNames } from 'polaris/polaris-react/src/utilities/css';
+import lang from 'polaris/polaris-react/locales/en.json';
 import styles from '@/classes/Card.json';
 import { ButtonGroup, ActionList, Button, Popover } from '@/components';
 import { ButtonFrom } from '@/components/Button';
@@ -116,5 +116,5 @@ provide('WithinContentContext', false);
 </script>
 
 <style lang="scss">
-@import 'polaris-react/src/components/Card/Card.scss';
+@import 'polaris/polaris-react/src/components/Card/Card.scss';
 </style>

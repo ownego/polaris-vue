@@ -23,6 +23,6 @@ withDefaults(defineProps<Props>(), {
 
 </script>
 <style lang="scss">
-@import 'polaris-react/src/components/SkeletonBodyText/SkeletonBodyText.scss';
+@import 'polaris/polaris-react/src/components/SkeletonBodyText/SkeletonBodyText.scss';
 </style>
 

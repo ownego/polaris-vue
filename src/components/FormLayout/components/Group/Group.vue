@@ -29,7 +29,7 @@ div(
 
 <script setup lang="ts">
 import { computed, useSlots } from 'vue';
-import { classNames } from 'polaris-react/src/utilities/css';
+import { classNames } from 'polaris/polaris-react/src/utilities/css';
 import { Item } from '../Item';
 import styles from '@/classes/FormLayout.json';
 import { UseUniqueId } from '@/use';

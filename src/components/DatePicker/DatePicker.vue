@@ -60,8 +60,8 @@ import {
   getNextDisplayMonth,
   getPreviousDisplayYear,
   getPreviousDisplayMonth,
-} from 'polaris-react/src/utilities/dates';
-import type { Range } from 'polaris-react/src/utilities/dates';
+} from 'polaris/polaris-react/src/utilities/dates';
+import type { Range } from 'polaris/polaris-react/src/utilities/dates';
 import ArrowLeftMinor from '@icons/ArrowLeftMinor.svg';
 import ArrowRightMinor from '@icons/ArrowRightMinor.svg';
 import styles from '@/classes/DatePicker.json';
@@ -290,5 +290,5 @@ function deriveRange(selected?: Range) {
 </script>
 
 <style lang="scss">
-@import 'polaris-react/src/components/DatePicker/DatePicker.scss';
+@import 'polaris/polaris-react/src/components/DatePicker/DatePicker.scss';
 </style>

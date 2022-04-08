@@ -102,5 +102,5 @@ provide('comboboxListboxContext', comboboxListboxContext);
 </script>
 
 <style lang="scss">
-@import 'polaris-react/src/components/Combobox/Combobox.scss';
+@import 'polaris/polaris-react/src/components/Combobox/Combobox.scss';
 </style>

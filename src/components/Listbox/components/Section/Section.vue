@@ -14,10 +14,10 @@ li(
 
 <script setup lang="ts">
 import { provide, computed } from 'vue';
-import { classNames } from 'polaris-react/src/utilities/css';
+import { classNames } from 'polaris/polaris-react/src/utilities/css';
 import {
   listboxSectionDataSelector,
-} from 'polaris-react/src/components/Listbox/components/Section/selectors';
+} from 'polaris/polaris-react/src/components/Listbox/components/Section/selectors';
 import styles from '@/classes/Listbox-Section.json';
 import { UseUniqueId } from '@/use';
 
@@ -39,5 +39,5 @@ const className = computed(() => classNames(
 </script>
 
 <style lang="scss">
-@import 'polaris-react/src/components/Listbox/components/Section/Section.scss';
+@import 'polaris/polaris-react/src/components/Listbox/components/Section/Section.scss';
 </style>

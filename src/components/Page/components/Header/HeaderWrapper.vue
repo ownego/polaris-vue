@@ -26,7 +26,7 @@ div(:class="headerClassNames")
 
 <script setup lang="ts">
 import { computed, useSlots } from 'vue';
-import { classNames } from 'polaris-react/src/utilities/css';
+import { classNames } from 'polaris/polaris-react/src/utilities/css';
 import styles from '@/classes/Page-Header.json';
 import type { IconSource } from '@/utilities/type';
 import type { PaginationProps } from '@/components/Pagination/utils';

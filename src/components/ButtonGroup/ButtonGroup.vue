@@ -21,7 +21,7 @@ export default {
 <script setup lang="ts">
 import { computed, useSlots } from 'vue';
 import type { VNodeArrayChildren } from 'vue';
-import { classNames } from 'polaris-react/src/utilities/css';
+import { classNames } from 'polaris/polaris-react/src/utilities/css';
 import { Item } from './components';
 import styles from '@/classes/ButtonGroup.json';
 import { hasSlot } from '@/utilities/has-slot';
@@ -75,5 +75,5 @@ const className = computed(() => {
 </script>
 
 <style lang="scss">
-@import 'polaris-react/src/components/ButtonGroup/ButtonGroup.scss';
+@import 'polaris/polaris-react/src/components/ButtonGroup/ButtonGroup.scss';
 </style>

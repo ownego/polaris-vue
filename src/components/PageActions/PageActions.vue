@@ -38,5 +38,5 @@ const distribution = computed(() => {
 </script>
 
 <style lang="scss">
-@import 'polaris-react/src/components/PageActions/PageActions.scss';
+@import 'polaris/polaris-react/src/components/PageActions/PageActions.scss';
 </style>

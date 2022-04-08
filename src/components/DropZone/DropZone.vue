@@ -67,9 +67,9 @@ import { computed, inject, onBeforeUnmount, onMounted, provide, reactive, ref, u
 import debounce from 'lodash/debounce';
 import UploadMajor from '@icons/UploadMajor.svg';
 import CircleAlertMajor from '@icons/CircleAlertMajor.svg';
-import { classNames, variationName } from 'polaris-react/src/utilities/css';
-import { capitalize } from 'polaris-react/src/utilities/capitalize';
-import { isServer } from 'polaris-react/src/utilities/target';
+import { classNames, variationName } from 'polaris/polaris-react/src/utilities/css';
+import { capitalize } from 'polaris/polaris-react/src/utilities/capitalize';
+import { isServer } from 'polaris/polaris-react/src/utilities/target';
 import {
   Stack,
   Caption,
@@ -420,6 +420,6 @@ provide('dropZoneContext', context);
 </script>
 
 <style lang="scss">
-@import 'polaris-react/src/components/DropZone/DropZone.scss';
+@import 'polaris/polaris-react/src/components/DropZone/DropZone.scss';
 </style>
 

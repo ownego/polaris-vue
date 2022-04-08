@@ -29,7 +29,7 @@ export default {
 
 <script setup lang="ts">
 import { computed } from 'vue';
-import { classNames } from 'polaris-react/src/utilities/css';
+import { classNames } from 'polaris/polaris-react/src/utilities/css';
 import styles from '@/classes/ActionList.json';
 import { Item } from '../Item';
 import type { ActionListItemDescriptor, ActionListSection } from '../../utils';

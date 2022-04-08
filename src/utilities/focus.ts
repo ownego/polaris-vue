@@ -1,4 +1,4 @@
-import { isElementInViewport } from 'polaris-react/src/utilities/is-element-in-viewport';
+import { isElementInViewport } from 'polaris/polaris-react/src/utilities/is-element-in-viewport';
 
 type Filter = (element: Element) => void;
 

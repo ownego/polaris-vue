@@ -16,9 +16,9 @@ div(:class="fileUploadClassName")
 
 <script setup lang="ts">
 import { computed, inject, toRefs } from 'vue';
-import { classNames } from 'polaris-react/src/utilities/css';
-import { capitalize } from 'polaris-react/src/utilities/capitalize';
-import uploadArrow from 'polaris-react/src/components/DropZone/images/upload-arrow.svg';
+import { classNames } from 'polaris/polaris-react/src/utilities/css';
+import { capitalize } from 'polaris/polaris-react/src/utilities/capitalize';
+import uploadArrow from 'polaris/polaris-react/src/components/DropZone/images/upload-arrow.svg';
 import { Stack, Caption, TextStyle } from '@/components';
 import styles from '@/classes/DropZone-FileUpload.json';
 import { createAllowMultipleKey } from '../../utils';
@@ -56,5 +56,5 @@ const fileUploadClassName = computed(() => {
 });
 </script>
 <style lang="scss">
-@import 'polaris-react/src/components/DropZone/components/FileUpload/FileUpload.scss';
+@import 'polaris/polaris-react/src/components/DropZone/components/FileUpload/FileUpload.scss';
 </style>

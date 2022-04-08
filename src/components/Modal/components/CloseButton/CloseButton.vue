@@ -16,5 +16,5 @@ const emit = defineEmits<{ (event: 'click'): void }>();
 </script>
 
 <style lang="scss">
-@import 'polaris-react/src/components/Modal/components/CloseButton/CloseButton.scss';
+@import 'polaris/polaris-react/src/components/Modal/components/CloseButton/CloseButton.scss';
 </style>

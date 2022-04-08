@@ -56,8 +56,8 @@ DiscardConfirmationModal(
 
 <script setup lang="ts">
 import { computed, ref, useSlots, inject } from 'vue';
-import { classNames } from 'polaris-react/src/utilities/css';
-import { getWidth } from 'polaris-react/src/utilities/get-width';
+import { classNames } from 'polaris/polaris-react/src/utilities/css';
+import { getWidth } from 'polaris/polaris-react/src/utilities/get-width';
 import { CustomProperties, Stack, Image, Button } from '@/components';
 import styles from '@/classes/Frame-ContextualSaveBar.json';
 import type { ContextualSaveBarAction, ContextualSaveBarCombinedActionProps } from '@/utilities/frame/types';
@@ -128,5 +128,5 @@ const handleDiscardAction = () => {
 </script>
 
 <style lang="scss">
-@import 'polaris-react/src/components/Frame/components/ContextualSaveBar/ContextualSaveBar.scss';
+@import 'polaris/polaris-react/src/components/Frame/components/ContextualSaveBar/ContextualSaveBar.scss';
 </style>

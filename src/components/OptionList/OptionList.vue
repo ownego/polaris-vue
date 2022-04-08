@@ -40,7 +40,7 @@ ul(:class="styles.OptionList", :role="role")
 
 <script setup lang="ts">
 import { ref, computed, watch, useSlots } from 'vue';
-import { arraysAreEqual } from 'polaris-react/src/utilities/arrays';
+import { arraysAreEqual } from 'polaris/polaris-react/src/utilities/arrays';
 import { UseUniqueId } from '@/use';
 import type { OptionDescriptor, SectionDescriptor } from '@/utilities/interface';
 import styles from '@/classes/OptionList.json';
@@ -152,6 +152,6 @@ function testSectionsPropEquality(
 }
 </script>
 <style lang="scss">
-@import 'polaris-react/src/components/OptionList/OptionList.scss';
+@import 'polaris/polaris-react/src/components/OptionList/OptionList.scss';
 </style>
 

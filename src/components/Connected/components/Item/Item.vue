@@ -9,7 +9,7 @@ div(
 
 <script setup lang="ts">
 import { ref, computed } from 'vue';
-import { classNames } from 'polaris-react/src/utilities/css';
+import { classNames } from 'polaris/polaris-react/src/utilities/css';
 import styles from '@/classes/Connected.json';
 
 type ItemPosition = 'left' | 'right' | 'primary';

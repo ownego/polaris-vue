@@ -30,7 +30,7 @@ button(
 
 <script setup lang="ts">
 import { computed } from 'vue';
-import { classNames } from 'polaris-react/src/utilities/css';
+import { classNames } from 'polaris/polaris-react/src/utilities/css';
 import styles from '@/classes/Link.json';
 import ExternalSmallMinor from '@icons/ExternalSmallMinor.svg';
 import { UnstyledLink } from '../UnstyledLink';
@@ -61,5 +61,5 @@ const className = computed(() => classNames(
 </script>
 
 <style lang="scss">
-@import 'polaris-react/src/components/Link/Link.scss';
+@import 'polaris/polaris-react/src/components/Link/Link.scss';
 </style>

@@ -14,7 +14,7 @@ Option(
 
 <script setup lang="ts">
 import { provide, computed } from 'vue';
-import { classNames } from 'polaris-react/src/utilities/css';
+import { classNames } from 'polaris/polaris-react/src/utilities/css';
 import styles from '@/classes/Listbox-Action.json';
 import type { IconSource } from '@/utilities/type';
 import { Option } from '../Option';
@@ -47,5 +47,5 @@ const className = computed(() => classNames(
 </script>
 
 <style lang="scss">
-@import 'polaris-react/src/components/Listbox/components/Action/Action.scss';
+@import 'polaris/polaris-react/src/components/Listbox/components/Action/Action.scss';
 </style>

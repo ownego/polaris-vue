@@ -36,7 +36,7 @@ export default {
 
 <script setup lang="ts">
 import { computed, useAttrs } from 'vue';
-import { classNames } from 'polaris-react/src/utilities/css';
+import { classNames } from 'polaris/polaris-react/src/utilities/css';
 import SelectMinor from '@icons/SelectMinor.svg';
 import CaretUpMinor from '@icons/CaretUpMinor.svg';
 import CaretDownMinor from '@icons/CaretDownMinor.svg';

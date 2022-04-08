@@ -40,7 +40,7 @@ fieldset(
 
 <script setup lang="ts">
 import { computed, useSlots } from 'vue';
-import { classNames } from 'polaris-react/src/utilities/css';
+import { classNames } from 'polaris/polaris-react/src/utilities/css';
 import { UseUniqueId } from '@/use';
 import styles from '@/classes/ChoiceList.json';
 import type { Error } from '@/utilities/type';
@@ -121,5 +121,5 @@ const handleChange = (event: Event): void => {
 </script>
 
 <style lang="scss">
-@import 'polaris-react/src/components/ChoiceList/ChoiceList.scss';
+@import 'polaris/polaris-react/src/components/ChoiceList/ChoiceList.scss';
 </style>

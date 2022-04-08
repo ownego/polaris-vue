@@ -40,10 +40,10 @@ li(
 
 <script setup lang="ts">
 import { inject, ref, computed, useSlots } from 'vue';
-import { classNames } from 'polaris-react/src/utilities/css';
+import { classNames } from 'polaris/polaris-react/src/utilities/css';
 import {
   listboxWithinSectionDataSelector,
-} from 'polaris-react/src/components/Listbox/components/Section/selectors';
+} from 'polaris/polaris-react/src/components/Listbox/components/Section/selectors';
 import type { ListboxContextType, NavigableOption } from '@/utilities/interface';
 import type { MappedActionContextType } from '@/utilities/autocomplete';
 import { UseUniqueId } from '@/use';
@@ -137,5 +137,5 @@ const handleMouseDown = (event: MouseEvent): void => {
 </script>
 
 <style lang="scss">
-@import 'polaris-react/src/components/Listbox/components/Option/Option.scss';
+@import 'polaris/polaris-react/src/components/Listbox/components/Option/Option.scss';
 </style>

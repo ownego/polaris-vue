@@ -5,7 +5,7 @@ component(:is="element", :class="className")
 
 <script setup lang="ts">
 import { ref, computed } from 'vue';
-import { classNames, variationName } from 'polaris-react/src/utilities/css';
+import { classNames, variationName } from 'polaris/polaris-react/src/utilities/css';
 import styles from '@/classes/TextStyle.json';
 
 type Variation = 'positive' | 'negative' | 'warning' | 'strong' | 'subdued' | 'code';
@@ -44,5 +44,5 @@ const className = computed(() => {
 </script>
 
 <style lang="scss">
-@import 'polaris-react/src/components/TextStyle/TextStyle.scss';
+@import 'polaris/polaris-react/src/components/TextStyle/TextStyle.scss';
 </style>

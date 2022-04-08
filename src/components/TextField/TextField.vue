@@ -110,7 +110,7 @@ Labelled(
 
 <script setup lang="ts">
 import { useSlots, ref, computed, watch } from 'vue';
-import { classNames, variationName } from 'polaris-react/src/utilities/css';
+import { classNames, variationName } from 'polaris/polaris-react/src/utilities/css';
 import { UseUniqueId } from '@/use';
 import styles from '@/classes/TextField.json';
 import CircleCancelMinor from '@icons/CircleCancelMinor.svg';
@@ -492,5 +492,5 @@ const handleKeyPress = (event: KeyboardEvent): void => {
 </script>
 
 <style lang="scss">
-@import 'polaris-react/src/components/TextField/TextField.scss';
+@import 'polaris/polaris-react/src/components/TextField/TextField.scss';
 </style>

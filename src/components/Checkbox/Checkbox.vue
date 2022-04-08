@@ -41,7 +41,7 @@ Choice(
 
 <script setup lang="ts">
 import { inject, ref, computed, useSlots } from 'vue';
-import { classNames } from 'polaris-react/src/utilities/css';
+import { classNames } from 'polaris/polaris-react/src/utilities/css';
 import { UseUniqueId } from '@/use';
 import MinusMinor from '@icons/MinusMinor.svg';
 import TickSmallMinor from '@icons/TickSmallMinor.svg';
@@ -170,5 +170,5 @@ function stopPropagation(event: MouseEvent | KeyboardEvent) {
 </script>
 
 <style lang="scss">
-@import 'polaris-react/src/components/Checkbox/Checkbox.scss';
+@import 'polaris/polaris-react/src/components/Checkbox/Checkbox.scss';
 </style>

@@ -12,7 +12,7 @@ span(:class="className")
 
 <script setup lang="ts">
 import { inject, ref, computed, onMounted } from 'vue';
-import { classNames, variationName } from 'polaris-react/src/utilities/css';
+import { classNames, variationName } from 'polaris/polaris-react/src/utilities/css';
 import styles from '@/classes/Badge.json';
 import { VisuallyHidden } from '../VisuallyHidden';
 
@@ -102,5 +102,5 @@ onMounted(() => {
 </script>
 
 <style lang="scss">
-@import 'polaris-react/src/components/Badge/Badge.scss';
+@import 'polaris/polaris-react/src/components/Badge/Badge.scss';
 </style>

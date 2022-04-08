@@ -10,7 +10,7 @@ div(:class="className")
 
 <script setup lang="ts">
 import { computed } from 'vue';
-import { classNames } from 'polaris-react/src/utilities/css';
+import { classNames } from 'polaris/polaris-react/src/utilities/css';
 import styles from '@/classes/Label.json';
 import { labelID } from './utils';
 
@@ -37,5 +37,5 @@ const labelClassName = computed(() => classNames(
 </script>
 
 <style lang="scss">
-@import 'polaris-react/src/components/Label/Label.scss';
+@import 'polaris/polaris-react/src/components/Label/Label.scss';
 </style>

@@ -38,13 +38,13 @@ import {
   provide, inject, ref, computed, watch, onMounted,
 } from 'vue';
 import debounce from 'lodash/debounce';
-import { classNames } from 'polaris-react/src/utilities/css';
-import { scrollIntoView } from 'polaris-react/src/utilities/scroll-into-view';
-import { scrollable } from 'polaris-react/src/components/shared';
-import { closestParentMatch } from 'polaris-react/src/utilities/closest-parent-match';
+import { classNames } from 'polaris/polaris-react/src/utilities/css';
+import { scrollIntoView } from 'polaris/polaris-react/src/utilities/scroll-into-view';
+import { scrollable } from 'polaris/polaris-react/src/components/shared';
+import { closestParentMatch } from 'polaris/polaris-react/src/utilities/closest-parent-match';
 import {
   listboxSectionDataSelector,
-} from 'polaris-react/src/components/Listbox/components/Section/selectors';
+} from 'polaris/polaris-react/src/components/Listbox/components/Section/selectors';
 import { UseUniqueId } from '@/use';
 import styles from '@/classes/Listbox.json';
 import type { ComboboxListboxType, NavigableOption } from '@/utilities/interface';
@@ -294,5 +294,5 @@ onMounted(() => {
 </script>
 
 <style lang="scss">
-@import 'polaris-react/src/components/Listbox/Listbox.scss';
+@import 'polaris/polaris-react/src/components/Listbox/Listbox.scss';
 </style>

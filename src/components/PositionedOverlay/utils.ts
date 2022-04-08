@@ -1,4 +1,4 @@
-import { layer } from 'polaris-react/src/components/shared';
+import { layer } from 'polaris/polaris-react/src/components/shared';
 import type { PreferredPosition, PreferredAlignment } from './math';
 
 export interface PositionedOverlayProps {
