@@ -17,6 +17,9 @@ const props = defineProps({
   keyCode: { type: String as () => Key, required: true },
   keyEvent: { type: String as () => KeyEvent, default: 'keyup' },
   handler: { type: Function, required: true },
+  useCapture: { type: Boolean },
+  // eslint-disable-next-line no-undef
+  options: { type: Object as () => AddEventListenerOptions },
 });
 
 function handleKeyEvent(event: KeyboardEvent) {
@@ -25,7 +28,7 @@ function handleKeyEvent(event: KeyboardEvent) {
   }
 }
 
-onMounted(() => document.addEventListener(props.keyEvent, handleKeyEvent));
+onMounted(() => document.addEventListener(props.keyEvent, handleKeyEvent, props.useCapture || props.options));
 
-onBeforeUnmount(() => document.removeEventListener(props.keyEvent, handleKeyEvent));
+onBeforeUnmount(() => document.removeEventListener(props.keyEvent, handleKeyEvent, props.useCapture || props.options));
 </script>
