@@ -12,8 +12,10 @@ div(:class="className")
       v-if="action",
       :class="styles.Action"
     )
-      //- TODO
-      //- buttonFrom(action, {plain: true})
+      ButtonFrom(
+        :action="action",
+        :overrides="{ plain: true }",
+      )
   slot
   div(
     v-if="isError",
@@ -41,7 +43,8 @@ import { computed } from 'vue';
 import { classNames } from 'polaris-react/src/utilities/css';
 import styles from '@/classes/Labelled.json';
 import type { Action, Error } from '@/utilities/type';
-import type { LabelProps } from "../Label/utils";
+import { ButtonFrom } from '@/components';
+import type { LabelProps } from '../Label/utils';
 import { Label } from '../Label';
 import { InlineError } from '../InlineError';
 import { helpTextID, errorID } from './utils';

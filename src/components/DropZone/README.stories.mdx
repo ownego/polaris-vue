@@ -1,0 +1,177 @@
+import { ref } from 'vue';
+import dedent from 'ts-dedent';
+import {Meta, Story, Canvas, ArgsTable} from '@storybook/addon-docs'
+import { DropZone, DropZoneFileUpload, Stack, Thumbnail, Caption } from '@/polaris-vue';
+import NoteMinor from '@icons/NoteMinor.svg';
+
+<Meta
+  title="Components / Actions / Drop zone"
+  component={DropZone}
+  argTypes={{
+    default: {
+      description: 'The child elements to render in the dropzone',
+      table: { type: { summary: null }},
+      control: { disable: true },
+    },
+    label: {
+      description: 'Slot for label for the file input. This will override the label props.',
+      table: { type: { summary: null }},
+      control: { disable: true },
+    },
+    allowMultiple: {
+      table: { defaultValue: { summary: 'true' }},
+    },
+    dropOnPage: {
+      table: { defaultValue: { summary: 'false' }},
+    },
+    labelAction: {
+      table: { type: { summary: 'Action' }},
+    },
+    type: {
+      table: { type: { summary: 'file | image' }},
+    },
+    click: {
+      description: 'Callback triggered on click',
+      table: {
+        category: 'events',
+        type: { summary: '(event) => void' },
+      },
+    },
+    drop: {
+      description: 'Callback triggered on any file drop',
+      control: { disable: true },
+      table: {
+        type: { summary: '(files, acceptedFiles, rejectedFiles) => void' },
+      },
+    },
+    dragover: {
+      description: 'Callback triggered when one or more files are dragging over the drag area',
+      control: { disable: true },
+    },
+    dragenter: {
+      description: 'Callback triggered when one or more files entered the drag area',
+      control: { disable: true },
+    },
+    dragleave: {
+      description: 'Callback triggered when one or more files left the drag area',
+      control: { disable: true },
+    },
+    'drop-accepted': {
+      description: 'Callback triggered when at least one of the files dropped was accepted',
+      control: { disable: true },
+      table: {
+        type: { summary: '(acceptedFiles) => void' },
+      },
+    },
+    'drop-rejected': {
+      description: 'Callback triggered when at least one of the files dropped was rejected',
+      control: { disable: true },
+      table: {
+        type: { summary: '(rejectedFiles) => void' },
+      },
+    },
+    'file-dialog-close': {
+      description: 'Callback triggered when the file dialog is canceled',
+      control: { disable: true },
+    },
+  }}
+/>
+
+export const Template = (args) => ({
+  components: { DropZone, DropZoneFileUpload, Stack, Thumbnail, Caption },
+  setup() {
+    const files = ref([]);
+    const handleDrop = (_dropFiles, acceptedFiles, _rejectedFiles) => {
+      files.value = [...files.value, ...acceptedFiles];
+    }
+    const validImageTypes = ['image/gif', 'image/jpeg', 'image/png'];
+    const thumbnailSource = (file) => {
+      return validImageTypes.includes(file.type)
+        ? window.URL.createObjectURL(file)
+        : NoteMinor;
+    };
+    return { files, handleDrop, validImageTypes, thumbnailSource };
+  },
+  template: `
+    <DropZone @drop="handleDrop">
+      <DropZoneFileUpload v-if="!files.length" actionHint="Accepts .gif, .jpg, and .png" />
+      <Stack v-else>
+        <Stack v-for="file, index in files" :key="index">
+          <Thumbnail size="small" :alt="file.name" :source="thumbnailSource(file)" />
+          <div>{{ file.name }} <Caption>{{ file.size }} bytes</Caption></div>
+        </Stack>
+      </Stack>
+    </DropZone>
+  `,
+});
+
+# Drop Zone
+<br/>
+
+The drop zone component lets users upload files by dragging and dropping the files into an area on a page, or activating a button.
+
+<Canvas>
+  <Story
+    name="Drop zone"
+    height="160px"
+    parameters={{
+      docs: {
+        source: {
+          code: dedent`
+            <DropZone @drop="handleDrop">
+              <DropZoneFileUpload v-if="!files.length" actionHint="Accepts .gif, .jpg, and .png" />
+              <Stack v-else>
+                <Stack v-for="file, index in files" :key="index">
+                  <Thumbnail size="small" :alt="file.name" :source="thumbnailSource(file)" />
+                  <div>{{ file.name }} <Caption>{{ file.size }} bytes</Caption></div>
+                </Stack>
+              </Stack>
+            </DropZone>\n
+            <script setup>
+              const files = ref([]);
+              const validImageTypes = ['image/gif', 'image/jpeg', 'image/png'];
+              const thumbnailSource = (file) => {
+                return validImageTypes.includes(file.type)
+                  ? window.URL.createObjectURL(file)
+                  : NoteMinor;
+              };
+              const handleDrop = (_dropFiles, acceptedFiles, _rejectedFiles) => {
+                files.value = [...files.value, ...acceptedFiles];
+              }
+            </script>
+          `,
+        },
+      },
+    }}
+  >
+    {Template.bind({})}
+  </Story>
+</Canvas>
+
+<ArgsTable story="Drop zone"/>
+
+---
+
+<br/>
+
+### **File Upload component**
+
+| Prop             | Type                          |
+| ---------------- | ----------------------------- |
+| actionTitle      | String     |
+| actionHint       | String     |
+
+<br/>
+
+### **Action Props**
+
+| Prop             | Type                          |
+| ---------------- | ----------------------------- |
+| id?              | String       |
+| content?         | String       |
+| accessibilityLabel?  | Boolean  |
+| url?             | String       |
+| external?        | String       |
+| onAction?()      | void         |
+| onMouseEnter?()  | void         |
+| onTouchStart?()  | void         |

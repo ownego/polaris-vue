@@ -21,6 +21,7 @@ export * from './CustomProperties';
 export * from './DatePicker';
 export * from './DescriptionList';
 export * from './DisplayText';
+export * from './DropZone';
 export * from './EventListener';
 export * from './ExceptionList';
 export * from './Focus';
