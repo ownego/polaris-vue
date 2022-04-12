@@ -1,0 +1,167 @@
+import { Meta, Story, Canvas, ArgsTable } from '@storybook/addon-docs';
+
+import { FormLayout, FormGroup, TextField } from '@/polaris-vue';
+
+<Meta
+  title="Components / Forms / Form Layout"
+  component={ FormLayout }
+  argTypes={{
+    default: {
+      table: {
+        disable: true,
+      },
+    },
+    field: {
+      name: 'field-{field-id}',
+      description: 'Slot for each form field, defined by `field-id`. Must have prefix `field-`',
+      table: {
+        category: 'Slots',
+        type: {
+          summary: null,
+        },
+      },
+    },
+    group: {
+      name: 'group-{group-id}',
+      description: 'Slot for each field group, defined by `group-id`. Must have prefix `group-`',
+      table: {
+        category: 'Slots',
+        type: {
+          summary: null,
+        },
+      },
+    },
+  }}
+/>
+
+# Form Layout
+
+Use form layout to arrange fields within a form using standard spacing.
+By default it stacks fields vertically but also supports horizontal groups of fields.
+
+export const Template = (args, { argTypes }) => ({
+  props: Object.keys(argTypes),
+  components: { FormLayout, TextField },
+  data() {
+    return {
+      textField: '',
+      emailField: '',
+    };
+  },
+  template: `
+  <FormLayout>
+    <TextField v-model="textField" autoComplete="off">
+      <template #label>Store name</template>
+    </TextField>
+    <TextField v-model="emailField" type="email" autoComplete="email">
+      <template #label>Account email</template>
+    </TextField>
+  </FormLayout>`,
+});
+
+<Canvas>
+  <Story
+    name="Default Form Layout"
+    height="160px"
+    parameters={{
+      docs: {
+        transformSource: (source) => {
+          const tmpSource = source
+            .replace(/value=""/, 'v-model="storeName"')
+            .replace(/value=""/, 'v-model="accountEmail"');
+          return tmpSource;
+        },
+      },
+    }}
+  >
+    {Template.bind({})}
+  </Story>
+</Canvas>
+
+### Field group
+
+export const FormLayoutGroup = (args, { argTypes }) => ({
+  props: Object.keys(argTypes),
+  components: { FormLayout, FormGroup, TextField },
+  data() {
+    return {
+      min: '',
+      max: '',
+    };
+  },
+  template: `<FormLayout>
+    <FormGroup>
+      <TextField v-model="min" type="number">
+        <template #label>Minimum order</template>
+      </TextField>
+      <TextField v-model="max" type="number">
+        <template #label>Maximum order</template>
+      </TextField>
+    </FormGroup>
+  </FormLayout>`,
+});
+
+<Canvas>
+  <Story
+    name="Field Group"
+    height="80px"
+    parameters={{
+      docs: {
+        transformSource: (source) => {
+          const tmpSource = source
+            .replace(/\svalue=""/g, '');
+          return tmpSource;
+        },
+      },
+    }}
+  >
+    {FormLayoutGroup.bind({})}
+  </Story>
+</Canvas>
+
+### Condensed field group
+
+export const FormGroupCondensed = (args, { argTypes }) => ({
+  props: Object.keys(argTypes),
+  components: { FormLayout, FormGroup, TextField },
+  data() {
+    return {
+      textField: '',
+      emailField: '',
+    };
+  },
+  template: `<FormLayout>
+    <FormGroup condensed>
+      <TextField>
+        <template #label>Length</template>
+      </TextField>
+      <TextField>
+        <template #label>Width</template>
+      </TextField>
+      <TextField>
+        <template #label>Height</template>
+      </TextField>
+      <TextField>
+        <template #label>Unit</template>
+      </TextField>
+    </FormGroup>
+  </FormLayout>`,
+});
+
+<Canvas>
+  <Story
+    name="Condensed field group"
+    height="80px"
+    parameters={{
+      docs: {
+        transformSource: (source) => {
+          const tmpSource = source
+            .replace(/condensed=""/, 'condensed');
+          return tmpSource;
+        },
+      },
+    }}
+  >
+    {FormGroupCondensed.bind({})}
+  </Story>
+</Canvas>
