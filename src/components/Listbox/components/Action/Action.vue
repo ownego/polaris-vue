@@ -1,10 +1,5 @@
 <template lang="pug">
-Option(
-  :value="value",
-  :selected="selected",
-  :disabled="disabled",
-  :divider="divider",
-)
+Option(v-bind="props")
   div(:class="className")
     TextOption(:selected="selected", :disabled="disabled")
       div(v-if="icon", :class="styles.Icon")
