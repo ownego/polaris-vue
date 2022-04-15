@@ -12,7 +12,7 @@ Card
     )
       CardSection
         div(
-          v-if="(popoverActions.length > 0)",
+          v-if="popoverActions.length > 0",
           :class="styles.Popover",
         )
           Popover(
@@ -39,11 +39,11 @@ Card
           spacing="tight",
         )
           div(
-            :class="styles.Heading"
+           :class="styles.Heading",
           )
             Heading {{ title }}
           p(
-            :class="styles.Description"
+            :class="styles.Description",
           ) {{ description }}
           div(
             v-if="primaryAction || secondaryAction",
@@ -67,11 +67,11 @@ Card
 </template>
 
 <script setup lang="ts">
-import { ref, inject } from 'vue';
+import { computed, inject, ref } from 'vue';
 import styles from '@/classes/MediaCard.json';
 import HorizontalDotsMinor from '@shopify/polaris-icons/dist/svg/HorizontalDotsMinor.svg';
 import type { ComplexAction } from '@/utilities/interface';
-import type { ActionListItemDescriptor } from './utils';
+import type { ActionListItemDescriptor } from '@/components/ActionList/utils';
 import { classNames } from 'polaris/polaris-react/src/utilities/css';
 import { Card, CardSection, Popover, Button, ButtonFrom, ActionList, Stack, ButtonGroup, Heading } from "@/components";
 
@@ -110,27 +110,26 @@ const props = withDefaults(defineProps<Props>(), {
 });
 const lang = inject('lang') as Record<string, any>;
 
-const actionClassName = classNames(
+const actionClassName = computed(() => classNames(
   styles.ActionContainer,
   props.portrait && styles.portrait,
-)
+));
 
-const mediaCardClassName = classNames(
+const mediaCardClassName = computed(() => classNames(
   styles.MediaCard,
   props.portrait && styles.portrait,
-);
+));
 
-const mediaContainerClassName = classNames(
+const mediaContainerClassName = computed(() => classNames(
   styles.MediaContainer,
   props.portrait && styles.portrait,
   props.size === 'small' && styles.sizeSmall,
-);
-
-const infoContainerClassName = classNames(
+));
+const infoContainerClassName = computed(() => classNames(
   styles.InfoContainer,
   props.portrait && styles.portrait,
   props.size === 'small' && styles.sizeSmall,
-);
+));
 
 </script>
 
