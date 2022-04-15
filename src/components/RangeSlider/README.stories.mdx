@@ -1,0 +1,313 @@
+import { Meta, Story, Canvas, ArgsTable } from "@storybook/addon-docs";
+import { ref } from 'vue';
+import { Card, RangeSlider, Stack, TextField } from "@/polaris-vue";
+import dedent from "ts-dedent";
+
+<Meta
+  title="Components / Forms / Range Slider"
+  component={RangeSlider}
+  argTypes={{
+    default: {
+      table: {
+        disable: true,
+      },
+    },
+    label: {
+      description: 'Label for the range input',
+      control: { disable: true },
+      table: { type: { summary: null } },
+    },
+    'help-text': {
+      description: 'Additional text to aid in use',
+      control: { disable: true },
+      table: { type: { summary: null } },
+    },
+    prefix: {
+      description: 'Element to display before the input',
+      control: { disable: true },
+      table: { type: { summary: null } },
+    },
+    suffix: {
+      description: 'Element to display after the input',
+      control: { disable: true },
+      table: { type: { summary: null } },
+    },
+    modelValue: {
+      table: { type: {
+        summary: 'number | [number, number]',
+      }}
+    },
+    error: {
+      table: { type: { summary: 'string'} },
+    },
+    labelAction: {
+      table: { type: { summary: 'LabelledProps[\'action\']' }}
+    },
+    blur: {
+      description: 'Callback when focus is removed',
+      table: { type: { summary: '() => void' } },
+      control: { disable: true },
+    },
+    focus: {
+      description: 'Callback when range input is focused',
+      table: { type: { summary: '() => void' } },
+      control: { disable: true },
+    },
+    change: {
+      description: 'Callback when the range input is changed',
+      table: { type: { summary: '(value, id) => void' } },
+      control: { disable: true },
+    },
+    'update:modelValue': {
+      table: { disable: true },
+      control: { disable: true },
+    },
+  }}
+/>
+
+# Range slider
+
+A range slider is an input field that merchants can use to select a numeric value within a given range (minimum and maximum values).
+
+<font color="#FF7900"><strong>Note:</strong></font> The <code>output</code> tooltip position is displayed incorrectly on demo because of the scss from Shopify.
+
+<br/>
+
+export const SlotTemplate = (args) => ({
+  components: { RangeSlider, Card },
+  setup() {
+    const rangeValue = ref(30);
+    return { args, rangeValue };
+  },
+  template: `
+    <Card sectioned>
+      <template #title>Text color</template>
+      <RangeSlider v-model="rangeValue" v-bind="args">
+        <template #prefix>Hue</template>
+        <template #suffix>{{ rangeValue }}</template>
+      </RangeSlider>
+    </Card>
+  `,
+});
+
+<Canvas>
+  <Story
+    name="Prefix and suffix elements"
+    height="150px"
+    args={{
+      min: 0,
+      max: 360,
+      label: "Hue color mix",
+      output: true,
+    }}
+    parameters={{
+      docs: {
+        source: {
+          state: 'close',
+          code: dedent`
+            <Card sectioned>
+              <template #title>Text color</template>
+              <RangeSlider v-model="rangeValue" :min="0" :max="360" label="Hue color mix" output>
+                <template #prefix>Hue</template>
+                <template #suffix>{{ rangeValue }}</template>
+              </RangeSlider>
+            </Card>\n
+            <script setup>
+              const rangeValue = ref(30);
+            </script>
+          `,
+        },
+      },
+    }}
+  >
+    {SlotTemplate.bind({})}
+  </Story>
+</Canvas>
+
+### **Step increamented range control**
+
+export const StepTemplate = (args) => ({
+  components: { RangeSlider, Card },
+  setup() {
+    const rangeValue = ref(0);
+    return { args, rangeValue };
+  },
+  template: `
+    <Card sectioned>
+      <template #title>Background color</template>
+      <RangeSlider v-model="rangeValue" v-bind="args" />
+      <br/><p>Value: {{ rangeValue }}</p>
+    </Card>
+  `,
+});
+
+<Canvas>
+  <Story
+    name="Range slider with steps"
+    height="150px"
+    args={{
+      min: -20,
+      max: 20,
+      step: 4,
+      label: "Logo offset",
+      output: true,
+    }}
+    parameters={{
+      docs: {
+        source: {
+          state: 'close',
+          code: dedent`
+            <Card sectioned>
+              <template #title>Background color</template>
+              <RangeSlider v-model="rangeValue" :min="-20" :max="20" :step="4" label="Logo offset" output />
+            </Card>
+          `,
+        },
+      },
+    }}
+  >
+    {StepTemplate.bind({})}
+  </Story>
+</Canvas>
+
+### **Dual thumb range slider**
+
+export const DualTemplate = (args) => ({
+  components: { RangeSlider, Card, Stack, TextField },
+  setup() {
+    const rangeValue = ref([900, 1000]);
+    const minValue = ref('900');
+    const maxValue = ref('1000');
+    const handleMinChange = (event) => {
+      if (event.target.value < rangeValue.value[1]) {
+        rangeValue.value[0] = parseInt(event.target.value);
+      }
+    };
+    const handleMaxChange = (event) => {
+      if (event.target.value > rangeValue.value[0]) {
+        rangeValue.value[1] = parseInt(event.target.value);
+      }
+    };
+    const handleRangeChange = (value) => {
+      minValue.value = `${value[0]}`;
+      maxValue.value = `${value[1]}`;
+    };
+    return { args, rangeValue, minValue, maxValue, handleMinChange, handleMaxChange, handleRangeChange };
+  },
+  template: `
+    <Card sectioned>
+      <template #title>Minimum requirements</template>
+      <RangeSlider v-model="rangeValue" @change="handleRangeChange" v-bind="args" />
+      <Stack distribution="equalSpacing" spacing="extraLoose">
+        <TextField v-model="minValue" type="number" min="0" max="rangeValue[1]" :step="10" autoComplete="off" @change="handleMinChange">
+          <template #label>Min money spent</template>
+          <template #prefix>$</template>
+        </TextField>
+        <TextField v-model="maxValue" type="number" min="rangeValue[0]" max="2000" :step="10" autoComplete="off" @change="handleMaxChange">
+          <template #label>Max money spent</template>
+          <template #prefix>$</template>
+        </TextField>
+      </Stack>
+    </Card>
+  `,
+});
+
+<Canvas>
+  <Story
+    name="Dual thumb range slider"
+    height="150px"
+    args={{
+      min: 0,
+      max: 2000,
+      step: 10,
+      label: "Money spent is between",
+      output: true,
+    }}
+    parameters={{
+      docs: {
+        source: {
+          state: 'close',
+          code: dedent`
+            <Card sectioned>
+              <template #title>Minimum requirements</template>
+              <RangeSlider v-model="rangeValue" @change="handleRangeChange" v-bind="args" />
+              <Stack distribution="equalSpacing" spacing="extraLoose">
+                <TextField v-model="minValue" type="number" min="0" max="rangeValue[1]" :step="10" autoComplete="off" @change="handleMinChange">
+                  <template #label>Min money spent</template>
+                  <template #prefix>$</template>
+                </TextField>
+                <TextField v-model="maxValue" type="number" min="rangeValue[0]" max="2000" :step="10" autoComplete="off" @change="handleMaxChange">
+                  <template #label>Max money spent</template>
+                  <template #prefix>$</template>
+                </TextField>
+              </Stack>
+            </Card>\n
+            <script setup>
+                const rangeValue = ref([900, 1000]);
+                const minValue = ref('900');
+                const maxValue = ref('1000');
+                const handleMinChange = (event) => {
+                  if (event.target.value < rangeValue.value[1]) {
+                    rangeValue.value[0] = parseInt(event.target.value);
+                  }
+                };
+                const handleMaxChange = (event) => {
+                  if (event.target.value > rangeValue.value[0]) {
+                    rangeValue.value[1] = parseInt(event.target.value);
+                  }
+                };
+                const handleRangeChange = (value) => {
+                  minValue.value = \`\${value[0]}\`;
+                  maxValue.value = \`\${value[1]}\`;
+                };
+            </script>
+          `,
+        },
+      },
+    }}
+  >
+    {DualTemplate.bind({})}
+  </Story>
+</Canvas>
+
+export const Template = (args) => ({
+  components: { RangeSlider, Card },
+  setup() {
+    const rangeValue = ref(10);
+    return { args, rangeValue };
+  },
+  template: `
+    <Card sectioned>
+      <template #title>Background color</template>
+      <RangeSlider v-model="rangeValue" v-bind="args" />
+      <p>Value: {{ rangeValue }}</p>
+    </Card>
+  `,
+});
+
+<Canvas>
+  <Story
+    name="Range slider"
+    height="150px"
+    args={{
+      label: "Opacity percentage",
+      output: false,
+    }}
+    parameters={{
+      docs: {
+        source: {
+          code: dedent`
+            <Card sectioned>
+              <template #title>Background color</template>
+              <RangeSlider v-model="rangeValue" label="Opacity percentage" />
+            </Card>
+          `,
+        },
+      },
+    }}
+  >
+    {Template.bind({})}
+  </Story>
+</Canvas>
+
+<ArgsTable story="Range slider" />

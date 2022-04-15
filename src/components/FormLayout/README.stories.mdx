@@ -1,6 +1,6 @@
 import { Meta, Story, Canvas, ArgsTable } from '@storybook/addon-docs';
-
 import { FormLayout, FormGroup, TextField } from '@/polaris-vue';
+import dedent from 'ts-dedent';
 
 <Meta
   title="Components / Forms / Form Layout"
@@ -39,8 +39,7 @@ import { FormLayout, FormGroup, TextField } from '@/polaris-vue';
 Use form layout to arrange fields within a form using standard spacing.
 By default it stacks fields vertically but also supports horizontal groups of fields.
 
-export const Template = (args, { argTypes }) => ({
-  props: Object.keys(argTypes),
+export const Template = (args) => ({
   components: { FormLayout, TextField },
   data() {
     return {
@@ -65,11 +64,18 @@ export const Template = (args, { argTypes }) => ({
     height="160px"
     parameters={{
       docs: {
-        transformSource: (source) => {
-          const tmpSource = source
-            .replace(/value=""/, 'v-model="storeName"')
-            .replace(/value=""/, 'v-model="accountEmail"');
-          return tmpSource;
+        source: {
+          state: 'close',
+          code: dedent`
+            <FormLayout>
+              <TextField v-model="textField" autoComplete="off">
+                <template #label>Store name</template>
+              </TextField>
+              <TextField v-model="emailField" type="email" autoComplete="email">
+                <template #label>Account email</template>
+              </TextField>
+            </FormLayout>
+          `,
         },
       },
     }}
@@ -81,7 +87,6 @@ export const Template = (args, { argTypes }) => ({
 ### Field group
 
 export const FormLayoutGroup = (args, { argTypes }) => ({
-  props: Object.keys(argTypes),
   components: { FormLayout, FormGroup, TextField },
   data() {
     return {
@@ -107,11 +112,21 @@ export const FormLayoutGroup = (args, { argTypes }) => ({
     height="80px"
     parameters={{
       docs: {
-        transformSource: (source) => {
-          const tmpSource = source
-            .replace(/\svalue=""/g, '');
-          return tmpSource;
-        },
+        source: {
+          state: 'close',
+          code: dedent`
+            <FormLayout>
+              <FormGroup>
+                <TextField v-model="min" type="number">
+                  <template #label>Minimum order</template>
+                </TextField>
+                <TextField v-model="max" type="number">
+                  <template #label>Maximum order</template>
+                </TextField>
+              </FormGroup>
+            </FormLayout>
+          `,
+        }
       },
     }}
   >
@@ -121,8 +136,7 @@ export const FormLayoutGroup = (args, { argTypes }) => ({
 
 ### Condensed field group
 
-export const FormGroupCondensed = (args, { argTypes }) => ({
-  props: Object.keys(argTypes),
+export const FormGroupCondensed = (args) => ({
   components: { FormLayout, FormGroup, TextField },
   data() {
     return {
@@ -154,11 +168,26 @@ export const FormGroupCondensed = (args, { argTypes }) => ({
     height="80px"
     parameters={{
       docs: {
-        transformSource: (source) => {
-          const tmpSource = source
-            .replace(/condensed=""/, 'condensed');
-          return tmpSource;
-        },
+        source: {
+          code: dedent`
+          <FormLayout>
+            <FormGroup condensed>
+              <TextField>
+                <template #label>Length</template>
+              </TextField>
+              <TextField>
+                <template #label>Width</template>
+              </TextField>
+              <TextField>
+                <template #label>Height</template>
+              </TextField>
+              <TextField>
+                <template #label>Unit</template>
+              </TextField>
+            </FormGroup>
+          </FormLayout>
+          `,
+        }
       },
     }}
   >

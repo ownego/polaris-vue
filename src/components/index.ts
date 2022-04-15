@@ -55,6 +55,7 @@ export * from './Portal';
 export * from './PositionedOverlay';
 export * from './ProgressBar';
 export * from './RadioButton';
+export * from './RangeSlider';
 export * from './Scrollable';
 export * from './ScrollLock';
 export * from './Select';

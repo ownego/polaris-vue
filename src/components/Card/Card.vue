@@ -1,4 +1,3 @@
-provide, import { computed } from 'vue';
 <template lang="pug">
 div(:class="className")
   Header(
