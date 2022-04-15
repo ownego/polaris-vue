@@ -40,5 +40,5 @@ const props = defineProps<MessageProps>();
 
 </script>
 <style lang="scss">
-@import 'polaris-react/src/components/TopBar/components/Menu/components/Message/Message.scss';
+@import 'polaris/polaris-react/src/components/TopBar/components/Menu/components/Message/Message.scss';
 </style>

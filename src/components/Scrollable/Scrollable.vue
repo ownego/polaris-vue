@@ -13,8 +13,8 @@ import {
   provide, ref, reactive, computed, onMounted, onUpdated, onBeforeUnmount,
 } from 'vue';
 import debounce from 'lodash/debounce';
-import { classNames } from 'polaris-react/src/utilities/css';
-import { scrollable } from 'polaris-react/src/components/shared';
+import { classNames } from 'polaris/polaris-react/src/utilities/css';
+import { scrollable } from 'polaris/polaris-react/src/components/shared';
 import { StickyManager } from '@/utilities/sticky-manager';
 import styles from '@/classes/Scrollable.json';
 
@@ -200,5 +200,5 @@ onBeforeUnmount(() => {
 </script>
 
 <style lang="scss">
-@import 'polaris-react/src/components/Scrollable/Scrollable.scss';
+@import 'polaris/polaris-react/src/components/Scrollable/Scrollable.scss';
 </style>

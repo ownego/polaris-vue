@@ -7,12 +7,14 @@ li(
   :role="legacyRoleSupport",
   :data-within-section="isWithinSection",
   :data-listbox-option-value="value",
+  :data-listbox-option-action="isAction",
   :data-listbox-option-destructive="destructive",
   :aria-disabled="disabled",
   :aria-label="accessibilityLabel",
   :aria-selected="selected",
-  @click="handleOptionClick",
-  @mousedown="handleMouseDown",
+  @click="disabled ? undefined : handleOptionSelect",
+  @keydown="disabled ? undefined : handleOptionSelect",
+  @mousedown="handleOptionSelect",
   tabindex="-1",
   data-listbox-option,
 )
@@ -40,10 +42,10 @@ li(
 
 <script setup lang="ts">
 import { inject, ref, computed, useSlots } from 'vue';
-import { classNames } from 'polaris-react/src/utilities/css';
+import { classNames } from 'polaris/polaris-react/src/utilities/css';
 import {
   listboxWithinSectionDataSelector,
-} from 'polaris-react/src/components/Listbox/components/Section/selectors';
+} from 'polaris/polaris-react/src/components/Listbox/components/Section/selectors';
 import type { ListboxContextType, NavigableOption } from '@/utilities/interface';
 import type { MappedActionContextType } from '@/utilities/autocomplete';
 import { UseUniqueId } from '@/use';
@@ -70,6 +72,7 @@ const listboxContext = inject<ListboxContextType>('listboxContext', {
   onOptionSelect(option: NavigableOption) { return },
   setLoading(label?: string) { return },
 });
+const isAction = inject<boolean>('isAction', false);
 
 const { role, url, external, onAction, destructive } = mappedActionContext;
 const { onOptionSelect } = listboxContext;
@@ -90,7 +93,6 @@ const sectionAttributes = {
 };
 
 const isSlotContainHTMLTag = computed(() => {
-  console.log(123, slots.default && slots.default());
   return Boolean(
     slots.default
       && (slots.default().length >= 2
@@ -108,34 +110,25 @@ const className = computed(() => classNames(
   props.divider && styles.divider,
 ));
 
-const handleOptionClick = (event: MouseEvent) => {
+const handleOptionSelect = (event: MouseEvent | KeyboardEvent): void => {
   event.preventDefault();
-
-  if (props.disabled) {
-    return;
-  }
-
-  if (onAction) {
-    onAction();
-  }
+  onAction && onAction();
 
   if (listItemRef.value && !onAction) {
-    const params = {
+    onOptionSelect({
       domId,
       value: props.value,
       element: listItemRef.value,
       disabled: props.disabled || false,
-    };
-
-    onOptionSelect(params);
+    })
   }
-}
+};
 
 const handleMouseDown = (event: MouseEvent): void => {
   event.preventDefault();
-}
+};
 </script>
 
 <style lang="scss">
-@import 'polaris-react/src/components/Listbox/components/Option/Option.scss';
+@import 'polaris/polaris-react/src/components/Listbox/components/Option/Option.scss';
 </style>

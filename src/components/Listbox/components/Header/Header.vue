@@ -25,5 +25,5 @@ const isSlotContainHTMLTag = computed(() => Boolean(
 </script>
 
 <style lang="scss">
-@import 'polaris-react/src/components/Listbox/components/Header/Header.scss';
+@import 'polaris/polaris-react/src/components/Listbox/components/Header/Header.scss';
 </style>

@@ -1,4 +1,4 @@
-import { clamp } from 'polaris-react/src/utilities/clamp';
+import { clamp } from 'polaris/polaris-react/src/utilities/clamp';
 import type {
   RGBColor,
   RGBAColor,
@@ -7,8 +7,8 @@ import type {
   HSLColor,
   HSLAColor,
   HSBLAColor,
-} from 'polaris-react/src/utilities/color-types';
-import { roundNumberToDecimalPlaces } from 'polaris-react/src/utilities/roundNumberToDecimalPlaces';
+} from 'polaris/polaris-react/src/utilities/color-types';
+import { roundNumberToDecimalPlaces } from 'polaris/polaris-react/src/utilities/roundNumberToDecimalPlaces';
 
 type ColorType = 'hex' | 'rgb' | 'rgba' | 'hsl' | 'hsla' | 'default';
 

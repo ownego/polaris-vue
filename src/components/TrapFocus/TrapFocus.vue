@@ -8,7 +8,7 @@ div(ref="wrapperNode")
 
 <script setup lang="ts">
 import { ref, watch } from 'vue';
-import { portal } from 'polaris-react/src/components/shared';
+import { portal } from 'polaris/polaris-react/src/components/shared';
 import {
   focusFirstFocusableNode,
   findFirstKeyboardFocusableNode,

@@ -5,7 +5,7 @@ div(:class="className")
 
 <script setup lang="ts">
 import { computed } from 'vue';
-import { classNames } from 'polaris-react/src/utilities/css';
+import { classNames } from 'polaris/polaris-react/src/utilities/css';
 import styles from '@/classes/Backdrop.json';
 import { ScrollLock } from '../ScrollLock';
 
@@ -26,5 +26,5 @@ const className = computed(() => {
 </script>
 
 <style lang="scss">
-@import 'polaris-react/src/components/Backdrop/Backdrop.scss';
+@import 'polaris/polaris-react/src/components/Backdrop/Backdrop.scss';
 </style>

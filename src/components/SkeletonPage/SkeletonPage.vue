@@ -39,7 +39,7 @@ div(
 </template>
 <script setup lang="ts">
 import { computed, inject } from "vue";
-import { classNames } from 'polaris-react/src/utilities/css';
+import { classNames } from 'polaris/polaris-react/src/utilities/css';
 import styles from '@/classes/SkeletonPage.json';
 import { SkeletonBodyText, SkeletonDisplayText } from "@/components";
 
@@ -68,5 +68,5 @@ const className = computed(() => classNames(
 </script>
 
 <style lang="scss">
-@import 'polaris-react/src/components/SkeletonPage/SkeletonPage.scss';
+@import 'polaris/polaris-react/src/components/SkeletonPage/SkeletonPage.scss';
 </style>

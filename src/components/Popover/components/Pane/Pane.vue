@@ -19,7 +19,7 @@ Scrollable(
 
 <script setup lang="ts">
 import { computed } from 'vue';
-import { classNames } from 'polaris-react/src/utilities/css';
+import { classNames } from 'polaris/polaris-react/src/utilities/css';
 import { Scrollable } from '@/components/Scrollable';
 import styles from '@/classes/Popover.json';
 import { Section } from '../Section';

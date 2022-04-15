@@ -8,7 +8,7 @@ component(
 
 <script setup lang="ts">
 import { computed } from 'vue';
-import { classNames, variationName } from 'polaris-react/src/utilities/css';
+import { classNames, variationName } from 'polaris/polaris-react/src/utilities/css';
 import type { HeadingTagName } from '@/utilities/type';
 import styles from '@/classes/DisplayText.json';
 
@@ -39,5 +39,5 @@ const className = computed(() => classNames(
 </script>
 
 <style lang="scss">
-@import 'polaris-react/src/components/DisplayText/DisplayText.scss';
+@import 'polaris/polaris-react/src/components/DisplayText/DisplayText.scss';
 </style>

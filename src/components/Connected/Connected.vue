@@ -14,5 +14,5 @@ import { Item } from './components';
 </script>
 
 <style lang="scss">
-@import 'polaris-react/src/components/Connected/Connected.scss';
+@import 'polaris/polaris-react/src/components/Connected/Connected.scss';
 </style>

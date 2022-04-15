@@ -29,7 +29,7 @@ nav(
 
 <script setup lang="ts">
 import { provide, useSlots } from 'vue';
-import { getWidth } from 'polaris-react/src/utilities/get-width';
+import { getWidth } from 'polaris/polaris-react/src/utilities/get-width';
 import styles from '@/classes/Navigation.json';
 import { UseFrame } from '@/utilities/frame';
 import {
@@ -62,5 +62,5 @@ provide('WithinContentContext', false);
 
 </script>
 <style lang="scss">
-@import 'polaris-react/src/components/Navigation/Navigation.scss';
+@import 'polaris/polaris-react/src/components/Navigation/Navigation.scss';
 </style>

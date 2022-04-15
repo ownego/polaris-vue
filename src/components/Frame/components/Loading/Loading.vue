@@ -60,5 +60,5 @@ const onTransitionEnd = () => {
 </script>
 
 <style lang="scss">
-@import 'polaris-react/src/components/Frame/components/Loading/Loading.scss';
+@import 'polaris/polaris-react/src/components/Frame/components/Loading/Loading.scss';
 </style>

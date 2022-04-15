@@ -15,5 +15,5 @@ const props = defineProps<MessageIndicatorProps>();
 </script>
 
 <style lang="scss">
-@import 'polaris-react/src/components/MessageIndicator/MessageIndicator.scss';
+@import 'polaris/polaris-react/src/components/MessageIndicator/MessageIndicator.scss';
 </style>

@@ -9,7 +9,7 @@ span(
 
 <script setup lang="ts">
 import { computed, ref, onMounted } from 'vue';
-import { classNames } from 'polaris-react/src/utilities/css';
+import { classNames } from 'polaris/polaris-react/src/utilities/css';
 import styles from '@/classes/ActionMenu-SecondaryAction.json';
 import { Button } from '@/components';
 import type { IconSource } from '@/utilities/type';
@@ -71,5 +71,5 @@ const onGetOffsetWidth = (width: number) => {
 </script>
 
 <style lang="scss">
-@import 'polaris-react/src/components/ActionMenu/components/SecondaryAction/SecondaryAction.scss';
+@import 'polaris/polaris-react/src/components/ActionMenu/components/SecondaryAction/SecondaryAction.scss';
 </style>

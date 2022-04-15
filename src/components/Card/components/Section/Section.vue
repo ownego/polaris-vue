@@ -28,7 +28,7 @@ div(:class="className")
 </template>
 <script setup lang="ts">
 import { computed, useSlots } from 'vue';
-import { classNames } from 'polaris-react/src/utilities/css';
+import { classNames } from 'polaris/polaris-react/src/utilities/css';
 import type { ComplexAction } from '@/utilities/interface';
 import { ButtonGroup, Stack, StackItem, Subheading } from '@/components';
 import { ButtonFrom } from '@/components/Button';

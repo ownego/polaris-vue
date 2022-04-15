@@ -8,7 +8,7 @@ th(
 <script setup lang="ts">
 import { computed } from 'vue';
 import styles from '@/classes/DatePicker.json';
-import { classNames } from 'polaris-react/src/utilities/css';
+import { classNames } from 'polaris/polaris-react/src/utilities/css';
 
 interface Props {
   label: string;

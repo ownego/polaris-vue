@@ -4,7 +4,7 @@ span(:class="className")
 
 <script setup lang="ts">
 import { computed } from 'vue';
-import { classNames } from 'polaris-react/src/utilities/css';
+import { classNames } from 'polaris/polaris-react/src/utilities/css';
 import styles from '@/classes/Indicator.json';
 
 interface IndicatorProps {
@@ -23,5 +23,5 @@ const className = computed(() => {
 });
 </script>
 <style lang="scss">
-@import 'polaris-react/src/components/Indicator/Indicator.scss';
+@import 'polaris/polaris-react/src/components/Indicator/Indicator.scss';
 </style>

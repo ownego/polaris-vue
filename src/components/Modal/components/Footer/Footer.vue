@@ -31,5 +31,5 @@ defineProps<Props>();
 </script>
 
 <style lang="scss">
-@import 'polaris-react/src/components/Modal/components/Footer/Footer.scss';
+@import 'polaris/polaris-react/src/components/Modal/components/Footer/Footer.scss';
 </style>

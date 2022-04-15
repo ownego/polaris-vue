@@ -8,5 +8,5 @@ import styles from '@/classes/Truncate.json';
 </script>
 
 <style lang="scss">
-@import 'polaris-react/src/components/Truncate/Truncate.scss';
+@import 'polaris/polaris-react/src/components/Truncate/Truncate.scss';
 </style>

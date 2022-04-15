@@ -19,7 +19,7 @@ div(:class="pageClassName")
 
 <script setup lang="ts">
 import { computed, useSlots } from 'vue';
-import { classNames } from 'polaris-react/src/utilities/css';
+import { classNames } from 'polaris/polaris-react/src/utilities/css';
 import styles from '@/classes/Page.json';
 import type { PaginationProps } from '@/components/Pagination/utils';
 import type { BreadcrumbsProps } from '@/components/Breadcrumbs/utils';
@@ -99,5 +99,5 @@ const contentClassName = computed(() => {
 </script>
 
 <style lang="scss">
-@import 'polaris-react/src/components/Page/Page.scss';
+@import 'polaris/polaris-react/src/components/Page/Page.scss';
 </style>

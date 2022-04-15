@@ -1,5 +1,7 @@
 <template lang="pug">
 span(:class="className")
+  span(v-if="hasIcon", :class="styles.Icon")
+    Icon(:source="icon")
   template(v-if="hasAccessibilityLabel")
     span(
       v-if="progressLabel",
@@ -7,13 +9,15 @@ span(:class="className")
     )
       VisuallyHidden {{ accessibilityLabel }}
     VisuallyHidden(v-else) {{ accessibilityLabel }}
-  slot
+  span(v-if="$slots.default")
+    slot
 </template>
 
 <script setup lang="ts">
 import { inject, ref, computed, onMounted } from 'vue';
-import { classNames, variationName } from 'polaris-react/src/utilities/css';
+import { classNames, variationName } from 'polaris/polaris-react/src/utilities/css';
 import styles from '@/classes/Badge.json';
+import type { IconSource } from '@/utilities/type';
 import { VisuallyHidden } from '../VisuallyHidden';
 
 type Status = 'info' | 'success' | 'attention' | 'warning' | 'critical' | 'new';
@@ -32,6 +36,8 @@ interface BadgeProps {
   size?: Size;
   /** Pass a custom accessibilityLabel */
   statusAndProgressLabelOverride?: string;
+  /** Icon to display to the left of the badge’s content. */
+  icon?: IconSource;
 }
 
 // eslint-disable-next-line vue/no-setup-props-destructure
@@ -50,6 +56,7 @@ const className = computed(() => classNames(
   styles.Badge,
   props.status && styles[variationName('status', props.status) as keyof typeof styles],
   props.progress && styles[variationName('progress', props.progress) as keyof typeof styles],
+  // hasIcon.value && styles.icon,
   props.size && props.size !== DEFAULT_SIZE && styles[variationName('size', props.size) as keyof typeof styles],
   withinFilter && styles.withinFilter,
 ));
@@ -60,6 +67,10 @@ const hasAccessibilityLabel= computed(() => props.statusAndProgressLabelOverride
 );
 const accessibilityLabel = computed(() => props.statusAndProgressLabelOverride
   || `${statusLabel.value} ${progressLabel.value}`);
+
+const hasIcon = computed(() => {
+  return !props.progress && props.icon;
+});
 
 onMounted(() => {
   switch (props.progress) {
@@ -102,5 +113,5 @@ onMounted(() => {
 </script>
 
 <style lang="scss">
-@import 'polaris-react/src/components/Badge/Badge.scss';
+@import 'polaris/polaris-react/src/components/Badge/Badge.scss';
 </style>

@@ -36,9 +36,9 @@ div(
 <script setup lang="ts">
 import { computed, onMounted, reactive, ref } from 'vue';
 import debounce from 'lodash/debounce';
-import { classNames } from 'polaris-react/src/utilities/css';
-import { clamp } from 'polaris-react/src/utilities/clamp';
-import type { HSBColor, HSBAColor, RGBAColor } from 'polaris-react/src/utilities/color-types';
+import { classNames } from 'polaris/polaris-react/src/utilities/css';
+import { clamp } from 'polaris/polaris-react/src/utilities/clamp';
+import type { HSBColor, HSBAColor, RGBAColor } from 'polaris/polaris-react/src/utilities/color-types';
 import {
   hsbToRgb,
   hsbToHex,
@@ -214,5 +214,5 @@ const handleDraggerMove = ({ x, y }: { x: number, y: number }): void => {
 </script>
 
 <style lang="scss">
-@import 'polaris-react/src/components/ColorPicker/ColorPicker.scss';
+@import 'polaris/polaris-react/src/components/ColorPicker/ColorPicker.scss';
 </style>

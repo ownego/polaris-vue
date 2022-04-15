@@ -82,7 +82,7 @@ Labelled(
 <script setup lang="ts">
 import { computed, useSlots } from 'vue';
 import type { Action, Error } from '@/utilities/type';
-import { classNames } from 'polaris-react/src/utilities/css';
+import { classNames } from 'polaris/polaris-react/src/utilities/css';
 import { UseUniqueId } from '@/use';
 import styles from '@/classes/Select.json';
 import SelectMinor from '@icons/SelectMinor.svg';
@@ -289,5 +289,5 @@ function normalizeOption(
 </script>
 
 <style lang="scss">
-@import 'polaris-react/src/components/Select/Select.scss';
+@import 'polaris/polaris-react/src/components/Select/Select.scss';
 </style>

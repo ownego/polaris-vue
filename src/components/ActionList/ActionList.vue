@@ -41,7 +41,7 @@ export default {
 
 <script setup lang="ts">
 import { computed, onMounted, ref } from 'vue';
-import { classNames } from 'polaris-react/src/utilities/css';
+import { classNames } from 'polaris/polaris-react/src/utilities/css';
 import { wrapFocusPreviousFocusableMenuItem, wrapFocusNextFocusableMenuItem } from '@/utilities/focus';
 import { KeypressListener } from '@/components/KeypressListener';
 import { Key } from '@/components/KeypressListener/utils';
@@ -113,5 +113,5 @@ const handleFocusNextItem = (evt: KeyboardEvent) => {
 };
 </script>
 <style lang="scss">
-@import 'polaris-react/src/components/ActionList/ActionList.scss';
+@import 'polaris/polaris-react/src/components/ActionList/ActionList.scss';
 </style>

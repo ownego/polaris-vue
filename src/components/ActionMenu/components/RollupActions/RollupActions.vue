@@ -51,5 +51,5 @@ const toggleRollupOpen = () => {
 </script>
 
 <style lang="scss">
-@import 'polaris-react/src/components/ActionMenu/components/RollupActions/RollupActions.scss';
+@import 'polaris/polaris-react/src/components/ActionMenu/components/RollupActions/RollupActions.scss';
 </style>

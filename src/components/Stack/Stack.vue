@@ -11,7 +11,7 @@ div(:class="className")
 
 <script setup lang="ts">
 import { computed, useSlots } from 'vue';
-import { classNames, variationName } from 'polaris-react/src/utilities/css';
+import { classNames, variationName } from 'polaris/polaris-react/src/utilities/css';
 import styles from '@/classes/Stack.json';
 import { Item as StackItem } from './components';
 
@@ -72,5 +72,5 @@ const className = computed(() => {
 </script>
 
 <style lang="scss">
-@import 'polaris-react/src/components/Stack/Stack.scss';
+@import 'polaris/polaris-react/src/components/Stack/Stack.scss';
 </style>

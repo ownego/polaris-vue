@@ -56,5 +56,5 @@ const callbackOnAction = computed(() => {
 </script>
 
 <style lang="scss">
-@import 'polaris-react/src/components/Breadcrumbs/Breadcrumbs.scss';
+@import 'polaris/polaris-react/src/components/Breadcrumbs/Breadcrumbs.scss';
 </style>

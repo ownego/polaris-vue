@@ -1,5 +1,5 @@
 import { ref, inject } from 'vue';
-import type { UniqueIdFactory } from 'polaris-react/src/utilities/unique-id/unique-id-factory';
+import type { UniqueIdFactory } from 'polaris/polaris-react/src/utilities/unique-id/unique-id-factory';
 import { MissingAppProviderError } from '@/utilities/errors';
 
 export default function UseUniqueId() {

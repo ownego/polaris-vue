@@ -1,4 +1,4 @@
-import type { ColorScheme } from 'polaris-react/src/tokens';
+import type { ColorScheme } from 'polaris/polaris-react/src/tokens';
 
 export const DEFAULT_COLOR_SCHEME: ColorScheme = 'light';
 

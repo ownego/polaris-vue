@@ -1,0 +1,271 @@
+import dedent from 'ts-dedent'
+import {Meta, Story, Canvas, ArgsTable} from '@storybook/addon-docs'
+import { Card, OptionList, TextStyle, Icon } from '@/polaris-vue';
+import FoodMajor from '@icons/FoodMajor.svg';
+import { ref } from 'vue';
+
+<Meta
+  title="Components / Lists and tables / Option List"
+  component={OptionList}
+  argTypes={{
+    modelValue: {
+      table: { disable: true },
+    },
+    allowMultiple: {
+      table: { defaultValue: { summary: 'false' }}
+    },
+    options: {
+      table: {
+        type: { summary: 'OptionsDescriptor[]' },
+      },
+      control: { disable: true },
+    },
+    role: {
+      table: {
+        type: { summary: '\'listbox\' | \'combobox\' | string' },
+      },
+    },
+    sections: {
+      table: {
+        type: { summary: 'SectionDescriptor[]' },
+      },
+      control: { disable: true },
+    },
+    verticalAlign: {
+      control: {
+        type: 'select',
+        options: ['top', 'center', 'bottom'],
+      },
+      table: {
+        defaultValue: { summary: 'top' },
+        type: { summary: 'top | center | bottom' },
+      },
+    },
+    'update:modelValue': {
+      table: { disable: true },
+    },
+    'change': {
+      description: 'Callback when selection is changed',
+      control: { disable: true },
+      table: {
+        type: { summary: '(value: string[]) => void' },
+      },
+    },
+    default: {
+      table: { disable: true },
+    },
+    'option-label-[option-id]': {
+      description: 'Slot to display label for the option. This will override the default option label prop.',
+      table: {
+        category: 'slots',
+        type: { summary: 'Example: option-label-kind' },
+      },
+    },
+    'option-media-[option-id]': {
+      description: 'Media to display to the left of the option content. Defined by option id value.',
+      table: {
+        category: 'slots',
+        type: { summary: 'Example: option-media-kind' },
+      },
+    },
+  }}
+/>
+
+export const Template1 = (args) => ({
+  components: { Card, OptionList, TextStyle, Icon },
+  setup() {
+    const selected = ref([]);
+    const changeSelected = (value) => { console.log('changeSelected', value) };
+    const options = [
+      {value: 'byward_market', label: 'Byward Market'},
+      {id: 'centre', value: 'centretown', label: 'Centretown'},
+      {value: 'hintonburg', label: 'Hintonburg'},
+      {value: 'westboro', label: 'Westboro'},
+      {value: 'downtown', label: 'Downtown'},
+    ];
+    return { changeSelected, selected, options, FoodMajor };
+  },
+  template: `
+    <Card>
+      <OptionList
+        id="option-list-1"
+        title="Inventory Location"
+        v-model="selected"
+        :options="options"
+        @change="changeSelected"
+      >
+        <template #option-label-centre>
+          <TextStyle variation="positive">Centretown</TextStyle>
+        </template>
+        <template #option-media-centre>
+          <Icon :source="FoodMajor"/>
+        </template>
+      </OptionList>
+    </Card>
+    <br/>
+    <p><strong>Value:</strong> {{ selected }}</p>
+  `,
+});
+
+# Option List
+<br/>
+
+The option list component lets you create a list of grouped items that merchants can pick from. This can include single selection or multiple selection of options. Option list usually appears in a popover, and sometimes in a modal or a sidebar. Option lists are styled differently than [choice lists](?path=/docs/components-forms-choice-list) and should not be used within a form, but as a standalone menu.
+
+<br/>
+
+### **Simple option list**
+
+Use sections when you have multiple groups of similar selectable items.
+
+<Canvas>
+  <Story
+    name="Option list"
+    parameters={{
+      docs: {
+        source: {
+          state: 'close',
+          code: dedent`
+            <Card>
+              <OptionList
+                v-model="selected"
+                :options="options"
+                @change="changeSelected"
+              >
+                <template #option-label-centre>
+                  <TextStyle variation="positive">Centretown</TextStyle>
+                </template>
+                <template #option-media-centre>
+                  <Icon :source="FoodMajor"/>
+                </template>
+              </OptionList>
+            </Card>\n
+            <script setup>
+              const options = [
+                {value: 'byward_market', label: 'Byward Market'},
+                {id: 'centre', value: 'centretown', label: 'Centretown'},
+                {value: 'hintonburg', label: 'Hintonburg'},
+                {value: 'westboro', label: 'Westboro'},
+                {value: 'downtown', label: 'Downtown'},
+              ];\n
+              const selected = ref([]);
+              const changeSelected = (value) => { console.log('changeSelected', value) };
+            </script>
+          `,
+        },
+      },
+    }}
+  >
+    {Template1.bind({})}
+  </Story>
+</Canvas>
+
+export const Template = (args) => ({
+  components: { Card, OptionList },
+  setup() {
+    const selectedValue = ref([]);
+    const changeSelectedvalue = (value) => { console.log('changeSelectedvalue', value) };
+    const sections = [
+      {
+        options: [
+          { value: 'type', label: 'Sale item type' },
+          { value: 'kind', label: 'Sale kind' },
+        ],
+      }, {
+        title: 'Traffic',
+        options: [
+          { value: 'source', label: 'Traffic referrer source' },
+          { value: 'host', label: 'Traffic referrer host' },
+          { value: 'path', label: 'Traffic referrer path' },
+        ],
+      }];
+    return { args, changeSelectedvalue, selectedValue, sections };
+  },
+  template: `
+    <Card>
+      <OptionList
+        v-bind="args"
+        v-model="selectedValue"
+        :sections="sections"
+        @change="changeSelectedvalue"
+      />
+    </Card>
+    <br/><p><strong>Value:</strong> {{ selectedValue }}</p>
+  `,
+});
+
+### **Option list with sections**
+
+Use sections when you have multiple groups of similar selectable items.
+
+<Canvas>
+  <Story
+    name="Option list with sections"
+    args={{
+      allowMultiple: true,
+    }}
+    parameters={{
+      docs: {
+        source: {
+          code: dedent`
+            <Card>
+              <OptionList
+                v-model="selectedValue"
+                :sections="sections"
+                allow-multiple
+                @change="changeSelectedvalue"
+              />
+            </Card>\n
+            <script setup>
+              const sections = [
+                {
+                  options: [
+                    { value: 'type', label: 'Sale item type' },
+                    { value: 'kind', label: 'Sale kind' },
+                  ],
+                }, {
+                  title: 'Traffic',
+                  options: [
+                    { value: 'source', label: 'Traffic referrer source' },
+                    { value: 'host', label: 'Traffic referrer host' },
+                    { value: 'path', label: 'Traffic referrer path' },
+                  ],
+                }];\n
+              const selected = ref([]);
+              const changeSelected = (value) => { console.log('changeSelected', value) };
+            </script>
+          `,
+        },
+      },
+    }}
+  >
+    {Template.bind({})}
+  </Story>
+</Canvas>
+
+<ArgsTable story="Option list with sections"/>
+
+---
+<br/>
+
+### **OptionDescriptor Props**
+
+| Prop             | Type                          | Description                                                                                        |
+| ---------------- | ----------------------------- | -------------------------------------------------------------------------------------------------- |
+| value            | String     | Value of the option                   |
+| label            | String     | Display label for the option          |
+| disabled         | Boolean    | Whether the option is disabled or not |
+| active           | String     | Whether the option is active or not   |
+| id               | String     | Unique identifier for the option      |
+
+<br/>
+
+---
+<br/>
+
+### **SectionDescriptor Props**
+
+| Prop             | Type                          | Description                                                                                        |
+| ---------------- | ----------------------------- | -------------------------------------------------------------------------------------------------- |
+| options          | OptionDescriptor[]     | Collection of options within the section                   |
+| title            | String                 | Section title                                              |

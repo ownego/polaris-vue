@@ -41,7 +41,7 @@ span(
 <script setup lang="ts">
 import { computed, useAttrs, useSlots } from 'vue';
 import { handleMouseUpByBlurring } from '@/utilities/focus';
-import { classNames } from 'polaris-react/src/utilities/css';
+import { classNames } from 'polaris/polaris-react/src/utilities/css';
 import CancelSmallMinor from '@icons/CancelSmallMinor.svg';
 import styles from '@/classes/Tag.json';
 import { Icon } from '../Icon';
@@ -111,5 +111,5 @@ const onMouseUp = handleMouseUpByBlurring;
 </script>
 
 <style lang="scss">
-@import 'polaris-react/src/components/Tag/Tag.scss';
+@import 'polaris/polaris-react/src/components/Tag/Tag.scss';
 </style>

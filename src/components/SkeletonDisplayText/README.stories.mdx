@@ -1,36 +1,36 @@
-import dedent from 'ts-dedent'
-import {Meta, Story, Canvas, ArgsTable} from '@storybook/addon-docs'
+import dedent from 'ts-dedent';
+import {Meta, Story, Canvas, ArgsTable} from '@storybook/addon-docs';
 import {SkeletonDisplayText} from '@/polaris-vue';
 
 <Meta
-    title="Components / Feedback indicators"
-    component={ SkeletonDisplayText }
-    argTypes={{
-        size: {
-            name: "size",
-            description: "Size of the text",
-            options: ["small", "medium", "large", "extraLarge"],
-            control: { type: "select" },
-            table: {
-                defaultValue: {
-                    summary: "medium",
-                },
-                type: {
-                    summary: null,
-                },
-            },
+  title="Components / Feedback indicators"
+  component={ SkeletonDisplayText }
+  argTypes={{
+    size: {
+      name: "size",
+      description: "Size of the text",
+      options: ["small", "medium", "large", "extraLarge"],
+      control: { type: "select" },
+      table: {
+        defaultValue: {
+          summary: "medium",
         },
-    }}
+        type: {
+          summary: null,
+        },
+      },
+    },
+  }}
 />
 
 export const Template = (args) => ({
-    components: { SkeletonDisplayText },
-    setup() {
-        return { args };
-    },
-    template: `
-      <SkeletonDisplayText v-bind="args"/>
-    `,
+  components: { SkeletonDisplayText },
+  setup() {
+    return { args };
+  },
+  template: `
+    <SkeletonDisplayText v-bind="args"/>
+  `,
 });
 
 # Skeleton display text
@@ -38,23 +38,23 @@ export const Template = (args) => ({
 Skeleton display text is used to provide a low fidelity representation of content before it appears on the page, and improves load times perceived by merchants. Can be used for content in or outside of a card.
 
 <Canvas>
-    <Story
-        name="SkeletonDisplayText"
-        args={{
-            size: 'medium',
-        }}
-        parameters={{
-            docs: {
-                source: {
-                    code: dedent`
-                        <SkeletonDisplayText v-bind="props"/>
-                    `,
-                },
-            },
-        }}
-    >
-        {Template.bind({})}
-    </Story>
+  <Story
+    name="Skeleton Display Text"
+    args={{
+      size: 'medium',
+    }}
+    parameters={{
+      docs: {
+        source: {
+          code: dedent`
+            <SkeletonDisplayText size="medium"/>
+          `,
+        },
+      },
+    }}
+  >
+    {Template.bind({})}
+  </Story>
 </Canvas>
 
-<ArgsTable story="SkeletonDisplayText"/>
+<ArgsTable story="Skeleton Display Text"/>

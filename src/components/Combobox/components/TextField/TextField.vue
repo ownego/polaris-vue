@@ -1,13 +1,14 @@
 <template lang="pug">
 PolarisTextField(
   v-bind="props",
+  :modelValue="modelValue",
   :id="textFieldId",
-  autoComplete="list",
+  :type="type",
+  :ariaAutoComplete="ariaAutocomplete",
   aria-haspopup="listbox",
   :ariaActiveDescendant="activeOptionId",
   :ariaControls="listboxId",
   :ariaExpanded="expanded",
-  :modelValue="modelValue",
   @focus="handleFocus",
   @blur="handleBlur",
   @change="handleChange",
@@ -24,6 +25,8 @@ PolarisTextField(
     slot(name="connected-left")
   template(#connected-right, v-if="$slots['connected-right']")
     slot(name="connected-right")
+  template(#vertical-content, v-if="$slots['vertical-content']")
+    slot(name="vertical-content")
 </template>
 
 <script setup lang="ts">
@@ -75,6 +78,8 @@ interface TextFieldProps {
   disabled?: boolean;
   /** Show a clear text button in the input */
   clearButton?: boolean;
+  /** An inline autocomplete suggestion containing the input value. The characters that complete the input value are selected for ease of deletion on input change or keypress of Backspace/Delete. The selected substring is visually highlighted with subdued styling. */
+  suggestion?: string;
   /** Disable editing of the input */
   readOnly?: boolean;
   /** Automatically focus the input */
@@ -95,6 +100,8 @@ interface TextFieldProps {
   role?: string;
   /** Limit increment value for numeric and date-time inputs */
   step?: number;
+  /** Enable automatic completion by the browser. Set to "off" when you do not want the browser to fill in info */
+  autoComplete: string;
   /** Mimics the behavior of the native HTML attribute, limiting the maximum value */
   max?: number | string;
   /** Maximum character length for an input */
@@ -113,6 +120,12 @@ interface TextFieldProps {
   spellCheck?: boolean;
   /** Indicates the id of a component owned by the input */
   ariaOwns?: string;
+  /** Indicates whether or not a Popover is displayed */
+  ariaExpanded?: boolean;
+  /** Indicates the id of a component controlled by the input */
+  ariaControls?: string;
+  /** Indicates the id of a related component’s visually focused element to the input */
+  ariaActiveDescendant?: string;
   /** Indicates what kind of user input completion suggestions are provided */
   ariaAutocomplete?: string;
   /** Indicates whether or not the character count should be displayed */
@@ -127,7 +140,6 @@ interface TextFieldProps {
   selectTextOnFocus?: boolean;
 }
 
-const comboboxTextFieldContext = inject<ComboboxTextFieldType>('comboboxTextFieldContext', {});
 const {
   activeOptionId,
   listboxId,
@@ -137,9 +149,12 @@ const {
   onTextFieldFocus,
   onTextFieldChange,
   onTextFieldBlur,
-} = comboboxTextFieldContext;
+} = inject<ComboboxTextFieldType>('comboboxTextFieldContext', {});
 
-const props = defineProps<TextFieldProps>();
+const props = withDefaults(defineProps<TextFieldProps>(), {
+  type: 'text',
+  ariaAutocomplete: 'list',
+});
 
 const emits = defineEmits<{
   (event: 'focus'): void
@@ -154,10 +169,7 @@ const textFieldId = computed(() => props.id || uniqueId);
 const labelId = computed(() => labelID(props.id || uniqueId));
 
 watch(
-  [
-    () => labelId.value,
-    () => setTextFieldLabelId,
-  ],
+  () => labelId.value,
   () => {
     if (setTextFieldLabelId) {
       setTextFieldLabelId(labelId.value);
@@ -171,7 +183,6 @@ const handleFocus = (): void => {
   if (onTextFieldFocus) {
     onTextFieldFocus();
   }
-
 
   if (setTextFieldFocused) {
     setTextFieldFocused(true);

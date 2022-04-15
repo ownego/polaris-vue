@@ -8,5 +8,5 @@ import styles from '@/classes/Caption.json';
 </script>
 
 <style lang="scss">
-@import 'polaris-react/src/components/Caption/Caption.scss';
+@import 'polaris/polaris-react/src/components/Caption/Caption.scss';
 </style>

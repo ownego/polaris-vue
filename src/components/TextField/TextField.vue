@@ -1,6 +1,6 @@
 <template lang="pug">
 Labelled(
-  :id="uniqueId",
+  :id="id",
   :error="error",
   :action="labelAction",
   :labelHidden="labelHidden",
@@ -19,18 +19,66 @@ Labelled(
       :class="className",
       @focus="handleFocus",
       @click="handleClick",
-      @blur="handleBlur",
+      @blur="focus = false",
     )
       div(
         v-if="slots.prefix",
-        :id="`${uniqueId}Prefix`",
+        :id="`${id}Prefix`",
         :class="styles.Prefix",
         ref="prefixRef",
       )
         slot(name="prefix")
+      div(
+        v-if="slots['vertical-content']"
+        :class="styles.VerticalContent",
+        :id="`${id}-VerticalContent`",
+        ref="verticalContentRef",
+      )
+        slot(name="vertical-content")
+        component(
+          :is="multiline ? 'textarea' : 'input'",
+          :id="id",
+          :name="name",
+          :disabled="disabled",
+          :readonly="readOnly",
+          :role="role",
+          :autofocus="autoFocus",
+          :value="modelValue",
+          :placeholder="placeholder",
+          :style="style",
+          :autocomplete="autoComplete",
+          :class="inputClassName",
+          :ref="multiline ? 'textareaRef' : 'inputRef'",
+          :min="min",
+          :max="max",
+          :step="step",
+          :minlength="minLength",
+          :maxlength="maxLength",
+          :spellcheck="spellCheck",
+          :pattern="pattern",
+          :inputMode="inputMode",
+          :rows="rows",
+          :type="inputType",
+          :aria-describedby="formattedDescribedBy",
+          :aria-labelledby="formattedLabelledBy",
+          :aria-invalid="Boolean(error)",
+          :aria-owns="ariaOwns",
+          :aria-activedescendant="ariaActiveDescendant",
+          :aria-autocomplete="ariaAutocomplete",
+          :aria-controls="ariaControls",
+          :aria-expanded="ariaExpanded",
+          :aria-required="requiredIndicator",
+          v-bind="normalizeAriaMultiline",
+          @input="handleChange",
+          @keydown="handleKeyPress",
+          @focus="handleOnFocus",
+          @blur="$emit('blur')",
+        )
+          template(v-if="multiline") {{ modelValue }}
       component(
+        v-else,
         :is="multiline ? 'textarea' : 'input'",
-        :id="uniqueId",
+        :id="id",
         :name="name",
         :disabled="disabled",
         :readonly="readOnly",
@@ -39,9 +87,9 @@ Labelled(
         :value="modelValue",
         :placeholder="placeholder",
         :style="style",
-        :autocomplete="normalizedAutocomplete",
+        :autocomplete="autoComplete",
         :class="inputClassName",
-        ref="inputRef",
+        :ref="multiline ? 'textareaRef' : 'inputRef'",
         :min="min",
         :max="max",
         :step="step",
@@ -64,13 +112,13 @@ Labelled(
         v-bind="normalizeAriaMultiline",
         @input="handleChange",
         @keydown="handleKeyPress",
-        @focus="handleInputOnFocus",
+        @focus="handleOnFocus",
         @blur="$emit('blur')",
       )
         template(v-if="multiline") {{ modelValue }}
       div(
         v-if="slots.suffix",
-        :id="`${uniqueId}Suffix`",
+        :id="`${id}Suffix`",
         :class="styles.Suffix",
         ref="suffixRef",
       )
@@ -78,14 +126,14 @@ Labelled(
       div(
         v-if="showCharacterCount",
         :class="characterCountClassName",
-        aria-label=characterCountLabel,
+        :aria-label=characterCountLabel,
         :aria-live="focus ? 'polite' : 'off'",
         aria-atomic="true",
       )
         p {{ characterCountText }}
       button(
         v-if="clearButtonVisible && clearButton",
-        :class="clearButtonClassName",
+        :class="clearButtonClassNames",
         :disabled="disabled",
         @click="$emit('clear-button-click', id)",
       )
@@ -109,8 +157,8 @@ Labelled(
 </template>
 
 <script setup lang="ts">
-import { useSlots, ref, computed, watch } from 'vue';
-import { classNames, variationName } from 'polaris-react/src/utilities/css';
+import { inject, useSlots, ref, computed, watch } from 'vue';
+import { classNames, variationName } from 'polaris/polaris-react/src/utilities/css';
 import { UseUniqueId } from '@/use';
 import styles from '@/classes/TextField.json';
 import CircleCancelMinor from '@icons/CircleCancelMinor.svg';
@@ -150,7 +198,7 @@ type InputMode =
   | 'email'
   | 'url';
 
-interface TextFieldProps {
+interface NonMutuallyExclusiveProps {
   /** Hint text to display */
   placeholder?: string;
   /** Initial value for the input */
@@ -163,6 +211,8 @@ interface TextFieldProps {
   disabled?: boolean;
   /** Show a clear text button in the input */
   clearButton?: boolean;
+  /** An inline autocomplete suggestion containing the input value. The characters that complete the input value are selected for ease of deletion on input change or keypress of Backspace/Delete. The selected substring is visually highlighted with subdued styling. */
+  suggestion?: string;
   /** Disable editing of the input */
   readOnly?: boolean;
   /** Automatically focus the input */
@@ -184,7 +234,7 @@ interface TextFieldProps {
   /** Limit increment value for numeric and date-time inputs */
   step?: number;
   /** Enable automatic completion by the browser. Set to "off" when you do not want the browser to fill in info */
-  autoComplete: string | boolean;
+  autoComplete: string;
   /** Mimics the behavior of the native HTML attribute, limiting the maximum value */
   max?: number | string;
   /** Maximum character length for an input */
@@ -223,7 +273,11 @@ interface TextFieldProps {
   selectTextOnFocus?: boolean;
 }
 
-const props = defineProps<TextFieldProps>();
+const lang = inject('lang') as Record<string, any>;
+
+const props = withDefaults(defineProps<NonMutuallyExclusiveProps>(), {
+  type: 'text',
+});
 
 const emits = defineEmits<{
   (event: 'focus', focusEvent: Event): void
@@ -233,9 +287,11 @@ const emits = defineEmits<{
   (event: 'clear-button-click', id?: string): void
 }>();
 
+const inputRef = ref<HTMLInputElement | null>(null);
+const textAreaRef = ref<HTMLTextAreaElement| null>(null);
 const prefixRef = ref<HTMLDivElement | null>(null);
 const suffixRef = ref<HTMLDivElement | null>(null);
-const inputRef = ref<HTMLInputElement | HTMLTextAreaElement | null>(null);
+const verticalContentRef = ref<HTMLDivElement | null>(null);
 
 const slots = useSlots();
 const connectedLeftSlot = computed(() => slots['connected-left']?.());
@@ -243,6 +299,7 @@ const connectedRightSlot = computed(() => slots['connected-right']?.());
 const helpTextSlot = computed(() => slots['help-text']?.());
 const prefixSlot = computed(() => slots.prefix?.());
 const suffixSlot = computed(() => slots.suffix?.());
+const verticalContentSlot = computed(() => slots.verticalContent?.());
 
 const height = ref<number>();
 const focus = ref<boolean>();
@@ -251,16 +308,42 @@ const buttonPressTimer = ref<number>();
 watch(
   () => props.focused,
   () => {
-    if (!inputRef.value || !props.focused === undefined) {
+    if (!inputRef.value || props.focused === undefined) {
       return;
     }
 
     props.focused ? inputRef.value.focus() : inputRef.value.blur();
   },
-)
+);
+
+watch(
+  [
+    () => focus.value,
+    () => props.modelValue,
+    () => props.type,
+    () => props.suggestion,
+  ],
+  () => {
+    const isSupportedInputType =
+      props.type === 'text' ||
+      props.type === 'tel' ||
+      props.type === 'search' ||
+      props.type === 'url' ||
+      props.type === 'password';
+
+    if (!inputRef.value || !isSupportedInputType || !props.suggestion) {
+      return;
+    }
+
+    inputRef.value.setSelectionRange(
+      (props.modelValue as string).length,
+      props.suggestion.length,
+    );
+  },
+);
 
 const { useUniqueId } = UseUniqueId();
-const uniqueId = computed(() => useUniqueId('TextField', props.id));
+const id = computed(() => useUniqueId('TextField', props.id));
 
 const inputType = computed(() => props.type === 'currency' ? 'text' : props.type);
 const rows = computed(() => {
@@ -294,7 +377,8 @@ const inputClassName = computed(() => {
     inputAlignmentStyle,
     suffixSlot.value && styles['Input-suffixed'],
     props.clearButton && styles['Input-hasClearButton'],
-    props.monospaced && styles.monospaced)
+    props.monospaced && styles.monospaced,
+  );
 });
 const characterCountClassName = computed(() => classNames(
   styles.CharacterCount,
@@ -305,15 +389,12 @@ const backdropClassName = computed(() => classNames(
   connectedLeftSlot.value &&  styles['Backdrop-connectedLeft'],
   connectedRightSlot.value && styles['Backdrop-connectedRight'],
 ));
-const clearButtonClassName = computed(() => classNames(
+const clearButtonClassNames = computed(() => classNames(
   styles.ClearButton,
   !clearButtonVisible.value && styles.AlignFieldBottom,
 ));
 
-const normalizedValue = computed(() => typeof props.modelValue === 'string'
-  ? props.modelValue
-  : '',
-);
+const normalizedValue = computed(() => props.suggestion ? props.suggestion : props.modelValue);
 const normalizedStep = computed(() => props.step ? props.step : 1);
 const normalizedMax = computed(() => props.max ? props.max : Infinity);
 const normalizedMin = computed(() => props.min ? props.min : -Infinity);
@@ -326,52 +407,59 @@ const normalizeAriaMultiline = computed(() => {
     ? {'aria-multiline': true}
     : undefined;
 });
-const normalizedAutocomplete = computed(() => {
-  if (props.autoComplete === true) {
-    return 'on';
-  }
 
-  if (props.autoComplete === false) {
-    return 'off';
-  }
-
-  return props.autoComplete;
+const characterCount = computed(() => (normalizedValue.value as string).length);
+const characterCountLabel = computed(() => {
+  return props.maxLength
+    ? lang.Polaris.TextField.characterCountWithMaxLength({
+      count: characterCount.value,
+      limit: props.maxLength,
+    })
+    : lang.Polaris.TextField.characterCount({
+      count: characterCount,
+    })
 });
-
-const characterCount = computed(() => normalizedValue.value.length);
-const characterCountText = computed(() => props.maxLength
+const characterCountText = computed(() => !props.maxLength
   ? characterCount.value
   : `${characterCount.value}/${props.maxLength}`,
 );
 
 const formattedDescribedBy = computed(() => {
   const describedBy: string[] = [];
+
   if (props.error) {
-    describedBy.push(`${uniqueId.value}Error`);
+    describedBy.push(`${id.value}Error`);
   }
+
   if (helpTextSlot.value) {
-    describedBy.push(helpTextID(uniqueId.value));
+    describedBy.push(helpTextID(id.value));
   }
+
   if (props.showCharacterCount) {
-    describedBy.push(`${uniqueId.value}CharacterCounter`);
+    describedBy.push(`${id.value}-CharacterCounter`);
   }
+
   return describedBy.length
     ? describedBy.join(' ')
-    : undefined;
+    : '';
 });
 
 const formattedLabelledBy = computed(() => {
   const labelledBy: string[] = [];
 
   if (prefixSlot.value) {
-    labelledBy.push(`${uniqueId.value}Prefix`);
+    labelledBy.push(`${id.value}-Prefix`);
   }
 
   if (suffixSlot.value) {
-    labelledBy.push(`${uniqueId.value}Suffix`);
+    labelledBy.push(`${id.value}-Suffix`);
   }
 
-  labelledBy.unshift(labelID(uniqueId.value));
+  if (verticalContentSlot.value) {
+    labelledBy.push(`${id.value}-VerticalContent`);
+  }
+
+  labelledBy.unshift(labelID(id.value));
 
   return labelledBy.join(' ');
 });
@@ -388,16 +476,6 @@ const containsAffix = (target: HTMLElement | EventTarget) => {
   );
 };
 
-const handleClick = (event: Event): void => {
-  const target = event.target as HTMLInputElement;
-
-  if (containsAffix(target) || focus.value) {
-    return;
-  }
-
-  inputRef.value?.focus();
-};
-
 const handleFocus = (event: Event): void => {
   const target = event.target as HTMLInputElement;
 
@@ -408,14 +486,14 @@ const handleFocus = (event: Event): void => {
   focus.value = true;
 };
 
-const handleBlur = (event: Event) => {
+const handleClick = (event: Event): void => {
   const target = event.target as HTMLInputElement;
 
-  if (containsAffix(target)) {
+  if (containsAffix(target) || focus.value) {
     return;
   }
 
-  focus.value = false;
+  inputRef.value?.focus();
 };
 
 const handleChange = (event: Event) => {
@@ -425,14 +503,7 @@ const handleChange = (event: Event) => {
   emits('change', event);
 };
 
-const handleInputOnFocus = (event: Event) => {
-  if (props.selectTextOnFocus && inputRef.value) {
-    inputRef.value.select();
-  }
-  emits('focus', event);
-};
-
-const handleNumberChange = (payload: number): void => {
+const handleNumberChange = (step: number): void => {
   // Returns the length of decimal places in a number
   const dpl = (num: number) => (num.toString().split('.')[1] || []).length;
   const numericValue = props.modelValue ? parseFloat(props.modelValue) : 0;
@@ -447,7 +518,7 @@ const handleNumberChange = (payload: number): void => {
   const decimalPlaces = Math.max(dpl(numericValue), dpl(normalizedStep.value));
   const newValue = Math.min(
     Number(normalizedMax.value),
-    Math.max(numericValue + payload * normalizedStep.value, Number(normalizedMin.value)),
+    Math.max(numericValue + step * normalizedStep.value, Number(normalizedMin.value)),
   );
 
   emits('update:modelValue', String(newValue.toFixed(decimalPlaces)));
@@ -489,8 +560,17 @@ const handleKeyPress = (event: KeyboardEvent): void => {
 
   event.preventDefault();
 };
+
+const handleOnFocus = (event: FocusEvent): void => { 
+  if (props.selectTextOnFocus && !props.suggestion) {
+    const input = props.multiline ? textAreaRef : inputRef;
+    input.value?.select();
+  }
+
+  emits('focus', event);
+};
 </script>
 
 <style lang="scss">
-@import 'polaris-react/src/components/TextField/TextField.scss';
+@import 'polaris/polaris-react/src/components/TextField/TextField.scss';
 </style>

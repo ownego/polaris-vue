@@ -13,7 +13,7 @@ div(
 
 <script setup lang="ts">
 import { computed, onMounted, onUpdated, ref, watch } from 'vue';
-import { classNames } from 'polaris-react/src/utilities/css';
+import { classNames } from 'polaris/polaris-react/src/utilities/css';
 import styles from '@/classes/Collapsible.json';
 
 interface Transition {
@@ -116,5 +116,5 @@ onMounted(() => {
 </script>
 
 <style lang="scss">
-@import 'polaris-react/src/components/Collapsible/Collapsible.scss';
+@import 'polaris/polaris-react/src/components/Collapsible/Collapsible.scss';
 </style>

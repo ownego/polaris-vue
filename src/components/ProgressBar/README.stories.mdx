@@ -1,0 +1,81 @@
+import { Meta, Story, Canvas, ArgsTable } from "@storybook/addon-docs";
+import { ProgressBar } from "@/polaris-vue";
+import dedent from "ts-dedent";
+
+<Meta
+  title="Components / Feedback indicators / Progress bar"
+  component={ProgressBar}
+  argTypes={{
+    size: {
+      name: "size",
+      description: "Size of ProgressBar",
+      options: ["small", "medium", "large"],
+      control: { type: "select" },
+      table: {
+        defaultValue: {
+          summary: "medium",
+        },
+        type: {
+          summary: null,
+        },
+      },
+    },
+    color: {
+      name: "color",
+      description: "Color of ProgressBar",
+      options: ["highlight", "primary", "success", "critical"],
+      control: { type: "select" },
+      table: {
+        defaultValue: {
+          summary: "highlight",
+        },
+        type: {
+          summary: '"() => void"',
+        },
+      },
+    },
+    default: {
+      table: {
+        disable: true,
+      },
+    },
+  }}
+/>
+
+export const Template = (args) => ({
+  components: { ProgressBar },
+  setup() {
+    return { args };
+  },
+  template: `<ProgressBar v-bind="args"/>`,
+});
+
+# Progress bar
+
+The progress bar component is used to visually represent the completion of a task or operation. It shows how much of the task has been completed and how much is still left.
+
+<br />
+<br />
+
+<Canvas>
+  <Story
+    name="Progress bar"
+    height="60px"
+    args={{
+      progress: 75,
+    }}
+    parameters={{
+      docs: {
+        source: {
+          code: dedent`
+            <ProgressBar v-bind="props"/>
+          `,
+        },
+      },
+    }}
+  >
+    {Template.bind({})}
+  </Story>
+</Canvas>
+
+<ArgsTable story="Progress bar" />

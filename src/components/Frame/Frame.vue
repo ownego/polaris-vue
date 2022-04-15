@@ -104,9 +104,9 @@ div(
 
 <script setup lang="ts">
 import { computed, onMounted, provide, ref, useSlots, watch, inject } from 'vue';
-import { classNames } from 'polaris-react/src/utilities/css';
-import { dataPolarisTopBar, layer } from 'polaris-react/src/components/shared';
-import { setRootProperty } from 'polaris-react/src/utilities/set-root-property';
+import { classNames } from 'polaris/polaris-react/src/utilities/css';
+import { dataPolarisTopBar, layer } from 'polaris/polaris-react/src/components/shared';
+import { setRootProperty } from 'polaris/polaris-react/src/utilities/set-root-property';
 import styles from '@/classes/Frame.json';
 import MobileCancelMajor from '@icons/MobileCancelMajor.svg';
 import type {
@@ -360,5 +360,5 @@ provide('frameContext', {
 </script>
 
 <style lang="scss">
-@import 'polaris-react/src/components/Frame/Frame.scss';
+@import 'polaris/polaris-react/src/components/Frame/Frame.scss';
 </style>

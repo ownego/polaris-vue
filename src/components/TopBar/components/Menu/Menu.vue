@@ -70,5 +70,5 @@ const badgeProps = props.message && props.message.badge && {
 </script>
 
 <style lang="scss">
-@import 'polaris-react/src/components/TopBar/components/Menu/Menu.scss';
+@import 'polaris/polaris-react/src/components/TopBar/components/Menu/Menu.scss';
 </style>

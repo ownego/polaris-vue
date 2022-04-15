@@ -48,8 +48,8 @@ div(:class="styles.TopBar")
 
 <script setup lang="ts">
 import { computed, inject, ref, useSlots } from 'vue';
-import { classNames } from 'polaris-react/src/utilities/css';
-import { getWidth  } from 'polaris-react/src/utilities/get-width';
+import { classNames } from 'polaris/polaris-react/src/utilities/css';
+import { getWidth  } from 'polaris/polaris-react/src/utilities/get-width';
 import MobileHamburgerMajor from '@icons/MobileHamburgerMajor.svg';
 import styles from '@/classes/TopBar.json';
 import { UseFrame } from '@/utilities/frame';
@@ -111,5 +111,5 @@ const width = getWidth(logo, 104);
 
 </script>
 <style lang="scss">
-@import 'polaris-react/src/components/TopBar/TopBar.scss';
+@import 'polaris/polaris-react/src/components/TopBar/TopBar.scss';
 </style>

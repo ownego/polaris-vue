@@ -5,7 +5,10 @@ div(:class="textOptionClassName")
       v-if="allowMultiple && !isAction",
       :class="styles.Checkbox",
     )
-      Checkbox(:checked="selected")
+      Checkbox(
+        :disabled="disabled",
+        :checked="selected",
+      )
         template(#label)
           slot
     slot(v-else)
@@ -13,13 +16,13 @@ div(:class="textOptionClassName")
 
 <script setup lang="ts">
 import { inject, computed } from 'vue';
-import { classNames } from 'polaris-react/src/utilities/css';
+import { classNames } from 'polaris/polaris-react/src/utilities/css';
 import type { ComboboxListboxOptionType } from '@/utilities/interface';
 import styles from '@/classes/Listbox-TextOption.json';
 import { Checkbox } from '../../../Checkbox';
 
-const comboboxListboxOptionContext = inject<ComboboxListboxOptionType>('comboboxListboxOptionContext', {});
-const actionContext = inject<boolean>('actionContext', false);
+const { allowMultiple} = inject<ComboboxListboxOptionType>('comboboxListboxOptionContext', {});
+const isAction = inject<boolean>('actionContext', false);
 
 interface Props {
   // Whether the option is selected
@@ -30,18 +33,15 @@ interface Props {
 
 const props = defineProps<Props>();
 
-const allowMultiple = computed(() => Boolean(comboboxListboxOptionContext.allowMultiple));
-const isAction = computed(() => actionContext);
-
 const textOptionClassName = computed(() => classNames(
   styles.TextOption,
-  props.selected && !allowMultiple.value && styles.selected,
+  props.selected && !allowMultiple && styles.selected,
   props.disabled && styles.disabled,
-  allowMultiple.value && styles.allowMultiple,
-  isAction.value && styles.isAction,
+  allowMultiple && styles.allowMultiple,
+  isAction && styles.isAction,
 ));
 </script>
 
 <style lang="scss">
-@import 'polaris-react/src/components/Listbox/components/TextOption/TextOption.scss';
+@import 'polaris/polaris-react/src/components/Listbox/components/TextOption/TextOption.scss';
 </style>

@@ -9,5 +9,5 @@ import styles from '@/classes/FooterHelp.json';
 </script>
 
 <style lang="scss">
-@import 'polaris-react/src/components/FooterHelp/FooterHelp.scss';
+@import 'polaris/polaris-react/src/components/FooterHelp/FooterHelp.scss';
 </style>

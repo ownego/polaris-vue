@@ -25,6 +25,7 @@ ul(
   :aria-label="inCombobox ? undefined : accessibilityLabel",
   :aria-labelledby="textFieldLabelId || undefined",
   :aria-busy="Boolean(loading)",
+  :asia-activedescendant="activeOption && activeOption.domId",
   :id="listId",
   @focus="handleFocus",
   @blur="handleBlur",
@@ -35,30 +36,25 @@ ul(
 
 <script setup lang="ts">
 import {
-  provide, inject, ref, computed, watch, onMounted,
+  provide, inject, ref, computed, watch, onUpdated, useSlots,
 } from 'vue';
 import debounce from 'lodash/debounce';
-import { classNames } from 'polaris-react/src/utilities/css';
-import { scrollIntoView } from 'polaris-react/src/utilities/scroll-into-view';
-import { scrollable } from 'polaris-react/src/components/shared';
-import { closestParentMatch } from 'polaris-react/src/utilities/closest-parent-match';
-import {
-  listboxSectionDataSelector,
-} from 'polaris-react/src/components/Listbox/components/Section/selectors';
+import { classNames } from 'polaris/polaris-react/src/utilities/css';
+import { scrollable } from 'polaris/polaris-react/src/components/shared';
 import { UseUniqueId } from '@/use';
 import styles from '@/classes/Listbox.json';
 import type { ComboboxListboxType, NavigableOption } from '@/utilities/interface';
 import { KeypressListener } from '../KeypressListener';
 import { Key } from '../KeypressListener/utils';
 import { VisuallyHidden } from '../VisuallyHidden';
+import { scrollOptionIntoView } from 'polaris/polaris-react/src/utilities/listbox/utilities';
 
 export type ArrowKeys = 'up' | 'down';
 
-const LISTBOX_OPTION_SELECTOR = '[data-listbox-option]';
-const LISTBOX_OPTION_VALUE_ATTRIBUTE = 'data-listbox-option-value';
-
-const DATA_ATTRIBUTE = 'data-focused';
-const ARIA_ATTRIBUTE = 'aria-activedescendant';
+const OPTION_SELECTOR = '[data-listbox-option]';
+const OPTION_VALUE_ATTRIBUTE = 'data-listbox-option-value';
+const OPTION_ACTION_ATTRIBUTE = 'data-listbox-option-action';
+const OPTION_FOCUS_ATTRIBUTE = 'data-focused';
 
 interface ListboxProps {
   /** Explicitly enable keyboard control */
@@ -76,15 +72,18 @@ const {
   setListboxId,
   listboxId,
   textFieldLabelId,
+  willLoadMoreOptions,
   onOptionSelected,
   onKeyToBottom,
   textFieldFocused,
 } = comboboxListboxContext;
 
 const props = defineProps<ListboxProps>();
+const slots = useSlots();
 
 const emits = defineEmits<{
   (event: 'select', value: string): void
+  (event: 'on-active-option-change', value: string): void
 }>();
 
 const { useUniqueId  } = UseUniqueId();
@@ -97,9 +96,11 @@ const listboxRef = ref<HTMLUListElement | null>(null);
 const scrollableRef = ref<HTMLElement | null>(null);
 
 const loading = ref('');
+const lazyLoading = ref(false);
+const currentOptions = ref<HTMLElement[]>([]);
 const keyboardEventsEnabled = ref(props.enableKeyboardControl);
 
-let currentActiveOption: NavigableOption;
+let activeOption: NavigableOption | undefined;
 
 watch(
   [
@@ -111,123 +112,224 @@ watch(
       setListboxId(listId);
     }
   },
-)
+);
 
 watch(
-  () => currentActiveOption,
+  [
+    () => activeOption,
+    () => loading,
+  ],
   () => {
-    if (setActiveOptionId) {
-      setActiveOptionId(currentActiveOption.domId);
+    if (
+      !loading.value
+      && slots.default
+      && slots.default().length > 0
+    ) {
+      resetActiveOption();
     }
   },
-)
+);
 
-const getNavigableOptions = (): HTMLElement[] => {
-  const temporaryArray = listboxRef.value?.querySelectorAll<HTMLElement>(LISTBOX_OPTION_SELECTOR);
-
-  return temporaryArray
-    ? [...new Set(Array.from(temporaryArray))]
-    : [];
-};
-
-const handleScrollIntoView = (option: NavigableOption, first: boolean): void => {
-  debounce(() => {
-    if (scrollableRef.value) {
-      const { element } = option;
-      const focusTarget = first
-        ? closestParentMatch(element, listboxSectionDataSelector.selector)
-            || element
-        : element;
-
-      scrollIntoView(focusTarget, scrollableRef.value);
+watch(
+  [
+    () => props.enableKeyboardControl,
+    () => keyboardEventsEnabled,
+  ],
+  () => {
+    if (props.enableKeyboardControl && !keyboardEventsEnabled.value) {
+      keyboardEventsEnabled.value = true;
     }
-  }, 15);
-};
+  },
+);
 
-const handleChangeActiveOption = (nextOption?: NavigableOption): void => {
-  if (currentActiveOption && currentActiveOption.element) {
-    currentActiveOption.element.removeAttribute(DATA_ATTRIBUTE);
+const getNavigableOptions = (): [] | HTMLElement[] => {
+  if (!listboxRef.value) {
+    return [];
   }
 
-  if (nextOption) {
-    nextOption.element.setAttribute(DATA_ATTRIBUTE, 'true');
-
-    listboxRef.value?.setAttribute(ARIA_ATTRIBUTE, nextOption.domId);
-
-    if (scrollableRef.value) {
-      const first = getNavigableOptions().findIndex(
-        (element) => element.id === nextOption.element.id,
-      ) === 0;
-
-      handleScrollIntoView(nextOption, first);
-    }
-
-    currentActiveOption = nextOption;
-  }
+  return [
+    ...new Set(
+      listboxRef.value.querySelectorAll<HTMLElement>(OPTION_SELECTOR),
+    ),
+  ];
 };
 
-const findNextValidOption = (type: ArrowKeys): HTMLElement | null => {
-  const isUp = type === 'up';
-  const navItems = getNavigableOptions();
-  let nextElement: HTMLElement | null | undefined = currentActiveOption.element;
-  let count = -1;
+const getFirstNavigableOption = (
+  currentOpts: HTMLElement[],
+): boolean | Record<string, any> | void => {
+  const hasSelectedOptions = currentOpts.some(
+    (option) => option.getAttribute('aria-selected') === 'true',
+  );
 
-  while (count++ < navItems.length) {
-    let nextIndex: number;
+  let elementIndex = 0;
+  const element = currentOpts.find((option, index) => {
+    const isInteractable = option.getAttribute('aria-disabled') !== 'true';
+    let isFirstNavigableOption;
 
-    if (nextElement) {
-      const currentId = nextElement?.id;
-      const currentIndex = navItems.findIndex(
-        (currentNavItem) => currentNavItem.id === currentId,
-      );
-      let increment = isUp ? -1 : 1;
-
-      if (currentIndex === 0 && isUp) {
-        increment = navItems.length - 1;
-      } else if (currentIndex === navItems.length - 1 && !isUp) {
-        increment = -(navItems.length - 1);
-      }
-
-      nextIndex = currentIndex + increment;
-      nextElement = navItems[nextIndex];
+    if (hasSelectedOptions) {
+      const isSelected = option.getAttribute('aria-selected') === 'true';
+      isFirstNavigableOption = isSelected && isInteractable;
     } else {
-      nextIndex = isUp ? navItems.length - 1 : 0;
-      nextElement = navItems[nextIndex] ;
+      isFirstNavigableOption = isInteractable;
     }
 
-    if (nextElement?.getAttribute('aria-disabled') === 'true') {
-      continue;
-    }
+    if (isFirstNavigableOption) {elementIndex = index;}
 
-    if (nextIndex === navItems.length - 1 && onKeyToBottom) {
-      onKeyToBottom();
-    }
+    return isFirstNavigableOption;
+  });
 
-    return nextElement;
-  }
-
-  return null;
-}
-
-const handleArrow = (type: ArrowKeys, event: KeyboardEvent): void => {
-  event.preventDefault();
-
-  const nextValidElement = findNextValidOption(type);
-
-  if (!nextValidElement) {
+  if (!element) {
     return;
   }
 
-  const nextOption = {
-    domId: nextValidElement.id,
-    value: nextValidElement
-      .getAttribute(LISTBOX_OPTION_VALUE_ATTRIBUTE) || '',
-    element: nextValidElement,
-    disabled: nextValidElement.getAttribute('aria-disabled') === 'true',
+  return {element, index: elementIndex};
+};
+
+const handleScrollIntoView = (option: NavigableOption): void => {
+  if (scrollableRef.value) {
+    scrollOptionIntoView(option.element, scrollableRef.value);
+  }
+};
+
+const handleScrollIntoViewDebounced = debounce(handleScrollIntoView, 50);
+
+const handleKeyToBottom = (): void | Promise<void> => {
+  if (onKeyToBottom) {
+    lazyLoading.value = true;
+    return Promise.resolve(onKeyToBottom());
+  }
+};
+
+const handleChangeActiveOption = (
+  nextOption?: NavigableOption,
+): void | Record<string, any> => {
+  if (!nextOption) {
+    activeOption = undefined;
+  } else {
+    activeOption?.element.removeAttribute(OPTION_FOCUS_ATTRIBUTE);
+    nextOption?.element.setAttribute(OPTION_FOCUS_ATTRIBUTE, 'true');
+    handleScrollIntoViewDebounced(nextOption);
+    activeOption = nextOption;
+    setActiveOptionId?.(nextOption.domId);
+  
+    emits('on-active-option-change', nextOption.value);
+  }
+};
+
+const getFormattedOption = (
+  element: HTMLElement, index: number,
+): Record<string, any> => {
+  return {
+    element,
+    index,
+    domId: element.id,
+    value: element.getAttribute(OPTION_VALUE_ATTRIBUTE) || '',
+    disabled: element.getAttribute('aria-disabled') === 'true',
+    isAction: element.getAttribute(OPTION_ACTION_ATTRIBUTE) === 'true',
   };
+};
+
+const resetActiveOption = (): void => {
+  let nextOption;
+  const nextOptions = getNavigableOptions();
+  const nextActiveOption = getFirstNavigableOption(nextOptions);
+
+  if (nextOptions.length === 0 && currentOptions.value.length > 0) {
+    currentOptions.value = nextOptions;
+    handleChangeActiveOption();
+    return;
+  }
+
+  if (nextActiveOption) {
+    const { element, index } = nextActiveOption as Record<string, any>;
+    nextOption = getFormattedOption(element, index);
+  }
+
+  const optionIsAlreadyActive =
+      activeOption !== undefined && nextOption?.domId === activeOption?.domId;
+
+  const actionContentHasUpdated =
+      activeOption?.isAction &&
+      nextOption?.isAction &&
+      nextOption?.value !== activeOption?.value;
+
+  const currentValues = currentOptions.value.map((option) =>
+    option.getAttribute(OPTION_VALUE_ATTRIBUTE),
+  );
+
+  const nextValues = nextOptions.map((option) =>
+    option.getAttribute(OPTION_VALUE_ATTRIBUTE),
+  );
+
+  const listIsUnchanged =
+      nextValues.length === currentValues.length &&
+      nextValues.every((value, index) => {
+        return currentValues[index] === value;
+      });
+
+  if (listIsUnchanged) {
+    if (optionIsAlreadyActive && actionContentHasUpdated) {
+      currentOptions.value = nextOptions
+      handleChangeActiveOption(nextOption);
+    }
+
+    return;
+  }
+
+  currentOptions.value = nextOptions
+
+  if (lazyLoading.value) {
+    lazyLoading.value = false;
+    return;
+  }
 
   handleChangeActiveOption(nextOption);
-}
+};
+
+const getNextValidOption = async (key: ArrowKeys): Promise<Record<string, any>> => {
+  const lastIndex = currentOptions.value.length - 1;
+  let currentIndex = activeOption?.index || 0;
+  let nextIndex = 0;
+  let element = activeOption?.element;
+  let totalOptions = -1;
+
+  while (totalOptions++ < lastIndex) {
+    nextIndex = getNextIndex(currentIndex, lastIndex, key);
+    element = currentOptions[nextIndex];
+    const triggerLazyLoad = nextIndex >= lastIndex;
+    const isDisabled = element?.getAttribute('aria-disabled') === 'true';
+
+    if (triggerLazyLoad && willLoadMoreOptions) {
+      await handleKeyToBottom();
+    }
+
+    if (isDisabled) {
+      currentIndex = nextIndex;
+      element = undefined;
+      continue;
+    }
+
+    break;
+  }
+  return {element, nextIndex};
+};
+
+const handleArrow = async (
+  type: ArrowKeys,
+  event: KeyboardEvent,
+): Promise<void> => {
+  event.preventDefault();
+
+  const { element, nextIndex } = await getNextValidOption(type) as Record<string, any>;
+
+  if (!element) {
+    return;
+  }
+
+  const nextOption = getFormattedOption(element, nextIndex);
+
+  handleChangeActiveOption(nextOption as NavigableOption);
+};
 
 const handleDownArrow = (event: KeyboardEvent): void => {
   handleArrow('down', event);
@@ -237,8 +339,64 @@ const handleUpArrow = (event: KeyboardEvent): void => {
   handleArrow('up', event);
 };
 
-const onSelect = (value: string): void => {
-  emits('select', value);
+const handleEnter = (event: KeyboardEvent): void => {
+  event.preventDefault();
+  event.stopPropagation();
+
+  onOptionSelect(activeOption as NavigableOption);
+};
+
+const handleFocus = (): void => {
+  if (props.enableKeyboardControl) {
+    return;
+  }
+
+  keyboardEventsEnabled.value = true;
+};
+
+const handleBlur = (event: FocusEvent): void => {
+  event.stopPropagation();
+
+  if (keyboardEventsEnabled.value) {
+    const nextActiveOption = getFirstNavigableOption(currentOptions.value);
+
+    if (nextActiveOption) {
+      const { element, index } = nextActiveOption as Record<string, any>;
+      const nextOption = getFormattedOption(element, index);
+
+      handleChangeActiveOption(nextOption as NavigableOption);
+    }
+  }
+
+  if (props.enableKeyboardControl) {
+    return;
+  }
+
+  keyboardEventsEnabled.value = false;
+};
+
+const setLoading = (value: string): void => {
+  loading.value = value;
+};
+
+const getNextIndex = (
+  currentIndex: number,
+  lastIndex: number,
+  direction: string,
+): number => {
+  let nextIndex;
+
+  if (direction === 'down') {
+    if (currentIndex === lastIndex) {
+      nextIndex = willLoadMoreOptions ? currentIndex + 1 : 0;
+    } else {
+      nextIndex = currentIndex + 1;
+    }
+  } else {
+    nextIndex = currentIndex === 0 ? lastIndex : currentIndex - 1;
+  }
+
+  return nextIndex;
 };
 
 const onOptionSelect = (option: NavigableOption): void => {
@@ -248,45 +406,12 @@ const onOptionSelect = (option: NavigableOption): void => {
     onOptionSelected();
   }
 
-  onSelect(option.value);
-};
-
-const setLoading = (value: string): void => {
-  loading.value = value;
+  emits('select', option.value);
 };
 
 provide('listboxContext', { onOptionSelect, setLoading });
 
-const handleEnter = (event: KeyboardEvent): void => {
-  event.preventDefault();
-  event.stopPropagation();
-
-  onOptionSelect(currentActiveOption);
-};
-
-const handleFocus = () => {
-  if (props.enableKeyboardControl) {
-    return;
-  }
-
-  keyboardEventsEnabled.value = true;
-};
-
-const handleBlur = (event: FocusEvent) => {
-  event.stopPropagation();
-
-  if (props.enableKeyboardControl) {
-    handleChangeActiveOption();
-  }
-
-  if (props.enableKeyboardControl || inCombobox) {
-    return;
-  }
-
-  keyboardEventsEnabled.value = false;
-};
-
-onMounted(() => {
+onUpdated(() => {
   if (listboxRef.value) {
     scrollableRef.value = listboxRef.value.closest(scrollable.selector);
   }
@@ -294,5 +419,5 @@ onMounted(() => {
 </script>
 
 <style lang="scss">
-@import 'polaris-react/src/components/Listbox/Listbox.scss';
+@import 'polaris/polaris-react/src/components/Listbox/Listbox.scss';
 </style>

@@ -34,5 +34,5 @@ const className = computed(() => {
 </script>
 
 <style lang="scss">
-@import 'polaris-react/src/components/Modal/components/Header/Header.scss';
+@import 'polaris/polaris-react/src/components/Modal/components/Header/Header.scss';
 </style>

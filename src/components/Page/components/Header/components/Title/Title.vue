@@ -17,7 +17,7 @@ div(
 
 <script setup lang="ts">
 import { computed, useSlots } from 'vue';
-import { classNames } from 'polaris-react/src/utilities/css';
+import { classNames } from 'polaris/polaris-react/src/utilities/css';
 import styles from '@/classes/Page-Title.json';
 import { hasSlot } from '@/utilities/has-slot';
 
@@ -50,5 +50,5 @@ const slots = useSlots();
 </script>
 
 <style lang="scss">
-@import 'polaris-react/src/components/Page/components/Header/components/Title/Title.scss';
+@import 'polaris/polaris-react/src/components/Page/components/Header/components/Title/Title.scss';
 </style>

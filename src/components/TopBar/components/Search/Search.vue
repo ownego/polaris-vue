@@ -17,7 +17,7 @@ div(
 
 <script setup lang="ts">
 import { useSlots, computed } from 'vue';
-import { classNames } from 'polaris-react/src/utilities/css';
+import { classNames } from 'polaris/polaris-react/src/utilities/css';
 import styles from '@/classes/TopBar-Search.json';
 import { CustomProperties } from '@/components';
 import { SearchDismissOverlay } from '../SearchDismissOverlay';
@@ -43,5 +43,5 @@ const className = computed(() => classNames(styles.Search, props.visible && styl
 </script>
 
 <style lang="scss">
-@import 'polaris-react/src/components/TopBar/components/Search/Search.scss';
+@import 'polaris/polaris-react/src/components/TopBar/components/Search/Search.scss';
 </style>

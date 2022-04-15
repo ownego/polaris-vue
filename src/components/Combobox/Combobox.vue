@@ -1,12 +1,13 @@
 <template lang="pug">
 Popover(
+  ref="popoverRef",
   :active="popoverActive",
+  @close="handleClose",
   autofocusTarget="none",
-  :preventFocusOnClose="true",
-  :fullWidth="true",
+  preventFocusOnClose,
+  fullWidth,
   :preferInputActivator="false",
   :preferredPosition="preferredPosition",
-  @close="handleClose",
 )
   template(#activator, v-if="slots.activator")
     slot(name="activator")
@@ -27,7 +28,9 @@ interface ComboboxProps {
   preferredPosition?: PreferredPosition;
 }
 
-const props = defineProps<ComboboxProps>();
+const props = withDefaults(defineProps<ComboboxProps>(), {
+  preferredPosition: 'below',
+});
 
 provide('comboboxListboxOptionContext', { allowMultiple: props.allowMultiple });
 
@@ -37,30 +40,46 @@ const emits = defineEmits<{
 
 const popoverActive = ref(false);
 const activeOptionId = ref('');
+const textFieldLabelId = ref('');
 const listboxId = ref('');
 const textFieldFocused = ref(false);
-const textFieldLabelId = ref('');
+const disableCloseOnSelect = ref(false);
+const popoverRef = ref(null);
 
 const slots = useSlots();
 const defaultSlot = computed(() => slots.default?.());
 
 const shouldOpen = computed(() => !popoverActive.value && defaultSlot);
 
-const onOptionSelected = (): void => {
-  if (!props.allowMultiple) {
+const handleClose = (): void =>  {
+  if (!disableCloseOnSelect.value) {
     popoverActive.value = false;
-    activeOptionId.value = '';
   }
+
+  activeOptionId.value = '';
 };
 
-const handleClose = (): void =>  {
-  popoverActive.value = false;
+const handleOpen = (): void => {
+  popoverActive.value = true;
   activeOptionId.value = '';
+};
+
+const onOptionSelected = (): void => {
+  if (!props.allowMultiple) {
+    handleClose();
+    return;
+  } else {
+    disableCloseOnSelect.value = true;
+    activeOptionId.value = '';
+  }
+
+  // TODO: waiting for forceUpdatePosition method in Popover
+  (popoverRef.value as any).forceUpdatePosition();
 };
 
 const handleFocus = (): void => {
   if (shouldOpen.value) {
-    popoverActive.value = true;
+    handleOpen();
   }
 };
 
@@ -71,9 +90,10 @@ const handleChange = (): void => {
 };
 
 const handleBlur = (): void => {
+  disableCloseOnSelect.value = false;
+
   if (popoverActive.value) {
-    popoverActive.value = false;
-    activeOptionId.value = '';
+    handleClose();
   }
 };
 
@@ -102,5 +122,5 @@ provide('comboboxListboxContext', comboboxListboxContext);
 </script>
 
 <style lang="scss">
-@import 'polaris-react/src/components/Combobox/Combobox.scss';
+@import 'polaris/polaris-react/src/components/Combobox/Combobox.scss';
 </style>

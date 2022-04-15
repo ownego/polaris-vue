@@ -36,5 +36,5 @@ const ariaLabel = isTextOnlySlot.value ? (slots.default && slots.default()[0].ch
 </script>
 
 <style lang="scss">
-@import 'polaris-react/src/components/Subheading/Subheading.scss';
+@import 'polaris/polaris-react/src/components/Subheading/Subheading.scss';
 </style>

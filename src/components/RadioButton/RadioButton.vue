@@ -30,7 +30,7 @@ Choice(
 
 <script setup lang="ts">
 import { ref, computed, useSlots } from 'vue';
-import { classNames } from 'polaris-react/src/utilities/css';
+import { classNames } from 'polaris/polaris-react/src/utilities/css';
 import styles from '@/classes/RadioButton.json';
 import { UseUniqueId } from '@/use';
 import { Choice } from '../Choice';
@@ -118,5 +118,5 @@ const handleKeyup = (): void => {
 </script>
 
 <style lang="scss">
-@import 'polaris-react/src/components/RadioButton/RadioButton.scss';
+@import 'polaris/polaris-react/src/components/RadioButton/RadioButton.scss';
 </style>

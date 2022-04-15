@@ -5,7 +5,7 @@ div(:class="className")
 
 <script setup lang="ts">
 import { computed } from 'vue';
-import { classNames, variationName } from 'polaris-react/src/utilities/css';
+import { classNames, variationName } from 'polaris/polaris-react/src/utilities/css';
 import styles from '@/classes/TextContainer.json';
 
 type Spacing = 'tight' | 'loose';
@@ -23,5 +23,5 @@ const className = computed(() => classNames(styles.TextContainer, spacingClassNa
 </script>
 
 <style lang="scss">
-@import 'polaris-react/src/components/TextContainer/TextContainer.scss';
+@import 'polaris/polaris-react/src/components/TextContainer/TextContainer.scss';
 </style>

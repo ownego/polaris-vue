@@ -5,8 +5,8 @@
     "src/**/*.ts",
     "src/**/*.vue",
     "types/*.ts",
-    "node_modules/polaris-react/**/*.ts",
-    "node_modules/polaris-react/**/*.tsx",
+    "node_modules/polaris/polaris-react/**/*.ts",
+    "node_modules/polaris/polaris-react/**/*.tsx",
   ],
   "exclude": [
     "dist",

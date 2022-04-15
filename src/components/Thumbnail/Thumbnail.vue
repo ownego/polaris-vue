@@ -10,7 +10,7 @@ span(:class="className")
 
 <script setup lang="ts">
 import { computed } from 'vue';
-import { classNames, variationName } from 'polaris-react/src/utilities/css';
+import { classNames, variationName } from 'polaris/polaris-react/src/utilities/css';
 import type { IconSource } from '@/utilities/type';
 import styles from '@/classes/Thumbnail.json';
 import { Image } from '../Image';
@@ -28,6 +28,8 @@ interface Props {
   source: string | IconSource;
   /** Alt text for the thumbnail image */
   alt: string;
+  /** Transparent background */
+  transparent?: boolean;
 }
 
 const props = withDefaults(defineProps<Props>(), {
@@ -40,10 +42,11 @@ const className = computed(() => {
   return classNames(
     styles.Thumbnail,
     size && styles[size],
+    props.transparent && styles.transparent,
   );
 })
 </script>
 
 <style lang="scss">
-@import 'polaris-react/src/components/Thumbnail/Thumbnail.scss';
+@import 'polaris/polaris-react/src/components/Thumbnail/Thumbnail.scss';
 </style>

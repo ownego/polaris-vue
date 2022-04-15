@@ -36,7 +36,7 @@ export default {
 
 <script setup lang="ts">
 import { watch, ref, onMounted, useAttrs } from 'vue';
-import { portal } from 'polaris-react/src/components/shared';
+import { portal } from 'polaris/polaris-react/src/components/shared';
 import { findFirstFocusableNodeIncludingDisabled, focusNextFocusableNode } from '@/utilities/focus';
 import { UseUniqueId } from '@/use';
 import type { PopoverOverlayProps, PopoverAutofocusTarget } from './utils';
@@ -172,5 +172,5 @@ onMounted(() => {
 </script>
 
 <style lang="scss">
-@import 'polaris-react/src/components/Popover/Popover.scss';
+@import 'polaris/polaris-react/src/components/Popover/Popover.scss';
 </style>

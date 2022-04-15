@@ -56,5 +56,5 @@ const showIndicator = ref(!!props.message);
 </script>
 
 <style lang="scss">
-@import 'polaris-react/src/components/TopBar/components/UserMenu/UserMenu.scss';
+@import 'polaris/polaris-react/src/components/TopBar/components/UserMenu/UserMenu.scss';
 </style>

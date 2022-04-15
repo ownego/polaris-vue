@@ -9,5 +9,5 @@ import styles from '@/classes/VisuallyHidden.json';
 </script>
 
 <style lang="scss">
-@import 'polaris-react/src/components/VisuallyHidden/VisuallyHidden.scss';
+@import 'polaris/polaris-react/src/components/VisuallyHidden/VisuallyHidden.scss';
 </style>

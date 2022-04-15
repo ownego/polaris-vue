@@ -286,5 +286,5 @@ function isMenuGroup(
 </script>
 
 <style lang="scss">
-@import 'polaris-react/src/components/ActionMenu/components/Actions/Actions.scss';
+@import 'polaris/polaris-react/src/components/ActionMenu/components/Actions/Actions.scss';
 </style>

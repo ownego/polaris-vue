@@ -83,5 +83,5 @@ const handleOffsetWidth = (width: number) => {
 </script>
 
 <style lang="scss">
-@import 'polaris-react/src/components/ActionMenu/components/MenuGroup/MenuGroup.scss';
+@import 'polaris/polaris-react/src/components/ActionMenu/components/MenuGroup/MenuGroup.scss';
 </style>

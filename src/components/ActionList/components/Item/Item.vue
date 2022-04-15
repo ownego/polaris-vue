@@ -42,7 +42,7 @@ export default {
 
 <script setup lang="ts">
 import { computed } from 'vue';
-import { classNames } from 'polaris-react/src/utilities/css';
+import { classNames } from 'polaris/polaris-react/src/utilities/css';
 import { ScrollTo } from '@/components/Scrollable';
 import { UnstyledLink } from '@/components/UnstyledLink';
 import styles from '@/classes/ActionList.json';

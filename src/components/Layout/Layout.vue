@@ -18,5 +18,5 @@ const props = defineProps<Props>();
 </script>
 
 <style lang="scss">
-@import 'polaris-react/src/components/Layout/Layout.scss';
+@import 'polaris/polaris-react/src/components/Layout/Layout.scss';
 </style>

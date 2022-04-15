@@ -24,5 +24,5 @@ const keyString = computed(() => {
 </script>
 
 <style lang="scss">
-@import 'polaris-react/src/components/KeyboardKey/KeyboardKey.scss';
+@import 'polaris/polaris-react/src/components/KeyboardKey/KeyboardKey.scss';
 </style>
