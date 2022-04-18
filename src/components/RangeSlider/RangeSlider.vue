@@ -1,9 +1,26 @@
 <template lang="pug">
-component(
-  :is="isDualThumb ? DualThumb : SingleThumb",
-  v-model="modelValue",
+DualThumb(
+  v-if="isDualThumb",
+  v-model="(modelValue as [number, number])",
   v-bind="sharedProps",
-  @change="handleChange",
+  @input="handleChange",
+  @focus="emits('focus')",
+  @blur="emits('blur')",
+)
+  template(#label, v-if="slots.label || label")
+    slot(v-if="slots.label", name="label")
+    template(v-else) {{ label }}
+  template(#help-text, v-if="slots['help-text']")
+    slot(name="help-text")
+  template(#prefix, v-if="slots.prefix")
+    slot(name="prefix")
+  template(#suffix, v-if="slots.suffix")
+    slot(name="suffix")
+SingleThumb(
+  v-else,
+  v-model="(modelValue as number)",
+  v-bind="sharedProps",
+  @input="handleChange",
   @focus="emits('focus')",
   @blur="emits('blur')",
 )
@@ -18,7 +35,7 @@ component(
     slot(name="suffix")
 </template>
 <script setup lang="ts">
-import { computed, useSlots } from 'vue';
+import { watch, computed, useSlots } from 'vue';
 import { UseUniqueId } from '@/use';
 import type { LabelledProps } from '@/components/Labelled/utils';
 import type { Error } from '@/utilities/type';
@@ -76,9 +93,19 @@ const sharedProps = computed(() => {
   };
 });
 
-const handleChange = (value: RangeSliderValue) => {
-  emits('change', value, id);
-  emits('update:modelValue', value, id);
+// watch(
+//   () => props.modelValue,
+//   (newVal, oldVal) => {
+//     if (newVal !== oldVal) {
+//       emits('update:modelValue', newVal, id);
+//       emits('change', newVal, id);
+//     }
+//   },
+// );
+
+const handleChange = (value: RangeSliderValue, thumbId: string) => {
+  emits('change', value, thumbId);
+  emits('update:modelValue', value, thumbId);
 };
 </script>
 <style lang="scss">

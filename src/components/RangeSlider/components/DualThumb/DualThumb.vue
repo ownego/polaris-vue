@@ -128,14 +128,9 @@ interface KeyHandlers {
   [key: string]: () => void;
 }
 
-enum Control {
-  Lower,
-  Upper,
-}
-
 const props = defineProps<DualThumbProps>();
 const emits = defineEmits<{
-  (e: 'change', value: DualValue, id: string): void;
+  (e: 'input', value: DualValue, id: string): void;
   (e: 'update:modelValue', value: DualValue, id: string): void;
   (e: 'focus'): void;
   (e: 'blur'): void;
@@ -262,7 +257,7 @@ const handleMouseMoveThumbLower = (event: MouseEvent) => {
   const valueUpper = value.value[1];
   setValue(
     [actualXPosition(event.clientX), valueUpper],
-    Control.Upper,
+    'Upper',
   );
 };
 
@@ -279,7 +274,7 @@ const handleTouchMoveThumbLower = (event: TouchEvent) => {
   const valueUpper = value.value[1];
   setValue(
     [actualXPosition(event.touches[0].clientX), valueUpper],
-    Control.Upper,
+    'Upper',
   );
 };
 
@@ -295,7 +290,7 @@ const handleMouseMoveThumbUpper = (event: MouseEvent) => {
   const valueLower = value.value[0];
   setValue(
     [valueLower, actualXPosition(event.clientX)],
-    Control.Lower,
+    'Lower',
   );
 };
 
@@ -313,7 +308,7 @@ const handleTouchMoveThumbUpper = (event: TouchEvent) => {
   const valueLower = value.value[0];
   setValue(
     [valueLower, actualXPosition(event.touches[0].clientX)],
-    Control.Lower,
+    'Lower',
   );
 };
 
@@ -362,37 +357,37 @@ const handleKeypressUpper = (event: KeyboardEvent) => {
 const incrementValueLower = () => {
   setValue(
     [value.value[0] + props.step, value.value[1]],
-    Control.Upper,
+    'Upper',
   );
 };
 
 const decrementValueLower = () => {
   setValue(
     [value.value[0] - props.step, value.value[1]],
-    Control.Upper,
+    'Upper',
   );
 };
 
 const incrementValueUpper = () => {
   setValue(
     [value.value[0], value.value[1] + props.step],
-    Control.Lower,
+    'Lower',
   );
 };
 
 const decrementValueUpper = () => {
   setValue(
     [value.value[0], value.value[1] - props.step],
-    Control.Lower,
+    'Lower',
   );
 };
 
 const dispatchValue = () => {
-  emits('change', value.value, props.id);
+  emits('input', value.value, props.id);
   emits('update:modelValue', value.value, props.id);
 };
 
-const setValue = (dirtyValue: DualValue, control: Control) => {
+const setValue = (dirtyValue: DualValue, control: 'Upper' | 'Lower') => {
   const sanitizedValue = sanitizeValue(dirtyValue, props.min, props.max, props.step, control);
   if (!isEqual(sanitizedValue, value)) {
     value.value = sanitizedValue;
@@ -411,14 +406,14 @@ const handleMouseDownTrack = (event: MouseEvent) => {
   const distanceFromUpperThumb = Math.abs(value.value[1] - clickXPosition);
 
   if (distanceFromLowerThumb <= distanceFromUpperThumb) {
-    setValue([clickXPosition, value.value[1]], Control.Upper);
+    setValue([clickXPosition, value.value[1]], 'Upper');
     registerMouseMoveHandler(handleMouseMoveThumbLower);
 
     if (thumbLower.value) {
       thumbLower.value.focus();
     }
   } else {
-    setValue([value.value[0], clickXPosition], Control.Lower);
+    setValue([value.value[0], clickXPosition], 'Lower');
     registerMouseMoveHandler(handleMouseMoveThumbUpper);
 
     if (thumbUpper.value) {
@@ -438,14 +433,14 @@ const handleTouchStartTrack = (event: TouchEvent) => {
   const distanceFromUpperThumb = Math.abs(value.value[1] - clickXPosition);
 
   if (distanceFromLowerThumb <= distanceFromUpperThumb) {
-    setValue([clickXPosition, value.value[1]], Control.Upper);
+    setValue([clickXPosition, value.value[1]], 'Upper');
     registerTouchMoveHandler(handleTouchMoveThumbLower);
 
     if (thumbLower.value) {
       thumbLower.value.focus();
     }
   } else {
-    setValue([value.value[0], clickXPosition], Control.Lower);
+    setValue([value.value[0], clickXPosition], 'Lower');
     registerTouchMoveHandler(handleTouchMoveThumbUpper);
 
     if (thumbUpper.value) {
@@ -495,16 +490,16 @@ function sanitizeValue(
   min: number,
   max: number,
   step: number,
-  control = Control.Upper,
+  control = 'Upper',
 ): DualValue {
   let upperValue = inBoundsUpper(roundedToStep(mainValue[1]));
   let lowerValue = inBoundsLower(roundedToStep(mainValue[0]));
   const maxLowerValue = upperValue - step;
   const minUpperValue = lowerValue + step;
 
-  if (control === Control.Upper && lowerValue > maxLowerValue) {
+  if (control === 'Upper' && lowerValue > maxLowerValue) {
     lowerValue = maxLowerValue;
-  } else if (control === Control.Lower && upperValue < minUpperValue) {
+  } else if (control === 'Lower' && upperValue < minUpperValue) {
     upperValue = minUpperValue;
   }
 
