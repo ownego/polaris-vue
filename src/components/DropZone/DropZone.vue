@@ -53,7 +53,7 @@ Labelled(
         :disabled="disabled",
         :multiple="allowMultiple || false",
         :openFileDialog="openFileDialog",
-        @change="handleDrop",
+        @input="handleDrop",
         @focus="handleFocus",
         @blur="handleBlur",
         @file-dialog-close="onFileDialogClose",
