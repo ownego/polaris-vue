@@ -1,7 +1,7 @@
 <template lang="pug">
 DualThumb(
   v-if="isDualThumb",
-  v-model="(modelValue as [number, number])",
+  v-model="dualValue",
   v-bind="sharedProps",
   @input="handleChange",
   @focus="emits('focus')",
@@ -18,7 +18,7 @@ DualThumb(
     slot(name="suffix")
 SingleThumb(
   v-else,
-  v-model="(modelValue as number)",
+  v-model="singleValue",
   v-bind="sharedProps",
   @input="handleChange",
   @focus="emits('focus')",
@@ -35,7 +35,7 @@ SingleThumb(
     slot(name="suffix")
 </template>
 <script setup lang="ts">
-import { watch, computed, useSlots } from 'vue';
+import { computed, useSlots } from 'vue';
 import { UseUniqueId } from '@/use';
 import type { LabelledProps } from '@/components/Labelled/utils';
 import type { Error } from '@/utilities/type';
@@ -85,6 +85,14 @@ const id = useUniqueId('RangeSlider');
 
 const isDualThumb = computed(() => Array.isArray(props.modelValue));
 
+const singleValue = computed<number>(() => isDualThumb.value ? props.modelValue[0] : props.modelValue);
+
+const dualValue = computed<[number, number]>(() => {
+  return isDualThumb.value
+    ? props.modelValue as [number, number]
+    : [props.modelValue as number, (props.modelValue as number) + 1];
+});
+
 const sharedProps = computed(() => {
   const { label, modelValue, ...rest } = props;
   return {
@@ -92,16 +100,6 @@ const sharedProps = computed(() => {
     ...rest,
   };
 });
-
-// watch(
-//   () => props.modelValue,
-//   (newVal, oldVal) => {
-//     if (newVal !== oldVal) {
-//       emits('update:modelValue', newVal, id);
-//       emits('change', newVal, id);
-//     }
-//   },
-// );
 
 const handleChange = (value: RangeSliderValue, thumbId: string) => {
   emits('change', value, thumbId);
