@@ -42,7 +42,7 @@ const slotsElms = computed(() => {
         return;
       }
 
-      if (item.type.toString() === 'Symbol(Fragment)') {
+      if (item.type.toString() === 'Symbol(Fragment)' || item.type.toString() === 'Symbol()') {
         children.forEach(child => {
           items.push(child);
         });
