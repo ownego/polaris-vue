@@ -89,7 +89,7 @@ const props = defineProps<SingleThumbProps>();
 const slots = useSlots();
 
 const emits = defineEmits<{
-  (e: 'change', value: number, id: string): void;
+  (e: 'input', value: number, id: string): void;
   (e: 'update:modelValue', value: number, id: string): void;
   (e: 'focus'): void;
   (e: 'blur'): void;
@@ -128,7 +128,7 @@ const className = computed(() => classNames(
 
 const handleChange = (event: Event) => {
   emits('update:modelValue', parseFloat((event.target as HTMLInputElement).value), props.id);
-  emits('change', parseFloat((event.target as HTMLInputElement).value), props.id);
+  emits('input', parseFloat((event.target as HTMLInputElement).value), props.id);
 }
 </script>
 

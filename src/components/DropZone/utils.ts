@@ -6,7 +6,6 @@ export function fileAccepted(file: File, accept: string | undefined) {
 
 export function getDataTransferFiles(event: DragEvent | Event) {
   if (isDragEvent(event) && event.dataTransfer) {
-    console.log('drag');
     const dt = event.dataTransfer;
 
     if (dt.files && dt.files.length) {

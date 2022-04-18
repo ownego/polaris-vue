@@ -28,7 +28,7 @@ const props = defineProps<DropZoneInputProps>();
 const emits = defineEmits<{
   (e: 'focus'): void;
   (e: 'blur'): void;
-  (e: 'change', event: Event): void;
+  (e: 'input', event: Event): void;
   (e: 'file-dialog-close'): void;
 }>();
 
@@ -61,7 +61,7 @@ const handleChange = (event: Event) => {
   if (!files) {
     return;
   }
-  emits('change', event);
+  emits('input', event);
 };
 
 const handleFocus = () => {
