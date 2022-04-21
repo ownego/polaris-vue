@@ -1,5 +1,5 @@
 import type { LabelledProps } from '@/components/Labelled/utils';
-import type { Error } from '@/utilities/type';
+import type { ErrorType } from '@/utilities/type';
 
 export type DualValue = [number, number];
 
@@ -23,7 +23,7 @@ export interface RangeSliderProps {
   /** Provide a tooltip while sliding, indicating the current value */
   output?: boolean;
   /** Display an error message */
-  error?: Error;
+  error?: ErrorType;
   /** Disable input */
   disabled?: boolean;
 }

@@ -93,7 +93,7 @@ import isEqual from 'lodash/isEqual';
 import { classNames } from 'polaris/polaris-react/src/utilities/css';
 import { Labelled, EventListener } from '@/components';
 import type { LabelledProps } from '@/components/Labelled/utils';
-import type { Error } from '@/utilities/type';
+import type { ErrorType } from '@/utilities/type';
 import { labelID } from '@/components/Label/utils';
 import { Key } from '@/components/KeypressListener/utils';
 import { hasSlot } from '@/utilities/has-slot';
@@ -119,7 +119,7 @@ interface DualThumbProps {
   /** Provide a tooltip while sliding, indicating the current value */
   output?: boolean;
   /** Display an error message */
-  error?: Error;
+  error?: ErrorType;
   /** Disable input */
   disabled?: boolean;
 }

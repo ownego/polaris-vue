@@ -163,7 +163,7 @@ import { UseUniqueId } from '@/use';
 import styles from '@/classes/TextField.json';
 import CircleCancelMinor from '@icons/CircleCancelMinor.svg';
 import type { LabelledProps } from '../Labelled/utils';
-import type { Error } from '@/utilities/type';
+import type { ErrorType } from '@/utilities/type';
 import { helpTextID, labelID } from '../Labelled/utils';
 import { Resizer, Spinner as TextFieldSpinner } from './components';
 import { Connected } from '../Connected';
@@ -222,7 +222,7 @@ interface NonMutuallyExclusiveProps {
   /** Allow for multiple lines of input */
   multiline?: boolean | number;
   /** Error to display beneath the label */
-  error?: Error | boolean;
+  error?: ErrorType | boolean;
   /** Determine type of input */
   type?: Type;
   /** Name of the input */
@@ -561,7 +561,7 @@ const handleKeyPress = (event: KeyboardEvent): void => {
   event.preventDefault();
 };
 
-const handleOnFocus = (event: FocusEvent): void => { 
+const handleOnFocus = (event: FocusEvent): void => {
   if (props.selectTextOnFocus && !props.suggestion) {
     const input = props.multiline ? textAreaRef : inputRef;
     input.value?.select();
