@@ -33,7 +33,7 @@ PolarisTextField(
 import { inject, computed, watch } from 'vue';
 import { UseUniqueId } from '@/use';
 import type { ComboboxTextFieldType } from '@/utilities/interface';
-import type { ErrorType } from '@/utilities/type';
+import type { Error } from '@/utilities/type';
 import type { LabelledProps } from '../../../Labelled/utils'
 import { labelID } from '../../../Label/utils';
 import { TextField as PolarisTextField } from '../../../TextField';
@@ -89,7 +89,7 @@ interface TextFieldProps {
   /** Allow for multiple lines of input */
   multiline?: boolean | number;
   /** Error to display beneath the label */
-  error?: ErrorType | boolean;
+  error?: Error;
   /** Determine type of input */
   type?: Type;
   /** Name of the input */
