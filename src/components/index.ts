@@ -66,6 +66,7 @@ export * from './SkeletonPage';
 export * from './Spinner';
 export * from './Stack';
 export * from './Subheading';
+export * from './Tabs';
 export * from './Toast';
 export * from './Tooltip';
 export * from './Tag';
