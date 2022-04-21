@@ -53,7 +53,7 @@ Labelled(
         :disabled="disabled",
         :multiple="allowMultiple || false",
         :openFileDialog="openFileDialog",
-        @change="handleDrop",
+        @input="handleDrop",
         @focus="handleFocus",
         @blur="handleBlur",
         @file-dialog-close="onFileDialogClose",
@@ -63,7 +63,7 @@ Labelled(
 </template>
 
 <script setup lang="ts">
-import { computed, inject, onBeforeUnmount, onMounted, provide, reactive, ref, useAttrs, useSlots, watch } from 'vue';
+import { computed, inject, onBeforeUnmount, onMounted, provide, reactive, ref, useAttrs, useSlots } from 'vue';
 import debounce from 'lodash/debounce';
 import UploadMajor from '@icons/UploadMajor.svg';
 import CircleAlertMajor from '@icons/CircleAlertMajor.svg';

@@ -23,6 +23,7 @@ div(:class="styles.FormLayout")
 
 <script setup lang="ts">
 import { computed, onBeforeUpdate, onMounted, ref, useSlots } from 'vue';
+import type { VNodeArrayChildren } from 'vue';
 import styles from '@/classes/FormLayout.json';
 import { Item } from './components';
 
@@ -33,21 +34,24 @@ const itemGroupIndexes = ref<boolean[]>([]);
 const slots = useSlots();
 
 const slotsElms = computed(() => {
-  const elms: any[] = [];
-  const defaultSlot = slots.default && slots.default();
+  const items : VNodeArrayChildren = [];
+  if (slots.default) {
+    slots.default().map(item => {
+      const children = item.children as VNodeArrayChildren;
+      if (typeof children === 'string' && children === 'v-if') {
+        return;
+      }
 
-  // Nothing in the default slot
-  if (!defaultSlot || !defaultSlot.length) { return elms; }
-
-  for (let i = 0; i < defaultSlot.length; i++) {
-    if (defaultSlot[i].type.toString() === 'Symbol()') {
-      elms.push(defaultSlot[i].children);
-    } else {
-      elms.push(defaultSlot[i]);
-    }
+      if (item.type.toString() === 'Symbol(Fragment)' || item.type.toString() === 'Symbol()') {
+        children.forEach(child => {
+          items.push(child);
+        });
+      } else {
+        items.push(item);
+      }
+    });
   }
-
-  return elms;
+  return items;
 });
 
 onBeforeUpdate(() => {

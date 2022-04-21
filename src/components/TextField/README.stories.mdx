@@ -727,7 +727,7 @@ Use when input text should be aligned right.
 export const RightAlignedField = (args, { argTypes }) => ({
   components: { TextField, Stack, StackItem },
   template: `
-  <Stack>
+  <Stack alignment="center">
     <StackItem :fill="true">
       Price
     </StackItem>
@@ -753,7 +753,7 @@ RightAlignedField.parameters = {
     source: {
       state: 'close',
       code: dedent`
-      <Stack>
+      <Stack alignment="center">
         <StackItem :fill="true">
           Price
         </StackItem>

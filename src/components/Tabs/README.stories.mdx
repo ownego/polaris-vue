@@ -1,0 +1,162 @@
+import { Meta, Story, Canvas, ArgsTable } from "@storybook/addon-docs";
+import { ref } from 'vue';
+import { Card, Tabs, Badge, CardSection } from "@/polaris-vue";
+import dedent from "ts-dedent";
+
+<Meta
+  title="Components / Navigation / Tabs"
+  component={Tabs}
+  argTypes={{
+    default: {
+      table: {
+        disable: true,
+      },
+    },
+    selected: {
+      control: { disable: true },
+    },
+    tabs: {
+      table: {
+        type: { summary: 'TabDescriptor[]' },
+      },
+      control: { disable: true },
+    },
+    select: {
+      table: { type: {
+        summary: '(selectedTabIndex: number) => void',
+      }},
+    },
+    '#tab-id': {
+      description: 'Slot to show content of the tab. This slot will override the `content` prop of tab.',
+      table: {
+        category: 'slots',
+        type: { summary: null },
+      },
+    }
+  }}
+/>
+
+# Tabs
+
+Use to alternate among related views within the same context.
+
+<br/>
+
+export const Template = (args) => ({
+  components: { Tabs, CardSection, Badge, Card },
+  setup() {
+    const selectedTab = ref(0);
+    const handleTabChange = (selectedTabIndex) => {
+      selectedTab.value = selectedTabIndex;
+    };
+    const tabs = [
+      {
+        id: 'all-customers-1',
+        content: 'All',
+        accessibilityLabel: 'All customers',
+        panelID: 'all-customers-content-1',
+      },
+      {
+        id: 'accepts-marketing-1',
+        content: 'Accepts marketing',
+        panelID: 'accepts-marketing-content-1',
+      },
+      {
+        id: 'repeat-customers-1',
+        content: 'Repeat customers',
+        panelID: 'repeat-customers-content-1',
+      },
+    ]
+    return { args, selectedTab, handleTabChange, tabs };
+  },
+  template: `
+    <Card>
+      <Tabs :tabs="tabs" :selected="selectedTab" @select="handleTabChange" v-bind="args">
+        <template #all-customers-1>
+          <span>All <Badge status="new">10+</Badge></span>
+        </template>
+        <CardSection :title="tabs[selectedTab].content">
+          <p v-if="selectedTab === 1">This is specific content of second tab</p>
+          <p v-else>Tab {{ selectedTab }} selected</p>
+        </CardSection>
+      </Tabs>
+    </Card>
+  `,
+});
+
+<Canvas>
+  <Story
+    name="Tabs"
+    height="200px"
+    args={{
+      fitted: false,
+    }}
+    parameters={{
+      docs: {
+        source: {
+          state: 'close',
+          code: dedent`
+            <Card>
+              <Tabs :tabs="tabs" :selected="selectedTab" @select="handleTabChange">
+                <template #all-customers-1>
+                  <span>All <Badge status="new">10+</Badge></span>
+                </template>
+                <CardSection :title="tabs[selectedTab].content">
+                  <p v-if="selectedTab === 1">This is specific content of second tab</p>
+                  <p v-else>Tab {{ selectedTab }} selected</p>
+                </CardSection>
+              </Tabs>
+            </Card>\n
+            <script setup>
+              const selectedTab = ref(0);
+              const handleTabChange = (selectedTabIndex) => {
+                selectedTab.value = selectedTabIndex;
+              };
+              const tabs = [
+                {
+                  id: 'all-customers-1',
+                  content: 'All',
+                  accessibilityLabel: 'All customers',
+                  panelID: 'all-customers-content-1',
+                },
+                {
+                  id: 'accepts-marketing-1',
+                  content: 'Accepts marketing',
+                  panelID: 'accepts-marketing-content-1',
+                },
+                {
+                  id: 'repeat-customers-1',
+                  content: 'Repeat customers',
+                  panelID: 'repeat-customers-content-1',
+                },
+              ];
+            </script>
+          `,
+        },
+      },
+    }}
+  >
+    {Template.bind({})}
+  </Story>
+</Canvas>
+
+<ArgsTable story="Tabs" />
+
+---
+
+<br/>
+
+### **TabDescriptor Props**
+
+```js
+/** A unique identifier for the tab */
+id: string;
+/** A destination to link to */
+url?: string;
+/** Content for the tab */
+content: string;
+/** A unique identifier for the panel */
+panelID?: string;
+/** Visually hidden text for screen readers */
+accessibilityLabel?: string;
+```

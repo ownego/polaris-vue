@@ -1,7 +1,7 @@
 <template lang="pug">
 div(:class="className")
   div(
-    v-if="slots.title || actions",
+    v-if="title || hasSlot(slots.title) || actions",
     :class="styles.SectionHeader",
   )
     Stack(v-if="actions", noItemWrap, alignment="baseline")
@@ -11,7 +11,8 @@ div(:class="className")
           name="title",
         )
         Subheading(v-else)
-          slot(name="title")
+          slot(v-if="hasSlot(slots.title)", name="title")
+          template(v-else) {{ title }}
       ButtonGroup
         ButtonFrom(
           v-for="action, index in actions",
@@ -23,7 +24,8 @@ div(:class="className")
     template(v-else)
       slot(v-if="!isTextOnlyTitle", name="title")
       Subheading(v-else)
-        slot(name="title")
+        slot(v-if="hasSlot(slots.title)", name="title")
+        template(v-else) {{ title }}
   slot
 </template>
 <script setup lang="ts">
@@ -32,9 +34,11 @@ import { classNames } from 'polaris/polaris-react/src/utilities/css';
 import type { ComplexAction } from '@/utilities/interface';
 import { ButtonGroup, Stack, StackItem, Subheading } from '@/components';
 import { ButtonFrom } from '@/components/Button';
+import { hasSlot } from '@/utilities/has-slot';
 import styles from '@/classes/Card.json';
 
 interface CardSectionProps {
+  title?: string;
   subdued?: boolean;
   flush?: boolean;
   fullWidth?: boolean;
@@ -69,6 +73,6 @@ const isTextOnlyTitle = computed(() => {
     }
   }
 
-  return false;
+  return true;
 });
 </script>

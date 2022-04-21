@@ -8,8 +8,16 @@ import OrdersMinor from '@icons/OrdersMinor.svg';
   title="Components / Structure / Card"
   component={ Card }
   argTypes={{
+    propTitle: {
+      name: 'title',
+      description: 'Title content for the card.',
+      table: {
+        category: 'props',
+        type: { summary: 'string' },
+      },
+    },
     title: {
-      description: 'Title content for the card',
+      description: 'Title content for the card. This will overwrite the `title` prop.',
       table: { type: { summary: null } },
       control: { disable: true },
     },
@@ -294,3 +302,57 @@ Cards are used to group similar concepts and tasks together to make Shopify easi
 </Canvas>
 
 <ArgsTable story="Card" />
+
+---
+
+<br/>
+
+### **CardSection Props**
+
+| Prop             | Type                          | Description |
+| ---------------- | ----------------------------- | ----------- |
+| title?           | String     | The title of the section. |
+| subdued?         | Boolean    | A less prominent card. |
+| flush?           | Boolean    | |
+| fullWidth?       | Boolean    | |
+| hideOnPrint?     | Boolean    | Allow the card to be hidden when printing. |
+| actions?         | ComplexAction[]     |
+
+| Slots            | Description |
+| ---------------- | ----------- |
+| #title           | The title of the section. This will overwrite the prop `title` if existed. |
+
+<br/>
+
+### **ComplexAction types**
+
+```js
+/** A unique identifier for the action */
+id?: string;
+/** Content the action displays */
+content?: string;
+/** Visually hidden text for screen readers */
+accessibilityLabel?: string;
+/** A destination to link to, rendered in the action */
+url?: string;
+/** Forces url to open in a new tab */
+external?: boolean;
+/** Whether or not the action is disabled */
+disabled?: boolean;
+/** Destructive action */
+destructive?: boolean;
+/** Source of the icon */
+icon?: IconSource;
+/** Should action be displayed as an outlined button */
+outline?: boolean;
+/** Should a spinner be displayed */
+loading?: boolean;
+/** Should action be displayed as a plain link */
+plain?: boolean;
+/** Callback when an action takes place */
+onAction?(): void;
+/** Callback when mouse enter */
+onMouseEnter?(): void;
+/** Callback when element is touched */
+onTouchStart?(): void;
+```

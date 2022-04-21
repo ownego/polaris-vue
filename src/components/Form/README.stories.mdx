@@ -1,0 +1,131 @@
+import dedent from 'ts-dedent';
+import { Meta, Story, Canvas, ArgsTable } from '@storybook/addon-docs';
+
+import { Form, FormLayout, Checkbox, Button, TextField } from '@/polaris-vue';
+
+<Meta
+  title="Components / Forms / Form"
+  component={ Form }
+  argTypes={{
+    default: {
+      table: {
+        disable: true,
+      },
+    },
+    implicitSubmit: {
+      table: {
+        type: {
+          summary: null,
+        },
+      },
+    },
+    preventDefault: {
+      table: {
+        type: {
+          summary: null,
+        },
+      },
+    },
+    encType: {
+      table: { type: {
+        summary: 'application/x-www-form-urlencoded | multipart/form-data | text/plain',
+      }},
+    },
+    submit: {
+      description: 'Callback when form is submitted',
+      control: { disable: true },
+    },
+  }}
+/>
+
+export const Template = (args) => ({
+  components: { Form, FormLayout, Checkbox, Button, TextField },
+  data() {
+    return {
+      checkbox: false,
+      textField: '',
+    };
+  },
+  setup() { return { args }; },
+  methods: {
+    handleSubmit(event) {
+      event.preventDefault();
+      alert(`Form submitted - Checkbox: ${this.checkbox} - email: ${this.textField}`);
+      this.checkbox = false;
+      this.textField = '';
+    },
+  },
+  template: `<Form @submit="handleSubmit">
+    <FormLayout>
+      <Checkbox id="signUpCheckbox" v-model="checkbox">
+        <template #label>Sign up for the Polaris newsletter</template>
+      </Checkbox>
+      <TextField v-model="textField" type="email" autoComplete="email">
+        <template #label>Email</template>
+        <template #help-text>
+          <span>
+            We'll use this email address to inform you on future changes to
+            Polaris.
+          </span>
+        </template>
+      </TextField>
+      <Button primary submit>Submit</Button>
+    </FormLayout>
+  </Form>`,
+});
+
+# Form
+
+A wrapper component that handles the submission of forms.
+
+<Canvas>
+  <Story
+    name="Form"
+    height="200px"
+    parameters={{
+      docs: {
+        source: {
+          code: dedent`
+            <Form @submit="handleSubmit" data-submit="handleSubmit">
+              <FormLayout>
+                <Checkbox id="signUpCheckbox" v-model="checkbox">
+                  <template #label>Sign up for the Polaris newsletter</template>
+                </Checkbox>
+                <TextField v-model="textField" type="email" autoComplete="email">
+                  <template #label>Email</template>
+                  <template #help-text>
+                    <span>
+                      We'll use this email address to inform you on future changes to
+                      Polaris.
+                    </span>
+                  </template>
+                </TextField>
+                <Button primary submit>Submit</Button>
+              </FormLayout>
+            </Form>\n
+            <script>
+              data() {
+                return {
+                  checkbox: false,
+                  textField: '',
+                };
+              },
+              methods: {
+                handleSubmit(event) {
+                  event.preventDefault();
+                  alert(\`Form submitted - Checkbox: \${this.checkbox} - email: \${this.textField}\`);
+                  this.checkbox = false;
+                  this.textField = '';
+                },
+              },
+            </script>
+          `,
+        },
+      },
+    }}
+  >
+    {Template.bind({})}
+  </Story>
+</Canvas>
+
+<ArgsTable story="Form"/>

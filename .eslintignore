@@ -9,3 +9,4 @@ src/**/*.css
 package.json
 README.md
 .storybook
+yarn.lock
