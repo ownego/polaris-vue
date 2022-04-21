@@ -1,11 +1,12 @@
 <template lang="pug">
 div(:class="className")
   Header(
-    v-if="slots.title || actions",
+    v-if="title || hasSlot(slots.title) || actions",
     :actions="actions",
   )
     template(#title)
-      slot(name="title")
+      slot(v-if="hasSlot(slots.title)", name="title")
+      template(v-else) {{ title }}
   Section(v-if="sectioned")
     slot
   slot(v-else)
@@ -63,9 +64,12 @@ import styles from '@/classes/Card.json';
 import { ButtonGroup, ActionList, Button, Popover } from '@/components';
 import { ButtonFrom } from '@/components/Button';
 import type { DisableableAction, ComplexAction } from '@/utilities/interface';
+import { hasSlot } from '@/utilities/has-slot';
 import { Header, Section } from './components';
 
 export interface CardProps {
+  /** Title content for the card **/
+  title?: string;
   /** A less prominent card */
   subdued?: boolean;
   /** Auto wrap content in section */

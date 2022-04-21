@@ -10,3 +10,4 @@ package.json
 README.md
 .storybook
 yarn.lock
+tsconfig.json

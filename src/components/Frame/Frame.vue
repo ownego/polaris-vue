@@ -292,7 +292,8 @@ const hideToast = ({ id }: ToastID) => {
 };
 
 const setContextualSaveBar = (saveBarProps: ContextualSaveBarProps) => {
-  contextualSaveBar.value = { ...saveBarProps };
+  const { contextControl, secondaryMenu, ...rest } = saveBarProps;
+  contextualSaveBar.value = rest;
   if (!showContextualSaveBar.value) {
     showContextualSaveBar.value = true;
   }
