@@ -1,6 +1,6 @@
 {
   "name": "@qikify/polaris-vue",
-  "version": "0.5.8",
+  "version": "0.5.9",
   "polaris_version": "9.4.0",
   "description": "Shopify Polaris UI library for Vue 3",
   "author": {
