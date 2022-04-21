@@ -43,7 +43,7 @@ import { computed, useSlots } from 'vue';
 import { classNames } from 'polaris/polaris-react/src/utilities/css';
 import { UseUniqueId } from '@/use';
 import styles from '@/classes/ChoiceList.json';
-import type { Error } from '@/utilities/type';
+import type { ErrorType } from '@/utilities/type';
 import { Checkbox } from '../Checkbox';
 import { RadioButton } from '../RadioButton';
 import { InlineError } from '../InlineError';
@@ -70,7 +70,7 @@ interface Props {
   /** Toggles display of the title */
   titleHidden?: boolean;
   /** Display an error message */
-  error?: Error;
+  error?: ErrorType;
   /** Disable all choices */
   disabled?: boolean;
 }

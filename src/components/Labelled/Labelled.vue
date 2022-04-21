@@ -42,7 +42,7 @@ div(:class="className")
 import { computed } from 'vue';
 import { classNames } from 'polaris/polaris-react/src/utilities/css';
 import styles from '@/classes/Labelled.json';
-import type { Action, Error } from '@/utilities/type';
+import type { Action, ErrorType } from '@/utilities/type';
 import { ButtonFrom } from '@/components';
 import type { LabelProps } from '../Label/utils';
 import { Label } from '../Label';
@@ -53,7 +53,7 @@ interface LabelledProps {
   /** A unique identifier for the label */
   id: LabelProps['id'];
   /** Error to display beneath the label */
-  error?: Error | boolean;
+  error?: ErrorType | boolean;
   /** An action */
   action?: Action;
   /** Visually hide the label */

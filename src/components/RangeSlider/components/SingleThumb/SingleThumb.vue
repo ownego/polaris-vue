@@ -60,7 +60,7 @@ import styles from '@/classes/RangeSlider-SingleThumb.json';
 import sharedStyles from '@/classes/RangeSlider.json';
 
 import type { LabelledProps } from '@/components/Labelled/utils';
-import type { Error } from '@/utilities/type';
+import type { ErrorType } from '@/utilities/type';
 
 interface SingleThumbProps {
   /** Adds an action to the label */
@@ -80,7 +80,7 @@ interface SingleThumbProps {
   /** Provide a tooltip while sliding, indicating the current value */
   output?: boolean;
   /** Display an error message */
-  error?: Error;
+  error?: ErrorType;
   /** Disable input */
   disabled?: boolean;
 }
@@ -90,7 +90,6 @@ const slots = useSlots();
 
 const emits = defineEmits<{
   (e: 'input', value: number, id: string): void;
-  (e: 'update:modelValue', value: number, id: string): void;
   (e: 'focus'): void;
   (e: 'blur'): void;
 }>();
@@ -127,7 +126,6 @@ const className = computed(() => classNames(
 ));
 
 const handleChange = (event: Event) => {
-  emits('update:modelValue', parseFloat((event.target as HTMLInputElement).value), props.id);
   emits('input', parseFloat((event.target as HTMLInputElement).value), props.id);
 }
 </script>

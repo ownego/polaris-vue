@@ -46,7 +46,7 @@ import { UseUniqueId } from '@/use';
 import MinusMinor from '@icons/MinusMinor.svg';
 import TickSmallMinor from '@icons/TickSmallMinor.svg';
 import styles from '@/classes/Checkbox.json';
-import type { Error } from '@/utilities/type';
+import type { ErrorType } from '@/utilities/type';
 import { Key } from '../KeypressListener/utils';
 import { errorTextID } from '../InlineError/utils';
 import { Choice } from '../Choice';
@@ -73,7 +73,7 @@ interface Props {
   /** Value for v-model binding */
   modelValue?: string | boolean;
   /** Display an error message */
-  error?: Error | boolean;
+  error?: ErrorType | boolean;
 }
 
 const isWithinListbox = inject<boolean>('withinListboxContext', false);

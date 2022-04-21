@@ -38,7 +38,7 @@ SingleThumb(
 import { computed, useSlots } from 'vue';
 import { UseUniqueId } from '@/use';
 import type { LabelledProps } from '@/components/Labelled/utils';
-import type { Error } from '@/utilities/type';
+import type { ErrorType } from '@/utilities/type';
 import type { RangeSliderValue } from './types';
 import { SingleThumb, DualThumb } from './components';
 
@@ -60,7 +60,7 @@ interface RangeSliderProps {
   /** Provide a tooltip while sliding, indicating the current value */
   output?: boolean;
   /** Display an error message */
-  error?: Error;
+  error?: ErrorType;
   /** Disable input */
   disabled?: boolean;
 }

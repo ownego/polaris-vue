@@ -16,13 +16,13 @@ div(
 <script setup lang="ts">
 import AlertMinor from '@icons/AlertMinor.svg';
 import styles from '@/classes/InlineError.json';
-import type { Error } from '@/utilities/type';
+import type { ErrorType } from '@/utilities/type';
 import { errorTextID } from './utils';
 import { Icon } from '../Icon';
 
 interface Props {
   /** Content briefly explaining how to resolve the invalid form field input. */
-  message: Error;
+  message: ErrorType;
   /** Unique identifier of the invalid form field that the message describes */
   fieldID: string;
 }
