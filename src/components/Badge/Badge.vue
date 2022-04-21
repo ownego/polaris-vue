@@ -1,6 +1,6 @@
 <template lang="pug">
 span(:class="className")
-  span(v-if="hasIcon", :class="styles.Icon")
+  span(v-if="!progress && icon", :class="styles.Icon")
     Icon(:source="icon")
   template(v-if="hasAccessibilityLabel")
     span(
@@ -18,6 +18,7 @@ import { inject, ref, computed, onMounted } from 'vue';
 import { classNames, variationName } from 'polaris/polaris-react/src/utilities/css';
 import styles from '@/classes/Badge.json';
 import type { IconSource } from '@/utilities/type';
+import { Icon } from '../Icon';
 import { VisuallyHidden } from '../VisuallyHidden';
 
 type Status = 'info' | 'success' | 'attention' | 'warning' | 'critical' | 'new';
@@ -67,10 +68,6 @@ const hasAccessibilityLabel= computed(() => props.statusAndProgressLabelOverride
 );
 const accessibilityLabel = computed(() => props.statusAndProgressLabelOverride
   || `${statusLabel.value} ${progressLabel.value}`);
-
-const hasIcon = computed(() => {
-  return !props.progress && props.icon;
-});
 
 onMounted(() => {
   switch (props.progress) {
