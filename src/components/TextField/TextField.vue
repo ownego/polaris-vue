@@ -163,7 +163,7 @@ import { UseUniqueId } from '@/use';
 import styles from '@/classes/TextField.json';
 import CircleCancelMinor from '@icons/CircleCancelMinor.svg';
 import type { LabelledProps } from '../Labelled/utils';
-import type { ErrorType } from '@/utilities/type';
+import type { Error } from '@/utilities/type';
 import { helpTextID, labelID } from '../Labelled/utils';
 import { Resizer, Spinner as TextFieldSpinner } from './components';
 import { Connected } from '../Connected';
@@ -222,7 +222,7 @@ interface NonMutuallyExclusiveProps {
   /** Allow for multiple lines of input */
   multiline?: boolean | number;
   /** Error to display beneath the label */
-  error?: ErrorType | boolean;
+  error?: Error;
   /** Determine type of input */
   type?: Type;
   /** Name of the input */

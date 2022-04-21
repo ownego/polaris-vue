@@ -39,7 +39,7 @@ label(
 import { computed } from 'vue';
 import { classNames } from 'polaris/polaris-react/src/utilities/css';
 import styles from '@/classes/Choice.json';
-import type { ErrorType } from '@/utilities/type';
+import type { Error } from '@/utilities/type';
 import { helpTextID } from './utils';
 import { InlineError } from '../InlineError';
 
@@ -49,7 +49,7 @@ interface Props {
   /** Whether the associated form control is disabled */
   disabled?: boolean;
   /** Display an error message */
-  error?: ErrorType | boolean;
+  error?: Error;
   /** Visually hide the label */
   labelHidden?: boolean;
 }
