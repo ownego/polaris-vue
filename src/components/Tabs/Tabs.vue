@@ -136,7 +136,7 @@ div
     )
 </template>
 <script setup lang="ts">
-import { ref, computed, useSlots, inject, onMounted, onUpdated } from 'vue';
+import { ref, computed, useSlots, inject, onMounted } from 'vue';
 import { classNames } from 'polaris/polaris-react/src/utilities/css';
 import {
   Icon,
