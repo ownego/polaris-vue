@@ -48,7 +48,7 @@ import { UnstyledButton } from '../UnstyledButton';
 import { Icon } from '../Icon';
 import { Spinner } from '../Spinner';
 import type { IconSource } from '@/utilities/type';
-import { capitalize } from 'lodash';
+import { capitalize } from '@/utilities/capitalize';
 
 interface Props {
   commonProps?: CommonButtonProps;

@@ -38,7 +38,7 @@ ul(
 import {
   provide, inject, ref, computed, watch, onUpdated, useSlots,
 } from 'vue';
-import debounce from 'lodash/debounce';
+import { debounce } from 'polaris/polaris-react/src/utilities/debounce';
 import { classNames } from 'polaris/polaris-react/src/utilities/css';
 import { scrollable } from 'polaris/polaris-react/src/components/shared';
 import { UseUniqueId } from '@/use';
@@ -211,7 +211,7 @@ const handleChangeActiveOption = (
     handleScrollIntoViewDebounced(nextOption);
     activeOption = nextOption;
     setActiveOptionId?.(nextOption.domId);
-  
+
     emits('on-active-option-change', nextOption.value);
   }
 };

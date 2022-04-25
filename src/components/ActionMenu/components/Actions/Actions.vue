@@ -41,7 +41,7 @@ div(
 
 <script setup lang="ts">
 import { inject, ref, computed, onUpdated } from 'vue';
-import debounce from 'lodash/debounce';
+import { debounce } from 'polaris/polaris-react/src/utilities/debounce';
 import styles from '@/classes/ActionMenu-Actions.json';
 import { ButtonGroup, EventListener } from '@/components';
 import type { ActionListItemDescriptor } from '@/components/ActionList/utils';

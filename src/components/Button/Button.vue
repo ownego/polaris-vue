@@ -55,7 +55,7 @@ import {
 import { classNames, variationName } from 'polaris/polaris-react/src/utilities/css';
 import CaretDownMinor from '@icons/CaretDownMinor.svg';
 import { handleMouseUpByBlurring } from '@/utilities/focus';
-import { capitalize } from 'lodash';
+import { capitalize } from '@/utilities/capitalize';
 import type { IconSource } from '@/utilities/type';
 import styles from '@/classes/Button.json';
 import type { ConnectedDisclosure } from './utils';

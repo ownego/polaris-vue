@@ -7,7 +7,7 @@ CustomProperties(:color-scheme="colorScheme")
 
 <script setup lang="ts">
 import { provide, ref, onMounted, watch } from 'vue';
-import debounce from 'lodash/debounce';
+import { debounce } from 'polaris/polaris-react/src/utilities/debounce';
 import { ScrollLockManager } from 'polaris/polaris-react/src/utilities/scroll-lock-manager/scroll-lock-manager';
 import { UniqueIdFactory, globalIdGeneratorFactory } from 'polaris/polaris-react/src/utilities/unique-id/unique-id-factory';
 import { navigationBarCollapsed } from 'polaris/polaris-react/src/utilities/breakpoints';

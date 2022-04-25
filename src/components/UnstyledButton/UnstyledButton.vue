@@ -36,7 +36,7 @@ export default {
 import { computed, useAttrs } from 'vue';
 import { UnstyledLink } from '@/components/UnstyledLink';
 import { handleMouseUpByBlurring } from '@/utilities/focus';
-import { capitalize } from 'lodash';
+import { capitalize } from '@/utilities/capitalize';
 
 interface Props {
   id?: string;

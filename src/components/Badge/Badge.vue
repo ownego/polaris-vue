@@ -1,29 +1,29 @@
 <template lang="pug">
 span(:class="className")
-  span(v-if="!progress && icon", :class="styles.Icon")
-    Icon(:source="icon")
-  template(v-if="hasAccessibilityLabel")
-    span(
-      v-if="progressLabel",
-      :class="styles.Pip",
+  span(v-if="progress && !icon", :class="styles.PipContainer")
+    Pip(
+      :progress="progress",
+      :status="status",
+      :accessibilityLabelOverride="accessibilityLabel",
     )
-      VisuallyHidden {{ accessibilityLabel }}
-    VisuallyHidden(v-else) {{ accessibilityLabel }}
+  template(v-if="hasAccessibilityLabel")
+    VisuallyHidden {{ accessibilityLabel }}
+  span(v-if="icon", :class="styles.Icon")
+    Icon(:source="icon")
   span(v-if="$slots.default")
     slot
 </template>
 
 <script setup lang="ts">
-import { inject, ref, computed, onMounted } from 'vue';
+import { inject, ref, computed } from 'vue';
 import { classNames, variationName } from 'polaris/polaris-react/src/utilities/css';
 import styles from '@/classes/Badge.json';
 import type { IconSource } from '@/utilities/type';
 import { Icon } from '../Icon';
+import { Pip } from './components/Pip';
 import { VisuallyHidden } from '../VisuallyHidden';
-
-type Status = 'info' | 'success' | 'attention' | 'warning' | 'critical' | 'new';
-type Progress = 'incomplete' | 'partiallyComplete' | 'complete';
-type Size = 'small' | 'medium';
+import { getDefaultAccessibilityLabel } from './utils';
+import type { Progress, Size, Status } from './utils';
 
 interface BadgeProps {
   /** Colors and labels the badge with the given status. */
@@ -41,7 +41,6 @@ interface BadgeProps {
   icon?: IconSource;
 }
 
-// eslint-disable-next-line vue/no-setup-props-destructure
 const props = withDefaults(defineProps<BadgeProps>(), {
   size: 'medium',
 });
@@ -56,8 +55,7 @@ const statusLabel = ref('');
 const className = computed(() => classNames(
   styles.Badge,
   props.status && styles[variationName('status', props.status) as keyof typeof styles],
-  props.progress && styles[variationName('progress', props.progress) as keyof typeof styles],
-  // hasIcon.value && styles.icon,
+  // props.icon && styles.icon,
   props.size && props.size !== DEFAULT_SIZE && styles[variationName('size', props.size) as keyof typeof styles],
   withinFilter && styles.withinFilter,
 ));
@@ -67,46 +65,9 @@ const hasAccessibilityLabel= computed(() => props.statusAndProgressLabelOverride
   || progressLabel.value,
 );
 const accessibilityLabel = computed(() => props.statusAndProgressLabelOverride
-  || `${statusLabel.value} ${progressLabel.value}`);
-
-onMounted(() => {
-  switch (props.progress) {
-  case 'incomplete':
-    progressLabel.value = 'incomplete';
-    break;
-  case 'partiallyComplete':
-    progressLabel.value = 'partiallyComplete';
-    break;
-  case 'complete':
-    progressLabel.value = 'complete';
-    break;
-  default:
-    break;
-  }
-
-  switch (props.status) {
-  case 'info':
-    statusLabel.value = 'info';
-    break;
-  case 'success':
-    statusLabel.value = 'success';
-    break;
-  case 'warning':
-    statusLabel.value = 'warning';
-    break;
-  case 'critical':
-    statusLabel.value = 'critical';
-    break;
-  case 'attention':
-    statusLabel.value = 'attention';
-    break;
-  case 'new':
-    statusLabel.value = 'new';
-    break;
-  default:
-    break;
-  }
-});
+  ? props.statusAndProgressLabelOverride
+  : getDefaultAccessibilityLabel(props.progress, props.status),
+);
 </script>
 
 <style lang="scss">

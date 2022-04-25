@@ -64,7 +64,7 @@ Labelled(
 
 <script setup lang="ts">
 import { computed, inject, onBeforeUnmount, onMounted, provide, reactive, ref, useAttrs, useSlots } from 'vue';
-import debounce from 'lodash/debounce';
+import { debounce } from 'polaris/polaris-react/src/utilities/debounce';
 import UploadMajor from '@icons/UploadMajor.svg';
 import CircleAlertMajor from '@icons/CircleAlertMajor.svg';
 import { classNames, variationName } from 'polaris/polaris-react/src/utilities/css';
@@ -90,7 +90,7 @@ import {
   createAllowMultipleKey,
 } from './utils';
 
-type DropZoneFileType = 'file' | 'image';
+type DropZoneFileType = 'file' | 'image' | 'video';
 
 interface DropZoneProps {
   /** Label for the file input */
