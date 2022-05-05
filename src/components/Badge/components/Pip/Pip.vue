@@ -8,7 +8,7 @@ span(:class="className")
 import { computed } from 'vue';
 import { classNames, variationName } from 'polaris/polaris-react/src/utilities/css';
 import { VisuallyHidden } from '@/components';
-import type { Progress, Status } from '../../types';
+import type { Progress, Status } from '../../utils';
 import { getDefaultAccessibilityLabel } from '../../utils';
 import styles from '@/classes/Badge-Pip.json';
 
