@@ -48,13 +48,14 @@ import {
 import { debounce } from 'polaris/polaris-react/src/utilities/debounce';
 import { classNames } from 'polaris/polaris-react/src/utilities/css';
 import { scrollable } from 'polaris/polaris-react/src/components/shared';
+import { scrollOptionIntoView } from 'polaris/polaris-react/src/utilities/listbox/utilities';
 import { UseUniqueId } from '@/use';
 import styles from '@/classes/Listbox.json';
 import type { ComboboxListboxType, NavigableOption } from '@/utilities/interface';
 import { KeypressListener } from '../KeypressListener';
 import { Key } from '../KeypressListener/utils';
+import { AutoSelection } from './utils';
 import { VisuallyHidden } from '../VisuallyHidden';
-import { scrollOptionIntoView } from 'polaris/polaris-react/src/utilities/listbox/utilities';
 
 export type ArrowKeys = 'up' | 'down';
 
@@ -62,13 +63,6 @@ const OPTION_SELECTOR = '[data-listbox-option]';
 const OPTION_VALUE_ATTRIBUTE = 'data-listbox-option-value';
 const OPTION_ACTION_ATTRIBUTE = 'data-listbox-option-action';
 const OPTION_FOCUS_ATTRIBUTE = 'data-focused';
-
-enum AutoSelection {
-  /** Default active option is the first selected option. If no options are selected, defaults to first interactive option. */
-  FirstSelected = 'FIRST_SELECTED',
-  /** Default active option is always the first interactive option. */
-  First = 'FIRST',
-}
 
 interface ListboxProps {
   autoSelection?: AutoSelection;
