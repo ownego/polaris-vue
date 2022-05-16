@@ -1,3 +1,4 @@
+export * from './AccountConnection';
 export * from './ActionList';
 export * from './ActionMenu';
 export * from './AppProvider';
