@@ -78,7 +78,7 @@ const onOptionSelected = (): void => {
   }
 
   // TODO: waiting for forceUpdatePosition method in Popover
-  (popoverRef.value as any).forceUpdatePosition();
+  // (popoverRef.value as any).forceUpdatePosition();
 };
 
 const handleFocus = (): void => {
