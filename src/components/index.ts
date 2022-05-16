@@ -4,6 +4,7 @@ export * from './AppProvider';
 export * from './Avatar';
 export * from './Backdrop';
 export * from './Badge';
+export * from './Banner';
 export * from './Breadcrumbs';
 export * from './Button';
 export * from './ButtonGroup';

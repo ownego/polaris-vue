@@ -52,7 +52,6 @@ interface Props {
   ariaControls?: string;
   ariaExpanded?: boolean;
   ariaDescribedBy?: string;
-  className?: string;
   others?: Record<string, unknown>;
 }
 
@@ -79,7 +78,7 @@ const linkListeners = getEventList(['blur', 'click', 'focus', 'mouseover', 'touc
 
 const commonProps = computed(() => ({
   id: props.id,
-  class: props.className,
+  class: attrs.class,
   'aria-label': props.accessibilityLabel,
 }));
 

@@ -223,7 +223,7 @@ const commonProps = computed(() => {
     id, accessibilityLabel, role, ariaDescribedBy,
   } = props;
   return {
-    id, className: className.value, accessibilityLabel, role, ariaDescribedBy,
+    id, class: className.value, accessibilityLabel, role, ariaDescribedBy,
   };
 });
 

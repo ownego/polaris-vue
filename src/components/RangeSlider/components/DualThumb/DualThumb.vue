@@ -25,7 +25,7 @@ Labelled(
       div(:class="styles['Track--dashed']")
       div(
         :id="idLower",
-        :className="thumbLowerClassName",
+        :class="thumbLowerClassName",
         :style="{ left: `${leftPositionThumbLower}px` }",
         ref="thumbLower",
         role="slider",
@@ -53,7 +53,7 @@ Labelled(
           span(:class="styles.OutputText") {{ value[0] }}
       div(
         :id="idUpper",
-        :className="thumbUpperClassName",
+        :class="thumbUpperClassName",
         :style="{ left: `${leftPositionThumbUpper}px` }",
         role="slider",
         tabIndex="0",
