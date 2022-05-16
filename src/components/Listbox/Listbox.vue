@@ -95,9 +95,9 @@ const {
   onKeyToBottom,
 } = comboboxListboxContext;
 
-const props = withDefaults({
+const props = withDefaults(defineProps<ListboxProps>(), { 
   autoSelection: AutoSelection.FirstSelected,
-}, defineProps<ListboxProps>());
+});
 const slots = useSlots();
 
 const emits = defineEmits<{
