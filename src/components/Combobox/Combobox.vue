@@ -20,8 +20,8 @@ Popover(
 <script setup lang="ts">
 import { provide, ref, computed, useSlots } from 'vue';
 import styles from '@/classes/Combobox.json';
+import { Popover, Pane } from '@/components';
 import type { PreferredPosition } from '../PositionedOverlay/math';
-import { Popover, Pane } from '../Popover';
 
 interface ComboboxProps {
   allowMultiple?: boolean;
