@@ -8,7 +8,7 @@ component(
   v-bind="$attrs",
   :is="as",
   :p-color-scheme="colorScheme",
-  :style="{ color: 'var(--p-text-color)' }",
+  :style="{ color: 'var(--p-text)' }",
 )
   slot
 </template>

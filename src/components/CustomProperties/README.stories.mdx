@@ -1,0 +1,121 @@
+import { Meta, Story, Canvas, ArgsTable } from '@storybook/addon-docs';
+import { CustomProperties, AppProvider, Card, TextContainer, CardSection, List, ListItem } from '@/polaris-vue';
+import dedent from 'ts-dedent';
+import { ref } from 'vue';
+
+<Meta
+  title="Components / Structure / CustomProperties"
+  component={ CustomProperties }
+  argTypes={{
+    default: { table: { disable: true } },
+    as: {
+      description: 'Element used for the root node.',
+      table: {
+        type: { summary: 'string' },
+      },
+      control: { type: 'text' }
+    },
+    colorScheme: {
+      description: 'Determines what color scheme is applied to child content.',
+      table: {
+        type: { summary: 'light | dark' },
+        defaultValue: { summary: 'light' },
+      },
+      control: { type: 'select', options: ['light', 'dark'] },
+    }
+  }}
+/>
+
+export const Template = (args) => ({
+  components: { AppProvider, CustomProperties, Card, TextContainer, CardSection, List, ListItem },
+  setup() {
+    return { args };
+  },
+  template: dedent`
+  <AppProvider>
+    <TextContainer>
+      <Card
+        title="Shipment 1234"
+        :secondaryFooterActions="[{content: 'Edit shipment'}]"
+        :primaryFooterAction="{content: 'Add tracking number'}"
+      >
+        <CardSection title="Items">
+          <List>
+            <ListItem>1 &times; Oasis Glass, 4-Pack</ListItem>
+            <ListItem>1 &times; Anubis Cup, 2-Pack</ListItem>
+          </List>
+        </CardSection>
+      </Card>
+      <CustomProperties color-scheme="dark">
+        <Card
+          title="Shipment 1234"
+          :secondaryFooterActions="[{content: 'Edit shipment'}]"
+          :primaryFooterAction="{content: 'Add tracking number'}"
+        >
+          <CardSection title="Items">
+            <List>
+              <ListItem>1 &times; Oasis Glass, 4-Pack</ListItem>
+              <ListItem>1 &times; Anubis Cup, 2-Pack</ListItem>
+            </List>
+          </CardSection>
+        </Card>
+      </CustomProperties>
+    </TextContainer>
+  </AppProvider>
+  `,
+});
+
+# CustomProperties
+
+Use the custom properties component to share global theme settings throughout the hierarchy of your application. Custom properties is included by default as a child of the [app provider component](?path=/docs/components-structure-app-provider) but can be used independently to apply a base color scheme to its children.
+
+<Canvas>
+  <Story
+    name="CustomProperties"
+    height="500px"
+    inline={false}
+    parameters={{
+      docs: {
+        source: {
+          code: dedent`
+          <AppProvider>
+            <TextContainer>
+              <Card
+                title="Shipment 1234"
+                :secondaryFooterActions="[{content: 'Edit shipment'}]"
+                :primaryFooterAction="{content: 'Add tracking number'}"
+              >
+                <CardSection title="Items">
+                  <List>
+                    <ListItem>1 &times; Oasis Glass, 4-Pack</ListItem>
+                    <ListItem>1 &times; Anubis Cup, 2-Pack</ListItem>
+                  </List>
+                </CardSection>
+              </Card>
+              <CustomProperties color-scheme="dark">
+                <Card
+                  title="Shipment 1234"
+                  :secondaryFooterActions="[{content: 'Edit shipment'}]"
+                  :primaryFooterAction="{content: 'Add tracking number'}"
+                >
+                  <CardSection title="Items">
+                    <List>
+                      <ListItem>1 &times; Oasis Glass, 4-Pack</ListItem>
+                      <ListItem>1 &times; Anubis Cup, 2-Pack</ListItem>
+                    </List>
+                  </CardSection>
+                </Card>
+              </CustomProperties>
+            </TextContainer>
+          </AppProvider>
+            `,
+        },
+      },
+    }}
+  >
+    {Template.bind({})}
+  </Story>
+</Canvas>
+
+<ArgsTable story="CustomProperties" />
+
