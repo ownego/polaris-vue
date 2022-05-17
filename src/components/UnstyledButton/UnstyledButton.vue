@@ -61,12 +61,12 @@ const attrs = useAttrs();
 
 const getEventList = (events: string[]) => {
   const eventBindings = { mouseup: handleMouseUpByBlurring };
-  events.forEach((event) => {
+  for (const event of events) {
     const eventName = `on${capitalize(event)}`;
     if (attrs[eventName]) {
       eventBindings[event] = attrs[eventName];
     }
-  });
+  }
   return eventBindings;
 }
 
