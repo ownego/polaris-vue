@@ -1,0 +1,130 @@
+import { Meta, Story, Canvas, ArgsTable } from '@storybook/addon-docs';
+import { Banner } from '@/polaris-vue';
+import dedent from 'ts-dedent';
+
+<Meta
+  title="Components / Feedback indicators / Banner"
+  component={ Banner }
+  argTypes={{
+    default: {
+      table: { disable: true },
+    },
+    icon: {
+      table: {
+        type: {
+          summary: 'IconSource',
+        },
+      },
+    },
+    status: {
+      control: {
+        type: 'select',
+        options: ['info', 'success', 'warning', 'critical'],
+      },
+      table: {
+        type: {
+          summary: 'success | info | warning | critical',
+        },
+      },
+    },
+    action: {
+      table: {
+        type: {
+          summary: 'DisableableAction & LoadableAction',
+        },
+      },
+    },
+    dismiss: {
+      description: 'Callback when banner is dismissed',
+      control: { disable: true },
+      table: {
+        type: {
+          summary: '() => void',
+        },
+      },
+    },
+  }}
+/>
+
+export const Template = (args) => ({
+  components: { Banner },
+  setup() {
+    return { args };
+  },
+  template: `<Banner
+    v-bind="args"
+    :action="{ content: 'Edit variant weights', url:'https://google.com' }"
+    :secondaryAction="{ content: 'View all variants', url:'https://google.com' }"
+    @dismiss="dismissHandler"
+  >
+    <p>Add weights to show accurate rates at checkout and when buying shipping labels in Shopify.</p>
+  </Banner>`,
+});
+
+# Banner
+
+Informs merchants about important changes or persistent conditions. Use this component if you need to communicate to merchants in a prominent way. Banners are placed at the top of the page or section they apply to, and below the page or section header.
+
+<Canvas>
+  <Story
+    name="Banner"
+    height="200px"
+    args={{
+      status: 'warning',
+      title: 'Some of your product varisants are missing weights',
+    }}
+    parameters={{
+      docs: {
+        source: {
+          code: dedent`<Banner
+            title="Some of your product variants are missing weights"
+            status="warning"
+            :action="{ content: 'Edit variant weights', url:'https://google.com' }"
+            :secondaryAction="{ content: 'View all variants', url:'https://google.com' }"
+            @dismiss="dismissHandler"
+          >
+            <p>Add weights to show accurate rates at checkout and when buying shipping labels in Shopify.</p>
+          </Banner>`,
+        },
+      },
+    }}
+  >
+    {Template.bind({})}
+  </Story>
+</Canvas>
+
+<ArgsTable story="Banner" />
+
+---
+
+<br/>
+
+### **Action Props**
+
+| Prop             | Type                          | Description     |
+| ---------------- | ----------------------------- | --------------- |
+| id?              | String       | A unique identifier for the action. |
+| content?         | String       | Content the action displays. |
+| accessibilityLabel?  | String  | Visually hidden text for screen readers. |
+| url?             | String       | A destination to link to, rendered in the action. |
+| external?        | String       | Forces url to open in a new tab. |
+| onAction?()      | void         | Callback when an action takes place. |
+| onMouseEnter?()  | void         | Callback when mouse enter. |
+| onTouchStart?()  | void         | Callback when element is touched. |
+
+<br />
+
+### **DisableableAction & LoadableAction**
+
+| Prop             | Type                          | Description     |
+| ---------------- | ----------------------------- | --------------- |
+| id?              | String       | A unique identifier for the action. |
+| content?         | String       | Content the action displays. |
+| accessibilityLabel?  | String  | Visually hidden text for screen readers. |
+| url?             | String       | A destination to link to, rendered in the action. |
+| external?        | String       | Forces url to open in a new tab. |
+| disabled?        | Boolean      | Whether or not the action is disabled. |
+| loading?         | Boolean      | Should a spinner be displayed. |
+| onAction?()      | void         | Callback when an action takes place. |
+| onMouseEnter?()  | void         | Callback when mouse enter. |
+| onTouchStart?()  | void         | Callback when element is touched. |

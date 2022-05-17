@@ -60,6 +60,7 @@ import {
   dateIsSelected,
   getNewRange,
   getOrderedWeekdays,
+  isDateDisabled,
 } from 'polaris/polaris-react/src/utilities/dates';
 import type { Range } from 'polaris/polaris-react/src/utilities/dates';
 import styles from '@/classes/DatePicker.json';
@@ -75,6 +76,7 @@ interface Props {
   year: number;
   disableDatesBefore?: Date;
   disableDatesAfter?: Date;
+  disableSpecificDates?: Date[];
   allowRange?: boolean;
   weekStartsOn: number;
   accessibilityLabelPrefixes?: [string | undefined, string];
@@ -135,7 +137,8 @@ const handleDateClick = (selectedDate: Date) => {
 
 const isDayDisabled = (day: Date) => {
   return (props.disableDatesBefore && isDateBefore(day, props.disableDatesBefore))
-    || (props.disableDatesAfter && isDateAfter(day, props.disableDatesAfter));
+    || (props.disableDatesAfter && isDateAfter(day, props.disableDatesAfter))
+    || (props.disableSpecificDates && isDateDisabled(day, props.disableSpecificDates));
 }
 
 const isFirstSelectedDay = (day: Date) => {

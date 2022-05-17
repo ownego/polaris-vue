@@ -1,0 +1,89 @@
+import { Meta, Story, Canvas, ArgsTable } from '@storybook/addon-docs';
+import { SettingToggle, TextStyle } from '@/polaris-vue';
+import dedent from 'ts-dedent';
+import { ref } from 'vue';
+
+<Meta
+  title="Components / Actions / Setting toggle"
+  component={ SettingToggle }
+  argTypes={{
+    default: {
+      table: { disable: true }
+    }
+  }}
+/>
+
+export const Template = (args) => ({
+  components: { SettingToggle, TextStyle },
+  setup() {
+    const toggleSetting = () => {
+      active.value = !active.value;
+    }
+    const active = ref(false);
+    return { args, active, toggleSetting };
+  },
+  template: `<SettingToggle
+    :action="{ content: active ? 'Deactivate' : 'Activate', onAction: toggleSetting }"
+    :enabled="active"
+  >
+    This setting is <TextStyle variation="strong">{{ active ? 'activated' : 'deactivated' }}</TextStyle>.
+  </SettingToggle>`,
+});
+
+# Setting toggle
+
+Use to give merchants control over a feature or option that can be turned on or off.
+
+<Canvas>
+  <Story
+    name="Setting toggle"
+    height="120px"
+    parameters={{
+      docs: {
+        source: {
+          code: dedent`
+            <SettingToggle
+              :action="{ content: active ? 'Deactivate' : 'Activate', onAction: toggleSetting }"
+              :enabled="active"
+            >
+              This setting is <TextStyle variation="strong">{{ active ? 'activated' : 'deactivated' }}</TextStyle>.
+            </SettingToggle>\n
+            <script setup>
+              const toggleSetting = () => {
+                active.value = !active.value;
+              }
+              const active = ref(false);
+            </script>
+            `,
+        },
+      },
+    }}
+  >
+    {Template.bind({})}
+  </Story>
+</Canvas>
+
+<ArgsTable story="Setting toggle" />
+
+---
+
+<br/>
+
+### **Complex Action**
+
+| Prop             | Type                          | Description     |
+| ---------------- | ----------------------------- | --------------- |
+| id?              | String       | A unique identifier for the action. |
+| content?         | String       | Content the action displays. |
+| accessibilityLabel?  | String  | Visually hidden text for screen readers. |
+| url?             | String       | A destination to link to, rendered in the action. |
+| external?        | String       | Forces url to open in a new tab. |
+| destructive?     | Boolean      | Destructive action. |
+| icon?            | IconSource   | Source of the icon. |
+| disabled?        | Boolean      | Whether or not the action is disabled. |
+| loading?         | Boolean      | Should a spinner be displayed. |
+| outline?         | Boolean      | Should action be displayed as an outlined button. |
+| plain?           | Boolean      | Should action be displayed as a plain link. |
+| onAction?()      | void         | Callback when an action takes place. |
+| onMouseEnter?()  | void         | Callback when mouse enter. |
+| onTouchStart?()  | void         | Callback when element is touched. |

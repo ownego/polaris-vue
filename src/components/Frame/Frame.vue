@@ -58,15 +58,15 @@ div(
     type="fade",
   )
     ContextualSaveBar(v-bind="contextualSaveBar", v-if="contextualSaveBar")
-      template(#contextControl, v-if="contextualSaveBar.contextControl")
+      template(#contextControl, v-if="contextualSaveBarSlots.contextControl")
         component(
-          v-for="el, index in contextualSaveBar.contextControl",
+          v-for="el, index in contextualSaveBarSlots.contextControl",
           :key="index",
           :is="el",
         )
-      template(#secondaryMenu, v-if="contextualSaveBar.secondaryMenu")
+      template(#secondaryMenu, v-if="contextualSaveBarSlots.secondaryMenu")
         component(
-          v-for="el, index in contextualSaveBar.secondaryMenu",
+          v-for="el, index in contextualSaveBarSlots.secondaryMenu",
           :key="index",
           :is="el",
         )
@@ -166,6 +166,7 @@ const loadingStack = ref(0);
 const toastMessages = ref<ToastPropsWithID[]>([]);
 const showContextualSaveBar = ref(false);
 const contextualSaveBar = ref<ContextualSaveBarProps | null>(null);
+const contextualSaveBarSlots = ref<{ contextControl?, secondaryMenu? }>({});
 const navigationRef = ref(null);
 
 const { useMediaQuery } = UseMediaQuery();
@@ -294,6 +295,7 @@ const hideToast = ({ id }: ToastID) => {
 const setContextualSaveBar = (saveBarProps: ContextualSaveBarProps) => {
   const { contextControl, secondaryMenu, ...rest } = saveBarProps;
   contextualSaveBar.value = rest;
+  contextualSaveBarSlots.value = { contextControl, secondaryMenu };
   if (!showContextualSaveBar.value) {
     showContextualSaveBar.value = true;
   }

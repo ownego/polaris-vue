@@ -1,4 +1,4 @@
-import debounce from 'lodash/debounce';
+import { debounce } from 'polaris/polaris-react/src/utilities/debounce';
 import { tokens } from 'polaris/polaris-react/src/tokens';
 import { dataPolarisTopBar, scrollable } from 'polaris/polaris-react/src/components/shared';
 import { stackedContent } from 'polaris/polaris-react/src/utilities/breakpoints';

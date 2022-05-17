@@ -3,7 +3,6 @@
 
 <script setup lang="ts">
 import { onBeforeUnmount, onMounted, useAttrs, useSlots } from 'vue';
-import { UseUniqueId } from '@/use';
 import { UseFrame } from '@/utilities/frame';
 import type { ContextualSaveBarAction, ContextualSaveBarCombinedActionProps } from '@/utilities/frame/types';
 
@@ -25,8 +24,6 @@ export interface ContextualSaveBarProps {
 }
 
 const props = defineProps<ContextualSaveBarProps>();
-
-const attrs = useAttrs();
 
 const { useFrame } = UseFrame();
 const {

@@ -37,9 +37,18 @@ import ChevronRightMinor from "@icons/ChevronRightMinor.svg";
       ],
       table: {
         type: {
+          summary: 'ActionListItemDescriptor[]',
+        },
+      },
+    },
+    sections: {
+      table: {
+        type: { summary: 'ActionListSection[]' },
+        defaultValue: {
           summary: null,
         },
       },
+      control: { disable: true },
     },
     actionRole: {
       control: {
@@ -581,3 +590,44 @@ For Icon usages, use the [Icon component.](/docs/components-images-and-icons-ico
 </Canvas>
 
 <ArgsTable story="Action List" />
+
+---
+
+<br/>
+
+### **ActionListItemDescriptor type**
+
+Array of type: `ActionListItemDescriptor[]`
+
+| Prop             | Type                          | Description     |
+| ---------------- | ----------------------------- | --------------- |
+| accessibilityLabel?  | String  | Visually hidden text for screen readers. |
+| active?           | Boolean       | Whether the action is active or not. |
+| badge?            | {content: string, status: "new"} | |
+| content?          | String        | Content the action displays. |
+| destructive?      | Boolean       | Destructive action. |
+| disabled?         | Boolean       | Whether or not the action is disabled. |
+| ellipsis?         | Boolean       | Add an ellipsis suffix to action content. |
+| external?         | Boolean       | Forces url to open in a new tab. |
+| helpText?         | String        | Additional hint text to display with item. |
+| icon?             | IconSource    | Source of the icon. |
+| id?               | String        | A unique identifier for the action. |
+| image?            | String        | Image source. |
+| prefixId?         | String        | Prefix ID to use in slot. |
+| role?             | String        | Defines a role for the action. |
+| suffixId?         | String        | Suffix ID to use in slot. |
+| url?              | String        | A destination to link to, rendered in the action. |
+| onAction?()       | void          | Callback when an action takes place. |
+| onMouseEnter?()   | void          | Callback when mouse enter. |
+| onTouchStart?()   | void          | Callback when element is touched. |
+
+<br/>
+
+### **ActionListSection type**
+
+Array of type: `ActionListSection[]`
+
+| Prop             | Type                          | Description     |
+| ---------------- | ----------------------------- | --------------- |
+| title?           | String                        | Section title. |
+| items?           | ActionListItemDescriptor[]    | Collection of action items for the list. |

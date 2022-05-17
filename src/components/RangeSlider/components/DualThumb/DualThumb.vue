@@ -25,7 +25,7 @@ Labelled(
       div(:class="styles['Track--dashed']")
       div(
         :id="idLower",
-        :className="thumbLowerClassName",
+        :class="thumbLowerClassName",
         :style="{ left: `${leftPositionThumbLower}px` }",
         ref="thumbLower",
         role="slider",
@@ -53,7 +53,7 @@ Labelled(
           span(:class="styles.OutputText") {{ value[0] }}
       div(
         :id="idUpper",
-        :className="thumbUpperClassName",
+        :class="thumbUpperClassName",
         :style="{ left: `${leftPositionThumbUpper}px` }",
         role="slider",
         tabIndex="0",
@@ -88,8 +88,7 @@ EventListener(
 </template>
 <script setup lang="ts">
 import { ref, computed, onMounted, onBeforeUnmount, useSlots } from 'vue';
-import debounce from 'lodash/debounce';
-import isEqual from 'lodash/isEqual';
+import { debounce } from 'polaris/polaris-react/src/utilities/debounce';
 import { classNames } from 'polaris/polaris-react/src/utilities/css';
 import { Labelled, EventListener } from '@/components';
 import type { LabelledProps } from '@/components/Labelled/utils';
@@ -389,7 +388,7 @@ const dispatchValue = () => {
 
 const setValue = (dirtyValue: DualValue, control: 'Upper' | 'Lower') => {
   const sanitizedValue = sanitizeValue(dirtyValue, props.min, props.max, props.step, control);
-  if (!isEqual(sanitizedValue, value)) {
+  if (!isTupleEqual(sanitizedValue, value.value)) {
     value.value = sanitizedValue;
     dispatchValue();
   }
@@ -532,6 +531,14 @@ function sanitizeValue(
   function roundedToStep(tmpValue: number) {
     return Math.round(tmpValue / step) * step;
   }
+}
+
+function isTupleEqual(a?: DualValue, b?: DualValue) {
+  if (a == null || b == null) {
+    return false;
+  }
+
+  return a[0] === b[0] && a[1] === b[1];
 }
 </script>
 <style lang="scss">

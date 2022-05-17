@@ -11,7 +11,7 @@ PositionedOverlay(
   div(
     :id="id",
     role="tooltip",
-    :className="styles.Content",
+    :class="styles.Content",
     :style="contentStyles",
     :aria-label="ariaLabel",
   )

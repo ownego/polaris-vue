@@ -27,6 +27,7 @@ div(
       :hoverDate="hoverDate",
       :disableDatesBefore="disableDatesBefore",
       :disableDatesAfter="disableDatesAfter",
+      :disableSpecificDates="disableSpecificDates",
       :allowRange="allowRange",
       :weekStartsOn="weekStartsOn",
       :accessibilityLabelPrefixes="accessibilityLabelPrefixes",
@@ -43,6 +44,7 @@ div(
       :hoverDate="hoverDate",
       :disableDatesBefore="disableDatesBefore",
       :disableDatesAfter="disableDatesAfter",
+      :disableSpecificDates="disableSpecificDates",
       :allowRange="allowRange",
       :weekStartsOn="weekStartsOn",
       :accessibilityLabelPrefixes="accessibilityLabelPrefixes",
@@ -60,6 +62,7 @@ import {
   getNextDisplayMonth,
   getPreviousDisplayYear,
   getPreviousDisplayMonth,
+  isDateDisabled,
 } from 'polaris/polaris-react/src/utilities/dates';
 import type { Range } from 'polaris/polaris-react/src/utilities/dates';
 import ArrowLeftMinor from '@icons/ArrowLeftMinor.svg';
@@ -84,6 +87,8 @@ interface Props {
   disableDatesBefore?: Date;
   /** Disable selecting dates after this. */
   disableDatesAfter?: Date;
+  /** Disable specific dates. */
+  disableSpecificDates?: Date[];
   /** The selection can span multiple months */
   multiMonth?: boolean;
   /**
@@ -234,7 +239,8 @@ const handleKeyUp = (event: KeyboardEvent) => {
     previousWeek.setDate(focusedDate.getDate() - 7);
     if (
       !(
-        props.disableDatesBefore && isDateBefore(previousWeek, props.disableDatesBefore)
+        (props.disableDatesBefore && isDateBefore(previousWeek, props.disableDatesBefore))
+        || (props.disableSpecificDates && isDateDisabled(previousWeek, props.disableSpecificDates))
       )
     ) {
       setFocusDateAndHandleMonthChange(previousWeek);
@@ -244,7 +250,12 @@ const handleKeyUp = (event: KeyboardEvent) => {
   if (key === 'ArrowDown') {
     const nextWeek = new Date(focusedDate);
     nextWeek.setDate(focusedDate.getDate() + 7);
-    if (!(props.disableDatesAfter && isDateAfter(nextWeek, props.disableDatesAfter))) {
+    if (
+      !(
+        (props.disableDatesAfter && isDateAfter(nextWeek, props.disableDatesAfter))
+        || (props.disableSpecificDates && isDateDisabled(nextWeek, props.disableSpecificDates))
+      )
+    ) {
       setFocusDateAndHandleMonthChange(nextWeek);
     }
   }
@@ -252,7 +263,12 @@ const handleKeyUp = (event: KeyboardEvent) => {
   if (key === 'ArrowRight') {
     const tomorrow = new Date(focusedDate);
     tomorrow.setDate(focusedDate.getDate() + 1);
-    if (!(props.disableDatesAfter && isDateAfter(tomorrow, props.disableDatesAfter))) {
+    if (
+      !(
+        (props.disableDatesAfter && isDateAfter(tomorrow, props.disableDatesAfter))
+        || (props.disableSpecificDates && isDateDisabled(tomorrow, props.disableSpecificDates))
+      )
+    ) {
       setFocusDateAndHandleMonthChange(tomorrow);
     }
   }
@@ -261,7 +277,10 @@ const handleKeyUp = (event: KeyboardEvent) => {
     const yesterday = new Date(focusedDate);
     yesterday.setDate(focusedDate.getDate() - 1);
     if (
-      !(props.disableDatesBefore && isDateBefore(yesterday, props.disableDatesBefore))
+      !(
+        (props.disableDatesBefore && isDateBefore(yesterday, props.disableDatesBefore))
+        || (props.disableSpecificDates && isDateDisabled(yesterday, props.disableSpecificDates))
+      )
     ) {
       setFocusDateAndHandleMonthChange(yesterday);
     }

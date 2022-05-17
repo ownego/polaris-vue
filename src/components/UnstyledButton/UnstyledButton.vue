@@ -36,7 +36,7 @@ export default {
 import { computed, useAttrs } from 'vue';
 import { UnstyledLink } from '@/components/UnstyledLink';
 import { handleMouseUpByBlurring } from '@/utilities/focus';
-import { capitalize } from 'lodash';
+import { capitalize } from '@/utilities/capitalize';
 
 interface Props {
   id?: string;
@@ -52,7 +52,6 @@ interface Props {
   ariaControls?: string;
   ariaExpanded?: boolean;
   ariaDescribedBy?: string;
-  className?: string;
   others?: Record<string, unknown>;
 }
 
@@ -79,7 +78,7 @@ const linkListeners = getEventList(['blur', 'click', 'focus', 'mouseover', 'touc
 
 const commonProps = computed(() => ({
   id: props.id,
-  class: props.className,
+  class: attrs.class,
   'aria-label': props.accessibilityLabel,
 }));
 

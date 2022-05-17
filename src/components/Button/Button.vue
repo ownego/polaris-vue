@@ -55,7 +55,7 @@ import {
 import { classNames, variationName } from 'polaris/polaris-react/src/utilities/css';
 import CaretDownMinor from '@icons/CaretDownMinor.svg';
 import { handleMouseUpByBlurring } from '@/utilities/focus';
-import { capitalize } from 'lodash';
+import { capitalize } from '@/utilities/capitalize';
 import type { IconSource } from '@/utilities/type';
 import styles from '@/classes/Button.json';
 import type { ConnectedDisclosure } from './utils';
@@ -169,7 +169,7 @@ const listeners = computed(() => {
   return eventBindings;
 });
 
-const hasChildren = !!slots.default
+const hasChildren = !!slots.default;
 
 const disclosureActive = ref<boolean>(false);
 
@@ -223,7 +223,7 @@ const commonProps = computed(() => {
     id, accessibilityLabel, role, ariaDescribedBy,
   } = props;
   return {
-    id, className: className.value, accessibilityLabel, role, ariaDescribedBy,
+    id, class: className.value, accessibilityLabel, role, ariaDescribedBy,
   };
 });
 
@@ -243,6 +243,7 @@ const buttonMarkupProps = computed(() => {
   const {
     removeUnderline, disclosure, loading, icon,
   } = props;
+
   return {
     commonProps: commonProps.value,
     linkProps: linkProps.value,

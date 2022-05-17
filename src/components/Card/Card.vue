@@ -57,9 +57,8 @@ div(:class="className")
 </template>
 
 <script setup lang="ts">
-import { computed, provide, ref, useSlots } from 'vue';
+import { computed, provide, ref, useSlots, inject } from 'vue';
 import { classNames } from 'polaris/polaris-react/src/utilities/css';
-import lang from 'polaris/polaris-react/locales/en.json';
 import styles from '@/classes/Card.json';
 import { ButtonGroup, ActionList, Button, Popover } from '@/components';
 import { ButtonFrom } from '@/components/Button';
@@ -91,6 +90,8 @@ export interface CardProps {
 const props = withDefaults(defineProps<CardProps>(), {
   footerActionAlignment: 'right',
 });
+
+const lang = inject('lang') as Record<string, any>;
 
 const slots = useSlots();
 

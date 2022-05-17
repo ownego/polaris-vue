@@ -1,0 +1,131 @@
+import { Meta, Story, Canvas, ArgsTable } from '@storybook/addon-docs';
+import { AccountConnection, Link } from '@/polaris-vue';
+import dedent from 'ts-dedent';
+import { ref } from 'vue';
+
+<Meta
+  title="Components / Actions / Account connection"
+  component={ AccountConnection }
+  argTypes={{
+    details: {
+      description: 'Content to display as title. This will override the `details` prop',
+      table: { type: { summary: null } },
+      control: { disable: true },
+    },
+    title: {
+      description: 'Content to display as terms of service. This will override the `title` prop',
+      table: { type: { summary: null } },
+      control: { disable: true },
+    },
+    termsOfService: {
+      description: 'Content to display as terms of service. This will override the `termOfService` prop',
+      table: { type: { summary: null } },
+      control: { disable: true },
+    },
+    propDetails: {
+      name: 'details',
+      description: 'Content to display as additional details.',
+      table: { category: 'props', type: { summary: 'string' } },
+    },
+    propTitle: {
+      name: 'title',
+      description: 'Content to display as title.',
+      table: { category: 'props', type: { summary: 'string' } },
+    },
+    propTermsOfService: {
+      name: 'termsOfService',
+      description: 'Content to display as terms of service.',
+      table: { category: 'props', type: { summary: 'string' } },
+    },
+    action: {
+      control: { disable: true },
+    },
+  }}
+/>
+
+export const Template = (args) => ({
+  components: { AccountConnection, Link },
+  setup() {
+    const handleAccountConnect = () => {
+      connected.value = !connected.value;
+    }
+    const connected = ref(false);
+    return { args, connected, handleAccountConnect };
+  },
+  template: `<AccountConnection
+    :accountName="connected ? 'Jane Appleseed' : ''"
+    :connected="connected"
+    title="Example App"
+    :action="{ content: connected ? 'Disconnect' : 'Connect', onAction: handleAccountConnect }"
+    :details="connected ? 'Account connected' : 'No account connected'"
+  >
+    <template #termsOfService v-if="!connected">
+      <p>
+        By clicking <strong>Connect</strong>, you agree to accept Sample App's
+        <Link url="Example App">terms and conditions</Link>. You'll pay a
+        commission rate of 15% on sales made through Sample App.
+      </p>
+    </template>
+  </AccountConnection>`,
+});
+
+# Account connection
+
+The account connection component is used so merchants can connect or disconnect their store to various accounts. For example, if merchants want to use the Facebook sales channel, they need to connect their Facebook account to their Shopify store.
+
+<Canvas>
+  <Story
+    name="Account connection"
+    height="200px"
+    parameters={{
+      docs: {
+        source: {
+          code: dedent`
+            <AccountConnection
+              :accountName="connected ? 'Jane Appleseed' : ''"
+              :connected="connected"
+              title="Example App"
+              :action="{ content: connected ? 'Disconnect' : 'Connect', onAction: handleAccountConnect }"
+              :details="connected ? 'Account connected' : 'No account connected'"
+            >
+              <template #termsOfService v-if="!connected">
+                <p>
+                  By clicking <strong>Connect</strong>, you agree to accept Sample App's
+                  <Link url="Example App">terms and conditions</Link>. You'll pay a
+                  commission rate of 15% on sales made through Sample App.
+                </p>
+              </template>
+            </AccountConnection>\n
+            <script setup>
+              const handleAccountConnect = () => {
+                connected.value = !connected.value;
+              }
+              const connected = ref(false);
+            </script>
+            `,
+        },
+      },
+    }}
+  >
+    {Template.bind({})}
+  </Story>
+</Canvas>
+
+<ArgsTable story="Account connection" />
+
+---
+
+<br />
+
+### **Action Props**
+
+| Prop             | Type                          | Description     |
+| ---------------- | ----------------------------- | --------------- |
+| id?              | String       | A unique identifier for the action. |
+| content?         | String       | Content the action displays. |
+| accessibilityLabel?  | String  | Visually hidden text for screen readers. |
+| url?             | String       | A destination to link to, rendered in the action. |
+| external?        | String       | Forces url to open in a new tab. |
+| onAction?()      | void         | Callback when an action takes place. |
+| onMouseEnter?()  | void         | Callback when mouse enter. |
+| onTouchStart?()  | void         | Callback when element is touched. |

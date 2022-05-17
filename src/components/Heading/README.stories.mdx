@@ -42,7 +42,19 @@ export const Template = (args) => ({
 });
 
 <Canvas>
-  <Story story={Template} name="Heading" height="50px"></Story>
+  <Story
+    name="Heading"
+    height="50px"
+    parameters = {{
+      docs: {
+        source: {
+          code: dedent`
+            <Heading>Online store dashboard</Heading>
+          `,
+        },
+      },
+    }}
+  >{Template.bind({})}</Story>
 </Canvas>
 
 <ArgsTable story="Heading" />

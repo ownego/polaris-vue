@@ -11,6 +11,7 @@ import {
   TextContainer,
   Tag,
   Stack,
+  Scrollable,
 } from '@/polaris-vue';
 import SearchMinor from '@icons/SearchMinor.svg';
 
@@ -77,20 +78,17 @@ Like Autocomplete, Combobox allows merchants to quickly search through and selec
 Use to help merchants complete text input quickly from a list of options.
 
 export const BasicAutocomplete = (args) => ({
-  components: { Combobox, Listbox, ListboxOption, ComboboxTextField, Icon },
+  components: { Combobox, Listbox, ListboxOption, ComboboxTextField, Icon, Scrollable },
   template: `
   <Combobox>
     <template #activator>
-      <ComboboxTextField  :labelHidden="true" v-model="searchValue" placeholder="Search customer">
+      <ComboboxTextField autoComplete="off" :labelHidden="true" v-model="searchValue" placeholder="Search customer">
         <template slot="prefix">
           <Icon :source="searchIcon" color="inkLighter"></Icon>
         </template>
       </ComboboxTextField>
     </template>
-    <Listbox @select="handleOptionSelected" onSelect="">
-      <ListboxOption value="" :disabled="true">
-        ListboxOptions rendered with v-for in filteredOptions
-      </ListboxOption>
+    <Listbox @select="handleOptionSelected">
       <ListboxOption
         v-for="option, index in filteredOptions"
         :key="index"
@@ -110,6 +108,8 @@ export const BasicAutocomplete = (args) => ({
         {value: 'vinyl', label: 'Vinyl'},
         {value: 'vintage', label: 'Vintage'},
         {value: 'refurbished', label: 'Refurbished'},
+        {value: 'polaris', label: 'Polaris'},
+        {value: 'custom', label: 'Custom'},
       ],
       searchValue: '',
     };
@@ -139,16 +139,13 @@ BasicAutocomplete.parameters = {
       code: dedent`
         <Combobox>
           <template #activator>
-            <ComboboxTextField  :labelHidden="true" v-model="searchValue" placeholder="Search customer">
+            <ComboboxTextField autoComplete="off" :labelHidden="true" v-model="searchValue" placeholder="Search customer">
               <template #prefix>
                 <Icon :source="searchIcon" color="inkLighter"></Icon>
               </template>
             </ComboboxTextField>
           </template>
-          <Listbox @select="handleOptionSelected" onSelect="">
-            <ListboxOption value="" :disabled="true">
-              ListboxOptions rendered with v-for in filteredOptions
-            </ListboxOption>
+          <Listbox @select="handleOptionSelected">
             <ListboxOption
               v-for="option, index in filteredOptions"
               :key="index"
@@ -168,6 +165,8 @@ BasicAutocomplete.parameters = {
               {value: 'vinyl', label: 'Vinyl'},
               {value: 'vintage', label: 'Vintage'},
               {value: 'refurbished', label: 'Refurbished'},
+              {value: 'polaris', label: 'Polaris'},
+              {value: 'custom', label: 'Custom'},
             ],
             searchValue: '',
           };
@@ -195,7 +194,7 @@ BasicAutocomplete.parameters = {
 };
 
 <Canvas>
-  <Story story={BasicAutocomplete} name="Basic Autocomplete" height="200px" inline={false}></Story>
+  <Story story={BasicAutocomplete} name="Basic Autocomplete" height="400px" inline={false}></Story>
 </Canvas>
 
 ### Multiple tags autocomplete
@@ -216,16 +215,13 @@ export const MultiTagAutocomplete = (args) => ({
   template: `
   <Combobox :allowMultiple="true">
     <template #activator>
-      <ComboboxTextField  :labelHidden="true" v-model="searchValue" placeholder="Search customer">
+      <ComboboxTextField autoComplete="off" :labelHidden="true" v-model="searchValue" placeholder="Search customer">
         <template #prefix>
           <Icon :source="searchIcon" color="inkLighter"></Icon>
         </template>
       </ComboboxTextField>
     </template>
     <Listbox @select="handleOptionSelected">
-      <ListboxOption value="" :disabled="true">
-        ListboxOptions rendered with v-for in filteredOptions
-      </ListboxOption>
       <ListboxOption
         v-for="option, index in filteredOptions"
         :key="index"
@@ -239,7 +235,8 @@ export const MultiTagAutocomplete = (args) => ({
   <TextContainer>
     <p> Tag component display options in selectedOptions</p>
     <Stack>
-      <Tag  
+      <Tag
+        :style="{marginRight: '10px'}"
         v-for="option, index in selectedOptions"
         :key="index"
         @remove="handleRemoveTag(option)"
@@ -258,6 +255,8 @@ export const MultiTagAutocomplete = (args) => ({
         {value: 'vinyl', label: 'Vinyl'},
         {value: 'vintage', label: 'Vintage'},
         {value: 'refurbished', label: 'Refurbished'},
+        {value: 'polaris', label: 'Polaris'},
+        {value: 'custom', label: 'Custom'},
       ],
       searchValue: '',
       selectedOptions: ['rustic', 'antique'],
@@ -292,16 +291,13 @@ MultiTagAutocomplete.parameters = {
       code: dedent`
       <Combobox :allowMultiple="true">
         <template #activator>
-          <ComboboxTextField  :labelHidden="true" v-model="searchValue" placeholder="Search customer">
+          <ComboboxTextField autoComplete="off" :labelHidden="true" v-model="searchValue" placeholder="Search customer">
             <template #prefix>
               <Icon :source="searchIcon" color="inkLighter"></Icon>
             </template>
           </ComboboxTextField>
         </template>
         <Listbox @select="handleOptionSelected">
-          <ListboxOption value="" :disabled="true">
-            ListboxOptions rendered with v-for in filteredOptions
-          </ListboxOption>
           <ListboxOption
             v-for="option, index in filteredOptions"
             :key="index"
@@ -315,7 +311,7 @@ MultiTagAutocomplete.parameters = {
       <TextContainer>
         <p> Tag component display options in selectedOptions</p>
         <Stack>
-          <Tag  
+          <Tag
             v-for="option, index in selectedOptions"
             :key="index"
             @remove="handleRemoveTag(option)"
@@ -333,6 +329,8 @@ MultiTagAutocomplete.parameters = {
             {value: 'vinyl', label: 'Vinyl'},
             {value: 'vintage', label: 'Vintage'},
             {value: 'refurbished', label: 'Refurbished'},
+            {value: 'polaris', label: 'Polaris'},
+            {value: 'custom', label: 'Custom'},
           ],
           searchValue: '',
           selectedOptions: ['rustic', 'antique'],
@@ -365,7 +363,7 @@ MultiTagAutocomplete.parameters = {
 };
 
 <Canvas>
-  <Story story={MultiTagAutocomplete} name="Multiple tags autocomplete" height="200px" inline={false}></Story>
+  <Story story={MultiTagAutocomplete} name="Multiple tags autocomplete" height="400px" inline={false}></Story>
 </Canvas>
 
 ### Autocomplete with loading
@@ -377,7 +375,7 @@ export const LoadingAutoComplete = (args) => ({
   template: `
   <Combobox>
     <template #activator>
-      <ComboboxTextField  :labelHidden="true" v-model="searchValue" placeholder="Search customer">
+      <ComboboxTextField autoComplete="off" :labelHidden="true" v-model="searchValue" placeholder="Search customer">
         <template #prefix>
           <Icon :source="searchIcon" color="inkLighter"></Icon>
         </template>
@@ -402,7 +400,7 @@ LoadingAutoComplete.parameters = {
       code: dedent`
         <Combobox>
           <template #activator>
-            <ComboboxTextField  :labelHidden="true" v-model="searchValue" placeholder="Search customer">
+            <ComboboxTextField autoComplete="off" :labelHidden="true" v-model="searchValue" placeholder="Search customer">
               <template #prefix>
                 <Icon :source="searchIcon" color="inkLighter"></Icon>
               </template>
@@ -436,7 +434,7 @@ export const ExampleAutoComplete = (args) => ({
   template: `
   <Combobox>
     <template #activator>
-      <ComboboxTextField  :labelHidden="true" v-model="searchValue" placeholder="Search customer">
+      <ComboboxTextField autoComplete="off" :labelHidden="true" v-model="searchValue" placeholder="Search customer">
         <template #prefix>
           <Icon :source="searchIcon" color="inkLighter"></Icon>
         </template>
@@ -462,6 +460,8 @@ export const ExampleAutoComplete = (args) => ({
         {value: 'vinyl', label: 'Vinyl'},
         {value: 'vintage', label: 'Vintage'},
         {value: 'refurbished', label: 'Refurbished'},
+        {value: 'polaris', label: 'Polaris'},
+        {value: 'custom', label: 'Custom'},
       ],
       searchValue: '',
     };
@@ -490,7 +490,7 @@ ExampleAutoComplete.parameters = {
       code: dedent`
         <Combobox>
           <template #activator>
-            <ComboboxTextField  :labelHidden="true" v-model="searchValue" placeholder="Search customer">
+            <ComboboxTextField autoComplete="off" :labelHidden="true" v-model="searchValue" placeholder="Search customer">
               <template #prefix>
                 <Icon :source="searchIcon" color="inkLighter"></Icon>
               </template>
@@ -513,7 +513,7 @@ ExampleAutoComplete.parameters = {
           ListboxOption,
           ComboboxTextField,
           Icon,
-        } from '@/polaris-vue'; 
+        } from '@/polaris-vue';
         import SearchMinor from '@icons/SearchMinor.svg';\n
         components: {
           Combobox,
@@ -531,6 +531,8 @@ ExampleAutoComplete.parameters = {
                 {value: 'vinyl', label: 'Vinyl'},
                 {value: 'vintage', label: 'Vintage'},
                 {value: 'refurbished', label: 'Refurbished'},
+                {value: 'polaris', label: 'Polaris'},
+                {value: 'custom', label: 'Custom'},
               ],
               searchValue: '',
             };
@@ -558,7 +560,7 @@ ExampleAutoComplete.parameters = {
 }
 
 <Canvas>
-  <Story story={ExampleAutoComplete} name="Example" height="180px" inline={false}></Story>
+  <Story story={ExampleAutoComplete} name="Example" height="400px" inline={false}></Story>
 </Canvas>
 
 <ArgsTable story="Example"/>

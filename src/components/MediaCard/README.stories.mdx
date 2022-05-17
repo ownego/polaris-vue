@@ -1,0 +1,199 @@
+import dedent from 'ts-dedent'
+import { Meta, Story, Canvas, ArgsTable } from '@storybook/addon-docs'
+import { MediaCard } from '@/polaris-vue';
+
+<Meta
+  title="Components / Structure / Media card"
+  component={ MediaCard }
+  argTypes={{
+    title: {
+      description: 'Heading content. This slot will override `title` prop.',
+      table: {
+        type: {
+          summary: null,
+        },
+      },
+      control: { disable: true }
+    },
+    default: {
+      table: { disable: true }
+    },
+    propTitle: {
+      name: 'title',
+      description: 'Heading content.',
+      table: {
+        category: 'props',
+        type: {
+          summary: 'string',
+        },
+      }
+    },
+    description: {
+      table: {
+        type: {
+          summary: 'string',
+        },
+      },
+    },
+    popoverActions: {
+      control: { disable: true },
+      table: {
+        defaultValue: {
+          summary: null,
+        },
+        type: {
+          summary: 'ActionListItemDescriptor[]',
+        },
+      },
+    },
+    primaryAction: {
+      control: { disable: true },
+    },
+    secondaryAction: {
+      control: { disable: true },
+    },
+    size: {
+      options: ['small', 'medium'],
+      control: { type: 'select' },
+      table: { type: { summary: 'small | medium' } },
+    },
+    prefix: {
+      name: "prefix-{prefixId}",
+      description:
+        "Slot to custom prefix for each item of ActionList by `prefixId`",
+      control: { disable: true },
+      table: {
+        category: "slots",
+        type: {
+          summary: null,
+        },
+      },
+    },
+    suffix: {
+      name: "suffix-{suffixId}",
+      description:
+        "Slot to custom suffix for each item of ActionList by `suffixId`",
+      control: { disable: true },
+      table: {
+        category: "slots",
+        type: {
+          summary: null,
+        },
+      },
+    },
+  }}
+/>
+
+export const Template = (args) => ({
+  components: { MediaCard },
+  setup() {
+    return { args };
+  },
+  template: `
+    <MediaCard
+      v-bind="args"
+      :title="args.propTitle"
+      :primaryAction="{ content: 'Add a product', onAction: () => { } }"
+      :secondaryAction="{ content: 'Learn more', plain: true, onAction: () => { } }"
+      :popoverActions="[{content: 'Dismiss', onAction: () => {}}]"
+    >
+      <img
+        :style="{ objectFit: 'cover', objectPosition: 'center', width: '100%', height: '100%' }"
+        src="https://burst.shopifycdn.com/photos/business-woman-smiling-in-office.jpg?width=1850"
+      />
+    </MediaCard>
+  `,
+});
+
+# Media card
+
+Media cards provide a consistent layout to present visual information to merchants. Visual media is used to provide additional context to the written information it's paired with.
+
+<Canvas>
+  <Story
+    name="Media card"
+    height="300px"
+    inline={false}
+    args={{
+      size: 'medium',
+      portrait: false,
+      propTitle: 'Get closer to launching your store',
+      description: 'Start your business with eye-catching inventory.',
+    }}
+    parameters={{
+      docs: {
+        source: {
+          code: dedent`
+            <MediaCard
+              title="Get closer to launching your store",
+              :primaryAction="{ content: 'Add a product', onAction: () => { } }",
+              :secondaryAction="{ content: 'Learn more', plain: true, onAction: () => { } }"
+              description="Start your business with eye-catching inventory."
+              :popoverActions="[{content: 'Dismiss', onAction: () => {}}]"
+            >
+              <img
+                :style="{ objectFit: 'cover', objectPosition: 'center', width: '100%', height: '100%' }"
+                src="https://burst.shopifycdn.com/photos/business-woman-smiling-in-office.jpg?width=1850"
+              />
+            </MediaCard>
+          `,
+        },
+      },
+    }}
+  >
+    {Template.bind({})}
+  </Story>
+</Canvas>
+
+<ArgsTable story="Media card"/>
+
+---
+
+<br/>
+
+### **Complex Action**
+
+| Prop             | Type                          | Description     |
+| ---------------- | ----------------------------- | --------------- |
+| id?              | String       | A unique identifier for the action. |
+| content?         | String       | Content the action displays. |
+| accessibilityLabel?  | String  | Visually hidden text for screen readers. |
+| url?             | String       | A destination to link to, rendered in the action. |
+| external?        | String       | Forces url to open in a new tab. |
+| destructive?     | Boolean      | Destructive action. |
+| disabled?        | Boolean      | Whether or not the action is disabled. |
+| icon?            | IconSource   | Source of the icon. |
+| loading?         | Boolean      | Should a spinner be displayed. |
+| outline?         | Boolean      | Should action be displayed as an outlined button. |
+| plain?           | Boolean      | Should action be displayed as a plain link. |
+| onAction?()      | void         | Callback when an action takes place. |
+| onMouseEnter?()  | void         | Callback when mouse enter. |
+| onTouchStart?()  | void         | Callback when element is touched. |
+
+<br/>
+
+### **ActionListItemDescriptor**
+
+Array of type: `ActionListItemDescriptor[]`
+
+| Prop             | Type                          | Description     |
+| ---------------- | ----------------------------- | --------------- |
+| accessibilityLabel?  | String  | Visually hidden text for screen readers. |
+| active?           | Boolean       | Whether the action is active or not. |
+| badge?            | {content: string, status: "new"} | |
+| content?          | String        | Content the action displays. |
+| destructive?      | Boolean       | Destructive action. |
+| disabled?         | Boolean       | Whether or not the action is disabled. |
+| ellipsis?         | Boolean       | Add an ellipsis suffix to action content. |
+| external?         | Boolean       | Forces url to open in a new tab. |
+| helpText?         | String        | Additional hint text to display with item. |
+| icon?             | IconSource    | Source of the icon. |
+| id?               | String        | A unique identifier for the action. |
+| image?            | String        | Image source. |
+| prefixId?         | String        | Prefix ID to use in slot. |
+| role?             | String        | Defines a role for the action. |
+| suffixId?         | String        | Suffix ID to use in slot. |
+| url?              | String        | A destination to link to, rendered in the action. |
+| onAction?()       | void          | Callback when an action takes place. |
+| onMouseEnter?()   | void          | Callback when mouse enter. |
+| onTouchStart?()   | void          | Callback when element is touched. |

@@ -36,18 +36,26 @@ ul(
 
 <script setup lang="ts">
 import {
-  provide, inject, ref, computed, watch, onUpdated, useSlots,
+  provide,
+  inject,
+  ref,
+  computed,
+  watch,
+  onUpdated,
+  useSlots,
+  withDefaults,
 } from 'vue';
-import debounce from 'lodash/debounce';
+import { debounce } from 'polaris/polaris-react/src/utilities/debounce';
 import { classNames } from 'polaris/polaris-react/src/utilities/css';
 import { scrollable } from 'polaris/polaris-react/src/components/shared';
+import { scrollOptionIntoView } from 'polaris/polaris-react/src/utilities/listbox/utilities';
 import { UseUniqueId } from '@/use';
 import styles from '@/classes/Listbox.json';
 import type { ComboboxListboxType, NavigableOption } from '@/utilities/interface';
 import { KeypressListener } from '../KeypressListener';
 import { Key } from '../KeypressListener/utils';
+import { AutoSelection } from './utils';
 import { VisuallyHidden } from '../VisuallyHidden';
-import { scrollOptionIntoView } from 'polaris/polaris-react/src/utilities/listbox/utilities';
 
 export type ArrowKeys = 'up' | 'down';
 
@@ -57,10 +65,13 @@ const OPTION_ACTION_ATTRIBUTE = 'data-listbox-option-action';
 const OPTION_FOCUS_ATTRIBUTE = 'data-focused';
 
 interface ListboxProps {
+  autoSelection?: AutoSelection;
   /** Explicitly enable keyboard control */
   enableKeyboardControl?: boolean;
   /** Visually hidden text for screen readers */
   accessibilityLabel?: string;
+  /** Provide a custom ID for the list element */
+  customListId?: string;
 }
 
 provide('withinListboxContext', true);
@@ -68,17 +79,19 @@ provide('withinListboxContext', true);
 const comboboxListboxContext = inject<ComboboxListboxType>('comboboxListboxContext', {});
 
 const {
-  setActiveOptionId,
-  setListboxId,
   listboxId,
   textFieldLabelId,
+  textFieldFocused,
   willLoadMoreOptions,
+  setActiveOptionId,
+  setListboxId,
   onOptionSelected,
   onKeyToBottom,
-  textFieldFocused,
 } = comboboxListboxContext;
 
-const props = defineProps<ListboxProps>();
+const props = withDefaults(defineProps<ListboxProps>(), { 
+  autoSelection: AutoSelection.FirstSelected,
+});
 const slots = useSlots();
 
 const emits = defineEmits<{
@@ -87,7 +100,7 @@ const emits = defineEmits<{
 }>();
 
 const { useUniqueId  } = UseUniqueId();
-const listId = useUniqueId('Listbox');
+const listId = props.customListId || useUniqueId('Listbox');
 
 const inCombobox = computed(() => Boolean(setActiveOptionId));
 const listBoxId = computed(() => listboxId || '');
@@ -98,7 +111,7 @@ const scrollableRef = ref<HTMLElement | null>(null);
 const loading = ref('');
 const lazyLoading = ref(false);
 const currentOptions = ref<HTMLElement[]>([]);
-const keyboardEventsEnabled = ref(props.enableKeyboardControl);
+const keyboardEventsEnabled = ref(Boolean(props.enableKeyboardControl));
 
 let activeOption: NavigableOption | undefined;
 
@@ -166,7 +179,10 @@ const getFirstNavigableOption = (
     const isInteractable = option.getAttribute('aria-disabled') !== 'true';
     let isFirstNavigableOption;
 
-    if (hasSelectedOptions) {
+    if (
+      hasSelectedOptions
+      && props.autoSelection === AutoSelection.FirstSelected
+    ) {
       const isSelected = option.getAttribute('aria-selected') === 'true';
       isFirstNavigableOption = isSelected && isInteractable;
     } else {
@@ -211,7 +227,7 @@ const handleChangeActiveOption = (
     handleScrollIntoViewDebounced(nextOption);
     activeOption = nextOption;
     setActiveOptionId?.(nextOption.domId);
-  
+
     emits('on-active-option-change', nextOption.value);
   }
 };
@@ -343,7 +359,9 @@ const handleEnter = (event: KeyboardEvent): void => {
   event.preventDefault();
   event.stopPropagation();
 
-  onOptionSelect(activeOption as NavigableOption);
+  if (activeOption) {
+    onOptionSelect(activeOption as NavigableOption);
+  }
 };
 
 const handleFocus = (): void => {

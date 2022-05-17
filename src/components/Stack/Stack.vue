@@ -1,6 +1,6 @@
 <template lang="pug">
 div(:class="className")
-  template(v-if="!noItemWrap && slots.default")
+  template(v-if="!noItemWrap && slots.default && hasSlot(slots.default)")
     StackItem(
       v-for="(item, index) in slots.default()",
       :key="index"
@@ -13,6 +13,7 @@ div(:class="className")
 import { computed, useSlots } from 'vue';
 import { classNames, variationName } from 'polaris/polaris-react/src/utilities/css';
 import styles from '@/classes/Stack.json';
+import { hasSlot } from '@/utilities/has-slot';
 import { Item as StackItem } from './components';
 
 type Spacing =
