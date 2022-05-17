@@ -16,7 +16,6 @@ import dedent from 'ts-dedent';
       control: { type: 'select' },
       table: {
         type: {
-          default: 'bullet',
           summary: null,
         },
       },
@@ -47,6 +46,9 @@ Lists display a set of related text-only content. Each list item begins with a b
   <Story
     name="List"
     height="80px"
+    args={{
+      type: 'bullet',
+    }}
     parameters={{
       docs: {
         source: {

@@ -30,7 +30,7 @@
     "typecheck": "vue-tsc --noEmit",
     "lint": "eslint . --ext .vue,.js,.jsx,.cjs,.mjs,.ts,.tsx,.cts,.mts --fix --ignore-path .gitignore",
     "storybook": "start-storybook -p 6006",
-    "build-storybook": "rimraf ./docs && build-storybook --docs -o docs"
+    "build-storybook": "rimraf ./docs && build-storybook -o docs"
   },
   "dependencies": {
     "@shopify/polaris-icons": "^4.18.4",
