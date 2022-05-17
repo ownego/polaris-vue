@@ -45,6 +45,7 @@ export * from './Link';
 export * from './List';
 export * from './Listbox';
 export * from './Loading';
+export * from './MediaCard';
 export * from './MessageIndicator';
 export * from './Modal';
 export * from './Navigation';

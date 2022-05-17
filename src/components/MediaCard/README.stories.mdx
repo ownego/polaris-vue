@@ -1,0 +1,124 @@
+import dedent from 'ts-dedent'
+import { Meta, Story, Canvas, ArgsTable } from '@storybook/addon-docs'
+import { MediaCard } from '@/polaris-vue';
+
+<Meta
+  title="Components / Structure"
+  component={ MediaCard }
+  argTypes={{
+    title: {
+      description: 'Heading content. This slot will override `title` prop.',
+      table: {
+        type: {
+          summary: null,
+        },
+      },
+      control: { disable: true }
+    },
+    default: {
+      table: { disable: true }
+    },
+    propTitle: {
+      name: 'title',
+      description: 'Heading content.',
+      table: {
+        category: 'props',
+        type: {
+          summary: 'string',
+        },
+      }
+    },
+    description: {
+      table: {
+        type: {
+          summary: 'string',
+        },
+      },
+    },
+    popoverActions: {
+      control: { disable: true },
+      table: {
+        defaultValue: {
+          summary: null,
+        },
+        type: {
+          summary: 'ActionListItemDescriptor[]',
+        },
+      },
+    },
+    primaryAction: {
+      control: { disable: true },
+    },
+    secondaryAction: {
+      control: { disable: true },
+    },
+    size: {
+      options: ['small', 'medium'],
+      control: { type: 'select' },
+      table: { type: { summary: 'small | medium' } },
+    },
+  }}
+/>
+
+export const Template = (args) => ({
+  components: { MediaCard },
+  setup() {
+    return { args };
+  },
+  template: `
+    <MediaCard
+      v-bind="args"
+      :title="args.propTitle"
+      :primaryAction="{ content: 'Add a product', onAction: () => { } }"
+      :secondaryAction="{ content: 'Learn more', plain: true, onAction: () => { } }"
+      :popoverActions="[{content: 'Dismiss', onAction: () => {}}]"
+    >
+      <img
+        :style="{ objectFit: 'cover', objectPosition: 'center', width: '100%', height: '100%' }"
+        src="https://burst.shopifycdn.com/photos/business-woman-smiling-in-office.jpg?width=1850"
+      />
+    </MediaCard>
+  `,
+});
+
+# Media card
+
+Media cards provide a consistent layout to present visual information to merchants. Visual media is used to provide additional context to the written information it's paired with.
+
+<Canvas>
+  <Story
+    name="Media Card"
+    height="300px"
+    inline={false}
+    args={{
+      size: 'medium',
+      portrait: false,
+      propTitle: 'Get closer to launching your store',
+      description: 'Start your business with eye-catching inventory.',
+    }}
+    parameters={{
+      docs: {
+        source: {
+          code: dedent`
+            <MediaCard
+              title="Get closer to launching your store",
+              :primaryAction="{ content: 'Add a product', onAction: () => { } }",
+              :secondaryAction="{ content: 'Learn more', plain: true, onAction: () => { } }"
+              description="Start your business with eye-catching inventory."
+              :popoverActions="[{content: 'Dismiss', onAction: () => {}}]"
+            >
+              <img
+                :style="{ objectFit: 'cover', objectPosition: 'center', width: '100%', height: '100%' }"
+                src="https://burst.shopifycdn.com/photos/business-woman-smiling-in-office.jpg?width=1850"
+              />
+            </MediaCard>
+          `,
+        },
+      },
+    }}
+  >
+    {Template.bind({})}
+  </Story>
+</Canvas>
+
+<ArgsTable story="Media Card"/>
