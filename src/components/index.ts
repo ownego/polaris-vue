@@ -62,6 +62,7 @@ export * from './Scrollable';
 export * from './ScrollLock';
 export * from './Select';
 export * from './SettingAction';
+export * from './SettingToggle';
 export * from './SkeletonBodyText';
 export * from './SkeletonDisplayText';
 export * from './SkeletonPage';
