@@ -1,15 +1,9 @@
 <template lang="pug">
 Card
-  div(
-    :class="mediaCardClassName",
-  )
-    div(
-      :class="mediaContainerClassName",
-    )
+  div(:class="mediaCardClassName")
+    div(:class="mediaContainerClassName")
       slot
-    div(
-      :class="infoContainerClassName",
-    )
+    div(:class="infoContainerClassName")
       CardSection
         div(
           v-if="popoverActions.length > 0",
@@ -17,9 +11,9 @@ Card
         )
           Popover(
             :active="popoverActive",
+            preferredAlignment="left",
+            preferredPosition="below",
             @close="togglePopoverActive",
-            preferredAlignment="left"
-            preferredPosition="below"
           )
             template(#content)
               ActionList(
@@ -29,22 +23,20 @@ Card
             template(#activator)
               Button(
                 :icon="HorizontalDotsMinor",
-                @click ="togglePopoverActive",
                 size="slim",
                 :plain="true",
                 :accessibilityLabel="lang.Polaris.MediaCard.popoverActivatorLabel",
-              )       
+                @click ="togglePopoverActive",
+              )
         Stack(
           :vertical="true",
           spacing="tight",
         )
-          div(
-           :class="styles.Heading",
-          )
-            Heading {{ title }}
-          p(
-            :class="styles.Description",
-          ) {{ description }}
+          div(:class="styles.Heading")
+            template(v-if="hasSlot(slots.title)")
+              slot(name="title")
+            Heading(v-else) {{ title }}
+          p {{ description }}
           div(
             v-if="primaryAction || secondaryAction",
             :class="actionClassName",
@@ -54,26 +46,23 @@ Card
                 v-if="primaryAction",
                 :class="styles.PrimaryAction",
               )
-                ButtonFrom(
-                  :action="primaryAction",
-                )
+                ButtonFrom(:action="primaryAction")
               div(
                 v-if="secondaryAction",
                 :class="styles.SecondaryAction",
               )
-                ButtonFrom(
-                  :action="secondaryAction",
-                )
+                ButtonFrom(:action="secondaryAction")
 </template>
 
 <script setup lang="ts">
-import { computed, inject, ref } from 'vue';
-import styles from '@/classes/MediaCard.json';
-import HorizontalDotsMinor from '@shopify/polaris-icons/dist/svg/HorizontalDotsMinor.svg';
+import { computed, inject, ref, useSlots } from 'vue';
+import { classNames } from 'polaris/polaris-react/src/utilities/css';
+import HorizontalDotsMinor from '@icons/HorizontalDotsMinor.svg';
 import type { ComplexAction } from '@/utilities/interface';
 import type { ActionListItemDescriptor } from '@/components/ActionList/utils';
-import { classNames } from 'polaris/polaris-react/src/utilities/css';
-import { Card, CardSection, Popover, Button, ButtonFrom, ActionList, Stack, ButtonGroup, Heading } from "@/components";
+import { hasSlot } from '@/utilities/has-slot';
+import { Card, CardSection, Popover, Button, ButtonFrom, ActionList, Stack, ButtonGroup, Heading } from '@/components';
+import styles from '@/classes/MediaCard.json';
 
 type Size = 'small' | 'medium';
 
@@ -100,15 +89,15 @@ interface Props {
 
 const popoverActive = ref(false);
 
-const togglePopoverActive = () => {
-  popoverActive.value = !popoverActive.value;
-};
 const props = withDefaults(defineProps<Props>(), {
   popoverActions: () => [],
   size: 'medium',
   portrait: false,
 });
+
 const lang = inject('lang') as Record<string, any>;
+
+const slots = useSlots();
 
 const actionClassName = computed(() => classNames(
   styles.ActionContainer,
@@ -131,6 +120,9 @@ const infoContainerClassName = computed(() => classNames(
   props.size === 'small' && styles.sizeSmall,
 ));
 
+const togglePopoverActive = () => {
+  popoverActive.value = !popoverActive.value;
+};
 </script>
 
 <style lang="scss">
