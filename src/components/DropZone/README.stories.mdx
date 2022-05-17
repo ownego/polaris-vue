@@ -165,13 +165,13 @@ The drop zone component lets users upload files by dragging and dropping the fil
 
 ### **Action Props**
 
-| Prop             | Type                          |
-| ---------------- | ----------------------------- |
-| id?              | String       |
-| content?         | String       |
-| accessibilityLabel?  | Boolean  |
-| url?             | String       |
-| external?        | String       |
-| onAction?()      | void         |
-| onMouseEnter?()  | void         |
-| onTouchStart?()  | void         |
+| Prop             | Type                          | Description     |
+| ---------------- | ----------------------------- | --------------- |
+| id?              | String       | A unique identifier for the action. |
+| content?         | String       | Content the action displays. |
+| accessibilityLabel?  | String  | Visually hidden text for screen readers. |
+| url?             | String       | A destination to link to, rendered in the action. |
+| external?        | String       | Forces url to open in a new tab. |
+| onAction?()      | void         | Callback when an action takes place. |
+| onMouseEnter?()  | void         | Callback when mouse enter. |
+| onTouchStart?()  | void         | Callback when element is touched. |

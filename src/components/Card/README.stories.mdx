@@ -326,33 +326,19 @@ Cards are used to group similar concepts and tasks together to make Shopify easi
 
 ### **ComplexAction types**
 
-```js
-/** A unique identifier for the action */
-id?: string;
-/** Content the action displays */
-content?: string;
-/** Visually hidden text for screen readers */
-accessibilityLabel?: string;
-/** A destination to link to, rendered in the action */
-url?: string;
-/** Forces url to open in a new tab */
-external?: boolean;
-/** Whether or not the action is disabled */
-disabled?: boolean;
-/** Destructive action */
-destructive?: boolean;
-/** Source of the icon */
-icon?: IconSource;
-/** Should action be displayed as an outlined button */
-outline?: boolean;
-/** Should a spinner be displayed */
-loading?: boolean;
-/** Should action be displayed as a plain link */
-plain?: boolean;
-/** Callback when an action takes place */
-onAction?(): void;
-/** Callback when mouse enter */
-onMouseEnter?(): void;
-/** Callback when element is touched */
-onTouchStart?(): void;
-```
+| Prop             | Type                          | Description     |
+| ---------------- | ----------------------------- | --------------- |
+| id?              | String       | A unique identifier for the action. |
+| content?         | String       | Content the action displays. |
+| accessibilityLabel?  | String  | Visually hidden text for screen readers. |
+| url?             | String       | A destination to link to, rendered in the action. |
+| external?        | String       | Forces url to open in a new tab. |
+| destructive?     | Boolean      | Destructive action. |
+| disabled?        | Boolean      | Whether or not the action is disabled. |
+| icon?            | IconSource   | Source of the icon. |
+| loading?         | Boolean      | Should a spinner be displayed. |
+| outline?         | Boolean      | Should action be displayed as an outlined button. |
+| plain?           | Boolean      | Should action be displayed as a plain link. |
+| onAction?()      | void         | Callback when an action takes place. |
+| onMouseEnter?()  | void         | Callback when mouse enter. |
+| onTouchStart?()  | void         | Callback when element is touched. |

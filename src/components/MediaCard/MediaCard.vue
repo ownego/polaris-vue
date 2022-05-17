@@ -20,6 +20,10 @@ Card
                 :items="popoverActions",
                 @action-any-item="togglePopoverActive",
               )
+                template(v-for="{prefixId} in popoverActions" #[`prefix-${prefixId}`])
+                  slot(:name="`prefix-${prefixId}`")
+                template(v-for="{suffixId} in popoverActions" #[`suffix-${suffixId}`])
+                  slot(:name="`suffix-${suffixId}`")
             template(#activator)
               Button(
                 :icon="HorizontalDotsMinor",

@@ -57,6 +57,30 @@ import { MediaCard } from '@/polaris-vue';
       control: { type: 'select' },
       table: { type: { summary: 'small | medium' } },
     },
+    prefix: {
+      name: "prefix-{prefixId}",
+      description:
+        "Slot to custom prefix for each item of ActionList by `prefixId`",
+      control: { disable: true },
+      table: {
+        category: "slots",
+        type: {
+          summary: null,
+        },
+      },
+    },
+    suffix: {
+      name: "suffix-{suffixId}",
+      description:
+        "Slot to custom suffix for each item of ActionList by `suffixId`",
+      control: { disable: true },
+      table: {
+        category: "slots",
+        type: {
+          summary: null,
+        },
+      },
+    },
   }}
 />
 
@@ -87,7 +111,7 @@ Media cards provide a consistent layout to present visual information to merchan
 
 <Canvas>
   <Story
-    name="Media Card"
+    name="Media card"
     height="300px"
     inline={false}
     args={{
@@ -121,4 +145,55 @@ Media cards provide a consistent layout to present visual information to merchan
   </Story>
 </Canvas>
 
-<ArgsTable story="Media Card"/>
+<ArgsTable story="Media card"/>
+
+---
+
+<br/>
+
+### **Complex Action**
+
+| Prop             | Type                          | Description     |
+| ---------------- | ----------------------------- | --------------- |
+| id?              | String       | A unique identifier for the action. |
+| content?         | String       | Content the action displays. |
+| accessibilityLabel?  | String  | Visually hidden text for screen readers. |
+| url?             | String       | A destination to link to, rendered in the action. |
+| external?        | String       | Forces url to open in a new tab. |
+| destructive?     | Boolean      | Destructive action. |
+| disabled?        | Boolean      | Whether or not the action is disabled. |
+| icon?            | IconSource   | Source of the icon. |
+| loading?         | Boolean      | Should a spinner be displayed. |
+| outline?         | Boolean      | Should action be displayed as an outlined button. |
+| plain?           | Boolean      | Should action be displayed as a plain link. |
+| onAction?()      | void         | Callback when an action takes place. |
+| onMouseEnter?()  | void         | Callback when mouse enter. |
+| onTouchStart?()  | void         | Callback when element is touched. |
+
+<br/>
+
+### **ActionListItemDescriptor**
+
+Array of type: `ActionListItemDescriptor[]`
+
+| Prop             | Type                          | Description     |
+| ---------------- | ----------------------------- | --------------- |
+| accessibilityLabel?  | String  | Visually hidden text for screen readers. |
+| active?           | Boolean       | Whether the action is active or not. |
+| badge?            | {content: string, status: "new"} | |
+| content?          | String        | Content the action displays. |
+| destructive?      | Boolean       | Destructive action. |
+| disabled?         | Boolean       | Whether or not the action is disabled. |
+| ellipsis?         | Boolean       | Add an ellipsis suffix to action content. |
+| external?         | Boolean       | Forces url to open in a new tab. |
+| helpText?         | String        | Additional hint text to display with item. |
+| icon?             | IconSource    | Source of the icon. |
+| id?               | String        | A unique identifier for the action. |
+| image?            | String        | Image source. |
+| prefixId?         | String        | Prefix ID to use in slot. |
+| role?             | String        | Defines a role for the action. |
+| suffixId?         | String        | Suffix ID to use in slot. |
+| url?              | String        | A destination to link to, rendered in the action. |
+| onAction?()       | void          | Callback when an action takes place. |
+| onMouseEnter?()   | void          | Callback when mouse enter. |
+| onTouchStart?()   | void          | Callback when element is touched. |
