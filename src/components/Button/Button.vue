@@ -169,7 +169,7 @@ const listeners = computed(() => {
   return eventBindings;
 });
 
-const hasChildren = !!slots.default
+const hasChildren = !!slots.default;
 
 const disclosureActive = ref<boolean>(false);
 
@@ -243,6 +243,7 @@ const buttonMarkupProps = computed(() => {
   const {
     removeUnderline, disclosure, loading, icon,
   } = props;
+
   return {
     commonProps: commonProps.value,
     linkProps: linkProps.value,

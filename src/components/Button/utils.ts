@@ -36,7 +36,7 @@ export interface CommonButtonProps
   | 'ariaDescribedBy'
   | 'role'
   > {
-  className: UnstyledButtonProps['className'];
+  class: UnstyledButtonProps['className'];
 }
 
 export type LinkButtonProps = Pick<ButtonProps, 'url' | 'external' | 'download'>;

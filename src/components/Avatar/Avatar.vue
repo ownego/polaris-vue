@@ -35,11 +35,7 @@ import { styleClass } from './utils';
 import { Image } from '../Image';
 import type { Size } from './utils';
 
-enum Status {
-  Pending = 'PENDING',
-  Loaded = 'LOADED',
-  Errored = 'ERRORED',
-}
+type Status = 'PENDING' | 'LOADED' | 'ERRORED';
 
 interface Props {
   /**
@@ -70,7 +66,7 @@ const props = withDefaults(defineProps<Props>(),{
 
 const emit = defineEmits<{ (event: 'error'): void }>();
 
-const status = ref<Status>(Status.Pending);
+const status = ref<Status>('PENDING');
 
 const svgPath = 'M8.28 27.5A14.95 14.95 0 0120 21.8c4.76 0 8.97 2.24 11.72 5.7a14.02 14.02 0 01-8.25 5.91 14.82 14.82 0 01-6.94 0 14.02 14.02 0 01-8.25-5.9zM13.99 12.78a6.02 6.02 0 1112.03 0 6.02 6.02 0 01-12.03 0z';
 
@@ -78,7 +74,7 @@ const svgPath = 'M8.28 27.5A14.95 14.95 0 0120 21.8c4.76 0 8.97 2.24 11.72 5.7a1
 const verticalOffset = '0.35em';
 
 const hasImage = computed(() => {
-  return props.source && status.value !== Status.Errored;
+  return props.source && status.value !== 'ERRORED';
 });
 
 const className =  computed(() => {
@@ -90,7 +86,7 @@ const className =  computed(() => {
     size && styles[size],
     !props.customer && styles[style],
     (hasImage.value || (props.initials && props.initials.length === 0))
-    && status.value !== Status.Loaded
+    && status.value !== 'LOADED'
     && styles.hidden,
     hasImage.value && styles.hasImage,
   );
@@ -107,11 +103,11 @@ const label = computed(() => {
 });
 
 const handleLoad = () => {
-  status.value = Status.Loaded;
+  status.value = 'LOADED';
 }
 
 const handleError = () => {
-  status.value = Status.Errored;
+  status.value = 'ERRORED';
   emit('error');
 }
 </script>

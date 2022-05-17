@@ -91,11 +91,12 @@ export const Template = (args) => ({
     const handleClick = () => {
       console.log('click');
     };
-    return { args, handleClick };
+    const { breadcrumbs, primaryAction, secondaryActions, actionGroups, pagination, ...rest } = args;
+    return { rest, handleClick };
   },
   template: `
     <Page
-      v-bind="args"
+      v-bind="rest"
       :breadcrumbs="[{content: 'Products', url: '/products'}]"
       :primaryAction="{ content: 'Save', disabled: true }"
       :secondaryActions="[{ content: 'Duplicate', onAction: handleClick }]"
@@ -147,6 +148,9 @@ Use pagination to let merchants move through an ordered collection of items that
         source: {
           code: dedent`
             <Page
+              :fullWidth="true"
+              title="3/4 inch Leather pet collar",
+              subtitle="Perfect for any pet",
               :breadcrumbs="[{content: 'Products', url: '/products'}]"
               :primaryAction="{ content: 'Save', disabled: true }"
               :secondaryActions="[{ content: 'Duplicate', onAction: handleClick }]"
