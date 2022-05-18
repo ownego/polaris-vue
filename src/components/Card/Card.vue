@@ -116,7 +116,7 @@ const footerClassName = computed(() => {
   )
 });
 
-provide('WithinContentContext', false);
+provide('WithinContentContext', true);
 </script>
 
 <style lang="scss">
