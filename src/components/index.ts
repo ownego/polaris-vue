@@ -9,6 +9,7 @@ export * from './Banner';
 export * from './Breadcrumbs';
 export * from './Button';
 export * from './ButtonGroup';
+export * from './CalloutCard';
 export * from './Caption';
 export * from './Card';
 export * from './Checkbox';

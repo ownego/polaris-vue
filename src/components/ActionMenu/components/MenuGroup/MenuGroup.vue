@@ -11,7 +11,7 @@ Popover(
       :disclosure="true",
       :icon="icon",
       :accessibilityLabel="accessibilityLabel",
-      @click="handleOpen",
+      @click="handleClick",
       @get-offset-width="handleOffsetWidth",
     ) {{ title }}
   template(#content)
@@ -33,12 +33,12 @@ export default {
 </script>
 
 <script setup lang="ts">
-import { useSlots, watch } from 'vue';
+import { useSlots } from 'vue';
 import styles from '@/classes/ActionMenu-MenuGroup.json';
 import { ActionList, Popover } from '@/components';
-import { SecondaryAction } from '../SecondaryAction';
 import type { ActionListItemDescriptor } from '@/components/ActionList/utils';
 import type { IconableAction } from '@/utilities/type';
+import { SecondaryAction } from '../SecondaryAction';
 
 interface MenuGroupProps {
   badge?: {
@@ -64,6 +64,7 @@ const props = defineProps<MenuGroupProps>();
 const slots = useSlots();
 
 const emits = defineEmits<{
+  (e: 'click'): void;
   (e: 'open', title: string): void;
   (e: 'close', title: string): void;
   (e: 'get-offset-width', width: number): void;
@@ -74,6 +75,11 @@ const handleClose = () => {
 };
 
 const handleOpen = () => {
+  emits('open', props.title);
+};
+
+const handleClick = () => {
+  emits('click');
   emits('open', props.title);
 };
 

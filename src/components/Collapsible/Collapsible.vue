@@ -5,7 +5,7 @@ div(
   ref="collapsibleContainerRef",
   :class="wrapperClassName",
   @transitionend="handleCompleteAnimation",
-  :aria-expanded="open",
+  :aria-hidden="!open",
 )
   template(v-if="expandOnPrint || !isFullyClosed")
     slot
