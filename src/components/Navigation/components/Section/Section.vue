@@ -3,14 +3,26 @@ ul(:class="className")
   li(v-if="title", :class="styles.SectionHeading")
     span(:class="styles.Text")
       | {{ title }}
-    button(
-      v-if="action",
-      type="button",
-      :class="styles.Action",
-      :aria-label="action.accessibilityLabel",
-      @click="action.onClick",
-    )
-      Icon(:source="action.icon")
+    template(v-if="action")
+      Tooltip(
+        v-if="action.tooltip",
+        v-bind="action.tooltip",
+      )
+        button(
+          type="button",
+          :class="styles.Action",
+          :aria-label="action.accessibilityLabel",
+          @click="action.onClick",
+        )
+          Icon(:source="action.icon")
+      button(
+        v-else,
+        type="button",
+        :class="styles.Action",
+        :aria-label="action.accessibilityLabel",
+        @click="action.onClick",
+      )
+        Icon(:source="action.icon")
   template(v-if="sectionItems.length > 0")
     Item(
       v-for="item, index in sectionItems",
@@ -61,7 +73,8 @@ import { UseMediaQuery } from '@/utilities/media-query';
 import { UseUniqueId } from '@/use';
 import styles from '@/classes/Navigation.json';
 import HorizontalDotsMinor from '@icons/HorizontalDotsMinor.svg';
-import { Collapsible, Icon } from '@/components';
+import { Collapsible, Icon, Tooltip } from '@/components';
+import type { TooltipProps } from '@/components/Tooltip/utils';
 import type { IconProps } from '@/components/Icon/utils';
 import { Item } from '../Item';
 import type { ItemProps } from '../Item/utils';
@@ -81,6 +94,7 @@ interface SectionProps {
   action?: {
     icon: IconProps['source'];
     accessibilityLabel: string;
+    tooltip?: TooltipProps;
     onClick(): void;
   };
   separator?: boolean;

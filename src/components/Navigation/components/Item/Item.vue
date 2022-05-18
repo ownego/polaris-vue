@@ -67,17 +67,34 @@ li(v-else, :class="className")
           :source="ExternalMinor",
         )
 
-    UnstyledLink(
-      v-if="secondaryAction",
-      external,
-      :url="secondaryAction.url",
-      :class="styles.SecondaryAction",
-      :tabIndex="tabIndex",
-      :aria-disabled="disabled",
-      :aria-label="secondaryAction.accessibilityLabel",
-      @click="secondaryAction.onClick",
-    )
-      Icon(:source="secondaryAction.icon")
+    template(v-if="secondaryAction")
+      Tooltip(
+        v-if="secondaryAction.tooltip",
+        v-bind="secondaryAction.tooltip",
+      )
+        UnstyledLink(
+          v-if="secondaryAction",
+          external,
+          :url="secondaryAction.url",
+          :class="styles.SecondaryAction",
+          :tabIndex="tabIndex",
+          :aria-disabled="disabled",
+          :aria-label="secondaryAction.accessibilityLabel",
+          @click="secondaryAction.onClick",
+        )
+          Icon(:source="secondaryAction.icon")
+
+      UnstyledLink(
+        v-else,
+        external,
+        :url="secondaryAction.url",
+        :class="styles.SecondaryAction",
+        :tabIndex="tabIndex",
+        :aria-disabled="disabled",
+        :aria-label="secondaryAction.accessibilityLabel",
+        @click="secondaryAction.onClick",
+      )
+        Icon(:source="secondaryAction.icon")
   div(
     v-if="subNavigationItems && subNavigationItems.length > 0",
     :class="SecondaryNavigationClassName",
@@ -105,9 +122,11 @@ import {
   Icon,
   UnstyledLink,
   Indicator,
+  Tooltip,
 } from '@/components';
 import type { IconProps } from '@/components/Icon/utils';
 import type { BadgeProps } from '@/components/Badge/utils';
+import type { TooltipProps } from '@/components/Tooltip/utils';
 
 import { Secondary } from './components';
 
@@ -137,6 +156,7 @@ interface SecondaryAction {
   url: string;
   accessibilityLabel: string;
   icon: IconProps['source'];
+  tooltip?: TooltipProps;
   onClick?(): void;
 }
 

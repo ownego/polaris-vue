@@ -16,7 +16,7 @@ import styles from '@/classes/Thumbnail.json';
 import { Image } from '../Image';
 import { Icon } from '../Icon';
 
-type Size = 'small' | 'medium' | 'large';
+type Size = 'extraSmall' | 'small' | 'medium' | 'large';
 
 interface Props {
   /**
