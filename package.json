@@ -41,6 +41,7 @@
   "devDependencies": {
     "@babel/core": "^7.17.5",
     "@rushstack/eslint-patch": "^1.1.0",
+    "@shopify/polaris-tokens": "^5.0.1",
     "@shopify/typescript-configs": "^5.1.0",
     "@storybook/addon-a11y": "^6.4.20",
     "@storybook/addon-actions": "^6.4.20",

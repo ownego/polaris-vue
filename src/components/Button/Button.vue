@@ -20,6 +20,7 @@ div(
         :disabled="connectedDisclosureData.disabled",
         :aria-label="connectedDisclosureData.disclosureLabel",
         :aria-describedby="ariaDescribedBy",
+        :aria-checked="ariaChecked",
         @click="toggleDisclosureActive",
         @mouseup="handleMouseUpByBlurring",
       )
@@ -92,6 +93,8 @@ interface Props {
   ariaExpanded?: boolean;
   /** Indicates the ID of the element that describes the button */
   ariaDescribedBy?: string;
+  /** Indicates the current checked state of the button when acting as a toggle or switch */
+  ariaChecked?: boolean;
   /**
    * Provides extra visual weight and identifies the primary action in a set of buttons
    */

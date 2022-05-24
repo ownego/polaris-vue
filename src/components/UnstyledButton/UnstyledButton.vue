@@ -20,6 +20,7 @@ button(
   :aria-controls="ariaControls",
   :aria-expanded="ariaExpanded",
   :aria-describedby="ariaDescribedBy",
+  :aria-checked="ariaChecked",
   :aria-pressed="pressed",
   v-on="buttonListeners",
 )
@@ -52,6 +53,7 @@ interface Props {
   ariaControls?: string;
   ariaExpanded?: boolean;
   ariaDescribedBy?: string;
+  ariaChecked?: boolean;
   others?: Record<string, unknown>;
 }
 

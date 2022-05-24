@@ -47,7 +47,7 @@ export default {
 <script setup lang="ts">
 import { computed, onBeforeUnmount, onMounted, ref, watch } from 'vue';
 import { classNames } from 'polaris/polaris-react/src/utilities/css';
-import { tokens } from 'polaris/polaris-react/src/tokens';
+import { tokens } from '@shopify/polaris-tokens';
 import { findFirstFocusableNode } from '@/utilities/focus';
 import { PositionedOverlay } from '@/components/PositionedOverlay';
 import { EventListener } from '@/components/EventListener';
@@ -122,7 +122,7 @@ watch(
     clearTransitionTimeout();
     const timer = window.setTimeout(() => {
       transitionStatus.value = afterStatus;
-    }, parseInt(tokens.motion['duration-100'], 10));
+    }, parseInt(tokens.motion['duration-100'].value, 10));
 
     if (props.active) {
       enteringTimer.value = timer;
