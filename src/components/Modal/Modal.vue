@@ -69,7 +69,7 @@ div
 </template>
 
 <script setup lang="ts">
-import { onMounted, ref, useSlots } from 'vue';
+import { onMounted, ref, useSlots, provide } from 'vue';
 import type { ComplexAction } from '@/utilities/interface';
 import { UseUniqueId } from '@/use';
 import { focusFirstFocusableNode } from '@/utilities/focus';
@@ -163,7 +163,9 @@ const handleExited = () => {
 
 onMounted(() => {
   domReady.value = true;
-})
+});
+
+provide('WithinContentContext', true);
 </script>
 
 <style lang="scss">

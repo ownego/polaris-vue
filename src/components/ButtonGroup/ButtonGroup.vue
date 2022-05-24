@@ -53,9 +53,9 @@ const itemMarkup = computed(() => {
       }
 
       if (item.type.toString() === 'Symbol(Fragment)' || item.type.toString() === 'Symbol()') {
-        children.forEach(child => {
+        for (const child of children) {
           items.push(child);
-        });
+        }
       } else {
         items.push(item);
       }

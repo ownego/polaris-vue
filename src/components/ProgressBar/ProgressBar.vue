@@ -19,7 +19,7 @@ div(:class="className")
 
 <script setup lang="ts">
 import { computed, inject } from 'vue';
-import { tokens } from 'polaris/polaris-react/src/tokens';
+import { tokens } from '@shopify/polaris-tokens';
 import { classNames, variationName } from 'polaris/polaris-react/src/utilities/css';
 import styles from '@/classes/ProgressBar.json';
 
@@ -89,8 +89,8 @@ const parseProgress = (progress: number, message: string) => {
 }
 
 const progressBarDuration = computed(() => props.animated
-  ? tokens.motion['duration-500']
-  : tokens.motion['duration-0'],
+  ? tokens.motion['duration-500'].value
+  : tokens.motion['duration-0'].value,
 );
 
 const indicatorStyles = computed(() => {

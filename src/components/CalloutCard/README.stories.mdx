@@ -1,0 +1,99 @@
+import { Meta, Story, Canvas, ArgsTable } from '@storybook/addon-docs';
+import { CalloutCard } from '@/polaris-vue';
+import dedent from 'ts-dedent';
+
+<Meta
+  title="Components / Structure / Callout card"
+  component={ CalloutCard }
+  argTypes={{
+    default: { table: { disable: true }},
+    primaryAction: {
+      control: {
+        type: 'object'
+      }
+    },
+    dismiss: {
+      description: 'Callback when banner is dismissed',
+      table: {
+        category: 'events',
+        type: { summary: '() => void' }
+      }
+    }
+  }}
+/>
+
+export const Template = (args) => ({
+  components: { CalloutCard },
+  setup() {
+    const onDismiss = () => {
+      console.log('dismissed');
+    };
+    return { args, onDismiss };
+  },
+  template: `<CalloutCard
+    v-bind="args"
+    @dismiss="onDismiss"
+  >
+    <p>Upload your store's logo, change colors and fonts, and more.</p>
+  </CalloutCard>`,
+});
+
+# Callout card
+
+Callout cards are used to encourage merchants to take an action related to a new feature or opportunity. They are most commonly displayed in the sales channels section of Shopify.
+
+<Canvas>
+  <Story
+    name="Callout card"
+    height="200px"
+    args={{
+      title: 'Customize the style of your checkout',
+      illustration: 'https://cdn.shopify.com/s/assets/admin/checkout/settings-customizecart-705f57c725ac05be5a34ec20c05b94298cb8afd10aac7bd9c7ad02030f48cfa0.svg',
+      primaryAction: { content: 'Customize checkout' },
+      secondaryAction: { content: 'Learn more about customizing checkout' },
+    }}
+    parameters={{
+      docs: {
+        source: {
+          code: dedent`
+            <CalloutCard
+              title="Customize the style of your checkout"
+              illustration="https://cdn.shopify.com/s/assets/admin/checkout/settings-customizecart-705f57c725ac05be5a34ec20c05b94298cb8afd10aac7bd9c7ad02030f48cfa0.svg"
+              :primaryAction="{content: 'Customize checkout'}"
+              :secondaryAction="{content: 'Learn more about customizing checkout'}"
+              @dismiss="onDismiss"
+            >
+              <p>Upload your store's logo, change colors and fonts, and more.</p>
+            </CalloutCard>\n
+            <script setup>
+              const onDismiss = () => {
+                console.log('dismissed');
+              };
+            </script>
+          `,
+        },
+      },
+    }}
+  >
+    {Template.bind({})}
+  </Story>
+</Canvas>
+
+<ArgsTable story="Callout card" />
+
+---
+
+<br/>
+
+### **Action Props**
+
+| Prop             | Type                          | Description     |
+| ---------------- | ----------------------------- | --------------- |
+| id?              | String       | A unique identifier for the action. |
+| content?         | String       | Content the action displays. |
+| accessibilityLabel?  | String  | Visually hidden text for screen readers. |
+| url?             | String       | A destination to link to, rendered in the action. |
+| external?        | String       | Forces url to open in a new tab. |
+| onAction?()      | void         | Callback when an action takes place. |
+| onMouseEnter?()  | void         | Callback when mouse enter. |
+| onTouchStart?()  | void         | Callback when element is touched. |

@@ -12,6 +12,8 @@ export interface MenuGroupDescriptor {
   actions: ActionListItemDescriptor[];
   /** Icon to display */
   icon?: IconableAction['icon'];
+  /** Disables action button */
+  disabled?: boolean;
   /** Zero-indexed numerical position. Overrides the group's order in the menu. */
   index?: number;
   /** Visually hidden menu description for screen readers */

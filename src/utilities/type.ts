@@ -52,6 +52,8 @@ export interface BaseButton {
   ariaExpanded?: boolean;
   /** Indicates the ID of the element that describes the button */
   ariaDescribedBy?: string;
+  /** Indicates the current checked state of the button when acting as a toggle or switch */
+  ariaChecked?: boolean;
 }
 
 export interface LinkAction {

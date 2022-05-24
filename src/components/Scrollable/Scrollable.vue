@@ -116,13 +116,13 @@ const toggleLock = (shouldLock = true): void => {
     return;
   }
 
-  EVENTS_TO_LOCK.forEach((eventName) => {
+  for (const eventName of EVENTS_TO_LOCK) {
     if (shouldLock) {
       scrollArea.value?.addEventListener(eventName, prevent);
     } else {
       scrollArea.value?.removeEventListener(eventName, prevent);
     }
-  });
+  }
 };
 
 const scrollStep = (): void => {

@@ -1,0 +1,99 @@
+import { Meta, Story, Canvas, ArgsTable } from '@storybook/addon-docs';
+import { EmptyState, Card, Link } from '@/polaris-vue';
+import dedent from 'ts-dedent';
+
+<Meta
+  title="Components / Structure / Empty state"
+  component={ EmptyState }
+  argTypes={{
+    default: { table: { disable: true }},
+    footerContent: {
+      description: 'Secondary elements to display below empty state actions',
+      table: {
+        type: { summary: null },
+      },
+      control: { disable:true },
+    },
+  }}
+/>
+
+export const Template = (args) => ({
+  components: { EmptyState, Card, Link },
+  setup() {
+    return { args };
+  },
+  template: `<Card>
+    <EmptyState v-bind="args">
+      <p>Track and receive your incoming inventory from suppliers.</p>
+      <template #footerContent>
+        <p>
+          If you don't want to add a transfer, you can import your inventory from
+          <Link monochrome url="/settings"> settings</Link>.
+        </p>
+      </template>
+    </EmptyState>
+  </Card>`,
+});
+
+# Empty state
+
+Empty states are used when a list, table, or chart has no items or data to show. This is an opportunity to provide explanation or guidance to help merchants progress. The empty state component is intended for use when a full page in the admin is empty, and not for individual elements or areas in the interface.
+
+<Canvas>
+  <Story
+    name="Empty state"
+    height="300px"
+    args={{
+      heading: 'Manage your inventory transfers',
+      action: {content: 'Add transfer'},
+      secondaryAction: {content: 'Learn more', url: 'https://help.shopify.com'},
+      image: 'https://cdn.shopify.com/s/files/1/0262/4071/2726/files/emptystate-files.png',
+    }}
+    parameters={{
+      docs: {
+        source: {
+          code: dedent`
+            <Card>
+              <EmptyState v-bind="args">
+                <p>Track and receive your incoming inventory from suppliers.</p>
+                <template #footerContent>
+                  <p>
+                    If you don't want to add a transfer, you can import your inventory from
+                    <Link monochrome url="/settings"> settings</Link>.
+                  </p>
+                </template>
+              </EmptyState>
+            </Card>
+          `,
+        },
+      },
+    }}
+  >
+    {Template.bind({})}
+  </Story>
+</Canvas>
+
+<ArgsTable story="Empty state" />
+
+---
+
+<br/>
+
+### **ComplexAction types**
+
+| Prop             | Type                          | Description     |
+| ---------------- | ----------------------------- | --------------- |
+| id?              | String       | A unique identifier for the action. |
+| content?         | String       | Content the action displays. |
+| accessibilityLabel?  | String  | Visually hidden text for screen readers. |
+| url?             | String       | A destination to link to, rendered in the action. |
+| external?        | String       | Forces url to open in a new tab. |
+| destructive?     | Boolean      | Destructive action. |
+| disabled?        | Boolean      | Whether or not the action is disabled. |
+| icon?            | IconSource   | Source of the icon. |
+| loading?         | Boolean      | Should a spinner be displayed. |
+| outline?         | Boolean      | Should action be displayed as an outlined button. |
+| plain?           | Boolean      | Should action be displayed as a plain link. |
+| onAction?()      | void         | Callback when an action takes place. |
+| onMouseEnter?()  | void         | Callback when mouse enter. |
+| onTouchStart?()  | void         | Callback when element is touched. |

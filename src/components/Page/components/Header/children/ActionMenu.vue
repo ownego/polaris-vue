@@ -10,7 +10,7 @@ ActionMenu(
 </template>
 
 <script setup lang="ts">
-import { useSlots, computed } from 'vue';
+import { useSlots } from 'vue';
 import { ActionMenu } from '@/components/ActionMenu';
 import type { MenuActionDescriptor } from '@/utilities/interface';
 import type { ActionMenuProps } from '@/components/ActionMenu/utils';

@@ -58,8 +58,9 @@ const rollupSections = computed(() => {
 function convertGroupToSection({
   title,
   actions,
+  disabled,
 }: MenuGroupDescriptor): ActionListSection {
-  return { title, items: actions };
+  return { title, items: disabled ? [] : actions };
 }
 </script>
 

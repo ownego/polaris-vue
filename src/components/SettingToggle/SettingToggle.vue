@@ -5,12 +5,14 @@ Card(sectioned)
       ButtonFrom(
         v-if="action",
         :action="action",
-        :overrides="{ primary: !enabled }",
+        :overrides="{ primary: !enabled, role: 'switch', id: id, ariaChecked: enabled ? true : false }",
       )
     template(#setting)
-      slot
+      label(:for="id")
+        slot
 </template>
 <script setup lang="ts">
+import { globalIdGeneratorFactory } from 'polaris/polaris-react/src/utilities/unique-id/unique-id-factory';
 import type { ComplexAction } from '@/utilities/interface';
 import { SettingAction, ButtonFrom, Card } from '@/components';
 
@@ -22,4 +24,8 @@ interface SettingToggleProps {
 }
 
 const props = defineProps<SettingToggleProps>();
+
+const getId = globalIdGeneratorFactory('SettingToggle');
+
+const id = getId();
 </script>

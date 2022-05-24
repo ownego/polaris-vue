@@ -36,7 +36,9 @@ interface Props {
 const props = defineProps<Props>();
 const emit = defineEmits<{ (event: 'scrolled-to-bottom'): void }>();
 
-const style = props.height ? { height: props.height, maxHeight: props.height } : undefined;
+const style = props.height
+  ? { height: props.height, maxHeight: props.height, minHeight: props.height }
+  : undefined;
 
 const className = computed(() => classNames(styles.Pane, props.fixed && styles['Pane-fixed']));
 </script>
