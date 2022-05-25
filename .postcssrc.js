@@ -9,6 +9,11 @@ module.exports = {
     postcssModules({
       generateScopedName: classConfig,
       getJSON: (cssFileName, json) => {
+        /* Ignore generate common polaris tokens style file */
+        if (cssFileName.indexOf('@shopify/polaris-tokens') !== -1) {
+          return;
+        }
+
         let cssName = path.basename(cssFileName, '.vue');
 
         let projectPath = path.basename(__dirname, './');

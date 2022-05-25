@@ -2,7 +2,7 @@
 component(
   :is="'style'",
   data-polaris-custom-properties="",
-  v-html="styles"
+  v-html="rawStyles"
 )
 component(
   v-bind="$attrs",
@@ -14,7 +14,7 @@ component(
 </template>
 <script setup lang="ts">
 import { computed } from 'vue';
-import { styles } from 'polaris/polaris-react/src/components/CustomProperties/styles';
+import rawStyles from '@shopify/polaris-tokens/css/styles.scss?inline';
 import { DEFAULT_COLOR_SCHEME, STYLE_SHEET_ID } from './utils';
 import type { CustomPropertiesProps } from './utils';
 
