@@ -1654,10 +1654,10 @@
   resolved "https://registry.yarnpkg.com/@rushstack/eslint-patch/-/eslint-patch-1.1.0.tgz#7f698254aadf921e48dda8c0a6b304026b8a9323"
   integrity sha512-JLo+Y592QzIE+q7Dl2pMUtt4q8SKYI5jDrZxrozEQxnGVOyYE+GWK9eLkwTaeN9DDctlaRAQ3TBmzZ1qdLE30A==
 
-"@shopify/polaris-icons@^4.18.4":
-  version "4.18.4"
-  resolved "https://registry.yarnpkg.com/@shopify/polaris-icons/-/polaris-icons-4.18.4.tgz#ac6be7d997e5604cfe19b65e3e33e5ce75be6b0b"
-  integrity sha512-nLObr1ICZHmrMh1dEfNVUbcSdQgkPyQarzKZStSJ8nkKFF9MdPXCH7DGiAwxSBqGFC19qRQTpPpRNRr5ovJiWw==
+"@shopify/polaris-icons@^4.22.0":
+  version "4.22.0"
+  resolved "https://registry.yarnpkg.com/@shopify/polaris-icons/-/polaris-icons-4.22.0.tgz#7842afa1fb4ce93056a065ab9c67ae5812b22b32"
+  integrity sha512-PTozhV8U56rrAtSEu4lbebka3tFX/ty7UcmlRmZKxo9eluuiJPNdcsQZzNXyqIBdYIxjdd30PTwed+OCboFNfg==
 
 "@shopify/polaris-tokens@^5.0.1":
   version "5.0.1"
@@ -8975,8 +8975,8 @@ pnp-webpack-plugin@1.6.4:
     ts-pnp "^1.1.6"
 
 "polaris@https://github.com/juzser/polaris.git":
-  version "9.8.0-fix"
-  resolved "https://github.com/juzser/polaris.git#256aec71fd3ea9967cf8972f66ec928043eb28ab"
+  version "9.9.0"
+  resolved "https://github.com/juzser/polaris.git#986b4386a3d706a00f220323bbaf15d1d9176484"
 
 polished@^4.2.2:
   version "4.2.2"
