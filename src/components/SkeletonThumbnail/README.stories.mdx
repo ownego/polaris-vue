@@ -1,0 +1,50 @@
+import dedent from 'ts-dedent';
+import { Meta, Story, Canvas, ArgsTable } from '@storybook/addon-docs';
+import { SkeletonThumbnail } from '@/polaris-vue';
+
+<Meta
+  title="Components / Feedback indicators / Skeleton thumbnail"
+  component={ SkeletonThumbnail }
+  argTypes={{
+    size: {
+      options: ['extraSmall', 'small', 'medium', 'large'],
+      control: { type: 'select' },
+    }
+  }}
+/>
+
+export const Template = (args) => ({
+  components: { SkeletonThumbnail },
+  setup() {
+    return { args };
+  },
+  template: `
+  <SkeletonThumbnail v-bind="args" />
+  `,
+});
+
+# Skeleton thumbnail
+
+Skeleton thumbnail is used to provide a low fidelity representation of an image before it appears on the page, and improves load times perceived by merchants. Use for thumbnails in or outside of a card.
+
+<Canvas>
+  <Story
+    name="Skeleton thumbnail"
+    args={{
+      size: 'medium',
+    }}
+    parameters={{
+      docs: {
+        source: {
+          code: dedent`
+            <SkeletonThumbnail size="medium" />
+          `,
+        },
+      },
+    }}
+  >
+    {Template.bind({})}
+  </Story>
+</Canvas>
+
+<ArgsTable story="Skeleton thumbnail"/>

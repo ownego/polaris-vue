@@ -69,6 +69,8 @@ export * from './SettingToggle';
 export * from './SkeletonBodyText';
 export * from './SkeletonDisplayText';
 export * from './SkeletonPage';
+export * from './SkeletonTabs';
+export * from './SkeletonThumbnail';
 export * from './Spinner';
 export * from './Stack';
 export * from './Subheading';

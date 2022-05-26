@@ -1,0 +1,48 @@
+import dedent from 'ts-dedent';
+import { Meta, Story, Canvas, ArgsTable } from '@storybook/addon-docs';
+import { SkeletonTabs, Card } from '@/polaris-vue';
+
+<Meta
+  title="Components / Feedback indicators / Skeleton tabs"
+  component={ SkeletonTabs }
+/>
+
+export const Template = (args) => ({
+  components: { SkeletonTabs, Card },
+  setup() {
+    return { args };
+  },
+  template: `
+  <Card>
+    <SkeletonTabs v-bind="args" />
+  </Card>
+  `,
+});
+
+# Skeleton tabs
+
+Skeleton tabs are used to provide a low fidelity representation of content before it appears on the page, and improves load times perceived by merchants. Can be used for content in or outside of a card.
+
+<Canvas>
+  <Story
+    name="Skeleton tabs"
+    args={{
+      count: 2,
+    }}
+    parameters={{
+      docs: {
+        source: {
+          code: dedent`
+            <Card>
+              <SkeletonTabs :count="2" />
+            </Card>
+          `,
+        },
+      },
+    }}
+  >
+    {Template.bind({})}
+  </Story>
+</Canvas>
+
+<ArgsTable story="Skeleton tabs"/>

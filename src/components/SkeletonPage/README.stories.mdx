@@ -1,0 +1,131 @@
+import dedent from 'ts-dedent';
+import { Meta, Story, Canvas, ArgsTable } from '@storybook/addon-docs';
+import { SkeletonPage, Layout, LayoutSection, Card, TextContainer, SkeletonBodyText, SkeletonDisplayText, CardSection } from '@/polaris-vue';
+
+<Meta
+  title="Components / Feedback indicators / Skeleton page"
+  component={ SkeletonPage }
+  argTypes={{
+  }}
+/>
+
+export const Template = (args) => ({
+  components: { SkeletonPage, Layout, LayoutSection, Card, TextContainer, SkeletonBodyText, SkeletonDisplayText, CardSection },
+  setup() {
+    return { args };
+  },
+  template: `
+    <SkeletonPage primaryAction>
+      <Layout>
+        <LayoutSection>
+          <Card sectioned>
+            <SkeletonBodyText />
+          </Card>
+          <Card sectioned>
+            <TextContainer>
+              <SkeletonDisplayText size="small" />
+              <SkeletonBodyText />
+            </TextContainer>
+          </Card>
+          <Card sectioned>
+            <TextContainer>
+              <SkeletonDisplayText size="small" />
+              <SkeletonBodyText />
+            </TextContainer>
+          </Card>
+        </LayoutSection>
+        <LayoutSection secondary>
+          <Card>
+            <CardSection>
+              <TextContainer>
+                <SkeletonDisplayText size="small" />
+                <SkeletonBodyText :lines="2" />
+              </TextContainer>
+            </Card.Section>
+            <CardSection>
+              <SkeletonBodyText lines={1} />
+            </Card.Section>
+          </Card>
+          <Card subdued>
+            <CardSection>
+              <TextContainer>
+                <SkeletonDisplayText size="small" />
+                <SkeletonBodyText :lines="2" />
+              </TextContainer>
+            </CardSection>
+            <CardSection>
+              <SkeletonBodyText :lines="2" />
+            </CardSection>
+          </Card>
+        </LayoutSection>
+      </Layout>
+    </SkeletonPage>
+  `,
+});
+
+# Skeleton page
+
+Skeleton page is used with other skeleton loading components to provide a low fidelity representation of the user interface (UI) before content appears on the page. It improves load times perceived by merchants.
+
+<Canvas>
+  <Story
+    name="Skeleton page"
+    parameters={{
+      docs: {
+        source: {
+          code: dedent`
+            <SkeletonPage primaryAction>
+              <Layout>
+                <LayoutSection>
+                  <Card sectioned>
+                    <SkeletonBodyText />
+                  </Card>
+                  <Card sectioned>
+                    <TextContainer>
+                      <SkeletonDisplayText size="small" />
+                      <SkeletonBodyText />
+                    </TextContainer>
+                  </Card>
+                  <Card sectioned>
+                    <TextContainer>
+                      <SkeletonDisplayText size="small" />
+                      <SkeletonBodyText />
+                    </TextContainer>
+                  </Card>
+                </LayoutSection>
+                <LayoutSection secondary>
+                  <Card>
+                    <CardSection>
+                      <TextContainer>
+                        <SkeletonDisplayText size="small" />
+                        <SkeletonBodyText :lines="2" />
+                      </TextContainer>
+                    </Card.Section>
+                    <CardSection>
+                      <SkeletonBodyText lines={1} />
+                    </Card.Section>
+                  </Card>
+                  <Card subdued>
+                    <CardSection>
+                      <TextContainer>
+                        <SkeletonDisplayText size="small" />
+                        <SkeletonBodyText :lines="2" />
+                      </TextContainer>
+                    </CardSection>
+                    <CardSection>
+                      <SkeletonBodyText :lines="2" />
+                    </CardSection>
+                  </Card>
+                </LayoutSection>
+              </Layout>
+            </SkeletonPage>
+          `,
+        },
+      },
+    }}
+  >
+    {Template.bind({})}
+  </Story>
+</Canvas>
+
+<ArgsTable story="Skeleton page"/>
