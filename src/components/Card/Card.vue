@@ -26,7 +26,7 @@ div(:class="className")
       )
         template(#activator)
           Button(:disclosure="true", @click="toggleSecondaryActionsPopoverOpen")
-            | {{ secondaryFooterActionsDisclosureText || lang.Polaris.Common.more }}
+            | {{ secondaryFooterActionsDisclosureText || i18n.translate('Polaris.Common.more') }}
         template(#content)
           ActionList(:items="secondaryFooterActions")
       ButtonFrom(
@@ -51,19 +51,20 @@ div(:class="className")
       )
         template(#activator)
           Button(disclosure, @click="toggleSecondaryActionsPopoverOpen")
-            | {{ secondaryFooterActionsDisclosureText || lang.Polaris.Common.more }}
+            | {{ secondaryFooterActionsDisclosureText || i18n.translate('Polaris.Common.more') }}
         template(#content)
           ActionList(:items="secondaryFooterActions")
 </template>
 
 <script setup lang="ts">
-import { computed, provide, ref, useSlots, inject } from 'vue';
+import { computed, provide, ref, useSlots } from 'vue';
 import { classNames } from 'polaris/polaris-react/src/utilities/css';
 import styles from '@/classes/Card.json';
 import { ButtonGroup, ActionList, Button, Popover } from '@/components';
 import { ButtonFrom } from '@/components/Button';
 import type { DisableableAction, ComplexAction } from '@/utilities/interface';
 import { hasSlot } from '@/utilities/has-slot';
+import { UseI18n } from '@/use';
 import { Header, Section } from './components';
 
 export interface CardProps {
@@ -91,7 +92,7 @@ const props = withDefaults(defineProps<CardProps>(), {
   footerActionAlignment: 'right',
 });
 
-const lang = inject('lang') as Record<string, any>;
+const i18n = UseI18n();
 
 const slots = useSlots();
 

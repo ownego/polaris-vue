@@ -21,6 +21,7 @@ import { capitalize } from 'polaris/polaris-react/src/utilities/capitalize';
 import uploadArrow from 'polaris/polaris-react/src/components/DropZone/images/upload-arrow.svg';
 import { Stack, Caption, TextStyle } from '@/components';
 import styles from '@/classes/DropZone-FileUpload.json';
+import { UseI18n } from '@/use';
 import { createAllowMultipleKey } from '../../utils';
 
 interface FileUploadProps {
@@ -28,7 +29,7 @@ interface FileUploadProps {
   actionHint?: string;
 }
 
-const lang = inject('lang') as Record<string, any>;
+const i18n = UseI18n();
 
 const { size, measuring, type, disabled, allowMultiple } = toRefs(inject('dropZoneContext') as any);
 
@@ -38,7 +39,7 @@ const allowMultipleKey = createAllowMultipleKey(allowMultiple.value);
 const props = defineProps<FileUploadProps>();
 
 const title = computed(() => {
-  return props.actionTitle || lang.Polaris.DropZone[allowMultipleKey][`actionTitle${typeSuffix}`]
+  return props.actionTitle || i18n.translate(`Polaris.DropZone.${allowMultipleKey}.actionTitle${typeSuffix}`);
 });
 
 const actionClassNames = classNames(

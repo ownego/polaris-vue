@@ -2,7 +2,7 @@
 div(
   :class="className",
   role="status",
-  :aria-label="lang.Polaris.SkeletonPage.loadingLabel",
+  :aria-label="i18n.translate('Polaris.SkeletonPage.loadingLabel')",
 )
   div(
     :class="styles.Header",
@@ -38,10 +38,11 @@ div(
     slot
 </template>
 <script setup lang="ts">
-import { computed, inject } from "vue";
+import { computed } from "vue";
 import { classNames } from 'polaris/polaris-react/src/utilities/css';
 import styles from '@/classes/SkeletonPage.json';
 import { SkeletonBodyText, SkeletonDisplayText } from "@/components";
+import { UseI18n } from '@/use';
 
 interface Props {
   /** Page title, in large type */
@@ -58,7 +59,7 @@ interface Props {
 
 const props = defineProps<Props>();
 
-const lang = inject('lang') as Record<string, any>;
+const i18n = UseI18n();
 
 const className = computed(() => classNames(
   styles.Page,

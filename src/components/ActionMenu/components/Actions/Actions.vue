@@ -40,12 +40,13 @@ div(
 </template>
 
 <script setup lang="ts">
-import { inject, ref, computed, onUpdated } from 'vue';
+import { ref, computed, onUpdated } from 'vue';
 import { debounce } from 'polaris/polaris-react/src/utilities/debounce';
 import styles from '@/classes/ActionMenu-Actions.json';
 import { ButtonGroup, EventListener } from '@/components';
 import type { ActionListItemDescriptor } from '@/components/ActionList/utils';
 import type { MenuActionDescriptor } from '@/utilities/interface';
+import { UseI18n } from '@/use';
 import type { MenuGroupDescriptor } from '../MenuGroup/utils';
 import { MenuGroup } from '../MenuGroup';
 import { SecondaryAction } from '../SecondaryAction';
@@ -64,7 +65,7 @@ interface MeasuredActions {
 
 const ACTION_SPACING = 8;
 
-const lang = inject('lang') as Record<string, any>;
+const i18n = UseI18n();
 
 const props = defineProps<Props>();
 
@@ -82,7 +83,7 @@ const measuredActions = ref<MeasuredActions>({
 });
 
 const defaultRollupGroup = ref<MenuGroupDescriptor>({
-  title: lang.Polaris.ActionMenu.Actions.moreActions,
+  title: i18n.translate('Polaris.ActionMenu.Actions.moreActions'),
   actions: [],
 });
 

@@ -23,7 +23,7 @@ li(v-if="!url", :class="styles.ListItem")
       v-if="props.new || badge",
       :class="styles.Badge"
     )
-      Badge(v-if="props.new", status="new", size="small") {{ lang.Polaris.Badge.STATUS_LABELS.new }}
+      Badge(v-if="props.new", status="new", size="small") {{ i18n.translate('Polaris.Badge.STATUS_LABELS.new') }}
       Badge(v-else-if="typeof badge === 'string'", status="new", size="small") {{ badge }}
       Badge(v-else-if="typeof badge === 'object'", v-bind="badge") {{ badge.content }}
 
@@ -54,7 +54,7 @@ li(v-else, :class="className")
         v-if="props.new || badge",
         :class="styles.Badge"
       )
-        Badge(v-if="props.new", status="new", size="small") {{ lang.Polaris.Badge.STATUS_LABELS.new }}
+        Badge(v-if="props.new", status="new", size="small") {{ i18n.translate('Polaris.Badge.STATUS_LABELS.new') }}
         Badge(v-else-if="typeof badge === 'string'", status="new", size="small") {{ badge }}
         Badge(v-else-if="typeof badge === 'object'", v-bind="badge") {{ badge.content }}
       div(
@@ -63,7 +63,7 @@ li(v-else, :class="className")
       )
         Icon(
           color="base",
-          :accessibilityLabel="lang.Polaris.Common.newWindowAccessibilityHint",
+          :accessibilityLabel="i18n.translate('Polaris.Common.newWindowAccessibilityHint')",
           :source="ExternalMinor",
         )
 
@@ -127,6 +127,7 @@ import {
 import type { IconProps } from '@/components/Icon/utils';
 import type { BadgeProps } from '@/components/Badge/utils';
 import type { TooltipProps } from '@/components/Tooltip/utils';
+import { UseI18n } from '@/use';
 
 import { Secondary } from './components';
 
@@ -207,7 +208,7 @@ const secondaryNavigationId = useUniqueId('SecondaryNavigation');
 const { useNavigationContext } = UseNavigationContext();
 const { location, onNavigationDismiss } = useNavigationContext();
 
-const lang = inject('lang') as Record<string, any>;
+const i18n = UseI18n();
 
 const keyFocused = ref(false);
 

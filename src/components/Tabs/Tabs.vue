@@ -16,7 +16,7 @@ div
           button(
             type="button",
             :class="disclosureButtonClassName",
-            :aria-label="lang.Polaris.Tabs.toggleTabsLabel",
+            :aria-label="i18n.translate('Polaris.Tabs.toggleTabsLabel')",
             @click="handleDisclosureActivatorClick",
           )
             span(:class="disclosureButtonContentWrapperClassName")
@@ -28,7 +28,7 @@ div
           v-else,
           type="button",
           :class="disclosureButtonClassName",
-          :aria-label="lang.Polaris.Tabs.toggleTabsLabel",
+          :aria-label="i18n.translate('Polaris.Tabs.toggleTabsLabel')",
           @click="handleDisclosureActivatorClick",
         )
           span(:class="disclosureButtonContentWrapperClassName")
@@ -91,7 +91,7 @@ div
               button(
                 type="button",
                 :class="disclosureButtonClassName",
-                :aria-label="lang.Polaris.Tabs.toggleTabsLabel",
+                :aria-label="i18n.translate('Polaris.Tabs.toggleTabsLabel')",
                 @click="handleDisclosureActivatorClick",
               )
                 span(:class="disclosureButtonContentWrapperClassName")
@@ -103,7 +103,7 @@ div
               v-else,
               type="button",
               :class="disclosureButtonClassName",
-              :aria-label="lang.Polaris.Tabs.toggleTabsLabel",
+              :aria-label="i18n.translate('Polaris.Tabs.toggleTabsLabel')",
               @click="handleDisclosureActivatorClick",
             )
               span(:class="disclosureButtonContentWrapperClassName")
@@ -136,7 +136,7 @@ div
     )
 </template>
 <script setup lang="ts">
-import { ref, computed, useSlots, inject, onMounted } from 'vue';
+import { ref, computed, useSlots, onMounted } from 'vue';
 import { classNames } from 'polaris/polaris-react/src/utilities/css';
 import {
   Icon,
@@ -147,6 +147,7 @@ import HorizontalDotsMinor from '@icons/HorizontalDotsMinor.svg';
 import CaretDownMinor from '@icons/CaretDownMinor.svg';
 import styles from '@/classes/Tabs.json';
 import { hasSlot } from '@/utilities/has-slot';
+import { UseI18n } from '@/use';
 import type { TabDescriptor, TabMeasurements } from './types';
 import { List, Panel, Tab, TabMeasurer } from './components';
 
@@ -161,7 +162,7 @@ interface TabsProps {
   disclosureText?: string;
 }
 
-const lang = inject('lang') as Record<string, any>;
+const i18n = UseI18n();
 const props = defineProps<TabsProps>();
 const slots = useSlots();
 

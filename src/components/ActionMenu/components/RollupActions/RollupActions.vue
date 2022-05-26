@@ -11,7 +11,7 @@ Popover(
       Button(
         outline,
         :icon="HorizontalDotsMinor",
-        :accessibilityLabel="accessibilityLabel || lang.Polaris.ActionMenu.RollupActions.rollupButton",
+        :accessibilityLabel="accessibilityLabel || i18n.translate('Polaris.ActionMenu.RollupActions.rollupButton')",
         @click="toggleRollupOpen",
       )
   template(#content)
@@ -23,10 +23,11 @@ Popover(
 </template>
 
 <script setup lang="ts">
-import { ref, inject } from 'vue';
+import { ref } from 'vue';
 import HorizontalDotsMinor from '@icons/HorizontalDotsMinor.svg';
 import styles from '@/classes/ActionMenu-RollupActions.json';
 import { ActionList, Button, Popover } from '@/components';
+import { UseI18n } from '@/use';
 import type { ActionListItemDescriptor, ActionListSection } from '@/components/ActionList/utils';
 
 interface RollupActionsProps {
@@ -38,7 +39,7 @@ interface RollupActionsProps {
   sections?: ActionListSection[];
 }
 
-const lang = inject('lang') as Record<string, any>;
+const i18n = UseI18n();
 
 defineProps<RollupActionsProps>();
 

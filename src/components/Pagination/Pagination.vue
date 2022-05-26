@@ -83,6 +83,7 @@ import { isInputFocused } from 'polaris/polaris-react/src/utilities/is-input-foc
 import ChevronLeftMinor from '@icons/ChevronLeftMinor.svg';
 import ChevronRightMinor from '@icons/ChevronRightMinor.svg';
 import { Button, ButtonGroup, KeypressListener, TextStyle, Tooltip } from '@/components';
+import { UseI18n } from '@/use';
 import { hasSlot } from '@/utilities/has-slot';
 import type { Key } from '../KeypressListener/utils';
 
@@ -116,7 +117,7 @@ interface PaginationProps {
 
 const props = defineProps<PaginationProps>();
 
-const lang = inject('lang') as Record<string, any>;
+const i18n = UseI18n();
 
 const paginationRef = ref<HTMLElement | null>(null);
 
@@ -124,9 +125,9 @@ const slots = useSlots();
 
 const attrs = useAttrs();
 
-const navLabel = props.accessibilityLabel || lang.Polaris.Pagination.pagination;
-const previousLabel = (props.accessibilityLabels && props.accessibilityLabels.previous) || lang.Polaris.Pagination.previous;
-const nextLabel = (props.accessibilityLabels && props.accessibilityLabels.next) || lang.Polaris.Pagination.next;
+const navLabel = props.accessibilityLabel || i18n.translate('Polaris.Pagination.pagination');
+const previousLabel = (props.accessibilityLabels && props.accessibilityLabels.previous) || i18n.translate('Polaris.Pagination.previous');
+const nextLabel = (props.accessibilityLabels && props.accessibilityLabels.next) || i18n.translate('Polaris.Pagination.next');
 
 const prevKeyCondition = computed(() => {
   return props.previousKeys && (props.previousURL || attrs['onPrevious']) && props.hasPrevious;

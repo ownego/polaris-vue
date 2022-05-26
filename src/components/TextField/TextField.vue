@@ -162,8 +162,9 @@ import { classNames, variationName } from 'polaris/polaris-react/src/utilities/c
 import { UseUniqueId } from '@/use';
 import styles from '@/classes/TextField.json';
 import CircleCancelMinor from '@icons/CircleCancelMinor.svg';
-import type { LabelledProps } from '../Labelled/utils';
 import type { Error } from '@/utilities/type';
+import { UseI18n } from '@/use';
+import type { LabelledProps } from '../Labelled/utils';
 import { helpTextID, labelID } from '../Labelled/utils';
 import { Resizer, Spinner as TextFieldSpinner } from './components';
 import { Connected } from '../Connected';
@@ -273,7 +274,7 @@ interface NonMutuallyExclusiveProps {
   selectTextOnFocus?: boolean;
 }
 
-const lang = inject('lang') as Record<string, any>;
+const i18n = UseI18n();
 
 const props = withDefaults(defineProps<NonMutuallyExclusiveProps>(), {
   type: 'text',
@@ -411,13 +412,13 @@ const normalizeAriaMultiline = computed(() => {
 const characterCount = computed(() => (normalizedValue.value as string).length);
 const characterCountLabel = computed(() => {
   return props.maxLength
-    ? lang.Polaris.TextField.characterCountWithMaxLength({
+    ? i18n.translate('Polaris.TextField.characterCountWithMaxLength', {
       count: characterCount.value,
       limit: props.maxLength,
     })
-    : lang.Polaris.TextField.characterCount({
-      count: characterCount,
-    })
+    : i18n.translate('Polaris.TextField.characterCount', {
+      count: characterCount.value,
+    });
 });
 const characterCountText = computed(() => !props.maxLength
   ? characterCount.value

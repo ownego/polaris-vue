@@ -11,6 +11,7 @@ import { debounce } from 'polaris/polaris-react/src/utilities/debounce';
 import { ScrollLockManager } from 'polaris/polaris-react/src/utilities/scroll-lock-manager/scroll-lock-manager';
 import { UniqueIdFactory, globalIdGeneratorFactory } from 'polaris/polaris-react/src/utilities/unique-id/unique-id-factory';
 import { navigationBarCollapsed } from 'polaris/polaris-react/src/utilities/breakpoints';
+import { I18n } from '@/utilities/i18n';
 import lang from 'polaris/polaris-react/locales/en.json';
 import { EventListener, CustomProperties } from '@/components';
 import { PortalManager } from '@/utilities/portal-manager';
@@ -68,12 +69,15 @@ onMounted(() => {
   }
 });
 
+const i18n = new I18n(lang);
+
 provide('mediaQueryContext', { isNavigationCollapsed: isNavigationCollapsed.value });
 provide('scrollLockManager', scrollLockManager);
 provide('portalManager', portalManager);
 provide('uniqueIdFactory', uniqueIdFactory.value);
 provide('focusManager', focusManager);
 provide('lang', lang);
+provide('i18n', i18n);
 </script>
 
 <style lang="scss">

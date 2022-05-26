@@ -10,8 +10,8 @@ Modal(
   template(#content) {{ message }}
 </template>
 <script setup lang="ts">
-import { inject } from 'vue';
 import { Modal } from '@/components';
+import { UseI18n } from '@/use';
 
 interface DiscardConfirmationModalProps {
   open: boolean;
@@ -24,12 +24,12 @@ const emits = defineEmits<{
   (e: 'cancel'): void;
 }>();
 
-const lang = inject('lang') as Record<string, any>;
+const i18n = UseI18n();
 
-const message = lang.Polaris.DiscardConfirmationModal.message;
-const title = lang.Polaris.DiscardConfirmationModal.title;
-const primaryActionMsg = lang.Polaris.DiscardConfirmationModal.primaryAction;
-const secondaryActionMsg = lang.Polaris.DiscardConfirmationModal.secondaryAction;
+const message = i18n.translate('Polaris.DiscardConfirmationModal.message');
+const title = i18n.translate('Polaris.DiscardConfirmationModal.title');
+const primaryActionMsg = i18n.translate('Polaris.DiscardConfirmationModal.primaryAction');
+const secondaryActionMsg = i18n.translate('Polaris.DiscardConfirmationModal.secondaryAction');
 
 const onDiscard = () => {
   emits('discard');
