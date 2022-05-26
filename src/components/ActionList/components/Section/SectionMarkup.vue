@@ -1,6 +1,6 @@
 <template lang="pug">
 div(:class="className")
-  p(v-if="section.title", :class="titleClass") {{ section.title }}
+  p(v-if="section.title", :class="styles.Title") {{ section.title }}
   ul(
     :class="styles.Actions",
     :role="sectionRole",
@@ -29,7 +29,6 @@ export default {
 
 <script setup lang="ts">
 import { computed } from 'vue';
-import { classNames } from 'polaris/polaris-react/src/utilities/css';
 import styles from '@/classes/ActionList.json';
 import { Item } from '../Item';
 import type { ActionListItemDescriptor, ActionListSection } from '../../utils';
@@ -41,8 +40,6 @@ interface SectionProps {
   hasMultipleSections: boolean;
   /** Defines a specific role attribute for each action in the list */
   actionRole?: 'option' | 'menuitem' | string;
-  /** Whether or not the section is the first to appear */
-  firstSection?: boolean;
 }
 
 const props = defineProps<SectionProps>();
@@ -50,8 +47,6 @@ const props = defineProps<SectionProps>();
 const emit = defineEmits<{ (event: 'action-any-item'): void }>();
 
 const className = computed(() => (props.section.title ? undefined : styles['Section-withoutTitle']));
-
-const titleClass = computed(() => classNames(styles.Title));
 
 const sectionRole = computed(() => {
   let sectionRoleValue;

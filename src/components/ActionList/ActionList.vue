@@ -10,7 +10,6 @@ component(
     Section(
       v-if="section.items && section.items.length > 0",
       :key="section.title || index",
-      :firstSection="index === 0",
       :section="section",
       :hasMultipleSections="hasMultipleSections",
       :actionRole="actionRole",
@@ -40,7 +39,7 @@ export default {
 </script>
 
 <script setup lang="ts">
-import { computed, onMounted, ref } from 'vue';
+import { computed, ref } from 'vue';
 import { classNames } from 'polaris/polaris-react/src/utilities/css';
 import { wrapFocusPreviousFocusableMenuItem, wrapFocusNextFocusableMenuItem } from '@/utilities/focus';
 import { KeypressListener } from '@/components/KeypressListener';
