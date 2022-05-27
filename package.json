@@ -3,9 +3,7 @@
   "version": "0.7.4",
   "polaris_version": "9.9.0",
   "description": "Shopify Polaris UI library for Vue 3",
-  "author": {
-    "name": "Ownego Team"
-  },
+  "author": "Ownego Team",
   "keywords": [
     "polaris",
     "shopify polaris",
@@ -63,7 +61,7 @@
     "eslint-plugin-vue": "^8.5.0",
     "hash-generator": "^0.1.0",
     "path": "^0.12.7",
-    "polaris": "https://github.com/juzser/polaris.git",
+    "polaris": "git+https://github.com/juzser/polaris.git",
     "postcss": "^7",
     "postcss-modules": "^3",
     "prettier": "^2.5.1",
@@ -83,7 +81,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/ownego/polaris-vue.git"
+    "url": "git+https://github.com/ownego/polaris-vue.git"
   },
   "bugs": {
     "url": "https://github.com/ownego/polaris-vue/issues"
