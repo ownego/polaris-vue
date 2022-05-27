@@ -117,8 +117,9 @@ const inputClassName = computed(() => classNames(
 ));
 
 const indeterminateAttributes = computed(() => isIndeterminate.value
-  ? { indeterminate: 'true', 'aria-checked': 'mixed' as const }
+  ? { indeterminate: true, 'aria-checked': 'mixed' as const }
   : { 'aria-checked': isChecked.value });
+
 const formattedAriaDescribedBy = computed(() => {
   const describedBy: string[] = [];
 

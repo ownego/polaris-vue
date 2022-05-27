@@ -67,7 +67,7 @@ import { hasSlot } from '@/utilities/has-slot';
 import { UseI18n } from '@/use';
 import { Header, Section } from './components';
 
-export interface CardProps {
+interface CardProps {
   /** Title content for the card **/
   title?: string;
   /** A less prominent card */

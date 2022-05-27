@@ -7,7 +7,7 @@ import { UseUniqueId } from '@/use';
 import { UseFrame } from '@/utilities/frame';
 import type { Action } from '@/utilities/type';
 
-export interface ToastProps {
+interface ToastProps {
   /** The content that should appear in the toast message */
   content: string;
   /**

@@ -40,7 +40,7 @@ const props = withDefaults(defineProps<Props>(), {
 
 const i18n = UseI18n();
 
-const contentStyles = ref<Record<string, unknown>>({});
+const contentStyles = ref<any>({});
 
 const ariaLabel = computed(() => {
   return props.accessibilityLabel
