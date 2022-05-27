@@ -15,7 +15,7 @@ jobs:
       - uses: actions/setup-node@v2
         with:
           node-version: lts/gallium
-      - run: yarn --frozen-lockfile
+      - run: yarn
 
   publish-npm:
     needs: build
