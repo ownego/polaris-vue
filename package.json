@@ -1,10 +1,10 @@
 {
-  "name": "@qikify/polaris-vue",
+  "name": "@ownego/polaris-vue",
   "version": "1.0.1",
   "polaris_version": "9.9.0",
   "description": "Shopify Polaris UI library for Vue 3",
   "author": {
-    "name": "Qikify"
+    "name": "Ownego Team"
   },
   "keywords": [
     "polaris",
@@ -83,11 +83,11 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/qikify/polaris-vue.git"
+    "url": "https://github.com/ownego/polaris-vue.git"
   },
   "bugs": {
-    "url": "https://github.com/qikify/polaris-vue/issues"
+    "url": "https://github.com/ownego/polaris-vue/issues"
   },
-  "homepage": "https://github.com/qikify/polaris-vue#readme",
+  "homepage": "https://github.com/ownego/polaris-vue#readme",
   "license": "MIT"
 }

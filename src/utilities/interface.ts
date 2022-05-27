@@ -134,3 +134,6 @@ export interface SectionDescriptor {
 
 export type Descriptor = SectionDescriptor | OptionDescriptor;
 
+export interface CheckboxHandles {
+  focus(): void;
+}

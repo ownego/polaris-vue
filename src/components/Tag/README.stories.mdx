@@ -56,7 +56,7 @@ export const Template = (args) => ({
   <Tag v-bind="args">Wholesale</Tag>&nbsp;
   <Tag @remove="removeHandle">Removable</Tag>&nbsp;
   <Tag @click="clickHandle">Clickable</Tag>&nbsp;
-  <Tag url="https://github.com/qikify/polaris-vue">With link</Tag>
+  <Tag url="https://github.com/ownego/polaris-vue">With link</Tag>
   </div>`,
 });
 
@@ -78,7 +78,7 @@ Tags represent a set of interactive, merchant-supplied keywords that help label,
             <Tag>Wholesale</Tag>
             <Tag v-on:remove="removeHandle">Removable</Tag>
             <Tag v-on:click="clickHandle">Clickable</Tag>
-            <Tag url="https://github.com/qikify/polaris-vue">With link</Tag>\n
+            <Tag url="https://github.com/ownego/polaris-vue">With link</Tag>\n
             <script setup>
               const removeHandle = () => {
                 alert('Removed');
