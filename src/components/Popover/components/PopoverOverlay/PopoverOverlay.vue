@@ -94,7 +94,7 @@ const transitionStatus = ref<TransitionStatus>(TransitionStatus.Exited);
 const contentRef = ref<HTMLElement | null>(null);
 const enteringTimer = ref<number | null>(null);
 const exitingTimer = ref<number | null>(null);
-const contentStyles = ref<Record<string, unknown>>({});
+const contentStyles = ref<any>({});
 
 const changeTransitionStatus = (status: TransitionStatus) => {
   transitionStatus.value = status;

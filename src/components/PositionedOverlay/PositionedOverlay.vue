@@ -117,7 +117,7 @@ const style = computed(
       right: right.value == null || Number.isNaN(right.value) ? undefined : `${right.value}px`,
       width: width.value == null || Number.isNaN(width.value) ? undefined : `${width.value}px`,
       zIndex: props.zIndexOverride || zIndex.value || undefined,
-    } as Record<string, unknown>),
+    } as any),
 );
 
 const handleMeasurement = () => {

@@ -57,7 +57,7 @@ import { Key } from '../KeypressListener/utils';
 import { AutoSelection } from './utils';
 import { VisuallyHidden } from '../VisuallyHidden';
 
-export type ArrowKeys = 'up' | 'down';
+type ArrowKeys = 'up' | 'down';
 
 const OPTION_SELECTOR = '[data-listbox-option]';
 const OPTION_VALUE_ATTRIBUTE = 'data-listbox-option-value';
@@ -89,7 +89,7 @@ const {
   onKeyToBottom,
 } = comboboxListboxContext;
 
-const props = withDefaults(defineProps<ListboxProps>(), { 
+const props = withDefaults(defineProps<ListboxProps>(), {
   autoSelection: AutoSelection.FirstSelected,
 });
 const slots = useSlots();

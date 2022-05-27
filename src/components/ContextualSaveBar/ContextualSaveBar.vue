@@ -6,7 +6,7 @@ import { onBeforeUnmount, onMounted, useAttrs, useSlots } from 'vue';
 import { UseFrame } from '@/utilities/frame';
 import type { ContextualSaveBarAction, ContextualSaveBarCombinedActionProps } from '@/utilities/frame/types';
 
-export interface ContextualSaveBarProps {
+interface ContextualSaveBarProps {
   /** Extend the contents section to be flush with the left edge  */
   alignContentFlush?: boolean;
   /** Accepts a string of content that will be rendered to the left of the actions */
