@@ -11,9 +11,9 @@ addons.setConfig({
   },
   theme: create({
     base: 'light',
-    brandTitle: 'Qikify Polaris Storybook',
+    brandTitle: 'Ownego Polaris Storybook',
     brandUrl: '/',
-    brandImage: 'https://github.com/qikify/polaris-vue/blob/master/public/images/brand.png?raw=true',
+    brandImage: 'https://github.com/ownego/polaris-vue/blob/master/public/images/brand.png?raw=true',
     appBorderRadius: 0,
     colorPrimary: '#008060',
     colorSecondary: '#008060',

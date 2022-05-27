@@ -50,7 +50,7 @@ div(
               span(:class="styles.Spinner")
                 Spinner(
                   size="small",
-                  :accessibilityLabel="lang.Polaris.Button.spinnerAccessibilityLabel",
+                  :accessibilityLabel="i18n.translate('Polaris.Button.spinnerAccessibilityLabel')",
                 )
               | {{ action.content }}
             UnstyledButtonFrom(
@@ -81,6 +81,7 @@ import { UseUniqueId } from '@/use';
 import type { Action } from '@/utilities/type';
 import type { DisableableAction, LoadableAction } from '@/utilities/interface';
 import { hasSlot } from '@/utilities/has-slot';
+import { UseI18n } from '@/use';
 
 import { Button, Heading, ButtonGroup, UnstyledButton, UnstyledLink, Spinner, Icon, UnstyledButtonFrom } from '@/components';
 import type { IconProps } from '@/components/Icon/utils';
@@ -117,8 +118,8 @@ interface BannerProps {
 }
 
 const props = defineProps<BannerProps>();
+const i18n = UseI18n();
 
-const lang = inject('lang') as Record<string, any>;
 const withinContentContainer = inject('WithinContentContext', false);
 provide('BannerContext', false);
 

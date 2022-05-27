@@ -5,7 +5,7 @@ div(
   :aria-valuemin="0",
   :aria-valuemax="100",
   role="progressbar"
-  :aria-label="lang.Polaris.Loading.label",
+  :aria-label="i18n.translate('Polaris.Loading.label')",
 )
   div(
     :class="styles.Level",
@@ -15,12 +15,13 @@ div(
 </template>
 
 <script setup lang="ts">
-import { computed, onMounted, ref, watch, inject } from 'vue';
+import { computed, onMounted, ref, watch } from 'vue';
 import styles from '@/classes/Frame-Loading.json';
+import { UseI18n } from '@/use';
 
 const STUCK_THRESHOLD = 99;
 
-const lang = inject('lang') as Record<string, any>;
+const i18n = UseI18n();
 
 const progress = ref(0);
 const animating = ref(false);

@@ -18,9 +18,10 @@ div(:class="className")
 </template>
 
 <script setup lang="ts">
-import { computed, inject } from 'vue';
-import { tokens } from '@shopify/polaris-tokens';
+import { computed } from 'vue';
 import { classNames, variationName } from 'polaris/polaris-react/src/utilities/css';
+import { tokens } from '@shopify/polaris-tokens';
+import { UseI18n } from '@/use';
 import styles from '@/classes/ProgressBar.json';
 
 type Size = 'small' | 'medium' | 'large';
@@ -56,7 +57,7 @@ const props = withDefaults(defineProps<Props>(),{
   animated: true,
 });
 
-const lang = inject('lang') as Record<string, any>;
+const i18n = UseI18n();
 
 const className =  computed(() => classNames(
   styles.ProgressBar,
@@ -66,8 +67,8 @@ const className =  computed(() => classNames(
 
 const warningMessage = computed(() => {
   return props.progress < 0
-    ? lang.Polaris.ProgressBar.negativeWarningMessage.replace('{progress}', props.progress)
-    : lang.Polaris.ProgressBar.exceedWarningMessage.replace('{progress}', props.progress);
+    ? i18n.translate('Polaris.ProgressBar.negativeWarningMessage', { progress: props.progress })
+    : i18n.translate('Polaris.ProgressBar.exceedWarningMessage', { progress: props.progress });
 });
 
 const parseProgress = (progress: number, message: string) => {

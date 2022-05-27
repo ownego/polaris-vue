@@ -1,0 +1,92 @@
+import { Meta, Story, Canvas, ArgsTable } from "@storybook/addon-docs";
+import { VideoThumbnail, MediaCard } from "@/polaris-vue";
+import dedent from "ts-dedent";
+
+<Meta
+  title="Components / Images and Icons / Video thumbnail"
+  component={VideoThumbnail}
+  argTypes={{
+    title: {
+      table: { disable: true },
+    },
+    description: {
+      table: { disable: true },
+    },
+    click: {
+      description: 'Callback on click or keypress of thumbnail. Use to trigger render of the video player in your chosen format, for example within a modal or fullscreen container.',
+      table: {
+        type: {
+          summary: '() => void',
+        },
+      },
+      control: { disable: true },
+    },
+    'before-start-playing': {
+      description: 'Callback on mouse enter, focus, or touch start of thumbnail. Use to trigger video preload.',
+      table: {
+        type: {
+          summary: '() => void',
+        },
+      },
+      control: { disable: true },
+    },
+  }}
+/>
+
+export const Template = (args) => ({
+  components: { VideoThumbnail, MediaCard },
+  setup() {
+    return { args };
+  },
+  template: `
+  <MediaCard
+    title="Turn your side-project into a business"
+    description="In this course, you'll learn how the Kular family turned their mom's recipe book into a global business."
+    :primaryAction="{ content: 'Learn more', onAction: () => {} }"
+    :popoverActions="[{content: 'Dismiss', onAction: () => {}}]"
+  >
+    <VideoThumbnail v-bind="args" />
+  </MediaCard>
+  `,
+});
+
+# Video thumbnail
+
+Video thumbnails are a clickable placeholder image. When clicked, it opens a video player within a modal or full screen.
+
+<Canvas>
+  <Story
+    name="Video thumbnail"
+    height="250px"
+    inline={false}
+    args={{
+      videoLength: 80,
+      showVideoProgress: false,
+      videoProgress: 0,
+      thumbnailUrl: 'https://burst.shopifycdn.com/photos/business-woman-smiling-in-office.jpg?width=1850',
+    }}
+    parameters={{
+      docs: {
+        source: {
+          code: dedent`
+            <MediaCard
+              title="Turn your side-project into a business"
+              description="In this course, you'll learn how the Kular family turned their mom's recipe book into a global business."
+              :primaryAction="{ content: 'Learn more', onAction: () => {} }"
+              :popoverActions="[{content: 'Dismiss', onAction: () => {}}]"
+            >
+              <VideoThumbnail
+                :videoLength="80"
+                thumbnailUrl="https://burst.shopifycdn.com/photos/business-woman-smiling-in-office.jpg?width=1850"
+              />
+            </MediaCard>
+          `,
+        },
+      },
+    }}
+  >
+    {Template.bind({})}
+  </Story>
+</Canvas>
+
+<ArgsTable story="Video thumbnail" />

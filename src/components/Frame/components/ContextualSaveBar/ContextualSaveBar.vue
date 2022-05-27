@@ -55,13 +55,14 @@ DiscardConfirmationModal(
 </template>
 
 <script setup lang="ts">
-import { computed, ref, useSlots, inject } from 'vue';
+import { computed, ref, useSlots } from 'vue';
 import { classNames } from 'polaris/polaris-react/src/utilities/css';
 import { getWidth } from 'polaris/polaris-react/src/utilities/get-width';
 import { CustomProperties, Stack, Image, Button } from '@/components';
 import styles from '@/classes/Frame-ContextualSaveBar.json';
 import type { ContextualSaveBarAction, ContextualSaveBarCombinedActionProps } from '@/utilities/frame/types';
 import { UseFrame } from '@/utilities/frame';
+import { UseI18n } from '@/use';
 import { DiscardConfirmationModal } from './components';
 
 interface ContextualSaveBarProps {
@@ -79,7 +80,7 @@ interface ContextualSaveBarProps {
 
 const props = defineProps<ContextualSaveBarProps>();
 
-const lang = inject('lang') as Record<string, any>;
+const i18n = UseI18n();
 
 const slots = useSlots();
 
@@ -90,8 +91,8 @@ const contentsClassName = computed(() => {
   );
 });
 
-const saveLang = lang.Polaris.ContextualSaveBar.save;
-const discardLang = lang.Polaris.ContextualSaveBar.discard;
+const saveLang = i18n.translate('Polaris.ContextualSaveBar.save');
+const discardLang = i18n.translate('Polaris.ContextualSaveBar.discard');
 
 // Get logo from frame context
 const { useFrame } = UseFrame();

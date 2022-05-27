@@ -63,7 +63,7 @@ Labelled(
 </template>
 
 <script setup lang="ts">
-import { computed, inject, onBeforeUnmount, onMounted, provide, reactive, ref, useAttrs, useSlots } from 'vue';
+import { computed, onBeforeUnmount, onMounted, provide, reactive, ref, useAttrs, useSlots } from 'vue';
 import { debounce } from 'polaris/polaris-react/src/utilities/debounce';
 import UploadMajor from '@icons/UploadMajor.svg';
 import CircleAlertMajor from '@icons/CircleAlertMajor.svg';
@@ -79,7 +79,7 @@ import {
   Icon,
 } from '@/components';
 import type { LabelledProps } from '@/components/Labelled/utils';
-import { UseUniqueId } from '@/use';
+import { UseUniqueId, UseI18n } from '@/use';
 import styles from '@/classes/DropZone.json';
 
 import { default as DropZoneInput } from './DropZoneInput.vue';
@@ -151,7 +151,7 @@ const props = withDefaults(defineProps<DropZoneProps>(), {
   allowMultiple: defaultAllowMultiple,
 });
 
-const lang = inject('lang') as Record<string, any>;
+const i18n = UseI18n();
 
 const slots = useSlots();
 
@@ -185,15 +185,19 @@ const dragging = ref(false);
 const internalError = ref(false);
 const focused = ref(false);
 
-const overlayTextWithDefault = !props.overlayText
-  ? lang.Polaris.DropZone[allowMultipleKey][`overlayText${typeSuffix}`]
-  : props.overlayText;
+const overlayTextWithDefault = computed(() => {
+  return !props.overlayText
+    ? i18n.translate(`Polaris.DropZone.${allowMultipleKey}.overlayText${typeSuffix}`)
+    : props.overlayText;
+});
 
-const errorOverlayTextWithDefault = !props.errorOverlayText
-  ? lang.Polaris.DropZone[`errorOverlayText${typeSuffix}`]
-  : props.errorOverlayText;
+const errorOverlayTextWithDefault = computed(() => {
+  return !props.errorOverlayText
+    ? i18n.translate(`Polaris.DropZone.errorOverlayText${typeSuffix}`)
+    : props.errorOverlayText;
+});
 
-const labelFallback = lang.Polaris.DropZone[allowMultipleKey][`label${typeSuffix}`];
+const labelFallback = i18n.translate(`Polaris.DropZone.${allowMultipleKey}.label${typeSuffix}`);
 
 /**
  * Computed

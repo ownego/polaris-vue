@@ -29,7 +29,7 @@ Card
                 :icon="HorizontalDotsMinor",
                 size="slim",
                 :plain="true",
-                :accessibilityLabel="lang.Polaris.MediaCard.popoverActivatorLabel",
+                :accessibilityLabel="i18n.translate('Polaris.MediaCard.popoverActivatorLabel')",
                 @click ="togglePopoverActive",
               )
         Stack(
@@ -65,6 +65,7 @@ import HorizontalDotsMinor from '@icons/HorizontalDotsMinor.svg';
 import type { ComplexAction } from '@/utilities/interface';
 import type { ActionListItemDescriptor } from '@/components/ActionList/utils';
 import { hasSlot } from '@/utilities/has-slot';
+import { UseI18n } from '@/use';
 import { Card, CardSection, Popover, Button, ButtonFrom, ActionList, Stack, ButtonGroup, Heading } from '@/components';
 import styles from '@/classes/MediaCard.json';
 
@@ -99,7 +100,7 @@ const props = withDefaults(defineProps<Props>(), {
   portrait: false,
 });
 
-const lang = inject('lang') as Record<string, any>;
+const i18n = UseI18n();
 
 const slots = useSlots();
 

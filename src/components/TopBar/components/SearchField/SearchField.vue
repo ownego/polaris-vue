@@ -5,7 +5,7 @@ div(
   @blur="handleBlur",
 )
   VisuallyHidden
-    label(:for="searchId") {{ lang.Polaris.TopBar.SearchField.search }}
+    label(:for="searchId") {{ i18n.translate('Polaris.TopBar.SearchField.search') }}
   input(
     :id="searchId",
     :class="styles.Input",
@@ -24,7 +24,7 @@ div(
   button(
     v-if="modelValue.length > 0",
     type="button",
-    :aria-label="lang.Polaris.TopBar.SearchField.clearButtonLabel",
+    :aria-label="i18n.translate('Polaris.TopBar.SearchField.clearButtonLabel')",
     :class="styles.Clear",
     @click="handleClear",
     @blur="onClearBlur",
@@ -35,13 +35,13 @@ div(
 </template>
 
 <script setup lang="ts">
-import { computed, inject, onMounted, ref } from 'vue';
+import { computed, onMounted, ref } from 'vue';
 import { classNames } from 'polaris/polaris-react/src/utilities/css';
 import SearchMinor from '@icons/SearchMinor.svg';
 import CircleCancelMinor from '@icons/CircleCancelMinor.svg';
 import { VisuallyHidden, Icon } from '@/components';
 import styles from '@/classes/TopBar-SearchField.json';
-import { UseUniqueId } from '@/use';
+import { UseUniqueId, UseI18n } from '@/use';
 
 interface SearchFieldProps {
   /** Initial value for the input */
@@ -66,7 +66,7 @@ const emits = defineEmits<{
   (e: 'update:modelValue', value: string): void
 }>();
 
-const lang = inject('lang') as Record<string, any>;
+const i18n = UseI18n();
 
 const forceActive = ref(false);
 const inputRef = ref<HTMLInputElement | null>(null);

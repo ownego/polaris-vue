@@ -1,17 +1,17 @@
 # Polaris Vue (Support Vue 3.0)
 
-Polaris Vue by qikify only supports **Vue 3.0+**.
+Polaris Vue by Ownego only supports **Vue 3.0+**.
 
-Polaris Vue by Qikify based on [Shopify Polaris style guide](https://polaris.shopify.com/), built especially for Vue 3.
+Polaris Vue based on [Shopify Polaris style guide](https://polaris.shopify.com/), built especially for Vue 3.
 We're trying to make it mostly close with Shopify style guide and get a better performance.
 
-**Follow Polaris React version:** [9.8.0](https://github.com/Shopify/polaris/releases/tag/v9.8.0) - Migrated date: *May 20th, 2022*.
+**Follow Polaris React version:** [9.9.0](https://github.com/Shopify/polaris/releases/tag/v9.9.0) - Migrated date: *May 26th, 2022*.
 
 <br/>
 
 ## Documentation
 
-Online documentation: [Click Here](https://qikify.github.io/polaris-vue/)
+Online documentation: [Click Here](https://ownego.github.io/polaris-vue/)
 
 <br/>
 
@@ -20,13 +20,13 @@ Online documentation: [Click Here](https://qikify.github.io/polaris-vue/)
 Via NPM:
 
 ```bash
-npm install @qikify/polaris-vue
+npm install @ownego/polaris-vue
 ```
 
 Via Yarn:
 
 ```bash
-yarn add @qikify/polaris-vue
+yarn add @ownego/polaris-vue
 ```
 
 <br/>
@@ -38,8 +38,8 @@ Use as a Vue 3 plugin (globally registers all components):
 ```js
 //main.js
 import { createApp } from 'vue'
-import PolarisVue from '@qikify/polaris-vue' // (✓)
-import '@qikify/polaris-vue/dist/style.css' // (✓) This will be deprecated in the future, right after Vue 3 supports css injections.
+import PolarisVue from '@ownego/polaris-vue' // (✓)
+import '@ownego/polaris-vue/dist/style.css' // (✓) This will be deprecated in the future, right after Vue 3 supports css injections.
 import App from './App.vue'
 
 //...
@@ -51,7 +51,7 @@ app.use(PolarisVue) // (✓)
 **OR** use individual component:
 
 ```js
-import { List, Icon } from '@qikify/polaris-vue';
+import { List, Icon } from '@ownego/polaris-vue';
 ```
 
 <br/>
@@ -100,7 +100,7 @@ export default defineConfig({
 
 ```bash
 # Clone repo
-git clone https://github.com/qikify/polaris-vue.git
+git clone https://github.com/ownego/polaris-vue.git
 
 # Install packages
 yarn
@@ -113,14 +113,14 @@ yarn dev
 
 ## Contributing
 
-Polaris Vue by qikify is an open source project and we are very happy to accept community contributions.
+Polaris Vue by Ownego is an open source project and we are very happy to accept community contributions.
 
-If you notice any bugs, please create issues under [Issues](https://github.com/qikify/polaris-vue/issues).
+If you notice any bugs, please create issues under [Issues](https://github.com/ownego/polaris-vue/issues).
 We will update the contribution rules later.
 
 ## License
 
-Code released under the  [MIT License](https://github.com/qikify/polaris-vue/LICENSE).
-Copyright (c) 2021 Qikify
+Code released under the  [MIT License](https://github.com/ownego/polaris-vue/LICENSE).
+Copyright (c) 2021 Ownego
 
 **Thank you!** :tada:

@@ -1,10 +1,10 @@
 {
-  "name": "@qikify/polaris-vue",
-  "version": "0.7.3",
-  "polaris_version": "9.8.0",
+  "name": "@ownego/polaris-vue",
+  "version": "0.7.4",
+  "polaris_version": "9.9.0",
   "description": "Shopify Polaris UI library for Vue 3",
   "author": {
-    "name": "Qikify"
+    "name": "Ownego Team"
   },
   "keywords": [
     "polaris",
@@ -33,8 +33,7 @@
     "build-storybook": "rimraf ./docs && build-storybook -o docs"
   },
   "dependencies": {
-    "@shopify/polaris-icons": "^4.18.4",
-    "polaris": "https://github.com/juzser/polaris.git",
+    "@shopify/polaris-icons": "^4.22.0",
     "vite-svg-loader": "^3.1.2",
     "vue": "^3.2.31"
   },
@@ -43,15 +42,15 @@
     "@rushstack/eslint-patch": "^1.1.0",
     "@shopify/polaris-tokens": "^5.0.1",
     "@shopify/typescript-configs": "^5.1.0",
-    "@storybook/addon-a11y": "^6.4.20",
-    "@storybook/addon-actions": "^6.4.20",
-    "@storybook/addon-docs": "^6.4.20",
-    "@storybook/addon-essentials": "^6.4.20",
-    "@storybook/addon-links": "^6.4.20",
-    "@storybook/addons": "^6.4.20",
-    "@storybook/builder-vite": "^0.1.23",
-    "@storybook/theming": "^6.4.20",
-    "@storybook/vue3": "^6.4.20",
+    "@storybook/addon-a11y": "^6.5.5",
+    "@storybook/addon-actions": "^6.5.5",
+    "@storybook/addon-docs": "^6.5.5",
+    "@storybook/addon-essentials": "^6.5.5",
+    "@storybook/addon-links": "^6.5.5",
+    "@storybook/addons": "^6.5.5",
+    "@storybook/builder-vite": "^0.1.35",
+    "@storybook/theming": "^6.5.5",
+    "@storybook/vue3": "^6.5.5",
     "@types/node": "^16.11.25",
     "@vitejs/plugin-vue": "^2.2.4",
     "@vue/eslint-config-prettier": "^7.0.0",
@@ -60,10 +59,11 @@
     "babel-loader": "^8.2.3",
     "change-case": "^4.1.2",
     "eslint": "^8.10.0",
-    "eslint-plugin-storybook": "^0.5.7",
+    "eslint-plugin-storybook": "^0.5.12",
     "eslint-plugin-vue": "^8.5.0",
     "hash-generator": "^0.1.0",
     "path": "^0.12.7",
+    "polaris": "https://github.com/juzser/polaris.git",
     "postcss": "^7",
     "postcss-modules": "^3",
     "prettier": "^2.5.1",
@@ -83,11 +83,11 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/qikify/polaris-vue.git"
+    "url": "https://github.com/ownego/polaris-vue.git"
   },
   "bugs": {
-    "url": "https://github.com/qikify/polaris-vue/issues"
+    "url": "https://github.com/ownego/polaris-vue/issues"
   },
-  "homepage": "https://github.com/qikify/polaris-vue#readme",
+  "homepage": "https://github.com/ownego/polaris-vue#readme",
   "license": "MIT"
 }

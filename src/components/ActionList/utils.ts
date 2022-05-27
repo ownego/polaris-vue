@@ -1,11 +1,19 @@
 import type { IconableAction, DisableableAction, BadgeAction, DestructableAction } from '@/utilities/interface';
+import type { IconSource } from '@/utilities/type';
 
-export interface ActionListItemDescriptor extends IconableAction, DisableableAction, BadgeAction, DestructableAction {
+export interface ActionListItemDescriptor extends DisableableAction, DestructableAction {
   /** Visually hidden text for screen readers */
   accessibilityLabel?: string;
+  /** @deprecated Badge component */
+  badge?: {
+    status: 'new';
+    content: string;
+  };
   /** Additional hint text to display with item */
   helpText?: string;
-  /** Image source */
+  /** @deprecated Source of the icon */
+  icon?: IconSource;
+  /** @deprecated Image source */
   image?: string;
   /** Prefix source */
   prefixId?: string;

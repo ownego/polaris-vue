@@ -19,10 +19,11 @@ PositionedOverlay(
 </template>
 
 <script setup lang="ts">
-import { computed, ref, inject } from 'vue';
+import { computed, ref } from 'vue';
 import styles from '@/classes/Tooltip-TooltipOverlay.json';
 import type { PositionedOverlayProps } from '@/components/PositionedOverlay/utils';
 import { PositionedOverlay } from '@/components/PositionedOverlay';
+import { UseI18n } from '@/use';
 
 interface Props {
   id: string;
@@ -37,16 +38,15 @@ const props = withDefaults(defineProps<Props>(), {
   preferredPosition: 'below',
 });
 
-const lang = inject('lang') as Record<string, any>;
+const i18n = UseI18n();
 
 const contentStyles = ref<Record<string, unknown>>({});
 
 const ariaLabel = computed(() => {
   return props.accessibilityLabel
-    ? lang.Polaris.TooltipOverlay.accessibilityLabel.replace(
-      '{label}',
-      props.accessibilityLabel,
-    )
+    ? i18n.translate('Polaris.TooltipOverlay.accessibilityLabel', {
+      label: props.accessibilityLabel,
+    })
     : undefined
 });
 

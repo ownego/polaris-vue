@@ -7,7 +7,7 @@ div(:class="styles.TopBar")
     @click="$emit('navigation-toggle')",
     @focus="forceTrueFocused",
     @blur="forceFalseFocused",
-    :aria-label="lang.Polaris.TopBar.toggleMenuLabel",
+    :aria-label="i18n.translate('Polaris.TopBar.toggleMenuLabel')",
   )
     div(:class="styles.IconWrapper")
       Icon(:source="MobileHamburgerMajor")
@@ -47,13 +47,14 @@ div(:class="styles.TopBar")
 </template>
 
 <script setup lang="ts">
-import { computed, inject, ref, useSlots } from 'vue';
+import { computed, ref, useSlots } from 'vue';
 import { classNames } from 'polaris/polaris-react/src/utilities/css';
 import { getWidth  } from 'polaris/polaris-react/src/utilities/get-width';
 import MobileHamburgerMajor from '@icons/MobileHamburgerMajor.svg';
 import styles from '@/classes/TopBar.json';
 import { UseFrame } from '@/utilities/frame';
 import { Icon, Image, UnstyledLink } from '@/components';
+import { UseI18n } from '@/use';
 import { Search } from './components';
 
 export interface TopBarProps {
@@ -69,7 +70,7 @@ const props = withDefaults(defineProps<TopBarProps>(), {
   searchResultsOverlayVisible: false,
 });
 
-const lang = inject('lang') as Record<string, any>;
+const i18n = UseI18n();
 
 const { useFrame } = UseFrame();
 const { logo } = useFrame();

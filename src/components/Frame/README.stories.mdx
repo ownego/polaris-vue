@@ -89,7 +89,7 @@ export const Template = (args) => ({
       },
       navItems2: [
         { label: 'Dashboard', icon: markRaw(HomeMajor), onClick: this.toggleIsLoading },
-        { label: 'Qikify Orders', icon: markRaw(OrdersMajor), onClick: this.toggleIsLoading },
+        { label: 'Ownego Orders', icon: markRaw(OrdersMajor), onClick: this.toggleIsLoading },
       ],
     };
   },
@@ -126,8 +126,8 @@ export const Template = (args) => ({
   setup() {
     const logo = {
       width: 30,
-      topBarSource: 'https://github.com/qikify/polaris-vue/raw/dev/public/images/logo.png',
-      contextualSaveBarSource: 'https://github.com/qikify/polaris-vue/raw/dev/public/images/logo.png',
+      topBarSource: 'https://github.com/ownego/polaris-vue/raw/dev/public/images/logo.png',
+      contextualSaveBarSource: 'https://github.com/ownego/polaris-vue/raw/dev/public/images/logo.png',
     }
     const navItems = [
       { label: 'Back to Shopify', icon: ArrowLeftMinor },
@@ -163,7 +163,7 @@ export const Template = (args) => ({
             <TopBarUserMenu
               :actions="userMenuAction"
               name="Polaris"
-              detail="qikify"
+              detail="ownego"
               initials="P"
               :message="userMenuMessage"
               :open="isUserMenuOpen"
@@ -260,7 +260,7 @@ The frame component, while not visible in the user interface itself, provides th
                     <TopBarUserMenu
                       :actions="userMenuAction"
                       name="Polaris"
-                      detail="qikify"
+                      detail="ownego"
                       initials="P"
                       :message="userMenuMessage"
                       :open="isUserMenuOpen"
@@ -340,7 +340,7 @@ The frame component, while not visible in the user interface itself, provides th
                     },
                     navItems2: [
                       { label: 'Dashboard', icon: markRaw(HomeMajor), onClick: this.toggleIsLoading },
-                      { label: 'Qikify Orders', icon: markRaw(OrdersMajor), onClick: this.toggleIsLoading },
+                      { label: 'Ownego Orders', icon: markRaw(OrdersMajor), onClick: this.toggleIsLoading },
                     ],
                   };
                 },
@@ -374,8 +374,8 @@ The frame component, while not visible in the user interface itself, provides th
                 setup() {
                   const logo = {
                     width: 30,
-                    topBarSource: 'https://github.com/qikify/polaris-vue/raw/dev/public/images/logo.png',
-                    contextualSaveBarSource: 'https://github.com/qikify/polaris-vue/raw/dev/public/images/logo.png',
+                    topBarSource: 'https://github.com/ownego/polaris-vue/raw/dev/public/images/logo.png',
+                    contextualSaveBarSource: 'https://github.com/ownego/polaris-vue/raw/dev/public/images/logo.png',
                   }
                   const navItems = [
                     { label: 'Back to Shopify', icon: ArrowLeftMinor },

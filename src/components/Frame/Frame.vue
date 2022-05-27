@@ -11,7 +11,7 @@ div(
       @blur="handleBlur",
       @click="handleClick",
     )
-      | {{ lang.Polaris.Frame.skipToContent }}
+      | {{ i18n.translate('Polaris.Frame.skipToContent') }}
   div(
     v-if="slots.topBar",
     :class="styles.TopBar",
@@ -36,7 +36,7 @@ div(
         v-bind="mobileNavAttributes",
         key="NavContent",
         :id="APP_FRAME_NAV",
-        :aria-label="lang.Polaris.Frame.navigationLabel",
+        :aria-label="i18n.translate('Polaris.Frame.navigationLabel')",
         :class="navClassName",
         ref="navigationRef",
         @keydown="handleNavKeydown",
@@ -48,7 +48,7 @@ div(
           :class="styles.NavigationDismiss",
           @click="handleNavigationDismiss",
           :aria-hidden="mobileNavHidden || (!isNavigationCollapsed && !showMobileNavigation)",
-          :aria-label="lang.Polaris.Frame.Navigation.closeMobileNavigationLabel",
+          :aria-label="i18n.translate('Polaris.Frame.Navigation.closeMobileNavigationLabel')",
           :tabIndex="tabIndex",
         )
           Icon(:source="MobileCancelMajor")
@@ -103,10 +103,11 @@ div(
 </template>
 
 <script setup lang="ts">
-import { computed, onMounted, provide, ref, useSlots, watch, inject } from 'vue';
+import { computed, onMounted, provide, ref, useSlots, watch } from 'vue';
 import { classNames } from 'polaris/polaris-react/src/utilities/css';
 import { dataPolarisTopBar, layer } from 'polaris/polaris-react/src/components/shared';
 import { setRootProperty } from 'polaris/polaris-react/src/utilities/set-root-property';
+import { UseI18n } from '@/use';
 import styles from '@/classes/Frame.json';
 import MobileCancelMajor from '@icons/MobileCancelMajor.svg';
 import type {
@@ -158,7 +159,7 @@ const emits = defineEmits<{
   (e: 'navigation-dismiss'): void;
 }>();
 
-const lang = inject('lang') as Record<string, any>;
+const i18n = UseI18n();
 
 const skipFocused = ref(false);
 const globalRibbonHeight = ref(0);
