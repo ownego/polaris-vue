@@ -15,6 +15,7 @@
   "files": [
     "dist",
     "package.json",
+    "volar.d.ts",
     "LICENSE",
     "README.md"
   ],
