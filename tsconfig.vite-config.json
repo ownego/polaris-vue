@@ -2,12 +2,12 @@
   "extends": "@vue/tsconfig/tsconfig.node.json",
   "include": [
     "vite.config.*",
-    "package.json",
+    "package.json"
   ],
   "exclude": [
     "dist",
     "build",
-    "node_modules",
+    "node_modules"
   ],
   "compilerOptions": {
     "baseUrl": ".",
@@ -32,7 +32,7 @@
       "esnext",
       "dom",
       "dom.iterable",
-      "scripthost",
-    ],
-  },
+      "scripthost"
+    ]
+  }
 }

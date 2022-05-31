@@ -6,17 +6,17 @@
     "src/**/*.vue",
     "types/*.ts",
     "node_modules/polaris/polaris-react/**/*.ts",
-    "node_modules/polaris/polaris-react/**/*.tsx",
+    "node_modules/polaris/polaris-react/**/*.tsx"
   ],
   "exclude": [
     "dist",
     "build",
-    "node_modules",
+    "node_modules"
   ],
   "compilerOptions": {
     "baseUrl": ".",
     "paths": {
-      "@/*": ["./src/*"],
+      "@/*": ["./src/*"]
     },
     "types": ["node"],
     "declaration": true,
@@ -33,7 +33,7 @@
     "jsx": "preserve",
     "importHelpers": true,
     "isolatedModules": false,
-    "plugins": [{ "name": "typescript-plugin-css-modules" }],
+    "plugins": [{ "name": "typescript-plugin-css-modules" }]
   },
 
   "references": [
