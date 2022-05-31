@@ -1,7 +1,7 @@
 <template lang="pug">
 Popover(
   :active="isVisible",
-  :preferInputActivator,
+  preferInputActivator,
   @close="toggleMenuVisibility",
 )
   template(#activator)

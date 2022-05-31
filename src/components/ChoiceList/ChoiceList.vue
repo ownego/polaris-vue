@@ -10,6 +10,7 @@ fieldset(
     li(
       v-for="choice, index in choices",
       :key="index",
+      :class="styles.ChoiceItem",
     )
       component(
         :is="allowMultiple ? Checkbox : RadioButton",

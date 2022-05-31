@@ -7,18 +7,20 @@ div(:class="styles.PageActions")
         :key="action.id",
         :action="action",
       )
+    slot(v-if="hasSlot(slots.primaryAction)", name="primaryAction")
     ButtonFrom(
-      v-if="primaryAction",
+      v-else-if="primaryAction",
       :action="primaryAction",
       :overrides="{ primary: true }",
     )
 </template>
 
 <script setup lang="ts">
-import { computed } from 'vue';
+import { computed, useSlots } from 'vue';
 import styles from '@/classes/PageActions.json';
 import { Stack, ButtonGroup, ButtonFrom } from '@/components';
 import type { DisableableAction, LoadableAction, ComplexAction } from '@/utilities/interface';
+import { hasSlot } from '@/utilities/has-slot';
 
 interface PageActionsProps {
   /** The primary action for the page */
@@ -28,6 +30,8 @@ interface PageActionsProps {
 }
 
 const props = defineProps<PageActionsProps>();
+
+const slots = useSlots();
 
 const distribution = computed(() => {
   return props.secondaryActions && props.secondaryActions.length > 0
