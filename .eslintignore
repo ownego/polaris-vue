@@ -11,3 +11,4 @@ README.md
 .storybook
 yarn.lock
 tsconfig.json
+tsconfig.vite-config.json
