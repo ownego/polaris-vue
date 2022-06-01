@@ -13,7 +13,7 @@ div(:class="className", @click="$emit('toggle-all')")
 </template>
 
 <script setup lang="ts">
-import { computed, inject, ref, watch } from 'vue';
+import { computed, inject, ref, onUpdated } from 'vue';
 import { classNames } from 'polaris/polaris-react/src/utilities/css';
 import { Checkbox } from '@/components';
 import type { ResourceListContextType, CheckableButtonKey } from '@/utilities/resource-list';
@@ -33,7 +33,7 @@ interface CheckableButtonProps {
 const props = withDefaults(defineProps<CheckableButtonProps>(), {
   label: '',
 });
-const { registerCheckableButtons } = inject('ResourceListContext') as ResourceListContextType;
+const { registerCheckableButtons } = inject('ResourceListContext', {}) as ResourceListContextType;
 
 const checkBoxRef = ref(null);
 
@@ -49,8 +49,7 @@ const currentKey = computed<CheckableButtonKey>(() => {
   return 'bulkLg';
 });
 
-watch(
-  [currentKey.value, registerCheckableButtons],
+onUpdated(
   () => {
     if (checkBoxRef.value && registerCheckableButtons) {
       registerCheckableButtons(currentKey.value, checkBoxRef.value);

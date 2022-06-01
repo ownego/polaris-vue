@@ -1,5 +1,8 @@
 <template lang="pug">
-div(ref="containerNode", todo="transition")
+div(
+  ref="containerNode",
+  v-if="selectMode",
+)
   div(v-if="smallScreen", ref="smallScreenGroupNode")
     div(
       :class="smallScreenGroupClassName",
@@ -91,7 +94,7 @@ div(ref="containerNode", todo="transition")
             )
           div(
             v-if="hasActionsPopover",
-            ref="moreActionsNode"
+            ref="moreActionsNode",
           )
             Popover(
               :active="largeScreenPopoverVisible",
@@ -100,10 +103,10 @@ div(ref="containerNode", todo="transition")
               template(#activator)
                 BulkActionButton(
                   disclosure,
-                  @action="toggleLargeScreenPopover",
                   :content="activatorLabel",
                   :disabled="disabled",
                   :indicator="isNewBadgeInBadgeActions",
+                  @action="toggleLargeScreenPopover",
                 )
               template(#content)
                 ActionList(
@@ -126,7 +129,7 @@ div(ref="containerNode", todo="transition")
 </template>
 
 <script setup lang="ts">
-import { ref, computed, onMounted } from 'vue';
+import { ref, computed, onMounted, watch } from 'vue';
 import { debounce } from 'polaris/polaris-react/src/utilities/debounce';
 import { tokens } from '@shopify/polaris-tokens';
 import { classNames } from 'polaris/polaris-react/src/utilities/css';
@@ -200,7 +203,7 @@ const promotedActionsWidths = ref<number[]>([]);
 const bulkActionsWidth = ref(0);
 const addedMoreActionsWidthForMeasuring = ref(0);
 
-const handleResize = debounce(
+const handleResize = computed(() => debounce(
   () => {
     if (containerNode.value) {
       const tmpContainerWidth = containerNode.value.getBoundingClientRect().width;
@@ -216,7 +219,7 @@ const handleResize = debounce(
   },
   50,
   {trailing: true},
-);
+));
 
 const numberOfPromotedActionsToRender = computed<number>(() => {
   if (!props.promotedActions) {
@@ -341,12 +344,12 @@ const smallScreenGroupClassName = computed(() => classNames(
   // styles[`Group-${status}`],
 ));
 
-const largeScreenGroupClassName = classNames(
+const largeScreenGroupClassName = computed(() => classNames(
   styles.Group,
   styles['Group-largeScreen'],
-  // !measuring.value && styles[`Group-${status}`],
+  !measuring.value && styles['Group-entered'],
   measuring.value && styles['Group-measuring'],
-);
+));
 
 const slideClasses = 'TODO';
 
@@ -359,22 +362,28 @@ const activatorLabel = computed(() => {
 
 const hasActionsPopover = computed(() => actionSections.value || rolledInPromotedActions.value.length > 0 || measuring.value);
 
-onMounted(() => {
-  if (props.promotedActions && !props.actions && moreActionsNode.value) {
-    addedMoreActionsWidthForMeasuring.value =
-      moreActionsNode.value.getBoundingClientRect().width;
-  }
+watch(
+  () => props.selectMode,
+  () => {
+    // Set time out to make sure all the nodes was rendered
+    setTimeout(() => {
+      if (props.promotedActions && !props.actions && moreActionsNode.value) {
+        addedMoreActionsWidthForMeasuring.value =
+          moreActionsNode.value.getBoundingClientRect().width;
+      }
 
-  bulkActionsWidth.value = largeScreenButtonsNode.value
-    ? largeScreenButtonsNode.value.getBoundingClientRect().width -
-      addedMoreActionsWidthForMeasuring.value
-    : 0;
+      bulkActionsWidth.value = largeScreenButtonsNode.value
+        ? largeScreenButtonsNode.value.getBoundingClientRect().width -
+          addedMoreActionsWidthForMeasuring.value
+        : 0;
 
-  if (containerNode.value) {
-    containerWidth.value = containerNode.value.getBoundingClientRect().width;
-    measuring.value = false;
-  }
-});
+      if (containerNode.value) {
+        containerWidth.value = containerNode.value.getBoundingClientRect().width;
+        measuring.value = false;
+      }
+    }, 1);
+  },
+);
 
 const toggleSmallScreenPopover = () => {
   emits('more-action-popover-toggle', smallScreenPopoverVisible.value);
