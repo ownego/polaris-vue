@@ -11,6 +11,10 @@ const NESTED_COMPONENT_PATH_REGEX = /.*\/components\/(.*)\/components/;
 const scopedHashes = {};
 
 module.exports = function generateScopedName(name, filename, css) {
+  if (filename.includes('@shopify/polaris-tokens') || filename.includes('CustomProperties')) {
+    return name;
+  }
+
   const parseName = name.split('_');
   const originalName = parseName.length > 1 ? parseName[1] : name;
 
