@@ -9,6 +9,13 @@ import dts from 'vite-plugin-dts';
 import packageJson from './package.json';
 
 export default defineConfig({
+  css: {
+    preprocessorOptions: {
+      scss: {
+        quietDeps: true, // Silent the deprecation warning
+      },
+    },
+  },
   plugins: [
     checker({
       overlay: false,
