@@ -18,7 +18,7 @@ span(
       ) {{ initials }}
   Image(
     v-if="source && status !== Status.Errored",
-    :class="styles.Image",
+    :class="imageClassName",
     :source="source",
     alt="",
     role="presentation",
@@ -85,10 +85,14 @@ const className =  computed(() => {
     styles.Avatar,
     size && styles[size],
     !props.customer && styles[style],
-    (hasImage.value || (props.initials && props.initials.length === 0))
-    && status.value !== 'LOADED'
-    && styles.hidden,
-    hasImage.value && styles.hasImage,
+    hasImage.value && status.value === 'LOADED' && styles.imageHasLoaded,
+  );
+});
+
+const imageClassName = computed(() => {
+  return classNames(
+    styles.Image,
+    status.value !== 'LOADED' && styles.hidden,
   );
 });
 

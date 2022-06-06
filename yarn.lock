@@ -8984,8 +8984,8 @@ pnp-webpack-plugin@1.6.4:
     ts-pnp "^1.1.6"
 
 "polaris@https://github.com/juzser/polaris.git":
-  version "9.11.0"
-  resolved "https://github.com/juzser/polaris.git#2b285ff5bd28e9aceefd346930de06da940c5200"
+  version "9.12.2"
+  resolved "https://github.com/juzser/polaris.git#425be40a1ccff8a0ac0769e883515dde2cc0948a"
 
 polished@^4.2.2:
   version "4.2.2"

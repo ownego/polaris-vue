@@ -65,7 +65,7 @@ div
         key="footer",
       )
         slot(name="footer")
-    Backdrop
+    Backdrop(@click="clickOutsideToClose ? emit('close') : null")
 </template>
 
 <script setup lang="ts">
@@ -113,6 +113,8 @@ interface Props {
   primaryAction?: ComplexAction;
   /** Collection of secondary actions */
   secondaryActions?: ComplexAction[];
+  /** Click or tap the area outside to close the modal */
+  clickOutsideToClose?: boolean;
 }
 
 defineProps<Props>();

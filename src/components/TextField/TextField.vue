@@ -17,9 +17,7 @@ Labelled(
       slot(name="connected-right")
     div(
       :class="className",
-      @focus="handleFocus",
       @click="handleClick",
-      @blur="focus = false",
     )
       div(
         v-if="slots.prefix",
@@ -33,6 +31,7 @@ Labelled(
         :class="styles.VerticalContent",
         :id="`${id}-VerticalContent`",
         ref="verticalContentRef",
+        @click="handleClickChild",
       )
         slot(name="vertical-content")
         component(
@@ -72,7 +71,7 @@ Labelled(
           @input="handleChange",
           @keydown="handleKeyPress",
           @focus="handleOnFocus",
-          @blur="$emit('blur')",
+          @blur="handleOnBlur",
         )
           template(v-if="multiline") {{ modelValue }}
       component(
@@ -113,7 +112,7 @@ Labelled(
         @input="handleChange",
         @keydown="handleKeyPress",
         @focus="handleOnFocus",
-        @blur="$emit('blur')",
+        @blur="handleOnBlur",
       )
         template(v-if="multiline") {{ modelValue }}
       div(
@@ -129,22 +128,25 @@ Labelled(
         :aria-label=characterCountLabel,
         :aria-live="focus ? 'polite' : 'off'",
         aria-atomic="true",
+        @click="handleClickChild",
       )
         p {{ characterCountText }}
       button(
+        type="button"
         v-if="clearButtonVisible && clearButton",
-        :class="clearButtonClassNames",
+        :class="styles.ClearButton",
         :disabled="disabled",
         @click="$emit('clear-button-click', id)",
       )
         VisuallyHidden
-          p Clear button
+          p {{ i18n.translate('Polaris.Common.clear') }}
         Icon(:source="CircleCancelMinor", color="base")
       TextFieldSpinner(
         v-if="type === 'number' && step !== 0 && !disabled && !readOnly",
         @change="handleNumberChange",
         @mousedown="handleButtonPress",
         @mouseup="handleButtonRelease",
+        @click="handleClickChild",
       )
       div(:class="backdropClassName")
       Resizer(
@@ -157,7 +159,7 @@ Labelled(
 </template>
 
 <script setup lang="ts">
-import { inject, useSlots, ref, computed, watch } from 'vue';
+import { useSlots, ref, computed, watch } from 'vue';
 import { classNames, variationName } from 'polaris/polaris-react/src/utilities/css';
 import { UseUniqueId } from '@/use';
 import styles from '@/classes/TextField.json';
@@ -390,10 +392,6 @@ const backdropClassName = computed(() => classNames(
   connectedLeftSlot.value &&  styles['Backdrop-connectedLeft'],
   connectedRightSlot.value && styles['Backdrop-connectedRight'],
 ));
-const clearButtonClassNames = computed(() => classNames(
-  styles.ClearButton,
-  !clearButtonVisible.value && styles.AlignFieldBottom,
-));
 
 const normalizedValue = computed(() => props.suggestion ? props.suggestion : props.modelValue);
 const normalizedStep = computed(() => props.step ? props.step : 1);
@@ -469,7 +467,7 @@ const handleExpandingResize = (value: number): void => {
   height.value = value;
 };
 
-const containsAffix = (target: HTMLElement | EventTarget) => {
+const isPrefixOrSuffix = (target: HTMLElement | EventTarget) => {
   return (
     target instanceof HTMLElement
       && ((prefixRef.value && prefixRef.value.contains(target))
@@ -477,25 +475,21 @@ const containsAffix = (target: HTMLElement | EventTarget) => {
   );
 };
 
-const handleFocus = (event: Event): void => {
-  const target = event.target as HTMLInputElement;
-
-  if (containsAffix(target)) {
-    return;
-  }
-
-  focus.value = true;
-};
-
 const handleClick = (event: Event): void => {
   const target = event.target as HTMLInputElement;
 
-  if (containsAffix(target) || focus.value) {
+  if (
+    isPrefixOrSuffix(target) ||
+    isVerticalContent(target) ||
+    isInput(target) ||
+    focus.value
+  ) {
     return;
   }
 
   inputRef.value?.focus();
 };
+
 
 const handleChange = (event: Event) => {
   const target = event.target as HTMLInputElement;
@@ -503,6 +497,22 @@ const handleChange = (event: Event) => {
   emits('update:modelValue', target.value);
   emits('change', event);
 };
+
+const handleClickChild = (event: Event) => {
+  event.stopPropagation();
+  const target = event.target as HTMLElement;
+
+  if (
+    isPrefixOrSuffix(target) ||
+    isVerticalContent(target) ||
+    isInput(target) ||
+    focus.value
+  ) {
+    return;
+  }
+
+  focus.value = true;
+}
 
 const handleNumberChange = (step: number): void => {
   // Returns the length of decimal places in a number
@@ -563,6 +573,8 @@ const handleKeyPress = (event: KeyboardEvent): void => {
 };
 
 const handleOnFocus = (event: FocusEvent): void => {
+  focus.value = true;
+
   if (props.selectTextOnFocus && !props.suggestion) {
     const input = props.multiline ? textAreaRef : inputRef;
     input.value?.select();
@@ -570,6 +582,29 @@ const handleOnFocus = (event: FocusEvent): void => {
 
   emits('focus', event);
 };
+
+const handleOnBlur = () => {
+  focus.value = false;
+  emits('blur');
+};
+
+function isVerticalContent(target: HTMLElement | EventTarget) {
+  return (
+    target instanceof HTMLElement &&
+    verticalContentRef.value &&
+    (verticalContentRef.value.contains(target) ||
+      verticalContentRef.value.contains(document.activeElement))
+  );
+}
+
+function isInput(target: HTMLElement | EventTarget) {
+  return (
+    target instanceof HTMLElement &&
+    inputRef.value &&
+    (inputRef.value.contains(target) ||
+      inputRef.value.contains(document.activeElement))
+  );
+}
 </script>
 
 <style lang="scss">
