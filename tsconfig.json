@@ -19,9 +19,9 @@
       "@/*": ["./src/*"]
     },
     "types": ["node"],
-    "declaration": true,
-    "declarationMap": true,
-    "declarationDir": "dist/types",
+    // "declaration": true,
+    // "declarationMap": true,
+    // "declarationDir": "dist/types",
     "moduleResolution": "node",
     "experimentalDecorators": true,
     "skipLibCheck": true,

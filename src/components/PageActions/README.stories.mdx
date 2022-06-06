@@ -13,11 +13,23 @@ import { PageActions } from '@/polaris-vue';
       },
     },
     primaryAction: {
-      table: { type: { summary: 'DisableableAction && LoadableAction' } },
+      description: 'The primary action for the page',
+      table: {
+        category: 'props',
+        type: { summary: 'DisableableAction && LoadableAction' }
+      },
       control: {
         disable: true,
       },
     },
+    slotPrimaryAction: {
+      name: 'primaryAction',
+      description: 'The primary action for the page. This slot will override the primaryAction prop',
+      table: {
+        category: 'slots',
+        type: { summary: null },
+      },
+    }
   }}
 />
 
@@ -68,3 +80,43 @@ Page actions let merchants take key actions at the bottom of specific pages in t
 </Canvas>
 
 <ArgsTable story="Page actions" />
+
+---
+
+<br/>
+
+### **DisableableAction & LoadableAction**
+
+| Prop             | Type                          | Description     |
+| ---------------- | ----------------------------- | --------------- |
+| id?              | String       | A unique identifier for the action. |
+| content?         | String       | Content the action displays. |
+| accessibilityLabel?  | String  | Visually hidden text for screen readers. |
+| url?             | String       | A destination to link to, rendered in the action. |
+| external?        | String       | Forces url to open in a new tab. |
+| disabled?        | Boolean      | Whether or not the action is disabled. |
+| loading?         | Boolean      | Should a spinner be displayed. |
+| onAction?()      | void         | Callback when an action takes place. |
+| onMouseEnter?()  | void         | Callback when mouse enter. |
+| onTouchStart?()  | void         | Callback when element is touched. |
+
+<br/>
+
+### **ComplexAction types**
+
+| Prop             | Type                          | Description     |
+| ---------------- | ----------------------------- | --------------- |
+| id?              | String       | A unique identifier for the action. |
+| content?         | String       | Content the action displays. |
+| accessibilityLabel?  | String  | Visually hidden text for screen readers. |
+| url?             | String       | A destination to link to, rendered in the action. |
+| external?        | String       | Forces url to open in a new tab. |
+| destructive?     | Boolean      | Destructive action. |
+| disabled?        | Boolean      | Whether or not the action is disabled. |
+| icon?            | IconSource   | Source of the icon. |
+| loading?         | Boolean      | Should a spinner be displayed. |
+| outline?         | Boolean      | Should action be displayed as an outlined button. |
+| plain?           | Boolean      | Should action be displayed as a plain link. |
+| onAction?()      | void         | Callback when an action takes place. |
+| onMouseEnter?()  | void         | Callback when mouse enter. |
+| onTouchStart?()  | void         | Callback when element is touched. |

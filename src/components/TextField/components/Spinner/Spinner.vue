@@ -1,13 +1,13 @@
 <template lang="pug">
 div(
-  aria-hidden="true",
+  :aria-hidden="true",
   :class="styles.Spinner",
 )
   div(
     role="button",
     tabindex="-1",
     :class="styles.Segment",
-    @click="handleStep(1)",
+    @click="($event) => handleStep($event, 1)",
     @mousedown="$emit('mousedown')",
     @mouseup="$emit('mouseup')",
   )
@@ -17,7 +17,7 @@ div(
     role="button",
     tabindex="-1",
     :class="styles.Segment",
-    @click="handleStep(-1)",
+    @click="($event) => handleStep($event, -1)",
     @mousedown="$emit('mousedown')",
     @mouseup="$emit('mouseup')",
   )
@@ -32,14 +32,14 @@ import styles from '@/classes/TextField.json';
 import { Icon } from '../../../Icon';
 
 const emits = defineEmits<{
-  (event: 'click'): void
+  (event: 'click', e: Event): void
   (event: 'change', value: number): void
   (event: 'mouseup'): void
   (event: 'mousedown'): void
 }>();
 
-const handleStep = (step: number): void => {
-  emits('click');
+const handleStep = (event: Event, step: number): void => {
+  emits('click', event);
   emits('change', step);
 };
 </script>
