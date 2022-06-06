@@ -12,8 +12,6 @@ import { computed } from 'vue';
 import type { ColorScheme } from '@shopify/polaris-tokens';
 import { DEFAULT_COLOR_SCHEME } from './utils';
 
-import '@shopify/polaris-tokens/scss/styles.scss';
-
 interface CustomPropertiesProps {
   /** Determines what color scheme is applied to child content. */
   colorScheme?: ColorScheme;
@@ -33,3 +31,7 @@ const styles = computed(() => ({
   ...props.style,
 }));
 </script>
+
+<style lang="scss">
+@import '@shopify/polaris-tokens/scss/styles.scss';
+</style>
