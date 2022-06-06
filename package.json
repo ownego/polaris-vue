@@ -15,6 +15,7 @@
   "files": [
     "dist",
     "package.json",
+    "volar.d.ts",
     "LICENSE",
     "README.md"
   ],
@@ -23,12 +24,15 @@
   "module": "./dist/polaris-vue.es.js",
   "scripts": {
     "dev": "vite",
-    "build": "rimraf dist && vue-tsc --noEmit && vite build && rimraf dist/index.html dist/favicon.ico dist/images",
+    "build": "rimraf dist && vue-tsc --noEmit && vite build && npm run gen-volar-dts && npm run remove-trashes",
     "preview": "vite preview --port 5050",
     "typecheck": "vue-tsc --noEmit",
     "lint": "eslint . --ext .vue,.js,.jsx,.cjs,.mjs,.ts,.tsx,.cts,.mts --fix --ignore-path .gitignore",
     "storybook": "start-storybook -p 6006",
-    "build-storybook": "rimraf ./docs && build-storybook -o docs"
+    "build-storybook": "rimraf ./docs && build-storybook -o docs",
+    "gen-volar-dts": "esbuild build/gen-component-declaration.js --bundle --platform=node | node && npm run move-volar-dts",
+    "move-volar-dts": "mv volar.d.ts dist/volar.d.ts",
+    "remove-trashes": "rimraf dist/index.html dist/favicon.ico dist/images"
   },
   "dependencies": {
     "@shopify/polaris-icons": "^4.22.0",
@@ -38,7 +42,7 @@
   "devDependencies": {
     "@babel/core": "^7.17.5",
     "@rushstack/eslint-patch": "^1.1.0",
-    "@shopify/polaris-tokens": "^5.0.1",
+    "@shopify/polaris-tokens": "^5.1.1",
     "@shopify/typescript-configs": "^5.1.0",
     "@storybook/addon-a11y": "^6.5.5",
     "@storybook/addon-actions": "^6.5.5",
@@ -59,12 +63,14 @@
     "eslint": "^8.10.0",
     "eslint-plugin-storybook": "^0.5.12",
     "eslint-plugin-vue": "^8.5.0",
+    "fs-extra": "^10.1.0",
     "hash-generator": "^0.1.0",
     "path": "^0.12.7",
     "polaris": "https://github.com/juzser/polaris.git",
     "postcss": "^7",
     "postcss-modules": "^3",
     "prettier": "^2.5.1",
+    "process": "^0.11.10",
     "rimraf": "^3.0.2",
     "sass": "^1.49.8",
     "ts-dedent": "^2.2.0",

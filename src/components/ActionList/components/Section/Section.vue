@@ -38,8 +38,6 @@ interface SectionProps {
   hasMultipleSections: boolean;
   /** Defines a specific role attribute for each action in the list */
   actionRole?: 'option' | 'menuitem' | string;
-  /** Whether or not the section is the first to appear */
-  firstSection?: boolean;
 }
 
 const props = defineProps<SectionProps>();
@@ -47,12 +45,11 @@ const props = defineProps<SectionProps>();
 const emit = defineEmits<{ (event: 'action-any-item'): void }>();
 
 const sectionMarkupProps = computed(() => {
-  const { section, hasMultipleSections, actionRole, firstSection } = props;
+  const { section, hasMultipleSections, actionRole } = props;
   return {
     section,
     hasMultipleSections,
     actionRole,
-    firstSection,
   };
 });
 </script>

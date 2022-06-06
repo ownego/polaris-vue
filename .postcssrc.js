@@ -10,7 +10,8 @@ module.exports = {
       generateScopedName: classConfig,
       getJSON: (cssFileName, json) => {
         /* Ignore generate common polaris tokens style file */
-        if (cssFileName.indexOf('@shopify/polaris-tokens') !== -1) {
+        if (cssFileName.indexOf('@shopify/polaris-tokens') !== -1 || cssFileName.indexOf('CustomProperties') !== -1) {
+          console.log(cssFileName);
           return;
         }
 

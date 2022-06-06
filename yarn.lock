@@ -1659,10 +1659,10 @@
   resolved "https://registry.yarnpkg.com/@shopify/polaris-icons/-/polaris-icons-4.22.0.tgz#7842afa1fb4ce93056a065ab9c67ae5812b22b32"
   integrity sha512-PTozhV8U56rrAtSEu4lbebka3tFX/ty7UcmlRmZKxo9eluuiJPNdcsQZzNXyqIBdYIxjdd30PTwed+OCboFNfg==
 
-"@shopify/polaris-tokens@^5.0.1":
-  version "5.0.1"
-  resolved "https://registry.yarnpkg.com/@shopify/polaris-tokens/-/polaris-tokens-5.0.1.tgz#e0e2c7151e748eae5b01cf01b6c0d7ad06889268"
-  integrity sha512-TcIhg8XtFHvuKPPIwDY4M9cRsdKMfFg1kBkqP6IPbh1bb903NaWEtYcPLtoMojVIr0pV0pZH90qJrQSJ4D2vAg==
+"@shopify/polaris-tokens@^5.1.1":
+  version "5.1.1"
+  resolved "https://registry.yarnpkg.com/@shopify/polaris-tokens/-/polaris-tokens-5.1.1.tgz#ec854d25d612607b7bc714865e5b3d9fe43f02c7"
+  integrity sha512-Hk7sy8Zz2a0C37JnvNU7Yd85nI79WkNsmFS6UYhgIZMC2YaSCpVQy/ZDg0t7OqUV7Im+7i9Hb/D9MQ2c7OEXnQ==
 
 "@shopify/typescript-configs@^5.1.0":
   version "5.1.0"
@@ -6281,6 +6281,15 @@ fs-extra@^10.0.1:
     jsonfile "^6.0.1"
     universalify "^2.0.0"
 
+fs-extra@^10.1.0:
+  version "10.1.0"
+  resolved "https://registry.yarnpkg.com/fs-extra/-/fs-extra-10.1.0.tgz#02873cfbc4084dde127eaa5f9905eef2325d1abf"
+  integrity sha512-oRXApq54ETRj4eMiFzGnHWGy+zo5raudjuxN0b8H7s/RU2oW0Wvsx9O0ACRN/kRq9E8Vu/ReskGB5o3ji+FzHQ==
+  dependencies:
+    graceful-fs "^4.2.0"
+    jsonfile "^6.0.1"
+    universalify "^2.0.0"
+
 fs-extra@^9.0.0, fs-extra@^9.0.1:
   version "9.1.0"
   resolved "https://registry.yarnpkg.com/fs-extra/-/fs-extra-9.1.0.tgz#5954460c764a8da2094ba3554bf839e6b9a7c86d"
@@ -8975,8 +8984,8 @@ pnp-webpack-plugin@1.6.4:
     ts-pnp "^1.1.6"
 
 "polaris@https://github.com/juzser/polaris.git":
-  version "9.9.0"
-  resolved "https://github.com/juzser/polaris.git#986b4386a3d706a00f220323bbaf15d1d9176484"
+  version "9.11.0"
+  resolved "https://github.com/juzser/polaris.git#2b285ff5bd28e9aceefd346930de06da940c5200"
 
 polished@^4.2.2:
   version "4.2.2"

@@ -107,6 +107,7 @@ import { computed, onMounted, provide, ref, useSlots, watch } from 'vue';
 import { classNames } from 'polaris/polaris-react/src/utilities/css';
 import { dataPolarisTopBar, layer } from 'polaris/polaris-react/src/components/shared';
 import { setRootProperty } from 'polaris/polaris-react/src/utilities/set-root-property';
+import { tokens } from '@shopify/polaris-tokens';
 import { UseI18n } from '@/use';
 import styles from '@/classes/Frame.json';
 import MobileCancelMajor from '@icons/MobileCancelMajor.svg';
@@ -148,8 +149,8 @@ const APP_FRAME_NAV = 'AppFrameNav';
 const APP_FRAME_TOP_BAR = 'AppFrameTopBar';
 const APP_FRAME_LOADING_BAR = 'AppFrameLoadingBar';
 
-const CONTEXTUALSAVEBAR_FADE_DURATION = 400;
-const NAVIGATION_ANIMATION_DURATION = 300;
+const CONTEXTUALSAVEBAR_FADE_DURATION = parseInt(tokens.motion['duration-400'].value, 10);
+const NAVIGATION_ANIMATION_DURATION = parseInt(tokens.motion['duration-300'].value, 10);
 
 const props = defineProps<FrameProps>();
 

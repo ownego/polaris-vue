@@ -31,6 +31,13 @@ module.exports = {
       output: {
         publicPath: '/polaris-vue',
       },
+      css: {
+        preprocessorOptions: {
+          scss: {
+            quietDeps: true, // Silent the deprecation warning
+          },
+        },
+      },
       resolve: { ...config.resolve },
       plugins: [
         svgLoader(),

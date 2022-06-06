@@ -161,7 +161,7 @@ const slots = useSlots();
 const attrs = useAttrs();
 
 const listeners = computed(() => {
-  const events = ['blur', 'click', 'focus', 'keydown', 'keypress', 'keyup', 'mouseover', 'touchstart'];
+  const events = ['blur', 'click', 'focus', 'keydown', 'keypress', 'keyup', 'mouseover', 'touchstart', 'pointerdown'];
   const eventBindings: Record<string, unknown> = {};
   for (const event of events) {
     const eventName = `on${capitalize(event)}`;
