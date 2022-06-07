@@ -25,6 +25,7 @@ CustomProperties(color-scheme="dark")
           :wrap="false",
         )
           slot(name="secondaryMenu")
+            span &nbsp;
           Button(
             v-if="discardAction",
             :url="discardAction.url",
