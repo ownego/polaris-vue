@@ -285,7 +285,7 @@ const props = withDefaults(defineProps<NonMutuallyExclusiveProps>(), {
 const emits = defineEmits<{
   (event: 'focus', focusEvent: Event): void
   (event: 'blur'): void
-  (event: 'change', changeEvent: Event): void
+  (event: 'change', payload: Event | string): void
   (event: 'update:modelValue', value: string): void
   (event: 'clear-button-click', id?: string): void
 }>();
@@ -532,6 +532,7 @@ const handleNumberChange = (step: number): void => {
     Math.max(numericValue + step * normalizedStep.value, Number(normalizedMin.value)),
   );
 
+  emits('change', String(newValue.toFixed(decimalPlaces)));
   emits('update:modelValue', String(newValue.toFixed(decimalPlaces)));
 };
 
