@@ -3,7 +3,7 @@ div(
   ref="containerNode",
   v-if="selectMode",
 )
-  div(v-if="smallScreen", ref="smallScreenGroupNode")
+  div(v-if="smallScreen")
     div(
       :class="smallScreenGroupClassName",
       ref="smallScreenGroupNode",
@@ -53,15 +53,13 @@ div(
         span(v-if="paginatedSelectAllText && paginatedSelectAllAction", aria-live="polite") {{ paginatedSelectAllText }}
         template(v-else) {{ paginatedSelectAllText }}
         Button(
-          v-if="paginatedSelectAllAction",
+          v-if="paginatedSelectAllAction && paginatedSelectAllAction.onAction",
           plain,
           :disabled="disabled",
           @click="paginatedSelectAllAction.onAction",
         ) {{ paginatedSelectAllAction.content }}
-  div(
-    v-else,
-    ref="largeScreenGroupNode",
-  )
+
+  div(v-else)
     div(
       :class="largeScreenGroupClassName",
       ref="largeScreenGroupNode",
@@ -69,14 +67,16 @@ div(
       EventListener(event="resize", :handler="handleResize")
       div(
         :class="styles.ButtonGroupWrapper",
-        ref="setLargeScreenButtonsNode",
+        ref="largeScreenButtonsNode",
       )
         ButtonGroup(
           v-if="(promotedActions && numberOfPromotedActionsToRender > 0) || hasActionsPopover",
           segmented,
+          no-item-wrap,
         )
-          CheckableButton(v-bind="checkableButtonProps", @toggle="emits('toggle-all')")
-          template(
+          ButtonGroupItem
+            CheckableButton(v-bind="checkableButtonProps", @toggle-all="emits('toggle-all')")
+          ButtonGroupItem(
             v-if="promotedActions && numberOfPromotedActionsToRender > 0"
             v-for="action, index in promotedActions.slice(0, numberOfPromotedActionsToRender)",
             :key="index",
@@ -92,28 +92,26 @@ div(
               v-bind="action",
               :handleMeasurement="handleMeasurement",
             )
-          div(
-            v-if="hasActionsPopover",
-            ref="moreActionsNode",
-          )
-            Popover(
-              :active="largeScreenPopoverVisible",
-              @close="toggleLargeScreenPopover",
-            )
-              template(#activator)
-                BulkActionButton(
-                  disclosure,
-                  :content="activatorLabel",
-                  :disabled="disabled",
-                  :indicator="isNewBadgeInBadgeActions",
-                  @action="toggleLargeScreenPopover",
-                )
-              template(#content)
-                ActionList(
-                  :sections="combinedActions",
-                  @action-any-item="toggleLargeScreenPopover",
-                )
-        CheckableButton(v-else, v-bind="checkableButtonProps")
+          ButtonGroupItem(v-if="hasActionsPopover")
+            div(ref="moreActionsNode")
+              Popover(
+                :active="largeScreenPopoverVisible",
+                @close="toggleLargeScreenPopover",
+              )
+                template(#activator)
+                  BulkActionButton(
+                    disclosure,
+                    :content="activatorLabel",
+                    :disabled="disabled",
+                    :indicator="isNewBadgeInBadgeActions",
+                    @action="toggleLargeScreenPopover",
+                  )
+                template(#content)
+                  ActionList(
+                    :sections="combinedActions",
+                    @action-any-item="toggleLargeScreenPopover",
+                  )
+        CheckableButton(v-else, v-bind="checkableButtonProps", @toggle-all="emits('toggle-all')")
       div(
         v-if="paginatedSelectAllAction",
         :class="styles.PaginatedSelectAll"
@@ -121,7 +119,7 @@ div(
         span(v-if="paginatedSelectAllText && paginatedSelectAllAction", aria-live="polite") {{ paginatedSelectAllText }}
         template(v-else) {{ paginatedSelectAllText }}
         Button(
-          v-if="paginatedSelectAllAction",
+          v-if="paginatedSelectAllAction && paginatedSelectAllAction.onAction",
           plain,
           :disabled="disabled",
           @click="paginatedSelectAllAction.onAction",
@@ -129,27 +127,17 @@ div(
 </template>
 
 <script setup lang="ts">
-import { ref, computed, onMounted, watch } from 'vue';
+import { ref, computed, watch } from 'vue';
 import { debounce } from 'polaris/polaris-react/src/utilities/debounce';
-import { tokens } from '@shopify/polaris-tokens';
 import { classNames } from 'polaris/polaris-react/src/utilities/css';
 import { clamp } from 'polaris/polaris-react/src/utilities/clamp';
 import type { MenuGroupDescriptor } from '@/components/ActionMenu/components/MenuGroup/utils';
-import type { ActionListSection } from '@/components/ActionList/utils';
 import type { Action } from '@/utilities/type';
-import type { DisableableAction, BadgeAction } from '@/utilities/interface';
 import { UseI18n } from '@/use';
 import styles from '@/classes/BulkActions.json';
-import { ActionList, Popover, Button, ButtonGroup, CheckableButton, EventListener } from '@/components';
+import { ActionList, Popover, Button, ButtonGroup, ButtonGroupItem, CheckableButton, EventListener } from '@/components';
 import { BulkActionButton, BulkActionMenu } from './components';
-
-type BulkAction = DisableableAction & BadgeAction;
-
-type BulkActionListSection = ActionListSection;
-
-type TransitionStatus = 'entering' | 'entered' | 'exiting' | 'exited';
-
-const MAX_PROMOTED_ACTIONS = 2;
+import type { BulkAction, BulkActionListSection } from './utils';
 
 interface BulkActionsProps {
   /** Visually hidden text for screen readers */
@@ -248,13 +236,6 @@ const numberOfPromotedActionsToRender = computed<number>(() => {
   }
 
   return clamp(counter, 0, props.promotedActions.length);
-});
-
-const hasActions = computed(() => {
-  return Boolean(
-    (props.promotedActions && props.promotedActions.length > 0) ||
-      (props.actions && props.actions.length > 0),
-  );
 });
 
 const actionSectionsHandler = (): BulkActionListSection[] | undefined => {

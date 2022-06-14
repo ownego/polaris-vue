@@ -7,7 +7,7 @@ Labelled(
   :required-indicator="requiredIndicator",
 )
   template(
-    v-if="!labelInline && slots['label']",
+    v-if="!labelInline && slots.label",
     #label,
   )
     slot(name="label")

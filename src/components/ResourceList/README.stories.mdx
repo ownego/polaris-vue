@@ -1,0 +1,576 @@
+import dedent from 'ts-dedent';
+import {Meta, Story, Canvas, ArgsTable} from '@storybook/addon-docs';
+import { ref } from 'vue';
+import { ResourceList, ResourceItem, Card, Avatar, TextStyle } from '@/polaris-vue';
+
+<Meta
+  title="Components / Lists and tables / Resource list"
+  component={ ResourceList }
+  argTypes={{
+    default: {
+      table: { disable: true },
+    },
+    alternateTool: {
+      description: 'Slot to display instead of the sort control.',
+      control: { disable: true },
+      table: { type: { summary: null } },
+    },
+    emptySearchState: {
+      description: 'The markup to display when no results are returned on search or filter of the list. Renders when `filterControl` is set, items are empty, and `emptyState` is not set.',
+      table: { type: { summary: null } },
+      control: { disable: true },
+    },
+    emptyState: {
+      description: 'The markup to display when no resources exist yet. Renders when set and items is empty.',
+      table: { type: { summary: null } },
+      control: { disable: true },
+    },
+    filterControl: {
+      description: 'Slot to display instead of the filter control.',
+      table: { type: { summary: null } },
+      control: { disable: true },
+    },
+    selectedItems: {
+      table: {
+        type: { summary: 'string[] | "All"' },
+        defaultValue: { summary: '[]' },
+      },
+      control: { disable: true },
+    },
+    bulkActions: {
+      table: {
+        type: { summary: '(BulkAction | BulkActionListSection)[]' },
+      },
+      control: { disable: true },
+    },
+    promotedBulkActions: {
+      table: {
+        type: { summary: '(BulkAction | MenuGroupDescriptor)[]' },
+      },
+      control: { disable: true },
+    },
+    idForItem: {
+      description: 'Function to customize the unique ID for each item.',
+      table: {
+        type: { summary: '(item: any, index: number) => string' },
+      },
+      control: { disable: true },
+    },
+    'selection-change': {
+      table: {
+        type: { summary: '(selectedItems: string[] | "All") => void' },
+      },
+      control: { disable: true },
+    },
+    'sort-change': {
+      table: {
+        type: { summary: '(selected: string, id: string) => void' },
+      },
+      control: { disable: true },
+    },
+  }}
+/>
+
+# Resource list
+
+A resource list displays a collection of objects of the same type, like products or customers. The main job of a resource list is to help merchants find an object and navigate to a full-page representation of it.
+
+Resource lists can also:
+
+- Support [customized list items](./?path=/docs/components-lists-and-tables-resource-item)
+- Include bulk actions so merchants can act on multiple objects at once
+- Support sorting and [filtering](./?path=/docs/components-lists-and-tables-filters) of long lists
+- Be paired with pagination to make long lists digestible
+
+export const SimpleTemplate = (args) => ({
+  components: { ResourceList, ResourceItem, Card, Avatar, TextStyle },
+  setup() {
+    const items = [
+      {
+        id: 100,
+        url: 'customers/341',
+        name: 'Mae Jemison',
+        location: 'Decatur, USA',
+      },
+      {
+        id: 200,
+        url: 'customers/256',
+        name: 'Ellen Ochoa',
+        location: 'Los Angeles, USA',
+      },
+    ];
+    const selectedItems = ref([]);
+    const onSelectionChange = (items) => {
+      selectedItems.value = items;
+    };
+    const promotedBulkActions = [
+      {
+        content: 'Edit customers',
+        onAction: () => console.log('Todo: implement bulk edit'),
+      },
+    ];
+    const bulkActions = [
+      {
+        content: 'Add tags',
+        onAction: () => console.log('Todo: implement bulk add tags'),
+      },
+      {
+        content: 'Remove tags',
+        onAction: () => console.log('Todo: implement bulk remove tags'),
+      },
+      {
+        content: 'Delete customers',
+        onAction: () => console.log('Todo: implement bulk delete'),
+      },
+    ];
+    return { args, items, selectedItems, onSelectionChange, promotedBulkActions, bulkActions };
+  },
+  template: `
+    <Card>
+      <ResourceList
+        :resourceName="{singular: 'customer', plural: 'customers'}"
+        :selectedItems="selectedItems"
+        selectable
+        :promotedBulkActions="promotedBulkActions"
+        :bulkActions="bulkActions"
+        @selection-change="onSelectionChange"
+      >
+        <ResourceItem
+          v-for="item in items"
+          :key="item.id"
+          :id="\`\${item.id}\`"
+          :url="item.url"
+          :accessibilityLabel="\`View details for \${item.name}\`"
+        >
+          <template #media>
+            <Avatar customer size="medium" :name="item.name" />
+          </template>
+          <h3>
+            <TextStyle variation="strong">{{ item.name }}</TextStyle>
+          </h3>
+          <div>{{ item.location }}</div>
+        </ResourceItem>
+      </ResourceList>
+    </Card>
+  `,
+});
+
+<br/><br/>
+
+### Resource list with bulk actions
+
+Allows merchants to select items and perform an action on the selection.
+
+<Canvas>
+  <Story
+    name="With bulk actions"
+    height="240px"
+    inline={false}
+    args={{
+    }}
+    parameters={{
+      docs: {
+        source: {
+          state: 'close',
+          code: dedent`
+            <Card>
+              <ResourceList
+                :resourceName="{singular: 'customer', plural: 'customers'}"
+                :selectedItems="selectedItems"
+                selectable
+                :promotedBulkActions="promotedBulkActions"
+                :bulkActions="bulkActions"
+                @selection-change="onSelectionChange"
+              >
+                <ResourceItem
+                  v-for="item in items"
+                  :key="item.id"
+                  :id="\`\${item.id}\`"
+                  :url="item.url"
+                  :accessibilityLabel="\`View details for \${item.name}\`"
+                >
+                  <template #media>
+                    <Avatar customer size="medium" :name="item.name" />
+                  </template>
+                  <h3>
+                    <TextStyle variation="strong">{{ item.name }}</TextStyle>
+                  </h3>
+                  <div>{{ item.location }}</div>
+                </ResourceItem>
+              </ResourceList>
+            </Card>\n
+            <script setup>
+              const items = [
+                {
+                  id: 100,
+                  url: 'customers/341',
+                  name: 'Mae Jemison',
+                  location: 'Decatur, USA',
+                },
+                {
+                  id: 200,
+                  url: 'customers/256',
+                  name: 'Ellen Ochoa',
+                  location: 'Los Angeles, USA',
+                },
+              ];
+              const selectedItems = ref([]);
+              const onSelectionChange = (items) => {
+                selectedItems.value = items;
+              };
+              const promotedBulkActions = [
+                {
+                  content: 'Edit customers',
+                  onAction: () => console.log('Todo: implement bulk edit'),
+                },
+              ];
+              const bulkActions = [
+                {
+                  content: 'Add tags',
+                  onAction: () => console.log('Todo: implement bulk add tags'),
+                },
+                {
+                  content: 'Remove tags',
+                  onAction: () => console.log('Todo: implement bulk remove tags'),
+                },
+                {
+                  content: 'Delete customers',
+                  onAction: () => console.log('Todo: implement bulk delete'),
+                },
+              ];
+            </script>
+          `,
+        },
+      },
+    }}
+  >
+    {SimpleTemplate.bind({})}
+  </Story>
+</Canvas>
+
+<br/><br/>
+
+### Resource list with sorting
+
+Allows merchants to change the way the list is sorted by selecting one of several options from a [Select](./?path=/docs/components-forms-select) control.
+
+export const SortingTemplate = (args) => ({
+  components: { ResourceList, ResourceItem, Card, Avatar, TextStyle },
+  setup() {
+    const items = [
+      {
+        id: 100,
+        url: 'customers/341',
+        name: 'Mae Jemison',
+        location: 'Decatur, USA',
+      },
+      {
+        id: 200,
+        url: 'customers/256',
+        name: 'Ellen Ochoa',
+        location: 'Los Angeles, USA',
+        latestOrderUrl: 'orders/1457',
+      },
+    ];
+    const sortValue = ref('DATE_MODIFIED_DESC');
+    const sortOptions = [
+      {label: 'Newest update', value: 'DATE_MODIFIED_DESC'},
+      {label: 'Oldest update', value: 'DATE_MODIFIED_ASC'},
+    ];
+    const onSortChange = (value) => {
+      sortValue.value = value;
+    };
+    return { items, sortValue, sortOptions, onSortChange };
+  },
+  template: `
+    <Card>
+      <ResourceList
+        :resourceName="{singular: 'customer', plural: 'customers'}"
+        :sortValue="sortValue"
+        :sortOptions="sortOptions"
+        @sort-change="onSortChange"
+      >
+        <ResourceItem
+          v-for="item in items"
+          :key="item.id"
+          :id="\`\${item.id}\`"
+          :url="item.url"
+          :accessibilityLabel="\`View details for \${item.name}\`"
+          persistActions
+          :shortcutActions="item.latestOrderUrl
+            ? [{
+              content: 'View latest order',
+              accessibilityLabel: \`View \${item.name}'s latest order\`,
+              url: item.latestOrderUrl
+            }]
+            : null"
+        >
+          <template #media>
+            <Avatar customer size="medium" :name="item.name" />
+          </template>
+          <h3>
+            <TextStyle variation="strong">{{ item.name }}</TextStyle>
+          </h3>
+          <div>{{ item.location }}</div>
+        </ResourceItem>
+      </ResourceList>
+    </Card>
+  `,
+});
+
+<Canvas>
+  <Story
+    name="With sorting"
+    height="240px"
+    inline={false}
+    parameters={{
+      docs: {
+        source: {
+          state: 'close',
+          code: dedent`
+            <Card>
+              <ResourceList
+                :resourceName="{singular: 'customer', plural: 'customers'}"
+                :sortValue="sortValue"
+                :sortOptions="sortOptions"
+                @sort-change="onSortChange"
+              >
+                <ResourceItem
+                  v-for="item in items"
+                  :key="item.id"
+                  :id="\`\${item.id}\`"
+                  :url="item.url"
+                  :accessibilityLabel="\`View details for \${item.name}\`"
+                  persistActions
+                  :shortcutActions="item.latestOrderUrl
+                    ? [{
+                      content: 'View latest order',
+                      accessibilityLabel: \`View \${item.name}'s latest order\`,
+                      url: item.latestOrderUrl
+                    }]
+                    : null"
+                >
+                  <template #media>
+                    <Avatar customer size="medium" :name="item.name" />
+                  </template>
+                  <h3>
+                    <TextStyle variation="strong">{{ item.name }}</TextStyle>
+                  </h3>
+                  <div>{{ item.location }}</div>
+                </ResourceItem>
+              </ResourceList>
+            </Card>\n
+            <script setup>
+              const items = [
+                {
+                  id: 100,
+                  url: 'customers/341',
+                  name: 'Mae Jemison',
+                  location: 'Decatur, USA',
+                },
+                {
+                  id: 200,
+                  url: 'customers/256',
+                  name: 'Ellen Ochoa',
+                  location: 'Los Angeles, USA',
+                },
+              ];
+              const sortValue = ref('DATE_MODIFIED_DESC');
+              const sortOptions = [
+                {label: 'Newest update', value: 'DATE_MODIFIED_DESC'},
+                {label: 'Oldest update', value: 'DATE_MODIFIED_ASC'},
+              ];
+              const onSortChange = (value) => {
+                sortValue.value = value;
+              };
+            </script>
+          `,
+        },
+      },
+    }}
+  >
+    {SortingTemplate.bind({})}
+  </Story>
+</Canvas>
+
+<br/><br/>
+
+### Example
+
+export const Template = (args) => ({
+  components: { ResourceList, ResourceItem, Card, Avatar, TextStyle },
+  setup() {
+    const items = [
+      {
+        id: 100,
+        url: 'customers/341',
+        name: 'Mae Jemison',
+        location: 'Decatur, USA',
+      },
+      {
+        id: 200,
+        url: 'customers/256',
+        name: 'Ellen Ochoa',
+        location: 'Los Angeles, USA',
+        latestOrderUrl: 'orders/1457',
+      },
+    ];
+    const onSortChange = (value) => {
+      sortValue.value = value;
+    };
+    return { args, items, onSortChange };
+  },
+  template: `
+    <Card>
+      <ResourceList
+        v-bind="args"
+        :sortValue="sortValue"
+        @sort-change="onSortChange"
+      >
+        <ResourceItem
+          v-for="item in items"
+          :key="item.id"
+          :id="\`\${item.id}\`"
+          :url="item.url"
+        >
+          <template #media>
+            <Avatar customer size="medium" :name="item.name" />
+          </template>
+          <h3>
+            <TextStyle variation="strong">{{ item.name }}</TextStyle>
+          </h3>
+          <div>{{ item.location }}</div>
+        </ResourceItem>
+      </ResourceList>
+    </Card>
+  `,
+});
+
+<Canvas>
+  <Story
+    name="Resource list"
+    height="240px"
+    inline={false}
+    args={{
+      resourceName: { singular: 'customer', plural: 'customers' },
+      sortOptions: [
+        {label: 'Newest update', value: 'DATE_MODIFIED_DESC'},
+        {label: 'Oldest update', value: 'DATE_MODIFIED_ASC'},
+      ],
+    }}
+    parameters={{
+      docs: {
+        source: {
+          state: 'close',
+          code: dedent`
+            <Card>
+              <ResourceList
+                :resourceName="{singular: 'customer', plural: 'customers'}"
+                :sortValue="sortValue"
+              >
+                <ResourceItem
+                  v-for="item in items"
+                  :key="item.id"
+                  :id="\`\${item.id}\`"
+                  :url="item.url"
+                >
+                  <template #media>
+                    <Avatar customer size="medium" :name="item.name" />
+                  </template>
+                  <h3>
+                    <TextStyle variation="strong">{{ item.name }}</TextStyle>
+                  </h3>
+                  <div>{{ item.location }}</div>
+                </ResourceItem>
+              </ResourceList>
+            </Card>\n
+            <script setup>
+              const items = [
+                {
+                  id: 100,
+                  url: 'customers/341',
+                  name: 'Mae Jemison',
+                  location: 'Decatur, USA',
+                },
+                {
+                  id: 200,
+                  url: 'customers/256',
+                  name: 'Ellen Ochoa',
+                  location: 'Los Angeles, USA',
+                },
+              ];
+              const sortValue = ref('DATE_MODIFIED_DESC');
+              const sortOptions = [
+                {label: 'Newest update', value: 'DATE_MODIFIED_DESC'},
+                {label: 'Oldest update', value: 'DATE_MODIFIED_ASC'},
+              ];
+              const onSortChange = (value) => {
+                sortValue.value = value;
+              };
+            </script>
+          `,
+        },
+      },
+    }}
+  >
+    {Template.bind({})}
+  </Story>
+</Canvas>
+
+<ArgsTable story="Resource list"/>
+
+---
+<br/>
+
+### **BulkAction Props**
+
+`type BulkAction = DisableableAction & BadgeAction`
+
+| Prop             | Type                          | Description     |
+| ---------------- | ----------------------------- | --------------- |
+| id?              | String               | A unique identifier for the action. |
+| content?         | String               | Content the action displays. |
+| accessibilityLabel?  | String           | Visually hidden text for screen readers. |
+| url?             | String               | A destination to link to, rendered in the action. |
+| external?        | String               | Forces url to open in a new tab. |
+| disabled?        | Boolean              | Whether or not the action is disabled. |
+| badge?           | { status, content }  | Show badge beside the action. |
+| onAction?()      | void                 | Callback when an action takes place. |
+| onMouseEnter?()  | void                 | Callback when mouse enter. |
+| onTouchStart?()  | void                 | Callback when element is touched. |
+
+<br/>
+
+`type BulkActionListSection = ActionListSection`
+
+See more in [ActionList](./?path=/docs/components-actions-action-list--action-list) component
+
+<br/>
+
+---
+<br/>
+
+### **MenuGroupDescriptor Props**
+
+```js
+interface MenuGroupDescriptor {
+  badge?: {
+    status: 'new';
+    content: string;
+  };
+  /** Menu group title */
+  title: string;
+  /** List of actions */
+  actions: ActionListItemDescriptor[];
+  /** Icon to display */
+  icon?: IconableAction['icon'];
+  /** Disables action button */
+  disabled?: boolean;
+  /** Zero-indexed numerical position. Overrides the group's order in the menu. */
+  index?: number;
+  /** Visually hidden menu description for screen readers */
+  accessibilityLabel?: string;
+  /** Whether or not the menu is open */
+  active?: boolean;
+}
+```

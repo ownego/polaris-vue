@@ -1,0 +1,250 @@
+import dedent from 'ts-dedent';
+import { Meta, Story, Canvas, ArgsTable, Source, Preview } from '@storybook/addon-docs';
+
+import { ref } from 'vue';
+import { ResourceItem, ResourceList, Card, TextStyle, Avatar } from '@/polaris-vue';
+
+<Meta
+  title="Components / Lists and tables / Resource item"
+  component={ ResourceItem }
+  argTypes={{
+    default: {
+      table: {
+        disable: 'true',
+      }
+    },
+    click: {
+      description: 'Callback when clicked (required if url is omitted)',
+      table: {
+        type: { summary: '(id?: string) => void' },
+      },
+      control: { disable: true },
+    },
+    media: {
+      description: 'Content for the media area at the left of the item, usually an Avatar or Thumbnail',
+      table: {
+        type: { summary: null },
+      },
+      control: { disable: true },
+    },
+    verticalAlignment: {
+      options: [
+        'leading',
+        'trailing',
+        'center',
+        'fill',
+        'baseline',
+      ],
+      control: {
+        type: 'select',
+      },
+      table: {
+        type: { summary: 'leading | trailing | center | fill | baseline' },
+      },
+    },
+    shortcutActions: {
+      control: { disable: true },
+    },
+  }}
+/>
+
+# Resource item
+
+Resource items represent specific objects within a collection, such as products or orders. They provide contextual information on the resource type and link to the object's detail page.
+
+<br/><br/>
+
+### Basic resource item
+
+A basic resource item with its details filled in at the point of use.
+
+export const BasicResourceItem = (args) => ({
+  components: { ResourceItem, ResourceList, Card, TextStyle },
+  setup() {
+    const items = [
+      {
+        id: 6,
+        url: 'posts/6',
+        title: 'How To Get Value From Wireframes',
+        author: 'Jonathan Mangrove',
+      },
+    ];
+    const selectedItems = ref([]);
+    const onSelectionChange = (value) => {
+      selectedItems.value = value;
+    };
+    return { items, selectedItems, onSelectionChange };
+  },
+  template: `<Card>
+    <ResourceList
+      :resourceName="{singular: 'blog post', plural: 'blog posts'}"
+      :selectedItems="selectedItems"
+      @selection-change="onSelectionChange"
+      selectable
+    >
+      <ResourceItem
+        v-for="item in items"
+        id="\`\${item.id}\`"
+        :url="item.url"
+        :accessibilityLabel="\`View details for \${item.title}\`"
+        :name="item.title"
+      >
+        <h3>
+          <TextStyle variation="strong">{{ item.title }}</TextStyle>
+        </h3>
+        <div v-if="item.author">by {{ item.author }}</div>
+      </ResourceItem>
+    </ResourceList>
+  </Card>`,
+});
+
+<Canvas>
+  <Story
+    name="Basic"
+    parameters={{
+      docs: {
+        source: {
+          state: 'close',
+          code: dedent`
+            <Card>
+              <ResourceList
+                :resourceName="{singular: 'blog post', plural: 'blog posts'}"
+                :selectedItems="selectedItems"
+                @selection-change="onSelectionChange"
+                selectable
+              >
+                <ResourceItem
+                  v-for="item in items"
+                  id="\`\${item.id}\`"
+                  :url="item.url"
+                  :accessibilityLabel="\`View details for \${item.title}\`"
+                  :name="item.title"
+                >
+                  <h3>
+                    <TextStyle variation="strong">{{ item.title }}</TextStyle>
+                  </h3>
+                  <div v-if="item.author">by {{ item.author }}</div>
+                </ResourceItem>
+              </ResourceList>
+            </Card>\n
+            <script setup>
+              const items = [
+                {
+                  id: 6,
+                  url: 'posts/6',
+                  title: 'How To Get Value From Wireframes',
+                  author: 'Jonathan Mangrove',
+                },
+              ];
+              const selectedItems = ref([]);
+              const onSelectionChange = (value) => {
+                selectedItems.value = value;
+              };
+            </script>
+          `,
+        },
+      },
+    }}
+  >
+    {BasicResourceItem.bind({})}
+  </Story>
+</Canvas>
+
+### Item with media
+
+The media element can hold an [avatar](./?path=/docs/components-images-and-icons-avatar--avatar), [thumbnail](./?path=/docs/components-images-and-icons-thumbnail--thumbnail), or other small-format graphic.
+
+export const MediaResourceItem = (args) => ({
+  components: { ResourceItem, ResourceList, Card, TextStyle, Avatar },
+  setup() {
+    const items = [
+      {
+        id: 145,
+        url: 'customers/145',
+        avatarSource: 'https://burst.shopifycdn.com/photos/freelance-designer-working-on-laptop.jpg?width=746',
+        name: 'Yi So-Yeon',
+        location: 'Gwangju, South Korea',
+        latestOrderUrl: 'orders/1456',
+      },
+    ];
+    return { items, args };
+  },
+  template: `<Card>
+    <ResourceList
+      :resourceName="{singular: 'blog post', plural: 'blog posts'}"
+      :showHeader="false"
+    >
+      <ResourceItem
+        v-for="item in items"
+        :key="item.id"
+        v-bind="args"
+        id="\`\${item.id}\`"
+        :url="item.url"
+        :name="item.name"
+        :shortcutActions="item.latestOrderUrl ? [{content: 'View latest order', url: item.latestOrderUrl}] : null"
+      >
+        <template #media>
+          <Avatar customer size="medium" :name="item.name" :source="item.avatarSource" />
+        </template>
+        <h3>
+          <TextStyle variation="strong">{{ item.name }}</TextStyle>
+        </h3>
+        <div>{{ item.location }}</div>
+      </ResourceItem>
+    </ResourceList>
+  </Card>`,
+});
+
+<Canvas>
+  <Story
+    name="Media &amp; shortcut actions"
+    parameters={{
+      docs: {
+        source: {
+          state: 'close',
+          code: dedent`
+            <Card>
+              <ResourceList
+                :resourceName="{singular: 'blog post', plural: 'blog posts'}"
+                :showHeader="false"
+              >
+                <ResourceItem
+                  v-for="item in items"
+                  :key="item.id"
+                  id="\`\${item.id}\`"
+                  :url="item.url"
+                  :name="item.name"
+                  :shortcutActions="item.latestOrderUrl ? [{content: 'View latest order', url: item.latestOrderUrl}] : null"
+                >
+                  <template #media>
+                    <Avatar customer size="medium" :name="item.name" :source="item.avatarSource" />
+                  </template>
+                  <h3>
+                    <TextStyle variation="strong">{{ item.name }}</TextStyle>
+                  </h3>
+                  <div>{{ item.location }}</div>
+                </ResourceItem>
+              </ResourceList>
+            </Card>\n
+            <script setup>
+              const items = [
+                {
+                  id: 145,
+                  url: 'customers/145',
+                  avatarSource: 'https://burst.shopifycdn.com/photos/freelance-designer-working-on-laptop.jpg?width=746',
+                  name: 'Yi So-Yeon',
+                  location: 'Gwangju, South Korea',
+                  latestOrderUrl: 'orders/1456',
+                },
+              ];
+            </script>
+          `,
+        },
+      },
+    }}
+  >
+    {MediaResourceItem.bind({})}
+  </Story>
+</Canvas>
+
+<ArgsTable story="Media &amp; shortcut actions"/>
