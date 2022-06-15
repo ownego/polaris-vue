@@ -11,12 +11,6 @@ const TYPE_ROOT = process.cwd();
 const packageName = '@ownego/polaris-vue';
 const fileName = 'volar.d.ts';
 
-const excludeComponents = [];
-
-function exist (path) {
-  return fs.existsSync(path);
-}
-
 function parseComponentsDeclaration (code) {
   if (!code) {
     return {};
@@ -28,8 +22,12 @@ function parseComponentsDeclaration (code) {
   );
 }
 
-async function generateComponentsType () {
-  const mainImports = await fs.readFile(path.resolve(TYPE_ROOT, 'src/components/index.ts'), 'utf-8');
+function generateImportString(key) {
+  return `typeof import('${packageName}')['${key}']`;
+}
+
+function generateComponentsType() {
+  const mainImports = fs.readFileSync(path.resolve(TYPE_ROOT, 'src/components/index.ts'), 'utf-8');
 
   const pattern = /\'\.\/(.*)\'/g;
 
@@ -39,14 +37,21 @@ async function generateComponentsType () {
   const componentList = mainImports.match(pattern).map((i) => i.replace(/[^\w]/g, ''));
 
   componentList.forEach((key) => {
-    const entry = `typeof import('${packageName}')['${key}']`
-    if (!excludeComponents.includes(key)) {
-      components[key] = entry;
+    const isSubComponentsExist = fs.existsSync(`src/components/${key}/components`);
+    const getSubComponentsPattern = /\s\w+\s}/g;
+    
+    if (isSubComponentsExist) {
+      const subImports = fs.readFileSync(path.resolve(TYPE_ROOT, `src/components/${key}/index.ts`), 'utf-8');
+      const subComponentList = subImports.match(getSubComponentsPattern).map((i) => i.replace(/}|\s/g, ''));
+
+      subComponentList.forEach((subKey) => components[subKey] = generateImportString(subKey));
+    } else {
+      components[key] = generateImportString(key);
     }
   });
 
-  const originalContent = exist(path.resolve(TYPE_ROOT, fileName))
-    ? await fs.readFile(path.resolve(TYPE_ROOT, fileName), 'utf-8')
+  const originalContent = fs.existsSync(path.resolve(TYPE_ROOT, fileName))
+    ? fs.readFileSync(path.resolve(TYPE_ROOT, fileName), 'utf-8')
     : '';
 
   const originImports = parseComponentsDeclaration(originalContent);
@@ -63,6 +68,7 @@ async function generateComponentsType () {
       }
       return `${name}: ${v}`
     });
+
   const code = `// Auto generated component declarations
 declare module 'vue' {
   export interface GlobalComponents {
@@ -72,8 +78,10 @@ declare module 'vue' {
 }
 export {}
 `;
+
   if (code !== originalContent) {
-    await fs.writeFile(path.resolve(TYPE_ROOT, fileName), code, 'utf-8');
+    fs.writeFileSync(path.resolve(TYPE_ROOT, fileName), code, 'utf-8');
   }
 }
-generateComponentsType()
+
+generateComponentsType();
