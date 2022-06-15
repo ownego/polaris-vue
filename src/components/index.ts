@@ -36,6 +36,7 @@ export * from './FooterHelp';
 export * from './Form';
 export * from './FormLayout';
 export * from './Frame';
+export * from './FullscreenBar';
 export * from './Heading';
 export * from './Icon';
 export * from './Image';
