@@ -16,6 +16,7 @@ import lang from 'polaris/polaris-react/locales/en.json';
 import { EventListener, CustomProperties } from '@/components';
 import { PortalManager } from '@/utilities/portal-manager';
 import { FocusManager } from '@/utilities/focus-manager';
+import { StickyManager } from '@/utilities/sticky-manager';
 import type { CustomPropertiesProps } from '../CustomProperties/utils';
 import { DEFAULT_COLOR_SCHEME } from '../CustomProperties/utils';
 
@@ -25,6 +26,8 @@ const props = defineProps({
     default: DEFAULT_COLOR_SCHEME,
   },
 });
+
+const stickyManager = new StickyManager();
 
 const scrollLockManager = new ScrollLockManager();
 
@@ -66,12 +69,14 @@ watch(
 onMounted(() => {
   if (document !== null) {
     setBodyStyles();
+    stickyManager.setContainer(document);
   }
 });
 
 const i18n = new I18n(lang);
 
 provide('mediaQueryContext', { isNavigationCollapsed: isNavigationCollapsed.value });
+provide('stickyManagerContext', stickyManager);
 provide('scrollLockManager', scrollLockManager);
 provide('portalManager', portalManager);
 provide('uniqueIdFactory', uniqueIdFactory.value);

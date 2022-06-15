@@ -1,0 +1,106 @@
+import dedent from 'ts-dedent'
+import {Meta, Story, Canvas, ArgsTable} from '@storybook/addon-docs';
+import { ref } from 'vue';
+import { FullscreenBar, DisplayText, Button } from '@/polaris-vue';
+
+<Meta
+  title="Components / Navigation / Fullscreen bar"
+  component={FullscreenBar}
+  argTypes={{
+    default: {
+      table: { disable: true },
+    },
+    action: {
+      description: 'Callback when back button is clicked.',
+      table: { type: { summary: '() => void' } },
+      control: { disable: true },
+    },
+  }}
+/>
+
+export const Template = (args) => ({
+  components: { FullscreenBar, DisplayText, Button },
+  setup() {
+    const isFullscreen = ref(true);
+    const handleActionClick = () => {
+      isFullscreen.value = !isFullscreen.value;
+    }
+    const setFullscreen = () => {
+      isFullscreen.value = true;
+    }
+    return { args, isFullscreen, handleActionClick, setFullscreen };
+  },
+  template: `
+    <div :style="{height: '250px'}">
+      <FullscreenBar v-if="isFullscreen" @action="handleActionClick">
+        <div
+          :style="{
+            display: 'flex',
+            flexGrow: 1,
+            justifyContent: 'space-between',
+            alignItems: 'center',
+            paddingLeft: '1rem',
+          }"
+        >
+          <DisplayText>Content</DisplayText>
+          <Button @click="() => {}">User Action 1</Button>
+        </div>
+      </FullscreenBar>
+      <div :style="{padding: '1rem'}">
+        <Button v-if="!isFullscreen" @click="setFullscreen">Go Fullscreen</Button>
+        <DisplayText size="small">Page content</DisplayText>
+      </div>
+    </div>
+  `,
+});
+
+# Fullscreen bar
+
+The Fullscreen bar is a header component that should be presented at the top of an app when it is in fullscreen mode. This is designed to ensure a uniform placement for a button to exit that mode. The Fullscreen bar can be customized by adding components to slot.
+
+<Canvas>
+  <Story
+    name="Fullscreen bar"
+    parameters={{
+      docs: {
+        source: {
+          code: dedent`
+            <div :style="{height: '250px'}">
+              <FullscreenBar v-if="isFullscreen" @action="handleActionClick">
+                <div
+                  :style="{
+                    display: 'flex',
+                    flexGrow: 1,
+                    justifyContent: 'space-between',
+                    alignItems: 'center',
+                    paddingLeft: '1rem',
+                  }"
+                >
+                  <DisplayText>Content</DisplayText>
+                  <Button @click="() => {}">User Action 1</Button>
+                </div>
+              </FullscreenBar>
+              <div :style="{padding: '1rem'}">
+                <Button v-if="!isFullscreen" @click="setFullscreen">Go Fullscreen</Button>
+                <DisplayText size="small">Page content</DisplayText>
+              </div>
+            </div>\n
+            <script setup>
+              const isFullscreen = ref(true);
+              const handleActionClick = () => {
+                isFullscreen.value = !isFullscreen.value;
+              }
+              const setFullscreen = () => {
+                isFullscreen.value = true;
+              }
+            </script>
+          `,
+        },
+      },
+    }}
+  >
+    {Template.bind({})}
+  </Story>
+</Canvas>
+
+<ArgsTable story="Fullscreen bar"/>

@@ -159,7 +159,7 @@ const props = withDefaults(defineProps<TextFieldProps>(), {
 const emits = defineEmits<{
   (event: 'focus'): void
   (event: 'blur'): void
-  (event: 'change', changeEvent: Event): void
+  (event: 'change', payload: Event | string): void
   (event: 'update:modelValue', value: string): void
 }>();
 
@@ -201,11 +201,16 @@ const handleBlur = (): void => {
   }
 };
 
-const handleChange = (event: Event): void => {
-  const target = event.target as HTMLInputElement;
-
-  emits('update:modelValue', target.value);
-  emits('change', event);
+const handleChange = (payload: Event | string): void => {
+  if (payload instanceof Event) {
+    const target = payload.target as HTMLInputElement;
+  
+    emits('update:modelValue', target.value);
+    emits('change', payload);
+  } else {
+    emits('update:modelValue', payload);
+    emits('change', payload);
+  }
 
   if (onTextFieldChange) {
     onTextFieldChange();

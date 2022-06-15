@@ -5,7 +5,7 @@ div(:class="className", @click="$emit('toggle-all')")
       ref="checkBoxRef",
       :label="accessibilityLabel",
       labelHidden,
-      :checked="selected",
+      v-model="selected",
       :disabled="disabled",
       @change="$emit('toggle-all')",
     )
@@ -13,7 +13,7 @@ div(:class="className", @click="$emit('toggle-all')")
 </template>
 
 <script setup lang="ts">
-import { computed, inject, ref, onUpdated } from 'vue';
+import { computed, inject, ref, onUpdated, onMounted } from 'vue';
 import { classNames } from 'polaris/polaris-react/src/utilities/css';
 import { Checkbox } from '@/components';
 import type { ResourceListContextType, CheckableButtonKey } from '@/utilities/resource-list';
@@ -49,13 +49,14 @@ const currentKey = computed<CheckableButtonKey>(() => {
   return 'bulkLg';
 });
 
-onUpdated(
-  () => {
-    if (checkBoxRef.value && registerCheckableButtons) {
-      registerCheckableButtons(currentKey.value, checkBoxRef.value);
-    }
-  },
-);
+onUpdated(() => registerButton);
+onMounted(() => registerButton);
+
+const registerButton = () => {
+  if (checkBoxRef.value && registerCheckableButtons) {
+    registerCheckableButtons(currentKey.value, checkBoxRef.value);
+  }
+}
 
 const className = computed(() => {
   return props.plain

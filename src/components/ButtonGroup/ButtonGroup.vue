@@ -6,10 +6,12 @@ div(
   :data-buttongroup-full-width="fullWidth",
 )
   Item(
+    v-if="!noItemWrap",
     v-for="(item, index) in itemMarkup",
     :key="index"
   )
     component(:is="item")
+  slot(v-else)
 </template>
 
 <script lang="ts">
@@ -24,7 +26,6 @@ import type { VNodeArrayChildren } from 'vue';
 import { classNames } from 'polaris/polaris-react/src/utilities/css';
 import { Item } from './components';
 import styles from '@/classes/ButtonGroup.json';
-import { hasSlot } from '@/utilities/has-slot';
 
 type Spacing = 'extraTight' | 'tight' | 'loose';
 
@@ -37,6 +38,8 @@ interface Props {
   fullWidth?: boolean;
   /** Remove top left and right border radius */
   connectedTop?: boolean;
+  /** No wrap all stack elements with ButtonGroupItem  */
+  noItemWrap?: boolean;
 }
 
 const props = defineProps<Props>();

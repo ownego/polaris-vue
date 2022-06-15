@@ -142,8 +142,7 @@ export class StickyManager {
     const scrollPosition = scrollTop + stickyOffset;
     const placeHolderNodeCurrentTop = placeHolderNode.getBoundingClientRect().top - containerTop + scrollTop;
     const top = containerTop + stickyOffset;
-    const { width } = placeHolderNode.getBoundingClientRect();
-    const { left } = placeHolderNode.getBoundingClientRect();
+    const { left, width } = placeHolderNode.getBoundingClientRect();
 
     let sticky: boolean;
 

@@ -1,15 +1,16 @@
+import type { ComputedRef, Ref } from 'vue';
 import type { CheckboxHandles } from '../interface';
 
-import type {ResourceListSelectedItems, CheckableButtonKey} from './types';
+import type { ResourceListSelectedItems, CheckableButtonKey } from './types';
 
 export interface ResourceListContextType {
   registerCheckableButtons?(
     key: CheckableButtonKey,
     button: CheckboxHandles,
   ): void;
-  selectMode?: boolean;
+  selectMode?: Ref<boolean>;
   selectable?: boolean;
-  selectedItems?: ResourceListSelectedItems;
+  selectedItems?: ComputedRef<ResourceListSelectedItems>;
   resourceName?: {
     singular: string;
     plural: string;
