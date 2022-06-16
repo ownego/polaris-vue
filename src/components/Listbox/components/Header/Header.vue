@@ -14,14 +14,26 @@ const sectionContext = inject<string>('sectionContext', '');
 const slots = useSlots();
 const defaultSlot = computed(() => slots.default?.());
 
-const isSlotContainHTMLTag = computed(() => Boolean(
-  defaultSlot.value
-    && (defaultSlot.value.length >= 2
-      || (defaultSlot.value[0]
-        && (defaultSlot.value[0].type.toString() !== 'Symbol(Text)'
-        || defaultSlot.value[0].type.toString() !== 'Symbol()')
-      )),
-));
+const isSlotContainHTMLTag = computed(() => {
+  if (!defaultSlot.value) {
+    return false;
+  }
+
+  // More than 2 elements => it's HTML tag
+  if (defaultSlot.value.length > 1) {
+    return true;
+  }
+
+  // The only element is not Text or null Symbol
+  if (defaultSlot.value[0]
+    && defaultSlot.value[0].type.toString() !== 'Symbol(Text)'
+    && defaultSlot.value[0].type.toString() !== 'Symbol()'
+  ) {
+    return true;
+  }
+
+  return false;
+});
 </script>
 
 <style lang="scss">

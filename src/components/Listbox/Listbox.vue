@@ -40,10 +40,10 @@ import {
   inject,
   ref,
   computed,
-  watch,
   onUpdated,
   useSlots,
   withDefaults,
+  onMounted,
 } from 'vue';
 import { debounce } from 'polaris/polaris-react/src/utilities/debounce';
 import { classNames } from 'polaris/polaris-react/src/utilities/css';
@@ -52,10 +52,9 @@ import { scrollOptionIntoView } from 'polaris/polaris-react/src/utilities/listbo
 import { UseUniqueId } from '@/use';
 import styles from '@/classes/Listbox.json';
 import type { ComboboxListboxType, NavigableOption } from '@/utilities/interface';
-import { KeypressListener } from '../KeypressListener';
+import { KeypressListener, VisuallyHidden } from '@/components';
 import { Key } from '../KeypressListener/utils';
 import { AutoSelection } from './utils';
-import { VisuallyHidden } from '../VisuallyHidden';
 
 type ArrowKeys = 'up' | 'down';
 
@@ -73,8 +72,6 @@ interface ListboxProps {
   /** Provide a custom ID for the list element */
   customListId?: string;
 }
-
-provide('withinListboxContext', true);
 
 const comboboxListboxContext = inject<ComboboxListboxType>('comboboxListboxContext', {});
 
@@ -100,10 +97,9 @@ const emits = defineEmits<{
 }>();
 
 const { useUniqueId  } = UseUniqueId();
-const listId = props.customListId || useUniqueId('Listbox');
+const listId = computed(() => props.customListId || useUniqueId('Listbox'));
 
 const inCombobox = computed(() => Boolean(setActiveOptionId));
-const listBoxId = computed(() => listboxId || '');
 
 const listboxRef = ref<HTMLUListElement | null>(null);
 const scrollableRef = ref<HTMLElement | null>(null);
@@ -113,47 +109,7 @@ const lazyLoading = ref(false);
 const currentOptions = ref<HTMLElement[]>([]);
 const keyboardEventsEnabled = ref(Boolean(props.enableKeyboardControl));
 
-let activeOption: NavigableOption | undefined;
-
-watch(
-  [
-    () => listId,
-    () => listBoxId,
-  ],
-  () => {
-    if (setListboxId && !listboxId) {
-      setListboxId(listId);
-    }
-  },
-);
-
-watch(
-  [
-    () => activeOption,
-    () => loading,
-  ],
-  () => {
-    if (
-      !loading.value
-      && slots.default
-      && slots.default().length > 0
-    ) {
-      resetActiveOption();
-    }
-  },
-);
-
-watch(
-  [
-    () => props.enableKeyboardControl,
-    () => keyboardEventsEnabled,
-  ],
-  () => {
-    if (props.enableKeyboardControl && !keyboardEventsEnabled.value) {
-      keyboardEventsEnabled.value = true;
-    }
-  },
-);
+const activeOption = ref<NavigableOption | undefined>();
 
 const getNavigableOptions = (): [] | HTMLElement[] => {
   if (!listboxRef.value) {
@@ -220,12 +176,12 @@ const handleChangeActiveOption = (
   nextOption?: NavigableOption,
 ): void | Record<string, any> => {
   if (!nextOption) {
-    activeOption = undefined;
+    activeOption.value = undefined;
   } else {
-    activeOption?.element.removeAttribute(OPTION_FOCUS_ATTRIBUTE);
+    activeOption.value?.element.removeAttribute(OPTION_FOCUS_ATTRIBUTE);
     nextOption?.element.setAttribute(OPTION_FOCUS_ATTRIBUTE, 'true');
     handleScrollIntoViewDebounced(nextOption);
-    activeOption = nextOption;
+    activeOption.value = nextOption;
     setActiveOptionId?.(nextOption.domId);
 
     emits('on-active-option-change', nextOption.value);
@@ -262,10 +218,10 @@ const resetActiveOption = (): void => {
   }
 
   const optionIsAlreadyActive =
-      activeOption !== undefined && nextOption?.domId === activeOption?.domId;
+      activeOption.value !== undefined && nextOption?.domId === activeOption.value?.domId;
 
   const actionContentHasUpdated =
-      activeOption?.isAction &&
+      activeOption.value?.isAction &&
       nextOption?.isAction &&
       nextOption?.value !== activeOption?.value;
 
@@ -283,39 +239,51 @@ const resetActiveOption = (): void => {
         return currentValues[index] === value;
       });
 
+  const listIsAppended =
+    currentValues.length !== 0 &&
+    nextValues.length > currentValues.length &&
+    currentValues.every((value, index) => {
+      return nextValues[index] === value;
+    });
+
   if (listIsUnchanged) {
     if (optionIsAlreadyActive && actionContentHasUpdated) {
-      currentOptions.value = nextOptions
+      currentOptions.value = nextOptions;
       handleChangeActiveOption(nextOption);
     }
 
     return;
   }
 
-  currentOptions.value = nextOptions
+  if (listIsAppended) {
+    currentOptions.value = nextOptions;
+    return;
+  }
+
+  currentOptions.value = nextOptions;
 
   if (lazyLoading.value) {
     lazyLoading.value = false;
     return;
   }
-
   handleChangeActiveOption(nextOption);
 };
 
 const getNextValidOption = async (key: ArrowKeys): Promise<Record<string, any>> => {
   const lastIndex = currentOptions.value.length - 1;
-  let currentIndex = activeOption?.index || 0;
+  let currentIndex = activeOption.value?.index || 0;
   let nextIndex = 0;
-  let element = activeOption?.element;
+  let element = activeOption.value?.element;
   let totalOptions = -1;
+
 
   while (totalOptions++ < lastIndex) {
     nextIndex = getNextIndex(currentIndex, lastIndex, key);
-    element = currentOptions[nextIndex];
+    element = currentOptions.value[nextIndex];
     const triggerLazyLoad = nextIndex >= lastIndex;
     const isDisabled = element?.getAttribute('aria-disabled') === 'true';
 
-    if (triggerLazyLoad && willLoadMoreOptions) {
+    if (triggerLazyLoad && willLoadMoreOptions?.value) {
       await handleKeyToBottom();
     }
 
@@ -359,8 +327,8 @@ const handleEnter = (event: KeyboardEvent): void => {
   event.preventDefault();
   event.stopPropagation();
 
-  if (activeOption) {
-    onOptionSelect(activeOption as NavigableOption);
+  if (activeOption.value) {
+    onOptionSelect(activeOption.value as NavigableOption);
   }
 };
 
@@ -406,7 +374,7 @@ const getNextIndex = (
 
   if (direction === 'down') {
     if (currentIndex === lastIndex) {
-      nextIndex = willLoadMoreOptions ? currentIndex + 1 : 0;
+      nextIndex = willLoadMoreOptions?.value ? currentIndex + 1 : 0;
     } else {
       nextIndex = currentIndex + 1;
     }
@@ -428,10 +396,30 @@ const onOptionSelect = (option: NavigableOption): void => {
 };
 
 provide('listboxContext', { onOptionSelect, setLoading });
+provide('withinListboxContext', true);
 
 onUpdated(() => {
   if (listboxRef.value) {
     scrollableRef.value = listboxRef.value.closest(scrollable.selector);
+  }
+});
+
+onMounted(() => {
+  if (
+    props.autoSelection !== AutoSelection.None
+    && !loading.value
+    && slots.default
+    && slots.default().length > 0
+  ) {
+    resetActiveOption();
+  }
+
+  if (props.enableKeyboardControl && !keyboardEventsEnabled.value) {
+    keyboardEventsEnabled.value = true;
+  }
+
+  if (setListboxId && !listboxId?.value) {
+    setListboxId(listId.value);
   }
 });
 </script>

@@ -3,4 +3,6 @@ export enum AutoSelection {
   FirstSelected = 'FIRST_SELECTED',
   /** Default active option is always the first interactive option. */
   First = 'FIRST',
+  /** Default to the manual selection pattern. */
+  None = 'NONE',
 }
