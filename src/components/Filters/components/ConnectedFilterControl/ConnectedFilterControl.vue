@@ -64,20 +64,14 @@ import { debounce } from 'polaris/polaris-react/src/utilities/debounce';
 import { classNames } from 'polaris/polaris-react/src/utilities/css';
 import { hasSlot } from '@/utilities/has-slot';
 import type { DisableableAction } from '@/utilities/interface';
+import type { PopoverableAction } from '../../utils';
 import { Popover, Button, EventListener } from '@/components';
 import styles from '@/classes/Filters-ConnectedFilterControl.json';
 
 import { Item } from './components';
 
-interface PopoverableAction extends DisableableAction {
-  popoverOpen: boolean;
-  key: string;
-  content: string;
-  onAction(): void;
-}
-
 interface Props {
-  rightPopoverableActions?: PopoverableAction[] | null;
+  rightPopoverableActions?: PopoverableAction[];
   disabled?: boolean;
   forceShowMorefiltersButton?: boolean;
   queryFieldHidden?: boolean;

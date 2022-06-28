@@ -49,12 +49,12 @@ module.exports = {
         allowBlockStart: false,
       },
     ],
-    'max-len': ['error', {
-      code: 150,
-      ignoreTemplateLiterals: true,
-      ignoreStrings: true,
-      ignoreComments: true,
-      ignorePattern: 'd="([\\s\\S]*?)"',
-    }],
+    // 'max-len': ['error', {
+    //   code: 150,
+    //   ignoreTemplateLiterals: true,
+    //   ignoreStrings: true,
+    //   ignoreComments: true,
+    //   ignorePattern: 'd="([\\s\\S]*?)"',
+    // }],
   },
 };
