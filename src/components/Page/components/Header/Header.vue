@@ -100,7 +100,11 @@ const pageTitleProps = computed(() => {
 });
 
 const actionMenuProps = computed(() => {
-  return { title: props.title, secondaryActions: props.secondaryActions, actionGroups: props.actionGroups };
+  return {
+    title: props.title,
+    secondaryActions: props.secondaryActions,
+    actionGroups: props.actionGroups,
+  };
 });
 
 const primaryActionProps = computed<PrimaryActionType>(() => {

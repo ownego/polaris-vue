@@ -239,13 +239,6 @@ const resetActiveOption = (): void => {
         return currentValues[index] === value;
       });
 
-  const listIsAppended =
-    currentValues.length !== 0 &&
-    nextValues.length > currentValues.length &&
-    currentValues.every((value, index) => {
-      return nextValues[index] === value;
-    });
-
   if (listIsUnchanged) {
     if (optionIsAlreadyActive && actionContentHasUpdated) {
       currentOptions.value = nextOptions;
@@ -254,6 +247,13 @@ const resetActiveOption = (): void => {
 
     return;
   }
+
+  const listIsAppended =
+    currentValues.length !== 0 &&
+    nextValues.length > currentValues.length &&
+    currentValues.every((value, index) => {
+      return nextValues[index] === value;
+    });
 
   if (listIsAppended) {
     currentOptions.value = nextOptions;
@@ -276,6 +276,21 @@ const getNextValidOption = async (key: ArrowKeys): Promise<Record<string, any>> 
   let element = activeOption.value?.element;
   let totalOptions = -1;
 
+  if (!activeOption.value && props.autoSelection === AutoSelection.None) {
+    const nextOptions = getNavigableOptions();
+    const nextActiveOption = getFirstNavigableOption(nextOptions);
+    currentOptions.value = nextOptions;
+
+    const {
+      tmpElement,
+      index,
+    } = nextActiveOption as Record<string, any>;
+
+    return {
+      element: tmpElement,
+      nextIndex: index || 0,
+    };
+  }
 
   while (totalOptions++ < lastIndex) {
     nextIndex = getNextIndex(currentIndex, lastIndex, key);

@@ -51,6 +51,7 @@ interface Props {
   limitHeight?: boolean;
   large?: boolean;
   small?: boolean;
+  fullScreen?: boolean;
 }
 
 const props = defineProps<Props>();
@@ -65,6 +66,7 @@ const classes = computed(() => {
     props.small && styles.sizeSmall,
     props.large && styles.sizeLarge,
     props.limitHeight && styles.limitHeight,
+    props.fullScreen && styles.fullScreen,
   );
 });
 

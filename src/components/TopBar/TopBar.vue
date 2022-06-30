@@ -31,6 +31,7 @@ div(:class="styles.TopBar")
         :class="styles.Logo",
         :style="{ width }",
       )
+    slot(name="logo-suffix")
   div(:class="styles.Contents")
     div(:class="styles.SearchField")
       template(v-if="slots.searchField")
@@ -51,6 +52,7 @@ import { computed, ref, useSlots } from 'vue';
 import { classNames } from 'polaris/polaris-react/src/utilities/css';
 import { getWidth  } from 'polaris/polaris-react/src/utilities/get-width';
 import MobileHamburgerMajor from '@icons/MobileHamburgerMajor.svg';
+import { hasSlot } from '@/utilities/has-slot';
 import styles from '@/classes/TopBar.json';
 import { UseFrame } from '@/utilities/frame';
 import { Icon, Image, UnstyledLink } from '@/components';
@@ -105,6 +107,7 @@ const className = computed(() => {
     props.showNavigationToggle || slots.searchField
       ? styles.LogoDisplayControl
       : styles.LogoDisplayContainer,
+    hasSlot(slots['logo-suffix']) && styles.hasLogoSuffix,
   );
 });
 

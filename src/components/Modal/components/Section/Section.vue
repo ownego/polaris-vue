@@ -10,16 +10,20 @@ import styles from '@/classes/Modal-Section.json';
 
 interface Props {
   flush?: boolean;
-  subdued?: boolean
+  subdued?: boolean;
+  titleHidden?: boolean;
 }
 
-const props = defineProps<Props>();
+const props = withDefaults(defineProps<Props>(), {
+  titleHidden: false,
+});
 
 const className = computed(() => {
   return classNames(
     styles.Section,
     props.flush && styles.flush,
     props.subdued && styles.subdued,
+    props.titleHidden && styles.titleHidden,
   );
 });
 </script>

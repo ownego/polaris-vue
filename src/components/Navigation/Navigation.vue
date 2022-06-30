@@ -10,7 +10,7 @@ nav(
     slot(name="contextControl")
   div(
     v-else-if="logo",
-    :class="styles.LogoContainer",
+    :class="className",
   )
     UnstyledLink(
       :url="logo.url || ''",
@@ -23,15 +23,18 @@ nav(
         :class="styles.Logo",
         :style="{ width }",
       )
+    slot(name="logo-suffix")
   Scrollable(:class="styles.PrimaryNavigation")
     slot
 </template>
 
 <script setup lang="ts">
-import { provide, useSlots } from 'vue';
+import { computed, provide, useSlots } from 'vue';
+import { classNames } from 'polaris/polaris-react/src/utilities/css';
 import { getWidth } from 'polaris/polaris-react/src/utilities/get-width';
 import styles from '@/classes/Navigation.json';
 import { UseFrame } from '@/utilities/frame';
+import { hasSlot } from '@/utilities/has-slot';
 import {
   Scrollable,
   Image,
@@ -52,6 +55,11 @@ const { logo } = useFrame();
 const width = getWidth(logo, 104);
 
 const slots = useSlots();
+
+const className = computed(() => classNames(
+  styles.LogoContainer,
+  hasSlot(slots['logo-suffix']) && styles.hasLogoSuffix,
+));
 
 provide('NavigationContext', {
   location: props.location,

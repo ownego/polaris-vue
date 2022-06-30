@@ -13,7 +13,8 @@ span(
         y="50%",
         :dy="verticalOffset",
         fill="currentColor",
-        font-size="20",
+        :font-size="shape === 'square' ? '15.5' : '20'",
+        :font-weight="shape === 'square' ? '600' : '400'",
         text-anchor="middle",
       ) {{ initials }}
   Image(
@@ -33,7 +34,7 @@ import { classNames, variationName } from 'polaris/polaris-react/src/utilities/c
 import styles from '@/classes/Avatar.json';
 import { styleClass } from './utils';
 import { Image } from '@/components';
-import type { Size } from './utils';
+import type { Size, Shape } from './utils';
 
 interface Props {
   /**
@@ -41,6 +42,11 @@ interface Props {
    * @default 'medium'
    */
   size?: Size;
+  /**
+   * Shape of avatar
+   * @default 'round'
+   */
+  shape?: Shape;
   /** The name of the person */
   name?: string;
   /** Initials of person to display */
@@ -55,11 +61,7 @@ interface Props {
 
 const props = withDefaults(defineProps<Props>(),{
   size: 'medium',
-  name: undefined,
-  initials: undefined,
-  customer: undefined,
-  source: undefined,
-  accessibilityLabel: undefined,
+  shape: 'round',
 });
 
 const emit = defineEmits<{ (event: 'error'): void }>();
@@ -84,6 +86,7 @@ const className =  computed(() => {
     size && styles[size],
     !props.customer && styles[style],
     hasImage.value && status.value === 'LOADED' && styles.imageHasLoaded,
+    props.shape && styles[variationName('shape', props.shape)],
   );
 });
 

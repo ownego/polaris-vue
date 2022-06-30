@@ -8,6 +8,8 @@ export function styleClass(name?: string) {
 
 export type Size = 'extraSmall' | 'small' | 'medium' | 'large';
 
+export type Shape = 'square' | 'round';
+
 export interface AvatarProps {
   /**
    * Size of avatar
