@@ -33,8 +33,8 @@ interface Props {
 const props = defineProps<Props>();
 
 const style = computed(() => {
-  return {
-    '--pc-grid-gap-xs': props.gap?.xs,
+  const gridStyle = {
+    '--pc-grid-gap-xs': props.gap && props.gap.xs ? props.gap.xs : undefined,
     '--pc-grid-gap-sm': props.gap?.sm,
     '--pc-grid-gap-md': props.gap?.md,
     '--pc-grid-gap-lg': props.gap?.lg,
@@ -50,6 +50,15 @@ const style = computed(() => {
     '--pc-grid-areas-lg': formatAreas(props.areas?.lg),
     '--pc-grid-areas-xl': formatAreas(props.areas?.xl),
   } as Record<string, any>;
+
+  // Remove undefined properties
+  Object.keys(gridStyle).forEach((key) => {
+    if (!gridStyle[key]) {
+      delete gridStyle[key];
+    }
+  });
+
+  return gridStyle;
 });
 
 function formatAreas(areas?: string[]) {

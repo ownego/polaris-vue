@@ -46,7 +46,7 @@ const className = computed(() => classNames(
 ));
 
 const style = computed(() => {
-  return {
+  const columnStyle = {
     gridArea: props.area,
     '--pc-column-xs': props.column?.xs,
     '--pc-column-sm': props.column?.sm,
@@ -59,6 +59,15 @@ const style = computed(() => {
     '--pc-row-lg': props.row?.lg,
     '--pc-row-xl': props.row?.xl,
   };
+
+  // Remove undefined properties
+  Object.keys(columnStyle).forEach((key) => {
+    if (!columnStyle[key]) {
+      delete columnStyle[key];
+    }
+  });
+
+  return columnStyle;
 });
 
 </script>
