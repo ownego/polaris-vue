@@ -39,6 +39,7 @@ export * from './Form';
 export * from './FormLayout';
 export * from './Frame';
 export * from './FullscreenBar';
+export * from './Grid';
 export * from './Heading';
 export * from './Icon';
 export * from './Image';

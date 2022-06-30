@@ -59,7 +59,7 @@ import { Icon, Image, UnstyledLink } from '@/components';
 import { UseI18n } from '@/use';
 import { Search } from './components';
 
-export interface TopBarProps {
+interface TopBarProps {
   /** Toggles whether or not a navigation component has been provided. Controls the presence of the mobile nav toggle button */
   showNavigationToggle?: boolean;
   /** A boolean property indicating whether search results are currently visible. */
