@@ -17,6 +17,7 @@ Popover(
   template(#content)
     ActionList(
       :items="actions",
+      :sections="sections",
       @action-any-item="handleClose",
     )
     div(
@@ -36,7 +37,7 @@ export default {
 import { useSlots } from 'vue';
 import styles from '@/classes/ActionMenu-MenuGroup.json';
 import { ActionList, Popover } from '@/components';
-import type { ActionListItemDescriptor } from '@/components/ActionList/utils';
+import type { ActionListItemDescriptor, ActionListSection } from '@/components/ActionList/utils';
 import type { IconableAction } from '@/utilities/type';
 import { SecondaryAction } from '../SecondaryAction';
 
@@ -57,6 +58,8 @@ interface MenuGroupProps {
   accessibilityLabel?: string;
   /** Whether or not the menu is open */
   active?: boolean;
+  /** Collection of sectioned action items */
+  sections?: readonly ActionListSection[];
 }
 
 const props = defineProps<MenuGroupProps>();

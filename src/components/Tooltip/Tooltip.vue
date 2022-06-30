@@ -6,7 +6,6 @@ component(
   @blur="handleBlur",
   @mouseleave="handleMouseLeave",
   @mouseover="handleMouseEnterFix",
-  @click="event => event.stopPropagation()",
   @keyup="handleKeyUp"
 )
   slot

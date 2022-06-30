@@ -179,9 +179,9 @@ const buttonOverlay = ref<HTMLButtonElement | null>(null);
 const className = computed(() => classNames(
   styles.ResourceItem,
   focused.value && styles.focused,
-  context.selectable && styles.selectable,
+  context.selectable?.value && styles.selectable,
   selected.value && styles.selected,
-  context.selectMode && styles.selectMode,
+  context.selectMode?.value && styles.selectMode,
   props.persistActions && styles.persistActions,
   focusedInner.value && styles.focusedInner,
 ));

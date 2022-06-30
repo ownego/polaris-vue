@@ -9,6 +9,7 @@ div
       :large="large",
       :small="small",
       :limitHeight="limitHeight",
+      :fullScreen="fullScreen",
       @close="emit('close')",
       @entered="handleEntered",
       @exited="handleExited",
@@ -56,7 +57,7 @@ div
             Spinner
           template(v-else)
             Section(v-if="sectioned")
-              slot(name="content")
+              slot(name="content", :titleHidden="titleHidden")
             slot(v-else, name="content")
       Footer(
         v-if="slots.footer || primaryAction || secondaryActions",
@@ -109,6 +110,8 @@ interface Props {
   loading?: boolean;
   /** Removes Scrollable container from the modal content */
   noScroll?: boolean;
+  /** Sets modal to the height of the viewport on small screens */
+  fullScreen?: boolean;
   /** Primary action */
   primaryAction?: ComplexAction;
   /** Collection of secondary actions */
@@ -117,7 +120,9 @@ interface Props {
   clickOutsideToClose?: boolean;
 }
 
-defineProps<Props>();
+const props = withDefaults(defineProps<Props>(), {
+  titleHidden: false,
+});
 
 const emit = defineEmits<{
   (event: 'iframe-load', source: Event ): void;

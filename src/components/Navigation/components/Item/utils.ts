@@ -1,7 +1,8 @@
 import type { IconProps } from '@/components/Icon/utils';
 import type { BadgeProps } from '@/components/Badge/utils';
+import type { TooltipProps } from '@/components/Tooltip/utils';
 
-interface ItemURLDetails {
+export interface ItemURLDetails {
   url?: string;
   matches?: boolean;
   exactMatch?: boolean;
@@ -10,7 +11,7 @@ interface ItemURLDetails {
   external?: boolean;
 }
 
-interface SubNavigationItem extends ItemURLDetails {
+export interface SubNavigationItem extends ItemURLDetails {
   url: string;
   label: string;
   disabled?: boolean;
@@ -18,14 +19,15 @@ interface SubNavigationItem extends ItemURLDetails {
   onClick?(): void;
 }
 
-interface SecondaryAction {
+export interface SecondaryAction {
   url: string;
   accessibilityLabel: string;
   icon: IconProps['source'];
+  tooltip?: TooltipProps;
   onClick?(): void;
 }
 
-interface BadgeItemProps extends BadgeProps {
+export interface BadgeItemProps extends BadgeProps {
   content: string;
 }
 

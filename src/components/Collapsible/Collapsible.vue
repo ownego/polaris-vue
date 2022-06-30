@@ -15,13 +15,7 @@ div(
 import { computed, onMounted, onUpdated, ref, watch } from 'vue';
 import { classNames } from 'polaris/polaris-react/src/utilities/css';
 import styles from '@/classes/Collapsible.json';
-
-interface Transition {
-  /** Assign a transition duration to the collapsible animation. */
-  duration?: string;
-  /** Assign a transition timing function to the collapsible animation */
-  timingFunction?: string;
-}
+import type { TransitionCollapsible } from './utils';
 
 interface CollapsibleProps {
   /** Assign a unique ID to the collapsible. For accessibility, pass this ID as the value of the triggering component’s aria-controls prop. */
@@ -30,8 +24,10 @@ interface CollapsibleProps {
   expandOnPrint?: boolean;
   /** Toggle whether the collapsible is expanded or not. */
   open: boolean;
+  /** Prevents component from re-measuring when child is updated **/
+  preventMeasuringOnChildrenUpdate?: boolean;
   /** Assign transition properties to the collapsible */
-  transition?: Transition;
+  transition?: TransitionCollapsible;
 }
 
 type AnimationState = 'idle' | 'measuring' | 'animating';
@@ -84,6 +80,11 @@ watch(
   () => [props.open, isOpen.value],
   () => {
     if (props.open !== isOpen.value) {
+      animationState.value = 'measuring';
+      return;
+    }
+
+    if (!isFullyClosed.value && !props.preventMeasuringOnChildrenUpdate) {
       animationState.value = 'measuring';
     }
   },

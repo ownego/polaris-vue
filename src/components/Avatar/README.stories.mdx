@@ -20,6 +20,18 @@ import dedent from "ts-dedent";
         },
       },
     },
+    shape: {
+      options: ["square", "round"],
+      control: { type: "select" },
+      table: {
+        defaultValue: {
+          summary: "round",
+        },
+        type: {
+          summary: null,
+        },
+      },
+    },
     error: {
       name: "error",
       description: "Callback fired when the image fails to load",

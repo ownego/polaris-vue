@@ -6,6 +6,7 @@ ActionMenu(
   :groups="actionGroups",
   :rollup="isNavigationCollapsed",
   :rollupActionsLabel="title ? `View actions for ${title}` : undefined",
+  @action-rollup="onActionRollup",
 )
 </template>
 
@@ -24,10 +25,19 @@ const props = defineProps<{
   actionGroups?: MenuGroupDescriptor[];
 }>();
 
+const emits = defineEmits<{
+  /** Callback that returns true when secondary actions are rolled up into action groups, and false when not */
+  (e: 'action-rollup', hasRolledUp: boolean): void;
+}>();
+
 const slots = useSlots();
 
 const { useMediaQuery } = UseMediaQuery();
 const { isNavigationCollapsed } = useMediaQuery();
+
+const onActionRollup = (hasRolledUp: boolean) => {
+  emits('action-rollup', hasRolledUp);
+};
 
 function hasGroupsWithActions(groups: ActionMenuProps['groups'] = []) {
   return groups.length === 0

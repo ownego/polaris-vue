@@ -1,6 +1,6 @@
 import { inject } from 'vue';
 
-interface NavigationContextType {
+export interface NavigationContextType {
   location: string;
   onNavigationDismiss?(): void;
   withinContentContainer?: boolean;

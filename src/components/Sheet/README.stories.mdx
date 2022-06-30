@@ -1,0 +1,112 @@
+import { Meta, Story, Canvas, ArgsTable } from '@storybook/addon-docs';
+import dedent from 'ts-dedent';
+
+import { Sheet, Card, Button, Heading } from '@/polaris-vue';
+import { ref } from 'vue';
+
+<Meta
+  title="Components / Overlays / Sheet"
+  component={ Sheet }
+  argTypes={{
+    default: {
+      table: {
+        disable: true,
+      },
+    },
+    activator: {
+      description: 'The element or the RefObject that activates the Sheet',
+      table: { type: { summary: null } },
+      control: { disable: true },
+    },
+    close: {
+      description: 'Callback when the backdrop is clicked or `ESC` is pressed',
+      table: { type: { summary: null } },
+      control: { disable: true },
+    },
+    entered: {
+      description: 'Callback when the sheet has completed entering',
+      table: { type: { summary: null } },
+      control: { disable: true },
+    },
+    exit: {
+      description: 'Callback when the sheet has started to exit',
+      table: { type: { summary: null } },
+      control: { disable: true },
+    },
+  }}
+/>
+
+export const Template = (args) => ({
+  components: { Sheet, Button, Card, Heading },
+  setup() {
+    const isActive = ref(false);
+    const openSheet = () => isActive.value = true;
+    const closeSheet = () => isActive.value = false;
+    return { args, isActive, openSheet, closeSheet };
+  },
+  template: `<Button @click="openSheet">Open Sheet</Button>
+  <Sheet
+    :open="isActive"
+    accessibilityLabel="Sheet"
+    @close="closeSheet"
+  >
+    <div style="padding: 2rem">
+      <Heading>Manage sales channels</Heading>
+      <br/>
+      <p>This is a sheet. This will open from bottom if it's in the page with narrow width & navigation closed.</p>
+      <br/>
+      <Button primary @click="closeSheet">Close Sheet</Button>
+    </div>
+  </Sheet>`,
+});
+
+# Sheet
+
+A sheet is a large container that enters from the edge of the screen when triggered by the merchant. It’s used to provide merchants with actions and information contextual to the page. It doesn't interrupt their flow like a modal.
+
+<br/>
+
+<div style={{border: '1px solid #fd5749', backgroundColor: '#fff4f4', padding: '20px 20px 10px', borderRadius: '8px', color: 'rgb(32, 34, 35)'}}>
+<h3 style={{fontWeight: 'bold', fontSize: '18px'}}>Deprecated</h3>
+
+The sheet component encourages designers to create a new layer on top of the page instead of improving the existing user interface. It also blocks other parts of the UI, forces users to switch context, and adds complexity to otherwise simple interactions.
+</div>
+
+<Canvas>
+  <Story
+    name="Sheet"
+    height="300px"
+    args={{
+    }}
+    parameters={{
+      docs: {
+        source: {
+          code: dedent`<Button @click="openSheet">Open Sheet</Button>
+            <Sheet
+              :open="isActive"
+              accessibilityLabel="Sheet"
+              @close="closeSheet"
+            >
+              <div style="padding: 2rem">
+                <Heading>Manage sales channels</Heading>
+                <br/>
+                <p>This is a sheet. This will open from bottom if it's in the page with narrow width & navigation closed.</p>
+                <br/>
+                <Button primary @click="closeSheet">Close Sheet</Button>
+              </div>
+            </Sheet>\n
+            <script setup>
+              const isActive = ref(false);
+              const openSheet = () => isActive.value = true;
+              const closeSheet = () => isActive.value = false;
+            </script>
+          `,
+        },
+      },
+    }}
+  >
+    {Template.bind({})}
+  </Story>
+</Canvas>
+
+<ArgsTable story="Sheet" />

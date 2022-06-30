@@ -283,11 +283,11 @@ const props = withDefaults(defineProps<NonMutuallyExclusiveProps>(), {
 });
 
 const emits = defineEmits<{
-  (event: 'focus', focusEvent: Event): void
-  (event: 'blur'): void
-  (event: 'change', payload: Event | string): void
-  (event: 'update:modelValue', value: string): void
-  (event: 'clear-button-click', id?: string): void
+  (event: 'focus', focusEvent: Event): void,
+  (event: 'blur', blurEvent: Event): void,
+  (event: 'change', payload: Event | string): void,
+  (event: 'update:modelValue', value: string): void,
+  (event: 'clear-button-click', id?: string): void,
 }>();
 
 const inputRef = ref<HTMLInputElement | null>(null);
@@ -499,7 +499,10 @@ const handleChange = (event: Event) => {
 };
 
 const handleClickChild = (event: Event) => {
-  event.stopPropagation();
+  if (inputRef.value !== event.target) {
+    event.stopPropagation();
+  }
+
   const target = event.target as HTMLElement;
 
   if (
@@ -584,9 +587,9 @@ const handleOnFocus = (event: FocusEvent): void => {
   emits('focus', event);
 };
 
-const handleOnBlur = () => {
+const handleOnBlur = (event: Event) => {
   focus.value = false;
-  emits('blur');
+  emits('blur', event);
 };
 
 function isVerticalContent(target: HTMLElement | EventTarget) {

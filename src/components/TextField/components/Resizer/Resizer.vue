@@ -27,7 +27,7 @@ import { EventListener } from '../../../EventListener';
 
 interface ResizerProps {
   contents?: string;
-  currentHeight?: number | null;
+  currentHeight?: number;
   minimumLines?: number;
 }
 

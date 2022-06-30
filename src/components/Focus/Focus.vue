@@ -1,9 +1,9 @@
+<template lang="pug">
+slot
+</template>
 <script lang="ts">
 export default {
   inheritAttrs: false,
-  render() {
-    return null;
-  },
 }
 </script>
 

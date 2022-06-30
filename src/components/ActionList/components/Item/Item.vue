@@ -1,37 +1,36 @@
 <template lang="pug">
-li(:role="roleName")
-  ScrollTo(v-if="active")
-  UnstyledLink(
-    v-if="url",
-    :id="id",
-    :url="disabled ? undefined : url",
-    :class="className",
-    :external="external",
-    :aria-label="accessibilityLabel",
-    :role="role",
-    @click="onClick",
-  )
-    ContentElement(v-bind="contentElementProps")
-      template(#suffix)
-        slot(name="suffix")
-      template(#prefix)
-        slot(name="prefix")
-  button(
-    v-else,
-    :id="id",
-    type="button",
-    :class="className",
-    :disabled="disabled",
-    :aria-label="accessibilityLabel",
-    :role="role",
-    @click="onClick",
-    @mouseup="handleMouseUpByBlurring",
-  )
-    ContentElement(v-bind="contentElementProps")
-      template(#suffix)
-        slot(name="suffix")
-      template(#prefix)
-        slot(name="prefix")
+ScrollTo(v-if="active")
+UnstyledLink(
+  v-if="url",
+  :id="id",
+  :url="disabled ? undefined : url",
+  :class="className",
+  :external="external",
+  :aria-label="accessibilityLabel",
+  :role="role",
+  @click="onClick",
+)
+  ContentElement(v-bind="contentElementProps")
+    template(#suffix)
+      slot(name="suffix")
+    template(#prefix)
+      slot(name="prefix")
+button(
+  v-else,
+  :id="id",
+  type="button",
+  :class="className",
+  :disabled="disabled",
+  :aria-label="accessibilityLabel",
+  :role="role",
+  @click="onClick",
+  @mouseup="handleMouseUpByBlurring",
+)
+  ContentElement(v-bind="contentElementProps")
+    template(#suffix)
+      slot(name="suffix")
+    template(#prefix)
+      slot(name="prefix")
 </template>
 
 <script lang="ts">
