@@ -194,12 +194,12 @@ div(:class="styles.Filters")
           @remove="() => { filter.onRemove(filter.key) }",
         ) {{ filter.label }}
   div(
-    v-if="hasSlot(slots.helpText)",
+    v-if="hasSlot(slots['help-text'])",
     id="FiltersHelpText",
     :class="styles.HelpText",
   )
     TextStyle(variation="subdued")
-      slot(name="helpText")
+      slot(name="help-text")
   template(v-if="open")
     ScrollLock
     div(:class="styles.Backdrop", @click="closeFilters")

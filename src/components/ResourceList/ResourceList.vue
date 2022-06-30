@@ -312,6 +312,7 @@ const headerTitle = computed(() => {
 const bulkActionsLabel = computed(() => {
   const selectedItemsCount =
     props.selectedItems === SELECT_ALL_ITEMS
+    || (Array.isArray(props.selectedItems) && props.selectedItems.length === items.value.length)
       ? `${items.value.length}+`
       : props.selectedItems?.length;
 
@@ -363,7 +364,9 @@ const paginatedSelectAllText = computed(() => {
     return;
   }
 
-  if (props.selectedItems === SELECT_ALL_ITEMS) {
+  if (props.selectedItems === SELECT_ALL_ITEMS
+  || (Array.isArray(props.selectedItems) && props.selectedItems.length === items.value.length)
+  ) {
     return i18n.translate(
       props.isFiltered
         ? 'Polaris.ResourceList.allFilteredItemsSelected'
@@ -385,6 +388,7 @@ const paginatedSelectAllAction = computed(() => {
 
   const actionText =
     props.selectedItems === SELECT_ALL_ITEMS
+    || (Array.isArray(props.selectedItems) && props.selectedItems.length === items.value.length)
       ? i18n.translate('Polaris.Common.undo')
       : i18n.translate(
         props.isFiltered
@@ -447,9 +451,10 @@ watch(
 
 const handleSelectAllItemsInStore = () => {
   const newlySelectedItems =
-    props.selectedItems === SELECT_ALL_ITEMS && generateItemId
-      ? getAllItemsOnPage(items.value, generateItemId)
-      : SELECT_ALL_ITEMS;
+    props.selectedItems === SELECT_ALL_ITEMS
+    || (Array.isArray(props.selectedItems) && props.selectedItems.length === items.value.length)
+      ? []
+      : getAllItemsOnPage(items.value, generateItemId);
 
   emits('selection-change', newlySelectedItems);
 };
@@ -463,8 +468,8 @@ const bulkSelectState = (): boolean | 'indeterminate' => {
   ) {
     selectState = false;
   } else if (
-    props.selectedItems === SELECT_ALL_ITEMS ||
-    (Array.isArray(props.selectedItems) && props.selectedItems.length === items.value.length)
+    props.selectedItems === SELECT_ALL_ITEMS
+    || (Array.isArray(props.selectedItems) && props.selectedItems.length === items.value.length)
   ) {
     selectState = true;
   }
@@ -556,7 +561,8 @@ const handleSelectionChange = (
   }
 
   let newlySelectedItems =
-    props.selectedItems === SELECT_ALL_ITEMS && generateItemId
+    props.selectedItems === SELECT_ALL_ITEMS
+    || (Array.isArray(props.selectedItems) && props.selectedItems.length === items.value.length)
       ? getAllItemsOnPage(items.value, generateItemId)
       : [...(props.selectedItems as string[])];
 
@@ -605,8 +611,8 @@ const handleToggleAll = () => {
   let newlySelectedItems: string[];
 
   if (
-    (Array.isArray(props.selectedItems) && props.selectedItems.length === items.value.length) ||
-    props.selectedItems === SELECT_ALL_ITEMS
+    (Array.isArray(props.selectedItems) && props.selectedItems.length === items.value.length)
+    || props.selectedItems === SELECT_ALL_ITEMS
   ) {
     newlySelectedItems = [];
   } else {
@@ -646,7 +652,7 @@ const selected = computed<ResourceListSelectedItems>(() => {
 
 const updateProvider = () => {
   provide<ResourceListContextType>('ResourceListContext', {
-    selectable: isSelectable.value,
+    selectable: isSelectable,
     selectedItems: selected,
     selectMode: selectMode,
     resourceName: props.resourceName,

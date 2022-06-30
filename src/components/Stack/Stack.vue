@@ -1,23 +1,23 @@
 <template lang="pug">
 div(:class="className")
   template(v-if="!noItemWrap && slots.default && hasSlot(slots.default)")
-    template(v-if="slots.default().length > 1 || slots.default()[0].type.toString() !== 'Symbol(Fragment)'")
+    template(
+      v-for="item, index in slots.default()",
+      :key="index",
+    )
       StackItem(
-        v-for="(item, index) in slots.default()",
-        :key="index",
+        v-if="item.type.toString() === 'Symbol(Fragment)' && item.el === null && item.children",
+        v-for="child, childIndex in item.children",
+        :key="`${index}-${childIndex.toString()}`",
       )
-        component(:is="item")
-    template(v-else)
-      StackItem(
-        v-for="(item, index) in slots.default()[0].children",
-        :key="index",
-      )
+        component(:is="child")
+      StackItem(v-else)
         component(:is="item")
   slot(v-else)
 </template>
 
 <script setup lang="ts">
-import { computed, useSlots } from 'vue';
+import { computed, onMounted, useSlots } from 'vue';
 import { classNames, variationName } from 'polaris/polaris-react/src/utilities/css';
 import styles from '@/classes/Stack.json';
 import { hasSlot } from '@/utilities/has-slot';
