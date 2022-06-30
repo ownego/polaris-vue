@@ -1,11 +1,18 @@
 <template lang="pug">
 div(:class="className")
   template(v-if="!noItemWrap && slots.default && hasSlot(slots.default)")
-    StackItem(
-      v-for="(item, index) in slots.default()",
-      :key="index"
-    )
-      component(:is="item")
+    template(v-if="slots.default().length > 1 || slots.default()[0].type.toString() !== 'Symbol(Fragment)'")
+      StackItem(
+        v-for="(item, index) in slots.default()",
+        :key="index",
+      )
+        component(:is="item")
+    template(v-else)
+      StackItem(
+        v-for="(item, index) in slots.default()[0].children",
+        :key="index",
+      )
+        component(:is="item")
   slot(v-else)
 </template>
 

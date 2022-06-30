@@ -1,0 +1,615 @@
+import { Meta, Story, Canvas, ArgsTable } from '@storybook/addon-docs';
+import dedent from 'ts-dedent';
+import { Autocomplete, AutocompleteTextField, Icon, Tag, Stack, StackItem } from '@/polaris-vue';
+import SearchMinor from '@icons/SearchMinor.svg';
+import CirclePlusMinor from '@icons/CirclePlusMinor.svg';
+import { ref } from 'vue';
+
+<Meta
+  title="Components / Forms / Autocomplete"
+  component={ Autocomplete }
+  argTypes={{
+    'update:modelValue': {
+      table: { disable: true },
+    },
+    default: {
+      table: { disable: true },
+    },
+    modelValue: {
+      table: { disable: true },
+    },
+    actionBefore: {
+      table: { type: { summary: 'actionBeforeProp' } },
+      control: { disable: true },
+    },
+    options: {
+      table: { type: { summary: 'SectionDescriptor[] | OptionDescriptor[]' } },
+      control: { disable: true },
+    },
+    preferredPosition: {
+      options: ['above', 'below', 'mostSpace'],
+      table: { type: { summary: 'above | below | mostSpace' } },
+      control: { type: 'select' },
+    },
+    'load-more-results': {
+      description: 'Callback when the end of the list is reached',
+      table: { type: { summary: '() => void' } },
+      control: { disable: true },
+    },
+    select: {
+      description: 'Callback when the selection of options is changed',
+      table: { type: { summary: '(selected: string[]) => void' } },
+      control: { disable: true },
+    },
+    textField: {
+      description: 'The text field component attached to the list of options',
+      table: { type: { summary: null } },
+      control: { disable: true },
+    },
+    emptyState: {
+      description: 'Is rendered when there are no options',
+      table: { type: { summary: null } },
+      control: { disable: true },
+    },
+    'action-helpText': {
+      description: 'Additional hint text to display with Action item',
+      table: { type: { summary: null } },
+      control: { disable: true },
+    },
+    'action-prefix': {
+      description: 'Prefix source for Action item',
+      table: { type: { summary: null } },
+      control: { disable: true },
+    },
+    'action-suffix': {
+      description: 'Suffix source for Action item',
+      table: { type: { summary: null } },
+      control: { disable: true },
+    },
+    'option-media-[optionId]': {
+      description: 'Media source for each option defined by option id',
+      table: {
+        category: 'slots',
+        type: { summary: null }
+      },
+      control: { disable: true },
+    },
+  }}
+/>
+
+export const BasicTemplate = (args) => ({
+  components: { Autocomplete, AutocompleteTextField, Icon },
+  setup() {
+    const deselectedOptions = [
+      {value: 'rustic', label: 'Rustic'},
+      {value: 'antique', label: 'Antique'},
+      {value: 'vinyl', label: 'Vinyl'},
+      {value: 'vintage', label: 'Vintage'},
+      {value: 'refurbished', label: 'Refurbished'},
+    ];
+    const selectedOptions = ref([]);
+    const inputValue = ref('');
+    const options = ref(deselectedOptions);
+    const updateText = (event) => {
+      const value = event.target.value;
+      inputValue.value = value;
+      if (value === '') {
+        options.value = deselectedOptions;
+        return;
+      }
+      const filterRegex = new RegExp(value, 'i');
+      const resultOptions = deselectedOptions.filter((option) =>
+        option.label.match(filterRegex),
+      );
+      options.value = resultOptions;
+    };
+    const updateSelection = (selected) => {
+      const selectedValue = selected.map((selectedItem) => {
+        const matchedOption = options.value.find((option) => {
+          return option.value.match(selectedItem);
+        });
+        return matchedOption && matchedOption.label;
+      });
+      selectedOptions.value = selected;
+      inputValue.value = selectedValue[0];
+    };
+    return { args, selectedOptions, inputValue, options, updateText, updateSelection, SearchMinor };
+  },
+  template: `
+    <div :style="{height: '225px'}">
+      <Autocomplete
+        :options="options"
+        v-model="selectedOptions"
+        @select="updateSelection"
+      >
+        <template #textField>
+          <AutocompleteTextField
+            @change="updateText"
+            label="Tags"
+            v-model="inputValue"
+            placeholder="Search"
+            auto-complete="off"
+          >
+            <template #prefix>
+              <Icon :source="SearchMinor" color="base" />
+            </template>
+          </AutocompleteTextField>
+        </template>
+      </Autocomplete>
+    </div>
+  `,
+});
+
+# Autocomplete
+
+The autocomplete component is an input field that provides selectable suggestions as a merchant types into it. It allows merchants to quickly search through and select from large collections of options. It's a convenience wrapper around the `Combobox` and `Listbox` components with minor UI differences.
+
+### Basic Autocomplete
+
+Use to help merchants complete text input quickly from a list of options.
+
+<Canvas>
+  <Story
+    name="Basic Autocomplete"
+    height="280px"
+    inline={false}
+    parameters={{
+      docs: {
+        source: {
+          state: 'close',
+          code: dedent`
+          <div :style="{height: '225px'}">
+            <Autocomplete
+              :options="options"
+              v-model="selectedOptions"
+              @select="updateSelection"
+            >
+              <template #textField>
+                <AutocompleteTextField
+                  @change="updateText"
+                  label="Tags"
+                  v-model="inputValue"
+                  placeholder="Search"
+                  auto-complete="off"
+                >
+                  <template #prefix>
+                    <Icon :source="SearchMinor" color="base" />
+                  </template>
+                </AutocompleteTextField>
+              </template>
+            </Autocomplete>
+          </div>\n
+          <script setup>
+            const deselectedOptions = [
+              {value: 'rustic', label: 'Rustic'},
+              {value: 'antique', label: 'Antique'},
+              {value: 'vinyl', label: 'Vinyl'},
+              {value: 'vintage', label: 'Vintage'},
+              {value: 'refurbished', label: 'Refurbished'},
+            ];\n
+            const selectedOptions = ref([]);
+            const inputValue = ref('');
+            const options = ref(deselectedOptions);\n
+            const updateText = (event) => {
+              const value = event.target.value;
+              inputValue.value = value;
+              if (value === '') {
+                options.value = deselectedOptions;
+                return;
+              }
+              const filterRegex = new RegExp(value, 'i');
+              const resultOptions = deselectedOptions.filter((option) =>
+                option.label.match(filterRegex),
+              );
+              options.value = resultOptions;
+            };\n
+            const updateSelection = (selected) => {
+              const selectedValue = selected.map((selectedItem) => {
+                const matchedOption = options.value.find((option) => {
+                  return option.value.match(selectedItem);
+                });
+                return matchedOption && matchedOption.label;
+              });
+              selectedOptions.value = selected;
+              inputValue.value = selectedValue[0];
+            };
+          </script>
+          `,
+        },
+      },
+    }}
+  >
+    {BasicTemplate.bind({})}
+  </Story>
+</Canvas>
+
+<br/>
+
+### Autocomplete with action
+
+Use to indicate there are no search results.
+
+export const ActionTemplate = (args) => ({
+  components: { Autocomplete, AutocompleteTextField, Icon },
+  setup() {
+    const deselectedOptions = [
+      {value: 'rustic', label: 'Rustic'},
+      {value: 'antique', label: 'Antique'},
+      {value: 'vinyl', label: 'Vinyl'},
+      {value: 'vintage', label: 'Vintage'},
+      {value: 'refurbished', label: 'Refurbished'},
+    ];
+    const selectedOptions = ref([]);
+    const inputValue = ref('');
+    const options = ref(deselectedOptions);
+    const loading = ref(false);
+    const updateText = (event) => {
+      const value = event.target.value;
+      inputValue.value = value;
+      if (!loading.value) {
+        loading.value = true;
+      }
+      setTimeout(() => {
+        if (value === '') {
+          options.value = deselectedOptions;
+          loading.value = false;
+          return;
+        }
+        const filterRegex = new RegExp(value, 'i');
+        const resultOptions = options.value.filter((option) =>
+          option.label.match(filterRegex),
+        );
+        options.value = resultOptions;
+        loading.value = false;
+      }, 300);
+    };
+    const updateSelection = (selected) => {
+      const selectedValue = selected.map((selectedItem) => {
+        const matchedOption = options.value.find((option) => {
+          return option.value.match(selectedItem);
+        });
+        return matchedOption && matchedOption.label;
+      });
+      selectedOptions.value = selected;
+      inputValue.value = selectedValue[0];
+    };
+    return { args, selectedOptions, inputValue, options, updateText, updateSelection, SearchMinor, loading, CirclePlusMinor };
+  },
+  template: `
+    <div :style="{height: '225px'}">
+      <Autocomplete
+        :options="options"
+        v-model="selectedOptions"
+        :actionBefore="{
+          accessibilityLabel: 'Action label',
+          badge: {
+            status: 'new',
+            content: 'New!',
+          },
+          content: 'Action with long name',
+          ellipsis: true,
+          icon: CirclePlusMinor,
+        }"
+        @select="updateSelection"
+      >
+        <template #action-helpText>Help text</template>
+        <template #textField>
+          <AutocompleteTextField
+            @change="updateText"
+            label="Tags"
+            v-model="inputValue"
+            placeholder="Search"
+            auto-complete="off"
+          >
+            <template #prefix>
+              <Icon :source="SearchMinor" color="base" />
+            </template>
+          </AutocompleteTextField>
+        </template>
+      </Autocomplete>
+    </div>
+  `,
+});
+
+<Canvas>
+  <Story
+    name="Action Autocomplete"
+    height="280px"
+    inline={false}
+    parameters={{
+      docs: {
+        source: {
+          state: 'close',
+          code: dedent`
+          <div :style="{height: '225px'}">
+            <Autocomplete
+              :options="options"
+              v-model="selectedOptions"
+              @select="updateSelection"
+            >
+              <template #textField>
+                <AutocompleteTextField
+                  @change="updateText"
+                  label="Tags"
+                  v-model="inputValue"
+                  placeholder="Search"
+                  auto-complete="off"
+                >
+                  <template #prefix>
+                    <Icon :source="SearchMinor" color="base" />
+                  </template>
+                </AutocompleteTextField>
+              </template>
+            </Autocomplete>
+          </div>\n
+          <script setup>
+            const deselectedOptions = [
+              {value: 'rustic', label: 'Rustic'},
+              {value: 'antique', label: 'Antique'},
+              {value: 'vinyl', label: 'Vinyl'},
+              {value: 'vintage', label: 'Vintage'},
+              {value: 'refurbished', label: 'Refurbished'},
+            ];\n
+            const selectedOptions = ref([]);
+            const inputValue = ref('');
+            const options = ref(deselectedOptions);\n
+            const updateText = (event) => {
+              const value = event.target.value;
+              inputValue.value = value;
+              if (value === '') {
+                options.value = deselectedOptions;
+                return;
+              }
+              const filterRegex = new RegExp(value, 'i');
+              const resultOptions = deselectedOptions.filter((option) =>
+                option.label.match(filterRegex),
+              );
+              options.value = resultOptions;
+            };\n
+            const updateSelection = (selected) => {
+              const selectedValue = selected.map((selectedItem) => {
+                const matchedOption = options.value.find((option) => {
+                  return option.value.match(selectedItem);
+                });
+                return matchedOption && matchedOption.label;
+              });
+              selectedOptions.value = selected;
+              inputValue.value = selectedValue[0];
+            };
+          </script>
+          `,
+        },
+      },
+    }}
+  >
+    {ActionTemplate.bind({})}
+  </Story>
+</Canvas>
+
+<br/>
+
+### Multiple tags autocomplete
+
+Use to help merchants select multiple options from a list curated by the text input
+
+export const MultiTemplate = (args) => ({
+  components: { Autocomplete, AutocompleteTextField, Icon, Tag, Stack, StackItem },
+  setup() {
+    const deselectedOptions = [
+      {value: 'rustic', label: 'Rustic'},
+      {value: 'antique', label: 'Antique'},
+      {value: 'vinyl', label: 'Vinyl'},
+      {value: 'vintage', label: 'Vintage'},
+      {value: 'refurbished', label: 'Refurbished'},
+    ];
+    const selectedOptions = ref(['rustic']);
+    const inputValue = ref('');
+    const options = ref(deselectedOptions);
+    const updateText = (event) => {
+      const value = typeof event === 'string' ? event : event.target.value;
+      inputValue.value = value;
+      if (value === '') {
+        options.value = deselectedOptions;
+        return;
+      }
+      const filterRegex = new RegExp(value, 'i');
+      const resultOptions = deselectedOptions.filter((option) =>
+        option.label.match(filterRegex),
+      );
+      options.value = resultOptions;
+    };
+    const handleSelect = (selected) => {
+      selectedOptions.value = selected;
+      updateText('');
+    };
+    const removeTag = (tag) => {
+      const tmpoptions = [...selectedOptions.value];
+      tmpoptions.splice(tmpoptions.indexOf(tag), 1);
+      selectedOptions.value = tmpoptions;
+    };
+    const titleCase = (str) => {
+      return str
+        .toLowerCase()
+        .split(' ')
+        .map((word) => word.replace(word[0], word[0].toUpperCase()))
+        .join('');
+    };
+    return { args, selectedOptions, inputValue, options, updateText, removeTag, SearchMinor, titleCase, handleSelect };
+  },
+  template: `
+    <div :style="{height: '325px'}">
+      <Autocomplete
+        allowMultiple
+        :options="options"
+        v-model="selectedOptions"
+        listTitle="Suggested Tags"
+        @select="handleSelect"
+      >
+        <template #textField>
+          <AutocompleteTextField
+            @change="updateText"
+            label="Tags"
+            v-model="inputValue"
+            placeholder="Vintage, cotton, summer"
+            auto-complete="off"
+          >
+            <template #vertical-content>
+              <Stack v-if="selectedOptions && selectedOptions.length > 0" spacing="extraTight" alignment="center">
+                <Tag
+                  v-for="option in selectedOptions"
+                  :key="\`option\${option}\`"
+                  @remove="removeTag(option)"
+                >
+                  {{ titleCase(option.replace('_', ' ')) }}
+                </Tag>
+              </Stack>
+            </template>
+          </AutocompleteTextField>
+        </template>
+      </Autocomplete>
+    </div>
+  `,
+});
+
+<Canvas>
+  <Story
+    name="Multi Autocomplete"
+    height="360px"
+    inline={false}
+    parameters={{
+      docs: {
+        source: {
+          state: 'close',
+          code: dedent`
+            <div :style="{height: '325px'}">
+              <Autocomplete
+                allowMultiple
+                :options="options"
+                v-model="selectedOptions"
+                listTitle="Suggested Tags"
+                @select="handleSelect"
+              >
+                <template #textField>
+                  <AutocompleteTextField
+                    @change="updateText"
+                    label="Tags"
+                    v-model="inputValue"
+                    placeholder="Vintage, cotton, summer"
+                    auto-complete="off"
+                  >
+                    <template #vertical-content>
+                      <Stack v-if="selectedOptions && selectedOptions.length > 0" spacing="extraTight" alignment="center">
+                        <Tag
+                          v-for="option in selectedOptions"
+                          :key="\`option\${option}\`"
+                          @remove="removeTag(option)"
+                        >
+                          {{ titleCase(option.replace('_', ' ')) }}
+                        </Tag>
+                      </Stack>
+                    </template>
+                  </AutocompleteTextField>
+                </template>
+              </Autocomplete>
+            </div>\n
+            <script setup>
+            const deselectedOptions = [
+              {value: 'rustic', label: 'Rustic'},
+              {value: 'antique', label: 'Antique'},
+              {value: 'vinyl', label: 'Vinyl'},
+              {value: 'vintage', label: 'Vintage'},
+              {value: 'refurbished', label: 'Refurbished'},
+            ];\n
+            const selectedOptions = ref(['rustic']);
+            const inputValue = ref('');
+            const options = ref(deselectedOptions);\n
+            const updateText = (event) => {
+              const value = typeof event === 'string' ? event : event.target.value;
+              inputValue.value = value;
+              if (value === '') {
+                options.value = deselectedOptions;
+                return;
+              }
+              const filterRegex = new RegExp(value, 'i');
+              const resultOptions = deselectedOptions.filter((option) =>
+                option.label.match(filterRegex),
+              );
+              options.value = resultOptions;
+            };\n
+            const handleSelect = (selected) => {
+              selectedOptions.value = selected;
+              updateText('');
+            };\n
+            const removeTag = (tag) => {
+              const tmpoptions = [...selectedOptions.value];
+              tmpoptions.splice(tmpoptions.indexOf(tag), 1);
+              selectedOptions.value = tmpoptions;
+            };\n
+            const titleCase = (str) => {
+              return str
+                .toLowerCase()
+                .split(' ')
+                .map((word) => word.replace(word[0], word[0].toUpperCase()))
+                .join('');
+            };
+            </script>
+          `,
+        },
+      },
+    }}
+  >
+    {MultiTemplate.bind({})}
+  </Story>
+</Canvas>
+
+<ArgsTable story="Basic Autocomplete" />
+
+---
+
+<br />
+
+### **actionBefore Prop**
+
+Array of type: `ActionListItemDescriptor[] & wrapOverflow`
+
+| Prop             | Type                          | Description     |
+| ---------------- | ----------------------------- | --------------- |
+| wrapOverflow?     | Boolean       | Specifies that if the label is too long it will wrap instead of being hidden. |
+| accessibilityLabel?  | String     | Visually hidden text for screen readers. |
+| active?           | Boolean       | Whether the action is active or not. |
+| badge?            | {content: string, status: "new"} | |
+| content?          | String        | Content the action displays. |
+| destructive?      | Boolean       | Destructive action. |
+| disabled?         | Boolean       | Whether or not the action is disabled. |
+| ellipsis?         | Boolean       | Add an ellipsis suffix to action content. |
+| external?         | Boolean       | Forces url to open in a new tab. |
+| helpText?         | String        | Additional hint text to display with item. |
+| icon?             | IconSource    | Source of the icon. |
+| id?               | String        | A unique identifier for the action. |
+| image?            | String        | Image source. |
+| role?             | String        | Defines a role for the action. |
+| url?              | String        | A destination to link to, rendered in the action. |
+| onAction?()       | void          | Callback when an action takes place. |
+| onMouseEnter?()   | void          | Callback when mouse enter. |
+| onTouchStart?()   | void          | Callback when element is touched. |
+
+<br/>
+
+### **OptionDescriptor Props**
+
+| Prop             | Type                          | Description                                                                                        |
+| ---------------- | ----------------------------- | -------------------------------------------------------------------------------------------------- |
+| value            | String     | Value of the option                   |
+| label            | String     | Display label for the option          |
+| disabled         | Boolean    | Whether the option is disabled or not |
+| active           | String     | Whether the option is active or not   |
+| id               | String     | Unique identifier for the option      |
+
+<br/>
+
+### **SectionDescriptor Props**
+
+| Prop             | Type                          | Description                                                                                        |
+| ---------------- | ----------------------------- | -------------------------------------------------------------------------------------------------- |
+| options          | OptionDescriptor[]     | Collection of options within the section                   |
+| title            | String                 | Section title                                              |

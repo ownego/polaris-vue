@@ -1,3 +1,4 @@
+import type { ComputedRef, Ref } from 'vue';
 import type { Action, IconSource } from '@/utilities/type';
 
 export interface anyKey {
@@ -52,13 +53,13 @@ export interface ComplexAction
 
 export interface ComboboxListboxType {
   // Value of the Texfields ID for listbox aria-labelledby
-  textFieldLabelId?: string;
+  textFieldLabelId?: Ref<string>;
   // Enables/disables keyboard control
-  textFieldFocused?: boolean;
+  textFieldFocused?: Ref<boolean>;
   // Unique ID to set on the listbox. Used to set the Combobox aria-owns and TextField aria-controls attributes.
-  listboxId?: string;
+  listboxId?: Ref<string>;
   // Whether or not more options are available to lazy load. Use the hasMoreResults boolean provided by the GraphQL API of the paginated data. */
-  willLoadMoreOptions?: boolean;
+  willLoadMoreOptions?: ComputedRef<boolean | undefined>;
   // Sets the value for the TextField aria-activedescendant attribute.
   setActiveOptionId?(id: string): void;
   // Callback to set a generated listbox ID.
@@ -90,11 +91,11 @@ export interface ListboxContextType {
 
 export interface ComboboxTextFieldType {
   // Value for the TextField aria-activedescendant. (also on list context when not in combobox)
-  activeOptionId?: string;
+  activeOptionId?: Ref<string>;
   // Value for the Combobox aria-owns and TextField aria-control
-  listboxId?: string;
+  listboxId?: Ref<string>;
   // Value for aria-expanded on TextField
-  expanded?: boolean;
+  expanded?: Ref<boolean>;
   // Sets the value for the Listbox aria-labelledby
   setTextFieldLabelId?(id: string): void;
   // Sets a boolean to enable/disable keyboard control for the Listbox

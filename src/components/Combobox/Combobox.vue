@@ -22,6 +22,7 @@ import { provide, ref, computed, useSlots } from 'vue';
 import styles from '@/classes/Combobox.json';
 import { Popover, Pane } from '@/components';
 import type { PreferredPosition } from '../PositionedOverlay/math';
+import type { ComboboxListboxType, ComboboxTextFieldType } from '@/utilities/interface';
 
 interface ComboboxProps {
   allowMultiple?: boolean;
@@ -53,6 +54,8 @@ const slots = useSlots();
 const defaultSlot = computed(() => slots.default?.());
 
 const shouldOpen = computed(() => !popoverActive.value && defaultSlot);
+
+const willLoadMoreOptions = computed(() => props.willLoadMoreOptions);
 
 const handleClose = (): void =>  {
   if (!disableCloseOnSelect.value) {
@@ -101,26 +104,42 @@ const handleBlur = (): void => {
   }
 };
 
-const comboboxTextFieldContext = {
-  activeOptionId: activeOptionId.value,
-  expanded: popoverActive.value,
-  listboxId: listboxId.value,
-  setTextFieldFocused: (value: boolean) => { textFieldFocused.value = value; },
-  setTextFieldLabelId: (id: string) => { textFieldLabelId.value = id; },
+const setTextFieldFocused = (value: boolean) => {
+  textFieldFocused.value = value;
+};
+
+const setTextFieldLabelId = (id: string) => {
+  textFieldLabelId.value = id;
+};
+
+const setActiveOptionId = (id: string) => {
+  activeOptionId.value = id;
+}
+
+const setListboxId = (id: string) => {
+  listboxId.value = id;
+}
+
+const comboboxTextFieldContext: ComboboxTextFieldType = {
+  activeOptionId: activeOptionId,
+  expanded: popoverActive,
+  listboxId: listboxId,
+  setTextFieldFocused,
+  setTextFieldLabelId,
   onTextFieldFocus: handleFocus,
   onTextFieldChange: handleChange,
   onTextFieldBlur: handleBlur,
 };
 provide('comboboxTextFieldContext', comboboxTextFieldContext);
 
-const comboboxListboxContext = {
-  listboxId: listboxId.value,
-  textFieldLabelId: textFieldLabelId.value,
-  textFieldFocused: textFieldFocused.value,
-  willLoadMoreOptions: props.willLoadMoreOptions,
+const comboboxListboxContext: ComboboxListboxType = {
+  listboxId: listboxId,
+  textFieldLabelId: textFieldLabelId,
+  textFieldFocused: textFieldFocused,
+  willLoadMoreOptions: willLoadMoreOptions,
   onOptionSelected: onOptionSelected,
-  setActiveOptionId: (id: string) => { activeOptionId.value = id; },
-  setListboxId: (id: string) => { listboxId.value = id; },
+  setActiveOptionId,
+  setListboxId,
   onKeyToBottom: () => { emits('scrolled-to-bottom'); },
 };
 provide('comboboxListboxContext', comboboxListboxContext);

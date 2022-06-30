@@ -204,7 +204,7 @@ const handleBlur = (): void => {
 const handleChange = (payload: Event | string): void => {
   if (payload instanceof Event) {
     const target = payload.target as HTMLInputElement;
-  
+
     emits('update:modelValue', target.value);
     emits('change', payload);
   } else {
