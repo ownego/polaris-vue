@@ -82,7 +82,23 @@ div(:class="styles.ResourceListWrapper")
         Spinner(:size="spinnerSize", accessibilityLabel="Items are loading")
       li(:class="styles.LoadingOverlay")
 </template>
-<script lang="ts">
+<script setup lang="ts">
+import { computed, ref, watch, provide, useSlots, onMounted } from 'vue';
+import type { VNodeArrayChildren } from 'vue';
+import { debounce } from 'polaris/polaris-react/src/utilities/debounce';
+import type { CheckboxHandles } from '@/utilities/interface';
+import { classNames } from 'polaris/polaris-react/src/utilities/css';
+import { UseI18n } from '@/use';
+import { hasSlot } from '@/utilities/has-slot';
+import { Button, EventListener, Sticky, Spinner, Select, EmptySearchResult, BulkActions, CheckableButton } from '@/components';
+import { SELECT_ALL_ITEMS } from '../../utilities/resource-list';
+import type { CheckableButtonKey, CheckableButtons, ResourceListSelectedItems } from '../../utilities/resource-list';
+import type { ResourceListContextType } from '../../utilities/resource-list';
+import type { SelectOption } from '../Select/utils';
+import type { BulkActionsProps } from '../BulkActions/utils';
+import EnableSelectionMinor from '@icons/EnableSelectionMinor.svg';
+import styles from '@/classes/ResourceList.json';
+
 const SMALL_SCREEN_WIDTH = 458;
 const SMALL_SPINNER_HEIGHT = 28;
 const LARGE_SPINNER_HEIGHT = 45;
@@ -102,10 +118,10 @@ const isSmallScreen = () => {
     : window.innerWidth < SMALL_SCREEN_WIDTH;
 };
 
-function defaultIdForItem(
+const defaultIdForItem = (
   item: any,
   index: number,
-) {
+) => {
   if (item.props?.id) {
     return item.props?.id;
   }
@@ -113,23 +129,6 @@ function defaultIdForItem(
     ? item.id
     : index.toString();
 }
-</script>
-<script setup lang="ts">
-import { computed, ref, watch, provide, useSlots, onMounted } from 'vue';
-import type { VNodeArrayChildren } from 'vue';
-import { debounce } from 'polaris/polaris-react/src/utilities/debounce';
-import type { CheckboxHandles } from '@/utilities/interface';
-import { classNames } from 'polaris/polaris-react/src/utilities/css';
-import { UseI18n } from '@/use';
-import { hasSlot } from '@/utilities/has-slot';
-import { Button, EventListener, Sticky, Spinner, Select, EmptySearchResult, BulkActions, CheckableButton } from '@/components';
-import { SELECT_ALL_ITEMS } from '../../utilities/resource-list';
-import type { CheckableButtonKey, CheckableButtons, ResourceListSelectedItems } from '../../utilities/resource-list';
-import type { ResourceListContextType } from '../../utilities/resource-list';
-import type { SelectOption } from '../Select/utils';
-import type { BulkActionsProps } from '../BulkActions/utils';
-import EnableSelectionMinor from '@icons/EnableSelectionMinor.svg';
-import styles from '@/classes/ResourceList.json';
 
 type TItemType = any;
 
@@ -169,7 +168,6 @@ interface ResourceListProps {
 
 const props = withDefaults(defineProps<ResourceListProps>(), {
   selectedItems: [] as any,
-  idForItem: defaultIdForItem,
   showHeader: true,
 });
 
@@ -190,8 +188,15 @@ const smallScreen = ref(isSmallScreen());
 const checkableButtons = ref<CheckableButtons>(new Map());
 const isSticky = ref(false);
 
+const generateItemId = (item: any, index: number) => {
+  if (props.idForItem) {
+    return props.idForItem(item, index);
+  }
+  return defaultIdForItem(item, index);
+};
+
 const items = computed<TItemType[]>(() => {
-  const items : VNodeArrayChildren = [];
+  const tmpItems : VNodeArrayChildren = [];
   if (slots.default) {
     slots.default().map(item => {
       const children = item.children as VNodeArrayChildren;
@@ -201,14 +206,14 @@ const items = computed<TItemType[]>(() => {
 
       if (item.type.toString() === 'Symbol(Fragment)' || item.type.toString() === 'Symbol()') {
         for (const child of children) {
-          items.push(child);
+          tmpItems.push(child);
         }
       } else {
-        items.push(item);
+        tmpItems.push(item);
       }
     });
   }
-  return items;
+  return tmpItems;
 });
 
 const defaultResourceName = {
@@ -307,6 +312,7 @@ const headerTitle = computed(() => {
 const bulkActionsLabel = computed(() => {
   const selectedItemsCount =
     props.selectedItems === SELECT_ALL_ITEMS
+    || (Array.isArray(props.selectedItems) && props.selectedItems.length === items.value.length)
       ? `${items.value.length}+`
       : props.selectedItems?.length;
 
@@ -358,7 +364,9 @@ const paginatedSelectAllText = computed(() => {
     return;
   }
 
-  if (props.selectedItems === SELECT_ALL_ITEMS) {
+  if (props.selectedItems === SELECT_ALL_ITEMS
+  || (Array.isArray(props.selectedItems) && props.selectedItems.length === items.value.length)
+  ) {
     return i18n.translate(
       props.isFiltered
         ? 'Polaris.ResourceList.allFilteredItemsSelected'
@@ -380,6 +388,7 @@ const paginatedSelectAllAction = computed(() => {
 
   const actionText =
     props.selectedItems === SELECT_ALL_ITEMS
+    || (Array.isArray(props.selectedItems) && props.selectedItems.length === items.value.length)
       ? i18n.translate('Polaris.Common.undo')
       : i18n.translate(
         props.isFiltered
@@ -442,9 +451,10 @@ watch(
 
 const handleSelectAllItemsInStore = () => {
   const newlySelectedItems =
-    props.selectedItems === SELECT_ALL_ITEMS && props.idForItem
-      ? getAllItemsOnPage(items.value, props.idForItem)
-      : SELECT_ALL_ITEMS;
+    props.selectedItems === SELECT_ALL_ITEMS
+    || (Array.isArray(props.selectedItems) && props.selectedItems.length === items.value.length)
+      ? []
+      : getAllItemsOnPage(items.value, generateItemId);
 
   emits('selection-change', newlySelectedItems);
 };
@@ -458,8 +468,8 @@ const bulkSelectState = (): boolean | 'indeterminate' => {
   ) {
     selectState = false;
   } else if (
-    props.selectedItems === SELECT_ALL_ITEMS ||
-    (Array.isArray(props.selectedItems) && props.selectedItems.length === items.value.length)
+    props.selectedItems === SELECT_ALL_ITEMS
+    || (Array.isArray(props.selectedItems) && props.selectedItems.length === items.value.length)
   ) {
     selectState = true;
   }
@@ -522,12 +532,12 @@ const setLoadingPosition = () => {
 };
 
 const handleMultiSelectionChange = (
-  lastSelected: number,
+  lastSelectedChange: number,
   currentSelected: number,
   resolveItemId: (item: TItemType) => string,
 ) => {
-  const min = Math.min(lastSelected, currentSelected);
-  const max = Math.max(lastSelected, currentSelected);
+  const min = Math.min(lastSelectedChange, currentSelected);
+  const max = Math.max(lastSelectedChange, currentSelected);
   return items.value.slice(min, max + 1).map(resolveItemId);
 };
 
@@ -551,8 +561,9 @@ const handleSelectionChange = (
   }
 
   let newlySelectedItems =
-    props.selectedItems === SELECT_ALL_ITEMS && props.idForItem
-      ? getAllItemsOnPage(items.value, props.idForItem)
+    props.selectedItems === SELECT_ALL_ITEMS
+    || (Array.isArray(props.selectedItems) && props.selectedItems.length === items.value.length)
+      ? getAllItemsOnPage(items.value, generateItemId)
       : [...(props.selectedItems as string[])];
 
   if (sortOrder !== undefined) {
@@ -600,13 +611,14 @@ const handleToggleAll = () => {
   let newlySelectedItems: string[];
 
   if (
-    (Array.isArray(props.selectedItems) && props.selectedItems.length === items.value.length) ||
-    props.selectedItems === SELECT_ALL_ITEMS
+    (Array.isArray(props.selectedItems) && props.selectedItems.length === items.value.length)
+    || props.selectedItems === SELECT_ALL_ITEMS
   ) {
     newlySelectedItems = [];
   } else {
     newlySelectedItems = items.value.map((item, index) => {
-      return (props.idForItem && props.idForItem(item, index)) as string;
+      const ids = generateItemId && generateItemId(item, index);
+      return ids;
     });
   }
 
@@ -640,7 +652,7 @@ const selected = computed<ResourceListSelectedItems>(() => {
 
 const updateProvider = () => {
   provide<ResourceListContextType>('ResourceListContext', {
-    selectable: isSelectable.value,
+    selectable: isSelectable,
     selectedItems: selected,
     selectMode: selectMode,
     resourceName: props.resourceName,

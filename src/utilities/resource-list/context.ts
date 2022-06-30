@@ -9,7 +9,7 @@ export interface ResourceListContextType {
     button: CheckboxHandles,
   ): void;
   selectMode?: Ref<boolean>;
-  selectable?: boolean;
+  selectable?: Ref<boolean>;
   selectedItems?: ComputedRef<ResourceListSelectedItems>;
   resourceName?: {
     singular: string;

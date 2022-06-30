@@ -80,7 +80,7 @@ li(v-else, :class="className")
           :tabIndex="tabIndex",
           :aria-disabled="disabled",
           :aria-label="secondaryAction.accessibilityLabel",
-          @click="secondaryAction.onClick",
+          @click="secondaryAction && secondaryAction.onClick",
         )
           Icon(:source="secondaryAction.icon")
 
@@ -92,7 +92,7 @@ li(v-else, :class="className")
         :tabIndex="tabIndex",
         :aria-disabled="disabled",
         :aria-label="secondaryAction.accessibilityLabel",
-        @click="secondaryAction.onClick",
+        @click="secondaryAction && secondaryAction.onClick",
       )
         Icon(:source="secondaryAction.icon")
   div(
@@ -110,7 +110,7 @@ li(v-else, :class="className")
 </template>
 
 <script setup lang="ts">
-import { computed, inject, onUpdated, ref } from 'vue';
+import { computed, onUpdated, ref } from 'vue';
 import { classNames } from 'polaris/polaris-react/src/utilities/css';
 import ExternalMinor from '@icons/ExternalMinor.svg';
 import styles from '@/classes/Navigation.json';
@@ -125,45 +125,11 @@ import {
   Tooltip,
 } from '@/components';
 import type { IconProps } from '@/components/Icon/utils';
-import type { BadgeProps } from '@/components/Badge/utils';
-import type { TooltipProps } from '@/components/Tooltip/utils';
+import type { SecondaryAction } from './utils';
+import type { BadgeItemProps, ItemURLDetails, SubNavigationItem } from './utils';
 import { UseI18n } from '@/use';
 
 import { Secondary } from './components';
-
-interface ItemURLDetails {
-  url?: string;
-  matches?: boolean;
-  exactMatch?: boolean;
-  matchPaths?: string[];
-  excludePaths?: string[];
-  external?: boolean;
-}
-
-interface SubNavigationItem {
-  url: string;
-  label: string;
-  disabled?: boolean;
-  new?: boolean;
-  matches?: boolean;
-  exactMatch?: boolean;
-  matchPaths?: string[];
-  excludePaths?: string[];
-  external?: boolean;
-  onClick?(): void;
-}
-
-interface SecondaryAction {
-  url: string;
-  accessibilityLabel: string;
-  icon: IconProps['source'];
-  tooltip?: TooltipProps;
-  onClick?(): void;
-}
-
-interface BadgeItemProps extends BadgeProps {
-  content: string;
-}
 
 interface ItemProps {
   url?: string;
@@ -172,7 +138,7 @@ interface ItemProps {
   excludePaths?: string[];
   external?: boolean;
   icon?: IconProps['source'];
-  badge?: string | BadgeItemProps;
+  badge?: BadgeItemProps | string;
   label: string;
   disabled?: boolean;
   accessibilityLabel?: string;
@@ -183,14 +149,6 @@ interface ItemProps {
   secondaryAction?: SecondaryAction;
   expanded?: boolean;
   shouldResizeIcon?: boolean;
-}
-
-enum MatchState {
-  MatchForced,
-  MatchUrl,
-  MatchPaths,
-  Excluded,
-  NoMatch,
 }
 
 const props = defineProps<ItemProps>();
@@ -278,9 +236,9 @@ const matchingSubNavigationItems = computed(() => {
   && props.subNavigationItems.filter((item) => {
     const subMatchState = matchStateForItem(item, location);
     return (
-      subMatchState === MatchState.MatchForced ||
-      subMatchState === MatchState.MatchUrl ||
-      subMatchState === MatchState.MatchPaths
+      subMatchState === 'forced' ||
+      subMatchState === 'url' ||
+      subMatchState === 'paths'
     );
   });
 });
@@ -291,9 +249,9 @@ const childIsActive = computed(() => {
 
 const selected = computed(() => {
   return props.selected == null
-    ? matchState === MatchState.MatchForced ||
-      matchState === MatchState.MatchUrl ||
-      matchState === MatchState.MatchPaths
+    ? matchState === 'forced' ||
+      matchState === 'url' ||
+      matchState === 'paths'
     : props.selected;
 });
 
@@ -366,9 +324,9 @@ function isNavigationItemActive(
     navigationItem.subNavigationItems.filter((item) => {
       const subMatchState = matchStateForItem(item, currentPath);
       return (
-        subMatchState === MatchState.MatchForced ||
-        subMatchState === MatchState.MatchUrl ||
-        subMatchState === MatchState.MatchPaths
+        subMatchState === 'forced' ||
+        subMatchState === 'url' ||
+        subMatchState === 'paths'
       );
     });
 
@@ -376,9 +334,9 @@ function isNavigationItemActive(
     matchingSubNavigationItemsActive && matchingSubNavigationItemsActive.length > 0;
 
   const selectedItem =
-    matchStateItem === MatchState.MatchForced ||
-    matchStateItem === MatchState.MatchUrl ||
-    matchStateItem === MatchState.MatchPaths;
+    matchStateItem === 'forced' ||
+    matchStateItem === 'url' ||
+    matchStateItem === 'paths';
 
   return selectedItem || childItemIsActive;
 }
@@ -401,11 +359,11 @@ function matchStateForItem(
   itemLocation: string,
 ) {
   if (url == null) {
-    return MatchState.NoMatch;
+    return 'no-match';
   }
 
   if (matches) {
-    return MatchState.MatchForced;
+    return 'forced';
   }
 
   if (
@@ -413,17 +371,17 @@ function matchStateForItem(
     (excludePaths &&
       excludePaths.some((path) => safeStartsWith(itemLocation, path)))
   ) {
-    return MatchState.Excluded;
+    return 'excluded';
   }
 
   if (matchPaths && matchPaths.some((path) => safeStartsWith(itemLocation, path))) {
-    return MatchState.MatchPaths;
+    return 'paths';
   }
 
   const matchesUrl = exactMatch
     ? safeEqual(itemLocation, url)
     : safeStartsWith(itemLocation, url);
-  return matchesUrl ? MatchState.MatchUrl : MatchState.NoMatch;
+  return matchesUrl ? 'url' : 'no-match';
 }
 
 function normalizeAriaAttributes(

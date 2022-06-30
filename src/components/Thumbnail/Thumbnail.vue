@@ -25,7 +25,7 @@ interface Props {
    */
   size?: Size;
   /** URL for the image */
-  source: string | IconSource;
+  source: IconSource;
   /** Alt text for the thumbnail image */
   alt: string;
   /** Transparent background */

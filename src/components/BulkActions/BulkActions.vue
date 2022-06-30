@@ -3,127 +3,136 @@ div(
   ref="containerNode",
   v-if="selectMode",
 )
-  div(v-if="smallScreen")
-    div(
-      :class="smallScreenGroupClassName",
-      ref="smallScreenGroupNode",
-    )
-      div(:class="styles.ButtonGroupWrapper")
-        ButtonGroup(segmented)
-          div(
-            todo="csstransition"
-            :class="slideClasses",
+  div(
+    v-if="smallScreen",
+    :class="smallScreenGroupClassName",
+    ref="smallScreenGroupNode",
+  )
+    div(:class="styles.ButtonGroupWrapper")
+      ButtonGroup(
+        segmented,
+        no-item-wrap
+      )
+        ButtonGroupItem
+          transition(
+            name="custom-bulkactions-transition",
+            appear,
+            :class="styles.Slide",
+            @before-enter="onTransitionBeforeEnter",
+            @enter="onTransitionEnter",
+            @after-enter="onTransitionAfterEnter",
           )
             div(
               :class="styles.CheckableContainer",
               ref="checkableWrapperNode",
             )
-              CheckableButton(v-bind="checkableButtonProps", smallScreen)
-          div(
-            v-if="actionSections || rolledInPromotedActions.length > 0 || measuring",
-            ref="moreActionsNode",
+              CheckableButton(v-bind="checkableButtonProps", @toggle-all="emits('toggle-all')", smallScreen)
+        ButtonGroupItem(
+          v-if="actionSections || rolledInPromotedActions.length > 0 || measuring",
+          ref="moreActionsNode",
+        )
+          Popover(
+            :active="smallScreenPopoverVisible",
+            @close="toggleSmallScreenPopover",
           )
-            Popover(
-              :active="smallScreenPopoverVisible",
-              @close="toggleSmallScreenPopover",
-            )
-              template(#activator)
-                BulkActionButton(
-                  disclosure,
-                  :content="i18n.translate('Polaris.ResourceList.BulkActions.actionsActivatorLabel')",
-                  :disabled="disabled",
-                  :indicator="isNewBadgeInBadgeActions",
-                  @action="toggleSmallScreenPopover",
-                )
-              template(#content)
-                ActionList(
-                  :items="promotedActions",
-                  :sections="actionSections",
-                  @action-any-item="toggleSmallScreenPopover",
-                )
+            template(#activator)
+              BulkActionButton(
+                disclosure,
+                :content="i18n.translate('Polaris.ResourceList.BulkActions.actionsActivatorLabel')",
+                :disabled="disabled",
+                :indicator="isNewBadgeInBadgeActions",
+                @action="toggleSmallScreenPopover",
+              )
+            template(#content)
+              ActionList(
+                :items="promotedActions",
+                :sections="actionSections",
+                @action-any-item="toggleSmallScreenPopover",
+              )
+        ButtonGroupItem
           Button(
             :disabled="disabled",
             @click="setSelectMode(false)",
           )
             | {{ i18n.translate('Polaris.Common.cancel') }}
-      div(
-        v-if="paginatedSelectAllAction",
-        :class="styles.PaginatedSelectAll"
-      )
-        span(v-if="paginatedSelectAllText && paginatedSelectAllAction", aria-live="polite") {{ paginatedSelectAllText }}
-        template(v-else) {{ paginatedSelectAllText }}
-        Button(
-          v-if="paginatedSelectAllAction && paginatedSelectAllAction.onAction",
-          plain,
-          :disabled="disabled",
-          @click="paginatedSelectAllAction.onAction",
-        ) {{ paginatedSelectAllAction.content }}
-
-  div(v-else)
     div(
-      :class="largeScreenGroupClassName",
-      ref="largeScreenGroupNode",
+      v-if="paginatedSelectAllAction",
+      :class="styles.PaginatedSelectAll"
     )
-      EventListener(event="resize", :handler="handleResize")
-      div(
-        :class="styles.ButtonGroupWrapper",
-        ref="largeScreenButtonsNode",
+      span(v-if="paginatedSelectAllText && paginatedSelectAllAction", aria-live="polite") {{ paginatedSelectAllText }}&nbsp;
+      template(v-else) {{ paginatedSelectAllText }}
+      Button(
+        v-if="paginatedSelectAllAction && paginatedSelectAllAction.onAction",
+        plain,
+        :disabled="disabled",
+        @click="paginatedSelectAllAction.onAction",
+      ) {{ paginatedSelectAllAction.content }}
+
+  div(
+    v-else,
+    :class="largeScreenGroupClassName",
+    ref="largeScreenGroupNode",
+  )
+    EventListener(event="resize", :handler="handleResize")
+    div(
+      :class="styles.ButtonGroupWrapper",
+      ref="largeScreenButtonsNode",
+    )
+      ButtonGroup(
+        v-if="(promotedActions && numberOfPromotedActionsToRender > 0) || hasActionsPopover",
+        segmented,
+        no-item-wrap,
       )
-        ButtonGroup(
-          v-if="(promotedActions && numberOfPromotedActionsToRender > 0) || hasActionsPopover",
-          segmented,
-          no-item-wrap,
+        ButtonGroupItem
+          CheckableButton(v-bind="checkableButtonProps", @toggle-all="emits('toggle-all')")
+        ButtonGroupItem(
+          v-if="promotedActions && numberOfPromotedActionsToRender > 0"
+          v-for="action, index in promotedActions.slice(0, numberOfPromotedActionsToRender)",
+          :key="index",
         )
-          ButtonGroupItem
-            CheckableButton(v-bind="checkableButtonProps", @toggle-all="emits('toggle-all')")
-          ButtonGroupItem(
-            v-if="promotedActions && numberOfPromotedActionsToRender > 0"
-            v-for="action, index in promotedActions.slice(0, numberOfPromotedActionsToRender)",
-            :key="index",
+          BulkActionMenu(
+            v-if="instanceOfMenuGroupDescriptor(action)",
+            v-bind="bulkActionPropsGenerate(action)",
+            :isNewBadgeInBadgeActions="isNewBadgeInBadgeActions",
           )
-            BulkActionMenu(
-              v-if="instanceOfMenuGroupDescriptor(action)",
-              v-bind="bulkActionPropsGenerate(action)",
-              :isNewBadgeInBadgeActions="isNewBadgeInBadgeActions",
+          BulkActionButton(
+            v-else,
+            :disabled="disabled",
+            v-bind="action",
+            :handleMeasurement="handleMeasurement",
+          )
+        ButtonGroupItem(v-if="hasActionsPopover")
+          div(ref="moreActionsNode")
+            Popover(
+              :active="largeScreenPopoverVisible",
+              @close="toggleLargeScreenPopover",
             )
-            BulkActionButton(
-              v-else,
-              :disabled="disabled",
-              v-bind="action",
-              :handleMeasurement="handleMeasurement",
-            )
-          ButtonGroupItem(v-if="hasActionsPopover")
-            div(ref="moreActionsNode")
-              Popover(
-                :active="largeScreenPopoverVisible",
-                @close="toggleLargeScreenPopover",
-              )
-                template(#activator)
-                  BulkActionButton(
-                    disclosure,
-                    :content="activatorLabel",
-                    :disabled="disabled",
-                    :indicator="isNewBadgeInBadgeActions",
-                    @action="toggleLargeScreenPopover",
-                  )
-                template(#content)
-                  ActionList(
-                    :sections="combinedActions",
-                    @action-any-item="toggleLargeScreenPopover",
-                  )
-        CheckableButton(v-else, v-bind="checkableButtonProps", @toggle-all="emits('toggle-all')")
-      div(
-        v-if="paginatedSelectAllAction",
-        :class="styles.PaginatedSelectAll"
-      )
-        span(v-if="paginatedSelectAllText && paginatedSelectAllAction", aria-live="polite") {{ paginatedSelectAllText }}
-        template(v-else) {{ paginatedSelectAllText }}
-        Button(
-          v-if="paginatedSelectAllAction && paginatedSelectAllAction.onAction",
-          plain,
-          :disabled="disabled",
-          @click="paginatedSelectAllAction.onAction",
-        ) {{ paginatedSelectAllAction.content }}
+              template(#activator)
+                BulkActionButton(
+                  disclosure,
+                  :content="activatorLabel",
+                  :disabled="disabled",
+                  :indicator="isNewBadgeInBadgeActions",
+                  @action="toggleLargeScreenPopover",
+                )
+              template(#content)
+                ActionList(
+                  :sections="combinedActions",
+                  @action-any-item="toggleLargeScreenPopover",
+                )
+      CheckableButton(v-else, v-bind="checkableButtonProps", @toggle-all="emits('toggle-all')")
+    div(
+      v-if="paginatedSelectAllAction",
+      :class="styles.PaginatedSelectAll"
+    )
+      span(v-if="paginatedSelectAllText && paginatedSelectAllAction", aria-live="polite") {{ paginatedSelectAllText }}&nbsp;
+      template(v-else) {{ paginatedSelectAllText }}
+      Button(
+        v-if="paginatedSelectAllAction && paginatedSelectAllAction.onAction",
+        plain,
+        :disabled="disabled",
+        @click="paginatedSelectAllAction.onAction",
+      ) {{ paginatedSelectAllAction.content }}
 </template>
 
 <script setup lang="ts">
@@ -322,7 +331,7 @@ const combinedActions = computed(() => {
 const smallScreenGroupClassName = computed(() => classNames(
   styles.Group,
   styles['Group-smallScreen'],
-  // styles[`Group-${status}`],
+  styles['Group-entered'],
 ));
 
 const largeScreenGroupClassName = computed(() => classNames(
@@ -331,8 +340,6 @@ const largeScreenGroupClassName = computed(() => classNames(
   !measuring.value && styles['Group-entered'],
   measuring.value && styles['Group-measuring'],
 ));
-
-const slideClasses = 'TODO';
 
 const activatorLabel = computed(() => {
   return !props.promotedActions ||
@@ -365,6 +372,21 @@ watch(
     }, 1);
   },
 );
+
+const onTransitionBeforeEnter = (el: Element) => {
+  el.classList.add(styles['Slide-enter']);
+};
+
+const onTransitionEnter = (el: Element, done) => {
+  setTimeout(() => {
+    el.classList.add(styles['Slide-entering']);
+    done();
+  }, 1);
+};
+
+const onTransitionAfterEnter = (el: Element) => {
+  el.classList.remove(styles['Slide-enter'], styles['Slide-entering']);
+}
 
 const toggleSmallScreenPopover = () => {
   emits('more-action-popover-toggle', smallScreenPopoverVisible.value);

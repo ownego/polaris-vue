@@ -40,7 +40,7 @@ fieldset(
 </template>
 
 <script setup lang="ts">
-import { computed, useSlots } from 'vue';
+import { computed } from 'vue';
 import { classNames } from 'polaris/polaris-react/src/utilities/css';
 import { UseUniqueId } from '@/use';
 import styles from '@/classes/ChoiceList.json';
@@ -86,7 +86,7 @@ const emits = defineEmits<{
 const { useUniqueId } = UseUniqueId();
 const uniqueId = computed(() => useUniqueId('ChoiceList', props.name));
 const finalName = computed(() => props.allowMultiple
-  ? `${uniqueId.value}Multiple`
+  ? `${uniqueId.value}[]`
   : uniqueId.value,
 );
 

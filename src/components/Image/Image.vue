@@ -9,21 +9,17 @@ img(
 </template>
 
 <script setup lang="ts">
-import { computed, onUpdated, ref, watch } from 'vue';
+import { computed, ref } from 'vue';
 import { classNames } from 'polaris/polaris-react/src/utilities/css';
 import styles from '@/classes/Image.json';
+import type { SourceSetImage } from './utils';
 
-interface SourceSet {
-  source: string;
-  descriptor?: string;
-}
-
-type CrossOrigin = 'anonymous' | 'use-credentials' | '' | undefined;
+type CrossOrigin = 'anonymous' | 'use-credentials' | '';
 
 interface Props {
   source: string;
   crossOrigin?: CrossOrigin;
-  sourceSet?: SourceSet[];
+  sourceSet?: SourceSetImage[];
 }
 
 const props = defineProps<Props>();
