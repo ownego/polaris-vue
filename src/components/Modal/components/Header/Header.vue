@@ -6,7 +6,10 @@ div(:class="className")
   )
     DisplayText(element="h2", size="small")
       slot
-  CloseButton(@click="emit('close')")
+  CloseButton(
+    :titleHidden="titleHidden",
+    @click="emit('close')",
+  )
 </template>
 
 <script setup lang="ts">

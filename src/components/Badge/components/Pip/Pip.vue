@@ -18,7 +18,9 @@ interface PipProps {
   accessibilityLabelOverride?: string;
 }
 
-const props = defineProps<PipProps>();
+const props = withDefaults(defineProps<PipProps>(), {
+  progress: 'complete',
+});
 
 const className = computed(() => {
   return classNames(

@@ -112,7 +112,7 @@ interface Props {
    * Changes the inner text alignment of the button
    * @values left | center | right
    */
-  textAlign?: 'left' | 'right' | 'center';
+  textAlign?: 'left' | 'right' | 'center' | 'start' | 'end';
   /**
    * Gives the button a subtle alternative to the default button styling,
    * appropriate for certain backdrops

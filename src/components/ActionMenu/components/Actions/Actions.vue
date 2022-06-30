@@ -46,6 +46,7 @@ import styles from '@/classes/ActionMenu-Actions.json';
 import { ButtonGroup, EventListener } from '@/components';
 import type { ActionListItemDescriptor } from '@/components/ActionList/utils';
 import type { MenuActionDescriptor } from '@/utilities/interface';
+import type { ActionListSection } from '@/components/ActionList/utils';
 import { UseI18n } from '@/use';
 import type { MenuGroupDescriptor } from '../MenuGroup/utils';
 import { MenuGroup } from '../MenuGroup';
@@ -69,12 +70,18 @@ const i18n = UseI18n();
 
 const props = defineProps<Props>();
 
+const emits = defineEmits<{
+  /** Callback that returns true when secondary actions are rolled up into action groups, and false when not */
+  (event: 'action-rollup', hasRolledUp: boolean): void;
+}>();
+
 const actionsLayoutRef = ref<HTMLDivElement | null>(null);
 const menuGroupWidth = ref<number>(0);
 const availableWidth = ref<number>(0);
 const actionsAndGroupsLength = ref<number>(0);
 const timesMeasured = ref(0);
 const actionWidths = ref<number[]>([]);
+const rollupActiveRef = ref<boolean | null>(null);
 
 const activeMenuGroup = ref<string | null>(null);
 const measuredActions = ref<MeasuredActions>({
@@ -136,20 +143,37 @@ const filteredGroups = computed(() => {
 const isDefaultGroup = (group: MenuGroupDescriptor) => group === defaultRollupGroup.value;
 const isLastMenuGroup = (group: MenuGroupDescriptor) => group === lastMenuGroup.value;
 
-const finalRolledUpActions = computed(() => {
+const finalRolledUp = computed(() => {
   return measuredActions.value.rolledUp.reduce(
-    (memo, action) => {
-      memo.push(...(isMenuGroup(action) ? action.actions : [action]));
+    ([actions, sections], action) => {
+      if (isMenuGroup(action)) {
+        sections.push({
+          title: action.title,
+          items: action.actions.map((sectionAction) => ({
+            ...sectionAction,
+            disabled: action.disabled || sectionAction.disabled,
+          })),
+        });
+      } else {
+        actions.push(action as any);
+      }
 
-      return memo;
+      return [actions as ActionListItemDescriptor[], sections as ActionListSection[]];
     },
-    [] as ActionListItemDescriptor[],
+    [[] as ActionListItemDescriptor[], [] as ActionListSection[]],
   );
 });
 
+const finalRolledUpActions = computed(() => finalRolledUp.value[0] as ActionListItemDescriptor[]);
+const finalRolledUpSectionGroups = computed(() => finalRolledUp.value[1] as ActionListSection[]);
+
 const menuGroupProps = (group: MenuGroupDescriptor) => {
   const { actions, ...rest } = group;
-  return { ...rest, active: activeMenuGroup.value === group.title };
+  return {
+    ...rest,
+    active: activeMenuGroup.value === group.title,
+    sections: finalRolledUpSectionGroups.value,
+  };
 }
 
 const getMenuGroupActions = (group: MenuGroupDescriptor): ActionListItemDescriptor[] => {
@@ -255,6 +279,12 @@ const measureActions = () => {
       newRolledUpActions = [...newRolledUpActions, action];
     }
   });
+
+  const isRollupActive = newShowableActions.length < actionsAndGroups.length - 1;
+  if (rollupActiveRef.value !== isRollupActive) {
+    emits('action-rollup', isRollupActive);
+    rollupActiveRef.value = isRollupActive;
+  }
 
   measuredActions.value = {
     showable: newShowableActions,

@@ -6,19 +6,22 @@ div(:class="className")
     :role="sectionRole",
     :tabIndex="!hasMultipleSections ? -1 : undefined"
   )
-    Item(
+    li(
       v-for="{content, helpText, onAction, ...item}, index in section.items",
       :key="`${content}-${index}`",
-      :content="content",
-      :helpText="helpText",
-      :role="actionRole",
-      v-bind="{...item}",
-      @action="handleAction(onAction)",
+      :role="actionRole === 'menuitem' ? 'presentation' : undefined",
     )
-      template(v-if="item.prefixId", #prefix)
-        slot(:name="`prefix-${item.prefixId}`")
-      template(v-if="item.suffixId", #suffix)
-        slot(:name="`suffix-${item.suffixId}`")
+      Item(
+        :content="content",
+        :helpText="helpText",
+        :role="actionRole",
+        v-bind="{...item}",
+        @action="handleAction(onAction)",
+      )
+        template(v-if="item.prefixId", #prefix)
+          slot(:name="`prefix-${item.prefixId}`")
+        template(v-if="item.suffixId", #suffix)
+          slot(:name="`suffix-${item.suffixId}`")
 </template>
 
 <script lang="ts">

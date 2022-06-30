@@ -13,6 +13,7 @@ div(
     v-else,
     :actions="actions",
     :groups="groups",
+    @action-rollup="onActionRollUp",
   )
 </template>
 
@@ -44,6 +45,11 @@ interface ActionMenuProps {
 
 const props = defineProps<ActionMenuProps>();
 
+const emits = defineEmits<{
+  /** Callback that returns true when secondary actions are rolled up into action groups, and false when not */
+  (event: 'action-rollup', hasRolledUp: boolean): void;
+}>();
+
 const actionMenuClassNames = computed(() => {
   return classNames(
     styles.ActionMenu,
@@ -55,12 +61,22 @@ const rollupSections = computed(() => {
   return (props.groups || []).map((group) => convertGroupToSection(group));
 });
 
+const onActionRollUp = (hasRolledUp: boolean) => {
+  emits('action-rollup', hasRolledUp);
+};
+
 function convertGroupToSection({
   title,
   actions,
   disabled,
 }: MenuGroupDescriptor): ActionListSection {
-  return { title, items: disabled ? [] : actions };
+  return {
+    title,
+    items: actions.map((action) => ({
+      ...action,
+      disabled: disabled || action.disabled,
+    })),
+  };
 }
 </script>
 

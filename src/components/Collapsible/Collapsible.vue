@@ -24,6 +24,8 @@ interface CollapsibleProps {
   expandOnPrint?: boolean;
   /** Toggle whether the collapsible is expanded or not. */
   open: boolean;
+  /** Prevents component from re-measuring when child is updated **/
+  preventMeasuringOnChildrenUpdate?: boolean;
   /** Assign transition properties to the collapsible */
   transition?: TransitionCollapsible;
 }
@@ -78,6 +80,11 @@ watch(
   () => [props.open, isOpen.value],
   () => {
     if (props.open !== isOpen.value) {
+      animationState.value = 'measuring';
+      return;
+    }
+
+    if (!isFullyClosed.value && !props.preventMeasuringOnChildrenUpdate) {
       animationState.value = 'measuring';
     }
   },
