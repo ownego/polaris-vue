@@ -18,7 +18,10 @@
     "paths": {
       "@/*": ["./src/*"]
     },
-    "types": ["node"],
+    "types": [
+      "node",
+      "vite/client"
+    ],
     // "declaration": true,
     // "declarationMap": true,
     // "declarationDir": "dist/types",
