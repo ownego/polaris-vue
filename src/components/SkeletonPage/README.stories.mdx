@@ -5,8 +5,6 @@ import { SkeletonPage, Layout, LayoutSection, Card, TextContainer, SkeletonBodyT
 <Meta
   title="Components / Feedback indicators / Skeleton page"
   component={ SkeletonPage }
-  argTypes={{
-  }}
 />
 
 export const Template = (args) => ({
@@ -41,10 +39,10 @@ export const Template = (args) => ({
                 <SkeletonDisplayText size="small" />
                 <SkeletonBodyText :lines="2" />
               </TextContainer>
-            </Card.Section>
+            </CardSection>
             <CardSection>
-              <SkeletonBodyText lines={1} />
-            </Card.Section>
+              <SkeletonBodyText :lines="1" />
+            </CardSection>
           </Card>
           <Card subdued>
             <CardSection>
@@ -100,10 +98,10 @@ Skeleton page is used with other skeleton loading components to provide a low fi
                         <SkeletonDisplayText size="small" />
                         <SkeletonBodyText :lines="2" />
                       </TextContainer>
-                    </Card.Section>
+                    </CardSection>
                     <CardSection>
-                      <SkeletonBodyText lines={1} />
-                    </Card.Section>
+                      <SkeletonBodyText :lines="1" />
+                    </CardSection>
                   </Card>
                   <Card subdued>
                     <CardSection>

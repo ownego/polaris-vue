@@ -224,11 +224,13 @@ const defaultResourceName = {
 const listRef = ref<HTMLUListElement | null>(null);
 const headerRef = ref<HTMLDivElement | null>(null);
 
-const isSelectable = computed(() => Boolean(
-  (props.promotedBulkActions && props.promotedBulkActions.length > 0) ||
-  (props.bulkActions && props.bulkActions.length > 0) ||
-  props.selectable,
-));
+const isSelectable = computed(() => {
+  return Boolean(
+    (props.promotedBulkActions && props.promotedBulkActions.length > 0) ||
+    (props.bulkActions && props.bulkActions.length > 0) ||
+    props.selectable,
+  );
+});
 
 const resourceName = computed(() => props.resourceName
   ? props.resourceName
@@ -650,19 +652,15 @@ const selected = computed<ResourceListSelectedItems>(() => {
   return Object.keys(props.selectedItems).map((key) => props.selectedItems[key]);
 });
 
-const updateProvider = () => {
-  provide<ResourceListContextType>('ResourceListContext', {
-    selectable: isSelectable,
-    selectedItems: selected,
-    selectMode: selectMode,
-    resourceName: props.resourceName,
-    loading: props.loading,
-    onSelectionChange: handleSelectionChange,
-    registerCheckableButtons: handleCheckableButtonRegistration,
-  });
-};
-
-updateProvider();
+provide<ResourceListContextType>('ResourceListContext', {
+  selectable: isSelectable,
+  selectedItems: selected,
+  selectMode: selectMode,
+  resourceName: props.resourceName,
+  loading: props.loading,
+  onSelectionChange: handleSelectionChange,
+  registerCheckableButtons: handleCheckableButtonRegistration,
+});
 </script>
 <style lang="scss">
 @import 'polaris/polaris-react/src/components/ResourceList/ResourceList.scss';
