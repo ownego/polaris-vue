@@ -5,6 +5,7 @@ Labelled(
   :action="labelAction",
   :label-hidden="selectLabelHidden",
   :required-indicator="requiredIndicator",
+  :label="label",
 )
   template(
     v-if="!labelInline && slots.label",
@@ -97,7 +98,8 @@ import { helpTextID } from '../Labelled/utils';
 interface SelectProps {
   /** List of options or option groups to choose from */
   options: (SelectOption | SelectGroup)[];
-  /** Label for the select */
+  /** Label: overriden by slot  */
+  label?: string;
   /** Adds an action to the label */
   labelAction?: Action;
   /** Visually hide the label */

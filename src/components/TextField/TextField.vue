@@ -5,11 +5,14 @@ Labelled(
   :action="labelAction",
   :labelHidden="labelHidden",
   :requiredIndicator="requiredIndicator",
+  :label="label",
 )
   template(#label, v-if="slots.label")
     slot(name="label")
   template(#help-text, v-if="slots['help-text']")
     slot(name="help-text")
+  template(#help-text, v-else-if="helpText")
+    span {{ helpText }}
   Connected
     template(#left, v-if="slots['connected-left']")
       slot(name="connected-left")
@@ -20,12 +23,15 @@ Labelled(
       @click="handleClick",
     )
       div(
-        v-if="slots.prefix",
+        v-if="slots.prefix || prefix",
         :id="`${id}Prefix`",
         :class="styles.Prefix",
         ref="prefixRef",
       )
-        slot(name="prefix")
+        slot(name="prefix" v-if="slots.prefix")
+        template(v-else-if="prefix")
+          span {{ prefix }}
+
       div(
         v-if="slots['vertical-content']"
         :class="styles.VerticalContent",
@@ -37,6 +43,8 @@ Labelled(
         component(
           :is="multiline ? 'textarea' : 'input'",
           :id="id",
+          :label="label",
+          :help-text="helpText",
           :name="name",
           :disabled="disabled",
           :readonly="readOnly",
@@ -78,6 +86,8 @@ Labelled(
         v-else,
         :is="multiline ? 'textarea' : 'input'",
         :id="id",
+        :label="label",
+        :help-text="helpText",
         :name="name",
         :disabled="disabled",
         :readonly="readOnly",
@@ -116,12 +126,14 @@ Labelled(
       )
         template(v-if="multiline") {{ modelValue }}
       div(
-        v-if="slots.suffix",
+        v-if="slots.suffix || suffix",
         :id="`${id}Suffix`",
         :class="styles.Suffix",
         ref="suffixRef",
       )
-        slot(name="suffix")
+        slot(name="suffix" v-if="slots.suffix")
+        template(v-else-if="suffix")
+          span {{ suffix }}
       div(
         v-if="showCharacterCount",
         :class="characterCountClassName",
@@ -206,10 +218,14 @@ interface NonMutuallyExclusiveProps {
   placeholder?: string;
   /** Initial value for the input */
   modelValue?: string;
+  /** Label */
+  label?: string;
   /** Adds an action to the label */
   labelAction?: LabelledProps['action'];
   /** Visually hide the label */
   labelHidden?: boolean;
+  /** Help Text */
+  helpText?: string;
   /** Disable the input */
   disabled?: boolean;
   /** Show a clear text button in the input */
@@ -237,7 +253,7 @@ interface NonMutuallyExclusiveProps {
   /** Limit increment value for numeric and date-time inputs */
   step?: number;
   /** Enable automatic completion by the browser. Set to "off" when you do not want the browser to fill in info */
-  autoComplete: string;
+  autoComplete?: string;
   /** Mimics the behavior of the native HTML attribute, limiting the maximum value */
   max?: number | string;
   /** Maximum character length for an input */
@@ -274,6 +290,10 @@ interface NonMutuallyExclusiveProps {
   monospaced?: boolean;
   /** Indicates whether or not the entire input/text area text should be selected on focus */
   selectTextOnFocus?: boolean;
+  /** */
+  suffix?:string
+  /** */
+  prefix?:string
 }
 
 const i18n = UseI18n();

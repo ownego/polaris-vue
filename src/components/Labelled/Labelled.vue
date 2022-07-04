@@ -1,13 +1,15 @@
 <template lang="pug">
 div(:class="className")
-  div(v-if="$slots.label", :class="styles.LabelWrapper")
+  div(v-if="$slots.label || label", :class="styles.LabelWrapper")
     Label(
       :id="id",
       :requiredIndicator="requiredIndicator",
       :hidden="false",
       v-bind="$attrs",
     )
-      slot(name="label")
+      slot(name="label" v-if="$slots.label")
+      template(v-else-if="label")
+        span {{ label }}
     div(
       v-if="action",
       :class="styles.Action"
@@ -56,6 +58,8 @@ interface LabelledProps {
   error?: Error;
   /** An action */
   action?: Action;
+  /** Label: Overriden by slot */
+  label?: string;
   /** Visually hide the label */
   labelHidden?: boolean;
   /** Visual required indicator for the label */
