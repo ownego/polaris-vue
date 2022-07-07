@@ -13,8 +13,8 @@ export function useRowHovered() {
 }
 
 export function useRowSelected() {
-  const { selected } = inject<RowContextType>('RowContext', {});
-  return selected;
+  const context = inject<ComputedRef<RowContextType>>('RowContext', {} as any);
+  return context.value.selected;
 }
 
 export function useContainerScroll() {

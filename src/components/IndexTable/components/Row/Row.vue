@@ -1,6 +1,6 @@
 <template lang="pug">
 component(
-  :is="condensed ? 'li' : 'tr'",
+  :is="RowWrapper",
   :key="id",
   :class="rowClassName",
   @mouseenter="setHoverIn",
@@ -92,20 +92,20 @@ const tableRowCallbackRef = () => {
 
 const rowClassName = computed(() => classNames(
   styles.TableRow,
-  selectable && condensed && styles.condensedRow,
+  selectable.value && condensed?.value && styles.condensedRow,
   props.selected && styles['TableRow-selected'],
   props.subdued && styles['TableRow-subdued'],
   hovered.value && styles['TableRow-hovered'],
   props.status && styles[variationName('status', props.status)],
-  !selectable &&
+  !selectable.value &&
     !primaryLinkElement.value &&
     styles['TableRow-unclickable'],
 ));
 
-const RowWrapper = computed(() => condensed ? 'li' : 'tr');
+const RowWrapper = computed(() => condensed?.value ? 'li' : 'tr');
 
 const handleRowClick = (event: Event) => {
-  if (!selectable && !primaryLinkElement.value) {
+  if (!selectable.value && !primaryLinkElement.value) {
     return;
   }
 
@@ -121,7 +121,7 @@ const handleRowClick = (event: Event) => {
     return;
   }
 
-  if (primaryLinkElement.value && !selectMode) {
+  if (primaryLinkElement.value && !selectMode.value) {
     isNavigating.value = true;
     const { ctrlKey, metaKey } = event as KeyboardEvent;
 

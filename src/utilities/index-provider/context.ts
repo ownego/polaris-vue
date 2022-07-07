@@ -19,7 +19,7 @@ export interface IndexContextType {
 }
 
 export interface IndexRowContextType {
-  selectable: boolean;
-  selectMode: boolean;
-  condensed?: boolean;
+  selectable: Ref<boolean>;
+  selectMode: ComputedRef<boolean>;
+  condensed?: Ref<boolean | undefined>;
 }

@@ -161,9 +161,9 @@ provide<IndexContextType>('IndexContext', {
 });
 
 provide<IndexRowContextType>('IndexRowContext', {
-  selectable: props.selectable,
-  selectMode: selectMode.value && props.selectable,
-  condensed: props.condensed,
+  selectable: toRef(props, 'selectable'),
+  selectMode: selectModeRef,
+  condensed: toRef(props, 'condensed'),
 });
 
 provide('IndexSelectionChangeContext', handleSelectionChange);
