@@ -78,7 +78,6 @@ const onSelectionChange = (
   toggleType: boolean,
   selection?: string | Range,
 ) => {
-  console.log('table', selectionType, toggleType, selection);
   emits('selection-change', selectionType, toggleType, selection);
 }
 

@@ -2,10 +2,9 @@ import { ref, computed, inject } from 'vue';
 import type { ComputedRef } from 'vue';
 import { UseI18n } from '@/use';
 
-import { SelectionType, SELECT_ALL_ITEMS } from './types';
+import { SelectionType } from './types';
 
 import type {
-  BulkSelectionDataOptions,
   HandleBulkSelectionOptions,
   HandleSelectionChange,
   Range,

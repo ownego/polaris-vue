@@ -87,7 +87,6 @@ export function useIndexResourceState<T extends {[key: string]: unknown}>(
         })();
         break;
       }
-      console.log(1, selectionType, selectedResources.value);
     }
 
   const clearSelection = () => {
