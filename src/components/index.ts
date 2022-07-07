@@ -43,6 +43,8 @@ export * from './Grid';
 export * from './Heading';
 export * from './Icon';
 export * from './Image';
+export * from './IndexProvider';
+export * from './IndexTable';
 export * from './Indicator';
 export * from './InlineError';
 export * from './KeyboardKey';
