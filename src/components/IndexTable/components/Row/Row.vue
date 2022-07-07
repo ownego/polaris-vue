@@ -19,7 +19,6 @@ import { classNames, variationName } from 'polaris/polaris-react/src/utilities/c
 import {
   useIndexRow,
   useIndexSelectionChange,
-  SelectionType,
 } from '@/utilities/index-provider';
 import type { RowContextType } from '@/utilities/index-table';
 import { Checkbox } from '../Checkbox';
@@ -76,8 +75,8 @@ const handleInteraction = (event: MouseEvent | KeyboardEvent) => {
   }
 
   const selectionType = event.shiftKey
-    ? SelectionType.Multi
-    : SelectionType.Single;
+    ? 'multi'
+    : 'single';
 
   onSelectionChange(selectionType, !props.selected, props.id, props.position);
 };

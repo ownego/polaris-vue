@@ -6,3 +6,10 @@ export function getTableHeadingsBySelector(
     ? Array.from(wrapperElement.querySelectorAll<HTMLElement>(selector))
     : [];
 }
+
+export interface IndexTableHeading {
+  title: string;
+  flush?: boolean;
+  new?: boolean;
+  hidden?: boolean;
+}

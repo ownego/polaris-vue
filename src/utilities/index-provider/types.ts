@@ -2,12 +2,7 @@ export type IndexSelectedItems = string[] | 'All';
 
 export const SELECT_ALL_ITEMS = 'All';
 
-export enum SelectionType {
-  All = 'all',
-  Page = 'page',
-  Multi = 'multi',
-  Single = 'single',
-}
+export type SelectionType = 'all' | 'page' | 'multi' | 'single';
 
 export type Range = [number, number];
 

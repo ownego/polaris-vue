@@ -6,6 +6,7 @@ export enum SelectionType {
   Multi = 'multi',
   Single = 'single',
 }
+
 type Range = [number, number];
 type ResourceIDResolver<T extends {[key: string]: unknown}> = (
   resource: T,

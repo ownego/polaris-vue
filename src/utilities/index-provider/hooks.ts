@@ -1,8 +1,6 @@
-import { ref, computed, inject } from 'vue';
-import type { ComputedRef } from 'vue';
-import { UseI18n } from '@/use';
+import { ref, inject } from 'vue';
 
-import { SelectionType } from './types';
+import type { SelectionType } from './types';
 
 import type {
   HandleBulkSelectionOptions,
@@ -60,23 +58,23 @@ export function useHandleBulkSelection({
   ) => {
     const prevSelected = lastSelected.value;
 
-    if (SelectionType.Multi && typeof sortOrder === 'number') {
+    if (selectionType === 'multi' && typeof sortOrder === 'number') {
       lastSelected.value = sortOrder;
     }
 
     if (
-      selectionType === SelectionType.Single ||
-      (selectionType === SelectionType.Multi &&
+      selectionType === 'single' ||
+      (selectionType === 'multi' &&
         (typeof prevSelected !== 'number' || typeof sortOrder !== 'number'))
     ) {
-      onSelectionChange(SelectionType.Single, toggleType, selection);
-    } else if (selectionType === SelectionType.Multi) {
+      onSelectionChange('single', toggleType, selection);
+    } else if (selectionType === 'multi') {
       const min = Math.min(prevSelected as number, sortOrder as number);
       const max = Math.max(prevSelected as number, sortOrder as number);
       onSelectionChange(selectionType, toggleType, [min, max]);
     } else if (
-      selectionType === SelectionType.Page ||
-      selectionType === SelectionType.All
+      selectionType === 'page' ||
+      selectionType === 'all'
     ) {
       onSelectionChange(selectionType, toggleType);
     }

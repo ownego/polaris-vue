@@ -280,6 +280,7 @@ import {
   EmptySearchResult,
   EventListener,
   Stack,
+  StackItem,
   Sticky,
   Spinner,
   VisuallyHidden,
@@ -290,20 +291,12 @@ import {
   useIndexValue,
   useIndexSelectionChange,
   SELECT_ALL_ITEMS,
-  SelectionType,
 } from '@/utilities/index-provider';
-import type { Range } from '@/utilities/index-provider';
 import type { BulkActionsProps } from '../BulkActions/utils';
 import { ScrollContainer } from './components';
 import { getTableHeadingsBySelector } from './utils';
+import type { IndexTableHeading } from './utils';
 import styles from '@/classes/IndexTable.json';
-
-interface IndexTableHeading {
-  title: string;
-  flush?: boolean;
-  new?: boolean;
-  hidden?: boolean;
-}
 
 interface IndexTableBaseProps {
   headings: IndexTableHeading[];
@@ -326,15 +319,6 @@ const SMALL_SCREEN_WIDTH = 458;
 const props = withDefaults(defineProps<IndexTableBaseProps>(), {
   lastColumnSticky: false,
 });
-
-const emits = defineEmits<{
-  (
-    e: 'selection-change',
-    selectionType: SelectionType,
-    toggleType: boolean,
-    selection?: string | Range,
-  ): void;
-}>();
 
 const slots = useSlots();
 
@@ -404,8 +388,8 @@ const toggleIsSmallScreenSelectable = () => {
 const handleSelectAllItemsInStore = () => {
   handleSelectionChange(
     selectedItemsCount.value === SELECT_ALL_ITEMS
-      ? SelectionType.Page
-      : SelectionType.All,
+      ? 'page'
+      : 'all',
     true,
   );
 };
@@ -638,7 +622,7 @@ const selectedItemsCountLabel = computed(() =>
 
 const handleTogglePage = () => {
   handleSelectionChange(
-    SelectionType.Page,
+    'page',
     Boolean(!bulkSelectState?.value || bulkSelectState?.value === 'indeterminate'),
   );
 };
@@ -748,7 +732,7 @@ const tableClassNames = computed(() => classNames(
 
 const handleSelectModeToggle = (val: boolean) => {
   if (condensed?.value) {
-    handleSelectionChange(SelectionType.All, false);
+    handleSelectionChange('all', false);
     isSmallScreenSelectable.value = val;
   }
 };
@@ -791,7 +775,7 @@ const checkboxClassName = (index: number) => {
 const handleSelectPage = (event: Event) => {
   const target = event.target as HTMLInputElement;
 
-  handleSelectionChange(SelectionType.Page, target.checked || false);
+  handleSelectionChange('page', target.checked || false);
 }
 
 const renderStickyHeading = (index: number) => {
