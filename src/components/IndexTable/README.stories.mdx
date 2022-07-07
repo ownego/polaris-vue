@@ -1,0 +1,673 @@
+import dedent from 'ts-dedent';
+import { Meta, Story, Canvas, ArgsTable } from '@storybook/addon-docs';
+
+import { IndexTable, IndexTableCell, IndexTableRow, Card, useIndexResourceState, TextStyle, TextField, Select, Filters } from '@/polaris-vue';
+import { ref, computed } from 'vue';
+
+<Meta
+  title="Components / Lists and tables / Index table"
+  component={ IndexTable }
+  argTypes={{
+    default: {
+      table: {
+        disable: true,
+      },
+    },
+    bulkActions: {
+      table: {
+        type: { summary: '(BulkAction | BulkActionListSection)[]' },
+      },
+    },
+    headings: {
+      table: {
+        type: { summary: 'IndexTableHeading[]' },
+      },
+    },
+    promotedBulkActions: {
+      table: {
+        type: { summary: '(BulkAction | MenuGroupDescriptor)[]' },
+      },
+    },
+    selectedItemsCount: {
+      control: { disable: true },
+      table: {
+        type: { summary: '"All" | number' },
+      },
+    },
+    'selection-change': {
+      control: { disable: true },
+      table: {
+        type: { summary: '(selectionType: SelectionType, toggleType: boolean, selection?: string | Range): void' },
+      },
+    },
+    emptyState: {
+      description: 'The markup to display when no resources exist yet. Renders when set and items is empty.',
+      control: { disable: true },
+      table: {
+        type: { summary: null },
+      },
+    },
+    sort: {
+      description: 'The markup to display sort controls. Only available for `condensed` layout.',
+      control: { disable: true },
+      table: {
+        type: { summary: null },
+      },
+    },
+  }}
+/>
+
+# Index table
+
+An index table displays a collection of objects of the same type, like orders or products. The main job of an index table is to help merchants get an at-a-glance of the objects to perform actions or navigate to a full-page representation of it.
+
+export const Template1 = (args) => ({
+  components: { IndexTable, IndexTableCell, IndexTableRow, Card, TextStyle },
+  setup() {
+    const customers = [
+      {
+        id: "3411",
+        url: "customers/341",
+        name: "Mae Jemison",
+        location: "Decatur, USA",
+        orders: 20,
+        amountSpent: "$2,400",
+      },
+      {
+        id: "2561",
+        url: "customers/256",
+        name: "Ellen Ochoa",
+        location: "Los Angeles, USA",
+        orders: 30,
+        amountSpent: "$140",
+        status: 'success',
+      },
+    ];
+    const { selectedResources, allResourcesSelected, handleSelectionChange } =
+      useIndexResourceState(customers);
+    return { args, customers, selectedResources, allResourcesSelected, handleSelectionChange };
+  },
+  template: `
+    <Card>
+      <IndexTable
+        v-bind="args"
+        :item-count="customers.length"
+        :selectedItemsCount="allResourcesSelected ? 'All' : selectedResources.length"
+        lastColumnSticky
+        @selection-change="handleSelectionChange"
+      >
+        <IndexTableRow
+          v-for="{ id, name, status, location, orders, amountSpent }, index in customers"
+          :key="id"
+          :id="id"
+          :selected="selectedResources.includes(id)"
+          :position="index"
+          :status="status"
+        >
+          <IndexTableCell>
+            <TextStyle variation="strong">{{name}}</TextStyle>
+          </IndexTableCell>
+          <IndexTableCell>{{location}}</IndexTableCell>
+          <IndexTableCell>{{orders}}</IndexTableCell>
+          <IndexTableCell>{{amountSpent}}</IndexTableCell>
+        </IndexTableRow>
+      </IndexTable>
+    </Card>
+  `,
+});
+
+<br/>
+
+### Simple index table with some extra props
+
+<Canvas>
+  <Story
+    name="Simple"
+    height="200px"
+    inline={false}
+    args={{
+      headings: [
+        { title: 'Name' },
+        { title: 'Location' },
+        { title: 'Order count' },
+        { title: 'Amount spent' },
+      ],
+      promotedBulkActions: [
+        {
+          content: 'Edit customers',
+          onAction: () => console.log('Todo: implement bulk edit'),
+        }
+      ],
+      bulkActions: [
+        {
+          content: 'Add tags',
+          onAction: () => console.log('Todo: implement bulk add tags'),
+        },
+        {
+          content: 'Remove tags',
+          onAction: () => console.log('Todo: implement bulk remove tags'),
+        },
+        {
+          content: 'Delete customers',
+          onAction: () => console.log('Todo: implement bulk delete'),
+        },
+      ],
+      resourceName: {
+        singular: "customer",
+        plural: "customers",
+      },
+    }}
+    parameters = {{
+      docs: {
+        source: {
+          state: 'close',
+          code: dedent`
+            <Card>
+              <IndexTable
+                :resourceName="resourceName"
+                :item-count="customers.length"
+                :bulkActions="bulkActions"
+                :promotedBulkActions="promotedBulkActions"
+                :selectedItemsCount="allResourcesSelected ? 'All' : selectedResources.length"
+                :headings="headings"
+                lastColumnSticky
+                @selection-change="handleSelectionChange"
+              >
+                <IndexTableRow
+                  v-for="{ id, name, status, location, orders, amountSpent }, index in customers"
+                  :key="id"
+                  :id="id"
+                  :selected="selectedResources.includes(id)"
+                  :position="index"
+                  :status="status"
+                >
+                  <IndexTableCell>
+                    <TextStyle variation="strong">{{name}}</TextStyle>
+                  </IndexTableCell>
+                  <IndexTableCell>{{location}}</IndexTableCell>
+                  <IndexTableCell>{{orders}}</IndexTableCell>
+                  <IndexTableCell>{{amountSpent}}</IndexTableCell>
+                </IndexTableRow>
+              </IndexTable>
+            </Card>\n
+            <script setup>
+              const headings = [
+                { title: 'Name' },
+                { title: 'Location' },
+                { title: 'Order count' },
+                { title: 'Amount spent' },
+              ];\n
+              const customers = [
+                {
+                  id: "3411",
+                  url: "customers/341",
+                  name: "Mae Jemison",
+                  location: "Decatur, USA",
+                  orders: 20,
+                  amountSpent: "$2,400",
+                },
+                {
+                  id: "2561",
+                  url: "customers/256",
+                  name: "Ellen Ochoa",
+                  location: "Los Angeles, USA",
+                  orders: 30,
+                  amountSpent: "$140",
+                  status: 'success',
+                },
+              ];\n
+              const promotedBulkActions = [
+                {
+                  content: 'Edit customers',
+                  onAction: () => console.log('Todo: implement bulk edit'),
+                },
+              ];\n
+              const bulkActions = [
+                {
+                  content: 'Add tags',
+                  onAction: () => console.log('Todo: implement bulk add tags'),
+                },
+                {
+                  content: 'Remove tags',
+                  onAction: () => console.log('Todo: implement bulk remove tags'),
+                },
+                {
+                  content: 'Delete customers',
+                  onAction: () => console.log('Todo: implement bulk delete'),
+                },
+              ];\n
+              const resourceName = {
+                singular: "customer",
+                plural: "customers",
+              };\n
+              const { selectedResources, allResourcesSelected, handleSelectionChange } =
+                useIndexResourceState(customers);
+            </script>
+          `,
+        },
+      },
+    }}
+  >
+    {Template1.bind({})}
+  </Story>
+</Canvas>
+
+export const Template = (args) => ({
+  components: { IndexTable, IndexTableCell, IndexTableRow, Card, TextStyle, TextField, Select, Filters },
+  setup() {
+    const customers = [
+      {
+        id: "3411",
+        url: "customers/341",
+        name: "Mae Jemison",
+        location: "Decatur, USA",
+        orders: 20,
+        amountSpent: "$2,400",
+      },
+      {
+        id: "2561",
+        url: "customers/256",
+        name: "Ellen Ochoa",
+        location: "Los Angeles, USA",
+        orders: 30,
+        amountSpent: "$140",
+        status: 'success',
+      },
+    ];
+    const { selectedResources, allResourcesSelected, handleSelectionChange } =
+      useIndexResourceState(customers);
+    const taggedWith = ref('VIP');
+    const queryValue = ref(null);
+    const sortValue = ref('today');
+    const handleTaggedWithChange = (value) => { taggedWith.value = value };
+    const handleTaggedWithRemove = () => { taggedWith.value = null };
+    const handleQueryValueRemove = () => { queryValue.value = null };
+    const handleSortChange = (value) => { sortValue.value = value };
+    const handleClearAll = () => {
+      handleTaggedWithRemove();
+      handleQueryValueRemove();
+    };
+    const filters = [
+      {
+        key: "taggedWith",
+        label: "Tagged with",
+        shortcut: true,
+      },
+    ];
+    const appliedFilters = computed(() => {
+      return !isEmpty(taggedWith.value)
+      ? [
+          {
+            key: "taggedWith",
+            label: disambiguateLabel("taggedWith", taggedWith.value),
+            onRemove: handleTaggedWithRemove,
+          },
+        ]
+      : [];
+    });
+    const sortOptions = [
+      { label: "Today", value: "today" },
+      { label: "Yesterday", value: "yesterday" },
+      { label: "Last 7 days", value: "lastWeek" },
+    ];
+    function disambiguateLabel(key, value) {
+      switch (key) {
+        case "taggedWith":
+          return `Tagged with ${value}`;
+        default:
+          return value;
+      }
+    }
+    function isEmpty(value) {
+      if (Array.isArray(value)) {
+        return value.length === 0;
+      } else {
+        return value === "" || value == null;
+      }
+    }
+    return { args, customers, selectedResources, allResourcesSelected, handleSelectionChange, taggedWith, queryValue, sortValue, handleTaggedWithChange, handleTaggedWithRemove, handleQueryValueRemove, handleSortChange, handleClearAll, filters, appliedFilters, sortOptions };
+  },
+  template: `
+    <Card>
+      <div :style="{ padding: '16px', display: 'flex' }">
+        <div :style="{ flex: 1 }">
+          <Filters
+            :queryValue="queryValue"
+            :filters="filters"
+            :appliedFilters="appliedFilters"
+            v-model="queryValue"
+            @query-clear="handleQueryValueRemove"
+            @clear-all="handleClearAll"
+          >
+            <template #filter-taggedWith>
+              <TextField
+                label="Tagged with"
+                v-model="taggedWith"
+                autoComplete="off"
+                labelHidden
+              />
+            </template>
+          </Filters>
+        </div>
+        <div :style="{ paddingLeft: '0.25rem' }">
+          <Select
+            labelInline
+            :options="sortOptions"
+            v-model="sortValue"
+            @change="handleSortChange"
+          >
+            <template #label>Sort by</template>
+          </Select>
+        </div>
+      </div>
+      <IndexTable
+        v-bind="args"
+        :item-count="customers.length"
+        :selectedItemsCount="allResourcesSelected ? 'All' : selectedResources.length"
+        lastColumnSticky
+        @selection-change="handleSelectionChange"
+      >
+        <IndexTableRow
+          v-for="{ id, name, status, location, orders, amountSpent }, index in customers"
+          :key="id"
+          :id="id"
+          :selected="selectedResources.includes(id)"
+          :position="index"
+          :status="status"
+        >
+          <IndexTableCell>
+            <TextStyle variation="strong">{{name}}</TextStyle>
+          </IndexTableCell>
+          <IndexTableCell>{{location}}</IndexTableCell>
+          <IndexTableCell>{{orders}}</IndexTableCell>
+          <IndexTableCell>{{amountSpent}}</IndexTableCell>
+        </IndexTableRow>
+      </IndexTable>
+    </Card>
+  `,
+});
+
+<br/>
+
+### Index table with all of its elements
+
+Use as a broad example that includes most of the elements and props available to index table.
+
+<Canvas>
+  <Story
+    name="Index table"
+    height="350px"
+    inline={false}
+    args={{
+      headings: [
+        { title: 'Name' },
+        { title: 'Location' },
+        { title: 'Order count' },
+        { title: 'Amount spent', hidden: false },
+      ],
+      promotedBulkActions: [
+        {
+          content: 'Edit customers',
+          onAction: () => console.log('Todo: implement bulk edit'),
+        }
+      ],
+      bulkActions: [
+        {
+          content: 'Add tags',
+          onAction: () => console.log('Todo: implement bulk add tags'),
+        },
+        {
+          content: 'Remove tags',
+          onAction: () => console.log('Todo: implement bulk remove tags'),
+        },
+        {
+          content: 'Delete customers',
+          onAction: () => console.log('Todo: implement bulk delete'),
+        },
+      ],
+      resourceName: {
+        singular: "customer",
+        plural: "customers",
+      },
+    }}
+    parameters = {{
+      docs: {
+        source: {
+          state: 'close',
+          code: dedent`
+            <Card>
+              <div :style="{ padding: '16px', display: 'flex' }">
+                <div :style="{ flex: 1 }">
+                  <Filters
+                    :queryValue="queryValue"
+                    :filters="filters"
+                    :appliedFilters="appliedFilters"
+                    v-model="queryValue"
+                    @query-clear="handleQueryValueRemove"
+                    @clear-all="handleClearAll"
+                  >
+                    <template #filter-taggedWith>
+                      <TextField
+                        label="Tagged with"
+                        v-model="taggedWith"
+                        autoComplete="off"
+                        labelHidden
+                      />
+                    </template>
+                  </Filters>
+                </div>
+                <div :style="{ paddingLeft: '0.25rem' }">
+                  <Select
+                    labelInline
+                    :options="sortOptions"
+                    v-model="sortValue"
+                    @change="handleSortChange"
+                  >
+                    <template #label>Sort by</template>
+                  </Select>
+                </div>
+              </div>
+              <IndexTable
+                v-bind="args"
+                :item-count="customers.length"
+                :selectedItemsCount="allResourcesSelected ? 'All' : selectedResources.length"
+                lastColumnSticky
+                @selection-change="handleSelectionChange"
+              >
+                <IndexTableRow
+                  v-for="{ id, name, status, location, orders, amountSpent }, index in customers"
+                  :key="id"
+                  :id="id"
+                  :selected="selectedResources.includes(id)"
+                  :position="index"
+                  :status="status"
+                >
+                  <IndexTableCell>
+                    <TextStyle variation="strong">{{name}}</TextStyle>
+                  </IndexTableCell>
+                  <IndexTableCell>{{location}}</IndexTableCell>
+                  <IndexTableCell>{{orders}}</IndexTableCell>
+                  <IndexTableCell>{{amountSpent}}</IndexTableCell>
+                </IndexTableRow>
+              </IndexTable>
+            </Card>\n
+            <script setup>
+              const promotedBulkActions = [
+                {
+                  content: 'Edit customers',
+                  onAction: () => console.log('Todo: implement bulk edit'),
+                },
+              ];\n
+              const bulkActions = [
+                {
+                  content: 'Add tags',
+                  onAction: () => console.log('Todo: implement bulk add tags'),
+                },
+                {
+                  content: 'Remove tags',
+                  onAction: () => console.log('Todo: implement bulk remove tags'),
+                },
+                {
+                  content: 'Delete customers',
+                  onAction: () => console.log('Todo: implement bulk delete'),
+                },
+              ];\n
+              const headings = [
+                { title: 'Name' },
+                { title: 'Location' },
+                { title: 'Order count' },
+                { title: 'Amount spent' },
+              ];\n
+              const customers = [
+                {
+                  id: "3411",
+                  url: "customers/341",
+                  name: "Mae Jemison",
+                  location: "Decatur, USA",
+                  orders: 20,
+                  amountSpent: "$2,400",
+                },
+                {
+                  id: "2561",
+                  url: "customers/256",
+                  name: "Ellen Ochoa",
+                  location: "Los Angeles, USA",
+                  orders: 30,
+                  amountSpent: "$140",
+                  status: 'success',
+                },
+              ];\n
+              const resourceName = {
+                singular: "customer",
+                plural: "customers",
+              };\n
+              const { selectedResources, allResourcesSelected, handleSelectionChange } =
+                useIndexResourceState(customers);\n
+              const taggedWith = ref('VIP');
+              const queryValue = ref(null);
+              const sortValue = ref('today');\n
+              const handleTaggedWithChange = (value) => { taggedWith.value = value };
+              const handleTaggedWithRemove = () => { taggedWith.value = null };
+              const handleQueryValueRemove = () => { queryValue.value = null };
+              const handleSortChange = (value) => { sortValue.value = value };
+              const handleClearAll = () => {
+                handleTaggedWithRemove();
+                handleQueryValueRemove();
+              };\n
+              const filters = [
+                {
+                  key: "taggedWith",
+                  label: "Tagged with",
+                  shortcut: true,
+                },
+              ];\n
+              const appliedFilters = computed(() => {
+                return !isEmpty(taggedWith.value)
+                ? [
+                    {
+                      key: "taggedWith",
+                      label: disambiguateLabel("taggedWith", taggedWith.value),
+                      onRemove: handleTaggedWithRemove,
+                    },
+                  ]
+                : [];
+              });\n
+              const sortOptions = [
+                { label: "Today", value: "today" },
+                { label: "Yesterday", value: "yesterday" },
+                { label: "Last 7 days", value: "lastWeek" },
+              ];\n
+              function disambiguateLabel(key, value) {
+                switch (key) {
+                  case "taggedWith":
+                    return \`Tagged with \${value}\`;
+                  default:
+                    return value;
+                }
+              }\n
+              function isEmpty(value) {
+                if (Array.isArray(value)) {
+                  return value.length === 0;
+                } else {
+                  return value === "" || value == null;
+                }
+              }
+            </script>
+          `,
+        },
+      },
+    }}
+  >
+    {Template.bind({})}
+  </Story>
+</Canvas>
+
+<ArgsTable story="Index table" />
+
+---
+<br/>
+
+### **BulkAction Props**
+
+`type BulkAction = DisableableAction & BadgeAction`
+
+| Prop             | Type                          | Description     |
+| ---------------- | ----------------------------- | --------------- |
+| id?              | String               | A unique identifier for the action. |
+| content?         | String               | Content the action displays. |
+| accessibilityLabel?  | String           | Visually hidden text for screen readers. |
+| url?             | String               | A destination to link to, rendered in the action. |
+| external?        | String               | Forces url to open in a new tab. |
+| disabled?        | Boolean              | Whether or not the action is disabled. |
+| badge?           | { status, content }  | Show badge beside the action. |
+| onAction?()      | void                 | Callback when an action takes place. |
+| onMouseEnter?()  | void                 | Callback when mouse enter. |
+| onTouchStart?()  | void                 | Callback when element is touched. |
+
+<br/>
+
+`type BulkActionListSection = ActionListSection`
+
+See more in [ActionList](./?path=/docs/components-actions-action-list--action-list) component
+
+<br/>
+
+---
+<br/>
+
+### **IndexTableHeading**
+
+| Prop             | Type                          | Description     |
+| ---------------- | ----------------------------- | --------------- |
+| title            | String               | Title of the heading. |
+| flush?           | Boolean              | Show the heading without padding |
+| new?             | Boolean              | Display NEW badge beside the title. |
+| hidden           | Boolean              | Hide the heading title on table. |
+
+---
+<br/>
+
+### **MenuGroupDescriptor Props**
+
+```js
+interface MenuGroupDescriptor {
+  badge?: {
+    status: 'new';
+    content: string;
+  };
+  /** Menu group title */
+  title: string;
+  /** List of actions */
+  actions: ActionListItemDescriptor[];
+  /** Icon to display */
+  icon?: IconableAction['icon'];
+  /** Disables action button */
+  disabled?: boolean;
+  /** Zero-indexed numerical position. Overrides the group's order in the menu. */
+  index?: number;
+  /** Visually hidden menu description for screen readers */
+  accessibilityLabel?: string;
+  /** Whether or not the menu is open */
+  active?: boolean;
+}
+```
