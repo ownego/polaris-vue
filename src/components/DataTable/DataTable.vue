@@ -216,7 +216,6 @@ div(:class="wrapperClassName")
           tr(
             v-for="row, index in rows",
             :key="`row-${index}`",
-            v-memo="[ condensed, showTotalsInFooter, columnVisibilityData, columnContentTypes, hideScrollIndicator, hasFixedFirstColumn, truncate, verticalAlign, row]",
             :class="tableRowClassName",
             @mouseenter="handleHover(index)",
             @mouseleave="handleHover()",
@@ -224,6 +223,7 @@ div(:class="wrapperClassName")
             Cell(
               v-for="content, cellIndex in row",
               :key="`cell-${cellIndex}-row-${index}`",
+              v-memo="[ condensed, showTotalsInFooter, columnVisibilityData, columnContentTypes, hideScrollIndicator, hasFixedFirstColumn, truncate, verticalAlign]",
               :contentType="columnContentTypes[cellIndex]",
               :firstColumn="cellIndex === 0",
               :truncate="truncate",
