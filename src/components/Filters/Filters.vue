@@ -320,9 +320,8 @@ const buttonClassName = classNames(styles.FilterTrigger);
 const transformedFilters = computed(() => transformFilters(props.filters));
 
 const hasAppliedFilters = computed<boolean>(() => {
-  const {appliedFilters, modelValue} = props;
-  const filtersApplied = Boolean(appliedFilters && appliedFilters.length > 0);
-  const queryApplied = Boolean(modelValue && modelValue !== '');
+  const filtersApplied = Boolean(props.appliedFilters && props.appliedFilters.length > 0);
+  const queryApplied = Boolean(props.modelValue && props.modelValue !== '');
 
   return filtersApplied || queryApplied;
 });
