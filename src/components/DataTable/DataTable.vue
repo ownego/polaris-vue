@@ -2,12 +2,12 @@
 div(:class="wrapperClassName")
   TableNavigation(
     v-if="!hideScrollIndicator",
-    :columnVisibilityData="state.columnVisibilityData",
-    :isScrolledFarthestLeft="state.isScrolledFarthestLeft",
-    :isScrolledFarthestRight="state.isScrolledFarthestRight",
-    :navigateTableLeft="navigateTable('left')",
-    :navigateTableRight="navigateTable('right')",
+    :columnVisibilityData="columnVisibilityData",
+    :isScrolledFarthestLeft="isScrolledFarthestLeft",
+    :isScrolledFarthestRight="isScrolledFarthestRight",
     :fixedFirstColumn="hasFixedFirstColumn",
+    @navigate-table-left="navigateTable('left')",
+    @navigate-table-right="navigateTable('right')",
   )
   div(:class="className", ref="dataTable")
     div(
@@ -23,12 +23,12 @@ div(:class="wrapperClassName")
           div
             TableNavigation(
               v-if="!hideScrollIndicator",
-              :columnVisibilityData="state.columnVisibilityData",
-              :isScrolledFarthestLeft="state.isScrolledFarthestLeft",
-              :isScrolledFarthestRight="state.isScrolledFarthestRight",
-              :navigateTableLeft="navigateTable('left')",
-              :navigateTableRight="navigateTable('right')",
+              :columnVisibilityData="columnVisibilityData",
+              :isScrolledFarthestLeft="isScrolledFarthestLeft",
+              :isScrolledFarthestRight="isScrolledFarthestRight",
               :fixedFirstColumn="hasFixedFirstColumn",
+              @navigate-table-left="navigateTable('left')",
+              @navigate-table-right="navigateTable('right')",
             )
           tr(
             :class="styles.StickyTableHeadingsRow",
@@ -36,7 +36,7 @@ div(:class="wrapperClassName")
           )
             table(
               v-if="hasFixedFirstColumn",
-              :class="classNames(!state.isScrolledFarthestLeft && styles.separate, styles.FixedFirstColumn)",
+              :class="classNames(!isScrolledFarthestLeft && styles.separate, styles.FixedFirstColumn)",
             )
               thead
                 tr
@@ -79,9 +79,10 @@ div(:class="wrapperClassName")
         :handler="scrollListener",
       )
       table(
-        v-if="state.condensed && hasFixedFirstColumn",
+        v-if="condensed && hasFixedFirstColumn",
+        v-memo="[ condensed, showTotalsInFooter, columnVisibilityData, columnContentTypes, hideScrollIndicator, hasFixedFirstColumn, truncate, verticalAlign]",
         :class="fixedFirstColumnClassName",
-        :style="{ maxWidth: `${state.columnVisibilityData[0].rightEdge}px` }",
+        :style="{ maxWidth: `${columnVisibilityData[0].rightEdge}px` }",
       )
         thead
           tr
@@ -128,19 +129,19 @@ div(:class="wrapperClassName")
             v-for="row, index in firstColumn",
             :key="`row-${index}`",
             :class="tableRowClassName",
+            v-memo="[ condensed, showTotalsInFooter, columnVisibilityData, columnContentTypes, hideScrollIndicator, hasFixedFirstColumn, truncate, verticalAlign, row]",
             @mouseenter="handleHover(index)",
             @mouseleave="handleHover()",
           )
             Cell(
               v-for="content, cellIndex in row",
               :key="`cell-${cellIndex}-row-${index}`",
-              content={content}
               :contentType="columnContentTypes[cellIndex]",
               :firstColumn="cellIndex === 0",
               :truncate="truncate",
               :verticalAlign="verticalAlign",
               :colSpan="getColSpan(row.length, headings.length, columnContentTypes.length, cellIndex)",
-              :hovered="index === state.rowHovered",
+              :hovered="index === rowHovered",
               :inFixedFirstColumn="true",
             )
               template(v-if="hasSlot(slots[`cell-${cellIndex}-row-${index}`])")
@@ -215,6 +216,7 @@ div(:class="wrapperClassName")
           tr(
             v-for="row, index in rows",
             :key="`row-${index}`",
+            v-memo="[ condensed, showTotalsInFooter, columnVisibilityData, columnContentTypes, hideScrollIndicator, hasFixedFirstColumn, truncate, verticalAlign, row]",
             :class="tableRowClassName",
             @mouseenter="handleHover(index)",
             @mouseleave="handleHover()",
@@ -227,7 +229,7 @@ div(:class="wrapperClassName")
               :truncate="truncate",
               :verticalAlign="verticalAlign",
               :colSpan="getColSpan(row.length, headings.length, columnContentTypes.length, cellIndex)",
-              :hovered="index === state.rowHovered",
+              :hovered="index === rowHovered",
               :inFixedFirstColumn="false",
             )
               template(v-if="hasSlot(slots[`cell-${cellIndex}-row-${index}`])")
@@ -265,7 +267,7 @@ div(:class="wrapperClassName")
 </template>
 
 <script setup lang="ts">
-import { ref, computed, reactive, onMounted, watch, onBeforeUnmount, useSlots } from 'vue';
+import { ref, computed, onMounted, onBeforeUnmount, useSlots, watch, toRaw } from 'vue';
 import { debounce } from 'polaris/polaris-react/src/utilities/debounce';
 import { classNames } from 'polaris/polaris-react/src/utilities/css';
 import { headerCell } from 'polaris/polaris-react/src/components/shared';
@@ -354,14 +356,6 @@ const emits = defineEmits<{
   (e: 'sort', headingIndex: number, direction: SortDirection): void;
 }>();
 
-const state = reactive<DataTableState>({
-  condensed: false,
-  columnVisibilityData: [],
-  isScrolledFarthestLeft: true,
-  isScrolledFarthestRight: false,
-  rowHovered: undefined,
-});
-
 const isMounted = ref(false);
 const dataTable = ref<HTMLDivElement | null>(null);
 const scrollContainer = ref<HTMLDivElement | null>(null);
@@ -373,28 +367,33 @@ const tableHeadingWidths = ref<number[]>([]);
 const stickyHeaderActive = ref(false);
 const scrollStopTimer = ref<ReturnType<typeof setTimeout> | null>(null);
 
+// DataTableState
+const condensed = ref(false);
+const columnVisibilityData = ref<DataTableState['columnVisibilityData']>([]);
+const previousColumn = ref<DataTableState['previousColumn']>(undefined);
+const currentColumn = ref<DataTableState['currentColumn']>(undefined);
+const sortedColumnIndex = ref<DataTableState['sortedColumnIndex']>(undefined);
+const sortDirection = ref<DataTableState['sortDirection']>(undefined);
+const isScrolledFarthestLeft = ref(true);
+const isScrolledFarthestRight = ref(false);
+const rowHovered = ref<number | undefined>(undefined);
+
 const handleResize = debounce(() => {
-  let condensed = false;
+  let tmpCondensed = false;
 
   if (table.value && scrollContainer.value) {
-    condensed = table.value.scrollWidth > scrollContainer.value.clientWidth;
+    tmpCondensed = table.value.scrollWidth > scrollContainer.value.clientWidth;
   }
 
-  setState(calculateColumnVisibilityData(condensed));
-  state.condensed = condensed;
-});
-
-const setState = (newState: Partial<DataTableState>) => {
-  Object.keys(newState).forEach((key) => {
-    state[key] = newState[key];
-  });
-};
+  calculateColumnVisibilityData(tmpCondensed);
+  condensed.value = tmpCondensed;
+}, 40, {trailing: true, leading: true, maxWait: 40});
 
 const rowCountIsEven = computed(() => props.rows.length % 2 === 0);
 
 const className = computed(() => classNames(
   styles.DataTable,
-  state.condensed && styles.condensed,
+  condensed.value && styles.condensed,
   props.totals && styles.ShowTotals,
   props.showTotalsInFooter && styles.ShowTotalsInFooter,
   props.hasZebraStripingOnData && styles.ZebraStripingOnData,
@@ -403,14 +402,14 @@ const className = computed(() => classNames(
 
 const wrapperClassName = computed(() => classNames(
   // styles.TableWrapper,
-  state.condensed && styles.condensed,
+  condensed.value && styles.condensed,
   props.increasedTableDensity && styles.IncreasedTableDensity,
   props.stickyHeader && styles.StickyHeaderEnabled,
 ));
 
 const fixedFirstColumnClassName = computed(() => classNames(
   styles.FixedFirstColumn,
-  !state.isScrolledFarthestLeft && styles.separate,
+  !isScrolledFarthestLeft.value && styles.separate,
 ));
 
 const firstColumn = computed(() => props.rows.map((row) => row.slice(0, 1)));
@@ -431,10 +430,10 @@ const tableHeadingProps = computed(() => {
     columnContentTypes: props.columnContentTypes,
     verticalAlign: props.verticalAlign,
     firstColumnMinWidth: props.firstColumnMinWidth,
-    sortDirection: state.sortDirection || props.defaultSortDirection,
+    sortDirection: sortDirection.value || props.defaultSortDirection,
     defaultSortDirection: props.defaultSortDirection,
-    sortedColumnIndex: state.sortedColumnIndex || props.initialSortColumnIndex,
-    isScrolledFarthestLeft: state.isScrolledFarthestLeft,
+    sortedColumnIndex: sortedColumnIndex.value || props.initialSortColumnIndex,
+    isScrolledFarthestLeft: isScrolledFarthestLeft.value,
     hasFixedFirstColumn: props.hasFixedFirstColumn,
   };
 });
@@ -443,13 +442,6 @@ onMounted(() => {
   isMounted.value = true;
   handleResize();
 });
-
-watch(
-  () => props,
-  () => {
-    handleResize();
-  },
-);
 
 onBeforeUnmount(() => {
   handleResize.cancel();
@@ -516,8 +508,8 @@ const changeHeadingFocus = () => {
   button.style.removeProperty('visibility');
 };
 
-const calculateColumnVisibilityData = (condensed: boolean) => {
-  if (condensed && table.value && scrollContainer.value && dataTable.value) {
+const calculateColumnVisibilityData = (tmpCondensed: boolean) => {
+  if (tmpCondensed && table.value && scrollContainer.value && dataTable.value) {
     const headerCells = table.value.querySelectorAll(headerCell.selector);
 
     const firstColumnWidth = props.hasFixedFirstColumn
@@ -535,37 +527,42 @@ const calculateColumnVisibilityData = (condensed: boolean) => {
         tableRightVisibleEdge,
       };
 
-      const columnVisibilityData = [...headerCells].map(
+      const tmpColumnVisibilityData = [...headerCells].map(
         measureColumn(tableData),
       );
 
-      const lastColumn = columnVisibilityData[columnVisibilityData.length - 1];
+      const lastColumn = tmpColumnVisibilityData[tmpColumnVisibilityData.length - 1];
 
-      const isScrolledFarthestLeft = props.hasFixedFirstColumn
+      const tmpIsScrolledFarthestLeft = props.hasFixedFirstColumn
         ? tableLeftVisibleEdge === firstColumnWidth
         : tableLeftVisibleEdge === 0;
 
-      return {
-        columnVisibilityData,
-        ...getPrevAndCurrentColumns(tableData, columnVisibilityData),
-        isScrolledFarthestLeft,
-        isScrolledFarthestRight: lastColumn.rightEdge <= tableRightVisibleEdge,
-      };
+      const {
+        previousColumn: tmpPreviousColumn,
+        currentColumn: tmpCurrentColumn,
+      } = getPrevAndCurrentColumns(tableData, tmpColumnVisibilityData);
+
+      // Set state
+      columnVisibilityData.value = tmpColumnVisibilityData;
+      isScrolledFarthestLeft.value = tmpIsScrolledFarthestLeft;
+      isScrolledFarthestRight.value = lastColumn.rightEdge <= tableRightVisibleEdge;
+      previousColumn.value = tmpPreviousColumn;
+      currentColumn.value = tmpCurrentColumn;
+      return;
     }
   }
 
-  return {
-    columnVisibilityData: [],
-    previousColumn: undefined,
-    currentColumn: undefined,
-  };
+  // Set state
+  columnVisibilityData.value = [];
+  previousColumn.value = undefined;
+  currentColumn.value = undefined;
 };
 
 const handleHeaderButtonFocus = (event: Event) => {
   if (
     !scrollContainer.value ||
     event.target == null ||
-    state.columnVisibilityData.length === 0
+    columnVisibilityData.value.length === 0
   ) {
     return;
   }
@@ -577,8 +574,8 @@ const handleHeaderButtonFocus = (event: Event) => {
   const tableViewableWidth = scrollContainer.value.offsetWidth;
   const tableRightEdge = tableScrollLeft + tableViewableWidth;
   const firstColumnWidth =
-    state.columnVisibilityData.length > 0
-      ? state.columnVisibilityData[0].rightEdge
+    columnVisibilityData.value.length > 0
+      ? columnVisibilityData.value[0].rightEdge
       : 0;
   const currentColumnLeftEdge = currentCell.offsetLeft;
   const currentColumnRightEdge = currentCell.offsetLeft + currentCell.offsetWidth;
@@ -608,12 +605,12 @@ const scrollListener = () => {
   }
 
   scrollStopTimer.value = setTimeout(() => {
-    setState(calculateColumnVisibilityData(state.condensed));
+    calculateColumnVisibilityData(condensed.value);
   }, 100);
 
-  setState({
-    isScrolledFarthestLeft: scrollContainer.value?.scrollLeft === 0,
-  });
+  if (isScrolledFarthestLeft.value !== (scrollContainer.value?.scrollLeft === 0)) {
+    isScrolledFarthestLeft.value = scrollContainer.value?.scrollLeft === 0;
+  }
 
   if (props.stickyHeader && stickyHeaderActive.value) {
     stickyHeaderScrolling();
@@ -621,7 +618,7 @@ const scrollListener = () => {
 };
 
 const handleHover = (row?: number) => {
-  state.rowHovered = row;
+  rowHovered.value = row;
 };
 
 const handleFocus = (event) => {
@@ -630,9 +627,9 @@ const handleFocus = (event) => {
   }
 
   const currentCell = event.target.parentNode as HTMLTableCellElement;
-  const hasFixedFirstColumn = state.columnVisibilityData.length > 0;
+  const hasFixedFirstColumn = columnVisibilityData.value.length > 0;
   const firstColumnWidth = hasFixedFirstColumn
-    ? state.columnVisibilityData[0].rightEdge
+    ? columnVisibilityData.value[0].rightEdge
     : 0;
   const currentColumnLeftEdge = currentCell.offsetLeft;
   const desiredScrollLeft = currentColumnLeftEdge - firstColumnWidth;
@@ -643,15 +640,14 @@ const handleFocus = (event) => {
 };
 
 const navigateTable = (direction: string) => {
-  const { currentColumn, previousColumn } = state;
-  const firstColumnWidth = state.columnVisibilityData[0]?.rightEdge;
-  if (!currentColumn || !previousColumn) {
+  const firstColumnWidth = columnVisibilityData.value[0]?.rightEdge;
+  if (!currentColumn.value || !previousColumn.value) {
     return;
   }
 
   let prevWidths = 0;
-  for (let index = 0; index < currentColumn.index; index++) {
-    prevWidths += state.columnVisibilityData[index].width;
+  for (let index = 0; index < currentColumn.value.index; index++) {
+    prevWidths += columnVisibilityData.value[index].width;
   }
 
   const handleScroll = () => {
@@ -659,24 +655,25 @@ const navigateTable = (direction: string) => {
     if (props.hasFixedFirstColumn) {
       newScrollLeft =
         direction === 'right'
-          ? prevWidths - firstColumnWidth + currentColumn.width
-          : prevWidths - previousColumn.width - firstColumnWidth;
+          ? prevWidths - firstColumnWidth + (currentColumn.value?.width ?? 0)
+          : prevWidths - (previousColumn.value?.width ?? 0) - firstColumnWidth;
     } else {
       newScrollLeft =
         direction === 'right'
-          ? currentColumn.rightEdge
-          : previousColumn.leftEdge;
+          ? (currentColumn.value?.rightEdge ?? 0)
+          : (previousColumn.value?.leftEdge ?? 0);
     }
 
     if (scrollContainer.value) {
       scrollContainer.value.scrollLeft = newScrollLeft;
 
       requestAnimationFrame(() => {
-        setState(calculateColumnVisibilityData(state.condensed));
+        calculateColumnVisibilityData(condensed.value);
       });
     }
   };
-  return handleScroll;
+
+  return handleScroll();
 };
 
 const getColSpan = (
@@ -694,25 +691,19 @@ const getColSpan = (
 };
 
 const defaultOnSort = (headingIndex: number) => {
-  const {
-    sortDirection = props.defaultSortDirection,
-    sortedColumnIndex = props.initialSortColumnIndex,
-  } = state;
+  sortDirection.value = sortDirection.value ?? toRaw(props.defaultSortDirection);
+  sortedColumnIndex.value = sortedColumnIndex.value ?? toRaw(props.initialSortColumnIndex);
 
-  let newSortDirection = props.defaultSortDirection;
+  let newSortDirection = toRaw(props.defaultSortDirection);
 
-  if (sortedColumnIndex === headingIndex) {
+  if (sortedColumnIndex.value === headingIndex) {
     newSortDirection =
-      sortDirection === 'ascending' ? 'descending' : 'ascending';
+      sortDirection.value === 'ascending' ? 'descending' : 'ascending';
   }
 
   const handleSort = () => {
-    setState(
-      {
-        sortDirection: newSortDirection,
-        sortedColumnIndex: headingIndex,
-      },
-    );
+    sortDirection.value = newSortDirection;
+    sortedColumnIndex.value = headingIndex;
     emits('sort', headingIndex, newSortDirection);
   };
 
@@ -739,7 +730,7 @@ const stickyHandler = (isSticky: boolean) => {
 const stickyHeaderClassNames = computed(() => classNames(
   styles.StickyTableHeader,
   stickyHeaderActive.value && styles['StickyTableHeader-isSticky'],
-  !state.isScrolledFarthestLeft && styles.separate,
+  !isScrolledFarthestLeft.value && styles.separate,
 ));
 </script>
 
