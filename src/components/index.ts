@@ -24,6 +24,7 @@ export * from './Combobox';
 export * from './Connected';
 export * from './ContextualSaveBar';
 export * from './CustomProperties';
+export * from './DataTable';
 export * from './DatePicker';
 export * from './DescriptionList';
 export * from './DisplayText';

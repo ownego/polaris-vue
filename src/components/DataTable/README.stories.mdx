@@ -1,0 +1,278 @@
+import { Meta, Story, Canvas, ArgsTable } from '@storybook/addon-docs';
+import { Card, DataTable, TextStyle, Link } from '@/polaris-vue';
+import { computed, ref } from 'vue';
+import dedent from 'ts-dedent';
+
+<Meta
+  title="Components / Lists and tables  / Data table"
+  component={ DataTable }
+  argTypes={{
+    default: {
+      table: { disable: true },
+    },
+    defaultSortDirection: {
+      options: ['ascending', 'descending', 'none'],
+      control: { type: 'select' },
+      table: {
+        type: { summary: 'ascending | descending | none' },
+      },
+    },
+    headings: {
+      table: {
+        type: { summary: 'string[]' },
+      },
+    },
+    rows: {
+      control: { disable: true },
+      table: {
+        type: { summary: '<string | number>[][]' },
+      },
+    },
+    sortable: {
+      table: {
+        type: { summary: 'boolean[]' },
+      },
+    },
+    verticalAlign: {
+      options: ['top', 'middle', 'bottom', 'baseline'],
+      control: { type: 'select' },
+      table: {
+        type: { summary: 'top | bottom | middle | baseline' },
+      },
+    },
+    propsFooterContent: {
+      name: 'footerContent',
+      description: 'Content centered in the full width cell of the table footer row. This prop will be overridden by the `\#footerContent` slot if it is provided.',
+      table: {
+        category: 'props',
+        type: { summary: 'string' },
+      },
+    },
+    footerContent: {
+      description: 'Content centered in the full width cell of the table footer row. This slot will override the `footerContent` prop.',
+      table: {
+        type: { summary: null },
+      },
+      control: { disable: true },
+    },
+    'heading-0': {
+      table: { disable: true },
+    },
+    'heading-[index]': {
+      description: 'Slot to display each header as dynamic content. Example: `heading-0` will be the slot for the first column\'s heading.',
+      table: { category: 'slots', type: { summary: null }},
+    },
+    'cell-[cellIndex]-row-[rowIndex]': {
+      description: 'Slot to display each cell as dynamic content. Example: `cell-1-row-2` will be the slot for the second column in third row.',
+      table: { category: 'slots', type: { summary: null }},
+    },
+    'totalsName-plural': {
+      description: 'Custom totals row heading for plural. This slot will override the `totalsName.plural` prop.',
+      table: { type: { summary: null }},
+      control: { disable: true },
+    },
+    'totalsName-singular': {
+      description: 'Custom totals row heading for singular. This slot will override the `totalsName.singular` prop.',
+      table: { type: { summary: null }},
+      control: { disable: true },
+    },
+    sort: {
+      description: 'Callback fired on click or keypress of a sortable column heading.',
+      control: { disable: true },
+      table: {
+        type: {
+          summary: '(headingIndex: number, direction: SortDirection) => void',
+        },
+      },
+    },
+  }}
+/>
+
+export const Template = (args) => ({
+  components: { Card, DataTable, TextStyle, Link },
+  setup() {
+    const initiallySortedRows = [
+      [
+        { url: 'https://google.com', key: 'emerald', content: 'Emerald Silk Gown'},
+        '$875.00', 124689, 140, '$122,500.00',
+      ],
+      [
+        { url: 'https://google.com', key: 'mauve', content: 'Mauve Cashmere Scarf'},
+        '$230.00', 124533, 83, '$19,090.00',
+      ],
+      [
+        { url: 'https://google.com', key: 'navy', content: 'Navy Merino Wool Blazer with khaki chinos and yellow belt'},
+        '$445.00', 124518, 32, '$14,240.00',
+      ],
+    ];
+    const sortedRows = ref(null);
+    const rows = computed(() => {
+      return sortedRows.value ? sortedRows.value : initiallySortedRows;
+    });
+    const handleSort = (index, direction) => {
+      sortedRows.value = sortCurrency(rows.value, index, direction);
+    }
+    function sortCurrency(trows, index, direction) {
+      return [...trows].sort((rowA, rowB) => {
+        const amountA = parseFloat(rowA[index].substring(1));
+        const amountB = parseFloat(rowB[index].substring(1));
+        return direction === 'descending' ? amountB - amountA : amountA - amountB;
+      });
+    }
+    return { args, rows, handleSort };
+  },
+  template: `<Card>
+    <DataTable
+      v-bind="args"
+      :rows="rows"
+      :footerContent="\`Showing \${rows.length} of \${rows.length} results\`"
+      @sort="handleSort"
+    >
+      <template #heading-0>
+        <TextStyle variation="strong">Product</TextStyle>
+      </template>
+      <template
+        v-for="row, index in rows"
+        :key="index"
+        #[\`cell-0-row-\${index}\`]
+      >
+        <Link remove-underline :url="row[0].url">{{ row[0].content }}</Link>
+      </template>
+      <template
+        v-for="row, index in rows"
+        :key="index"
+        #[\`cell-1-row-\${index}\`]
+      >
+        <TextStyle variation="positive">{{ row[1] }}</TextStyle>
+      </template>
+    </DataTable>
+  </Card>`,
+});
+
+# Data table
+
+Data tables are used to organize and display all information from a data set. While a data visualization represents part of data set, a data table lets merchants view details from the entire set. This helps merchants compare and analyze the data.
+
+<Canvas>
+  <Story
+    name="Data table"
+    height="350px"
+    args={{
+      totalsName: { singular: 'Total net sales', plural: 'Total net sales' },
+      columnContentTypes: [
+        'text',
+        'numeric',
+        'numeric',
+        'numeric',
+        'numeric',
+      ],
+      headings: [
+        'Product',
+        'Price',
+        'SKU Number',
+        'Net quantity',
+        'Net sales',
+      ],
+      totals: ['', '', '', 255, '$155,830.00'],
+      sortable: [false, true, false, false, true],
+      initialSortColumnIndex: 4,
+      defaultSortDirection: 'descending',
+      truncate: true,
+      stickyHeader: true,
+      hasFixedFirstColumn: true,
+    }}
+    parameters={{
+      docs: {
+        source: {
+          state: 'close',
+          code: dedent`
+          <Card>
+            <DataTable
+              :totalsName="{singular: 'Total net sales', plural: 'Total net sales'}"
+              :columnContentTypes="columnContentTypes"
+              :headings="tableHeadings"
+              :rows="rows"
+              :totals="['', '', '', 255, '$155,830.00']"
+              :sortable="[false, true, false, false, true]"
+              :initialSortColumnIndex="4"
+              defaultSortDirection="descending"
+              :footerContent="\`Showing \${rows.length} of \${rows.length} results\`"
+              :truncate="false"
+              showTotalsInFooter
+              stickyHeader
+              hasFixedFirstColumn
+              @sort="handleSort"
+            >
+              <template #heading-0>
+                <TextStyle variation="strong">Product</TextStyle>
+              </template>
+              <template
+                v-for="row, index in rows"
+                :key="index"
+                #[\`cell-0-row-\${index}\`]
+              >
+                <Link remove-underline :url="row[0].url">{{ row[0].content }}</Link>
+              </template>
+              <template
+                v-for="row, index in rows"
+                :key="index"
+                #[\`cell-1-row-\${index}\`]
+              >
+                <TextStyle variation="positive">{{ row[1] }}</TextStyle>
+              </template>
+            </DataTable>
+          </Card>\n
+          <script setup>
+            const tableHeadings = [
+              'Product',
+              'Price',
+              'SKU Number',
+              'Net quantity',
+              'Net sales',
+            ];\n
+            const columnContentTypes = [
+              'text',
+              'numeric',
+              'numeric',
+              'numeric',
+              'numeric',
+            ];\n
+            const initiallySortedRows = [
+              [
+                { url: 'https://google.com', key: 'emerald', content: 'Emerald Silk Gown'},
+                '$875.00', 124689, 140, '$122,500.00',
+              ],
+              [
+                { url: 'https://google.com', key: 'mauve', content: 'Mauve Cashmere Scarf'},
+                '$230.00', 124533, 83, '$19,090.00',
+              ],
+              [
+                { url: 'https://google.com', key: 'navy', content: 'Navy Merino Wool Blazer with khaki chinos and yellow belt'},
+                '$445.00', 124518, 32, '$14,240.00',
+              ],
+            ];\n
+            const sortedRows = ref(null);
+            const rows = computed(() => {
+              return sortedRows.value ? sortedRows.value : initiallySortedRows;
+            });\n
+            const handleSort = (index, direction) => {
+              sortedRows.value = sortCurrency(rows.value, index, direction);
+            }\n
+            function sortCurrency(trows, index, direction) {
+              return [...trows].sort((rowA, rowB) => {
+                const amountA = parseFloat(rowA[index].substring(1));
+                const amountB = parseFloat(rowB[index].substring(1));
+                return direction === 'descending' ? amountB - amountA : amountA - amountB;
+              });
+            }
+          </script>
+          `,
+        },
+      },
+    }}
+  >
+    {Template.bind({})}
+  </Story>
+</Canvas>
+
+<ArgsTable story="Data table" />
