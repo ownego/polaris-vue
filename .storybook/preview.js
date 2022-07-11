@@ -13,6 +13,7 @@ export const parameters = {
       return `${src.replace(pattern, '$1')}`;
     },
     source: {
+      language: 'html',
       state: 'open',
     },
   },

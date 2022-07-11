@@ -1,11 +1,10 @@
 <template lang="pug">
-div
-  span(:class="className")
-    SpinnerIconLarge(v-if="size === 'large'")
-    SpinnerIconSmall(v-else)
-  span(v-bind="spanAttributes")
-    VisuallyHidden
-      span {{ accessibilityLabel }}
+span(:class="className")
+  SpinnerIconLarge(v-if="size === 'large'")
+  SpinnerIconSmall(v-else)
+span(v-bind="spanAttributes")
+  VisuallyHidden
+    span {{ accessibilityLabel }}
 </template>
 
 <script setup lang="ts">

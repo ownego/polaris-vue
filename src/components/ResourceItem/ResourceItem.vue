@@ -132,8 +132,6 @@ interface BaseProps {
   ariaExpanded?: boolean;
   /** Unique identifier for the item */
   id: string;
-  /** Content for the media area at the left of the item, usually an Avatar or Thumbnail */
-  // media?: React.ReactElement<AvatarProps | ThumbnailProps>;
   /** Makes the shortcut actions always visible */
   persistActions?: boolean;
   /** 1 or 2 shortcut actions; must be available on the page linked to by url */
