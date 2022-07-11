@@ -6,13 +6,12 @@ Labelled(
   :labelHidden="labelHidden",
   :requiredIndicator="requiredIndicator",
   :label="label",
+  :help-text="helpText",
 )
   template(#label, v-if="slots.label")
     slot(name="label")
   template(#help-text, v-if="slots['help-text']")
     slot(name="help-text")
-  template(#help-text, v-else-if="helpText")
-    span {{ helpText }}
   Connected
     template(#left, v-if="slots['connected-left']")
       slot(name="connected-left")
@@ -30,7 +29,7 @@ Labelled(
       )
         slot(name="prefix" v-if="slots.prefix")
         template(v-else-if="prefix")
-          span {{ prefix }}
+          | {{ prefix }}
 
       div(
         v-if="slots['vertical-content']"
@@ -133,7 +132,7 @@ Labelled(
       )
         slot(name="suffix" v-if="slots.suffix")
         template(v-else-if="suffix")
-          span {{ suffix }}
+          | {{ suffix }}
       div(
         v-if="showCharacterCount",
         :class="characterCountClassName",
@@ -218,13 +217,13 @@ interface NonMutuallyExclusiveProps {
   placeholder?: string;
   /** Initial value for the input */
   modelValue?: string;
-  /** Label */
+  /** Label for the input: overridden by #label slot */
   label?: string;
   /** Adds an action to the label */
   labelAction?: LabelledProps['action'];
   /** Visually hide the label */
   labelHidden?: boolean;
-  /** Help Text */
+  /** Additional hint text to display: overridden by #label slot */
   helpText?: string;
   /** Disable the input */
   disabled?: boolean;
@@ -253,7 +252,7 @@ interface NonMutuallyExclusiveProps {
   /** Limit increment value for numeric and date-time inputs */
   step?: number;
   /** Enable automatic completion by the browser. Set to "off" when you do not want the browser to fill in info */
-  autoComplete?: string;
+  autoComplete: string;
   /** Mimics the behavior of the native HTML attribute, limiting the maximum value */
   max?: number | string;
   /** Maximum character length for an input */

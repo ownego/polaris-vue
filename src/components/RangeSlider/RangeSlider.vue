@@ -10,12 +10,15 @@ DualThumb(
   template(#label, v-if="slots.label || label")
     slot(v-if="slots.label", name="label")
     template(v-else) {{ label }}
-  template(#help-text, v-if="slots['help-text']")
-    slot(name="help-text")
-  template(#prefix, v-if="slots.prefix")
-    slot(name="prefix")
-  template(#suffix, v-if="slots.suffix")
-    slot(name="suffix")
+  template(#help-text, v-if="slots['help-text']" || helpText)
+    slot(v-if="slots['help-text']" name="help-text")
+    template(v-else) {{ helpText }}
+  template(#prefix, v-if="slots.prefix || prefix")
+    slot(v-if="slots.prefix" name="prefix")
+    template(v-else) {{ prefix }}
+  template(#suffix, v-if="slots.suffix || suffix")
+    slot(v-if="slots.suffix" name="suffix")
+    template(v-else) {{ suffix }}
 SingleThumb(
   v-else,
   v-model="singleValue",
@@ -27,12 +30,15 @@ SingleThumb(
   template(#label, v-if="slots.label || label")
     slot(v-if="slots.label", name="label")
     template(v-else) {{ label }}
-  template(#help-text, v-if="slots['help-text']")
-    slot(name="help-text")
-  template(#prefix, v-if="slots.prefix")
-    slot(name="prefix")
-  template(#suffix, v-if="slots.suffix")
-    slot(name="suffix")
+  template(#help-text, v-if="slots['help-text'] || helpText")
+    slot(v-if="slots['help-text']" name="help-text")
+    template(v-else) {{ helpText }}
+  template(#prefix, v-if="slots.prefix || prefix")
+    slot(v-if="slots.prefix" name="prefix")
+    template(v-else) {{ prefix }}
+  template(#suffix, v-if="slots.suffix || suffix")
+    slot(v-if="slots.suffix" name="suffix")
+    template(v-else) {{ suffix }}
 </template>
 <script setup lang="ts">
 import { computed, useSlots } from 'vue';
@@ -59,10 +65,16 @@ interface RangeSliderProps {
   step?: number;
   /** Provide a tooltip while sliding, indicating the current value */
   output?: boolean;
+  /** Additional text to aid in use */
+  helpText?: string;
   /** Display an error message */
   error?: ErrorType;
   /** Disable input */
   disabled?: boolean;
+  /** Element to display before the input */
+  prefix?: string;
+  /** Element to display after the input */
+  suffix?: string;
 }
 
 const props = withDefaults(defineProps<RangeSliderProps>(), {

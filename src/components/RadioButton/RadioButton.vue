@@ -6,10 +6,12 @@ Choice(
   @mouseover="mouseOver = true",
   @mouseout="mouseOver = false",
 )
-  template(#label, v-if="slots.label")
-    slot(name="label")
-  template(#help-text, v-if="slots['help-text']")
-    slot(name="help-text")
+  template(#label, v-if="slots.label || label")
+    slot(name="label" v-if="slots.label")
+    template(v-else-if="label") {{ label }}
+  template(#help-text, v-if="slots['help-text'] || helpText")
+    slot(name="help-text" v-if="slots['help-text']")
+    template(v-else-if="helpText") {{ helpText }}
   span(:class="styles.RadioButton")
     input(
       :id="uniqueId",
@@ -39,10 +41,14 @@ import { helpTextID } from '../Choice/utils';
 interface Props {
   /** Indicates the ID of the element that describes the the radio button */
   ariaDescribedBy?: string;
+  /** Label for the radio button: overriden by #label slot */
+  label?: string;
   /** Visually hide the label */
   labelHidden?: boolean;
   /** Radio button is selected */
   checked?: boolean;
+  /** Additional text to aid in use: overriden by #help-text slot */
+  helpText?: string;
   /** Disable input */
   disabled?: boolean;
   /** ID for form input */

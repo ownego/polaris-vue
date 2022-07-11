@@ -9,7 +9,7 @@ div(:class="className")
     )
       slot(name="label" v-if="$slots.label")
       template(v-else-if="label")
-        span {{ label }}
+        | {{ label }}
     div(
       v-if="action",
       :class="styles.Action"
@@ -33,11 +33,13 @@ div(:class="className")
       :is="error",
     )
   div(
-    v-if="$slots['help-text']",
+    v-if="$slots['help-text'] || helpText",
     :class="styles.HelpText",
     :id="helpTextID(id)",
   )
-    slot(name="help-text")
+    slot(name="help-text" v-if="$slots['help-text']")
+    template(v-else-if="helpText")
+      | {{ helpText }}
 </template>
 
 <script setup lang="ts">
@@ -58,12 +60,14 @@ interface LabelledProps {
   error?: Error;
   /** An action */
   action?: Action;
-  /** Label: Overriden by slot */
+  /** Label: overriden by #label slot  */
   label?: string;
   /** Visually hide the label */
   labelHidden?: boolean;
   /** Visual required indicator for the label */
   requiredIndicator?: boolean;
+  /** Help Text: Overriden by #helpText slot */
+  helpText?: string;
 }
 
 const props = defineProps<LabelledProps>();

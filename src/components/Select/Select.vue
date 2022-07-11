@@ -6,6 +6,7 @@ Labelled(
   :label-hidden="selectLabelHidden",
   :required-indicator="requiredIndicator",
   :label="label",
+  :help-text="helpText",
 )
   template(
     v-if="!labelInline && slots.label",
@@ -98,7 +99,7 @@ import { helpTextID } from '../Labelled/utils';
 interface SelectProps {
   /** List of options or option groups to choose from */
   options: (SelectOption | SelectGroup)[];
-  /** Label: overriden by slot  */
+  /** Label for the select: overriden by #label slot  */
   label?: string;
   /** Adds an action to the label */
   labelAction?: Action;
@@ -106,6 +107,8 @@ interface SelectProps {
   labelHidden?: boolean;
   /** Show the label to the left of the value, inside the control */
   labelInline?: boolean;
+  /** Additional text to aide in use: overriden by #helpText slot */
+  helpText?: string;
   /** Disable input */
   disabled?: boolean;
   /** Example text to display as placeholder */

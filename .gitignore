@@ -14,6 +14,7 @@ dist-ssr
 coverage
 *.local
 ./src/Demo.vue
+./src/demo/*
 
 /cypress/videos/
 /cypress/screenshots/

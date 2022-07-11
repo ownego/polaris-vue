@@ -20,11 +20,12 @@ div(
         component(:is="item")
     slot(v-else)
   div(
-    v-if="slots['help-text']",
+    v-if="slots['help-text'] || helpText",
     :id="helpTextId",
     :class="styles.HelpText",
   )
-    slot(name="help-text")
+    slot(name="help-text" v-if="slots['help-text']")
+    template(v-else) {{ helpText }}
 </template>
 
 <script setup lang="ts">
@@ -39,6 +40,7 @@ import { UseUniqueId } from '@/use';
  */
 interface Props {
   condensed?: boolean;
+  helpText?: string;
 }
 
 const props = defineProps<Props>();

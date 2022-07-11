@@ -7,10 +7,12 @@ Choice(
   @mouseover="mouseOver = true",
   @mouseout="mouseOver = false",
 )
-  template(#label, v-if="slots.label")
-    slot(name="label")
-  template(#help-text, v-if="slots['help-text']")
-    slot(name="help-text")
+  template(#label, v-if="slots.label || label")
+    slot(name="label" v-if="slots.label")
+    template(v-else-if="label") {{ label }}
+  template(#help-text, v-if="slots['help-text'] || helpText")
+    slot(name="help-text" v-if="slots['help-text']")
+    template(v-else-if="helpText") {{ helpText }}
   span(:class="wrapperClassName")
     input(
       :id="uniqueId",
@@ -58,10 +60,14 @@ interface Props {
   ariaControls?: string;
   /** Indicates the ID of the element that describes the checkbox */
   ariaDescribedBy?: string;
+  /** Label for the checkbox: overriden by the #label slot */
+  label?: string
   /** Visually hide the label */
   labelHidden?: boolean;
   /** Checkbox is selected. `indeterminate` shows a horizontal line in the checkbox */
   checked?: boolean | 'indeterminate';
+  /** Additional text to aide in use: overriden by #help-text slot */
+  helpText?: string
   /** Disable input */
   disabled?: boolean;
   /** ID for form input */
