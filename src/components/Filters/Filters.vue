@@ -32,7 +32,7 @@ div(:class="styles.Filters")
         Button(@click="toggleFilters", :disabled="disabled") {{ moreFiltersLabel }}
     TextField(
       v-if="!hideQueryField",
-      v-model="modelValue",
+      :model-value="modelValue",
       :focused="focused",
       :placeholder="queryPlaceholder || i18n.translate('Polaris.Filters.filter', { resourceName: filterResourceName.plural })",
       labelHidden,
