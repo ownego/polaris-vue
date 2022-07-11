@@ -52,7 +52,7 @@ div(:class="wrapperClassName")
                   )
                     template(v-if="hasSlot(slots['heading-0'])")
                       slot(name="heading-0")
-                    template(v-else) okokok {{ headings[0] }}
+                    template(v-else) {{ headings[0] }}
 
             TableHeading(
               v-for="heading, index in headings",
