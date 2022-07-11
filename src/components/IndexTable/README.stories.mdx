@@ -277,7 +277,7 @@ export const Template = (args) => ({
     const { selectedResources, allResourcesSelected, handleSelectionChange } =
       useIndexResourceState(customers);
     const taggedWith = ref('VIP');
-    const queryValue = ref(null);
+    const queryValue = ref('');
     const sortValue = ref('today');
     const handleTaggedWithChange = (value) => { taggedWith.value = value };
     const handleTaggedWithRemove = () => { taggedWith.value = null };

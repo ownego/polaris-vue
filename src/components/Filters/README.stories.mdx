@@ -83,7 +83,7 @@ export const Template = (args) => ({
     const accountStatus = ref([]);
     const moneySpent = ref([]);
     const taggedWith = ref(null);
-    const queryValue = ref(null);
+    const queryValue = ref('');
     const appliedFilters = computed(() => {
       const tmpFilters = [];
       if (accountStatus.value && accountStatus.value.length > 0) {
