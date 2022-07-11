@@ -102,7 +102,7 @@ const helpTextSlot = computed(() => slots['help-text']?.());
 const { useUniqueId } = UseUniqueId();
 const uniqueId = computed(() => useUniqueId('Checkbox', props.id));
 
-const isIndeterminate = computed(() => props.modelValue === 'indeterminate');
+const isIndeterminate = computed(() => props.modelValue === 'indeterminate' || props.checked === 'indeterminate');
 const isChecked = computed(() => (!isIndeterminate.value && Boolean(props.checked))
     || (typeof props.modelValue === 'boolean' && props.modelValue === true));
 

@@ -15,3 +15,7 @@ export default PolarisVue;
 
 // Export single component
 export * from './components';
+
+// Export single utility
+export { useIndexResourceState } from './utilities/use-index-resource-state';
+export { useContainerScroll } from './utilities/index-table';
