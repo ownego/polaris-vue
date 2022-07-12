@@ -33,8 +33,7 @@ export const TemplateSimple = (args) => ({
   components: { Card },
   setup() { return { args }; },
   template: `
-    <Card sectioned :actions="[{content: 'Add variant'}]">
-      <template #title>Variants</template>
+    <Card sectioned title="Variants" :actions="[{content: 'Add variant'}]">
       <p>Add variants if this product comes in multiple versions, like different sizes or colors.</p>
     </Card>
   `,
@@ -162,8 +161,7 @@ Cards are used to group similar concepts and tasks together to make Shopify easi
         source: {
           state: 'close',
           code: dedent`
-            <Card sectioned :actions="[{content: 'Add variant'}]">
-              <template #title>Variants</template>
+            <Card sectioned title="Variants" :actions="[{content: 'Add variant'}]">
               <p>Add variants if this product comes in multiple versions, like different sizes or colors.</p>
             </Card>`,
         },

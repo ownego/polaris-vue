@@ -6,10 +6,12 @@ Choice(
   @mouseover="mouseOver = true",
   @mouseout="mouseOver = false",
 )
-  template(#label, v-if="slots.label")
-    slot(name="label")
-  template(#help-text, v-if="slots['help-text']")
-    slot(name="help-text")
+  template(#label, v-if="hasSlot(slots.label) || label")
+    slot(v-if="hasSlot(slots.label)", name="label")
+    template(v-else) {{ label }}
+  template(#help-text, v-if="hasSlot(slots['help-text']) || helpText")
+    slot(v-if="hasSlot(slots['help-text'])", name="help-text")
+    template(v-else) {{ helpText }}
   span(:class="styles.RadioButton")
     input(
       :id="uniqueId",
@@ -32,6 +34,7 @@ Choice(
 import { ref, computed, useSlots } from 'vue';
 import { classNames } from 'polaris/polaris-react/src/utilities/css';
 import styles from '@/classes/RadioButton.json';
+import { hasSlot } from '@/utilities/has-slot';
 import { UseUniqueId } from '@/use';
 import { Choice } from '../Choice';
 import { helpTextID } from '../Choice/utils';
@@ -39,10 +42,14 @@ import { helpTextID } from '../Choice/utils';
 interface Props {
   /** Indicates the ID of the element that describes the the radio button */
   ariaDescribedBy?: string;
+  /** Label for the radio button */
+  label?: string;
   /** Visually hide the label */
   labelHidden?: boolean;
   /** Radio button is selected */
   checked?: boolean;
+  /** Additional text to aid in use. This prop will be overriden by `help-text` slot. */
+  helpText?: string;
   /** Disable input */
   disabled?: boolean;
   /** ID for form input */

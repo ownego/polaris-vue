@@ -5,6 +5,8 @@ Labelled(
   :action="labelAction",
   :label-hidden="selectLabelHidden",
   :required-indicator="requiredIndicator",
+  :label="label",
+  :help-text="helpText",
 )
   template(
     v-if="!labelInline && slots.label",
@@ -62,7 +64,8 @@ Labelled(
         v-if="labelInline",
         :class="styles.InlineLabel"
       )
-        slot(name="label")
+        slot(v-if="slots.label", name="label")
+        template(v-else-if="label") {{ label }}
       div(
         v-if="$slots[`prefix-${selectedOption.id}`]",
         :class="styles.Prefix",
@@ -98,6 +101,7 @@ interface SelectProps {
   /** List of options or option groups to choose from */
   options: (SelectOption | SelectGroup)[];
   /** Label for the select */
+  label?: string;
   /** Adds an action to the label */
   labelAction?: Action;
   /** Visually hide the label */
@@ -106,6 +110,8 @@ interface SelectProps {
   labelInline?: boolean;
   /** Disable input */
   disabled?: boolean;
+  /** Additional text to aide in use. This prop will be overriden by `help-text` slot. */
+  helpText?: string;
   /** Example text to display as placeholder */
   placeholder?: string;
   /** ID for form input */
