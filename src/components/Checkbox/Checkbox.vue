@@ -60,13 +60,13 @@ interface Props {
   ariaControls?: string;
   /** Indicates the ID of the element that describes the checkbox */
   ariaDescribedBy?: string;
-  /** Label for the checkbox. This will be overridden by `label` slot. */
+  /** Label for the checkbox. This will be overriden by `label` slot. */
   label?: string;
   /** Visually hide the label */
   labelHidden?: boolean;
   /** Checkbox is selected. `indeterminate` shows a horizontal line in the checkbox */
   checked?: boolean | 'indeterminate';
-  /** Additional text to aide in use.This will be overridden by `help-text` slot. */
+  /** Additional text to aide in use.This will be overriden by `help-text` slot. */
   helpText?: string;
   /** Disable input */
   disabled?: boolean;
