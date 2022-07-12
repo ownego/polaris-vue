@@ -16,13 +16,13 @@ div(:class="className")
         div(v-if="action || secondaryAction", :class="styles.Actions")
           Stack(alignment="center", distribution="center", spacing="tight")
             ButtonFrom(
+              v-if="secondaryAction",
+              :action="secondaryAction",
+            )
+            ButtonFrom(
               v-if="action",
               :action="action",
               :overrides="{ primary: true, size: 'medium' }",
-            )
-            ButtonFrom(
-              v-if="secondaryAction",
-              :action="secondaryAction",
             )
         div(v-if="hasSlot(slots.footerContent)", :class="styles.FooterContent")
           TextContainer

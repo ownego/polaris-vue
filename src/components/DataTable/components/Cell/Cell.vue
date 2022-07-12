@@ -68,8 +68,8 @@ template(v-else)
 import { ref, computed, useSlots } from 'vue';
 import { classNames, variationName } from 'polaris/polaris-react/src/utilities/css';
 import { headerCell } from 'polaris/polaris-react/src/components/shared';
-import CaretUpMinor from '@icons/CaretUpMinor.svg';
-import CaretDownMinor from '@icons/CaretDownMinor.svg';
+import SortAscendingMajor from '@icons/SortAscendingMajor.svg';
+import SortDescendingMajor from '@icons/SortDescendingMajor.svg';
 import { Icon, Tooltip } from '@/components';
 import { UseI18n } from '@/use';
 import styles from '@/classes/DataTable.json';
@@ -157,7 +157,7 @@ const headerClassName = computed(() => classNames(
 
 const iconClassName = computed(() => classNames(props.sortable && styles.Icon));
 const direction = computed(() => props.sorted && props.sortDirection ? props.sortDirection : props.defaultSortDirection);
-const source = computed(() => direction.value === 'descending' ? CaretDownMinor : CaretUpMinor);
+const source = computed(() => direction.value === 'descending' ? SortDescendingMajor : SortAscendingMajor);
 const oppositeDirection = computed(() => props.sortDirection === 'ascending' ? 'descending' : 'ascending');
 
 const sortAccessibilityLabel = computed(() => i18n.translate(

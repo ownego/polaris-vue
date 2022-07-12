@@ -10,7 +10,7 @@ import { provide, ref, onMounted, watch } from 'vue';
 import { debounce } from 'polaris/polaris-react/src/utilities/debounce';
 import { ScrollLockManager } from 'polaris/polaris-react/src/utilities/scroll-lock-manager/scroll-lock-manager';
 import { UniqueIdFactory, globalIdGeneratorFactory } from 'polaris/polaris-react/src/utilities/unique-id/unique-id-factory';
-import { navigationBarCollapsed } from 'polaris/polaris-react/src/utilities/breakpoints';
+import { navigationBarCollapsed } from '@/utilities/breakpoints';
 import { I18n } from '@/utilities/i18n';
 import lang from 'polaris/polaris-react/locales/en.json';
 import { EventListener, CustomProperties } from '@/components';

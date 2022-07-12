@@ -7,6 +7,7 @@ UnstyledLink(
   :class="className",
   :external="external",
   :aria-label="accessibilityLabel",
+  :data-primary-link="dataPrimaryLink",
 )
   slot
   span(
@@ -21,6 +22,7 @@ button(
   type="button",
   :class="className",
   :aria-label="accessibilityLabel",
+  :data-primary-link="dataPrimaryLink",
   @click="$emit('click')",
 )
   slot
@@ -55,6 +57,8 @@ const props = defineProps<{
   removeUnderline?: boolean;
   /** Descriptive text to be read to screenreaders */
   accessibilityLabel?: string;
+  /** Indicates whether or not the link is the primary navigation link when rendered inside of an `IndexTable.Row` */
+  dataPrimaryLink?: boolean;
 }>();
 
 const slots = useSlots();
