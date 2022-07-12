@@ -1,13 +1,14 @@
 <template lang="pug">
 div(:class="className")
-  div(v-if="$slots.label", :class="styles.LabelWrapper")
+  div(v-if="$slots.label || label", :class="styles.LabelWrapper")
     Label(
       :id="id",
       :requiredIndicator="requiredIndicator",
       :hidden="false",
       v-bind="$attrs",
     )
-      slot(name="label")
+      slot(v-if="$slots.label", name="label")
+      template(v-else) {{ label }}
     div(
       v-if="action",
       :class="styles.Action"
@@ -31,11 +32,12 @@ div(:class="className")
       :is="error",
     )
   div(
-    v-if="$slots['help-text']",
+    v-if="$slots['help-text'] || helpText",
     :class="styles.HelpText",
     :id="helpTextID(id)",
   )
-    slot(name="help-text")
+    slot(v-if="$slots['help-text']", name="help-text")
+    template(v-else) {{ helpText }}
 </template>
 
 <script setup lang="ts">
@@ -60,6 +62,10 @@ interface LabelledProps {
   labelHidden?: boolean;
   /** Visual required indicator for the label */
   requiredIndicator?: boolean;
+  /** Text for the label */
+  label?: string;
+  /** Additional hint text to display */
+  helpText?: string;
 }
 
 const props = defineProps<LabelledProps>();

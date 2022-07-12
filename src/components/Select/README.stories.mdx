@@ -81,6 +81,7 @@ import HintMajor from '@icons/HintMajor.svg';
       },
     },
     'help-text': {
+      description: 'Additional text to aide in use.',
       control: {
         type: 'text',
       },
@@ -92,6 +93,7 @@ import HintMajor from '@icons/HintMajor.svg';
       },
     },
     label: {
+      description: 'Label for the select.',
       control: {
         type: 'text',
       },
@@ -101,6 +103,12 @@ import HintMajor from '@icons/HintMajor.svg';
           summary: null,
         },
       },
+    },
+    propLabel: {
+      name: 'label',
+      description: 'Label for the select. This prop will be overriden by `label` slot.',
+      control: { type: 'text' },
+      table: { category: 'props', type: { summary: 'string' } },
     },
     default: {
       table: {
@@ -168,7 +176,11 @@ Select lets merchants choose one option from an options menu. Consider select wh
     parameters={{
       docs: {
         source: {
-          code: dedent`<Select placeholder="Select an option" v-model="selectValue" :options="options">
+          code: dedent`<Select
+            placeholder="Select an option"
+            v-model="selectValue"
+            :options="options"
+          >
               <template #label>Date Range</template>
               <template #help-text>This is some help text</template>
               <template #prefix-hint>

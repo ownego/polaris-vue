@@ -9,14 +9,16 @@ div(v-if="error && typeof error !== 'boolean' || $slots['help-text']")
     span(:class="styles.Control")
       slot
     span(:class="styles.Label")
-      slot(name="label")
+      slot(v-if="$slots.label", name="label")
+      template(v-else-if="label") {{ label }}
   div(:class="styles.Descriptions")
     div(
-      v-if="$slots['help-text']",
+      v-if="$slots['help-text'] || helpText",
       :id="helpTextID(id)",
       :class="styles.HelpText",
     )
-      slot(name="help-text")
+      slot(v-if="$slots['help-text']", name="help-text")
+      template(v-else) {{ helpText }}
     InlineError(
       v-if="(error && typeof error !== 'boolean')",
       :fieldID="id",
@@ -32,7 +34,8 @@ label(
   span(:class="styles.Control")
     slot
   span(:class="styles.Label")
-    slot(name="label")
+    slot(v-if="$slots.label", name="label")
+    template(v-else-if="label") {{ label }}
 </template>
 
 <script setup lang="ts">
@@ -46,12 +49,16 @@ import { InlineError } from '../InlineError';
 interface Props {
   /** A unique identifier for the choice */
   id: string;
+  /**	Label for the choice */
+  label?: string;
   /** Whether the associated form control is disabled */
   disabled?: boolean;
   /** Display an error message */
   error?: Error;
   /** Visually hide the label */
   labelHidden?: boolean;
+  /** Additional text to aide in use */
+  helpText?: string;
 }
 
 const props = defineProps<Props>();
