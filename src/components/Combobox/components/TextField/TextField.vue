@@ -9,6 +9,10 @@ PolarisTextField(
   :ariaActiveDescendant="activeOptionId",
   :ariaControls="listboxId",
   :ariaExpanded="expanded",
+  :label="label",
+  :helpText="helpText",
+  :suffix="suffix",
+  :prefix="prefix",
   @focus="handleFocus",
   @blur="handleBlur",
   @change="handleChange",
@@ -70,6 +74,14 @@ interface TextFieldProps {
   placeholder?: string;
   /** Initial value for the input */
   modelValue?: string;
+  /** Text to display before value */
+  prefix?: string;
+  /** Text to display after value */
+  suffix?: string;
+  /** Additional hint text to display */
+  helpText?: string;
+  /** Label for the input */
+  label?: string;
   /** Adds an action to the label */
   labelAction?: LabelledProps['action'];
   /** Visually hide the label */

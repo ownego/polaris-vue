@@ -32,6 +32,24 @@ import dedent from "ts-dedent";
       control: { disable: true },
       table: { type: { summary: null } },
     },
+    propLabel: {
+      name: 'label',
+      description: 'Label for the range input. This prop will be overriden by `label` slot.',
+      control: { type: 'text' },
+      table: { category: 'props', type: { summary: 'string' } },
+    },
+    propPrefix: {
+      name: 'prefix',
+      description: 'Element to display before the input. This prop will be overriden by `prefix` slot.',
+      control: { disable: true },
+      table: { category: 'props', type: { summary: 'string' } },
+    },
+    propSuffix: {
+      name: 'suffix',
+      description: 'Element to display after the input. This prop will be overriden by `suffix` slot.',
+      control: { disable: true },
+      table: { category: 'props', type: { summary: 'string' } },
+    },
     modelValue: {
       table: { type: {
         summary: 'number | [number, number]',
@@ -80,10 +98,15 @@ export const SlotTemplate = (args) => ({
   template: `
     <Card sectioned>
       <template #title>Text color</template>
-      <RangeSlider v-model="rangeValue" v-bind="args">
-        <template #prefix>Hue</template>
-        <template #suffix>{{ rangeValue }}</template>
-      </RangeSlider>
+      <RangeSlider
+        v-model="rangeValue"
+        :min="0"
+        :max="360"
+        label="Hue color mix"
+        output
+        prefix="Hue"
+        :suffix="rangeValue"
+      />
     </Card>
   `,
 });
@@ -105,10 +128,15 @@ export const SlotTemplate = (args) => ({
           code: dedent`
             <Card sectioned>
               <template #title>Text color</template>
-              <RangeSlider v-model="rangeValue" :min="0" :max="360" label="Hue color mix" output>
-                <template #prefix>Hue</template>
-                <template #suffix>{{ rangeValue }}</template>
-              </RangeSlider>
+              <RangeSlider
+                v-model="rangeValue"
+                :min="0"
+                :max="360"
+                label="Hue color mix"
+                output
+                prefix="Hue"
+                :suffix="rangeValue"
+              />
             </Card>\n
             <script setup>
               const rangeValue = ref(30);

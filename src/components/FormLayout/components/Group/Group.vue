@@ -6,11 +6,12 @@ div(
   :aria-describedby="helpTextId",
 )
   div(
-    v-if="slots.title",
+    v-if="slots.title || title",
     :id="titleId",
     :class="styles.Title",
   )
-    slot(name="title")
+    slot(v-if="slots.title", name="title")
+    template(v-else) {{ title }}
   div(:class="styles.Items")
     template(v-if="slots.default")
       Item(
@@ -20,11 +21,12 @@ div(
         component(:is="item")
     slot(v-else)
   div(
-    v-if="slots['help-text']",
+    v-if="slots['help-text'] || helpText",
     :id="helpTextId",
     :class="styles.HelpText",
   )
-    slot(name="help-text")
+    slot(v-if="slots['help-text']", name="help-text")
+    template(v-else) {{ helpText }}
 </template>
 
 <script setup lang="ts">
@@ -39,6 +41,8 @@ import { UseUniqueId } from '@/use';
  */
 interface Props {
   condensed?: boolean;
+  helpText?: string;
+  title?: string;
 }
 
 const props = defineProps<Props>();

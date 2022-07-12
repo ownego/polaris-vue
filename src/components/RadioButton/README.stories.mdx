@@ -48,6 +48,17 @@ import { RadioButton } from '@/polaris-vue';
         },
       },
     },
+    propLabel: {
+      name: 'label',
+      description: 'Label for the radio button. This prop will be overriden by `label` slot.',
+      control: { type: 'text' },
+      table: {
+        category: 'props',
+        type: {
+          summary: 'string',
+        },
+      },
+    },
     label: {
       description: 'Label for the radio button',
       control: { disable: true },
@@ -79,10 +90,9 @@ export const Template = (args) => ({
       name="demoRadioButton"
       value="disabled"
       v-model="demoValue"
-    >
-      <template #label>Accounts are disabled</template>
-      <template #help-text>Customers will only be able to check out as guests.</template>
-    </RadioButton>
+      label="Accounts are disabled"
+      helpText="Customers will only be able to check out as guests"
+    />
     <RadioButton
       v-bind="args"
       name="demoRadioButton"
@@ -109,11 +119,11 @@ Template.parameters = {
             name="demoRadioButton"
             value="disabled"
             v-model="demoValue"
-          >
-            <template #label>Accounts are disabled</template>
-            <template #help-text>Customers will only be able to check out as guests.</template>
-          </RadioButton>
+            label="Accounts are disabled"
+            helpText="Customers will only be able to check out as guests"
+          />
           <RadioButton
+            v-bind="args"
             name="demoRadioButton"
             value="optional"
             v-model="demoValue"

@@ -7,15 +7,18 @@ DualThumb(
   @focus="emits('focus')",
   @blur="emits('blur')",
 )
-  template(#label, v-if="slots.label || label")
-    slot(v-if="slots.label", name="label")
+  template(#label, v-if="hasSlot(slots.label) || label")
+    slot(v-if="hasSlot(slots.label)", name="label")
     template(v-else) {{ label }}
-  template(#help-text, v-if="slots['help-text']")
-    slot(name="help-text")
-  template(#prefix, v-if="slots.prefix")
-    slot(name="prefix")
-  template(#suffix, v-if="slots.suffix")
-    slot(name="suffix")
+  template(#help-text, v-if="hasSlot(slots['help-text']) || helpText")
+    slot(v-if="hasSlot(slots['help-text'])", name="help-text")
+    template(v-else) {{ helpText }}
+  template(#prefix, v-if="hasSlot(slots.prefix) || prefix")
+    slot(v-if="hasSlot(slots.prefix)", name="prefix")
+    template(v-else) {{ prefix }}
+  template(#suffix, v-if="hasSlot(slots.suffix) || suffix")
+    slot(v-if="hasSlot(slots.suffix)", name="suffix")
+    template(v-else) {{ suffix }}
 SingleThumb(
   v-else,
   v-model="singleValue",
@@ -24,26 +27,30 @@ SingleThumb(
   @focus="emits('focus')",
   @blur="emits('blur')",
 )
-  template(#label, v-if="slots.label || label")
-    slot(v-if="slots.label", name="label")
+  template(#label, v-if="hasSlot(slots.label) || label")
+    slot(v-if="hasSlot(slots.label)", name="label")
     template(v-else) {{ label }}
-  template(#help-text, v-if="slots['help-text']")
-    slot(name="help-text")
-  template(#prefix, v-if="slots.prefix")
-    slot(name="prefix")
-  template(#suffix, v-if="slots.suffix")
-    slot(name="suffix")
+  template(#help-text, v-if="hasSlot(slots['help-text']) || helpText")
+    slot(v-if="hasSlot(slots['help-text'])", name="help-text")
+    template(v-else) {{ helpText }}
+  template(#prefix, v-if="hasSlot(slots.prefix) || prefix")
+    slot(v-if="hasSlot(slots.prefix)", name="prefix")
+    template(v-else) {{ prefix }}
+  template(#suffix, v-if="hasSlot(slots.suffix) || suffix")
+    slot(v-if="hasSlot(slots.suffix)", name="suffix")
+    template(v-else) {{ suffix }}
 </template>
 <script setup lang="ts">
 import { computed, useSlots } from 'vue';
 import { UseUniqueId } from '@/use';
 import type { LabelledProps } from '@/components/Labelled/utils';
+import { hasSlot } from '@/utilities/has-slot';
 import type { ErrorType } from '@/utilities/type';
 import type { RangeSliderValue } from './types';
 import { SingleThumb, DualThumb } from './components';
 
 interface RangeSliderProps {
-  /** Label for the range input */
+  /** Label for the range input. This prop will be overriden by `label` slot. */
   label?: string;
   /** Adds an action to the label */
   labelAction?: LabelledProps['action'];
@@ -51,6 +58,8 @@ interface RangeSliderProps {
   labelHidden?: boolean;
   /** Initial value for range input */
   modelValue: RangeSliderValue;
+  /** Additional text to aid in use. This prop will be overriden by `help-text` slot. */
+  helpText?: string;
   /** Minimum possible value for range input */
   min?: number;
   /** Maximum possible value for range input */
@@ -63,6 +72,10 @@ interface RangeSliderProps {
   error?: ErrorType;
   /** Disable input */
   disabled?: boolean;
+  /** Element to display before the input. This prop will be overriden by `prefix` slot. */
+  prefix?: string;
+  /** Element to display after the input. This prop will be overriden by `suffix` slot. */
+  suffix?: string;
 }
 
 const props = withDefaults(defineProps<RangeSliderProps>(), {

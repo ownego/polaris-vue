@@ -5,10 +5,12 @@ Labelled(
   :action="labelAction",
   :labelHidden="labelHidden",
   :requiredIndicator="requiredIndicator",
+  :label="label",
+  :helpText="helpText",
 )
-  template(#label, v-if="slots.label")
+  template(#label, v-if="hasSlot(slots.label)")
     slot(name="label")
-  template(#help-text, v-if="slots['help-text']")
+  template(#help-text, v-if="hasSlot(slots['help-text'])")
     slot(name="help-text")
   Connected
     template(#left, v-if="slots['connected-left']")
@@ -20,20 +22,23 @@ Labelled(
       @click="handleClick",
     )
       div(
-        v-if="slots.prefix",
+        v-if="slots.prefix || prefix",
         :id="`${id}Prefix`",
         :class="styles.Prefix",
         ref="prefixRef",
       )
-        slot(name="prefix")
+        slot(v-if="hasSlot(slots.prefix)", name="prefix")
+        template(v-else) {{ prefix }}
+
       div(
-        v-if="slots['vertical-content']"
+        v-if="hasSlot(slots['vertical-content']) || verticalContent",
         :class="styles.VerticalContent",
         :id="`${id}-VerticalContent`",
         ref="verticalContentRef",
         @click="handleClickChild",
       )
-        slot(name="vertical-content")
+        slot(v-if="hasSlot(slots['vertical-content'])", name="vertical-content")
+        template(v-else) {{ verticalContent }}
         component(
           :is="multiline ? 'textarea' : 'input'",
           :id="id",
@@ -116,12 +121,13 @@ Labelled(
       )
         template(v-if="multiline") {{ modelValue }}
       div(
-        v-if="slots.suffix",
+        v-if="hasSlot(slots.suffix) || suffix",
         :id="`${id}Suffix`",
         :class="styles.Suffix",
         ref="suffixRef",
       )
-        slot(name="suffix")
+        slot(v-if="hasSlot(slots.suffix)", name="suffix")
+        template(v-else) {{ suffix }}
       div(
         v-if="showCharacterCount",
         :class="characterCountClassName",
@@ -166,6 +172,7 @@ import styles from '@/classes/TextField.json';
 import CircleCancelMinor from '@icons/CircleCancelMinor.svg';
 import type { Error } from '@/utilities/type';
 import { UseI18n } from '@/use';
+import { hasSlot } from '@/utilities/has-slot';
 import type { LabelledProps } from '../Labelled/utils';
 import { helpTextID, labelID } from '../Labelled/utils';
 import { Resizer, Spinner as TextFieldSpinner } from './components';
@@ -202,10 +209,20 @@ type InputMode =
   | 'url';
 
 interface NonMutuallyExclusiveProps {
+  /** Content to vertically display above the input value */
+  verticalContent?: string;
+  /** Text to display before value */
+  prefix?: string;
+  /** Text to display after value */
+  suffix?: string;
   /** Hint text to display */
   placeholder?: string;
   /** Initial value for the input */
   modelValue?: string;
+  /** Additional hint text to display */
+  helpText?: string;
+  /** Label for the input */
+  label?: string;
   /** Adds an action to the label */
   labelAction?: LabelledProps['action'];
   /** Visually hide the label */

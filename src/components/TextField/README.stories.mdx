@@ -10,6 +10,7 @@ import {
   FormLayout,
   FormGroup,
   InlineError,
+  TextStyle,
 } from '@/polaris-vue';
 
 <Meta
@@ -472,6 +473,68 @@ import {
         },
       }
     },
+    'vertical-content': {
+      control: {
+        disable: true,
+      },
+      description: 'Content to vertically display above the input value',
+      table: {
+        type: {
+          summary: null
+        },
+      }
+    },
+    'helpText': {
+      control: {
+        type: 'text',
+      },
+      description: 'Additional hint text to display. This prop will be overriden by the `helpText` slot',
+      table: {
+        category: 'props',
+        type: {
+          summary: 'string'
+        },
+      }
+    },
+    'propLabel': {
+      name: 'label',
+      control: {
+        type: 'text',
+      },
+      description: 'Label for the input. This prop will be overriden by the `label` slot',
+      table: {
+        category: 'props',
+        type: {
+          summary: 'string'
+        },
+      }
+    },
+    'propPrefix': {
+      name: 'prefix',
+      control: {
+        type: 'text',
+      },
+      description: 'Text to display before value. This prop will be overriden by the `prefix` slot',
+      table: {
+        category: 'props',
+        type: {
+          summary: 'string'
+        },
+      }
+    },
+    'propSuffix': {
+      name: 'suffix',
+      control: {
+        type: 'text',
+      },
+      description: 'Text to display after value. This prop will be overriden by the `suffix` slot',
+      table: {
+        category: 'props',
+        type: {
+          summary: 'string'
+        },
+      }
+    },
   }}
 />
 
@@ -491,12 +554,9 @@ export const DefaultTextField = (args) => ({
   <div>
     <TextField
       v-model="name"
+      label="Your store name"
       autoComplete="off"
-    >
-      <template slot="label">
-        Your store name
-      </template>
-    </TextField>
+    />
     <p style="margin-top: 20px">Name: {{ name }}</p>
   </div>
   `,
@@ -514,12 +574,9 @@ DefaultTextField.parameters = {
       <div>
         <TextField
           v-model="name"
+          label="Your store name"
           autoComplete="off"
-        >
-          <template slot="label">
-            Your store name
-          </template>
-        </TextField>
+        />
         <p>Name: {{ name }}</p>
       </div>\n
       data() {
@@ -541,7 +598,7 @@ DefaultTextField.parameters = {
 Use when input text should be a number.
 
 export const NumberField = (args, { argTypes }) => ({
-  components: { TextField },
+  components: { TextField, TextStyle },
   template: `
   <div>
     <TextField
@@ -549,8 +606,8 @@ export const NumberField = (args, { argTypes }) => ({
       v-model="numberData"
       autoComplete="off"
     >
-      <template slot="label">
-        Quantity
+      <template #label>
+        <TextStyle variation="strong">Quantity</TextStyle>
       </template>
     </TextField>
     <p style="margin-top: 20px">Number: {{ numberData }}</p>
@@ -572,8 +629,8 @@ NumberField.parameters = {
           v-model="numberData"
           autoComplete="off"
         >
-          <template slot="label">
-            Quantity
+          <template #label>
+            <TextStyle variation="strong">Quantity</TextStyle>
           </template>
         </TextField>
         <p>Number: {{ numberData }}</p>
@@ -604,12 +661,9 @@ export const MultiLineField = (args, { argTypes }) => ({
     <TextField
       v-model="address"
       autoComplete="off"
+      label="Address"
       :multiline="4"
-    >
-      <template slot="label">
-        Address
-      </template>
-    </TextField>
+    />
     <p style="margin-top: 20px">Address: {{ address }}</p>
   </div>`,
   data() {
@@ -627,12 +681,9 @@ MultiLineField.parameters = {
         <TextField
           v-model="address"
           autoComplete="off"
+          label="Address"
           :multiline="4"
-        >
-          <template slot="label">
-            Address
-          </template>
-        </TextField>
+        />
         <p style="margin-top: 20px">Address: {{ address }}</p>
       </div>\n
       data() {
@@ -736,11 +787,8 @@ export const RightAlignedField = (args, { argTypes }) => ({
       autoComplete="off"
       align="right"
       :labelHidden="true"
-    >
-      <template #label>
-        Price label
-      </template>
-    </TextField>
+      label="Price label"
+    />
   </Stack>`,
   data() {
     return {
@@ -754,19 +802,14 @@ RightAlignedField.parameters = {
       state: 'close',
       code: dedent`
       <Stack alignment="center">
-        <StackItem :fill="true">
-          Price
-        </StackItem>
+        <StackItem :fill="true">Price</StackItem>
         <TextField
           v-model="price"
           autoComplete="off"
           align="right"
           :labelHidden="true"
-        >
-          <template #label>
-            Price label
-          </template>
-        </TextField>
+          label="Price label"
+        />
       </Stack>\n
       import { Stack, StackItem } from '@/polaris-vue';\n
       data() {
@@ -796,10 +839,8 @@ export const HelpTextField = (args, { argTypes }) => ({
     <TextField
       type="email"
       autoComplete="email"
+      label="Account email"
     >
-      <template #label>
-        Account email
-      </template>
       <template #help-text>
         We'll use this address if we need to contact you about your account.
       </template>
@@ -816,10 +857,8 @@ HelpTextField.parameters = {
         <TextField
           type="email"
           autoComplete="email"
+          label="Account email"
         >
-          <template #label>
-            Account email
-          </template>
           <template #help-text>
             We'll use this address if we need to contact you about your account.
           </template>
@@ -850,14 +889,9 @@ export const PrefixSuffixField = (args, { argTypes }) => ({
       v-model="price"
       type="number"
       autoComplete="off"
-    >
-      <template #label>
-        Price
-      </template>
-      <template #prefix>
-        $
-      </template>
-    </TextField>
+      label="Price"
+      prefix="$"
+    />
   </div>
   `,
   data() {
@@ -876,14 +910,9 @@ PrefixSuffixField.parameters = {
           v-model="price"
           type="number"
           autoComplete="off"
-        >
-          <template #label>
-            Price
-          </template>
-          <template #prefix>
-            $
-          </template>
-        </TextField>
+          label="Price"
+          prefix="$"
+        />
       </div>
       `,
     },
@@ -968,12 +997,9 @@ export const ClearBtnField = (args, { argTypes }) => ({
       v-model="storeName"
       autoComplete="off"
       :clearButton="true"
+      label="Store name"
       @clear-button-click="storeName = ''"
-    >
-      <template slot="label">
-        Store name
-      </template>
-    </TextField>
+    />
   </div>
   `,
   data() {
@@ -992,12 +1018,9 @@ ClearBtnField.parameters = {
           v-model="storeName"
           autoComplete="off"
           :clearButton="true"
+          label="Store name"
           @clear-button-click="storeName = ''"
-        >
-          <template slot="label">
-            Store name
-          </template>
-        </TextField>
+        />
       </div>\n
       data() {
         return {

@@ -148,6 +148,8 @@ interface Props {
    * Disclosure button connected right of the button. Toggles a popover action list.
    */
   connectedDisclosure?: ConnectedDisclosure;
+  /** Indicates whether or not the button is the primary navigation link when rendered inside of an `IndexTable.Row` */
+  dataPrimaryLink?: boolean;
 }
 
 const props = withDefaults(defineProps<Props>(), {
@@ -226,7 +228,12 @@ const commonProps = computed(() => {
     id, accessibilityLabel, role, ariaDescribedBy,
   } = props;
   return {
-    id, class: className.value, accessibilityLabel, role, ariaDescribedBy,
+    id,
+    class: className.value,
+    accessibilityLabel,
+    role,
+    ariaDescribedBy,
+    'data-primary-link': props.dataPrimaryLink,
   };
 });
 

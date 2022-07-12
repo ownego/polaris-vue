@@ -194,12 +194,13 @@ div(:class="styles.Filters")
           @remove="() => { filter.onRemove(filter.key) }",
         ) {{ filter.label }}
   div(
-    v-if="hasSlot(slots['help-text'])",
+    v-if="hasSlot(slots['help-text']) || helpText",
     id="FiltersHelpText",
     :class="styles.HelpText",
   )
     TextStyle(variation="subdued")
-      slot(name="help-text")
+      slot(v-if="hasSlot(slots['help-text'])", name="help-text")
+      template(v-else) {{ helpText }}
   template(v-if="open")
     ScrollLock
     div(:class="styles.Backdrop", @click="closeFilters")
@@ -257,6 +258,8 @@ interface FiltersProps {
   appliedFilters?: AppliedFilterInterface[];
   /** Disable all filters */
   disabled?: boolean;
+  /** Additional hint text to display below the filters. This prop will be overriden by `help-text` slot. */
+  helpText?: string;
   /** Hide tags for applied filters */
   hideTags?: boolean;
   /** Hide the query field */
