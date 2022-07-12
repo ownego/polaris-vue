@@ -49,6 +49,19 @@ import { Checkbox } from '@/polaris-vue';
         },
       },
     },
+    propLabel: {
+      name: 'label',
+      description: 'Label for the checkbox. This will be overridden by `label` slot.',
+      control: {
+        type: 'text',
+      },
+      table: {
+        category: 'props',
+        type: {
+          summary: 'string',
+        },
+      },
+    },
     modelValue: {
       description: 'v-model is available for this component, string type should be used with multiple checkbox',
       control: {
@@ -116,15 +129,17 @@ export const Template = (args) => ({
   setup() { return { args }; },
   template: `
   <div>
+    <Checkbox label="Basic Label" helpText="Basic help text" v-model="checkboxValue"/>
     <Checkbox v-bind="args" v-model="isChecked">
-      <template #label>Checkbox label</template>
-      <template #help-text>Basic help text</template>
+      <template #label>Dynamic checkbox label</template>
+      <template #help-text>Dynamic help text</template>
     </Checkbox>
     <p style="margin-top: 30px">Checked: {{ isChecked }} </p>
   </div>`,
   data() {
     return {
       isChecked: false,
+      checkboxValue: false,
     };
   },
 });
@@ -133,9 +148,10 @@ Template.parameters = {
     source: {
       code: dedent`
         <div>
+          <Checkbox label="Basic Label" helpText="Basic help text" v-model="checkboxValue"/>
           <Checkbox v-model="isChecked">
-            <template #label>Checkbox label</template>
-            <template #help-text>Basic help text</template>
+            <template #label>Dynamic checkbox label</template>
+            <template #help-text>Dynamic help text</template>
           </Checkbox>
           <p>Checked: {{ isChecked }} </p>
         </div>
