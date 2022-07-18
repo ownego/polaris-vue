@@ -13,8 +13,10 @@ Labelled(
     :class="className",
     :style="cssVars",
   )
-    div(v-if="hasSlot(slots.prefix)", :class="styles.Prefix")
-      slot(name="prefix")
+    div(v-if="hasSlot(slots.prefix) || prefix", :class="styles.Prefix")
+      slot(v-if="hasSlot(slots.prefix)", name="prefix")
+      template(v-else) {{ prefix }}
+
     div(:class="styles.InputWrapper")
       input(
         type="range",
@@ -43,8 +45,9 @@ Labelled(
         div(:class="styles.OutputBubble")
           span(:class="styles.OutputText")
             | {{ clampedValue }}
-    div(v-if="hasSlot(slots.suffix)", :class="styles.Suffix")
-      slot(name="suffix")
+    div(v-if="hasSlot(slots.suffix) || suffix", :class="styles.Suffix")
+      slot(v-if="hasSlot(slots.suffix)", name="suffix")
+      template(v-else) {{ suffix }}
 </template>
 
 <script setup lang="ts">
@@ -83,6 +86,10 @@ interface SingleThumbProps {
   error?: ErrorType;
   /** Disable input */
   disabled?: boolean;
+  /** Element to display before the input. This prop will be overriden by `prefix` slot. */
+  prefix?: string;
+  /** Element to display after the input. This prop will be overriden by `suffix` slot. */
+  suffix?: string;
 }
 
 const props = defineProps<SingleThumbProps>();
