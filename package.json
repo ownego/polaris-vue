@@ -1,6 +1,6 @@
 {
   "name": "@ownego/polaris-vue",
-  "version": "1.0.3",
+  "version": "1.0.4",
   "polaris_version": "9.20.0",
   "description": "Shopify Polaris UI library for Vue 3",
   "author": "Ownego Team",
