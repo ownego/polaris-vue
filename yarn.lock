@@ -1729,10 +1729,10 @@
     colors "~1.2.1"
     string-argv "~0.3.1"
 
-"@shopify/polaris-icons@^5.0.0":
-  version "5.0.0"
-  resolved "https://registry.yarnpkg.com/@shopify/polaris-icons/-/polaris-icons-5.0.0.tgz#af9da0d9ad0295f4e6c44a4bd0474517b32bc538"
-  integrity sha512-VNh8bImQw5FwQznE8kp7vUMb2kseZJ0FJ1yT4RNDVz4wj8OnfEBhK+kEXdm6fKprLVlGmpgyt8+EUoPdhfye4A==
+"@shopify/polaris-icons@^5.2.0":
+  version "5.2.0"
+  resolved "https://registry.yarnpkg.com/@shopify/polaris-icons/-/polaris-icons-5.2.0.tgz#650b50ca34278429b570b65b1080833b8ac32cc4"
+  integrity sha512-7at7poxqO1sjd9yu8u7jn8+Xsy/gp73omxmzNzw5BL1G9WIOKWsjiL70UegJe4jy4sY1wCL+JLYFLLFQm4ld9A==
 
 "@shopify/polaris-tokens@^5.5.0":
   version "5.5.0"
