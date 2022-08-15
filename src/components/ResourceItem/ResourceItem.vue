@@ -291,7 +291,7 @@ const handleSelection = (value: boolean, shiftKey: boolean) => {
   focused.value = value;
   focusedInner.value = value;
 
-  onSelectionChange(value, id, sortOrder, shiftKey);
+  onSelectionChange(!value, id, sortOrder, shiftKey);
 };
 
 const handleClick = (event: MouseEvent) => {
