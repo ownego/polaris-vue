@@ -51,7 +51,7 @@ li(:class="listItemClassName", :dataHref="dataHref")
                   :id="checkboxId",
                   :label="checkboxAccessibilityLabel",
                   labelHidden,
-                  v-model="selected",
+                  :checked="selected",
                   :disabled="loading",
                 )
           div(
@@ -275,7 +275,7 @@ const handleMouseOut = () => {
 const handleLargerSelectionArea = (event: Event) => {
   event.stopPropagation();
   const e = event as MouseEvent;
-  handleSelection(selected.value, e.shiftKey);
+  handleSelection(!selected.value, e.shiftKey);
 };
 
 const handleSelection = (value: boolean, shiftKey: boolean) => {
