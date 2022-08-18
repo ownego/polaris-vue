@@ -138,11 +138,11 @@ Labelled(
       )
         p {{ characterCountText }}
       button(
-        type="button"
+        type="button",
         v-if="clearButtonVisible && clearButton",
         :class="styles.ClearButton",
         :disabled="disabled",
-        @click="$emit('clear-button-click', id)",
+        @click="handleClearButtonPress(id)",
       )
         VisuallyHidden
           p {{ i18n.translate('Polaris.Common.clear') }}
@@ -580,6 +580,11 @@ const handleButtonPress = (): void => {
   document.addEventListener('mouseup', handleButtonRelease, {
     once: true,
   });
+};
+
+const handleClearButtonPress = (targetId: string): void => {
+  emits('update:modelValue', '');
+  emits('clear-button-click', targetId);
 };
 
 const handleKeyPress = (event: KeyboardEvent): void => {
