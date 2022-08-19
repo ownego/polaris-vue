@@ -3,15 +3,35 @@ span(
   :class="className",
   ref="secondaryActionsRef",
 )
-  Button(@click="$emit('click')", v-bind="props")
+  Tooltip(
+    v-if="helpText || hasSlot(slots.helpText)",
+    :content="helpText || ''",
+  )
+    template(
+      v-if="hasSlot(slots.helpText)",
+      #content,
+    )
+      slot(name="helpText")
+
+    Button(
+      v-bind="props",
+      @click="$emit('click')",
+    )
+      slot
+  Button(
+    v-else,
+    v-bind="props",
+    @click="$emit('click')",
+  )
     slot
 </template>
 
 <script setup lang="ts">
-import { computed, ref, onMounted } from 'vue';
+import { computed, ref, onMounted, useSlots } from 'vue';
 import { classNames } from 'polaris/polaris-react/src/utilities/css';
 import styles from '@/classes/ActionMenu-SecondaryAction.json';
-import { Button } from '@/components';
+import { Button, Tooltip } from '@/components';
+import { hasSlot } from '@/utilities/has-slot';
 import type { IconSource } from '@/utilities/type';
 import type { ConnectedDisclosure } from '@/components/Button/utils';
 
@@ -31,6 +51,7 @@ interface ButtonProps {
   ariaDescribedBy?: string;
   primary?: boolean;
   destructive?: boolean;
+  helpText?: string;
   size?: 'slim' | 'medium' | 'large';
   textAlign?: 'left' | 'right' | 'center';
   outline?: boolean;
@@ -51,6 +72,8 @@ const emits = defineEmits<{
 }>();
 
 const secondaryActionsRef = ref<HTMLSpanElement | null>(null);
+
+const slots = useSlots();
 
 const className = computed(() => {
   return classNames(

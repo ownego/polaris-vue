@@ -5,7 +5,7 @@ Polaris Vue by Ownego only supports **Vue 3.0+**.
 Polaris Vue based on [Shopify Polaris style guide](https://polaris.shopify.com/), built especially for Vue 3.
 We're trying to make it mostly close with Shopify style guide and get a better performance.
 
-**Follow Polaris React version:** [9.20.0](https://github.com/Shopify/polaris/releases/tag/%40shopify%2Fpolaris%409.20.0) - Migrated date: *Jul 12th, 2022*.
+**Follow Polaris React version:** [9.23.1](https://github.com/Shopify/polaris/releases/tag/%40shopify%2Fpolaris%409.23.1) - Migrated date: *Aug 18th, 2022*.
 
 <br/>
 

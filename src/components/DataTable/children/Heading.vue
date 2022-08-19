@@ -1,5 +1,6 @@
 <template lang="pug">
 Cell(
+  v-if="!inFixedFirstColumn || !inStickyHeader",
   header,
   :setRef="setRef",
   :stickyHeadingCell="inStickyHeader",
@@ -12,8 +13,46 @@ Cell(
   :fixedCellVisible="!isScrolledFarthestLeft",
   :firstColumnMinWidth="firstColumnMinWidth",
   :inFixedFirstColumn="inFixedFirstColumn",
+  @focus="handleFocus",
+  @sort="$emit('sort')",
 )
   slot
+template(v-else)
+  Cell(
+    header,
+    :setRef="setRef",
+    :stickyHeadingCell="inStickyHeader",
+    :contentType="columnContentTypes && columnContentTypes[headingIndex]",
+    :firstColumn="headingIndex === 0",
+    :truncate="truncate",
+    v-bind="sortableHeadingProps",
+    :verticalAlign="verticalAlign",
+    :stickyCellWidth="stickyCellWidth",
+    :fixedCellVisible="!isScrolledFarthestLeft",
+    :firstColumnMinWidth="firstColumnMinWidth",
+    :inFixedFirstColumn="false",
+    @focus="handleFocus",
+    @sort="$emit('sort')",
+  )
+    slot
+  Cell(
+    v-if="!inFixedFirstColumn || !inStickyHeader",
+    header,
+    :setRef="setRef",
+    :stickyHeadingCell="inStickyHeader",
+    :contentType="columnContentTypes && columnContentTypes[headingIndex]",
+    :firstColumn="headingIndex === 0",
+    :truncate="truncate",
+    v-bind="sortableHeadingProps",
+    :verticalAlign="verticalAlign",
+    :stickyCellWidth="stickyCellWidth",
+    :fixedCellVisible="!isScrolledFarthestLeft",
+    :firstColumnMinWidth="firstColumnMinWidth",
+    :inFixedFirstColumn="true",
+    @focus="handleFocus",
+    @sort="$emit('sort')",
+  )
+    slot
 </template>
 
 <script setup lang="ts">
@@ -46,6 +85,11 @@ const props = withDefaults(defineProps<Props>(), {
 
 const slots = useSlots();
 
+const emits = defineEmits<{
+  (e: 'focus', event: Event): void;
+  (e: 'sort'): void;
+}>();
+
 // const headingCellId = computed(() => `heading-cell-${props.headingIndex}`);
 // const stickyHeaderId = computed(() => `stickyheader-${props.headingIndex}`);
 // const id = computed(() => props.inStickyHeader ? stickyHeaderId.value : headingCellId.value);
@@ -68,4 +112,8 @@ const sortableHeadingProps = computed(() => {
 
   return {};
 });
+
+const handleFocus = (e: Event) => {
+  emits('focus', e);
+}
 </script>

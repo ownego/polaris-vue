@@ -1,7 +1,7 @@
 {
   "name": "@ownego/polaris-vue",
   "version": "1.0.0",
-  "polaris_version": "9.20.0",
+  "polaris_version": "9.23.1",
   "description": "Shopify Polaris UI library for Vue 3",
   "author": {
     "name": "Ownego Team"
@@ -37,7 +37,8 @@
     "remove-trashes": "rimraf dist/index.html dist/favicon.ico dist/images"
   },
   "dependencies": {
-    "@shopify/polaris-icons": "^5.2.0",
+    "@shopify/polaris-icons": "^5.4.0",
+    "polaris": "https://github.com/juzser/polaris.git",
     "vite-svg-loader": "^3.1.2",
     "vue": "^3.2.31",
     "vue-router": "^3.1.6"
@@ -45,7 +46,7 @@
   "devDependencies": {
     "@babel/core": "^7.17.5",
     "@rushstack/eslint-patch": "^1.1.0",
-    "@shopify/polaris-tokens": "^5.5.0",
+    "@shopify/polaris-tokens": "^5.5.1",
     "@shopify/typescript-configs": "^5.1.0",
     "@storybook/addon-a11y": "^6.5.5",
     "@storybook/addon-actions": "^6.5.5",
@@ -69,7 +70,6 @@
     "fs-extra": "^10.1.0",
     "hash-generator": "^0.1.0",
     "path": "^0.12.7",
-    "polaris": "https://github.com/juzser/polaris.git",
     "postcss": "^7",
     "postcss-modules": "^3",
     "prettier": "^2.5.1",

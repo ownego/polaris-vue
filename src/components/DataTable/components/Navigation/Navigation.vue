@@ -1,5 +1,5 @@
 <template lang="pug">
-div(:class="styles.Navigation")
+div(:class="styles.Navigation", :ref="setRef")
   Button(
     plain,
     :icon="ChevronLeftMinor",
@@ -32,17 +32,21 @@ import ChevronLeftMinor from '@icons/ChevronLeftMinor.svg';
 import ChevronRightMinor from '@icons/ChevronRightMinor.svg';
 import styles from '@/classes/DataTable.json';
 import type { ColumnVisibilityData } from '../../types';
+import { ref } from 'vue';
 
 interface NavigationProps {
   columnVisibilityData: ColumnVisibilityData[];
   isScrolledFarthestLeft?: boolean;
   isScrolledFarthestRight?: boolean;
   fixedFirstColumn?: boolean;
+  setRef?: (ref: any) => void;
 }
 
 defineProps<NavigationProps>();
 
 const i18n = UseI18n();
+
+const navigationRef = ref<HTMLDivElement | null>(null);
 
 const leftA11yLabel = i18n.translate(
   'Polaris.DataTable.navAccessibilityLabel',
@@ -53,5 +57,7 @@ const rightA11yLabel = i18n.translate(
   'Polaris.DataTable.navAccessibilityLabel',
   { direction: 'right' },
 );
+
+defineExpose({ el: navigationRef });
 </script>
 

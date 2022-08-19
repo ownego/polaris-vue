@@ -47,18 +47,12 @@ template(v-else)
   th(
     v-else-if="firstColumn",
     v-bind="colSpanProp",
-    :ref="(ref) => { setTooltip(ref); setRef(ref) }",
+    :ref="(ref) => { setRef(ref) }",
     :style="{ minWidth: `${firstColumnMinWidth}px` }",
     :class="className",
     scope="row",
   )
-    Tooltip(
-      v-if="showTooltip",
-      :content="slotText",
-    )
-      span(:class="styles.TooltipContent")
-        slot
-    template(v-else)
+    TruncatedText(:class="styles.TooltipContent")
       slot
   td(v-else, :class="className", v-bind="colSpanProp")
     slot
@@ -112,23 +106,11 @@ const props = withDefaults(defineProps<CellProps>(), {
 const i18n = UseI18n();
 const slots = useSlots();
 
-const showTooltip = ref(false);
-
 const numeric = computed(() => props.contentType === 'numeric');
 
 const slotText = computed(() => {
   return slots.default && slots.default()[0].el?.innerText;
 })
-
-const setTooltip = (elm: any) => {
-  if (!elm) {
-    return;
-  }
-  const tmpElm = elm as HTMLTableCellElement;
-  if (tmpElm.scrollWidth > tmpElm.offsetWidth && props.inFixedFirstColumn) {
-    showTooltip.value = true;
-  }
-};
 
 const className = computed(() => classNames(
   styles.Cell,
@@ -165,7 +147,7 @@ const sortAccessibilityLabel = computed(() => i18n.translate(
   { direction: props.sorted ? oppositeDirection.value : direction.value },
 ));
 
-const focusable = computed(() => props.inFixedFirstColumn || !(props.hasFixedFirstColumn && props.firstColumn));
+const focusable = computed(() => props.stickyHeadingCell || !(props.hasFixedFirstColumn && props.firstColumn && !props.inFixedFirstColumn));
 
 const colSpanProp = computed(() => props.colSpan && props.colSpan > 1 ? { colSpan: props.colSpan } : {});
 

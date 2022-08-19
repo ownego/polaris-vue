@@ -1729,15 +1729,15 @@
     colors "~1.2.1"
     string-argv "~0.3.1"
 
-"@shopify/polaris-icons@^5.2.0":
-  version "5.2.0"
-  resolved "https://registry.yarnpkg.com/@shopify/polaris-icons/-/polaris-icons-5.2.0.tgz#650b50ca34278429b570b65b1080833b8ac32cc4"
-  integrity sha512-7at7poxqO1sjd9yu8u7jn8+Xsy/gp73omxmzNzw5BL1G9WIOKWsjiL70UegJe4jy4sY1wCL+JLYFLLFQm4ld9A==
+"@shopify/polaris-icons@^5.4.0":
+  version "5.4.0"
+  resolved "https://registry.yarnpkg.com/@shopify/polaris-icons/-/polaris-icons-5.4.0.tgz#99a11fa48d38657aaa63d2cc3306a4d56911d6b8"
+  integrity sha512-RzVSdwJuObO/4hS+DUCzY0jEQE0d6WFH5yFjTYqotMUGxe3tCUVdbuxxk/G1QbLVGQXYHmAvDXKbt+xSHwf+ow==
 
-"@shopify/polaris-tokens@^5.5.0":
-  version "5.5.0"
-  resolved "https://registry.yarnpkg.com/@shopify/polaris-tokens/-/polaris-tokens-5.5.0.tgz#02c1d1b4bb22fb87ab77438c1847ea4061b7daf6"
-  integrity sha512-+4hlufqh26cLLvgcjNNn4p8EU+YP3zYeoWlXBMJ7ero2GgxKMqwEmdZxVs0s16feA19ruWlE0p07qjVdZ+Cb1A==
+"@shopify/polaris-tokens@^5.5.1":
+  version "5.5.1"
+  resolved "https://registry.yarnpkg.com/@shopify/polaris-tokens/-/polaris-tokens-5.5.1.tgz#e2a97d5e6e85898bee3fd6d596a4e0d7afb8ade5"
+  integrity sha512-N7nEsVos0Y+CxOJo5E2xBuAjw5oI/gebZZtoLN9sHH5NetoRBqXuADLOv3tfxEAQLwYLo38OecV097AUSzZ1/A==
 
 "@shopify/typescript-configs@^5.1.0":
   version "5.1.0"
@@ -9108,8 +9108,8 @@ pnp-webpack-plugin@1.6.4:
     ts-pnp "^1.1.6"
 
 "polaris@https://github.com/juzser/polaris.git":
-  version "9.20.0-fix"
-  resolved "https://github.com/juzser/polaris.git#25680d5d197019889242213c13cc4412342666a3"
+  version "9.23.1"
+  resolved "https://github.com/juzser/polaris.git#42398978b0edc1deeb1be3392012ee9f15752c72"
 
 polished@^4.2.2:
   version "4.2.2"
