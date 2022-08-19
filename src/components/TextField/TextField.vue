@@ -325,7 +325,7 @@ const verticalContentSlot = computed(() => slots.verticalContent?.());
 const height = ref<number>();
 const focus = ref<boolean>();
 const buttonPressTimer = ref<number>();
-const spinnerRef = ref<HTMLDivElement | null>(null);
+const spinnerRef = ref<InstanceType<typeof TextFieldSpinner> | null>(null);
 
 watch(
   () => props.focused,
@@ -639,7 +639,7 @@ function isSpinner(target: Element | EventTarget) {
   return (
     target instanceof Element &&
     spinnerRef.value &&
-    spinnerRef.value.contains(target)
+    spinnerRef.value.el?.contains(target)
   );
 }
 </script>
