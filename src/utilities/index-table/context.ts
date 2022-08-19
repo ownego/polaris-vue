@@ -3,6 +3,7 @@ import type { Ref } from 'vue';
 export interface RowContextType {
   itemId?: string;
   selected?: boolean;
+  disabled?: boolean;
   onInteraction?: (event: Event) => void;
 }
 

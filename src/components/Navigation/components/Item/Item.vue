@@ -57,15 +57,6 @@ li(v-else, :class="className")
         Badge(v-if="props.new", status="new", size="small") {{ i18n.translate('Polaris.Badge.STATUS_LABELS.new') }}
         Badge(v-else-if="typeof badge === 'string'", status="new", size="small") {{ badge }}
         Badge(v-else-if="typeof badge === 'object'", v-bind="badge") {{ badge.content }}
-      div(
-        v-if="external",
-        :class="styles.ExternalIcon"
-      )
-        Icon(
-          color="base",
-          :accessibilityLabel="i18n.translate('Polaris.Common.newWindowAccessibilityHint')",
-          :source="ExternalMinor",
-        )
 
     template(v-if="secondaryAction")
       Tooltip(
@@ -112,7 +103,6 @@ li(v-else, :class="className")
 <script setup lang="ts">
 import { computed, onUpdated, ref } from 'vue';
 import { classNames } from 'polaris/polaris-react/src/utilities/css';
-import ExternalMinor from '@icons/ExternalMinor.svg';
 import styles from '@/classes/Navigation.json';
 import { UseUniqueId } from '@/use';
 import { UseMediaQuery } from '@/utilities/media-query';

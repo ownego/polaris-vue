@@ -149,6 +149,7 @@ Labelled(
         Icon(:source="CircleCancelMinor", color="base")
       TextFieldSpinner(
         v-if="type === 'number' && step !== 0 && !disabled && !readOnly",
+        ref="spinnerRef",
         @change="handleNumberChange",
         @mousedown="handleButtonPress",
         @mouseup="handleButtonRelease",
@@ -324,6 +325,7 @@ const verticalContentSlot = computed(() => slots.verticalContent?.());
 const height = ref<number>();
 const focus = ref<boolean>();
 const buttonPressTimer = ref<number>();
+const spinnerRef = ref<HTMLDivElement | null>(null);
 
 watch(
   () => props.focused,
@@ -499,6 +501,7 @@ const handleClick = (event: Event): void => {
     isPrefixOrSuffix(target) ||
     isVerticalContent(target) ||
     isInput(target) ||
+    isSpinner(target) ||
     focus.value
   ) {
     return;
@@ -516,7 +519,7 @@ const handleChange = (event: Event) => {
 };
 
 const handleClickChild = (event: Event) => {
-  if (inputRef.value !== event.target) {
+  if (event.target && !isSpinner(event.target) && !isInput(event.target)) {
     event.stopPropagation();
   }
 
@@ -629,6 +632,14 @@ function isInput(target: HTMLElement | EventTarget) {
     inputRef.value &&
     (inputRef.value.contains(target) ||
       inputRef.value.contains(document.activeElement))
+  );
+}
+
+function isSpinner(target: Element | EventTarget) {
+  return (
+    target instanceof Element &&
+    spinnerRef.value &&
+    spinnerRef.value.contains(target)
   );
 }
 </script>

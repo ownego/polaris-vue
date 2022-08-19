@@ -69,7 +69,7 @@ div(
             UnstyledButton(
               v-else,
               :class="styles.SecondaryAction",
-              @click="secondaryAction.onAction",
+              @click="secondaryAction && secondaryAction.onAction",
             )
               span(:class="styles.Text") {{ secondaryAction.content }}
 </template>

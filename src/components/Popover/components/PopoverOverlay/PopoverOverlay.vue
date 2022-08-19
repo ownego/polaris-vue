@@ -48,7 +48,7 @@ export default {
 import { computed, onBeforeUnmount, onMounted, ref, watch } from 'vue';
 import { classNames } from 'polaris/polaris-react/src/utilities/css';
 import { tokens } from '@shopify/polaris-tokens';
-import { findFirstFocusableNode } from '@/utilities/focus';
+import { findFirstKeyboardFocusableNode } from '@/utilities/focus';
 import { PositionedOverlay } from '@/components/PositionedOverlay';
 import { EventListener } from '@/components/EventListener';
 import { KeypressListener } from '@/components/KeypressListener';
@@ -188,7 +188,7 @@ const focusContent = () => {
 
   requestAnimationFrame(() => {
     if (contentRef.value) {
-      const focusableChild = findFirstFocusableNode(contentRef.value);
+      const focusableChild = findFirstKeyboardFocusableNode(contentRef.value);
 
       if (focusableChild && props.autofocusTarget === 'first-node') {
         focusableChild.focus();

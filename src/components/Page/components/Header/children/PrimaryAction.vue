@@ -1,6 +1,16 @@
 <template lang="pug">
 div(:class="styles.PrimaryActionWrapper")
-  slot(v-if="hasSlot(slots.default)")
+  Tooltip(
+    v-if="hasSlot(slots.default) && helpText",
+    :content="helpText",
+  )
+    ButtonFrom(
+      :action="iconOnly",
+      :overrides="{ primary }",
+      @action="() => { onAction && onAction(); }",
+      @mouseenter="() => { onMouseEnter && onMouseEnter(); }",
+      @touchstart="() => { onTouchStart && onTouchStart(); }",
+    )
   ButtonFrom(
     v-else,
     :action="iconOnly",
@@ -14,6 +24,7 @@ div(:class="styles.PrimaryActionWrapper")
 <script setup lang="ts">
 import { computed, useSlots } from 'vue';
 import { ButtonFrom } from '@/components/Button';
+import { Tooltip } from '@/components';
 import styles from '@/classes/Page-Header.json';
 import { UseMediaQuery } from '@/utilities/media-query';
 import type { IconSource } from '@/utilities/type';
@@ -26,6 +37,7 @@ type PrimaryActionProps = {
   url?: string;
   external?: boolean;
   destructive?: boolean;
+  helpText?: string;
   disabled?: boolean;
   loading?: boolean;
   icon?: IconSource;

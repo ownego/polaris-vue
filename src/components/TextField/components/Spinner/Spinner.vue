@@ -2,6 +2,7 @@
 div(
   :aria-hidden="true",
   :class="styles.Spinner",
+  @click="handleClick",
 )
   div(
     role="button",
@@ -38,8 +39,11 @@ const emits = defineEmits<{
   (event: 'mousedown'): void
 }>();
 
+const handleClick = (e: Event) => {
+  emits('click', e);
+}
+
 const handleStep = (event: Event, step: number): void => {
-  emits('click', event);
   emits('change', step);
 };
 </script>

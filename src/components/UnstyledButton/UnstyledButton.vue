@@ -36,6 +36,7 @@ export default {
 <script setup lang="ts">
 import { computed, useAttrs } from 'vue';
 import { UnstyledLink } from '@/components/UnstyledLink';
+import { useDisableClick } from '@/utilities/use-disable-interaction';
 import { handleMouseUpByBlurring } from '@/utilities/focus';
 import { capitalize } from '@/utilities/capitalize';
 
@@ -62,12 +63,16 @@ const props = defineProps<Props>();
 const attrs = useAttrs();
 
 const getEventList = (events: string[]) => {
-  const eventBindings = { mouseup: handleMouseUpByBlurring };
+  const eventBindings: Record<string, any> = { mouseup: handleMouseUpByBlurring };
   for (const event of events) {
     const eventName = `on${capitalize(event)}`;
     if (attrs[eventName]) {
       eventBindings[event] = attrs[eventName];
     }
+  }
+
+  if (attrs.onClick) {
+    eventBindings.click = useDisableClick(props.disabled, attrs.onClick as any);
   }
   return eventBindings;
 }
