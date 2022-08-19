@@ -28,14 +28,17 @@ export function useIndexResourceState<T extends {[key: string]: unknown}>(
     selectedResources: initSelectedResources = [],
     allResourcesSelected: initAllResourcesSelected = false,
     resourceIDResolver = defaultResourceIDResolver,
+    resourceFilter = undefined,
   }: {
     selectedResources?: string[];
     allResourcesSelected?: boolean;
     resourceIDResolver?: ResourceIDResolver<T>;
+    resourceFilter?: (value: T) => boolean;
   } = {
     selectedResources: [],
     allResourcesSelected: false,
     resourceIDResolver: defaultResourceIDResolver,
+    resourceFilter: undefined,
   },
 ) {
   const selectedResources = ref(initSelectedResources);
@@ -64,6 +67,14 @@ export function useIndexResourceState<T extends {[key: string]: unknown}>(
         selectedResources.value = isSelecting
           ? resources.map(resourceIDResolver)
           : [];
+        if (resourceFilter) {
+          const filteredResources = resources.filter(resourceFilter);
+          selectedResources.value = isSelecting && selectedResources.value.length < filteredResources.length
+            ? filteredResources.map(resourceIDResolver)
+            : [];
+        } else {
+          selectedResources.value = isSelecting ? resources.map(resourceIDResolver) : [];
+        }
         break;
       case SelectionType.Multi:
         if (!selection) {
@@ -71,14 +82,19 @@ export function useIndexResourceState<T extends {[key: string]: unknown}>(
         }
         selectedResources.value = (() => {
           const ids: string[] = [];
+          const filteredResources = resourceFilter
+            ? resources.filter(resourceFilter)
+            : resources;
           for (let i = selection[0] as number; i <= selection[1]; i++) {
-            const id = resourceIDResolver(resources[i]);
+            if (filteredResources.includes(resources[i])) {
+              const id = resourceIDResolver(resources[i]);
 
-            if (
-              (isSelecting && !selectedResources.value.includes(id)) ||
-              (!isSelecting && selectedResources.value.includes(id))
-            ) {
-              ids.push(id);
+              if (
+                (isSelecting && !selectedResources.value.includes(id)) ||
+                (!isSelecting && selectedResources.value.includes(id))
+              ) {
+                ids.push(id);
+              }
             }
           }
 

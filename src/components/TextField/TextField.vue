@@ -138,17 +138,18 @@ Labelled(
       )
         p {{ characterCountText }}
       button(
-        type="button"
+        type="button",
         v-if="clearButtonVisible && clearButton",
         :class="styles.ClearButton",
         :disabled="disabled",
-        @click="$emit('clear-button-click', id)",
+        @click="handleClearButtonPress(id)",
       )
         VisuallyHidden
           p {{ i18n.translate('Polaris.Common.clear') }}
         Icon(:source="CircleCancelMinor", color="base")
       TextFieldSpinner(
         v-if="type === 'number' && step !== 0 && !disabled && !readOnly",
+        ref="spinnerRef",
         @change="handleNumberChange",
         @mousedown="handleButtonPress",
         @mouseup="handleButtonRelease",
@@ -324,6 +325,7 @@ const verticalContentSlot = computed(() => slots.verticalContent?.());
 const height = ref<number>();
 const focus = ref<boolean>();
 const buttonPressTimer = ref<number>();
+const spinnerRef = ref<InstanceType<typeof TextFieldSpinner> | null>(null);
 
 watch(
   () => props.focused,
@@ -499,6 +501,7 @@ const handleClick = (event: Event): void => {
     isPrefixOrSuffix(target) ||
     isVerticalContent(target) ||
     isInput(target) ||
+    isSpinner(target) ||
     focus.value
   ) {
     return;
@@ -516,7 +519,7 @@ const handleChange = (event: Event) => {
 };
 
 const handleClickChild = (event: Event) => {
-  if (inputRef.value !== event.target) {
+  if (event.target && !isSpinner(event.target) && !isInput(event.target)) {
     event.stopPropagation();
   }
 
@@ -582,6 +585,11 @@ const handleButtonPress = (): void => {
   });
 };
 
+const handleClearButtonPress = (targetId: string): void => {
+  emits('update:modelValue', '');
+  emits('clear-button-click', targetId);
+};
+
 const handleKeyPress = (event: KeyboardEvent): void => {
   const { key, which } = { ...event };
   const numbersSpec = /[\d.eE+-]$/;
@@ -624,6 +632,14 @@ function isInput(target: HTMLElement | EventTarget) {
     inputRef.value &&
     (inputRef.value.contains(target) ||
       inputRef.value.contains(document.activeElement))
+  );
+}
+
+function isSpinner(target: Element | EventTarget) {
+  return (
+    target instanceof Element &&
+    spinnerRef.value &&
+    spinnerRef.value.el?.contains(target)
   );
 }
 </script>

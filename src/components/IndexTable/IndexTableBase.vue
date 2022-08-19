@@ -51,7 +51,7 @@ div(:class="styles.IndexTable")
                 Spinner(size="small")
                 span(:class="styles.LoadingPanelText") {{ loadingPanelTextContent }}
           BulkActions(
-            :smallScreen="condensed",
+            :smallScreen="smallScreen",
             :label="bulkActionLabel",
             :accessibilityLabel="bulkActionsAccessibilityLabel",
             :selected="bulkSelectState",
@@ -345,6 +345,12 @@ const toggleHasMoreLeftColumns = () => {
   hasMoreLeftColumns.value = !hasMoreLeftColumns.value;
 };
 
+const isSmallScreen = () => {
+  return typeof window === 'undefined'
+    ? false
+    : window.innerWidth < SMALL_SCREEN_WIDTH;
+};
+
 const tablePosition = ref({ top: 0, left: 0 });
 const tableHeadingRects = ref<TableHeadingRect[]>([]);
 
@@ -356,6 +362,7 @@ const tableInitialized = ref(false);
 const isSmallScreenSelectable = ref(false);
 const stickyWrapper = ref<HTMLElement | null>(null);
 const hideScrollContainer = ref(false);
+const smallScreen = ref(isSmallScreen());
 
 const tableHeadings = ref<HTMLElement[]>([]);
 const stickyTableHeadings = ref<HTMLElement[]>([]);
@@ -494,6 +501,11 @@ const handleCanScrollRight = () => {
   canScrollRight.value = tableRect.width > scrollableRect.width;
 };
 
+const handleIsSmallScreen = () => {
+  // Somehow, Shopify dev makes a stupid here, wth is this...
+  // setSmallScreen(smallScreen);
+};
+
 const handleResize = () => {
   // hide the scrollbar when resizing
   scrollBarElement.value?.style.setProperty(
@@ -504,6 +516,7 @@ const handleResize = () => {
   resizeTableHeadings();
   debounceResizeTableScrollbar();
   handleCanScrollRight();
+  handleIsSmallScreen();
 };
 
 const handleScrollContainerScroll = (canScrollLeft, tmpCanScrollRight) => {
@@ -735,12 +748,6 @@ const handleSelectModeToggle = (val: boolean) => {
     handleSelectionChange('all', false);
     isSmallScreenSelectable.value = val;
   }
-};
-
-const isSmallScreen = () => {
-  return typeof window === 'undefined'
-    ? false
-    : window.innerWidth < SMALL_SCREEN_WIDTH;
 };
 
 // Heading markup condition

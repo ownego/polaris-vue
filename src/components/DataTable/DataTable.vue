@@ -1,7 +1,54 @@
 <template lang="pug">
-div(:class="wrapperClassName")
+div(
+  ref="dataTable",
+  :class="wrapperClassName",
+)
+  div(
+    v-if="stickyHeader",
+    :class="styles.StickyHeaderWrapper",
+    role="presentation"
+  )
+    Sticky(
+      :boundingElement="dataTable",
+      @sticky-change="stickyHandler",
+    )
+      div(:class="stickyHeaderInnerClassNames")
+        div
+          TableNavigation(
+            v-if="!hideScrollIndicator",
+            ref="stickyNav",
+            :columnVisibilityData="columnVisibilityData",
+            :isScrolledFarthestLeft="isScrolledFarthestLeft",
+            :isScrolledFarthestRight="isScrolledFarthestRight",
+            :fixedFirstColumn="hasFixedFirstColumn",
+            @navigate-table-left="navigateTable('left')",
+            @navigate-table-right="navigateTable('right')",
+          )
+        table(
+          ref="stickyTable",
+          :class="stickyHeaderTableClassNames",
+        )
+          thead
+            tr(:class="styles.StickyTableHeadingsRow")
+              TableHeading(
+                v-for="heading, index in headings",
+                :key="`stickyheader-${index}`",
+                :headingIndex="index",
+                :inFixedFirstColumn="Boolean(index === 0 && hasFixedFirstColumn)",
+                :inStickyHeader="true",
+                :stickyCellWidth="tableHeadingWidths[index]",
+                :setRef="(ref) => { setCellRef({ cellRef: ref, index, inStickyHeader: false }) }",
+                v-bind="tableHeadingProps",
+                @focus="handleFocus",
+                @sort="defaultOnSort(index)",
+              )
+                template(v-if="hasSlot(slots[`heading-${index}`])")
+                  slot(:name="`heading-${index}`")
+                template(v-else) {{ heading }}
+
   TableNavigation(
     v-if="!hideScrollIndicator",
+    ref="headerNav",
     :columnVisibilityData="columnVisibilityData",
     :isScrolledFarthestLeft="isScrolledFarthestLeft",
     :isScrolledFarthestRight="isScrolledFarthestRight",
@@ -9,67 +56,7 @@ div(:class="wrapperClassName")
     @navigate-table-left="navigateTable('left')",
     @navigate-table-right="navigateTable('right')",
   )
-  div(:class="className", ref="dataTable")
-    div(
-      v-if="stickyHeader",
-      :class="styles.StickyTable",
-      role="presentation"
-    )
-      Sticky(
-        :boundingElement="dataTable",
-        @sticky-change="stickyHandler",
-      )
-        table(:class="stickyHeaderClassNames")
-          div
-            TableNavigation(
-              v-if="!hideScrollIndicator",
-              :columnVisibilityData="columnVisibilityData",
-              :isScrolledFarthestLeft="isScrolledFarthestLeft",
-              :isScrolledFarthestRight="isScrolledFarthestRight",
-              :fixedFirstColumn="hasFixedFirstColumn",
-              @navigate-table-left="navigateTable('left')",
-              @navigate-table-right="navigateTable('right')",
-            )
-          tr(
-            :class="styles.StickyTableHeadingsRow",
-            ref="stickyTableHeadingsRow",
-          )
-            table(
-              v-if="hasFixedFirstColumn",
-              :class="classNames(!isScrolledFarthestLeft && styles.separate, styles.FixedFirstColumn)",
-            )
-              thead
-                tr
-                  TableHeading(
-                    :headingIndex="0",
-                    :inFixedFirstColumn="true",
-                    :inStickyHeader="true",
-                    :stickyCellWidth="tableHeadingWidths[0]",
-                    :setRef="(ref) => { setCellRef({ cellRef: ref, index: 0, inStickyHeader: false, inFixedFirstColumn: true }) }",
-                    v-bind="tableHeadingProps",
-                    @focus="handleFocus",
-                    @sort="defaultOnSort(0)",
-                  )
-                    template(v-if="hasSlot(slots['heading-0'])")
-                      slot(name="heading-0")
-                    template(v-else) {{ headings[0] }}
-
-            TableHeading(
-              v-for="heading, index in headings",
-              :key="`stickyheader-${index}`",
-              :headingIndex="index",
-              :inFixedFirstColumn="false",
-              :inStickyHeader="true",
-              :stickyCellWidth="tableHeadingWidths[index]",
-              :setRef="(ref) => { setCellRef({ cellRef: ref, index, inStickyHeader: false, inFixedFirstColumn: true }) }",
-              v-bind="tableHeadingProps",
-              @focus="handleFocus",
-              @sort="defaultOnSort(index)",
-            )
-              template(v-if="hasSlot(slots[`heading-${index}`])")
-                slot(:name="`heading-${index}`")
-              template(v-else) {{ heading }}
-
+  div(:class="className")
     div(:class="styles.ScrollContainer", ref="scrollContainer")
       EventListener(event="resize", :handler="handleResize")
       EventListener(
@@ -85,15 +72,14 @@ div(:class="wrapperClassName")
         :style="{ maxWidth: `${columnVisibilityData[0].rightEdge}px` }",
       )
         thead
-          tr
+          tr(:style="{ height: `${headerRowHeights[0]}px` }")
             TableHeading(
               v-for="heading, index in firstHeading",
-              :key="`stickyheader-${index}`",
+              :key="`heading-cell-${index}`",
               :headingIndex="index",
               :inFixedFirstColumn="true",
               :inStickyHeader="false",
-              :stickyCellWidth="tableHeadingWidths[index]",
-              :setRef="(ref) => { setCellRef({ cellRef: ref, index, inStickyHeader: false, inFixedFirstColumn: true }) }",
+              :setRef="(ref) => { setCellRef({ cellRef: ref, index, inStickyHeader: false }) }",
               v-bind="tableHeadingProps",
               @focus="handleFocus",
               @sort="defaultOnSort(index)",
@@ -102,7 +88,10 @@ div(:class="wrapperClassName")
                 slot(:name="`heading-${index}`")
               template(v-else) {{ heading }}
 
-          tr(v-if="totals && !showTotalsInFooter")
+          tr(
+            v-if="totals && !showTotalsInFooter",
+            :style="{ height: `${headerRowHeights[1]}px` }",
+          )
             Cell(
               v-for="total, index in firstTotal",
               :key="`totals-cell-${index}`",
@@ -129,6 +118,7 @@ div(:class="wrapperClassName")
             v-for="row, index in firstColumn",
             :key="`row-${index}`",
             :class="tableRowClassName",
+            :style="bodyRowHeights ? { height: `${bodyRowHeights[index]}px` } : {}",
             v-memo="[ condensed, showTotalsInFooter, columnVisibilityData, columnContentTypes, hideScrollIndicator, hasFixedFirstColumn, truncate, verticalAlign, row]",
             @mouseenter="handleHover(index)",
             @mouseleave="handleHover()",
@@ -176,12 +166,11 @@ div(:class="wrapperClassName")
           tr
             TableHeading(
               v-for="heading, index in headings",
-              :key="`stickyheader-${index}`",
+              :key="`heading-cell-${index}`",
               :headingIndex="index",
               :inFixedFirstColumn="false",
               :inStickyHeader="false",
-              :stickyCellWidth="tableHeadingWidths[index]",
-              :setRef="(ref) => { setCellRef({ cellRef: ref, index, inStickyHeader: false, inFixedFirstColumn: true }) }",
+              :setRef="(ref) => { setCellRef({ cellRef: ref, index, inStickyHeader: false }) }",
               v-bind="tableHeadingProps",
               @focus="handleFocus",
               @sort="defaultOnSort(index)",
@@ -360,7 +349,9 @@ const isMounted = ref(false);
 const dataTable = ref<HTMLDivElement | null>(null);
 const scrollContainer = ref<HTMLDivElement | null>(null);
 const table = ref<HTMLTableElement | null>(null);
-const stickyTableHeadingsRow = ref<HTMLTableRowElement | null>(null);
+const stickyTable = ref<HTMLTableElement | null>(null);
+const stickyNav = ref<InstanceType<typeof TableNavigation> | null>(null);
+const headerNav = ref<InstanceType<typeof TableNavigation> | null>(null);
 const tableHeadings = ref<HTMLTableCellElement[]>([]);
 const stickyHeadings = ref<HTMLDivElement[]>([]);
 const tableHeadingWidths = ref<number[]>([]);
@@ -415,6 +406,10 @@ const fixedFirstColumnClassName = computed(() => classNames(
 const firstColumn = computed(() => props.rows.map((row) => row.slice(0, 1)));
 const firstHeading = computed(() => props.headings.slice(0, 1));
 const firstTotal = computed(() => props.totals?.slice(0, 1));
+const tableHeaderRows = computed(() => table.value?.children[0].childNodes);
+const tableBodyRows = computed(() => table.value?.children[1].childNodes);
+const headerRowHeights = computed(() => getRowClientHeights(tableHeaderRows.value));
+const bodyRowHeights = computed(() => getRowClientHeights(tableBodyRows.value));
 
 const tableRowClassName = computed(() => {
   return classNames(
@@ -447,21 +442,27 @@ onBeforeUnmount(() => {
   handleResize.cancel();
 });
 
+const getRowClientHeights = (rows: NodeList | undefined) => {
+  const heights: number[] = [];
+  if (!rows) {
+    return heights;
+  }
+  rows.forEach((row) => {
+    heights.push((row as HTMLTableRowElement).clientHeight);
+  });
+  return heights;
+};
+
 const setCellRef = ({
   cellRef,
   index,
   inStickyHeader,
-  inFixedFirstColumn,
 }: {
   cellRef: HTMLTableCellElement | null;
   index: number;
   inStickyHeader: boolean;
-  inFixedFirstColumn: boolean;
 }) => {
-  if (
-    cellRef == null ||
-    (props.hasFixedFirstColumn && !inFixedFirstColumn && index === 0)
-  ) {
+  if (cellRef == null) {
     return;
   }
 
@@ -487,19 +488,49 @@ const changeHeadingFocus = () => {
     (item) => item === document.activeElement?.parentElement,
   );
 
-  if (stickyFocusedItemIndex < 0 && tableFocusedItemIndex < 0) {
+  const arrowsInStickyNav = stickyNav.value?.el?.querySelectorAll('button');
+  const arrowsInHeaderNav = headerNav.value?.el?.querySelectorAll('button');
+
+  let stickyFocusedNavIndex = -1;
+
+  arrowsInStickyNav?.forEach((item: HTMLButtonElement, index: number) => {
+    if (item === document.activeElement) {
+      stickyFocusedNavIndex = index;
+    }
+  });
+
+  let headerFocusedNavIndex = -1;
+
+  arrowsInHeaderNav?.forEach((item: HTMLButtonElement, index: number) => {
+    if (item === document.activeElement) {
+      headerFocusedNavIndex = index;
+    }
+  });
+
+  if (
+    stickyFocusedItemIndex < 0 &&
+    tableFocusedItemIndex < 0 &&
+    stickyFocusedNavIndex < 0 &&
+    headerFocusedNavIndex < 0
+  ) {
     return null;
   }
 
-  let button: HTMLButtonElement | null = null;
+  let button;
 
   if (stickyFocusedItemIndex >= 0) {
-    button = tableHeadings.value[stickyFocusedItemIndex].querySelector('button') as HTMLButtonElement;
+    button = tableHeadings[stickyFocusedItemIndex].querySelector('button');
   } else if (tableFocusedItemIndex >= 0) {
-    button = stickyHeadings.value[tableFocusedItemIndex].querySelector('button') as HTMLButtonElement;
+    button = stickyHeadings[tableFocusedItemIndex].querySelector('button');
   }
 
-  if (button === null) {
+  if (stickyFocusedNavIndex >= 0) {
+    button = arrowsInHeaderNav?.[stickyFocusedNavIndex];
+  } else if (headerFocusedNavIndex >= 0) {
+    button = arrowsInStickyNav?.[headerFocusedNavIndex];
+  }
+
+  if (button == null) {
     return null;
   }
 
@@ -575,7 +606,7 @@ const handleHeaderButtonFocus = (event: Event) => {
   const tableRightEdge = tableScrollLeft + tableViewableWidth;
   const firstColumnWidth =
     columnVisibilityData.value.length > 0
-      ? columnVisibilityData.value[0].rightEdge
+      ? columnVisibilityData.value[0]?.rightEdge
       : 0;
   const currentColumnLeftEdge = currentCell.offsetLeft;
   const currentColumnRightEdge = currentCell.offsetLeft + currentCell.offsetWidth;
@@ -592,11 +623,11 @@ const handleHeaderButtonFocus = (event: Event) => {
 };
 
 const stickyHeaderScrolling = () => {
-  if (!stickyTableHeadingsRow.value || !scrollContainer.value) {
+  if (!stickyTable.value || !scrollContainer.value) {
     return;
   }
 
-  stickyTableHeadingsRow.value.scrollLeft = scrollContainer.value.scrollLeft;
+  stickyTable.value.scrollLeft = scrollContainer.value.scrollLeft;
 };
 
 const scrollListener = () => {
@@ -629,7 +660,7 @@ const handleFocus = (event) => {
   const currentCell = event.target.parentNode as HTMLTableCellElement;
   const hasFixedFirstColumn = columnVisibilityData.value.length > 0;
   const firstColumnWidth = hasFixedFirstColumn
-    ? columnVisibilityData.value[0].rightEdge
+    ? columnVisibilityData.value[0]?.rightEdge
     : 0;
   const currentColumnLeftEdge = currentCell.offsetLeft;
   const desiredScrollLeft = currentColumnLeftEdge - firstColumnWidth;
@@ -723,13 +754,17 @@ const hasCustomTotalsNameSingular = computed(() => {
 });
 
 const stickyHandler = (isSticky: boolean) => {
-  changeHeadingFocus();
+  setTimeout(changeHeadingFocus, 10);
   stickyHeaderActive.value = isSticky;
 }
 
-const stickyHeaderClassNames = computed(() => classNames(
-  styles.StickyTableHeader,
-  stickyHeaderActive.value && styles['StickyTableHeader-isSticky'],
+const stickyHeaderInnerClassNames = computed(() => classNames(
+  styles.StickyHeaderInner,
+  stickyHeaderActive.value && styles['StickyHeaderInner-isSticky'],
+));
+
+const stickyHeaderTableClassNames = computed(() => classNames(
+  styles.StickyHeaderTable,
   !isScrolledFarthestLeft.value && styles.separate,
 ));
 </script>

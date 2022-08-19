@@ -17,11 +17,12 @@ div(
       button(
         type="button",
         :class="connectedDisclosureClassName",
-        :disabled="connectedDisclosureData.disabled",
+        :aria-disabled="connectedDisclosureData.disabled",
+        :tabIndex="connectedDisclosureData.disabled ? -1 : undefined"
         :aria-label="connectedDisclosureData.disclosureLabel",
         :aria-describedby="ariaDescribedBy",
         :aria-checked="ariaChecked",
-        @click="toggleDisclosureActive",
+        @click="handleClick",
         @mouseup="handleMouseUpByBlurring",
       )
         span
@@ -57,6 +58,7 @@ import { classNames, variationName } from 'polaris/polaris-react/src/utilities/c
 import CaretDownMinor from '@icons/CaretDownMinor.svg';
 import { handleMouseUpByBlurring } from '@/utilities/focus';
 import { capitalize } from '@/utilities/capitalize';
+import { useDisableClick } from '@/utilities/use-disable-interaction';
 import type { IconSource } from '@/utilities/type';
 import styles from '@/classes/Button.json';
 import type { ConnectedDisclosure } from './utils';
@@ -282,6 +284,7 @@ const toggleDisclosureActive = () => {
   disclosureActive.value = !disclosureActive.value;
 };
 
+const handleClick = useDisableClick(connectedDisclosureData.value.disabled, toggleDisclosureActive);
 </script>
 
 <style lang="scss">

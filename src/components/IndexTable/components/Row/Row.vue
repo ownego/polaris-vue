@@ -32,6 +32,7 @@ interface Props {
   position: number;
   subdued?: boolean;
   status?: RowStatus;
+  disabled?: boolean;
 }
 
 const props = defineProps<Props>();
@@ -63,6 +64,7 @@ const contextValue = computed<RowContextType>(() => {
   return {
     itemId: props.id,
     selected: props.selected,
+    disabled: props.disabled,
     onInteraction: handleInteraction,
   } as RowContextType;
 });
@@ -95,6 +97,7 @@ const rowClassName = computed(() => classNames(
   props.selected && styles['TableRow-selected'],
   props.subdued && styles['TableRow-subdued'],
   hovered.value && styles['TableRow-hovered'],
+  props.disabled && styles['TableRow-disabled'],
   props.status && styles[variationName('status', props.status)],
   !selectable.value &&
     !primaryLinkElement.value &&
@@ -104,7 +107,7 @@ const rowClassName = computed(() => classNames(
 const RowWrapper = computed(() => condensed?.value ? 'li' : 'tr');
 
 const handleRowClick = (event: Event) => {
-  if (!selectable.value && !primaryLinkElement.value) {
+  if ((props.disabled || !selectable.value) && !primaryLinkElement.value) {
     return;
   }
 

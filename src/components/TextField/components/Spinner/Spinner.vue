@@ -1,7 +1,9 @@
 <template lang="pug">
 div(
+  ref="elRef",
   :aria-hidden="true",
   :class="styles.Spinner",
+  @click="handleClick",
 )
   div(
     role="button",
@@ -29,7 +31,8 @@ div(
 import CaretDownMinor from '@icons/CaretDownMinor.svg';
 import CaretUpMinor from '@icons/CaretUpMinor.svg';
 import styles from '@/classes/TextField.json';
-import { Icon } from '../../../Icon';
+import { Icon } from '@/components';
+import { ref } from 'vue';
 
 const emits = defineEmits<{
   (event: 'click', e: Event): void
@@ -38,8 +41,15 @@ const emits = defineEmits<{
   (event: 'mousedown'): void
 }>();
 
+const elRef = ref<HTMLDivElement | null>(null);
+
+const handleClick = (e: Event) => {
+  emits('click', e);
+}
+
 const handleStep = (event: Event, step: number): void => {
-  emits('click', event);
   emits('change', step);
 };
+
+defineExpose({ el: elRef })
 </script>

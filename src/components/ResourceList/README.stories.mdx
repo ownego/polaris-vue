@@ -415,10 +415,11 @@ export const Template = (args) => ({
         latestOrderUrl: 'orders/1457',
       },
     ];
+    const sortValue = ref('DATE_MODIFIED_DESC');
     const onSortChange = (value) => {
       sortValue.value = value;
     };
-    return { args, items, onSortChange };
+    return { args, items, sortValue, onSortChange };
   },
   template: `
     <Card>

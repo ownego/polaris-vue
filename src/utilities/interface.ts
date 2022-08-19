@@ -108,7 +108,12 @@ export interface ComboboxTextFieldType {
   onTextFieldChange?(): void;
 }
 
-export interface MenuActionDescriptor extends ComplexAction {
+export interface TooltipAction {
+  /** Text content to render in a tooltip */
+  helpText?: string;
+}
+
+export interface MenuActionDescriptor extends ComplexAction, TooltipAction {
   /** Zero-indexed numerical position. Overrides the action's order in the menu */
   index?: number;
 }

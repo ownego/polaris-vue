@@ -99,6 +99,7 @@ export * from './Thumbnail';
 export * from './TopBar';
 export * from './TrapFocus';
 export * from './Truncate';
+export * from './TruncatedText';
 export * from './UnstyledButton';
 export * from './UnstyledLink';
 export * from './VideoThumbnail';

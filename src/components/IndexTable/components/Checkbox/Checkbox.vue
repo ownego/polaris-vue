@@ -10,6 +10,7 @@ td(v-if="!condensed", :class="checkboxClassName", ref="checkboxNode")
         :label="selectItemLabel",
         labelHidden,
         :checked="rowContext.selected",
+        :disabled="rowContext.disabled",
       )
 div(v-else, :class="styles.TableCellContentContainer")
   div(
@@ -21,6 +22,7 @@ div(v-else, :class="styles.TableCellContentContainer")
       :label="selectItemLabel",
       labelHidden,
       :checked="rowContext.selected",
+      :disabled="rowContext.disabled",
     )
 </template>
 

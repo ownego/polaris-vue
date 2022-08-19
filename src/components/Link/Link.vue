@@ -8,14 +8,9 @@ UnstyledLink(
   :external="external",
   :aria-label="accessibilityLabel",
   :data-primary-link="dataPrimaryLink",
+  @click="$emit('click')",
 )
   slot
-  span(
-    v-if="external && isSlotTextOnly",
-    :class="styles.IconLockup",
-  )
-    span(:class="styles.IconLayout")
-      Icon(:source="ExternalSmallMinor")
 button(
   v-else,
   :id="id",
@@ -26,21 +21,13 @@ button(
   @click="$emit('click')",
 )
   slot
-  span(
-    v-if="external && isSlotTextOnly",
-    :class="styles.IconLockup",
-  )
-    span(:class="styles.IconLayout")
-      Icon(:source="ExternalSmallMinor")
 </template>
 
 <script setup lang="ts">
-import { computed, useSlots } from 'vue';
+import { computed, inject, useSlots } from 'vue';
 import { classNames } from 'polaris/polaris-react/src/utilities/css';
 import styles from '@/classes/Link.json';
-import ExternalSmallMinor from '@icons/ExternalSmallMinor.svg';
 import { UnstyledLink } from '../UnstyledLink';
-import { Icon } from '../Icon';
 
 const props = defineProps<{
   /** ID for the link */
@@ -63,15 +50,13 @@ const props = defineProps<{
 
 const slots = useSlots();
 
-const isSlotTextOnly = computed(() => {
-  return slots.default
-    && slots.default().length === 1
-    && slots.default()[0].type.toString() === 'Symbol(Text)';
-});
+const BannerContext = inject('BannerContext', false);
+
+const shouldBeMonochrome = computed(() => props.monochrome || BannerContext);
 
 const className = computed(() => classNames(
   styles.Link,
-  props.monochrome && styles.monochrome,
+  shouldBeMonochrome.value && styles.monochrome,
   props.removeUnderline && styles.removeUnderline,
 ));
 </script>

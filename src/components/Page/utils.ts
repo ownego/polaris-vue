@@ -8,6 +8,7 @@ export interface PrimaryActionType {
   external?: boolean;
   destructive?: boolean;
   disabled?: boolean;
+  helpText?: string;
   loading?: boolean;
   icon?: IconSource;
   /** Provides extra visual weight and identifies the primary action in a set of buttons */
