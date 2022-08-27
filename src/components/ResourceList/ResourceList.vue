@@ -90,6 +90,7 @@ import type { CheckboxHandles } from '@/utilities/interface';
 import { classNames } from 'polaris/polaris-react/src/utilities/css';
 import { UseI18n } from '@/use';
 import { hasSlot } from '@/utilities/has-slot';
+import { tokens, toPx } from '@shopify/polaris-tokens';
 import { Button, EventListener, Sticky, Spinner, Select, EmptySearchResult, BulkActions, CheckableButton } from '@/components';
 import { SELECT_ALL_ITEMS } from '../../utilities/resource-list';
 import type { CheckableButtonKey, CheckableButtons, ResourceListSelectedItems } from '../../utilities/resource-list';
@@ -99,7 +100,6 @@ import type { BulkActionsProps } from '../BulkActions/utils';
 import EnableSelectionMinor from '@icons/EnableSelectionMinor.svg';
 import styles from '@/classes/ResourceList.json';
 
-const SMALL_SCREEN_WIDTH = 458;
 const SMALL_SPINNER_HEIGHT = 28;
 const LARGE_SPINNER_HEIGHT = 45;
 
@@ -112,10 +112,11 @@ function getAllItemsOnPage<TItemType>(
   });
 }
 
-const isSmallScreen = () => {
+const isBreakpointsXS = () => {
   return typeof window === 'undefined'
     ? false
-    : window.innerWidth < SMALL_SCREEN_WIDTH;
+    : window.innerWidth <
+        parseFloat(toPx(tokens.breakpoints['breakpoints-sm']) ?? '');
 };
 
 const defaultIdForItem = (
@@ -184,7 +185,7 @@ const emits = defineEmits<{
 const selectMode = ref<boolean>(Boolean(props.selectedItems && props.selectedItems.length > 0));
 const loadingPosition = ref(0);
 const lastSelected = ref<number | undefined>();
-const smallScreen = ref(isSmallScreen());
+const smallScreen = ref(isBreakpointsXS());
 const checkableButtons = ref<CheckableButtons>(new Map());
 const isSticky = ref(false);
 
@@ -444,7 +445,7 @@ watch(
       if (newSelectedItems && (newSelectedItems as string[]).length > 0 && !newSelectMode) {
         selectMode.value = true;
       }
-      if ((!newSelectedItems || (newSelectedItems as string[]).length === 0) && !isSmallScreen()) {
+      if ((!newSelectedItems || (newSelectedItems as string[]).length === 0) && !isBreakpointsXS()) {
         selectMode.value = false;
       }
     }
@@ -487,7 +488,7 @@ const handleSelectMode = (tmpSelectMode: boolean) => {
 
 const handleResize = debounce(
   () => {
-    const newSmallScreen = isSmallScreen();
+    const newSmallScreen = isBreakpointsXS();
 
     if (
       props.selectedItems &&
@@ -596,7 +597,7 @@ const handleSelectionChange = (
     }
   }
 
-  if (newlySelectedItems.length === 0 && !isSmallScreen()) {
+  if (newlySelectedItems.length === 0 && !isBreakpointsXS()) {
     handleSelectMode(false);
   } else if (newlySelectedItems.length > 0) {
     handleSelectMode(true);
@@ -624,7 +625,7 @@ const handleToggleAll = () => {
     });
   }
 
-  if (newlySelectedItems.length === 0 && !isSmallScreen()) {
+  if (newlySelectedItems.length === 0 && !isBreakpointsXS()) {
     handleSelectMode(false);
   } else if (newlySelectedItems.length > 0) {
     handleSelectMode(true);
@@ -632,7 +633,7 @@ const handleToggleAll = () => {
 
   let checkbox: CheckboxHandles | undefined;
 
-  if (isSmallScreen()) {
+  if (isBreakpointsXS()) {
     checkbox = checkableButtons.value.get('bulkSm');
   } else if (newlySelectedItems.length === 0) {
     checkbox = checkableButtons.value.get('plain');

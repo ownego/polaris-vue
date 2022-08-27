@@ -3,8 +3,7 @@ Popover(
   fixed,
   :active="open",
   :full-height="isFullHeight",
-  preferredAlignment="right",
-  :color-scheme="colorScheme",
+  preferred-alignment="right",
   @close="$emit('close')",
 )
   template(#activator)
@@ -41,7 +40,6 @@ export default {
 import { computed } from 'vue';
 import styles from '@/classes/TopBar-Menu.json';
 import type { ActionListProps } from '@/components/ActionList/utils';
-import type { PopoverProps } from '@/components/Popover/utils';
 import type { MessageProps } from './components/Message/utils';
 import { Popover, ActionList } from '@/components';
 import { Message } from './components';
@@ -53,8 +51,6 @@ interface MenuProps {
   message?: MessageProps;
   /** A boolean property indicating whether the menu is currently open */
   open: boolean;
-  /** Accepts a color scheme for the contents of the menu */
-  colorScheme?: PopoverProps['colorScheme'];
   /** A string that provides the accessibility labeling */
   accessibilityLabel?: string;
 }

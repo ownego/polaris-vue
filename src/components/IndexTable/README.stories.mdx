@@ -40,6 +40,14 @@ import { ref, computed } from 'vue';
         type: { summary: '(selectionType: SelectionType, toggleType: boolean, selection?: string | Range): void' },
       },
     },
+    eventSort: {
+      control: { disable: true },
+      description: 'Callback fired on click or keypress of a sortable column heading.',
+      table: {
+        category: 'events',
+        type: { summary: '(index: number, direction: ascending | descending): void' },
+      },
+    },
     emptyState: {
       description: 'The markup to display when no resources exist yet. Renders when set and items is empty.',
       control: { disable: true },
@@ -52,6 +60,24 @@ import { ref, computed } from 'vue';
       control: { disable: true },
       table: {
         type: { summary: null },
+      },
+    },
+    sortDirection: {
+      control: {
+        type: 'select',
+        options: ['ascending', 'descending'],
+      },
+      table: {
+        type: { summary: 'ascending | descending' },
+      },
+    },
+    defaultSortDirection: {
+      control: {
+        type: 'select',
+        options: ['ascending', 'descending'],
+      },
+      table: {
+        type: { summary: 'ascending | descending' },
       },
     },
   }}

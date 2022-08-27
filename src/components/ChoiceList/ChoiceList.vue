@@ -15,6 +15,7 @@ fieldset(
       component(
         :is="allowMultiple ? Checkbox : RadioButton",
         :name="finalName",
+        :id="id",
         :value="choice.value",
         :checked="isChoiceSelected(choice)",
         :disabled="choice.disabled || disabled",
@@ -72,6 +73,8 @@ interface Props {
   titleHidden?: boolean;
   /** Display an error message */
   error?: ErrorType;
+  /** A unique identifier for the choice */
+  id?: string;
   /** Disable all choices */
   disabled?: boolean;
 }

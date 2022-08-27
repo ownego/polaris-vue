@@ -112,6 +112,7 @@ const className = computed(() => classNames(
 
 const handleOptionSelect = (event: MouseEvent | KeyboardEvent): void => {
   event.preventDefault();
+  event.stopPropagation();
   onAction && onAction();
 
   if (listItemRef.value && !onAction) {

@@ -8,18 +8,15 @@ div(
   v-if="slots.default",
   :class="className",
 )
-  //- TODO: Fix this - add `color-scheme="dark"` to CustomProperties component
-  CustomProperties()
-    div(:class="styles.SearchContent")
-      div(:class="styles.Results")
-        slot
+  div(:class="styles.SearchContent")
+    div(:class="styles.Results")
+      slot
 </template>
 
 <script setup lang="ts">
 import { useSlots, computed } from 'vue';
 import { classNames } from 'polaris/polaris-react/src/utilities/css';
 import styles from '@/classes/TopBar-Search.json';
-import { CustomProperties } from '@/components';
 import { SearchDismissOverlay } from '../SearchDismissOverlay';
 
 interface SearchProps {

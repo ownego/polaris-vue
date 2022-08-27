@@ -77,10 +77,6 @@ export const Template = (args) => ({
       isLoading: false,
       isDirty: false,
       toastActive: false,
-      userMenuAction: [
-        { items: [{ content: 'Back to Shopify', icon: ArrowLeftMinor }] },
-        { items: [{ content: 'Community forums' }] },
-      ],
       userMenuMessage: {
         title: 'Another Message',
         description:'This is a description of message',
@@ -129,10 +125,14 @@ export const Template = (args) => ({
       topBarSource: 'https://github.com/ownego/polaris-vue/raw/dev/public/images/logo.png',
       contextualSaveBarSource: 'https://github.com/ownego/polaris-vue/raw/dev/public/images/logo.png',
     }
+    const userMenuAction = [
+      { items: [{ content: 'Back to Shopify', icon: ArrowLeftMinor }] },
+      { items: [{ content: 'Community forums' }] },
+    ];
     const navItems = [
       { label: 'Back to Shopify', icon: ArrowLeftMinor },
     ];
-    return { logo, navItems, QuestionMarkMajor, CirclePlusOutlineMinor };
+    return { userMenuAction, logo, navItems, QuestionMarkMajor, CirclePlusOutlineMinor };
   },
   template: `
     <Frame

@@ -96,7 +96,7 @@ import QuestionMarkMajor from '@icons/QuestionMarkMajor.svg';
 />
 
 export const Template = (args) => ({
-  components: { Frame, TopBar, TopBarUserMenu, TopBarMenu, Icon, VisuallyHidden, TopBarSearchField, ActionList },
+  components: { ArrowLeftMinor, Frame, TopBar, TopBarUserMenu, TopBarMenu, Icon, VisuallyHidden, TopBarSearchField, ActionList },
   setup() {
     const logo = {
       width: 30,
@@ -120,10 +120,10 @@ export const Template = (args) => ({
     const toggleIsSecondaryMenuOpen = () => {
       isSecondaryMenuOpen.value = !isSecondaryMenuOpen.value;
     };
-    const userMenuAction = ref([
+    const userMenuAction = [
       { items: [{ content: 'Back to Shopify', icon: ArrowLeftMinor }] },
-      { items: [{ content: 'Community forums' }] }]
-    );
+      { items: [{ content: 'Community forums' }]},
+    ];
     const clickHandle = () => { alert('clicked'); };
     const userMenuMessage = ref({
       title: 'Another Message',

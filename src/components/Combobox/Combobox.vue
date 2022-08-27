@@ -47,7 +47,6 @@ const activeOptionId = ref('');
 const textFieldLabelId = ref('');
 const listboxId = ref('');
 const textFieldFocused = ref(false);
-const disableCloseOnSelect = ref(false);
 const popoverRef = ref(null);
 
 const slots = useSlots();
@@ -58,10 +57,8 @@ const shouldOpen = computed(() => !popoverActive.value && defaultSlot);
 const willLoadMoreOptions = computed(() => props.willLoadMoreOptions);
 
 const handleClose = (): void =>  {
-  if (!disableCloseOnSelect.value) {
-    popoverActive.value = false;
-    emits('close');
-  }
+  popoverActive.value = false;
+  emits('close');
 
   activeOptionId.value = '';
 };
@@ -76,8 +73,6 @@ const onOptionSelected = (): void => {
     handleClose();
     activeOptionId.value = '';
     return;
-  } else {
-    disableCloseOnSelect.value = true;
   }
 
   // TODO: waiting for forceUpdatePosition method in Popover
@@ -97,8 +92,6 @@ const handleChange = (): void => {
 };
 
 const handleBlur = (): void => {
-  disableCloseOnSelect.value = false;
-
   if (popoverActive.value) {
     handleClose();
   }

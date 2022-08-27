@@ -36,9 +36,9 @@ Portal(v-if="isMounted", idPrefix="sheet")
   )
 </template>
 <script setup lang="ts">
-import { computed, ref, inject, useSlots, onMounted } from 'vue';
+import { ref, useSlots, onMounted } from 'vue';
 import { classNames } from 'polaris/polaris-react/src/utilities/css';
-import { tokens } from '@shopify/polaris-tokens';
+import { motion } from '@shopify/polaris-tokens';
 import { focusFirstFocusableNode } from '@/utilities/focus';
 import { UseMediaQuery } from '@/utilities/media-query';
 import { hasSlot } from '@/utilities/has-slot';
@@ -105,7 +105,7 @@ const onTransitionEnter = (el: Element, done) => {
   el.classList.remove(transitionClasses.enter);
   el.classList.add(transitionClasses.enterDone);
 
-  setTimeout(done, parseInt(tokens.motion['duration-300'].value, 10));
+  setTimeout(done, parseInt(motion['duration-300'], 10));
 };
 
 const onTransitionAfterEnter = (el: Element) => {
@@ -122,7 +122,7 @@ const onTransitionLeave = (el: Element, done) => {
   el.classList.add(transitionClasses.exit);
 
   emits('exit');
-  setTimeout(done, parseInt(tokens.motion['duration-300'].value, 10));
+  setTimeout(done, parseInt(motion['duration-300'], 10));
 };
 </script>
 <style lang="scss">

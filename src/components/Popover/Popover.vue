@@ -18,7 +18,6 @@ component(
       :zIndexOverride="zIndexOverride",
       :autofocusTarget="autofocusTarget",
       :sectioned="sectioned",
-      :colorScheme="colorScheme",
       @close="handleClose",
       @scrolled-to-bottom="emit('scrolled-to-bottom')",
     )
@@ -80,8 +79,6 @@ interface PopoverProps {
   ariaHaspopup?: string;
   /** Allow the popover overlay to be hidden when printing */
   hideOnPrint?: boolean;
-  /** Accepts a color scheme for the contents of the popover */
-  colorScheme?: PopoverOverlayProps['colorScheme'];
   /**
    * The preferred auto focus target defaulting to the popover container
    * @default 'container'
@@ -94,7 +91,6 @@ const props = withDefaults(defineProps<PopoverProps>(), {
   preferredAlignment: undefined,
   zIndexOverride: undefined,
   ariaHaspopup: undefined,
-  colorScheme: undefined,
   activatorWrapper: 'div',
   preferInputActivator: true,
   autofocusTarget: 'container',

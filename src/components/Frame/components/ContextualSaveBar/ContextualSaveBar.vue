@@ -1,52 +1,51 @@
 <template lang="pug">
-CustomProperties(color-scheme="dark")
-  div(:class="styles.ContextualSaveBar")
-    div(
-      v-if="slots.contextControl",
-      :class="styles.ContextControl",
+div(:class="styles.ContextualSaveBar")
+  div(
+    v-if="slots.contextControl",
+    :class="styles.ContextControl",
+  )
+    slot(name="contextControl")
+  div(
+    v-if="!alignContentFlush && !slots.contextControl",
+    :class="styles.LogoContainer",
+    :style="width",
+  )
+    Image(
+      v-if="logo",
+      :style="{ width }",
+      :source="logo.contextualSaveBarSource || ''",
+      alt="",
     )
-      slot(name="contextControl")
-    div(
-      v-if="!alignContentFlush && !slots.contextControl",
-      :class="styles.LogoContainer",
-      :style="width",
-    )
-      Image(
-        v-if="logo",
-        :style="{ width }",
-        :source="logo.contextualSaveBarSource || ''",
-        alt="",
+  div(:class="contentsClassName")
+    h2(:class="styles.Message") {{ message }}
+    div(:class="styles.ActionContainer")
+      Stack(
+        spacing="tight",
+        :wrap="false",
       )
-    div(:class="contentsClassName")
-      h2(:class="styles.Message") {{ message }}
-      div(:class="styles.ActionContainer")
-        Stack(
-          spacing="tight",
-          :wrap="false",
+        slot(name="secondaryMenu")
+          span &nbsp;
+        Button(
+          v-if="discardAction",
+          :url="discardAction.url",
+          :loading="discardAction.loading",
+          :disabled="discardAction.disabled",
+          :accessibilityLabel="discardAction.content",
+          @click="discardActionHandler",
         )
-          slot(name="secondaryMenu")
-            span &nbsp;
-          Button(
-            v-if="discardAction",
-            :url="discardAction.url",
-            :loading="discardAction.loading",
-            :disabled="discardAction.disabled",
-            :accessibilityLabel="discardAction.content",
-            @click="discardActionHandler",
-          )
-            template(v-if="discardAction.content") {{ discardAction.content }}
-            template(v-else) {{ discardLang }}
-          Button(
-            v-if="saveAction",
-            primary,
-            :url="saveAction.url",
-            :loading="saveAction.loading",
-            :disabled="saveAction.disabled",
-            :accessibilityLabel="saveAction.content",
-            @click="saveAction.onAction",
-          )
-            template(v-if="saveAction.content") {{ saveAction.content }}
-            template(v-else) {{ saveLang }}
+          template(v-if="discardAction.content") {{ discardAction.content }}
+          template(v-else) {{ discardLang }}
+        Button(
+          v-if="saveAction",
+          primary,
+          :url="saveAction.url",
+          :loading="saveAction.loading",
+          :disabled="saveAction.disabled",
+          :accessibilityLabel="saveAction.content",
+          @click="handleSaveAction",
+        )
+          template(v-if="saveAction.content") {{ saveAction.content }}
+          template(v-else) {{ saveLang }}
 DiscardConfirmationModal(
   v-if="discardAction && discardAction.onAction && discardAction.discardConfirmationModal",
   :open="discardConfirmationModalVisible",
@@ -59,7 +58,7 @@ DiscardConfirmationModal(
 import { computed, ref, useSlots } from 'vue';
 import { classNames } from 'polaris/polaris-react/src/utilities/css';
 import { getWidth } from 'polaris/polaris-react/src/utilities/get-width';
-import { CustomProperties, Stack, Image, Button } from '@/components';
+import { Stack, Image, Button } from '@/components';
 import styles from '@/classes/Frame-ContextualSaveBar.json';
 import type { ContextualSaveBarAction, ContextualSaveBarCombinedActionProps } from '@/utilities/frame/types';
 import { UseFrame } from '@/utilities/frame';
@@ -102,6 +101,10 @@ const { logo } = useFrame();
 const width = getWidth(logo, 104);
 
 const discardConfirmationModalVisible = ref(false);
+
+const handleSaveAction = (e: Event) => {
+  props.saveAction?.onAction && props.saveAction.onAction();
+};
 
 const toggleDiscardConfirmationModal = () => {
   discardConfirmationModalVisible.value = !discardConfirmationModalVisible.value;
