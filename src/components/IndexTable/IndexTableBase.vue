@@ -143,31 +143,29 @@ div(:class="styles.IndexTable")
                           template(#label) {{ checkboxLabel }}
                   StackItem(v-if="selectable")
                     div(:class="styles['StickyTableHeading-second-scrolling']")
-                      Stack(
-                        v-if="headings[0].new",
-                        :wrap="false",
-                        alignment="center"
+                      HeadingContentWrapper(
+                        :heading="headings[0]",
+                        :index="0",
+                        :sortable="sortable",
+                        :defaultSortDirection="defaultSortDirection",
+                        :sortDirection="sortDirection",
+                        :sortColumnIndex="sortColumnIndex",
+                        @sort="handleSort",
                       )
-                        span {{ headings[0].title }}
-                        Badge(status="new")
-                          | {{ i18n.translate('Polaris.IndexTable.onboardingBadgeText') }}
-                      VisuallyHidden(v-else-if="headings[0].hidden") {{ headings[0].title }}
-                      template(v-else) {{ headings[0].title }}
                   StackItem(v-if="!selectable")
                     div(
                       :class="styles.FirstStickyHeaderElement",
                       ref="firstStickyHeaderElement",
                     )
-                      Stack(
-                        v-if="headings[0].new",
-                        :wrap="false",
-                        alignment="center"
+                      HeadingContentWrapper(
+                        :heading="headings[0]",
+                        :index="0",
+                        :sortable="sortable",
+                        :defaultSortDirection="defaultSortDirection",
+                        :sortDirection="sortDirection",
+                        :sortColumnIndex="sortColumnIndex",
+                        @sort="handleSort",
                       )
-                        span {{ headings[0].title }}
-                        Badge(status="new")
-                          | {{ i18n.translate('Polaris.IndexTable.onboardingBadgeText') }}
-                      VisuallyHidden(v-else-if="headings[0].hidden") {{ headings[0].title }}
-                      template(v-else) {{ headings[0].title }}
 
             div(
               :class="styles.StickyTableHeadings",
@@ -181,16 +179,15 @@ div(:class="styles.IndexTable")
                 :style="renderStickyHeading(index)",
                 data-index-table-sticky-heading="true",
               )
-                Stack(
-                  v-if="heading.new",
-                  :wrap="false",
-                  alignment="center"
+                HeadingContentWrapper(
+                  :heading="heading",
+                  :index="index",
+                  :sortable="sortable",
+                  :defaultSortDirection="defaultSortDirection",
+                  :sortDirection="sortDirection",
+                  :sortColumnIndex="sortColumnIndex",
+                  @sort="handleSort",
                 )
-                  span {{ heading.title }}
-                  Badge(status="new")
-                    | {{ i18n.translate('Polaris.IndexTable.onboardingBadgeText') }}
-                VisuallyHidden(v-else-if="heading.hidden") {{ heading.title }}
-                template(v-else) {{ heading.title }}
     ul(
       v-if="condensed",
       :data-selectmode="Boolean(selectMode || isSmallScreenSelectable)",
@@ -227,16 +224,15 @@ div(:class="styles.IndexTable")
                 :style="stickyPositioningStyle(index)",
                 data-index-table-heading="true",
               )
-                Stack(
-                  v-if="heading.new",
-                  :wrap="false",
-                  alignment="center"
+                HeadingContentWrapper(
+                  :heading="heading",
+                  :index="index",
+                  :sortable="sortable",
+                  :defaultSortDirection="defaultSortDirection",
+                  :sortDirection="sortDirection",
+                  :sortColumnIndex="sortColumnIndex",
+                  @sort="handleSort",
                 )
-                  span {{ heading.title }}
-                  Badge(status="new")
-                    | {{ i18n.translate('Polaris.IndexTable.onboardingBadgeText') }}
-                VisuallyHidden(v-else-if="heading.hidden") {{ heading.title }}
-                template(v-else) {{ heading.title }}
 
         tbody(ref="tableBodyRef")
           slot
@@ -271,11 +267,12 @@ import { ref, computed, onMounted, watch, useSlots } from 'vue';
 import { debounce } from 'polaris/polaris-react/src/utilities/debounce';
 import { classNames } from 'polaris/polaris-react/src/utilities/css';
 import EnableSelectionMinor from '@icons/EnableSelectionMinor.svg';
-import { tokens } from '@shopify/polaris-tokens';
+import { tokens, motion, toPx } from '@shopify/polaris-tokens';
 import { UseI18n } from '@/use';
 import { hasSlot } from '@/utilities/has-slot';
 import {
-  Badge,
+  BulkActions,
+  Button,
   Checkbox,
   EmptySearchResult,
   EventListener,
@@ -283,9 +280,6 @@ import {
   StackItem,
   Sticky,
   Spinner,
-  VisuallyHidden,
-  Button,
-  BulkActions,
 } from '@/components';
 import {
   useIndexValue,
@@ -294,8 +288,9 @@ import {
 } from '@/utilities/index-provider';
 import type { BulkActionsProps } from '../BulkActions/utils';
 import { ScrollContainer } from './components';
+import { HeadingContentWrapper } from './children';
 import { getTableHeadingsBySelector } from './utils';
-import type { IndexTableHeading } from './utils';
+import type { IndexTableHeading, IndexTableSortDirection } from './utils';
 import styles from '@/classes/IndexTable.json';
 
 interface IndexTableBaseProps {
@@ -304,6 +299,10 @@ interface IndexTableBaseProps {
   bulkActions?: BulkActionsProps['actions'];
   paginatedSelectAllActionText?: string;
   lastColumnSticky?: boolean;
+  sortable?: boolean[];
+  defaultSortDirection?: IndexTableSortDirection;
+  sortDirection?: IndexTableSortDirection;
+  sortColumnIndex?: number;
 }
 
 interface TableHeadingRect {
@@ -314,11 +313,15 @@ interface TableHeadingRect {
 const SCROLL_BAR_PADDING = 4;
 const SIXTY_FPS = 1000 / 60;
 const SCROLL_BAR_DEBOUNCE_PERIOD = 300;
-const SMALL_SCREEN_WIDTH = 458;
 
 const props = withDefaults(defineProps<IndexTableBaseProps>(), {
+  defaultSortDirection: 'descending',
   lastColumnSticky: false,
 });
+
+const emits = defineEmits<{
+  (e: 'sort', index: number, direction: IndexTableSortDirection): void;
+}>();
 
 const slots = useSlots();
 
@@ -345,10 +348,10 @@ const toggleHasMoreLeftColumns = () => {
   hasMoreLeftColumns.value = !hasMoreLeftColumns.value;
 };
 
-const isSmallScreen = () => {
+const isBreakpointsXS = () => {
   return typeof window === 'undefined'
     ? false
-    : window.innerWidth < SMALL_SCREEN_WIDTH;
+    : window.innerWidth < parseFloat(toPx(tokens.breakpoints['breakpoints-sm']) ?? '');
 };
 
 const tablePosition = ref({ top: 0, left: 0 });
@@ -362,7 +365,7 @@ const tableInitialized = ref(false);
 const isSmallScreenSelectable = ref(false);
 const stickyWrapper = ref<HTMLElement | null>(null);
 const hideScrollContainer = ref(false);
-const smallScreen = ref(isSmallScreen());
+const smallScreen = ref(isBreakpointsXS());
 
 const tableHeadings = ref<HTMLElement[]>([]);
 const stickyTableHeadings = ref<HTMLElement[]>([]);
@@ -449,7 +452,7 @@ const resizeTableHeadings = debounce(
     // update sticky header min-widths
     stickyTableHeadings.value.forEach((heading, index) => {
       let minWidth = 0;
-      if (index === 0 && (!isSmallScreen() || !selectable?.value)) {
+      if (index === 0 && (!isBreakpointsXS() || !selectable?.value)) {
         minWidth = calculateFirstHeaderOffset();
       } else if (selectable?.value && tableHeadingRects.value.length > index) {
         minWidth = tableHeadingRects.value[index]?.offsetWidth || 0;
@@ -756,6 +759,7 @@ const isLast = (index: number) => index === props.headings.length - 1;
 const headingContentClassName = (heading: IndexTableHeading, index: number) => {
   return classNames(
     styles.TableHeading,
+    props.sortable?.some((value) => value === true) && styles['TableHeading-sortable'],
     isSecond(index) && styles['TableHeading-second'],
     isLast(index) && !heading.hidden && styles['TableHeading-last'],
     !selectable?.value && styles['TableHeading-unselectable'],
@@ -784,6 +788,10 @@ const handleSelectPage = (event: Event) => {
 
   handleSelectionChange('page', target.checked || false);
 }
+
+const handleSort = (headingIndex: number, direction: IndexTableSortDirection) => {
+  emits('sort', headingIndex, direction);
+};
 
 const renderStickyHeading = (index: number) => {
   return tableHeadingRects.value && tableHeadingRects.value.length > (index + 1)
@@ -831,7 +839,7 @@ const onTransitionLeave = (el: Element, done) => {
   el.classList.add(loadingTransitionClassNames.exitActive);
   setTimeout(() => {
     done();
-  }, parseInt(tokens.motion['duration-100'].value, 10));
+  }, parseInt(motion['duration-100'], 10));
 };
 
 const onTransitionAfterLeave = (el: Element) => {

@@ -6,14 +6,14 @@ import type {
 
 import {
   getMediaConditions,
-  tokens,
+  breakpoints,
 } from '@shopify/polaris-tokens';
 
 import {isServer} from 'polaris/polaris-react/src/utilities/target';
 
 const Breakpoints = {
-  navigationBarCollapsed: '768px',
-  stackedContent: '1043px',
+  navigationBarCollapsed: '767.95px',
+  stackedContent: '1039.95px',
 };
 
 const noWindowMatches: MediaQueryList = {
@@ -56,7 +56,7 @@ type BreakpointsMatches = {
   [DirectionAlias in BreakpointsDirectionAlias]: boolean;
 };
 
-const breakpointsQueryEntries = getBreakpointsQueryEntries(tokens.breakpoints);
+const breakpointsQueryEntries = getBreakpointsQueryEntries(breakpoints);
 
 function getMatches(defaults?: UseBreakpointsOptions['defaults']) {
   if (!isServer) {
@@ -151,8 +151,8 @@ export interface UseBreakpointsOptions {
  *   // etc.
  * ]
  */
-export function getBreakpointsQueryEntries(breakpoints: BreakpointsTokenGroup) {
-  const mediaConditionEntries = Object.entries(getMediaConditions(breakpoints));
+export function getBreakpointsQueryEntries(breakpointsValue: BreakpointsTokenGroup) {
+  const mediaConditionEntries = Object.entries(getMediaConditions(breakpointsValue));
 
   return mediaConditionEntries
     .map(([breakpointsToken, mediaConditions]) =>

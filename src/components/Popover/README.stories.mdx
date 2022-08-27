@@ -59,18 +59,6 @@ import {
         },
       },
     },
-    colorScheme: {
-      options: ["light", "dark"],
-      control: { type: "select" },
-      table: {
-        defaultValue: {
-          summary: "light",
-        },
-        type: {
-          summary: "dark | light",
-        },
-      },
-    },
     close: {
       name: "close",
       description: "Callback when popover is closed",
@@ -149,7 +137,6 @@ export const Template = (args, { argTypes }) => ({
       :active="active"
       autofocusTarget="first-node"
       @close="toggleActive"
-      :colorScheme="'${args.colorScheme}'"
     >
       <template #activator>
         <Button :disclosure="true" @click="toggleActive"> More actions </Button>
@@ -366,9 +353,6 @@ For ActionList usages, use the [ActionList component.](/docs/components-actions-
     name="Popover"
     inline={false}
     height="300px"
-    args={{
-      colorScheme: "light",
-    }}
     parameters={{
       docs: {
         source: {

@@ -1,6 +1,5 @@
 declare module '*.vue' {
   import { defineComponent } from 'vue';
-  import type { CustomProperties } from 'vue';
 
   const Component: ReturnType<typeof defineComponent>;
 

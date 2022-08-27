@@ -19,6 +19,4 @@ export interface UserMenuProps {
   avatar?: AvatarProps['source'];
   /** A boolean property indicating whether the user menu is currently open */
   open: boolean;
-  /** Accepts a color scheme for the contents of the user menu */
-  colorScheme?: MenuProps['colorScheme'];
 }

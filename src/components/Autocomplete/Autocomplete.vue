@@ -171,6 +171,11 @@ const isShowEmptyState = computed(() => {
 });
 
 const updateSelection = (newSelection: string) => {
+  if (props.actionBefore && newSelection === props.actionBefore.content) {
+    props.actionBefore.onAction && props.actionBefore.onAction();
+    return;
+  }
+
   if (props.allowMultiple) {
     if (props.modelValue.includes(newSelection)) {
       emits('select', props.modelValue.filter((option) => option !== newSelection));

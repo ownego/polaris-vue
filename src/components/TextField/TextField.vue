@@ -330,11 +330,12 @@ const spinnerRef = ref<InstanceType<typeof TextFieldSpinner> | null>(null);
 watch(
   () => props.focused,
   () => {
-    if (!inputRef.value || props.focused === undefined) {
+    const input = props.multiline ? textAreaRef.value : inputRef.value;
+    if (!input || props.focused === undefined) {
       return;
     }
 
-    props.focused ? inputRef.value.focus() : inputRef.value.blur();
+    props.focused ? input.focus() : input.blur();
   },
 );
 

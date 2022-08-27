@@ -11,6 +11,7 @@ IndexProvider(
 )
   IndexTableBase(
     v-bind="indexTableBaseProps",
+    @sort="onSort",
   )
     slot
     template(v-if="hasSlot(slots.sort)", #sort)
@@ -21,13 +22,11 @@ IndexProvider(
 
 <script setup lang="ts">
 import { computed, useSlots } from 'vue';
-import type {
-  SelectionType,
-} from '@/utilities/index-provider';
+import type { SelectionType } from '@/utilities/index-provider';
 import { IndexProvider } from '@/components';
 import { hasSlot } from '@/utilities/has-slot';
 import IndexTableBase from './IndexTableBase.vue';
-import type { IndexTableHeading } from './utils';
+import type { IndexTableHeading, IndexTableSortDirection } from './utils';
 import type { BulkActionsProps } from '@/components/BulkActions/utils';
 
 type Range = [number, number];
@@ -60,6 +59,19 @@ interface IndexTableProps {
   paginatedSelectAllActionText?: string;
   /** Sticky the last column on horizontal scrolling */
   lastColumnSticky?: boolean;
+  /** List of booleans, which maps to whether sorting is enabled or not for each column. Defaults to false for all columns.  */
+  sortable?: boolean[];
+  /**
+   * The direction to sort the table rows on first click or keypress of a sortable column heading. Defaults to ascending.
+   * @default 'descending'
+   */
+  defaultSortDirection?: IndexTableSortDirection;
+  /** The current sorting direction. */
+  sortDirection?: IndexTableSortDirection;
+  /**
+   * The index of the heading that the table rows are sorted by.
+   */
+  sortColumnIndex?: number;
 }
 
 interface IndexTableBaseProps {
@@ -68,6 +80,10 @@ interface IndexTableBaseProps {
   bulkActions?: BulkActionsProps['actions'];
   paginatedSelectAllActionText?: string;
   lastColumnSticky?: boolean;
+  sortable?: boolean[];
+  defaultSortDirection?: IndexTableSortDirection;
+  sortDirection?: IndexTableSortDirection;
+  sortColumnIndex?: number;
 }
 
 const props = withDefaults(defineProps<IndexTableProps>(), {
@@ -84,6 +100,8 @@ const emits = defineEmits<{
     toggleType: boolean,
     selection?: string | Range,
   ): void;
+  /** Callback fired on click or keypress of a sortable column heading. */
+  (e: 'sort', index: number, direction: IndexTableSortDirection): void;
 }>();
 
 const slots = useSlots();
@@ -96,6 +114,10 @@ const onSelectionChange = (
   emits('selection-change', selectionType, toggleType, selection);
 }
 
+const onSort = (index: number, direction: IndexTableSortDirection) => {
+  emits('sort', index, direction);
+};
+
 const indexTableBaseProps = computed<IndexTableBaseProps>(() => {
   return {
     headings: props.headings,
@@ -103,6 +125,10 @@ const indexTableBaseProps = computed<IndexTableBaseProps>(() => {
     bulkActions: props.bulkActions,
     paginatedSelectAllActionText: props.paginatedSelectAllActionText,
     lastColumnSticky: props.lastColumnSticky,
+    sortable: props.sortable,
+    defaultSortDirection: props.defaultSortDirection,
+    sortDirection: props.sortDirection,
+    sortColumnIndex: props.sortColumnIndex,
   };
 });
 </script>

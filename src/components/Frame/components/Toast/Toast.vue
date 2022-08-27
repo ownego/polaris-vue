@@ -1,35 +1,34 @@
 <template lang="pug">
-CustomProperties(color-scheme="dark")
-  div(:class="className")
-    KeypressListener(
-      :keyCode="Key.Escape",
-      :handler="onDismiss",
+div(:class="className")
+  KeypressListener(
+    :keyCode="Key.Escape",
+    :handler="onDismiss",
+  )
+  | {{ content }}
+  slot
+  div(
+    v-if="action",
+    :class="styles.Action",
+  )
+    PButton(
+      plain,
+      monochrome,
+      @click="handleAction",
     )
-    | {{ content }}
-    slot
-    div(
-      v-if="action",
-      :class="styles.Action",
-    )
-      PButton(
-        plain,
-        monochrome,
-        @click="action.onAction",
-      )
-        | {{ action.content }}
-    button(
-      type="button",
-      :class="styles.CloseButton",
-      @click="onDismiss",
-    )
-      Icon(:source="MobileCancelMajor")
+      | {{ action.content }}
+  button(
+    type="button",
+    :class="styles.CloseButton",
+    @click="onDismiss",
+  )
+    Icon(:source="MobileCancelMajor")
 </template>
 
 <script setup lang="ts">
 import { computed, onBeforeUnmount, onMounted, ref } from 'vue';
 import { classNames } from 'polaris/polaris-react/src/utilities/css';
 import styles from '@/classes/Frame-Toast.json';
-import { KeypressListener, Button as PButton, CustomProperties, Icon } from '@/components';
+import { KeypressListener, Button as PButton, Icon } from '@/components';
 import type { Action } from '@/utilities/type';
 import { Key } from '@/components/KeypressListener/utils';
 import MobileCancelMajor from '@icons/MobileCancelMajor.svg';
@@ -87,6 +86,10 @@ onBeforeUnmount(() => {
 
 const onDismiss = () => {
   emits('dismiss');
+};
+
+const handleAction = (e: Event) => {
+  props.action?.onAction && props.action.onAction();
 };
 </script>
 

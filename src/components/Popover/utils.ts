@@ -1,6 +1,5 @@
 /* eslint-disable max-len */
 import type { PositionedOverlayProps } from '../PositionedOverlay/utils';
-import type { CustomPropertiesProps } from '../CustomProperties/utils';
 
 export enum PopoverCloseSource {
   Click,
@@ -77,7 +76,6 @@ export interface PopoverOverlayProps {
   sectioned?: boolean;
   fixed?: boolean;
   hideOnPrint?: boolean;
-  colorScheme?: CustomPropertiesProps['colorScheme'];
   autofocusTarget?: PopoverAutofocusTarget;
 }
 
@@ -117,7 +115,6 @@ export interface PopoverProps {
   /** Allow the popover overlay to be hidden when printing */
   hideOnPrint?: boolean;
   /** Accepts a color scheme for the contents of the popover */
-  colorScheme?: PopoverOverlayProps['colorScheme'];
   /**
    * The preferred auto focus target defaulting to the popover container
    * @default 'container'

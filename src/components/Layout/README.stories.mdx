@@ -70,7 +70,7 @@ export const OneColLayout = (args) => ({
   template: `
   <Layout>
     <LayoutSection>
-      <TextField>
+      <TextField autoComplete="off">
         <template #label>Text field</template>
       </TextField>
     </LayoutSection>
@@ -87,7 +87,7 @@ export const OneColLayout = (args) => ({
           code: dedent`
           <Layout>
             <LayoutSection>
-              <TextField>
+              <TextField autoComplete="off">
                 <template #label>Text field</template>
               </TextField>
             </LayoutSection>
@@ -112,12 +112,12 @@ export const TwoColLayoutDW = (args) => ({
   template: `
   <Layout>
     <LayoutSection>
-      <TextField>
+      <TextField autoComplete="off">
         <template #label>Text field</template>
       </TextField>
     </LayoutSection>
-    <LayoutSection secondary="true">
-      <TextField>
+    <LayoutSection :secondary="true">
+      <TextField autoComplete="off">
         <template #label>Text field</template>
       </TextField>
     </LayoutSection>
@@ -135,12 +135,12 @@ export const TwoColLayoutDW = (args) => ({
           code: dedent`
             <Layout>
               <LayoutSection>
-                <TextField>
+                <TextField autoComplete="off">
                   <template #label>Text field</template>
                 </TextField>
               </LayoutSection>
-              <LayoutSection secondary="true">
-                <TextField>
+              <LayoutSection :secondary="true">
+                <TextField autoComplete="off">
                   <template #label>Text field</template>
                 </TextField>
               </LayoutSection>
@@ -164,13 +164,13 @@ export const TwoColLayoutSW = (args) => ({
   components: { Layout, LayoutSection, AnnotatedSection, TextField },
   template: `
   <Layout>
-    <LayoutSection oneHalf="true">
-      <TextField>
+    <LayoutSection :oneHalf="true">
+      <TextField autoComplete="off">
         <template #label>Text field</template>
       </TextField>
     </LayoutSection>
-    <LayoutSection oneHalf="true">
-      <TextField>
+    <LayoutSection :oneHalf="true">
+      <TextField autoComplete="off">
         <template #label>Text field</template>
       </TextField>
     </LayoutSection>
@@ -187,13 +187,13 @@ export const TwoColLayoutSW = (args) => ({
           state: 'close',
           code: dedent`
           <Layout>
-            <LayoutSection oneHalf="true">
-              <TextField>
+            <LayoutSection :oneHalf="true">
+              <TextField autoComplete="off">
                 <template #label>Text field</template>
               </TextField>
             </LayoutSection>
-            <LayoutSection oneHalf="true">
-              <TextField>
+            <LayoutSection :oneHalf="true">
+              <TextField autoComplete="off">
                 <template #label>Text field</template>
               </TextField>
             </LayoutSection>
@@ -217,18 +217,18 @@ export const ThreeColLayoutSW = (args) => ({
   components: { Layout, LayoutSection, AnnotatedSection, TextField },
   template: `
   <Layout>
-    <LayoutSection oneThird="true">
-      <TextField>
+    <LayoutSection :oneThird="true">
+      <TextField autoComplete="off">
         <template #label>Text field</template>
       </TextField>
     </LayoutSection>
-    <LayoutSection oneThird="true">
-      <TextField>
+    <LayoutSection :oneThird="true">
+      <TextField autoComplete="off">
         <template #label>Text field</template>
       </TextField>
     </LayoutSection>
-    <LayoutSection oneThird="true">
-      <TextField>
+    <LayoutSection :oneThird="true">
+      <TextField autoComplete="off">
         <template #label>Text field</template>
       </TextField>
     </LayoutSection>
@@ -245,18 +245,18 @@ export const ThreeColLayoutSW = (args) => ({
           state: 'close',
           code: dedent`
           <Layout>
-            <LayoutSection oneThird="true">
-              <TextField>
+            <LayoutSection :oneThird="true">
+              <TextField autoComplete="off">
                 <template #label>Text field</template>
               </TextField>
             </LayoutSection>
-            <LayoutSection oneThird="true">
-              <TextField>
+            <LayoutSection :oneThird="true">
+              <TextField autoComplete="off">
                 <template #label>Text field</template>
               </TextField>
             </LayoutSection>
-            <LayoutSection oneThird="true">
-              <TextField>
+            <LayoutSection :oneThird="true">
+              <TextField autoComplete="off">
                 <template #label>Text field</template>
               </TextField>
             </LayoutSection>
@@ -414,7 +414,7 @@ export const Example = (args) => ({
   template: `
   <Layout v-bind="args">
     <LayoutSection>
-      <TextField>
+      <TextField autoComplete="off">
         <template #label>Text field</template>
       </TextField>
     </LayoutSection>
@@ -432,7 +432,7 @@ export const Example = (args) => ({
           code: dedent`
             <Layout>
               <LayoutSection>
-                <TextField>
+                <TextField autoComplete="off">
                   <template #label>Text field</template>
                 </TextField>
               </LayoutSection>

@@ -3,7 +3,6 @@ Menu(
   :open="open",
   :actions="actions",
   :message="message",
-  :color-scheme="colorScheme",
   :accessibilityLabel="accessibilityLabel",
   @open="$emit('toggle')",
   @close="$emit('toggle')",
@@ -46,8 +45,6 @@ interface UserMenuProps {
   avatar?: AvatarProps['source'];
   /** A boolean property indicating whether the user menu is currently open */
   open: boolean;
-  /** Accepts a color scheme for the contents of the user menu */
-  colorScheme?: MenuProps['colorScheme'];
 }
 
 const props = defineProps<UserMenuProps>();

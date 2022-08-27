@@ -1,5 +1,5 @@
 <template lang="pug">
-div(:class="styles.Item")
+div(v-if="$slots.default", :class="styles.Item")
   slot
 </template>
 

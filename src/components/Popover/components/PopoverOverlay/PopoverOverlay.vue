@@ -14,28 +14,27 @@ PositionedOverlay(
   @change-content-styles="changeContentStyles",
 )
   div(:class="styles.FocusTracker", tabIndex="0", @focus="handleFocusFirstItem")
-  CustomProperties(:color-scheme="colorScheme")
-    div(:class="styles.Wrapper")
-      div(
-        :id="id",
-        :tabIndex="autofocusTarget === 'none' ? undefined : -1",
-        :style="contentStyles",
-        :class="contentClassNames",
-        ref="contentRef",
+  div(:class="styles.Wrapper")
+    div(
+      :id="id",
+      :tabIndex="autofocusTarget === 'none' ? undefined : -1",
+      :style="contentStyles",
+      :class="contentClassNames",
+      ref="contentRef",
+    )
+      slot(name="extra-content")
+      Pane(
+        :sectioned="sectioned",
+        :fixed="fixed",
+        @scrolled-to-bottom="$emit('scrolled-to-bottom')",
       )
-        slot(name="extra-content")
-        Pane(
-          :sectioned="sectioned",
-          :fixed="fixed",
-          @scrolled-to-bottom="$emit('scrolled-to-bottom')",
+        slot(
+          name="overlay",
         )
-          slot(
-            name="overlay",
-          )
-    div(:class="styles.FocusTracker", tabIndex="0", @focus="handleFocusLastItem")
-    EventListener(event="click", :handler="handleClick")
-    EventListener(event="touchstart", :handler="handleClick")
-    KeypressListener(:keyCode="Key.Escape", :handler="handleEscape")
+  div(:class="styles.FocusTracker", tabIndex="0", @focus="handleFocusLastItem")
+  EventListener(event="click", :handler="handleClick")
+  EventListener(event="touchstart", :handler="handleClick")
+  KeypressListener(:keyCode="Key.Escape", :handler="handleEscape")
 </template>
 
 <script lang="ts">
@@ -47,14 +46,12 @@ export default {
 <script setup lang="ts">
 import { computed, onBeforeUnmount, onMounted, ref, watch } from 'vue';
 import { classNames } from 'polaris/polaris-react/src/utilities/css';
-import { tokens } from '@shopify/polaris-tokens';
+import { motion } from '@shopify/polaris-tokens';
 import { findFirstKeyboardFocusableNode } from '@/utilities/focus';
 import { PositionedOverlay } from '@/components/PositionedOverlay';
 import { EventListener } from '@/components/EventListener';
 import { KeypressListener } from '@/components/KeypressListener';
 import { Key } from '@/components/KeypressListener/utils';
-import { CustomProperties } from '@/components/CustomProperties';
-import type { CustomPropertiesProps } from '@/components/CustomProperties/utils';
 import styles from '@/classes/Popover.json';
 import type { PositionedOverlayProps } from '@/components/PositionedOverlay/utils';
 import { PopoverCloseSource, nodeContainsDescendant, TransitionStatus } from '../../utils';
@@ -75,7 +72,6 @@ export interface PopoverOverlayProps {
   sectioned?: boolean;
   fixed?: boolean;
   hideOnPrint?: boolean;
-  colorScheme?: CustomPropertiesProps['colorScheme'];
   autofocusTarget?: PopoverAutofocusTarget;
 }
 
@@ -85,7 +81,6 @@ const props = withDefaults(defineProps<PopoverOverlayProps>(), {
   preferInputActivator: true,
   autofocusTarget: 'container',
   zIndexOverride: undefined,
-  colorScheme: undefined,
 });
 
 const emit = defineEmits<{ (event: 'close', source: PopoverCloseSource): void; (event: 'scrolled-to-bottom'): void }>();
@@ -122,7 +117,7 @@ watch(
     clearTransitionTimeout();
     const timer = window.setTimeout(() => {
       transitionStatus.value = afterStatus;
-    }, parseInt(tokens.motion['duration-100'].value, 10));
+    }, parseInt(motion['duration-100'], 10));
 
     if (props.active) {
       enteringTimer.value = timer;

@@ -1,0 +1,161 @@
+import dedent from 'ts-dedent';
+import { Meta, Story, Canvas, ArgsTable, Source, Preview } from '@storybook/addon-docs';
+
+import { Text, Stack } from '@/polaris-vue';
+
+<Meta
+  title="Components / Titles and text / Text"
+  component={ Text }
+  argTypes={{
+    variant: {
+      control: {
+        type: 'select',
+        options: ['headingXs', 'headingSm', 'headingMd', 'headingLg', 'headingXl', 'heading2xl', 'heading3xl', 'heading4xl', 'bodySm', 'bodyMd', 'bodyLg'],
+      },
+      table: {
+        type: {
+          summary: 'headingXs | headingSm | headingMd | headingLg | headingXl | heading2xl | heading3xl | heading4xl | bodySm | bodyMd | bodyLg',
+        },
+      },
+    },
+    as: {
+      control: {
+        type: 'select',
+        options: ['p', 'h1', 'h2', 'h3', 'h4', 'h5', 'h6', 'span'],
+      },
+      table: {
+        type: {
+          summary: 'p | h1 | h2 | h3 | h4 | h5 | h6 | span',
+        },
+      },
+    },
+    fontWeight: {
+      control: {
+        type: 'select',
+        options: ['regular', 'medium', 'semibold', 'bold'],
+      },
+      table: {
+        type: {
+          summary: 'regular | medium | semibold | bold',
+        },
+      },
+    },
+    color: {
+      control: {
+        type: 'select',
+        options: ['success', 'critical', 'warning', 'subdued'],
+      },
+      table: {
+        type: {
+          summary: 'success | critical | warning | subdued',
+        },
+      },
+    },
+    alignment: {
+      control: {
+        type: 'select',
+        options: ['start', 'center', 'end', 'justify'],
+      },
+      table: {
+        type: {
+          summary: 'start | center | end | justify',
+        },
+      },
+    },
+    default: {
+      table: {
+        disable: 'true',
+      }
+    },
+  }}
+/>
+
+# Text
+
+Typography helps establish hierarchy and communicate important content by creating clear visual patterns.
+
+export const Template = (args) => ({
+  components: { Text, Stack },
+  setup() { return {args}; },
+  template: `
+    <Stack vertical>
+      <Text v-bind="args">
+        Example Text
+      </Text>
+      <Text variant="heading4xl" as="h1">
+        Online store dashboard
+      </Text>
+      <Text variant="heading3xl" as="h2">
+        Online store dashboard
+      </Text>
+      <Text variant="heading2xl" as="h3">
+        Online store dashboard
+      </Text>
+      <Text variant="headingXl" as="h4">
+        Online store dashboard
+      </Text>
+      <Text variant="headingLg" as="h5">
+        Online store dashboard
+      </Text>
+      <Text variant="headingMd" as="h6">
+        Online store dashboard
+      </Text>
+      <Text variant="headingSm" as="h6">
+        Online store dashboard
+      </Text>
+      <Text variant="headingXs" as="h6">
+        Online store dashboard
+      </Text>
+    </Stack>
+  `
+});
+Template.args = {
+  variant: 'headingMd',
+  as: 'h3',
+  fontWeight: 'semibold',
+  color: 'success',
+  alignment: 'center',
+};
+Template.parameters = {
+  docs: {
+    source: {
+      code: dedent`
+        <Stack vertical>
+          <Text as="h3" alignment="center" color="success" font-weight="semibold" variant="headingMd">
+            Example Text
+          </Text>
+          <Text variant="heading4xl" as="h1">
+            Online store dashboard
+          </Text>
+          <Text variant="heading3xl" as="h2">
+            Online store dashboard
+          </Text>
+          <Text variant="heading2xl" as="h3">
+            Online store dashboard
+          </Text>
+          <Text variant="headingXl" as="h4">
+            Online store dashboard
+          </Text>
+          <Text variant="headingLg" as="h5">
+            Online store dashboard
+          </Text>
+          <Text variant="headingMd" as="h6">
+            Online store dashboard
+          </Text>
+          <Text variant="headingSm" as="h6">
+            Online store dashboard
+          </Text>
+          <Text variant="headingXs" as="h6">
+            Online store dashboard
+          </Text>
+        </Stack>
+      `,
+    },
+  },
+};
+
+<Canvas>
+  <Story story={Template} name="Text"></Story>
+</Canvas>
+
+<ArgsTable story="Text" />
