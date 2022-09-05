@@ -13,12 +13,19 @@ div(
     slot(v-if="slots.title", name="title")
     template(v-else) {{ title }}
   div(:class="styles.Items")
-    template(v-if="slots.default")
-      Item(
-        v-for="(item, index) in slots.default()",
+    template(v-if="slots.default && hasSlot(slots.default)")
+      template(
+        v-for="item, index in slots.default()",
         :key="index",
       )
-        component(:is="item")
+        Item(
+          v-if="item.type.toString() === 'Symbol(Fragment)' && item.el === null && item.children",
+          v-for="child, childIndex in item.children",
+          :key="`${index}-${childIndex.toString()}`",
+        )
+          component(:is="child")
+        Item(v-else)
+          component(:is="item")
     slot(v-else)
   div(
     v-if="slots['help-text'] || helpText",
@@ -33,6 +40,7 @@ div(
 import { computed, useSlots } from 'vue';
 import { classNames } from 'polaris/polaris-react/src/utilities/css';
 import { Item } from '../Item';
+import { hasSlot } from '@/utilities/has-slot';
 import styles from '@/classes/FormLayout.json';
 import { UseUniqueId } from '@/use';
 
