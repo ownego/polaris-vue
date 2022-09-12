@@ -1,13 +1,12 @@
 <template lang="pug">
 div(:class="styles.FormLayout")
   template(
-    v-if="slotsElms.length",
+    v-if="!noItemWrap && slotsElms.length",
     v-for="(item, index) in slotsElms",
   )
     Item(
       v-if="!itemGroupIndexes[index]",
       :key="index",
-      :class="styles.Item",
     )
       component(
         :is="item",
@@ -27,6 +26,15 @@ import type { VNodeArrayChildren } from 'vue';
 import { extractElement } from '@/utilities/extract-fragment';
 import styles from '@/classes/FormLayout.json';
 import { Item } from './components';
+
+interface Props {
+  /** No wrap all stack elements with FormItem  */
+  noItemWrap?: boolean;
+}
+
+const props = withDefaults(defineProps<Props>(), {
+  noItemWrap: false,
+});
 
 const itemRefs = ref<any[]>([]);
 
