@@ -1,26 +1,21 @@
 <template lang="pug">
 div(:class="className")
   template(v-if="!noItemWrap && slots.default && hasSlot(slots.default)")
-    template(
-      v-for="item, index in slots.default()",
+    StackItem(
+      v-for="item, index in slotsElms",
       :key="index",
     )
-      StackItem(
-        v-if="item.type.toString() === 'Symbol(Fragment)' && item.el === null && item.children",
-        v-for="child, childIndex in item.children",
-        :key="`${index}-${childIndex.toString()}`",
-      )
-        component(:is="child")
-      StackItem(v-else)
-        component(:is="item")
+      component(:is="item")
   slot(v-else)
 </template>
 
 <script setup lang="ts">
-import { computed, onMounted, useSlots } from 'vue';
+import { computed, useSlots } from 'vue';
+import type { VNodeArrayChildren } from 'vue';
 import { classNames, variationName } from 'polaris/polaris-react/src/utilities/css';
 import styles from '@/classes/Stack.json';
 import { hasSlot } from '@/utilities/has-slot';
+import { extractElement } from '@/utilities/extract-fragment';
 import { Item as StackItem } from './components';
 
 type Spacing =
@@ -76,6 +71,18 @@ const className = computed(() => {
     alignment && styles[alignment],
     props.wrap === false && styles.noWrap,
   );
+});
+
+const slotsElms = computed(() => {
+  let elms : VNodeArrayChildren = [];
+  if (slots.default) {
+    const groups = slots.default().map(group => {
+      return extractElement(group);
+    });
+    elms = groups.flat();
+  }
+
+  return elms;
 });
 </script>
 

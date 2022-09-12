@@ -90,6 +90,7 @@ import type { CheckboxHandles } from '@/utilities/interface';
 import { classNames } from 'polaris/polaris-react/src/utilities/css';
 import { UseI18n } from '@/use';
 import { hasSlot } from '@/utilities/has-slot';
+import { extractElement } from '@/utilities/extract-fragment';
 import { tokens, toPx } from '@shopify/polaris-tokens';
 import { Button, EventListener, Sticky, Spinner, Select, EmptySearchResult, BulkActions, CheckableButton } from '@/components';
 import { SELECT_ALL_ITEMS } from '../../utilities/resource-list';
@@ -197,23 +198,14 @@ const generateItemId = (item: any, index: number) => {
 };
 
 const items = computed<TItemType[]>(() => {
-  const tmpItems : VNodeArrayChildren = [];
+  let tmpItems: VNodeArrayChildren = [];
   if (slots.default) {
-    slots.default().map(item => {
-      const children = item.children as VNodeArrayChildren;
-      if (typeof children === 'string' && children === 'v-if') {
-        return;
-      }
-
-      if (item.type.toString() === 'Symbol(Fragment)' || item.type.toString() === 'Symbol()') {
-        for (const child of children) {
-          tmpItems.push(child);
-        }
-      } else {
-        tmpItems.push(item);
-      }
+    const groups = slots.default().map(group => {
+      return extractElement(group);
     });
+    tmpItems = groups.flat();
   }
+
   return tmpItems;
 });
 
