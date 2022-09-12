@@ -24,8 +24,9 @@ export default {
 import { computed, useSlots } from 'vue';
 import type { VNodeArrayChildren } from 'vue';
 import { classNames } from 'polaris/polaris-react/src/utilities/css';
-import { Item } from './components';
+import { extractElement } from '@/utilities/extract-fragment';
 import styles from '@/classes/ButtonGroup.json';
+import { Item } from './components';
 
 type Spacing = 'extraTight' | 'tight' | 'loose';
 
@@ -47,24 +48,15 @@ const props = defineProps<Props>();
 const slots = useSlots();
 
 const itemMarkup = computed(() => {
-  const items : VNodeArrayChildren = [];
+  let elms : VNodeArrayChildren = [];
   if (slots.default) {
-    slots.default().map(item => {
-      const children = item.children as VNodeArrayChildren;
-      if (typeof children === 'string' && children === 'v-if') {
-        return;
-      }
-
-      if (item.type.toString() === 'Symbol(Fragment)' || item.type.toString() === 'Symbol()') {
-        for (const child of children) {
-          items.push(child);
-        }
-      } else {
-        items.push(item);
-      }
+    const groups = slots.default().map(group => {
+      return extractElement(group);
     });
+    elms = groups.flat();
   }
-  return items;
+
+  return elms;
 });
 
 const className = computed(() => {
