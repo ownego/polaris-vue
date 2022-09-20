@@ -87,6 +87,7 @@ const className =  computed(() => {
     !props.customer && styles[style],
     hasImage.value && status.value === 'LOADED' && styles.imageHasLoaded,
     props.shape && styles[variationName('shape', props.shape)],
+    !props.customer && !props.source && styles[variationName('style', styleClass(props.name || props.initials))],
   );
 });
 

@@ -511,7 +511,6 @@ const handleClick = (event: Event): void => {
   inputRef.value?.focus();
 };
 
-
 const handleChange = (event: Event) => {
   const target = event.target as HTMLInputElement;
 

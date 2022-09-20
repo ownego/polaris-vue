@@ -4,6 +4,7 @@ export interface RowContextType {
   itemId?: string;
   selected?: boolean;
   disabled?: boolean;
+  position?: number;
   onInteraction?: (event: Event) => void;
 }
 

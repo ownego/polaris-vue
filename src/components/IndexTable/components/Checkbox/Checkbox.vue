@@ -30,6 +30,7 @@ div(v-else, :class="styles.TableCellContentContainer")
 import { ref, computed, onMounted, onBeforeUnmount } from 'vue';
 import { classNames } from 'polaris/polaris-react/src/utilities/css';
 import { setRootProperty } from 'polaris/polaris-react/src/utilities/set-root-property';
+import { debounce } from 'polaris/polaris-react/src/utilities/debounce';
 import { UseI18n } from '@/use';
 import { useIndexValue } from '@/utilities/index-provider';
 import { useRowContext } from '@/utilities/index-table';
@@ -50,14 +51,14 @@ const wrapperClassName = computed(() => classNames(
 // eslint-disable-next-line no-undef
 const checkboxNode = ref<HTMLTableDataCellElement | null>(null);
 
-const handleResize = () => {
-  if (!checkboxNode.value) {
+const handleResize = debounce(() => {
+  if (rowContext.value.position !== 0 || !checkboxNode.value) {
     return;
   }
 
   const {width} = checkboxNode.value.getBoundingClientRect();
   setRootProperty('--pc-checkbox-offset', `${width}px`);
-};
+});
 
 const checkboxClassName = computed(() => classNames(
   sharedStyles.TableCell,
