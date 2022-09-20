@@ -104,11 +104,25 @@ export function useIndexResourceState<T extends {[key: string]: unknown}>(
         })();
         break;
       }
-    }
+    };
 
   const clearSelection = () => {
     selectedResources.value = [];
     allResourcesSelected.value = false;
+  };
+
+  const removeSelectedResources = (removeResources: string[]) => {
+    const selectedResourcesCopy = [...selectedResources.value];
+
+    const newSelectedResources = selectedResourcesCopy.filter(
+      (resource) => !removeResources.includes(resource),
+    );
+
+    selectedResources.value = newSelectedResources;
+
+    if (newSelectedResources.length === 0) {
+      allResourcesSelected.value = false;
+    }
   };
 
   return {
@@ -116,5 +130,6 @@ export function useIndexResourceState<T extends {[key: string]: unknown}>(
     allResourcesSelected,
     handleSelectionChange,
     clearSelection,
+    removeSelectedResources,
   };
 }

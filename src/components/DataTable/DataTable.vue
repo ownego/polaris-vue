@@ -20,7 +20,7 @@ div(
             :columnVisibilityData="columnVisibilityData",
             :isScrolledFarthestLeft="isScrolledFarthestLeft",
             :isScrolledFarthestRight="isScrolledFarthestRight",
-            :fixedFirstColumn="hasFixedFirstColumn",
+            :fixedFirstColumns="fixedFirstColumns",
             @navigate-table-left="navigateTable('left')",
             @navigate-table-right="navigateTable('right')",
           )
@@ -34,7 +34,7 @@ div(
                 v-for="heading, index in headings",
                 :key="`stickyheader-${index}`",
                 :headingIndex="index",
-                :inFixedFirstColumn="Boolean(index === 0 && hasFixedFirstColumn)",
+                :inFixedNthColumn="Boolean(index <= fixedFirstColumns - 1 && fixedFirstColumns)",
                 :inStickyHeader="true",
                 :stickyCellWidth="tableHeadingWidths[index]",
                 :setRef="(ref) => { setCellRef({ cellRef: ref, index, inStickyHeader: false }) }",
@@ -52,7 +52,7 @@ div(
     :columnVisibilityData="columnVisibilityData",
     :isScrolledFarthestLeft="isScrolledFarthestLeft",
     :isScrolledFarthestRight="isScrolledFarthestRight",
-    :fixedFirstColumn="hasFixedFirstColumn",
+    :fixedFirstColumns="fixedFirstColumns",
     @navigate-table-left="navigateTable('left')",
     @navigate-table-right="navigateTable('right')",
   )
@@ -66,18 +66,18 @@ div(
         :handler="scrollListener",
       )
       table(
-        v-if="condensed && hasFixedFirstColumn",
+        v-if="condensed && fixedFirstColumns !== 0",
         v-memo="[ condensed, showTotalsInFooter, columnVisibilityData, columnContentTypes, hideScrollIndicator, hasFixedFirstColumn, truncate, verticalAlign]",
         :class="fixedFirstColumnClassName",
-        :style="{ maxWidth: `${columnVisibilityData[0].rightEdge}px` }",
+        :style="{ width: `${columnVisibilityData[fixedFirstColumns - 1]?.rightEdge}px` }",
       )
         thead
           tr(:style="{ height: `${headerRowHeights[0]}px` }")
             TableHeading(
-              v-for="heading, index in firstHeading",
+              v-for="heading, index in nthHeadings",
               :key="`heading-cell-${index}`",
               :headingIndex="index",
-              :inFixedFirstColumn="true",
+              :inFixedNthColumn="true",
               :inStickyHeader="false",
               :setRef="(ref) => { setCellRef({ cellRef: ref, index, inStickyHeader: false }) }",
               v-bind="tableHeadingProps",
@@ -93,10 +93,11 @@ div(
             :style="{ height: `${headerRowHeights[1]}px` }",
           )
             Cell(
-              v-for="total, index in firstTotal",
+              v-for="total, index in nthTotals",
               :key="`totals-cell-${index}`",
               total,
               :totalInFooter="showTotalsInFooter",
+              :nthColumn="index <= fixedFirstColumns - 1",
               :firstColumn="index === 0",
               :contentType="total !== '' && index > 0 ? 'numeric' : undefined",
               :truncate="truncate",
@@ -115,10 +116,9 @@ div(
 
         tbody
           tr(
-            v-for="row, index in firstColumn",
+            v-for="row, index in nthColumns",
             :key="`row-${index}`",
             :class="tableRowClassName",
-            :style="bodyRowHeights ? { height: `${bodyRowHeights[index]}px` } : {}",
             v-memo="[ condensed, showTotalsInFooter, columnVisibilityData, columnContentTypes, hideScrollIndicator, hasFixedFirstColumn, truncate, verticalAlign, row]",
             @mouseenter="handleHover(index)",
             @mouseleave="handleHover()",
@@ -127,12 +127,14 @@ div(
               v-for="content, cellIndex in row",
               :key="`cell-${cellIndex}-row-${index}`",
               :contentType="columnContentTypes[cellIndex]",
+              :nthColumn="cellIndex <= fixedFirstColumns - 1",
               :firstColumn="cellIndex === 0",
               :truncate="truncate",
               :verticalAlign="verticalAlign",
               :colSpan="getColSpan(row.length, headings.length, columnContentTypes.length, cellIndex)",
               :hovered="index === rowHovered",
-              :inFixedFirstColumn="true",
+              :style="bodyRowHeights ? { height: `${bodyRowHeights[index]}px` } : {}",
+              :inFixedNthColumn="condensed && true",
             )
               template(v-if="hasSlot(slots[`cell-${cellIndex}-row-${index}`])")
                 slot(:name="`cell-${cellIndex}-row-${index}`")
@@ -141,10 +143,11 @@ div(
         tfoot(v-if="totals && showTotalsInFooter")
           tr
             Cell(
-              v-for="total, index in firstTotal",
+              v-for="total, index in nthTotals",
               :key="`totals-cell-${index}`",
               total,
               :totalInFooter="showTotalsInFooter",
+              :nthColumn="index <= fixedFirstColumns - 1",
               :firstColumn="index === 0",
               :contentType="total !== '' && index > 0 ? 'numeric' : undefined",
               :truncate="truncate",
@@ -168,7 +171,7 @@ div(
               v-for="heading, index in headings",
               :key="`heading-cell-${index}`",
               :headingIndex="index",
-              :inFixedFirstColumn="false",
+              :inFixedNthColumn="false",
               :inStickyHeader="false",
               :setRef="(ref) => { setCellRef({ cellRef: ref, index, inStickyHeader: false }) }",
               v-bind="tableHeadingProps",
@@ -214,12 +217,13 @@ div(
               :key="`cell-${cellIndex}-row-${index}`",
               v-memo="[ condensed, showTotalsInFooter, columnVisibilityData, columnContentTypes, hideScrollIndicator, hasFixedFirstColumn, truncate, verticalAlign]",
               :contentType="columnContentTypes[cellIndex]",
+              :nthColumn="cellIndex <= fixedFirstColumns - 1",
               :firstColumn="cellIndex === 0",
               :truncate="truncate",
               :verticalAlign="verticalAlign",
               :colSpan="getColSpan(row.length, headings.length, columnContentTypes.length, cellIndex)",
               :hovered="index === rowHovered",
-              :inFixedFirstColumn="false",
+              :inFixedNthColumn="condensed && false",
             )
               template(v-if="hasSlot(slots[`cell-${cellIndex}-row-${index}`])")
                 slot(:name="`cell-${cellIndex}-row-${index}`")
@@ -323,8 +327,10 @@ interface DataTableProps {
   hasZebraStripingOnData?: boolean;
   /** Header becomes sticky and pins to top of table when scrolling  */
   stickyHeader?: boolean;
-  /** Add a fixed first column on horizontal scroll. */
+  /** @deprecated Add a fixed first column on horizontal scroll. Use fixedFirstColumns={n} instead. */
   hasFixedFirstColumn?: boolean;
+  /** Add fixed columns on horizontal scroll. */
+  fixedFirstColumns?: number;
   /** Specify a min width for the first column if neccessary */
   firstColumnMinWidth?: string;
 }
@@ -373,12 +379,24 @@ const handleResize = debounce(() => {
   let tmpCondensed = false;
 
   if (table.value && scrollContainer.value) {
-    tmpCondensed = table.value.scrollWidth > scrollContainer.value.clientWidth;
+    // safari sometimes incorrectly sets the scrollwidth too large by 1px
+    tmpCondensed = table.value.scrollWidth > scrollContainer.value.clientWidth + 1;
   }
-
   calculateColumnVisibilityData(tmpCondensed);
   condensed.value = tmpCondensed;
 }, 40, {trailing: true, leading: true, maxWait: 40});
+
+
+const fixedFirstColumns = computed(() => {
+  const numberOfFixedFirstColumns =
+    props.hasFixedFirstColumn && !props.fixedFirstColumns ? 1 : (props.fixedFirstColumns || 0);
+
+  if (numberOfFixedFirstColumns >= props.headings.length) {
+    return 0;
+  }
+
+  return numberOfFixedFirstColumns;
+});
 
 const rowCountIsEven = computed(() => props.rows.length % 2 === 0);
 
@@ -400,12 +418,12 @@ const wrapperClassName = computed(() => classNames(
 
 const fixedFirstColumnClassName = computed(() => classNames(
   styles.FixedFirstColumn,
-  !isScrolledFarthestLeft.value && styles.separate,
+  !isScrolledFarthestLeft.value && styles['Cell-separate'],
 ));
 
-const firstColumn = computed(() => props.rows.map((row) => row.slice(0, 1)));
-const firstHeading = computed(() => props.headings.slice(0, 1));
-const firstTotal = computed(() => props.totals?.slice(0, 1));
+const nthColumns = computed(() => props.rows.map((row) => row.slice(0, fixedFirstColumns.value)));
+const nthHeadings = computed(() => props.headings.slice(0, fixedFirstColumns.value));
+const nthTotals = computed(() => props.totals?.slice(0, fixedFirstColumns.value));
 const tableHeaderRows = computed(() => table.value?.children[0].childNodes);
 const tableBodyRows = computed(() => table.value?.children[1].childNodes);
 const headerRowHeights = computed(() => getRowClientHeights(tableHeaderRows.value));
@@ -422,6 +440,7 @@ const tableHeadingProps = computed(() => {
   return {
     sortable: props.sortable,
     truncate: props.truncate,
+    fixedFirstColumns: fixedFirstColumns.value,
     columnContentTypes: props.columnContentTypes,
     verticalAlign: props.verticalAlign,
     firstColumnMinWidth: props.firstColumnMinWidth,
@@ -430,12 +449,13 @@ const tableHeadingProps = computed(() => {
     sortedColumnIndex: sortedColumnIndex.value || props.initialSortColumnIndex,
     isScrolledFarthestLeft: isScrolledFarthestLeft.value,
     hasFixedFirstColumn: props.hasFixedFirstColumn,
+    columnVisibilityData: columnVisibilityData.value,
   };
 });
 
 onMounted(() => {
   isMounted.value = true;
-  handleResize();
+  setTimeout(handleResize, 10);
 });
 
 onBeforeUnmount(() => {
@@ -475,7 +495,7 @@ const setCellRef = ({
     button.addEventListener('focus', handleHeaderButtonFocus);
   } else {
     tableHeadings.value[index] = cellRef;
-    tableHeadingWidths.value[index] = cellRef.getBoundingClientRect().width;
+    tableHeadingWidths.value[index] = cellRef.clientWidth;
   }
 };
 
@@ -540,16 +560,18 @@ const changeHeadingFocus = () => {
 };
 
 const calculateColumnVisibilityData = (tmpCondensed: boolean) => {
-  if (tmpCondensed && table.value && scrollContainer.value && dataTable.value) {
-    const headerCells = table.value.querySelectorAll(headerCell.selector);
+  if ((props.stickyHeader || tmpCondensed) && table.value && scrollContainer.value && dataTable.value) {
+    const headerCells = table.value.querySelectorAll<HTMLTableCellElement>(headerCell.selector);
 
-    const firstColumnWidth = props.hasFixedFirstColumn
-      ? headerCells[0].clientWidth
+    const rightMostHeader = headerCells[fixedFirstColumns.value - 1];
+
+    const nthColumnWidth = fixedFirstColumns.value
+      ? rightMostHeader.offsetLeft + rightMostHeader.offsetWidth
       : 0;
 
     if (headerCells.length > 0) {
       const firstVisibleColumnIndex = headerCells.length - 1;
-      const tableLeftVisibleEdge = scrollContainer.value.scrollLeft + firstColumnWidth;
+      const tableLeftVisibleEdge = scrollContainer.value.scrollLeft + nthColumnWidth;
       const tableRightVisibleEdge = scrollContainer.value.scrollLeft + dataTable.value.offsetWidth;
 
       const tableData: TableMeasurements = {
@@ -564,8 +586,8 @@ const calculateColumnVisibilityData = (tmpCondensed: boolean) => {
 
       const lastColumn = tmpColumnVisibilityData[tmpColumnVisibilityData.length - 1];
 
-      const tmpIsScrolledFarthestLeft = props.hasFixedFirstColumn
-        ? tableLeftVisibleEdge === firstColumnWidth
+      const tmpIsScrolledFarthestLeft = fixedFirstColumns.value
+        ? tableLeftVisibleEdge === nthColumnWidth
         : tableLeftVisibleEdge === 0;
 
       const {
@@ -604,16 +626,16 @@ const handleHeaderButtonFocus = (event: Event) => {
   const tableScrollLeft = scrollContainer.value.scrollLeft;
   const tableViewableWidth = scrollContainer.value.offsetWidth;
   const tableRightEdge = tableScrollLeft + tableViewableWidth;
-  const firstColumnWidth =
+  const nthColumnWidth =
     columnVisibilityData.value.length > 0
-      ? columnVisibilityData.value[0]?.rightEdge
+      ? columnVisibilityData.value[fixedFirstColumns.value]?.rightEdge
       : 0;
   const currentColumnLeftEdge = currentCell.offsetLeft;
   const currentColumnRightEdge = currentCell.offsetLeft + currentCell.offsetWidth;
 
-  if (tableScrollLeft > currentColumnLeftEdge - firstColumnWidth) {
+  if (tableScrollLeft > currentColumnLeftEdge - nthColumnWidth) {
     scrollContainer.value.scrollLeft =
-      currentColumnLeftEdge - firstColumnWidth;
+      currentColumnLeftEdge - nthColumnWidth;
   }
 
   if (currentColumnRightEdge > tableRightEdge) {
@@ -659,11 +681,11 @@ const handleFocus = (event) => {
 
   const currentCell = event.target.parentNode as HTMLTableCellElement;
   const hasFixedFirstColumn = columnVisibilityData.value.length > 0;
-  const firstColumnWidth = hasFixedFirstColumn
-    ? columnVisibilityData.value[0]?.rightEdge
+  const nthColumnWidth = hasFixedFirstColumn
+    ? columnVisibilityData.value[fixedFirstColumns.value]?.rightEdge
     : 0;
   const currentColumnLeftEdge = currentCell.offsetLeft;
-  const desiredScrollLeft = currentColumnLeftEdge - firstColumnWidth;
+  const desiredScrollLeft = currentColumnLeftEdge - nthColumnWidth;
 
   if (scrollContainer.value.scrollLeft > desiredScrollLeft) {
     scrollContainer.value.scrollLeft = desiredScrollLeft;
@@ -671,7 +693,7 @@ const handleFocus = (event) => {
 };
 
 const navigateTable = (direction: string) => {
-  const firstColumnWidth = columnVisibilityData.value[0]?.rightEdge;
+  const nthColumnWidth = columnVisibilityData.value[fixedFirstColumns.value - 1]?.rightEdge;
   if (!currentColumn.value || !previousColumn.value) {
     return;
   }
@@ -683,11 +705,11 @@ const navigateTable = (direction: string) => {
 
   const handleScroll = () => {
     let newScrollLeft = 0;
-    if (props.hasFixedFirstColumn) {
+    if (fixedFirstColumns.value) {
       newScrollLeft =
         direction === 'right'
-          ? prevWidths - firstColumnWidth + (currentColumn.value?.width ?? 0)
-          : prevWidths - (previousColumn.value?.width ?? 0) - firstColumnWidth;
+          ? prevWidths - nthColumnWidth + (currentColumn.value?.width ?? 0)
+          : prevWidths - (previousColumn.value?.width ?? 0) - nthColumnWidth;
     } else {
       newScrollLeft =
         direction === 'right'
@@ -713,6 +735,9 @@ const getColSpan = (
   contentTypesLength: number,
   cellIndex: number,
 ) => {
+  if (fixedFirstColumns.value) {
+    return 1;
+  }
   const rowLen = rowLength ? rowLength : 1;
   const colLen = headingsLength ? headingsLength : contentTypesLength;
   const colSpan = Math.floor(colLen / rowLen);
@@ -765,7 +790,7 @@ const stickyHeaderInnerClassNames = computed(() => classNames(
 
 const stickyHeaderTableClassNames = computed(() => classNames(
   styles.StickyHeaderTable,
-  !isScrolledFarthestLeft.value && styles.separate,
+  !isScrolledFarthestLeft.value && styles['Cell-separate'],
 ));
 </script>
 

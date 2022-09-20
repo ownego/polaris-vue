@@ -1,68 +1,43 @@
 <template lang="pug">
+template(v-if="inFixedNthColumn && inStickyHeader")
+  Cell(
+    :setRef="setRef",
+    v-bind="cellProps",
+    :inFixedNthColumn="false",
+    @focus="handleFocus",
+    @sort="$emit('sort')",
+  )
+    slot
+  Cell(
+    :setRef="setRef",
+    v-bind="cellProps",
+    :inFixedNthColumn="!!fixedFirstColumns",
+    :lastFixedFirstColumn="headingIndex === fixedFirstColumns - 1",
+    :style="{left: columnVisibilityData ? `${columnVisibilityData[headingIndex]?.leftEdge}px` : '0px'}",
+    @focus="handleFocus",
+    @sort="$emit('sort')",
+  )
+    slot
 Cell(
-  v-if="!inFixedFirstColumn || !inStickyHeader",
-  header,
+  v-else,
   :setRef="setRef",
-  :stickyHeadingCell="inStickyHeader",
-  :contentType="columnContentTypes && columnContentTypes[headingIndex]",
-  :firstColumn="headingIndex === 0",
-  :truncate="truncate",
-  v-bind="sortableHeadingProps",
-  :verticalAlign="verticalAlign",
-  :stickyCellWidth="stickyCellWidth",
-  :fixedCellVisible="!isScrolledFarthestLeft",
-  :firstColumnMinWidth="firstColumnMinWidth",
-  :inFixedFirstColumn="inFixedFirstColumn",
+  v-bind="cellProps",
+  :inFixedNthColumn="inFixedNthColumn",
+  :lastFixedFirstColumn="headingIndex === fixedFirstColumns - 1",
   @focus="handleFocus",
   @sort="$emit('sort')",
 )
   slot
-template(v-else)
-  Cell(
-    header,
-    :setRef="setRef",
-    :stickyHeadingCell="inStickyHeader",
-    :contentType="columnContentTypes && columnContentTypes[headingIndex]",
-    :firstColumn="headingIndex === 0",
-    :truncate="truncate",
-    v-bind="sortableHeadingProps",
-    :verticalAlign="verticalAlign",
-    :stickyCellWidth="stickyCellWidth",
-    :fixedCellVisible="!isScrolledFarthestLeft",
-    :firstColumnMinWidth="firstColumnMinWidth",
-    :inFixedFirstColumn="false",
-    @focus="handleFocus",
-    @sort="$emit('sort')",
-  )
-    slot
-  Cell(
-    v-if="!inFixedFirstColumn || !inStickyHeader",
-    header,
-    :setRef="setRef",
-    :stickyHeadingCell="inStickyHeader",
-    :contentType="columnContentTypes && columnContentTypes[headingIndex]",
-    :firstColumn="headingIndex === 0",
-    :truncate="truncate",
-    v-bind="sortableHeadingProps",
-    :verticalAlign="verticalAlign",
-    :stickyCellWidth="stickyCellWidth",
-    :fixedCellVisible="!isScrolledFarthestLeft",
-    :firstColumnMinWidth="firstColumnMinWidth",
-    :inFixedFirstColumn="true",
-    @focus="handleFocus",
-    @sort="$emit('sort')",
-  )
-    slot
 </template>
 
 <script setup lang="ts">
 import { computed, useSlots } from 'vue';
-import type { ColumnContentType, SortDirection, VerticalAlign } from '../types';
+import type { ColumnContentType, SortDirection, VerticalAlign, DataTableState } from '../types';
 import { Cell } from '../components';
 
 interface Props {
   headingIndex: number;
-  inFixedFirstColumn: boolean;
+  inFixedNthColumn: boolean;
   inStickyHeader: boolean;
   sortable?: boolean[];
   truncate: boolean;
@@ -75,6 +50,8 @@ interface Props {
   isScrolledFarthestLeft?: boolean;
   hasFixedFirstColumn?: boolean;
   stickyCellWidth?: number;
+  fixedFirstColumns: number;
+  columnVisibilityData: DataTableState['columnVisibilityData'];
   setRef: (ref: any) => void;
 }
 
@@ -105,12 +82,30 @@ const sortableHeadingProps = computed(() => {
       sorted: isSorted.value,
       sortable: isSortable.value,
       sortDirection: direction.value,
-      hasFixedFirstColumn: props.hasFixedFirstColumn,
-      inFixedFirstColumn: props.hasFixedFirstColumn && props.inFixedFirstColumn,
+      // hasFixedFirstColumn: props.hasFixedFirstColumn,
+      // fixedNthColumn: props.fixedFirstColumns,
+      inFixedNthColumn: props.fixedFirstColumns,
     };
   }
 
   return {};
+});
+
+const cellProps = computed(() => {
+  return {
+    header: true,
+    stickyHeadingCell: props.inStickyHeader,
+    contentType: props.columnContentTypes?.[props.headingIndex],
+    nthColumn: props.headingIndex < props.fixedFirstColumns,
+    // fixedFirstColumns: props.fixedFirstColumns,
+    truncate: props.truncate,
+    // headingIndex: props.headingIndex,
+    ...sortableHeadingProps.value,
+    verticalAlign: props.verticalAlign,
+    stickyCellWidth: props.stickyCellWidth,
+    fixedCellVisible: props.isScrolledFarthestLeft,
+    firstColumnMinWidth: props.firstColumnMinWidth,
+  };
 });
 
 const handleFocus = (e: Event) => {

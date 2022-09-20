@@ -18,6 +18,7 @@ component(
       :zIndexOverride="zIndexOverride",
       :autofocusTarget="autofocusTarget",
       :sectioned="sectioned",
+      :prevent-close-on-child-overlay-click="preventCloseOnChildOverlayClick",
       @close="handleClose",
       @scrolled-to-bottom="emit('scrolled-to-bottom')",
     )
@@ -84,6 +85,8 @@ interface PopoverProps {
    * @default 'container'
    */
   autofocusTarget?: PopoverAutofocusTarget;
+  /** Prevents closing the popover when other overlays are clicked */
+  preventCloseOnChildOverlayClick?: boolean;
 }
 
 const props = withDefaults(defineProps<PopoverProps>(), {
