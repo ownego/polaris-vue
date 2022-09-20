@@ -311,7 +311,6 @@ interface TableHeadingRect {
 }
 
 const SCROLL_BAR_PADDING = 4;
-const SIXTY_FPS = 1000 / 60;
 const SCROLL_BAR_DEBOUNCE_PERIOD = 300;
 
 const props = withDefaults(defineProps<IndexTableBaseProps>(), {
@@ -466,8 +465,6 @@ const resizeTableHeadings = debounce(
       heading.style.minWidth = `${minWidth}px`;
     });
   },
-  SIXTY_FPS,
-  {leading: true, trailing: true, maxWait: SIXTY_FPS},
 );
 
 const resizeTableScrollBar = () => {
@@ -489,7 +486,7 @@ const debounceResizeTableScrollbar = () => debounce(
   },
 );
 
-const handleCanScrollRight = () => {
+const handleCanScrollRight = debounce(() => {
   if (
     !props.lastColumnSticky ||
     !tableElement.value ||
@@ -502,7 +499,7 @@ const handleCanScrollRight = () => {
   const scrollableRect = scrollContainerRef.value.getBoundingClientRect();
 
   canScrollRight.value = tableRect.width > scrollableRect.width;
-};
+});
 
 const handleIsSmallScreen = () => {
   // Somehow, Shopify dev makes a stupid here, wth is this...
@@ -779,6 +776,7 @@ const stickyPositioningStyle = (index: number) => {
 const checkboxClassName = (index: number) => {
   return classNames(
     styles.TableHeading,
+    props.sortable?.some((value) => value === true) && styles['TableHeading-sortable'],
     index === 0 && styles['TableHeading-first'],
   );
 };

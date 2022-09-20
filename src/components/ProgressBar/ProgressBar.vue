@@ -1,6 +1,7 @@
 <template lang="pug">
 div(:class="className")
   progress(
+    :aria-labelledby="ariaLabelledBy",
     :class="styles.Progress",
     :value="parsedProgress",
     max="100",
@@ -48,6 +49,10 @@ interface Props {
    * @default 'true'
    */
   animated?: boolean;
+   /**
+   * Id (ids) of element (elements) that describes progressbar
+   */
+   ariaLabelledBy?: string;
 }
 
 const props = withDefaults(defineProps<Props>(),{

@@ -12,7 +12,7 @@ div(:class="styles.Navigation", :ref="setRef")
     :key="`pip-${index}`",
   )
     div(
-      v-if="!fixedFirstColumn || index",
+      v-if="fixedFirstColumns <= index",
       :class="classNames(styles.Pip, column.isVisible && styles['Pip-visible'])",
     )
   Button(
@@ -38,7 +38,7 @@ interface NavigationProps {
   columnVisibilityData: ColumnVisibilityData[];
   isScrolledFarthestLeft?: boolean;
   isScrolledFarthestRight?: boolean;
-  fixedFirstColumn?: boolean;
+  fixedFirstColumns: number;
   setRef?: (ref: any) => void;
 }
 

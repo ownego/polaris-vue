@@ -5,7 +5,7 @@ th(
   :ref="setRef",
   :class="className",
   :aria-sort="sortDirection",
-  :style="stickyHeadingStyle",
+  :style="{ ...style, ...minWidthStyles }",
   data-index-table-sticky-heading="true",
 )
   button(
@@ -24,12 +24,12 @@ th(
 template(v-else)
   th(
     v-if="header",
+    :aria-sort="sortDirection",
     v-bind="{ ...headerCell.props, ...colSpanProp }",
     :ref="setRef",
     :class="className",
     scope="col",
-    :aria-sort="sortDirection",
-    :style="firstColumn ? { minWidth: `${firstColumnMinWidth}px` } : {}",
+    :style="{ ...minWidthStyles }",
   )
     button(
       v-if="sortable",
@@ -45,15 +45,16 @@ template(v-else)
       slot
 
   th(
-    v-else-if="firstColumn",
+    v-else-if="firstColumn || nthColumn",
     v-bind="colSpanProp",
-    :ref="(ref) => { setRef(ref) }",
-    :style="{ minWidth: `${firstColumnMinWidth}px` }",
+    :ref="setRef",
     :class="className",
     scope="row",
+    :style="{ ...minWidthStyles }",
   )
-    TruncatedText(:class="styles.TooltipContent")
+    TruncatedText(v-if="truncate", :class="styles.TooltipContent")
       slot
+    slot(v-else)
   td(v-else, :class="className", v-bind="colSpanProp")
     slot
 </template>
@@ -71,6 +72,7 @@ import type { SortDirection, VerticalAlign } from '../../types';
 
 interface CellProps {
   contentType?: string;
+  nthColumn?: boolean;
   firstColumn?: boolean;
   truncate?: boolean;
   header?: boolean;
@@ -85,10 +87,12 @@ interface CellProps {
   stickyHeadingCell?: boolean;
   stickyCellWidth?: number;
   hovered?: boolean;
-  inFixedFirstColumn?: boolean;
-  hasFixedFirstColumn?: boolean;
+  inFixedNthColumn?: boolean;
+  hasFixedNthColumn?: boolean;
   fixedCellVisible?: boolean;
   firstColumnMinWidth?: string;
+  style?: Record<string, string>;
+  lastFixedFirstColumn?: boolean;
   setRef?: (ref: any) => void;
 }
 
@@ -99,6 +103,7 @@ const props = withDefaults(defineProps<CellProps>(), {
   hovered: false,
   hasFixedFirstColumn: false,
   fixedCellVisible: false,
+  hasFixedNthColumn: false,
   // eslint-disable-next-line @typescript-eslint/no-empty-function
   setRef: () => {},
 });
@@ -116,7 +121,7 @@ const className = computed(() => classNames(
   styles.Cell,
   styles[`Cell-${variationName('verticalAlign', props.verticalAlign)}`],
   props.firstColumn && styles['Cell-firstColumn'],
-  props.firstColumn && props.truncate && styles['Cell-truncated'],
+  props.truncate && styles['Cell-truncated'],
   props.header && styles['Cell-header'],
   props.total && styles['Cell-total'],
   props.totalInFooter && styles['Cell-total-footer'],
@@ -125,9 +130,12 @@ const className = computed(() => classNames(
   props.sorted && styles['Cell-sorted'],
   // props.stickyHeadingCell && styles.StickyHeaderCell,
   props.hovered && styles['Cell-hovered'],
-  props.fixedCellVisible && styles.separate,
-  props.firstColumn &&
-    props.inFixedFirstColumn &&
+  props.lastFixedFirstColumn
+    && props.inFixedNthColumn
+    && props.fixedCellVisible
+    && styles['Cell-separate'],
+  props.nthColumn &&
+    props.inFixedNthColumn &&
     props.stickyHeadingCell &&
     styles.FixedFirstColumn,
 ));
@@ -147,12 +155,18 @@ const sortAccessibilityLabel = computed(() => i18n.translate(
   { direction: props.sorted ? oppositeDirection.value : direction.value },
 ));
 
-const focusable = computed(() => props.stickyHeadingCell || !(props.hasFixedFirstColumn && props.firstColumn && !props.inFixedFirstColumn));
+const focusable = computed(() =>
+  !(props.stickyHeadingCell
+    && props.hasFixedNthColumn
+    && props.nthColumn
+    && !props.inFixedNthColumn),
+);
 
 const colSpanProp = computed(() => props.colSpan && props.colSpan > 1 ? { colSpan: props.colSpan } : {});
 
-const stickyHeadingStyle = computed(() => props.firstColumn && props.firstColumnMinWidth
-  ? { minWidth: `${props.firstColumnMinWidth}px` }
-  : { minWidth: `${props.stickyCellWidth}px` },
-);
+const minWidthStyles = computed(() => {
+  return props.nthColumn && props.firstColumnMinWidth
+    ? { minWidth: `${props.firstColumnMinWidth || 0}px` }
+    : { minWidth: `${props.stickyCellWidth || 0}px` };
+});
 </script>

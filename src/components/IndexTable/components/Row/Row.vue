@@ -65,6 +65,7 @@ const contextValue = computed<RowContextType>(() => {
     itemId: props.id,
     selected: props.selected,
     disabled: props.disabled,
+    position: props.position,
     onInteraction: handleInteraction,
   } as RowContextType;
 });
