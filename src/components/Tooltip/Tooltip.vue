@@ -66,6 +66,11 @@ const props = withDefaults(defineProps<Props>(), {
   active: false,
 });
 
+const emits = defineEmits<{
+  (e: 'close'): void;
+  (e: 'open'): void;
+}>();
+
 const active = ref<boolean>(props.active);
 
 const mouseEntered = ref<boolean>(false);
@@ -104,14 +109,17 @@ watch(() => activatorContainer.value, () => {
 
 const handleBlur = () => {
   active.value = false;
+  emits('close');
 }
 
 const handleFocus = () => {
   active.value = true;
+  emits('open');
 }
 
 const handleKeyUp = (event: KeyboardEvent) => {
-  if (event.key !== Key.Escape) {return;}
+  if (event.key !== Key.Escape) { return; }
+  emits('close');
   handleBlur();
 }
 
