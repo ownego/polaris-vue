@@ -12,9 +12,9 @@ export interface IndexContextType {
   bulkActionsLabel: ComputedRef<string>;
   selectMode: ComputedRef<boolean>;
   paginatedSelectAllText?: ComputedRef<string | undefined>;
-  itemCount: number;
+  itemCount: Ref<number>;
   selectable?: Ref<boolean>;
-  hasMoreItems?: boolean;
+  hasMoreItems?: Ref<boolean | undefined>;
   condensed?: Ref<boolean | undefined>;
 }
 

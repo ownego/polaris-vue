@@ -153,9 +153,9 @@ provide<IndexContextType>('IndexContext', {
   bulkActionsAccessibilityLabel,
   selectMode: selectModeRef,
   paginatedSelectAllText,
-  itemCount: props.itemCount,
+  itemCount: toRef(props, 'itemCount'),
   selectable: toRef(props, 'selectable'),
-  hasMoreItems: props.hasMoreItems,
+  hasMoreItems: toRef(props, 'hasMoreItems'),
   condensed: toRef(props, 'condensed'),
   bulkActionsLabel,
 });

@@ -629,7 +629,7 @@ const bulkActionsSelectable = computed(() => Boolean(
 
 const selectedItemsCountLabel = computed(() =>
   selectedItemsCount.value === SELECT_ALL_ITEMS
-    ? `${itemCount}+`
+    ? `${itemCount.value}+`
     : selectedItemsCount.value,
 );
 
@@ -691,14 +691,14 @@ const bulkActionLabel = computed(() => {
 });
 
 const paginatedSelectAllAction = computed(() => {
-  if (!selectable?.value || !hasBulkActions.value || !hasMoreItems) {
+  if (!selectable?.value || !hasBulkActions.value || !hasMoreItems?.value) {
     return;
   }
 
   const customActionText =
     props.paginatedSelectAllActionText ??
     i18n.translate('Polaris.IndexTable.selectAllItems', {
-      itemsLength: itemCount,
+      itemsLength: itemCount.value,
       resourceNamePlural: resourceName.plural.toLocaleLowerCase(),
     });
 
