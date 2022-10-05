@@ -298,6 +298,7 @@ const i18n = UseI18n();
 
 const props = withDefaults(defineProps<NonMutuallyExclusiveProps>(), {
   type: 'text',
+  autoComplete: 'off',
 });
 
 const emits = defineEmits<{
