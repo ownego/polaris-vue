@@ -23,8 +23,14 @@ button(
   slot
 </template>
 
+<script lang="ts">
+export default {
+  inheritAttrs: false,
+}
+</script>
+
 <script setup lang="ts">
-import { computed, inject, useSlots } from 'vue';
+import { computed, inject } from 'vue';
 import { classNames } from 'polaris/polaris-react/src/utilities/css';
 import styles from '@/classes/Link.json';
 import { UnstyledLink } from '../UnstyledLink';
@@ -47,8 +53,6 @@ const props = defineProps<{
   /** Indicates whether or not the link is the primary navigation link when rendered inside of an `IndexTable.Row` */
   dataPrimaryLink?: boolean;
 }>();
-
-const slots = useSlots();
 
 const BannerContext = inject('BannerContext', false);
 
