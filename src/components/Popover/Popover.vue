@@ -16,6 +16,7 @@ component(
       :preferredPosition="preferredPosition",
       :preferredAlignment="preferredAlignment",
       :zIndexOverride="zIndexOverride",
+      :fluid-content="fluidContent",
       :autofocusTarget="autofocusTarget",
       :sectioned="sectioned",
       :prevent-close-on-child-overlay-click="preventCloseOnChildOverlayClick",
