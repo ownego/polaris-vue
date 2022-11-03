@@ -1,0 +1,86 @@
+import { Meta, Story, Canvas, ArgsTable } from '@storybook/addon-docs';
+import { Columns, Text, Inline, SkeletonDisplayText } from '@/polaris-vue';
+import dedent from 'ts-dedent';
+import { ref } from 'vue';
+
+<Meta
+  title="Components / Columns"
+  component={ Columns }
+  argTypes={{
+    default: {
+      table: {
+        disable: true,
+      },
+    },
+  }}
+/>
+
+export const Template = (args) => ({
+  components: { Columns, Text, Inline, SkeletonDisplayText },
+  setup() {
+    return { args };
+  },
+  template: `
+    <Columns>
+      <SkeletonDisplayText />
+      <SkeletonDisplayText />
+      <SkeletonDisplayText />
+      <SkeletonDisplayText />
+      <SkeletonDisplayText />
+      <SkeletonDisplayText />
+    </Columns>
+  `,
+});
+
+# Columns
+
+Displays content horizontally in one or more columns with equal spacing between.
+
+<Canvas>
+  <Story
+    name="Columns"
+    height="200px"
+    parameters={{
+      docs: {
+        source: {
+          code: dedent`
+          <Columns>
+            <SkeletonDisplayText />
+            <SkeletonDisplayText />
+            <SkeletonDisplayText />
+            <SkeletonDisplayText />
+            <SkeletonDisplayText />
+            <SkeletonDisplayText />
+          </Columns>
+          `,
+        },
+      },
+    }}
+  >
+    {Template.bind({})}
+  </Story>
+</Canvas>
+
+<ArgsTable story="Columns" />
+
+---
+
+```javascript
+type Columns = {
+  xs?: string | number;
+  sm?: string | number;
+  md?: string | number;
+  lg?: string | number;
+  xl?: string | number;
+}
+```
+
+```javascript
+type Spacing = {
+    xs?: "0" | "025" | "05" | "1" | "2" | "3" | "4" | "5" | "6" | "8" | "10" | "12" | "16" | "20" | "24" | "28" | "32";
+    sm?: "0" ...;
+    md?: "0" ...;
+    lg?: "0" ...;
+    xl?: "0" ...;
+}
+```

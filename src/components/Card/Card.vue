@@ -58,7 +58,7 @@ div(:class="className")
 
 <script setup lang="ts">
 import { computed, provide, ref, useSlots } from 'vue';
-import { classNames } from 'polaris/polaris-react/src/utilities/css';
+import { classNames } from '@/utilities/css';
 import styles from '@/classes/Card.json';
 import { ButtonGroup, ActionList, Button, Popover } from '@/components';
 import { ButtonFrom } from '@/components/Button';

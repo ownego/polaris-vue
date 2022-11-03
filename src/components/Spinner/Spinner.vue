@@ -9,7 +9,7 @@ span(v-bind="spanAttributes")
 
 <script setup lang="ts">
 import { ref, computed } from 'vue';
-import { classNames, variationName } from 'polaris/polaris-react/src/utilities/css';
+import { classNames, variationName } from '@/utilities/css';
 import SpinnerIconLarge from '@/assets/spinner-large.svg';
 import SpinnerIconSmall from '@/assets/spinner-small.svg';
 import styles from '@/classes/Spinner.json';

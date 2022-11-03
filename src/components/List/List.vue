@@ -8,7 +8,7 @@ component(
 
 <script setup lang="ts">
 import { computed } from 'vue';
-import { classNames, variationName } from 'polaris/polaris-react/src/utilities/css';
+import { classNames, variationName } from '@/utilities/css';
 import styles from '@/classes/List.json';
 
 /**

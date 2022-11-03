@@ -32,7 +32,7 @@ div(
 <script setup lang="ts">
 import { computed, useSlots } from 'vue';
 import type { VNodeArrayChildren } from 'vue';
-import { classNames } from 'polaris/polaris-react/src/utilities/css';
+import { classNames } from '@/utilities/css';
 import { Item } from '../Item';
 import { hasSlot } from '@/utilities/has-slot';
 import { extractElement } from '@/utilities/extract-fragment';

@@ -17,7 +17,7 @@ div(
 
 <script setup lang="ts">
 import { computed, onMounted, ref } from 'vue';
-import { classNames } from 'polaris/polaris-react/src/utilities/css';
+import { classNames } from '@/utilities/css';
 import type { HSBColor } from 'polaris/polaris-react/src/utilities/color-types';
 import { calculateDraggerY, alphaForDraggerY } from 'polaris/polaris-react/src/components/ColorPicker/components/AlphaPicker/utilities';
 import { hsbToRgb } from '@/utilities/color-transformers';

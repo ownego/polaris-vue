@@ -42,7 +42,7 @@ fieldset(
 
 <script setup lang="ts">
 import { computed } from 'vue';
-import { classNames } from 'polaris/polaris-react/src/utilities/css';
+import { classNames } from '@/utilities/css';
 import { UseUniqueId } from '@/use';
 import styles from '@/classes/ChoiceList.json';
 import type { ErrorType } from '@/utilities/type';

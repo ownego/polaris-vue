@@ -5,7 +5,7 @@ td(:class="cellClassName")
 
 <script setup lang="ts">
 import { computed } from 'vue';
-import { classNames } from 'polaris/polaris-react/src/utilities/css';
+import { classNames } from '@/utilities/css';
 import styles from '@/classes/IndexTable.json';
 
 interface Props {

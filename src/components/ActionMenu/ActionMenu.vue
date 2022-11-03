@@ -25,7 +25,7 @@ export default {
 
 <script setup lang="ts">
 import { computed } from 'vue';
-import { classNames } from 'polaris/polaris-react/src/utilities/css';
+import { classNames } from '@/utilities/css';
 import styles from '@/classes/ActionMenu.json';
 import type { ActionListSection } from '@/components/ActionList/utils';
 import type { MenuActionDescriptor } from '@/utilities/interface';

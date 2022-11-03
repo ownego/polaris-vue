@@ -76,7 +76,7 @@ div(
 
 <script setup lang="ts">
 import { inject, ref, computed, onMounted, useAttrs, provide, useSlots } from 'vue';
-import { classNames, variationName } from 'polaris/polaris-react/src/utilities/css';
+import { classNames, variationName } from '@/utilities/css';
 import { UseUniqueId } from '@/use';
 import type { Action } from '@/utilities/type';
 import type { DisableableAction, LoadableAction } from '@/utilities/interface';

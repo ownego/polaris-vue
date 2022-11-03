@@ -28,7 +28,7 @@ div(v-else, :class="styles.TableCellContentContainer")
 
 <script setup lang="ts">
 import { ref, computed, onMounted, onBeforeUnmount } from 'vue';
-import { classNames } from 'polaris/polaris-react/src/utilities/css';
+import { classNames } from '@/utilities/css';
 import { setRootProperty } from 'polaris/polaris-react/src/utilities/set-root-property';
 import { debounce } from 'polaris/polaris-react/src/utilities/debounce';
 import { UseI18n } from '@/use';

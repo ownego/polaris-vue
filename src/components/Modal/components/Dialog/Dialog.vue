@@ -39,7 +39,7 @@ div(
 
 <script setup lang="ts">
 import { computed, onBeforeUnmount, onMounted, ref } from 'vue';
-import { classNames } from 'polaris/polaris-react/src/utilities/css';
+import { classNames } from '@/utilities/css';
 import styles from '@/classes/Modal-Dialog.json';
 import { focusFirstFocusableNode } from '@/utilities/focus';
 import { KeypressListener, Key } from '@/components/KeypressListener';

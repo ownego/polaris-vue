@@ -8,7 +8,7 @@ div(
 </template>
 <script setup lang="ts">
 import { ref, computed } from 'vue';
-import { classNames } from 'polaris/polaris-react/src/utilities/css';
+import { classNames } from '@/utilities/css';
 import styles from '@/classes/Filters-ConnectedFilterControl.json';
 
 const focused = ref(false);

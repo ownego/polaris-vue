@@ -265,7 +265,7 @@ div(
 <script setup lang="ts">
 import { ref, computed, onMounted, watch, useSlots } from 'vue';
 import { debounce } from 'polaris/polaris-react/src/utilities/debounce';
-import { classNames } from 'polaris/polaris-react/src/utilities/css';
+import { classNames } from '@/utilities/css';
 import EnableSelectionMinor from '@icons/EnableSelectionMinor.svg';
 import { tokens, motion, toPx } from '@shopify/polaris-tokens';
 import { UseI18n } from '@/use';
@@ -290,7 +290,7 @@ import type { BulkActionsProps } from '../BulkActions/utils';
 import { ScrollContainer } from './components';
 import { HeadingContentWrapper } from './children';
 import { getTableHeadingsBySelector } from './utils';
-import type { IndexTableHeading, IndexTableSortDirection } from './utils';
+import type { IndexTableHeading, IndexTableSortDirection, IndexTableSortToggleLabels } from './utils';
 import styles from '@/classes/IndexTable.json';
 
 interface IndexTableBaseProps {
@@ -303,6 +303,7 @@ interface IndexTableBaseProps {
   defaultSortDirection?: IndexTableSortDirection;
   sortDirection?: IndexTableSortDirection;
   sortColumnIndex?: number;
+  sortToggleLabels?: IndexTableSortToggleLabels;
 }
 
 interface TableHeadingRect {
@@ -531,8 +532,7 @@ const handleCanScrollRight = debounce(() => {
 });
 
 const handleIsSmallScreen = () => {
-  // Somehow, Shopify dev makes a stupid here, wth is this...
-  // setSmallScreen(smallScreen);
+  smallScreen.value = isBreakpointsXS();
 };
 
 const handleResize = () => {
@@ -768,6 +768,8 @@ const scrollBarClassNames = computed(() => classNames(
   tableElement.value && tableInitialized && styles.ScrollBarContent,
 ));
 
+const isSortable = computed(() => props.sortable?.some((value) => value));
+
 const tableClassNames = computed(() => classNames(
   styles.Table,
   hasMoreLeftColumns.value && styles['Table-scrolling'],
@@ -776,6 +778,7 @@ const tableClassNames = computed(() => classNames(
   !selectable?.value && styles['Table-unselectable'],
   canFitStickyColumn.value && props.lastColumnSticky && styles['Table-sticky-last'],
   canFitStickyColumn.value && styles['Table-sticky'],
+  isSortable.value && styles['Table-sortable'],
   canFitStickyColumn.value &&
     props.lastColumnSticky &&
     canScrollRight.value && styles['Table-sticky-scrolling'],

@@ -18,7 +18,7 @@ ListboxOption(
 
 <script setup lang="ts">
 import { computed, useSlots } from 'vue';
-import { classNames } from 'polaris/polaris-react/src/utilities/css';
+import { classNames } from '@/utilities/css';
 import { hasSlot } from '@/utilities/has-slot';
 import { ListboxOption, ListboxTextOption } from '@/components';
 import styles from '@/classes/Autocomplete-MappedOption.json';

@@ -17,7 +17,7 @@ export default {
 
 <script setup lang="ts">
 import { ref, computed, onBeforeMount, onUpdated, onMounted, onBeforeUnmount } from 'vue';
-import { classNames } from 'polaris/polaris-react/src/utilities/css';
+import { classNames } from '@/utilities/css';
 import { dataPolarisTopBar, overlay, layer } from 'polaris/polaris-react/src/components/shared';
 import { getRectForNode, Rect } from '@/utilities/geometry';
 import styles from '@/classes/PositionedOverlay.json';

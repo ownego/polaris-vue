@@ -138,7 +138,7 @@ div(
 <script setup lang="ts">
 import { ref, computed, watch, onMounted } from 'vue';
 import { debounce } from 'polaris/polaris-react/src/utilities/debounce';
-import { classNames } from 'polaris/polaris-react/src/utilities/css';
+import { classNames } from '@/utilities/css';
 import { clamp } from 'polaris/polaris-react/src/utilities/clamp';
 import type { MenuGroupDescriptor } from '@/components/ActionMenu/components/MenuGroup/utils';
 import type { Action } from '@/utilities/type';

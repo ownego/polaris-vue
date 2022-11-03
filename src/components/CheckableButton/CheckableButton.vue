@@ -14,7 +14,7 @@ div(:class="className", @click="$emit('toggle-all')")
 
 <script setup lang="ts">
 import { computed, inject, ref, onUpdated, onMounted } from 'vue';
-import { classNames } from 'polaris/polaris-react/src/utilities/css';
+import { classNames } from '@/utilities/css';
 import { Checkbox } from '@/components';
 import type { ResourceListContextType, CheckableButtonKey } from '@/utilities/resource-list';
 import styles from '@/classes/CheckableButton.json';

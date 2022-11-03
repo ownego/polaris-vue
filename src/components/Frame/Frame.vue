@@ -104,7 +104,7 @@ div(
 
 <script setup lang="ts">
 import { computed, onMounted, provide, ref, useSlots, watch } from 'vue';
-import { classNames } from 'polaris/polaris-react/src/utilities/css';
+import { classNames } from '@/utilities/css';
 import { dataPolarisTopBar, layer } from 'polaris/polaris-react/src/components/shared';
 import { setRootProperty } from 'polaris/polaris-react/src/utilities/set-root-property';
 import { motion } from '@shopify/polaris-tokens';

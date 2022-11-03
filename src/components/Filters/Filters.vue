@@ -208,7 +208,7 @@ div(:class="styles.Filters")
 </template>
 <script setup lang="ts">
 import { computed, ref, inject, reactive, provide, useSlots } from 'vue';
-import { classNames } from 'polaris/polaris-react/src/utilities/css';
+import { classNames } from '@/utilities/css';
 import { UseI18n } from '@/use';
 import { hasSlot } from '@/utilities/has-slot';
 import { UseMediaQuery } from '@/utilities/media-query';

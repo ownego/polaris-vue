@@ -2,7 +2,7 @@
 Collapsible(
   :id="id || uid",
   :open="expanded",
-  :transition="{ duration: '0ms', timingFunction: 'linear' }",
+  :transition="false",
 )
   ul(:class="styles.List")
     slot

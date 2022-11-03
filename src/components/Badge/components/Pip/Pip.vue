@@ -6,7 +6,7 @@ span(:class="className")
 </template>
 <script setup lang="ts">
 import { computed } from 'vue';
-import { classNames, variationName } from 'polaris/polaris-react/src/utilities/css';
+import { classNames, variationName } from '@/utilities/css';
 import { VisuallyHidden } from '@/components';
 import type { Progress, Status } from '../../utils';
 import { getDefaultAccessibilityLabel } from '../../utils';

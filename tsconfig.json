@@ -36,7 +36,15 @@
     "jsx": "preserve",
     "importHelpers": true,
     "isolatedModules": false,
-    "plugins": [{ "name": "typescript-plugin-css-modules" }]
+    "plugins": [{
+      "name": "typescript-plugin-css-modules"
+    }]
+  },
+
+  "vueCompilerOptions": {
+    "plugins": [
+      "@volar/vue-language-plugin-pug"
+    ]
   },
 
   "references": [

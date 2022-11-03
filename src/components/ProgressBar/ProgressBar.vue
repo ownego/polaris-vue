@@ -20,7 +20,7 @@ div(:class="className")
 
 <script setup lang="ts">
 import { computed } from 'vue';
-import { classNames, variationName } from 'polaris/polaris-react/src/utilities/css';
+import { classNames, variationName } from '@/utilities/css';
 import { motion } from '@shopify/polaris-tokens';
 import { UseI18n } from '@/use';
 import styles from '@/classes/ProgressBar.json';

@@ -32,7 +32,7 @@ Choice(
 
 <script setup lang="ts">
 import { ref, computed, useSlots } from 'vue';
-import { classNames } from 'polaris/polaris-react/src/utilities/css';
+import { classNames } from '@/utilities/css';
 import styles from '@/classes/RadioButton.json';
 import { hasSlot } from '@/utilities/has-slot';
 import { UseUniqueId } from '@/use';

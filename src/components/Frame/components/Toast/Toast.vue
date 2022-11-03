@@ -26,7 +26,7 @@ div(:class="className")
 
 <script setup lang="ts">
 import { computed, onBeforeUnmount, onMounted, ref } from 'vue';
-import { classNames } from 'polaris/polaris-react/src/utilities/css';
+import { classNames } from '@/utilities/css';
 import styles from '@/classes/Frame-Toast.json';
 import { KeypressListener, Button as PButton, Icon } from '@/components';
 import type { Action } from '@/utilities/type';

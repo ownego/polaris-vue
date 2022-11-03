@@ -25,7 +25,7 @@ div(:class="styles.Navigation", :ref="setRef")
 </template>
 
 <script setup lang="ts">
-import { classNames } from 'polaris/polaris-react/src/utilities/css';
+import { classNames } from '@/utilities/css';
 import { UseI18n } from '@/use';
 import { Button } from '@/components';
 import ChevronLeftMinor from '@icons/ChevronLeftMinor.svg';

@@ -15,7 +15,7 @@ component(
 <script setup lang="ts">
 import type { ComputedRef, Ref } from 'vue';
 import { ref, computed, useAttrs, provide, onMounted } from 'vue';
-import { classNames, variationName } from 'polaris/polaris-react/src/utilities/css';
+import { classNames, variationName } from '@/utilities/css';
 import {
   useIndexRow,
   useIndexSelectionChange,

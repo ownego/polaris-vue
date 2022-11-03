@@ -28,7 +28,7 @@ li(:class="classItem")
 <script setup lang="ts">
 import { computed, useSlots } from 'vue';
 import type { IconSource } from '@/utilities/type';
-import { classNames, variationName } from 'polaris/polaris-react/src/utilities/css';
+import { classNames, variationName } from '@/utilities/css';
 import styles from '@/classes/ExceptionList.json';
 import { Icon } from '../Icon';
 import { Truncate } from '../Truncate';

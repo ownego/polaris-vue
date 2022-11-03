@@ -40,7 +40,7 @@ label(
 
 <script setup lang="ts">
 import { computed } from 'vue';
-import { classNames } from 'polaris/polaris-react/src/utilities/css';
+import { classNames } from '@/utilities/css';
 import styles from '@/classes/Choice.json';
 import type { Error } from '@/utilities/type';
 import { helpTextID } from './utils';

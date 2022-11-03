@@ -36,7 +36,7 @@ div(
 <script setup lang="ts">
 import { computed, onMounted, reactive, ref } from 'vue';
 import { debounce } from 'polaris/polaris-react/src/utilities/debounce';
-import { classNames } from 'polaris/polaris-react/src/utilities/css';
+import { classNames } from '@/utilities/css';
 import { clamp } from 'polaris/polaris-react/src/utilities/clamp';
 import type { HSBColor, HSBAColor, RGBAColor } from 'polaris/polaris-react/src/utilities/color-types';
 import {

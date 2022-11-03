@@ -31,7 +31,7 @@ export default {
 
 <script setup lang="ts">
 import { computed, inject } from 'vue';
-import { classNames } from 'polaris/polaris-react/src/utilities/css';
+import { classNames } from '@/utilities/css';
 import styles from '@/classes/Link.json';
 import { UnstyledLink } from '../UnstyledLink';
 

@@ -42,7 +42,7 @@ li(
 
 <script setup lang="ts">
 import { inject, ref, computed, useSlots } from 'vue';
-import { classNames } from 'polaris/polaris-react/src/utilities/css';
+import { classNames } from '@/utilities/css';
 import {
   listboxWithinSectionDataSelector,
 } from 'polaris/polaris-react/src/components/Listbox/components/Section/selectors';

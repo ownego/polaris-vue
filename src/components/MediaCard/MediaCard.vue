@@ -60,7 +60,7 @@ Card
 
 <script setup lang="ts">
 import { computed, inject, ref, useSlots } from 'vue';
-import { classNames } from 'polaris/polaris-react/src/utilities/css';
+import { classNames } from '@/utilities/css';
 import HorizontalDotsMinor from '@icons/HorizontalDotsMinor.svg';
 import type { ComplexAction } from '@/utilities/interface';
 import type { ActionListItemDescriptor } from '@/components/ActionList/utils';

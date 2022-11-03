@@ -21,7 +21,7 @@ div(:class="className")
 
 <script setup lang="ts">
 import { ref, computed } from 'vue';
-import { classNames } from 'polaris/polaris-react/src/utilities/css';
+import { classNames } from '@/utilities/css';
 import styles from '@/classes/OptionList-Checkbox.json';
 import TickSmallMinor from '@icons/TickSmallMinor.svg';
 import { UseUniqueId } from '@/use';

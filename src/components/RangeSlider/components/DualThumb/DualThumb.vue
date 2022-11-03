@@ -91,7 +91,7 @@ EventListener(
 <script setup lang="ts">
 import { ref, computed, onMounted, onBeforeUnmount, useSlots } from 'vue';
 import { debounce } from 'polaris/polaris-react/src/utilities/debounce';
-import { classNames } from 'polaris/polaris-react/src/utilities/css';
+import { classNames } from '@/utilities/css';
 import { Labelled, EventListener } from '@/components';
 import type { LabelledProps } from '@/components/Labelled/utils';
 import type { ErrorType } from '@/utilities/type';

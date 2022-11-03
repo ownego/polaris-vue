@@ -13,7 +13,7 @@ import {
   provide, ref, reactive, computed, onMounted, onUpdated, onBeforeUnmount,
 } from 'vue';
 import { debounce } from 'polaris/polaris-react/src/utilities/debounce';
-import { classNames } from 'polaris/polaris-react/src/utilities/css';
+import { classNames } from '@/utilities/css';
 import { scrollable } from 'polaris/polaris-react/src/components/shared';
 import { StickyManager } from '@/utilities/sticky-manager';
 import styles from '@/classes/Scrollable.json';
@@ -52,6 +52,7 @@ interface Props {
 
 const props = withDefaults(defineProps<Props>(), {
   vertical: true,
+  horizontal: true,
 });
 
 const emits = defineEmits<{ (event: 'scrolled-to-bottom'): void }>();

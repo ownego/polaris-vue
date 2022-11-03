@@ -137,7 +137,7 @@ div
 </template>
 <script setup lang="ts">
 import { ref, computed, useSlots, onMounted } from 'vue';
-import { classNames } from 'polaris/polaris-react/src/utilities/css';
+import { classNames } from '@/utilities/css';
 import {
   Icon,
   Popover,

@@ -8,7 +8,7 @@ div(:class="styles.Tabs")
     SkeletonBodyText(:lines="1")
 </template>
 <script setup lang="ts">
-import { classNames } from 'polaris/polaris-react/src/utilities/css';
+import { classNames } from '@/utilities/css';
 import styles from '@/classes/SkeletonTabs.json';
 import { SkeletonBodyText } from '@/components';
 

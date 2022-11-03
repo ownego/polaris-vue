@@ -102,7 +102,7 @@ li(v-else, :class="className")
 
 <script setup lang="ts">
 import { computed, onUpdated, ref } from 'vue';
-import { classNames } from 'polaris/polaris-react/src/utilities/css';
+import { classNames } from '@/utilities/css';
 import styles from '@/classes/Navigation.json';
 import { UseUniqueId } from '@/use';
 import { UseMediaQuery } from '@/utilities/media-query';

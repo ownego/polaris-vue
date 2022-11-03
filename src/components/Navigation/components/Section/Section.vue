@@ -68,7 +68,7 @@ ul(:class="className")
 
 <script setup lang="ts">
 import { computed, onMounted, ref } from 'vue';
-import { classNames } from 'polaris/polaris-react/src/utilities/css';
+import { classNames } from '@/utilities/css';
 import { UseMediaQuery } from '@/utilities/media-query';
 import { UseUniqueId } from '@/use';
 import styles from '@/classes/Navigation.json';

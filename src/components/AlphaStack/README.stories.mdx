@@ -1,0 +1,74 @@
+import { Meta, Story, Canvas, ArgsTable } from '@storybook/addon-docs';
+import { AlphaStack, Text, SkeletonDisplayText } from '@/polaris-vue';
+import dedent from 'ts-dedent';
+import { ref } from 'vue';
+
+<Meta
+  title="Components / Alpha stack"
+  component={ AlphaStack }
+  argTypes={{
+    default: {
+      table: {
+        disable: true,
+      },
+    },
+  }}
+/>
+
+export const Template = (args) => ({
+  components: { AlphaStack, Text, SkeletonDisplayText },
+  setup() {
+    return { args };
+  },
+  template: `
+    <AlphaStack>
+      <SkeletonDisplayText :style="{ minWidth: '200px' }" />
+      <SkeletonDisplayText :style="{ minWidth: '200px' }" />
+      <SkeletonDisplayText :style="{ minWidth: '200px' }" />
+    </AlphaStack>
+  `,
+});
+
+# Alpha stack
+
+Use to display elements vertically with items placed directly below the preceding item.
+
+<Canvas>
+  <Story
+    name="Alpha stack"
+    height="160px"
+    parameters={{
+      docs: {
+        source: {
+          code: dedent`
+            <AlphaStack>
+              <SkeletonDisplayText />
+              <SkeletonDisplayText />
+              <SkeletonDisplayText />
+            </AlphaStack>
+          `,
+        },
+      },
+    }}
+  >
+    {Template.bind({})}
+  </Story>
+</Canvas>
+
+<ArgsTable story="Alpha stack" />
+
+---
+
+```javascript
+type Spacing = "05" | "1" | "2" | "3" | "4" | "5" | "6" | "0" | "025" | "8" | "10" | "12" | "16" | "20" | "24" | "28" | "32"
+
+OR
+
+type Spacing = {
+  xs?: "05" | "1" | "2" | "3" | "4" | "5" | "6" | "0" | "025" | "8" | "10" | "12" | "16" | "20" | "24" | "28" | "32";
+  sm?: "05" ...;
+  md?: "05" ...;
+  lg?: "05" ...;
+  xl?: "05" ...;
+}
+```

@@ -37,7 +37,7 @@ li(
 </template>
 <script setup lang="ts">
 import { ref, computed, onMounted, watch, useSlots } from 'vue';
-import { classNames } from 'polaris/polaris-react/src/utilities/css';
+import { classNames } from '@/utilities/css';
 import { focusFirstFocusableNode, handleMouseUpByBlurring } from '@/utilities/focus';
 import styles from '@/classes/Tabs.json';
 import { UnstyledLink } from '@/components';

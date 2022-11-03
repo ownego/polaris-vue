@@ -20,7 +20,7 @@ div(
 </template>
 <script setup lang="ts">
 import { ref, useSlots, watch } from 'vue';
-import { classNames } from 'polaris/polaris-react/src/utilities/css';
+import { classNames } from '@/utilities/css';
 import styles from '@/classes/Tabs.json';
 import { EventListener } from '@/components';
 import { hasSlot } from '@/utilities/has-slot';

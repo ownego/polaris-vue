@@ -1,0 +1,77 @@
+import { Meta, Story, Canvas, ArgsTable } from '@storybook/addon-docs';
+import { Inline, SkeletonDisplayText } from '@/polaris-vue';
+import dedent from 'ts-dedent';
+import { ref } from 'vue';
+
+<Meta
+  title="Components / Inline"
+  component={ Inline }
+  argTypes={{
+    default: {
+      table: {
+        disable: true,
+      },
+    },
+    align: {
+      control: {
+        type: 'select',
+        options: ['start', 'center', 'end'],
+      },
+    },
+    alignY: {
+      control: {
+        type: 'select',
+        options: ['baseline', 'top', 'center', 'bottom'],
+      },
+    },
+    spacing: {
+      control: {
+        type: 'select',
+        options: ['0', '025', '05', '1', '2', '3', '4', '5', '6', '8', '10', '12', '16', '20', '24', '28', '32'],
+      },
+    },
+  }}
+/>
+
+export const Template = (args) => ({
+  components: { Inline, SkeletonDisplayText },
+  setup() {
+    return { args };
+  },
+  template: `
+    <Inline>
+      <SkeletonDisplayText :style="{width: '300px', height: '60px'}" />
+      <SkeletonDisplayText :style="{width: '300px'}" />
+      <SkeletonDisplayText :style="{width: '300px'}" />
+      <SkeletonDisplayText :style="{width: '300px'}" />
+      <SkeletonDisplayText :style="{width: '300px'}" />
+      <SkeletonDisplayText :style="{width: '300px'}" />
+    </Inline>
+  `,
+});
+
+# Inline
+
+Use to arrange items in a horizontal row with equal spacing around them. Items wrap onto multiple lines when needed.
+
+<Canvas>
+  <Story
+    name="Inline"
+    height="200px"
+    parameters={{
+      docs: {
+        source: {
+          code: dedent`
+          `,
+        },
+      },
+    }}
+  >
+    {Template.bind({})}
+  </Story>
+</Canvas>
+
+<ArgsTable story="Inline" />
+
+---
+

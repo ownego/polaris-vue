@@ -36,7 +36,7 @@ div(
 
 <script setup lang="ts">
 import { computed, onMounted, ref } from 'vue';
-import { classNames } from 'polaris/polaris-react/src/utilities/css';
+import { classNames } from '@/utilities/css';
 import SearchMinor from '@icons/SearchMinor.svg';
 import CircleCancelMinor from '@icons/CircleCancelMinor.svg';
 import { VisuallyHidden, Icon } from '@/components';
