@@ -28,7 +28,7 @@ UnstyledButton(
 HeadingContent(v-else, :heading="heading")
 </template>
 <script setup lang="ts">
-import { computed } from 'vue';
+import { computed, VueElement } from 'vue';
 import { classNames } from '@/utilities/css';
 import SortAscendingMajor from '@icons/SortAscendingMajor.svg';
 import SortDescendingMajor from '@icons/SortDescendingMajor.svg';
@@ -68,14 +68,14 @@ const newDirection = computed(() => {
 });
 const SourceComponent = computed(() => {
   if (isCurrentlySorted.value) {
-    return props.sortDirection === 'ascending'
+    return (props.sortDirection === 'ascending'
       ? SortAscendingMajor
-      : SortDescendingMajor;
+      : SortDescendingMajor) as any;
   }
 
-  return props.defaultSortDirection === 'ascending'
+  return (props.defaultSortDirection === 'ascending'
     ? SortAscendingMajor
-    : SortDescendingMajor;
+    : SortDescendingMajor) as any;
 });
 
 const className = computed(() => classNames(

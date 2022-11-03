@@ -40,12 +40,16 @@ const props = withDefaults(defineProps<Props>(), {
 
 const slots = useSlots();
 
-const style = computed(() => ({
-  '--pc-inline-align': props.align,
-  '--pc-inline-align-y': props.alignY ? AlignY[props.alignY] : undefined,
-  '--pc-inline-wrap': props.wrap ? 'wrap' : 'nowrap',
-  '--pc-inline-spacing': `var(--p-space-${props.spacing})`,
-} as Record<string, any>));
+const style = computed(() => {
+  const fullStyles = {
+    '--pc-inline-align': props.align,
+    '--pc-inline-align-y': props.alignY ? AlignY[props.alignY] : undefined,
+    '--pc-inline-wrap': props.wrap ? 'wrap' : 'nowrap',
+    '--pc-inline-spacing': `var(--p-space-${props.spacing})`,
+  };
+
+  return Object.fromEntries(Object.entries(fullStyles).filter(([, value]) => value));
+});
 
 const slotsElms = computed(() => {
   let elms : VNodeArrayChildren = [];

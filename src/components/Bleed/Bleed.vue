@@ -64,7 +64,7 @@ const negativeMargins = computed(() => {
 });
 
 const style = computed(() => {
-  return {
+  const fullStyles = {
     ...(negativeMargins.value.bottom
       ? {'--pc-bleed-margin-bottom': `var(--p-space-${negativeMargins.value.bottom})`}
       : undefined),
@@ -77,7 +77,14 @@ const style = computed(() => {
     ...(negativeMargins.value.top
       ? {'--pc-bleed-margin-top': `var(--p-space-${negativeMargins.value.top})`}
       : undefined),
-  } as Record<string, any>;
+  };
+
+  return Object.keys(fullStyles).reduce((acc, key) => {
+    if (fullStyles[key] !== undefined) {
+      acc[key] = fullStyles[key];
+    }
+    return acc;
+  }, {} as Record<string, any>);
 });
 </script>
 

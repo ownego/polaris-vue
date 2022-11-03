@@ -1,0 +1,108 @@
+import { Meta, Story, Canvas, ArgsTable } from '@storybook/addon-docs';
+import { Tiles, Text } from '@/polaris-vue';
+import dedent from 'ts-dedent';
+import { ref } from 'vue';
+
+<Meta
+  title="Components / Tiles"
+  component={ Tiles }
+  argTypes={{
+    default: {
+      table: {
+        disable: true,
+      },
+    },
+  }}
+/>
+
+export const Template = (args) => ({
+  components: { Tiles, Text },
+  setup() {
+    const styles = {
+      background: 'var(--p-surface)',
+      border: 'var(--p-border-base)',
+      borderRadius: 'var(--p-border-radius-2)',
+      padding: 'var(--p-space-4)',
+    };
+    return { args, styles };
+  },
+  template: `
+    <div :style="{width: '100%'}">
+      <Tiles :columns="{xs: 1}" :gap="{xs: '5'}">
+        <div v-for="index in 2" :key="index" :style="styles">
+          <Text as="h2" variant="headingMd">
+            Sales
+          </Text>
+          <Text as="p" variant="bodyMd">
+            View a summary of your online store's sales.
+          </Text>
+        </div>
+      </Tiles>
+    </div>
+  `,
+});
+
+# Tiles
+
+Create complex layouts based on CSS Grid.
+
+<Canvas>
+  <Story
+    name="Tiles"
+    height="200px"
+    parameters={{
+      docs: {
+        source: {
+          code: dedent`
+            <div :style="{width: '100%'}">
+              <Tiles :columns="{xs: 1}" :gap="{xs: '5'}">
+                <div v-for="index in 2" :key="index" :style="styles">
+                  <Text as="h2" variant="headingMd">
+                    Sales
+                  </Text>
+                  <Text as="p" variant="bodyMd">
+                    View a summary of your online store's sales.
+                  </Text>
+                </div>
+              </Tiles>
+            </div>\n
+            <script setup>
+              const styles = {
+                background: 'var(--p-surface)',
+                border: 'var(--p-border-base)',
+                borderRadius: 'var(--p-border-radius-2)',
+                padding: 'var(--p-space-4)',
+              };
+            </script>
+          `,
+        },
+      },
+    }}
+  >
+    {Template.bind({})}
+  </Story>
+</Canvas>
+
+<ArgsTable story="Tiles" />
+
+---
+
+```javascript
+type Gap = {
+    xs?: "0" | "025" | "05" | "1" | "2" | "3" | "4" | "5" | "6" | "8" | "10" | "12" | "16" | "20" | "24" | "28" | "32" ;
+    sm?: "0" ...;
+    md?: "0" ...;
+    lg?: "0" ...;
+    xl?: "0" ...;
+}
+```
+
+```javascript
+type Columns = {
+  sm?: string | number;
+  xs?: string | number;
+  md?: string | number;
+  lg?: string | number;
+  xl?: string | number;
+}
+```

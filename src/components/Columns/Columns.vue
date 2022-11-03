@@ -32,28 +32,37 @@ interface Props {
 
 const props = defineProps<Props>();
 
-const style = computed(() => ({
-  '--pc-columns-xs': formatColumns(props.columns?.xs || 6),
-  '--pc-columns-sm': formatColumns(props.columns?.sm),
-  '--pc-columns-md': formatColumns(props.columns?.md),
-  '--pc-columns-lg': formatColumns(props.columns?.lg),
-  '--pc-columns-xl': formatColumns(props.columns?.xl),
-  '--pc-columns-space-xs': props.spacing?.xs
-    ? `var(--p-space-${props.spacing?.xs})`
-    : undefined,
-  '--pc-columns-space-sm': props.spacing?.sm
-    ? `var(--p-space-${props.spacing?.sm})`
-    : undefined,
-  '--pc-columns-space-md': props.spacing?.md
-    ? `var(--p-space-${props.spacing?.md})`
-    : undefined,
-  '--pc-columns-space-lg': props.spacing?.lg
-    ? `var(--p-space-${props.spacing?.lg})`
-    : undefined,
-  '--pc-columns-space-xl': props.spacing?.xl
-    ? `var(--p-space-${props.spacing?.xl})`
-    : undefined,
-} as Record<string, any>));
+const style = computed(() => {
+  const fullStyles = {
+    '--pc-columns-xs': formatColumns(props.columns?.xs || 6),
+    '--pc-columns-sm': formatColumns(props.columns?.sm),
+    '--pc-columns-md': formatColumns(props.columns?.md),
+    '--pc-columns-lg': formatColumns(props.columns?.lg),
+    '--pc-columns-xl': formatColumns(props.columns?.xl),
+    '--pc-columns-space-xs': props.spacing?.xs
+      ? `var(--p-space-${props.spacing?.xs})`
+      : undefined,
+    '--pc-columns-space-sm': props.spacing?.sm
+      ? `var(--p-space-${props.spacing?.sm})`
+      : undefined,
+    '--pc-columns-space-md': props.spacing?.md
+      ? `var(--p-space-${props.spacing?.md})`
+      : undefined,
+    '--pc-columns-space-lg': props.spacing?.lg
+      ? `var(--p-space-${props.spacing?.lg})`
+      : undefined,
+    '--pc-columns-space-xl': props.spacing?.xl
+      ? `var(--p-space-${props.spacing?.xl})`
+      : undefined,
+  } as Record<string, any>;
+
+  return Object.keys(fullStyles).reduce((acc, key) => {
+    if (fullStyles[key] !== undefined) {
+      acc[key] = fullStyles[key];
+    }
+    return acc;
+  }, {});
+});
 
 function formatColumns(columns?: number | string) {
   if (!columns) {
