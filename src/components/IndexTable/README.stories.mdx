@@ -5,7 +5,7 @@ import { IndexTable, IndexTableCell, IndexTableRow, Card, useIndexResourceState,
 import { ref, computed } from 'vue';
 
 <Meta
-  title="Components / Lists and tables / Index table"
+  title="Components / Index table"
   component={ IndexTable }
   argTypes={{
     default: {
@@ -41,6 +41,7 @@ import { ref, computed } from 'vue';
       },
     },
     eventSort: {
+      name: 'sort',
       control: { disable: true },
       description: 'Callback fired on click or keypress of a sortable column heading.',
       table: {
@@ -654,7 +655,7 @@ Use as a broad example that includes most of the elements and props available to
 
 `type BulkActionListSection = ActionListSection`
 
-See more in [ActionList](./?path=/docs/components-actions-action-list--action-list) component
+See more in [ActionList](./?path=/docs/components-action-list--action-list) component
 
 <br/>
 

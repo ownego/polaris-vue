@@ -15,3 +15,11 @@ export interface IndexTableHeading {
   new?: boolean;
   hidden?: boolean;
 }
+
+export type IndexTableSortToggleLabel = {
+  [key in IndexTableSortDirection]: string;
+};
+
+export interface IndexTableSortToggleLabels {
+  [key: number]: IndexTableSortToggleLabel;
+}

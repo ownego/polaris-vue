@@ -1,0 +1,84 @@
+import { Meta, Story, Canvas, ArgsTable } from '@storybook/addon-docs';
+import { Bleed, Box, Text } from '@/polaris-vue';
+import dedent from 'ts-dedent';
+import { ref } from 'vue';
+
+<Meta
+  title="Components / Bleed"
+  component={ Bleed }
+  argTypes={{
+    default: {
+      table: {
+        disable: true,
+      },
+    },
+  }}
+/>
+
+export const Template = (args) => ({
+  components: { Bleed, Box, Text },
+  setup() {
+    const styles = {
+      background: 'var(--p-background-selected)',
+      borderRadius: 'var(--p-border-radius-05)',
+      border: '1px solid var(--p-surface-dark)',
+      padding: 'var(--p-space-4)',
+      height: 'var(--p-space-12)',
+      opacity: 0.7,
+    };
+    return { args, styles };
+  },
+  template: `
+    <div :style="{marginTop: '50px', width: '100%'}">
+      <Box background="surface" border="base" padding="4">
+        <Bleed vertical="6">
+          <div :style="styles">
+            <Text variant="bodySm" as="h3" alignment="center" fontWeight="bold">
+              vertical
+            </Text>
+          </div>
+        </Bleed>
+      </Box>
+    </div>
+  `,
+});
+
+# Bleed
+
+Used to create a container that applies negative margins to allow content to extend into the surrounding layout.
+
+<Canvas>
+  <Story
+    name="Bleed"
+    height="200px"
+    parameters={{
+      docs: {
+        source: {
+          code: dedent`
+            <div style="{width: '100%'}">
+              <Box background="surface" border="base" padding="4">
+                <Bleed vertical="6">
+                  <div :style="styles">
+                    <Text variant="bodySm" as="h3" alignment="center" fontWeight="bold">
+                      vertical
+                    </Text>
+                  </div>
+                </Bleed>
+              </Box>
+            </div>
+          `,
+        },
+      },
+    }}
+  >
+    {Template.bind({})}
+  </Story>
+</Canvas>
+
+<ArgsTable story="Bleed" />
+
+---
+
+```javascript
+type SpacingSpaceScale = "05" | "1" | "2" | "3" | "4" | "5" | "6" | "0" | "025" | "8" | "10" | "12" | "16" | "20" | "24" | "28" | "32"
+```

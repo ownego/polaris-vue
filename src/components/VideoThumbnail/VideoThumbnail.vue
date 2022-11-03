@@ -1,8 +1,9 @@
 <template lang="pug">
-div(
-  :class="styles.Thumbnail",
-  :style="{ backgroundImage: `url(${thumbnailUrl})` }",
-)
+div(:class="styles.ThumbnailContainer")
+  div(
+    :class="styles.Thumbnail",
+    :style="{ backgroundImage: `url(${thumbnailUrl})` }",
+  )
   button(
     type="button",
     :class="styles.PlayButton",
@@ -12,9 +13,15 @@ div(
     @focus="$emit('before-start-playing')",
     @touchstart="$emit('before-start-playing')",
   )
-    Icon(:class="styles.PlayIcon", :source="PlayIcon")
-  p(v-if="videoLength", :class="className")
-    | {{ secondsToTimestamp(videoLength) }}
+    p(v-if="videoLength", :class="styles.Timestamp")
+      Stack(alignment="center", spacing="extraTight")
+        span(:class="styles.PlayIcon")
+          Icon(:source="PlayMinor")
+        Text(
+          :variant="isNavigationCollapsed ? 'bodyLg' : 'bodyMd'",
+          as="p",
+          font-weight="semibold",
+        ) {{ secondsToTimestamp(videoLength) }}
   div(v-if="showVideoProgress", :class="styles.Progress")
     progress(
       :class="styles.ProgressBar",
@@ -30,11 +37,12 @@ div(
 
 <script setup lang="ts">
 import { ref, computed, inject } from 'vue';
-import { classNames } from 'polaris/polaris-react/src/utilities/css';
+import { classNames } from '@/utilities/css';
 import { secondsToTimeComponents, secondsToTimestamp, secondsToDurationTranslationKey } from 'polaris/polaris-react/src/utilities/duration';
-import PlayIcon from 'polaris/polaris-react/src/components/VideoThumbnail/illustrations/play.svg';
 import { UseI18n } from '@/use';
-import { Icon } from '@/components';
+import { UseMediaQuery } from '@/utilities/media-query';
+import { Icon, Stack, Text } from '@/components';
+import PlayMinor from '@icons/PlayMinor.svg';
 import styles from '@/classes/VideoThumbnail.json';
 
 interface VideoThumbnailProps {
@@ -68,6 +76,8 @@ const props = withDefaults(defineProps<VideoThumbnailProps>(), {
 });
 
 const i18n = UseI18n();
+const { useMediaQuery } = UseMediaQuery();
+const { isNavigationCollapsed } = useMediaQuery();
 
 const buttonLabel = computed(() => {
   if (props.accessibilityLabel) {
@@ -94,13 +104,6 @@ const buttonLabel = computed(() => {
 
 const progressValue = computed(() => calculateProgress(props.videoLength, props.videoProgress));
 const progressValuePercents = computed(() => Math.round(progressValue.value * 100));
-
-const className = computed(() => {
-  return classNames(
-    styles.Timestamp,
-    props.showVideoProgress && styles.withProgress,
-  );
-});
 
 function calculateProgress(videoLength: number, videoProgress: number) {
   // if (videoProgress > videoLength && process.env.NODE_ENV === 'development') {

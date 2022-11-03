@@ -49,7 +49,7 @@ div(:class="styles.TopBar")
 
 <script setup lang="ts">
 import { computed, ref, useSlots } from 'vue';
-import { classNames } from 'polaris/polaris-react/src/utilities/css';
+import { classNames } from '@/utilities/css';
 import { getWidth  } from 'polaris/polaris-react/src/utilities/get-width';
 import MobileHamburgerMajor from '@icons/MobileHamburgerMajor.svg';
 import { hasSlot } from '@/utilities/has-slot';

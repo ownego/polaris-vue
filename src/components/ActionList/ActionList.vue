@@ -40,7 +40,7 @@ export default {
 
 <script setup lang="ts">
 import { computed, ref } from 'vue';
-import { classNames } from 'polaris/polaris-react/src/utilities/css';
+import { classNames } from '@/utilities/css';
 import { wrapFocusPreviousFocusableMenuItem, wrapFocusNextFocusableMenuItem } from '@/utilities/focus';
 import { KeypressListener } from '@/components/KeypressListener';
 import { Key } from '@/components/KeypressListener/utils';

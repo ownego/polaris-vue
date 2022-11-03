@@ -13,7 +13,7 @@ div(
 
 <script setup lang="ts">
 import { computed, onMounted, onUpdated, ref, watch } from 'vue';
-import { classNames } from 'polaris/polaris-react/src/utilities/css';
+import { classNames } from '@/utilities/css';
 import styles from '@/classes/Collapsible.json';
 import type { TransitionCollapsible } from './utils';
 
@@ -26,13 +26,17 @@ interface CollapsibleProps {
   open: boolean;
   /** Prevents component from re-measuring when child is updated **/
   preventMeasuringOnChildrenUpdate?: boolean;
-  /** Assign transition properties to the collapsible */
-  transition?: TransitionCollapsible;
+  /** Override transition properties. When set to false, disables transition completely.
+   * @default transition={{duration: 'var(--p-duration-150)', timingFunction: 'var(--p-ease-in-out)'}}
+   */
+  transition?: boolean | TransitionCollapsible;
 }
 
 type AnimationState = 'idle' | 'measuring' | 'animating';
 
-const props = defineProps<CollapsibleProps>();
+const props = withDefaults(defineProps<CollapsibleProps>(), {
+  transition: true,
+});
 
 const height = ref(0);
 const animationState = ref<AnimationState>('idle');
@@ -58,16 +62,37 @@ const wrapperClassName = computed(() => {
 
 const collapsibleStyles = computed(() => {
   return {
-    ...(props.transition && {
-      transitionDuration: `${props.transition.duration}`,
-      transitionTimingFunction: `${props.transition.timingFunction}`,
-    }),
+    ...transitionStyles.value,
     ...{
       maxHeight: isFullyOpen.value ? 'none' : `${height.value}px`,
       overflow: isFullyOpen.value ? 'visible' : 'hidden',
     },
   };
 });
+
+const transitionDisabled = computed(() => isTransitionDisabled(props.transition));
+
+const transitionStyles = computed(() => {
+  return typeof props.transition === 'object' && {
+    transitionDuration: props.transition.duration,
+    transitionTimingFunction: props.transition.timingFunction,
+  }
+});
+
+const startAnimation = () => {
+  if (transitionDisabled.value) {
+    isOpen.value = props.open;
+    animationState.value = 'idle';
+
+    if (props.open && collapsibleContainerRef.value) {
+      height.value = collapsibleContainerRef.value.scrollHeight;
+    } else {
+      height.value = 0;
+    }
+  } else {
+    animationState.value = 'measuring';
+  }
+};
 
 const handleCompleteAnimation = ({ target }) => {
   if (target === collapsibleContainerRef.value) {
@@ -80,7 +105,7 @@ watch(
   () => [props.open, isOpen.value],
   () => {
     if (props.open !== isOpen.value) {
-      animationState.value = 'measuring';
+      startAnimation();
       return;
     }
 
@@ -114,6 +139,20 @@ onMounted(() => {
   // If collapsible defaults to open, set an initial height
   height.value = collapsibleContainerRef.value.scrollHeight;
 });
+
+const zeroDurationRegex = /^0(ms|s)$/;
+
+function isTransitionDisabled(transitionProp: TransitionCollapsible | boolean) {
+  if (typeof transitionProp === 'boolean') {
+    return !transitionProp;
+  }
+
+  const {duration} = transitionProp;
+  if (duration && zeroDurationRegex.test(duration.trim())) {
+    return true;
+  }
+  return false;
+}
 </script>
 
 <style lang="scss">

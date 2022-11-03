@@ -23,7 +23,7 @@ export default {
 <script setup lang="ts">
 import { computed, useSlots } from 'vue';
 import type { VNodeArrayChildren } from 'vue';
-import { classNames } from 'polaris/polaris-react/src/utilities/css';
+import { classNames } from '@/utilities/css';
 import { extractElement } from '@/utilities/extract-fragment';
 import styles from '@/classes/ButtonGroup.json';
 import { Item } from './components';

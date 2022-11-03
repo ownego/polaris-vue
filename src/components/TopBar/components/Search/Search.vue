@@ -15,7 +15,7 @@ div(
 
 <script setup lang="ts">
 import { useSlots, computed } from 'vue';
-import { classNames } from 'polaris/polaris-react/src/utilities/css';
+import { classNames } from '@/utilities/css';
 import styles from '@/classes/TopBar-Search.json';
 import { SearchDismissOverlay } from '../SearchDismissOverlay';
 

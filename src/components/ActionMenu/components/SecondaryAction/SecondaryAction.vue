@@ -28,7 +28,7 @@ span(
 
 <script setup lang="ts">
 import { computed, ref, onMounted, useSlots } from 'vue';
-import { classNames } from 'polaris/polaris-react/src/utilities/css';
+import { classNames } from '@/utilities/css';
 import styles from '@/classes/ActionMenu-SecondaryAction.json';
 import { Button, Tooltip } from '@/components';
 import { hasSlot } from '@/utilities/has-slot';

@@ -1,11 +1,5 @@
 export const STYLE_CLASSES = ['one', 'two', 'three', 'four', 'five'];
 
-export function styleClass(name?: string) {
-  return name
-    ? STYLE_CLASSES[name.charCodeAt(0) % STYLE_CLASSES.length]
-    : STYLE_CLASSES[0];
-}
-
 export type Size = 'extraSmall' | 'small' | 'medium' | 'large';
 
 export type Shape = 'square' | 'round';
@@ -26,4 +20,24 @@ export interface AvatarProps {
   source?: string;
   /** Accessible label for the avatar image */
   accessibilityLabel?: string;
+}
+
+/**
+ * Computes a rudimentary hash from a string by xoring the character codes
+ * of all characters
+ */
+export function xorHash(str: string) {
+  let hash = 0;
+
+  for (const char of str) {
+    hash ^= char.charCodeAt(0);
+  }
+
+  return hash;
+}
+
+export function styleClass(name?: string) {
+  return name
+    ? STYLE_CLASSES[xorHash(name) % STYLE_CLASSES.length]
+    : STYLE_CLASSES[0];
 }

@@ -42,7 +42,7 @@ div(
 
 <script setup lang="ts">
 import { computed, onMounted, ref, useAttrs } from 'vue';
-import { classNames } from 'polaris/polaris-react/src/utilities/css';
+import { classNames } from '@/utilities/css';
 import { isServer } from 'polaris/polaris-react/src/utilities/target';
 import styles from '@/classes/ColorPicker.json';
 import { EventListener } from '@/components/EventListener';

@@ -2,15 +2,25 @@
 component(
   :is="componentName",
   :class="className",
+  :id="id",
 )
   slot
 </template>
 <script setup lang="ts">
 import { computed } from 'vue';
-import { classNames } from 'polaris/polaris-react/src/utilities/css';
+import { classNames } from '@/utilities/css';
 import styles from '@/classes/Text.json';
 
-type Element = 'h1' | 'h2' | 'h3' | 'h4' | 'h5' | 'h6' | 'p' | 'span';
+type Element =
+  | 'h1'
+  | 'h2'
+  | 'h3'
+  | 'h4'
+  | 'h5'
+  | 'h6'
+  | 'p'
+  | 'span'
+  | 'legend';
 
 type Variant =
   | 'headingXs'
@@ -50,10 +60,14 @@ interface TextProps {
   alignment?: Alignment;
   /** The element type */
   as: Element;
+  /** Prevent text from overflowing */
+  breakWord?: boolean;
   /** Adjust color of text */
   color?: Color;
   /** Adjust weight of text */
   fontWeight?: FontWeight;
+  /** HTML id attribute */
+  id?: string;
   /** Truncate text overflow with ellipsis */
   truncate?: boolean;
   /** Typographic style of text */
@@ -75,6 +89,7 @@ const className = classNames(
   props.fontWeight ? styles[props.fontWeight] : styles[VariantFontWeightMapping[props.variant]],
   (props.alignment || props.truncate) && styles.block,
   props.alignment && styles[props.alignment],
+  props.breakWord && styles.break,
   props.color && styles[props.color],
   props.truncate && styles.truncate,
   props.visuallyHidden && styles.visuallyHidden,

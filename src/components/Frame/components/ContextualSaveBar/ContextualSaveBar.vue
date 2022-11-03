@@ -56,7 +56,7 @@ DiscardConfirmationModal(
 
 <script setup lang="ts">
 import { computed, ref, useSlots } from 'vue';
-import { classNames } from 'polaris/polaris-react/src/utilities/css';
+import { classNames } from '@/utilities/css';
 import { getWidth } from 'polaris/polaris-react/src/utilities/get-width';
 import { Stack, Image, Button } from '@/components';
 import styles from '@/classes/Frame-ContextualSaveBar.json';

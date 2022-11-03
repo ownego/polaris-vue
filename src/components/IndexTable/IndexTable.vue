@@ -26,7 +26,7 @@ import type { SelectionType } from '@/utilities/index-provider';
 import { IndexProvider } from '@/components';
 import { hasSlot } from '@/utilities/has-slot';
 import IndexTableBase from './IndexTableBase.vue';
-import type { IndexTableHeading, IndexTableSortDirection } from './utils';
+import type { IndexTableHeading, IndexTableSortDirection, IndexTableSortToggleLabels } from './utils';
 import type { BulkActionsProps } from '@/components/BulkActions/utils';
 
 type Range = [number, number];
@@ -72,6 +72,9 @@ interface IndexTableProps {
    * The index of the heading that the table rows are sorted by.
    */
   sortColumnIndex?: number;
+  /** Optional dictionary of sort toggle labels for each sortable column, with ascending and descending label,
+   * with the key as the index of the column */
+   sortToggleLabels?: IndexTableSortToggleLabels;
 }
 
 interface IndexTableBaseProps {
@@ -129,6 +132,7 @@ const indexTableBaseProps = computed<IndexTableBaseProps>(() => {
     defaultSortDirection: props.defaultSortDirection,
     sortDirection: props.sortDirection,
     sortColumnIndex: props.sortColumnIndex,
+    sortToggleLabels: props.sortToggleLabels,
   };
 });
 </script>

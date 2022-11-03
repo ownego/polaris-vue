@@ -50,7 +50,7 @@ div(:class="styles.MonthContainer")
 </template>
 <script setup lang="ts">
 import { computed } from 'vue';
-import { classNames } from 'polaris/polaris-react/src/utilities/css';
+import { classNames } from '@/utilities/css';
 import {
   isDateBefore,
   isDateAfter,

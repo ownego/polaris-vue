@@ -17,7 +17,7 @@ div(
 
 <script setup lang="ts">
 import { computed, useSlots } from 'vue';
-import { classNames } from 'polaris/polaris-react/src/utilities/css';
+import { classNames } from '@/utilities/css';
 import styles from '@/classes/Page-Title.json';
 import { hasSlot } from '@/utilities/has-slot';
 

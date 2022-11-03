@@ -45,7 +45,7 @@ export default {
 
 <script setup lang="ts">
 import { computed, onBeforeUnmount, onMounted, ref, watch } from 'vue';
-import { classNames } from 'polaris/polaris-react/src/utilities/css';
+import { classNames } from '@/utilities/css';
 import { motion } from '@shopify/polaris-tokens';
 import { findFirstKeyboardFocusableNode } from '@/utilities/focus';
 import { PositionedOverlay } from '@/components/PositionedOverlay';
@@ -149,8 +149,16 @@ const handleScrollOut = () => {
   emit('close', PopoverCloseSource.ScrollOut);
 };
 
-const handleEscape = () => {
-  emit('close', PopoverCloseSource.EscapeKeypress);
+const handleEscape = (event: Event) => {
+  const target = event.target as HTMLElement;
+
+  const composedPath = event.composedPath();
+  const wasDescendant = wasContentNodeDescendant(composedPath, contentRef.value as HTMLElement);
+  const isActivatorDescendant = nodeContainsDescendant(props.activator, target);
+
+  if (wasDescendant || isActivatorDescendant) {
+    emit('close', PopoverCloseSource.EscapeKeypress);
+  }
 };
 
 const handleClick = (event: Event) => {

@@ -22,7 +22,7 @@ span(:class="className")
 
 <script setup lang="ts">
 import { computed, onMounted } from 'vue';
-import { classNames, variationName } from 'polaris/polaris-react/src/utilities/css';
+import { classNames, variationName } from '@/utilities/css';
 import styles from '@/classes/Icon.json';
 import config from '@/config';
 import type { IconSource } from '@/utilities/type';

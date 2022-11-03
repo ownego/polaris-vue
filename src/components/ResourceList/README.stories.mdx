@@ -4,7 +4,7 @@ import { ref } from 'vue';
 import { ResourceList, ResourceItem, Card, Avatar, TextStyle } from '@/polaris-vue';
 
 <Meta
-  title="Components / Lists and tables / Resource list"
+  title="Components / Resource list"
   component={ ResourceList }
   argTypes={{
     default: {
@@ -77,9 +77,9 @@ A resource list displays a collection of objects of the same type, like products
 
 Resource lists can also:
 
-- Support [customized list items](./?path=/docs/components-lists-and-tables-resource-item--basic)
+- Support [customized list items](./?path=/docs/components-resource-item--basic)
 - Include bulk actions so merchants can act on multiple objects at once
-- Support sorting and [filtering](./?path=/docs/components-lists-and-tables-filters) of long lists
+- Support sorting and [filtering](./?path=/docs/components-filters) of long lists
 - Be paired with pagination to make long lists digestible
 
 export const SimpleTemplate = (args) => ({
@@ -252,7 +252,7 @@ Allows merchants to select items and perform an action on the selection.
 
 ### Resource list with sorting
 
-Allows merchants to change the way the list is sorted by selecting one of several options from a [Select](./?path=/docs/components-forms-select) control.
+Allows merchants to change the way the list is sorted by selecting one of several options from a [Select](./?path=/docs/components-select) control.
 
 export const SortingTemplate = (args) => ({
   components: { ResourceList, ResourceItem, Card, Avatar, TextStyle },
@@ -544,7 +544,7 @@ export const Template = (args) => ({
 
 `type BulkActionListSection = ActionListSection`
 
-See more in [ActionList](./?path=/docs/components-actions-action-list--action-list) component
+See more in [ActionList](./?path=/docs/components-action-list--action-list) component
 
 <br/>
 

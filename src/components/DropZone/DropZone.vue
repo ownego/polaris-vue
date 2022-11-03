@@ -67,7 +67,7 @@ import { computed, onBeforeUnmount, onMounted, provide, reactive, ref, useAttrs,
 import { debounce } from 'polaris/polaris-react/src/utilities/debounce';
 import UploadMajor from '@icons/UploadMajor.svg';
 import CircleAlertMajor from '@icons/CircleAlertMajor.svg';
-import { classNames, variationName } from 'polaris/polaris-react/src/utilities/css';
+import { classNames, variationName } from '@/utilities/css';
 import { capitalize } from 'polaris/polaris-react/src/utilities/capitalize';
 import { isServer } from 'polaris/polaris-react/src/utilities/target';
 import {

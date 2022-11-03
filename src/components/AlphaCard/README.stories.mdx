@@ -1,0 +1,159 @@
+import { Meta, Story, Canvas, ArgsTable } from '@storybook/addon-docs';
+import { AlphaCard, AlphaStack, Text } from '@/polaris-vue';
+import dedent from 'ts-dedent';
+import { ref } from 'vue';
+
+<Meta
+  title="Components / Alpha card"
+  component={ AlphaCard }
+  argTypes={{
+    default: {
+      table: {
+        disable: true,
+      },
+    },
+    background: {
+      control: {
+        type: 'text',
+      },
+    },
+    padding: {
+      control: {
+        type: 'text',
+      },
+    },
+    roundedAbove: {
+      control: {
+        type: 'text',
+      },
+    },
+  }}
+/>
+
+export const Template = (args) => ({
+  components: { AlphaCard, AlphaStack, Text },
+  setup() {
+    return { args };
+  },
+  template: `
+    <AlphaCard>
+      <AlphaStack spacing="5">
+        <Text as="h3" variant="headingMd">
+          Online store dashboard
+        </Text>
+        <p>View a summary of your online store's performance.</p>
+      </AlphaStack>
+    </AlphaCard>
+  `,
+});
+
+# Alpha card
+
+Cards are used to group similar concepts and tasks together to make Shopify easier for merchants to scan, read, and get things done.
+
+<Canvas>
+  <Story
+    name="Alpha card"
+    height="200px"
+    parameters={{
+      docs: {
+        source: {
+          code: dedent`
+            <AlphaCard>
+              <AlphaStack spacing="5">
+                <Text as="h3" variant="headingMd">
+                  Online store dashboard
+                </Text>
+                <p>View a summary of your online store's performance.</p>
+              </AlphaStack>
+            </AlphaCard>
+          `,
+        },
+      },
+    }}
+  >
+    {Template.bind({})}
+  </Story>
+</Canvas>
+
+<ArgsTable story="Alpha card" />
+
+---
+
+```javascript
+type SpacingSpaceScale = "0" | "025" | "05" | "1" | "2" | "3" | "4" | "5" | "6" | "8" | "10" | "12" | "16" | "20" | "24" | "28" | "32"
+```
+
+```javascript
+type BreakpointsAlias = "xs" | "sm" | "md" | "lg" | "xl"
+```
+
+
+```javascript
+type BackgroundColorTokenScale =
+  | 'action-critical'
+  | 'action-critical-depressed'
+  | 'action-critical-disabled'
+  | 'action-critical-hovered'
+  | 'action-critical-pressed'
+  | 'action-primary'
+  | 'action-primary-depressed'
+  | 'action-primary-disabled'
+  | 'action-primary-hovered'
+  | 'action-primary-pressed'
+  | 'action-secondary'
+  | 'action-secondary-depressed'
+  | 'action-secondary-disabled'
+  | 'action-secondary-hovered'
+  | 'action-secondary-hovered-dark'
+  | 'action-secondary-pressed'
+  | 'action-secondary-pressed-dark'
+  | 'backdrop'
+  | 'background'
+  | 'background-hovered'
+  | 'background-pressed'
+  | 'background-selected'
+  | 'overlay'
+  | 'surface'
+  | 'surface-attention'
+  | 'surface-critical'
+  | 'surface-critical-subdued'
+  | 'surface-critical-subdued-depressed'
+  | 'surface-critical-subdued-hovered'
+  | 'surface-critical-subdued-pressed'
+  | 'surface-dark'
+  | 'surface-depressed'
+  | 'surface-disabled'
+  | 'surface-highlight'
+  | 'surface-highlight-subdued'
+  | 'surface-highlight-subdued-hovered'
+  | 'surface-highlight-subdued-pressed'
+  | 'surface-hovered'
+  | 'surface-hovered-dark'
+  | 'surface-neutral'
+  | 'surface-neutral-disabled'
+  | 'surface-neutral-hovered'
+  | 'surface-neutral-pressed'
+  | 'surface-neutral-subdued'
+  | 'surface-neutral-subdued-dark'
+  | 'surface-pressed'
+  | 'surface-pressed-dark'
+  | 'surface-primary-selected'
+  | 'surface-primary-selected-hovered'
+  | 'surface-primary-selected-pressed'
+  | 'surface-search-field'
+  | 'surface-search-field-dark'
+  | 'surface-selected'
+  | 'surface-selected-hovered'
+  | 'surface-selected-pressed'
+  | 'surface-subdued'
+  | 'surface-success'
+  | 'surface-success-subdued'
+  | 'surface-success-subdued-hovered'
+  | 'surface-success-subdued-pressed'
+  | 'surface-warning'
+  | 'surface-warning-subdued'
+  | 'surface-warning-subdued-hovered'
+  | 'surface-warning-subdued-pressed';
+```
+

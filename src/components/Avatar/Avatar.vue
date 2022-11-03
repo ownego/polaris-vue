@@ -13,8 +13,7 @@ span(
         y="50%",
         :dy="verticalOffset",
         fill="currentColor",
-        :font-size="shape === 'square' ? '15.5' : '20'",
-        :font-weight="shape === 'square' ? '600' : '400'",
+        :class="textClassName",
         text-anchor="middle",
       ) {{ initials }}
   Image(
@@ -30,7 +29,7 @@ span(
 
 <script setup lang="ts">
 import { computed, ref } from 'vue';
-import { classNames, variationName } from 'polaris/polaris-react/src/utilities/css';
+import { classNames, variationName } from '@/utilities/css';
 import styles from '@/classes/Avatar.json';
 import { styleClass } from './utils';
 import { Image } from '@/components';
@@ -90,6 +89,11 @@ const className =  computed(() => {
     !props.customer && !props.source && styles[variationName('style', styleClass(props.name || props.initials))],
   );
 });
+
+const textClassName = computed(() => classNames(
+  styles.Text,
+  (props.initials?.length || 0) > 2 && styles.long,
+));
 
 const imageClassName = computed(() => {
   return classNames(

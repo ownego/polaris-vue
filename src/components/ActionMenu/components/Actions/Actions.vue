@@ -40,7 +40,7 @@ div(
 </template>
 
 <script setup lang="ts">
-import { ref, computed, onUpdated } from 'vue';
+import { ref, computed, onUpdated, onMounted } from 'vue';
 import { debounce } from 'polaris/polaris-react/src/utilities/debounce';
 import styles from '@/classes/ActionMenu-Actions.json';
 import { ButtonGroup, EventListener } from '@/components';

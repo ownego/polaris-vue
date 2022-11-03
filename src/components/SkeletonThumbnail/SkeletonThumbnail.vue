@@ -2,7 +2,7 @@
 div(:class="className")
 </template>
 <script setup lang="ts">
-import { classNames, variationName } from 'polaris/polaris-react/src/utilities/css';
+import { classNames, variationName } from '@/utilities/css';
 import styles from '@/classes/SkeletonThumbnail.json';
 
 type Size = 'extraSmall' | 'small' | 'medium' | 'large';

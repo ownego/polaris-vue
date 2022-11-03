@@ -37,7 +37,7 @@ Portal(v-if="isMounted", idPrefix="sheet")
 </template>
 <script setup lang="ts">
 import { ref, useSlots, onMounted } from 'vue';
-import { classNames } from 'polaris/polaris-react/src/utilities/css';
+import { classNames } from '@/utilities/css';
 import { motion } from '@shopify/polaris-tokens';
 import { focusFirstFocusableNode } from '@/utilities/focus';
 import { UseMediaQuery } from '@/utilities/media-query';

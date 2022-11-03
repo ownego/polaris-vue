@@ -12,7 +12,7 @@ div(:class="className")
 <script setup lang="ts">
 import { computed, useSlots } from 'vue';
 import type { VNodeArrayChildren } from 'vue';
-import { classNames, variationName } from 'polaris/polaris-react/src/utilities/css';
+import { classNames, variationName } from '@/utilities/css';
 import styles from '@/classes/Stack.json';
 import { hasSlot } from '@/utilities/has-slot';
 import { extractElement } from '@/utilities/extract-fragment';

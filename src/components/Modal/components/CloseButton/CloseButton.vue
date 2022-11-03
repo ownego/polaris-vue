@@ -9,7 +9,7 @@ button(
 
 <script setup lang="ts">
 import { computed } from 'vue';
-import { classNames } from 'polaris/polaris-react/src/utilities/css';
+import { classNames } from '@/utilities/css';
 import MobileCancelMajor from '@icons/MobileCancelMajor.svg';
 import { Icon } from '@/components/Icon';
 import styles from '@/classes/Modal-CloseButton.json';

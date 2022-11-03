@@ -30,7 +30,7 @@ nav(
 
 <script setup lang="ts">
 import { computed, provide, useSlots } from 'vue';
-import { classNames } from 'polaris/polaris-react/src/utilities/css';
+import { classNames } from '@/utilities/css';
 import { getWidth } from 'polaris/polaris-react/src/utilities/get-width';
 import styles from '@/classes/Navigation.json';
 import { UseFrame } from '@/utilities/frame';

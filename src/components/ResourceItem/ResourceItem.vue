@@ -108,7 +108,7 @@ li(:class="listItemClassName", :dataHref="dataHref")
 
 <script setup lang="ts">
 import { computed, inject, ref, useSlots, watch } from 'vue';
-import { classNames, variationName } from 'polaris/polaris-react/src/utilities/css';
+import { classNames, variationName } from '@/utilities/css';
 import { UseI18n } from '@/use';
 import { hasSlot } from '@/utilities/has-slot';
 import { ActionList, Popover, UnstyledLink, ButtonGroup, Checkbox, Button, ButtonFrom } from '@/components';

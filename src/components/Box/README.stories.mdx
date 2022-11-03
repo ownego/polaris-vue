@@ -1,0 +1,213 @@
+import { Meta, Story, Canvas, ArgsTable } from '@storybook/addon-docs';
+import { Box, Stack, Text } from '@/polaris-vue';
+import dedent from 'ts-dedent';
+import { ref } from 'vue';
+
+<Meta
+  title="Components / Box"
+  component={ Box }
+  argTypes={{
+    default: {
+      table: {
+        disable: true,
+      },
+    },
+  }}
+/>
+
+export const Template = (args) => ({
+  components: { Box, Stack, Text },
+  setup() {
+    return { args };
+  },
+  template: `
+    <Stack vertical>
+      <Box background="surface" borderRadius="2" padding="5" shadow="card">
+        <Text as="h2" variant="headingMd">
+          Box with uniform padding
+        </Text>
+      </Box>
+      <Box
+        background="surface"
+        borderRadius="2"
+        padding="5"
+        paddingInlineStart="2"
+        shadow="card"
+      >
+        <Text as="h2" variant="headingMd">
+          Box with left padding overwritten
+        </Text>
+      </Box>
+      <Box
+        background="surface"
+        borderRadius="2"
+        paddingBlockStart="4"
+        shadow="card"
+      >
+        <Text as="h2" variant="headingMd">
+          Box with top padding only
+        </Text>
+      </Box>
+    </Stack>
+  `,
+});
+
+# Box
+
+Box is the most primitive layout component. Box has a set of padding options. Use it to render an individual item.
+
+<Canvas>
+  <Story
+    name="Box"
+    height="200px"
+    parameters={{
+      docs: {
+        source: {
+          code: dedent`
+            <Stack vertical>
+              <Box background="surface" borderRadius="2" padding="5" shadow="card">
+                <Text as="h2" variant="headingMd">
+                  Box with uniform padding
+                </Text>
+              </Box>
+              <Box
+                background="surface"
+                borderRadius="2"
+                padding="5"
+                paddingInlineStart="2"
+                shadow="card"
+              >
+                <Text as="h2" variant="headingMd">
+                  Box with left padding overwritten
+                </Text>
+              </Box>
+              <Box
+                background="surface"
+                borderRadius="2"
+                paddingBlockStart="4"
+                shadow="card"
+              >
+                <Text as="h2" variant="headingMd">
+                  Box with top padding only
+                </Text>
+              </Box>
+            </Stack>
+          `,
+        },
+      },
+    }}
+  >
+    {Template.bind({})}
+  </Story>
+</Canvas>
+
+<ArgsTable story="Box" />
+
+---
+
+```javascript
+type BorderTokenAlias = "base" | "dark" | "divider" | "divider-on-dark" | "transparent"
+```
+
+```javascript
+type BorderRadiusTokenScale = "base" | "05" | "1" | "2" | "3" | "4" | "5" | "6" | "large" | "half"
+```
+
+```javascript
+type ColorTokenScale =
+  | 'text'
+  | 'text-critical'
+  | 'text-disabled'
+  | 'text-highlight'
+  | 'text-on-critical'
+  | 'text-on-dark'
+  | 'text-on-interactive'
+  | 'text-on-primary'
+  | 'text-primary'
+  | 'text-primary-hovered'
+  | 'text-primary-pressed'
+  | 'text-subdued'
+  | 'text-subdued-on-dark'
+  | 'text-success'
+  | 'text-warning';
+```
+
+```javascript
+type Overflow = "hidden" | "scroll"
+```
+
+```javascript
+type SpacingSpaceScale = "05" | "1" | "2" | "3" | "4" | "5" | "6" | "0" | "025" | "8" | "10" | "12" | "16" | "20" | "24" | "28" | "32"
+```
+
+```javascript
+type DepthShadowAlias = "base" | "transparent" | "faint" | "deep" | "button" | "top-bar" | "card" | "popover" | "layer" | "modal"
+```
+
+```javascript
+type BackgroundColorTokenScale =
+  | 'action-critical'
+  | 'action-critical-depressed'
+  | 'action-critical-disabled'
+  | 'action-critical-hovered'
+  | 'action-critical-pressed'
+  | 'action-primary'
+  | 'action-primary-depressed'
+  | 'action-primary-disabled'
+  | 'action-primary-hovered'
+  | 'action-primary-pressed'
+  | 'action-secondary'
+  | 'action-secondary-depressed'
+  | 'action-secondary-disabled'
+  | 'action-secondary-hovered'
+  | 'action-secondary-hovered-dark'
+  | 'action-secondary-pressed'
+  | 'action-secondary-pressed-dark'
+  | 'backdrop'
+  | 'background'
+  | 'background-hovered'
+  | 'background-pressed'
+  | 'background-selected'
+  | 'overlay'
+  | 'surface'
+  | 'surface-attention'
+  | 'surface-critical'
+  | 'surface-critical-subdued'
+  | 'surface-critical-subdued-depressed'
+  | 'surface-critical-subdued-hovered'
+  | 'surface-critical-subdued-pressed'
+  | 'surface-dark'
+  | 'surface-depressed'
+  | 'surface-disabled'
+  | 'surface-highlight'
+  | 'surface-highlight-subdued'
+  | 'surface-highlight-subdued-hovered'
+  | 'surface-highlight-subdued-pressed'
+  | 'surface-hovered'
+  | 'surface-hovered-dark'
+  | 'surface-neutral'
+  | 'surface-neutral-disabled'
+  | 'surface-neutral-hovered'
+  | 'surface-neutral-pressed'
+  | 'surface-neutral-subdued'
+  | 'surface-neutral-subdued-dark'
+  | 'surface-pressed'
+  | 'surface-pressed-dark'
+  | 'surface-primary-selected'
+  | 'surface-primary-selected-hovered'
+  | 'surface-primary-selected-pressed'
+  | 'surface-search-field'
+  | 'surface-search-field-dark'
+  | 'surface-selected'
+  | 'surface-selected-hovered'
+  | 'surface-selected-pressed'
+  | 'surface-subdued'
+  | 'surface-success'
+  | 'surface-success-subdued'
+  | 'surface-success-subdued-hovered'
+  | 'surface-success-subdued-pressed'
+  | 'surface-warning'
+  | 'surface-warning-subdued'
+  | 'surface-warning-subdued-hovered'
+  | 'surface-warning-subdued-pressed';
+```

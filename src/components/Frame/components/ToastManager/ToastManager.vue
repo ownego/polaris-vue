@@ -31,7 +31,7 @@ Portal(
 
 <script setup lang="ts">
 import { onMounted, ref, watch } from 'vue';
-import { classNames } from 'polaris/polaris-react/src/utilities/css';
+import { classNames } from '@/utilities/css';
 import styles from '@/classes/Frame-ToastManager.json';
 import { Portal, EventListener } from '@/components';
 import type { ToastPropsWithID } from '@/utilities/frame';

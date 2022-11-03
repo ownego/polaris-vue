@@ -13,7 +13,7 @@ div(
 
 <script setup lang="ts">
 import { ref, computed, onMounted } from 'vue';
-import { classNames } from 'polaris/polaris-react/src/utilities/css';
+import { classNames } from '@/utilities/css';
 import { calculateDraggerY, hueForDraggerY } from 'polaris/polaris-react/src/components/ColorPicker/components/HuePicker/utilities';
 import styles from '@/classes/ColorPicker.json';
 import { Slidable } from '../Slidable';

@@ -87,7 +87,7 @@ import { computed, ref, watch, provide, useSlots, onMounted } from 'vue';
 import type { VNodeArrayChildren } from 'vue';
 import { debounce } from 'polaris/polaris-react/src/utilities/debounce';
 import type { CheckboxHandles } from '@/utilities/interface';
-import { classNames } from 'polaris/polaris-react/src/utilities/css';
+import { classNames } from '@/utilities/css';
 import { UseI18n } from '@/use';
 import { hasSlot } from '@/utilities/has-slot';
 import { extractElement } from '@/utilities/extract-fragment';

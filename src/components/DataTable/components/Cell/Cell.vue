@@ -61,7 +61,7 @@ template(v-else)
 
 <script setup lang="ts">
 import { computed, useSlots } from 'vue';
-import { classNames, variationName } from 'polaris/polaris-react/src/utilities/css';
+import { classNames, variationName } from '@/utilities/css';
 import { headerCell } from 'polaris/polaris-react/src/components/shared';
 import SortAscendingMajor from '@icons/SortAscendingMajor.svg';
 import SortDescendingMajor from '@icons/SortDescendingMajor.svg';

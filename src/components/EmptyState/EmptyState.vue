@@ -52,7 +52,7 @@ div(:class="className")
 
 <script setup lang="ts">
 import { inject, computed, useSlots } from 'vue';
-import { classNames } from 'polaris/polaris-react/src/utilities/css';
+import { classNames } from '@/utilities/css';
 import type { ComplexAction } from '@/utilities/interface';
 import { hasSlot } from '@/utilities/has-slot';
 import { Image, ButtonFrom, Stack, TextContainer, DisplayText } from '@/components';

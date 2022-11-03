@@ -262,7 +262,7 @@ div(
 <script setup lang="ts">
 import { ref, computed, onMounted, onBeforeUnmount, useSlots, watch, toRaw } from 'vue';
 import { debounce } from 'polaris/polaris-react/src/utilities/debounce';
-import { classNames } from 'polaris/polaris-react/src/utilities/css';
+import { classNames } from '@/utilities/css';
 import { headerCell } from 'polaris/polaris-react/src/components/shared';
 import {
   EventListener,

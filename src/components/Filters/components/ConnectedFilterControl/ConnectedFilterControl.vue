@@ -61,7 +61,7 @@ div(:class="styles.Wrapper")
 <script setup lang="ts">
 import { computed, ref, onMounted, useSlots } from 'vue';
 import { debounce } from 'polaris/polaris-react/src/utilities/debounce';
-import { classNames } from 'polaris/polaris-react/src/utilities/css';
+import { classNames } from '@/utilities/css';
 import { hasSlot } from '@/utilities/has-slot';
 import type { DisableableAction } from '@/utilities/interface';
 import type { PopoverableAction } from '../../utils';

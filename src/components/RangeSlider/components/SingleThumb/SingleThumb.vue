@@ -52,7 +52,7 @@ Labelled(
 
 <script setup lang="ts">
 import { computed, ref, useSlots } from 'vue';
-import { classNames } from 'polaris/polaris-react/src/utilities/css';
+import { classNames } from '@/utilities/css';
 import { clamp } from 'polaris/polaris-react/src/utilities/clamp';
 import { invertNumber } from 'polaris/polaris-react/src/components/RangeSlider/utilities';
 import { Labelled } from '@/components';

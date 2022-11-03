@@ -41,7 +41,7 @@ li(
 
 <script setup lang="ts">
 import { ref, computed, useSlots } from 'vue';
-import { classNames, variationName } from 'polaris/polaris-react/src/utilities/css';
+import { classNames, variationName } from '@/utilities/css';
 import { ScrollTo } from '@/components';
 import styles from '@/classes/OptionList-Option.json';
 import { Checkbox } from '../Checkbox';

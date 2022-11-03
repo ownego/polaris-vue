@@ -35,7 +35,7 @@ Card
 
 <script setup lang="ts">
 import { computed, useAttrs } from 'vue';
-import { classNames } from 'polaris/polaris-react/src/utilities/css';
+import { classNames } from '@/utilities/css';
 import type { Action } from '@/utilities/type';
 import { Card, TextContainer, ButtonGroup, Button, ButtonFrom, Heading, Image, CardSection } from '@/components';
 import CancelSmallMinor from '@icons/CancelSmallMinor.svg';

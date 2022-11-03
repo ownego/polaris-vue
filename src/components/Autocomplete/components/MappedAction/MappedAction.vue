@@ -36,7 +36,7 @@ div(:class="styles.ActionContainer")
 
 <script setup lang="ts">
 import { computed, provide, useSlots } from 'vue';
-import { classNames } from 'polaris/polaris-react/src/utilities/css';
+import { classNames } from '@/utilities/css';
 import { UseI18n } from '@/use';
 import type { IconSource } from '@/utilities/type';
 import { hasSlot } from '@/utilities/has-slot';

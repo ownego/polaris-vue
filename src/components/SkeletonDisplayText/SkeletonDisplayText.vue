@@ -5,7 +5,7 @@ div(
 </template>
 <script setup lang="ts">
 import styles from '@/classes/SkeletonDisplayText.json';
-import { classNames, variationName } from 'polaris/polaris-react/src/utilities/css';
+import { classNames, variationName } from '@/utilities/css';
 
 type Size = 'small' | 'medium' | 'large' | 'extraLarge';
 

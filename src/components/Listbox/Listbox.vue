@@ -46,7 +46,7 @@ import {
   onMounted,
 } from 'vue';
 import { debounce } from 'polaris/polaris-react/src/utilities/debounce';
-import { classNames } from 'polaris/polaris-react/src/utilities/css';
+import { classNames } from '@/utilities/css';
 import { scrollable } from 'polaris/polaris-react/src/components/shared';
 import { scrollOptionIntoView } from 'polaris/polaris-react/src/utilities/listbox/utilities';
 import { UseUniqueId } from '@/use';

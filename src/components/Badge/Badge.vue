@@ -16,7 +16,7 @@ span(:class="className")
 
 <script setup lang="ts">
 import { inject, ref, computed } from 'vue';
-import { classNames, variationName } from 'polaris/polaris-react/src/utilities/css';
+import { classNames, variationName } from '@/utilities/css';
 import styles from '@/classes/Badge.json';
 import type { IconSource } from '@/utilities/type';
 import { Icon } from '../Icon';
