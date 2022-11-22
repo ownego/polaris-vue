@@ -144,8 +144,8 @@ Labelled(
         :disabled="disabled",
         @click="handleClearButtonPress(id)",
       )
-        VisuallyHidden
-          p {{ i18n.translate('Polaris.Common.clear') }}
+        Text(as="span", variant="bodySm", visually-hidden)
+          | {{ i18n.translate('Polaris.Common.clear') }}
         Icon(:source="CircleCancelMinor", color="base")
       TextFieldSpinner(
         v-if="type === 'number' && step !== 0 && !disabled && !readOnly",
@@ -174,13 +174,10 @@ import CircleCancelMinor from '@icons/CircleCancelMinor.svg';
 import type { Error } from '@/utilities/type';
 import { UseI18n } from '@/use';
 import { hasSlot } from '@/utilities/has-slot';
+import { Connected, Icon, Labelled } from '@/components';
 import type { LabelledProps } from '../Labelled/utils';
 import { helpTextID, labelID } from '../Labelled/utils';
 import { Resizer, Spinner as TextFieldSpinner } from './components';
-import { Connected } from '../Connected';
-import { Icon } from '../Icon';
-import { Labelled } from '../Labelled';
-import { VisuallyHidden } from '../VisuallyHidden';
 
 type Type =
   | 'text'

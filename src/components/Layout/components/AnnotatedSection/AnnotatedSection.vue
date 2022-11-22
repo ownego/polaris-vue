@@ -3,11 +3,11 @@ div(:class="styles.AnnotatedSection")
   div(:class="styles.AnnotationWrapper")
     div(:class="styles.Annotation")
       TextContainer
-        Heading(:id="id")
+        Text(:id="id", variant="headingMd", as="h2")
           slot(name="title")
-        div(
+        Box(
           v-if="!isDescriptionSlotContainHTMLTag",
-          :class="styles.AnnotationDescription",
+          color="text-subdued",
         )
           slot(name="description")
         slot(v-else, name="description")
@@ -18,14 +18,13 @@ div(:class="styles.AnnotatedSection")
 <script setup lang="ts">
 import { useSlots, computed } from 'vue';
 import styles from '@/classes/Layout.json';
-import { TextContainer } from '../../../TextContainer';
-import { Heading } from '../../../Heading';
+import { Box, Text, TextContainer } from '@/components';
 
 interface Props {
   id?: string;
 }
 
-const props = defineProps<Props>();
+defineProps<Props>();
 
 const slots = useSlots();
 const descriptionSlot = computed(() => slots.description?.());

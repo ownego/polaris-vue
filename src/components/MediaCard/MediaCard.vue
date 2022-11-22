@@ -39,7 +39,7 @@ Card
           div(:class="styles.Heading")
             template(v-if="hasSlot(slots.title)")
               slot(name="title")
-            Heading(v-else) {{ title }}
+            Text(v-else, variant="headingMd", as="h2") {{ title }}
           p {{ description }}
           div(
             v-if="primaryAction || secondaryAction",
@@ -59,14 +59,14 @@ Card
 </template>
 
 <script setup lang="ts">
-import { computed, inject, ref, useSlots } from 'vue';
+import { computed, ref, useSlots } from 'vue';
 import { classNames } from '@/utilities/css';
 import HorizontalDotsMinor from '@icons/HorizontalDotsMinor.svg';
 import type { ComplexAction } from '@/utilities/interface';
 import type { ActionListItemDescriptor } from '@/components/ActionList/utils';
 import { hasSlot } from '@/utilities/has-slot';
 import { UseI18n } from '@/use';
-import { Card, CardSection, Popover, Button, ButtonFrom, ActionList, Stack, ButtonGroup, Heading } from '@/components';
+import { Card, CardSection, Popover, Button, ButtonFrom, ActionList, Stack, ButtonGroup, Text } from '@/components';
 import styles from '@/classes/MediaCard.json';
 
 type Size = 'small' | 'medium';

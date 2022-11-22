@@ -60,12 +60,13 @@ Labelled(
       aria-hidden,
       :aria-disabled="disabled",
     )
-      span(
+      Box(
         v-if="labelInline",
-        :class="styles.InlineLabel"
+        padding-inline-end="1",
       )
-        slot(v-if="slots.label", name="label")
-        template(v-else-if="label") {{ label }}
+        Text(as="span", variant="bodyMd", color="subdued", truncate)
+          slot(v-if="slots.label", name="label")
+          template(v-else-if="label") {{ label }}
       div(
         v-if="$slots[`prefix-${selectedOption.id}`]",
         :class="styles.Prefix",
@@ -90,8 +91,7 @@ import { UseUniqueId } from '@/use';
 import styles from '@/classes/Select.json';
 import SelectMinor from '@icons/SelectMinor.svg';
 import type { StrictOption, SelectOption, SelectGroup, HideableStrictOption, StrictGroup } from './utils';
-import { Icon } from '../Icon';
-import { Labelled } from '../Labelled';
+import { Icon, Box, Text, Labelled } from '@/components';
 import { helpTextID } from '../Labelled/utils';
 
 /**

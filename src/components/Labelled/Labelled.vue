@@ -36,8 +36,9 @@ div(:class="className")
     :class="styles.HelpText",
     :id="helpTextID(id)",
   )
-    slot(v-if="$slots['help-text']", name="help-text")
-    template(v-else) {{ helpText }}
+    Text(as="span", variant="bodyMd", color="subdued", break-word)
+      slot(v-if="$slots['help-text']", name="help-text")
+      template(v-else) {{ helpText }}
 </template>
 
 <script setup lang="ts">
@@ -45,10 +46,8 @@ import { computed } from 'vue';
 import { classNames } from '@/utilities/css';
 import styles from '@/classes/Labelled.json';
 import type { Action, Error } from '@/utilities/type';
-import { ButtonFrom } from '@/components';
+import { ButtonFrom, Text, InlineError, Label } from '@/components';
 import type { LabelProps } from '../Label/utils';
-import { Label } from '../Label';
-import { InlineError } from '../InlineError';
 import { helpTextID, errorID } from './utils';
 
 interface LabelledProps {

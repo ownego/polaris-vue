@@ -30,7 +30,7 @@ div(
       :class="styles.Heading",
       :id="headingID",
     )
-      Heading(element="p") {{ title }}
+      Text(as="p", variant="headingMd") {{ title }}
 
     div(
       v-if="hasSlot(slots.default) || action || secondaryAction",
@@ -75,7 +75,7 @@ div(
 </template>
 
 <script setup lang="ts">
-import { inject, ref, computed, onMounted, useAttrs, provide, useSlots } from 'vue';
+import { inject, ref, computed, useAttrs, provide, useSlots } from 'vue';
 import { classNames, variationName } from '@/utilities/css';
 import { UseUniqueId } from '@/use';
 import type { Action } from '@/utilities/type';
@@ -83,7 +83,16 @@ import type { DisableableAction, LoadableAction } from '@/utilities/interface';
 import { hasSlot } from '@/utilities/has-slot';
 import { UseI18n } from '@/use';
 
-import { Button, Heading, ButtonGroup, UnstyledButton, UnstyledLink, Spinner, Icon, UnstyledButtonFrom } from '@/components';
+import {
+  Button,
+  ButtonGroup,
+  Icon,
+  Spinner,
+  Text,
+  UnstyledButton,
+  UnstyledButtonFrom,
+  UnstyledLink,
+} from '@/components';
 import type { IconProps } from '@/components/Icon/utils';
 
 import CancelSmallMinor from '@icons/CancelSmallMinor.svg';

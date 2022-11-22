@@ -9,16 +9,18 @@ div(v-if="error && typeof error !== 'boolean' || $slots['help-text']")
     span(:class="styles.Control")
       slot
     span(:class="styles.Label")
-      slot(v-if="$slots.label", name="label")
-      template(v-else-if="label") {{ label }}
+      Text(as="span", variant="bodyMd")
+        slot(v-if="$slots.label", name="label")
+        template(v-else-if="label") {{ label }}
   div(:class="styles.Descriptions")
     div(
       v-if="$slots['help-text'] || helpText",
       :id="helpTextID(id)",
       :class="styles.HelpText",
     )
-      slot(v-if="$slots['help-text']", name="help-text")
-      template(v-else) {{ helpText }}
+      Text(as="span", variant="bodyMd", color="subdued")
+        slot(v-if="$slots['help-text']", name="help-text")
+        template(v-else) {{ helpText }}
     InlineError(
       v-if="(error && typeof error !== 'boolean')",
       :fieldID="id",
@@ -34,13 +36,15 @@ label(
   span(:class="styles.Control")
     slot
   span(:class="styles.Label")
-    slot(v-if="$slots.label", name="label")
-    template(v-else-if="label") {{ label }}
+    Text(as="span", variant="bodyMd")
+      slot(v-if="$slots.label", name="label")
+      template(v-else-if="label") {{ label }}
 </template>
 
 <script setup lang="ts">
 import { computed } from 'vue';
 import { classNames } from '@/utilities/css';
+import { Text } from '@/components';
 import styles from '@/classes/Choice.json';
 import type { Error } from '@/utilities/type';
 import { helpTextID } from './utils';

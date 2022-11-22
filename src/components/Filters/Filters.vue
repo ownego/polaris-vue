@@ -64,7 +64,7 @@ div(:class="styles.Filters")
         :accessibilityLabel="i18n.translate('Polaris.Filters.cancel')",
         @click="closeFilters",
       )
-      DisplayText(size="small", element="h3")
+      Text(variant="headingLg", as="h3")
         | {{ moreFiltersLabel }}
       Button(@click="closeFilters", primary)
         | {{ i18n.translate('Polaris.Filters.done') }}
@@ -84,13 +84,15 @@ div(:class="styles.Filters")
         )
           div(:class="styles.FilterTriggerLabelContainer")
             h3(:class="styles.FilterTriggerTitle")
-              TextStyle(
-                :variation="disabled || filter.disabled ? 'subdued' : undefined",
+              Text(
+                variant="bodyMd",
+                as="span",
+                :color="disabled || filter.disabled ? 'subdued' : undefined",
               ) {{ filter.label }}
             span
               Icon(:source="filterIsOpen(filter, index) ? ChevronUpMinor : ChevronDownMinor", color="base")
           div(v-if="getAppliedFilterContent(filter.key)", :class="styles.AppliedFilterBadgeContainer")
-            Badge(size="small", status="new") {{ getAppliedFilterContent(filter.key) }}
+            Badge(status="new") {{ getAppliedFilterContent(filter.key) }}
         Collapsible(:id="`${filter.key}Collapsible`", :open="filterIsOpen(filter, index)")
           div(:class="styles.FilterNodeContainer")
             Focus(
@@ -112,7 +114,7 @@ div(:class="styles.Filters")
         Button(v-if="hasAppliedFilters", @click="emits('clear-all')", fullWidth)
           | {{ i18n.translate('Polaris.Filters.clearAllFilters') }}
         div(v-else, :class="styles.EmptyFooterState")
-          TextStyle(variation="subdued")
+          Text(variant="bodyMd", color="subdued", as="span")
             p {{ i18n.translate('Polaris.Filters.noFiltersApplied') }}
   Sheet(
     v-else,
@@ -124,7 +126,7 @@ div(:class="styles.Filters")
   )
     div(:class="styles.FiltersContainer")
       div(:class="filtersContainerHeaderClassname")
-        DisplayText(size="small", element="h3")
+        Text(variant="headingLg", as="h3")
           | {{ moreFiltersLabel }}
         Button(
           :icon="CancelSmallMinor",
@@ -151,13 +153,15 @@ div(:class="styles.Filters")
           )
             div(:class="styles.FilterTriggerLabelContainer")
               h3(:class="styles.FilterTriggerTitle")
-                TextStyle(
-                  :variation="disabled || filter.disabled ? 'subdued' : undefined",
+                Text(
+                  variant="bodyMd",
+                  as="span",
+                  :color="disabled || filter.disabled ? 'subdued' : undefined",
                 ) {{ filter.label }}
               span
                 Icon(:source="filterIsOpen(filter, index) ? ChevronUpMinor : ChevronDownMinor", color="base")
             div(v-if="getAppliedFilterContent(filter.key)", :class="styles.AppliedFilterBadgeContainer")
-              Badge(size="small", status="new") {{ getAppliedFilterContent(filter.key) }}
+              Badge(status="new") {{ getAppliedFilterContent(filter.key) }}
           Collapsible(:id="`${filter.key}Collapsible`", :open="filterIsOpen(filter, index)")
             div(:class="styles.FilterNodeContainer")
               Focus(
@@ -198,7 +202,7 @@ div(:class="styles.Filters")
     id="FiltersHelpText",
     :class="styles.HelpText",
   )
-    TextStyle(variation="subdued")
+    Text(variant="bodyMd", color="subdued", as="span")
       slot(v-if="hasSlot(slots['help-text'])", name="help-text")
       template(v-else) {{ helpText }}
   template(v-if="open")
@@ -215,21 +219,20 @@ import { UseMediaQuery } from '@/utilities/media-query';
 import { focusFirstFocusableNode } from '@/utilities/focus';
 import type { ResourceListContextType } from '@/utilities/resource-list';
 import {
-  Button,
-  DisplayText,
-  Collapsible,
-  Scrollable,
-  ScrollLock,
-  Icon,
-  TextField,
-  Tag,
-  TextStyle,
   Badge,
+  Button,
+  Collapsible,
   Focus,
-  Sheet,
-  Stack,
+  Icon,
   Key,
   KeypressListener,
+  Scrollable,
+  ScrollLock,
+  Sheet,
+  Stack,
+  Tag,
+  Text,
+  TextField,
 } from '@/components';
 
 import SearchMinor from '@icons/SearchMinor.svg';
@@ -238,7 +241,7 @@ import ChevronDownMinor from '@icons/ChevronDownMinor.svg';
 import CancelSmallMinor from '@icons/CancelSmallMinor.svg';
 import styles from '@/classes/Filters.json';
 
-import type { PopoverableAction, ConnectedFilterControlProps, AppliedFilterInterface, FilterInterface } from './utils';
+import type { PopoverableAction, AppliedFilterInterface, FilterInterface } from './utils';
 import { ConnectedFilterControl, TagsWrapper } from './components';
 
 interface TransformedFiltersProps extends PopoverableAction {

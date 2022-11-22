@@ -5,12 +5,14 @@ div(:class="className")
     :for="id",
     :class="labelClassName",
   )
-    slot
+    Text(as="span", variant="bodyMd")
+      slot
 </template>
 
 <script setup lang="ts">
 import { computed } from 'vue';
 import { classNames } from '@/utilities/css';
+import { Text } from '@/components';
 import styles from '@/classes/Label.json';
 import { labelID } from './utils';
 

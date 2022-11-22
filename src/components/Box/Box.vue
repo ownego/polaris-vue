@@ -14,11 +14,16 @@ import { computed, ref } from 'vue';
 import { classNames } from '@/utilities/css';
 
 import type {
+  ColorsActionTokenAlias,
+  ColorsBackdropTokenAlias,
+  ColorsBackgroundTokenAlias,
+  ColorsOverlayTokenAlias,
+  ColorsSurfaceTokenAlias,
+  ShapeBorderWidthScale,
   DepthShadowAlias,
   SpacingSpaceScale,
 } from '@shopify/polaris-tokens';
 
-import type { BackgroundColorTokenScale } from './utils';
 import styles from '@/classes/Box.json';
 
 type Element = 'div' | 'span' | 'section';
@@ -68,6 +73,13 @@ type BorderRadiusTokenScale =
   | 'large'
   | 'half';
 
+type BackgroundColors =
+  | ColorsBackdropTokenAlias
+  | ColorsBackgroundTokenAlias
+  | ColorsOverlayTokenAlias
+  | ColorsActionTokenAlias
+  | ColorsSurfaceTokenAlias;
+
 interface BorderRadius {
   startStart: BorderRadiusTokenScale;
   startEnd: BorderRadiusTokenScale;
@@ -82,11 +94,18 @@ interface Spacing {
   inlineEnd: SpacingSpaceScale;
 }
 
+interface BorderWidth {
+  blockStart: ShapeBorderWidthScale;
+  blockEnd: ShapeBorderWidthScale;
+  inlineStart: ShapeBorderWidthScale;
+  inlineEnd: ShapeBorderWidthScale;
+}
+
 interface Props {
   /** HTML Element type */
   as?: Element;
   /** Background color */
-  background?: BackgroundColorTokenScale;
+  background?: BackgroundColors;
   /** Border style */
   border?: BorderTokenAlias;
   /** Vertical end border style */
@@ -107,6 +126,16 @@ interface Props {
   borderRadiusStartStart?: BorderRadiusTokenScale;
   /** Verital start horizontal end border radius */
   borderRadiusStartEnd?: BorderRadiusTokenScale;
+  /** Border width */
+  borderWidth?: ShapeBorderWidthScale;
+  /** Vertical start border width */
+  borderBlockStartWidth?: ShapeBorderWidthScale;
+  /** Vertical end border width */
+  borderBlockEndWidth?: ShapeBorderWidthScale;
+  /** Horizontal start border width */
+  borderInlineStartWidth?: ShapeBorderWidthScale;
+  /** Horizontal end border width */
+  borderInlineEndWidth?: ShapeBorderWidthScale;
   /** Color of children */
   color?: ColorTokenScale;
   /** HTML id attribute */
@@ -155,6 +184,13 @@ const borderRadiuses = computed(() => ({
   startEnd: props.borderRadiusStartEnd,
 } as BorderRadius));
 
+const borderWidths = computed(() => ({
+  blockStart: props.borderBlockStartWidth,
+  blockEnd: props.borderBlockEndWidth,
+  inlineStart: props.borderInlineStartWidth,
+  inlineEnd: props.borderInlineEndWidth,
+} as BorderWidth));
+
 const paddings = computed(() => ({
   blockEnd: props.paddingBlockEnd,
   inlineStart: props.paddingInlineStart,
@@ -193,6 +229,21 @@ const style = computed(() => {
       : undefined,
     '--pc-box-border-radius-start-end': borderRadiuses.value.startEnd
       ? `var(--p-border-radius-${borderRadiuses.value.startEnd})`
+      : undefined,
+    '--pc-box-border-width': props.borderWidth
+      ? `var(--p-border-width-${props.borderWidth})`
+      : undefined,
+    '--pc-box-border-block-start-width': borderWidths.value.blockStart
+      ? `var(--p-border-width-${borderWidths.value.blockStart})`
+      : undefined,
+    '--pc-box-border-block-end-width': borderWidths.value.blockEnd
+      ? `var(--p-border-width-${borderWidths.value.blockEnd})`
+      : undefined,
+    '--pc-box-border-inline-start-width': borderWidths.value.inlineStart
+      ? `var(--p-border-width-${borderWidths.value.inlineStart})`
+      : undefined,
+    '--pc-box-border-inline-end-width': borderWidths.value.inlineEnd
+      ? `var(--p-border-width-${borderWidths.value.inlineEnd})`
       : undefined,
     '--pc-box-min-height': props.minHeight,
     '--pc-box-min-width': props.minWidth,

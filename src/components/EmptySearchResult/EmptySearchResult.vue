@@ -1,15 +1,15 @@
 <template lang="pug">
 Stack(alignment="center", vertical)
   EmptySearchSvg
-  DisplayText(size="small") {{ title }}
-  TextStyle(variation="subdued")
+  Text(variant="headingLg", as="p") {{ title }}
+  Text(variant="bodyMd", color="subdued", as="span")
     p(v-if="description") {{ description }}
 </template>
 <script setup lang="ts">
 import { UseI18n } from '@/use';
-import { DisplayText, TextStyle, Stack } from '@/components';
+import { Text, Stack } from '@/components';
 
-import EmptySearchSvg from 'polaris/polaris-react/src/components/EmptySearchResult/illustrations/empty-search.svg';
+import EmptySearchSvg from 'polaris/polaris-react/src/components/EmptySearchResult/illustrations/empty-search.svg?component';
 
 interface EmptySearchResultProps {
   title: string;

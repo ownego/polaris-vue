@@ -69,9 +69,10 @@ div
         :url="tabs[tab].url",
         @click="handleTabClick",
       )
-        template(v-if="hasSlot(slots[tabs[tab].id])")
-          slot(:name="tabs[tab].id")
-        template(v-else) {{ tabs[tab].content }}
+        Text(as="span", variant="bodyMd")
+          template(v-if="hasSlot(slots[tabs[tab].id])")
+            slot(:name="tabs[tab].id")
+          template(v-else) {{ tabs[tab].content }}
 
       li(
         :class="disclosureTabClassName",
@@ -141,6 +142,7 @@ import { classNames } from '@/utilities/css';
 import {
   Icon,
   Popover,
+  Text,
 } from '@/components';
 import { getVisibleAndHiddenTabIndices } from './utilities';
 import HorizontalDotsMinor from '@icons/HorizontalDotsMinor.svg';

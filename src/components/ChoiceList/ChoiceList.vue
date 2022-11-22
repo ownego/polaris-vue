@@ -4,8 +4,9 @@ fieldset(
   :class="className",
   :aria-invalid="error !== null",
 )
-  legend(:class="styles.Title")
-    slot
+  legend(v-if="$slots.default", :class="styles.Title")
+    Text(as="span", variant="bodyMd")
+      slot
   ul(:class="styles.Choices")
     li(
       v-for="choice, index in choices",
@@ -46,9 +47,7 @@ import { classNames } from '@/utilities/css';
 import { UseUniqueId } from '@/use';
 import styles from '@/classes/ChoiceList.json';
 import type { ErrorType } from '@/utilities/type';
-import { Checkbox } from '../Checkbox';
-import { RadioButton } from '../RadioButton';
-import { InlineError } from '../InlineError';
+import { Checkbox, RadioButton, InlineError, Text } from '@/components';
 import { errorTextID } from '../InlineError/utils';
 
 interface Choice {

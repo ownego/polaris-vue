@@ -1,7 +1,7 @@
 <template lang="pug">
 ul(:class="className")
   li(v-if="title", :class="styles.SectionHeading")
-    span(:class="styles.Text")
+    Text(as="span", variant="headingXs", color="subdued")
       | {{ title }}
     template(v-if="action")
       Tooltip(
@@ -12,7 +12,7 @@ ul(:class="className")
           type="button",
           :class="styles.Action",
           :aria-label="action.accessibilityLabel",
-          @click="action.onClick",
+          @click="action?.onClick",
         )
           Icon(:source="action.icon")
       button(
@@ -20,7 +20,7 @@ ul(:class="className")
         type="button",
         :class="styles.Action",
         :aria-label="action.accessibilityLabel",
-        @click="action.onClick",
+        @click="action?.onClick",
       )
         Icon(:source="action.icon")
   template(v-if="sectionItems.length > 0")
@@ -73,7 +73,7 @@ import { UseMediaQuery } from '@/utilities/media-query';
 import { UseUniqueId } from '@/use';
 import styles from '@/classes/Navigation.json';
 import HorizontalDotsMinor from '@icons/HorizontalDotsMinor.svg';
-import { Collapsible, Icon, Tooltip } from '@/components';
+import { Collapsible, Icon, Tooltip, Text } from '@/components';
 import type { TooltipProps } from '@/components/Tooltip/utils';
 import type { IconProps } from '@/components/Icon/utils';
 import { Item } from '../Item';

@@ -1,13 +1,20 @@
 <template lang="pug">
 div(:id="sectionContext", aria-hidden)
-  div(v-if="!isSlotContainHTMLTag", :class="styles.Header")
-    slot
+  Box(
+    v-if="!isSlotContainHTMLTag",
+    padding-block-start="2",
+    padding-inline-start="4",
+    padding-block-end="2",
+    padding-inline-end="4",
+  )
+    Text(as="span", variant="headingXs", color="subdued")
+      slot
   slot(v-else)
 </template>
 
 <script setup lang="ts">
 import { inject, useSlots, computed } from 'vue';
-import styles from '@/classes/Listbox-Header.json';
+import { Box, Text } from '@/components';
 
 const sectionContext = inject<string>('sectionContext', '');
 
@@ -35,7 +42,3 @@ const isSlotContainHTMLTag = computed(() => {
   return false;
 });
 </script>
-
-<style lang="scss">
-@import 'polaris/polaris-react/src/components/Listbox/components/Header/Header.scss';
-</style>

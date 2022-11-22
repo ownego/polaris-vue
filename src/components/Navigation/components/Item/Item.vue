@@ -23,8 +23,8 @@ li(v-if="!url", :class="styles.ListItem")
       v-if="props.new || badge",
       :class="styles.Badge"
     )
-      Badge(v-if="props.new", status="new", size="small") {{ i18n.translate('Polaris.Badge.STATUS_LABELS.new') }}
-      Badge(v-else-if="typeof badge === 'string'", status="new", size="small") {{ badge }}
+      Badge(v-if="props.new", status="new") {{ i18n.translate('Polaris.Badge.STATUS_LABELS.new') }}
+      Badge(v-else-if="typeof badge === 'string'", status="new") {{ badge }}
       Badge(v-else-if="typeof badge === 'object'", v-bind="badge") {{ badge.content }}
 
 li(v-else, :class="className")
@@ -54,8 +54,8 @@ li(v-else, :class="className")
         v-if="props.new || badge",
         :class="styles.Badge"
       )
-        Badge(v-if="props.new", status="new", size="small") {{ i18n.translate('Polaris.Badge.STATUS_LABELS.new') }}
-        Badge(v-else-if="typeof badge === 'string'", status="new", size="small") {{ badge }}
+        Badge(v-if="props.new", status="new") {{ i18n.translate('Polaris.Badge.STATUS_LABELS.new') }}
+        Badge(v-else-if="typeof badge === 'string'", status="new") {{ badge }}
         Badge(v-else-if="typeof badge === 'object'", v-bind="badge") {{ badge.content }}
 
     template(v-if="secondaryAction")

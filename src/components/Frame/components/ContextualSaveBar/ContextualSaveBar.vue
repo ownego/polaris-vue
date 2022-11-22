@@ -17,7 +17,7 @@ div(:class="styles.ContextualSaveBar")
       alt="",
     )
   div(:class="contentsClassName")
-    h2(:class="styles.Message") {{ message }}
+    Text(as="h2", variant="headingMd", color="text-inverse", truncate) {{ message }}
     div(:class="styles.ActionContainer")
       Stack(
         spacing="tight",
@@ -58,7 +58,7 @@ DiscardConfirmationModal(
 import { computed, ref, useSlots } from 'vue';
 import { classNames } from '@/utilities/css';
 import { getWidth } from 'polaris/polaris-react/src/utilities/get-width';
-import { Stack, Image, Button } from '@/components';
+import { Stack, Image, Button, Text } from '@/components';
 import styles from '@/classes/Frame-ContextualSaveBar.json';
 import type { ContextualSaveBarAction, ContextualSaveBarCombinedActionProps } from '@/utilities/frame/types';
 import { UseFrame } from '@/utilities/frame';

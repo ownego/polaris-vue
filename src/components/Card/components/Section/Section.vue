@@ -10,7 +10,7 @@ div(:class="className")
           v-if="!isTextOnlyTitle",
           name="title",
         )
-        Subheading(v-else)
+        Text(v-else, variant="headingSm", as="h3")
           slot(v-if="hasSlot(slots.title)", name="title")
           template(v-else) {{ title }}
       ButtonGroup
@@ -23,7 +23,7 @@ div(:class="className")
         )
     template(v-else)
       slot(v-if="!isTextOnlyTitle", name="title")
-      Subheading(v-else)
+      Text(v-else, variant="headingSm", as="h3")
         slot(v-if="hasSlot(slots.title)", name="title")
         template(v-else) {{ title }}
   slot
@@ -32,8 +32,13 @@ div(:class="className")
 import { computed, useSlots } from 'vue';
 import { classNames } from '@/utilities/css';
 import type { ComplexAction } from '@/utilities/interface';
-import { ButtonGroup, Stack, StackItem, Subheading } from '@/components';
-import { ButtonFrom } from '@/components/Button';
+import {
+  ButtonGroup,
+  ButtonFrom,
+  Stack,
+  StackItem,
+  Text,
+} from '@/components';
 import { hasSlot } from '@/utilities/has-slot';
 import styles from '@/classes/Card.json';
 

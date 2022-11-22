@@ -4,7 +4,7 @@ div(:class="className")
     :id="id",
     :class="styles.Title",
   )
-    DisplayText(element="h2", size="small")
+    Text(as="h2", variant="headingLg")
       slot
   CloseButton(
     :titleHidden="titleHidden",
@@ -14,7 +14,7 @@ div(:class="className")
 
 <script setup lang="ts">
 import { computed, useSlots } from 'vue';
-import { DisplayText } from '@/components/DisplayText';
+import { Text } from '@/components';
 import styles from '@/classes/Modal-Header.json';
 import { CloseButton } from '../CloseButton';
 

@@ -2,7 +2,6 @@
 nav(v-if="breadcrumb", role="navigation")
   UnstyledLink(
     v-if="linkUrl",
-    :key="breadcrumb.content",
     :url="linkUrl",
     :class="styles.Breadcrumb",
     :aria-label="breadcrumb.accessibilityLabel",
@@ -10,11 +9,10 @@ nav(v-if="breadcrumb", role="navigation")
   )
     span(:class="styles.Icon")
       Icon(:source="ArrowLeftMinor")
-    VisuallyHidden {{ breadcrumb.content }}
+    Text(variant="bodySm", as="span", visually-hidden, color="subdued") {{ breadcrumb.content }}
   button(
     v-else,
     type="button",
-    :key="breadcrumb.content",
     :class="styles.Breadcrumb",
     :aria-label="breadcrumb.accessibilityLabel",
     @mouseup="handleMouseUpByBlurring",
@@ -22,7 +20,7 @@ nav(v-if="breadcrumb", role="navigation")
   )
     span(:class="styles.Icon")
       Icon(:source="ArrowLeftMinor")
-    VisuallyHidden {{ breadcrumb.content }}
+    Text(variant="bodySm", as="span", visually-hidden, color="subdued") {{ breadcrumb.content }}
 </template>
 
 <script setup lang="ts">
@@ -31,9 +29,7 @@ import styles from '@/classes/Breadcrumbs.json';
 import { handleMouseUpByBlurring } from '@/utilities/focus';
 import ArrowLeftMinor from '@icons/ArrowLeftMinor.svg';
 import type { CallbackAction, LinkAction } from '@/utilities/type';
-import { VisuallyHidden } from '../VisuallyHidden';
-import { Icon } from '../Icon';
-import { UnstyledLink } from '../UnstyledLink';
+import { Text, Icon, UnstyledLink } from '@/components';
 
 interface BreadcrumbsProps {
   /** Collection of breadcrumbs */

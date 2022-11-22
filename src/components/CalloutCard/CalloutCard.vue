@@ -12,7 +12,7 @@ Card
       div(:class="styles.CalloutCard")
         div(:class="styles.Content")
           div(:class="styles.Title")
-            Heading {{ title }}
+            Text(as="h2", variant="headingMd") {{ title }}
           TextContainer
             slot
           div(:class="styles.Buttons")
@@ -37,7 +37,16 @@ Card
 import { computed, useAttrs } from 'vue';
 import { classNames } from '@/utilities/css';
 import type { Action } from '@/utilities/type';
-import { Card, TextContainer, ButtonGroup, Button, ButtonFrom, Heading, Image, CardSection } from '@/components';
+import {
+  Card,
+  TextContainer,
+  ButtonGroup,
+  Button,
+  ButtonFrom,
+  Text,
+  Image,
+  CardSection,
+} from '@/components';
 import CancelSmallMinor from '@icons/CancelSmallMinor.svg';
 import styles from '@/classes/CalloutCard.json';
 

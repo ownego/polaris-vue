@@ -1,6 +1,14 @@
 <template lang="pug">
 div(:class="className")
-  p(v-if="section.title", :class="styles.Title") {{ section.title }}
+  Box(
+    v-if="section.title",
+    padding-block-start="4",
+    padding-inline-start="4",
+    padding-block-end="2",
+    padding-inline-end="4",
+  )
+    Text(as="p", variant="headingXs") {{ section.title }}
+
   ul(
     :class="styles.Actions",
     :role="sectionRole",
@@ -33,6 +41,7 @@ export default {
 <script setup lang="ts">
 import { computed } from 'vue';
 import styles from '@/classes/ActionList.json';
+import { Box, Text } from '@/components';
 import { Item } from '../Item';
 import type { ActionListItemDescriptor, ActionListSection } from '../../utils';
 

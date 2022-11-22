@@ -39,7 +39,7 @@ type Alignment = 'start' | 'center' | 'end' | 'justify';
 
 type FontWeight = 'regular' | 'medium' | 'semibold' | 'bold';
 
-type Color = 'success' | 'critical' | 'warning' | 'subdued';
+type Color = 'success' | 'critical' | 'warning' | 'subdued' | 'text-inverse';
 
 const VariantFontWeightMapping: {[V in Variant]: FontWeight} = {
   headingXs: 'semibold',
@@ -83,7 +83,7 @@ const props = withDefaults(defineProps<TextProps>(), {
 
 const componentName = computed(() => props.as || (props.visuallyHidden ? 'span' : 'p'));
 
-const className = classNames(
+const className = computed(() => classNames(
   styles.root,
   styles[props.variant],
   props.fontWeight ? styles[props.fontWeight] : styles[VariantFontWeightMapping[props.variant]],
@@ -93,7 +93,7 @@ const className = classNames(
   props.color && styles[props.color],
   props.truncate && styles.truncate,
   props.visuallyHidden && styles.visuallyHidden,
-);
+));
 </script>
 
 <style lang="scss">

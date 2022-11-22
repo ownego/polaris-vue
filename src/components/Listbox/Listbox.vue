@@ -15,7 +15,7 @@ template(v-if="keyboardEventsEnabled || textFieldFocused")
     :keyCode="Key.Enter",
     :handler="handleEnter",
   )
-VisuallyHidden
+Text(variant="bodySm", as="span", visually-hidden)
   div(aria-live="polite") {{ loading ? loading : null }}
 ul(
   v-if="$slots.default",
@@ -52,7 +52,7 @@ import { scrollOptionIntoView } from 'polaris/polaris-react/src/utilities/listbo
 import { UseUniqueId } from '@/use';
 import styles from '@/classes/Listbox.json';
 import type { ComboboxListboxType, NavigableOption } from '@/utilities/interface';
-import { KeypressListener, VisuallyHidden } from '@/components';
+import { KeypressListener, Text } from '@/components';
 import { Key } from '../KeypressListener/utils';
 import { AutoSelection } from './utils';
 

@@ -4,7 +4,8 @@ div(:class="className")
     :keyCode="Key.Escape",
     :handler="onDismiss",
   )
-  | {{ content }}
+  Inline(block-align="center")
+    Text(as="span", variant="bodyMd", fontWeight="medium") {{ content }}
   slot
   div(
     v-if="action",
@@ -28,7 +29,7 @@ div(:class="className")
 import { computed, onBeforeUnmount, onMounted, ref } from 'vue';
 import { classNames } from '@/utilities/css';
 import styles from '@/classes/Frame-Toast.json';
-import { KeypressListener, Button as PButton, Icon } from '@/components';
+import { Inline, Text, KeypressListener, Button as PButton, Icon } from '@/components';
 import type { Action } from '@/utilities/type';
 import { Key } from '@/components/KeypressListener/utils';
 import MobileCancelMajor from '@icons/MobileCancelMajor.svg';

@@ -3,17 +3,17 @@ span(:class="className")
   SpinnerIconLarge(v-if="size === 'large'")
   SpinnerIconSmall(v-else)
 span(v-bind="spanAttributes")
-  VisuallyHidden
-    span {{ accessibilityLabel }}
+  Text(as="span", variant="bodySm", visually-hidden)
+    | {{ accessibilityLabel }}
 </template>
 
 <script setup lang="ts">
 import { ref, computed } from 'vue';
 import { classNames, variationName } from '@/utilities/css';
-import SpinnerIconLarge from '@/assets/spinner-large.svg';
-import SpinnerIconSmall from '@/assets/spinner-small.svg';
+import SpinnerIconLarge from '@/assets/spinner-large.svg?component';
+import SpinnerIconSmall from '@/assets/spinner-small.svg?component';
 import styles from '@/classes/Spinner.json';
-import { VisuallyHidden } from '../VisuallyHidden';
+import { Text } from '@/components';
 
 type Size = 'small' | 'large';
 

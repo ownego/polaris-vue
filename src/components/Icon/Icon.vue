@@ -1,7 +1,6 @@
 <template lang="pug">
 span(:class="className")
-  VisuallyHidden
-    span {{ accessibilityLabel }}
+  Text(variant="bodySm", as="span", visually-hidden) {{ accessibilityLabel }}
   component(
     v-if="sourceType === 'icon'",
     :is="source",
@@ -26,7 +25,7 @@ import { classNames, variationName } from '@/utilities/css';
 import styles from '@/classes/Icon.json';
 import config from '@/config';
 import type { IconSource } from '@/utilities/type';
-import { VisuallyHidden } from '../VisuallyHidden';
+import { Text } from '@/components';
 import type { Color } from './utils';
 
 const COLORS_WITH_BACKDROPS: string[] = ['base', 'critical', 'highlight', 'success', 'warning'];

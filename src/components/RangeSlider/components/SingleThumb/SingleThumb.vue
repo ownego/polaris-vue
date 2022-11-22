@@ -43,7 +43,7 @@ Labelled(
         :class="styles.Output",
       )
         div(:class="styles.OutputBubble")
-          span(:class="styles.OutputText")
+          Text(as="span", variant="headingXs", alignment="center")
             | {{ clampedValue }}
     div(v-if="hasSlot(slots.suffix) || suffix", :class="styles.Suffix")
       slot(v-if="hasSlot(slots.suffix)", name="suffix")
@@ -55,7 +55,7 @@ import { computed, ref, useSlots } from 'vue';
 import { classNames } from '@/utilities/css';
 import { clamp } from 'polaris/polaris-react/src/utilities/clamp';
 import { invertNumber } from 'polaris/polaris-react/src/components/RangeSlider/utilities';
-import { Labelled } from '@/components';
+import { Labelled, Text } from '@/components';
 import { helpTextID } from '@/components/Labelled/utils';
 import { hasSlot } from '@/utilities/has-slot';
 

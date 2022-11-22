@@ -28,8 +28,8 @@ Labelled(
           :source="UploadMajor",
           color="interactive",
         )
-        Caption(v-else)
-          TextStyle(variation="strong") {{ overlayTextWithDefault }}
+        Text(v-else, as="p", variant="bodySm", font-weight="bold")
+          | {{ overlayTextWithDefault }}
     div(
       v-if="showDragErrorOverlay",
       :class="styles.Overlay",
@@ -43,9 +43,9 @@ Labelled(
           :source="CircleAlertMajor",
           color="critical",
         )
-        Caption(v-else)
-          TextStyle(variation="strong") {{ errorOverlayTextWithDefault }}
-    VisuallyHidden
+        Text(v-else, as="p", variant="bodySm", font-weight="bold")
+          | {{ errorOverlayTextWithDefault }}
+    Text(variant="bodySm", as="span", visually-hidden)
       DropZoneInput(
         type="file",
         :id="uniqueId",
@@ -72,9 +72,7 @@ import { capitalize } from 'polaris/polaris-react/src/utilities/capitalize';
 import { isServer } from 'polaris/polaris-react/src/utilities/target';
 import {
   Stack,
-  Caption,
-  TextStyle,
-  VisuallyHidden,
+  Text,
   Labelled,
   Icon,
 } from '@/components';

@@ -24,13 +24,19 @@ type Element = 'div' | 'ul' | 'ol' | 'fieldset';
 type Spacing = ResponsiveProp<SpacingSpaceScale>;
 
 interface Props {
-  /** HTML Element type */
+  /** HTML Element type
+   * @default 'div'
+   */
   as?: Element;
-  /** Adjust vertical alignment of elements */
+  /** The vertical alignment of elements
+   * @default 'start'
+   */
   align?: Align;
   /** Toggle elements to be full width */
   fullWidth?: boolean;
-  /** Adjust spacing between elements */
+  /** The spacing between elements
+   * @default '4'
+   */
   spacing?: Spacing;
 }
 
