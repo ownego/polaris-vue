@@ -31,14 +31,25 @@ interface Props {
   sectioned?: boolean;
   /** Sets a fixed height and max-height on the Scrollable */
   height?: string;
+  /**
+   * Prevents page scrolling when the end of the scrollable Popover content is reached
+   * @default false
+   */
+   captureOverscroll?: boolean;
 }
 
-const props = defineProps<Props>();
+const props = withDefaults(defineProps<Props>(), {
+  captureOverscroll: false,
+});
 const emit = defineEmits<{ (event: 'scrolled-to-bottom'): void }>();
 
 const style = props.height
   ? { height: props.height, maxHeight: props.height, minHeight: props.height }
   : undefined;
 
-const className = computed(() => classNames(styles.Pane, props.fixed && styles['Pane-fixed']));
+const className = computed(() => classNames(
+  styles.Pane,
+  props.fixed && styles['Pane-fixed'],
+  props.captureOverscroll && styles['Pane-captureOverscroll'],
+));
 </script>

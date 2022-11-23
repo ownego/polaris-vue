@@ -15,6 +15,7 @@ import { Icon } from '@/components/Icon';
 import styles from '@/classes/Modal-CloseButton.json';
 
 interface Props {
+  pressed?: boolean;
   titleHidden?: boolean;
 }
 
@@ -29,6 +30,7 @@ const emit = defineEmits<{
 const className = computed(() => classNames(
   styles.CloseButton,
   props.titleHidden && styles.titleHidden,
+  props.pressed && styles.pressed,
 ));
 </script>
 

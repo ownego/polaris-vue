@@ -99,7 +99,7 @@ div(
               :totalInFooter="showTotalsInFooter",
               :nthColumn="index <= fixedFirstColumns - 1",
               :firstColumn="index === 0",
-              :contentType="total !== '' && index > 0 ? 'numeric' : undefined",
+              :contentType="total !== '' && index > 0 ? columnContentTypes[index] : undefined",
               :truncate="truncate",
               :verticalAlign="verticalAlign",
             )
@@ -149,7 +149,7 @@ div(
               :totalInFooter="showTotalsInFooter",
               :nthColumn="index <= fixedFirstColumns - 1",
               :firstColumn="index === 0",
-              :contentType="total !== '' && index > 0 ? 'numeric' : undefined",
+              :contentType="total !== '' && index > 0 ? columnContentTypes[index] : undefined",
               :truncate="truncate",
               :verticalAlign="verticalAlign",
             )
@@ -189,7 +189,7 @@ div(
               total,
               :totalInFooter="showTotalsInFooter",
               :firstColumn="index === 0",
-              :contentType="total !== '' && index > 0 ? 'numeric' : undefined",
+              :contentType="total !== '' && index > 0 ? columnContentTypes[index] : undefined",
               :truncate="truncate",
               :verticalAlign="verticalAlign",
             )
@@ -237,7 +237,7 @@ div(
               total,
               :totalInFooter="showTotalsInFooter",
               :firstColumn="index === 0",
-              :contentType="total !== '' && index > 0 ? 'numeric' : undefined",
+              :contentType="total !== '' && index > 0 ? columnContentTypes[index] : undefined",
               :truncate="truncate",
               :verticalAlign="verticalAlign",
             )

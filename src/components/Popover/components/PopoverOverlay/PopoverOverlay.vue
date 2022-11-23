@@ -26,6 +26,7 @@ PositionedOverlay(
       Pane(
         :sectioned="sectioned",
         :fixed="fixed",
+        :capture-overscroll="captureOverscroll",
         @scrolled-to-bottom="$emit('scrolled-to-bottom')",
       )
         slot(
@@ -74,6 +75,7 @@ export interface PopoverOverlayProps {
   hideOnPrint?: boolean;
   autofocusTarget?: PopoverAutofocusTarget;
   preventCloseOnChildOverlayClick?: boolean;
+  captureOverscroll?: boolean;
 }
 
 const props = withDefaults(defineProps<PopoverOverlayProps>(), {

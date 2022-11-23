@@ -8,18 +8,8 @@ component(
   Portal(v-if="activator && active", idPrefix="popover")
     PopoverOverlay(
       :id="id",
+      v-bind="props",
       :activator="activator",
-      :fullWidth="fullWidth",
-      :active="active",
-      :preferInputActivator="preferInputActivator",
-      :fixed="fixed",
-      :preferredPosition="preferredPosition",
-      :preferredAlignment="preferredAlignment",
-      :zIndexOverride="zIndexOverride",
-      :fluid-content="fluidContent",
-      :autofocusTarget="autofocusTarget",
-      :sectioned="sectioned",
-      :prevent-close-on-child-overlay-click="preventCloseOnChildOverlayClick",
       @close="handleClose",
       @scrolled-to-bottom="emit('scrolled-to-bottom')",
     )
@@ -88,6 +78,11 @@ interface PopoverProps {
   autofocusTarget?: PopoverAutofocusTarget;
   /** Prevents closing the popover when other overlays are clicked */
   preventCloseOnChildOverlayClick?: boolean;
+  /**
+   * Prevents page scrolling when the end of the scrollable Popover overlay content is reached - applied to Pane subcomponent
+   * @default false
+   */
+   captureOverscroll?: boolean;
 }
 
 const props = withDefaults(defineProps<PopoverProps>(), {

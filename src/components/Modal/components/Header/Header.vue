@@ -7,7 +7,8 @@ div(:class="className")
     Text(as="h2", variant="headingLg")
       slot
   CloseButton(
-    :titleHidden="titleHidden",
+    :pressed="closing",
+    :title-hidden="titleHidden",
     @click="emit('close')",
   )
 </template>
@@ -21,6 +22,7 @@ import { CloseButton } from '../CloseButton';
 interface Props {
   id?: string;
   titleHidden?: boolean;
+  closing?: boolean;
 }
 
 const props = defineProps<Props>();

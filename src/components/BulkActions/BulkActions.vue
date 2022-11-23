@@ -32,7 +32,7 @@ div(
           ref="moreActionsNode",
         )
           Popover(
-            :active="smallScreenPopoverVisible",
+            :active="smallScreenPopoverVisible && selectMode",
             @close="toggleSmallScreenPopover",
           )
             template(#activator)
@@ -65,7 +65,7 @@ div(
         v-if="paginatedSelectAllAction && paginatedSelectAllAction.onAction",
         plain,
         :disabled="disabled",
-        @click="paginatedSelectAllAction.onAction",
+        @click="paginatedSelectAllAction?.onAction",
       ) {{ paginatedSelectAllAction.content }}
 
   div(
@@ -104,7 +104,7 @@ div(
         ButtonGroupItem(v-if="hasActionsPopover")
           div(ref="moreActionsNode")
             Popover(
-              :active="largeScreenPopoverVisible",
+              :active="largeScreenPopoverVisible && selectMode",
               @close="toggleLargeScreenPopover",
             )
               template(#activator)
@@ -131,7 +131,7 @@ div(
         v-if="paginatedSelectAllAction && paginatedSelectAllAction.onAction",
         plain,
         :disabled="disabled",
-        @click="paginatedSelectAllAction.onAction",
+        @click="paginatedSelectAllAction?.onAction",
       ) {{ paginatedSelectAllAction.content }}
 </template>
 
@@ -200,7 +200,7 @@ const promotedActionsWidths = ref<number[]>([]);
 const bulkActionsWidth = ref(0);
 const addedMoreActionsWidthForMeasuring = ref(0);
 
-const handleResize = computed(() => debounce(
+const handleResize = debounce(
   () => {
     if (containerNode.value) {
       const tmpContainerWidth = containerNode.value.getBoundingClientRect().width;
@@ -216,7 +216,7 @@ const handleResize = computed(() => debounce(
   },
   50,
   {trailing: true},
-));
+);
 
 const numberOfPromotedActionsToRender = computed<number>(() => {
   if (!props.promotedActions) {
