@@ -51,7 +51,7 @@ Labelled(
         :style="{ left: `${leftPositionThumbLower}px` }",
       )
         div(:class="styles.OutputBubble")
-          span(:class="styles.OutputText") {{ value[0] }}
+          Text(as="span", variant="headingXs", alignment="center") {{ value[0] }}
       div(
         :id="idUpper",
         :class="thumbUpperClassName",
@@ -79,7 +79,7 @@ Labelled(
         :style="{ left: `${leftPositionThumbUpper}px` }",
       )
         div(:class="styles.OutputBubble")
-          span(:class="styles.OutputText") {{ value[1] }}
+          Text(as="span", variant="headingXs", alignment="center") {{ value[1] }}
     div(v-if="hasSlot(slots.suffix) || suffix", :class="styles.Suffix")
       slot(v-if="hasSlot(slots.suffix)", name="suffix")
       template(v-else) {{ suffix }}
@@ -92,7 +92,7 @@ EventListener(
 import { ref, computed, onMounted, onBeforeUnmount, useSlots } from 'vue';
 import { debounce } from 'polaris/polaris-react/src/utilities/debounce';
 import { classNames } from '@/utilities/css';
-import { Labelled, EventListener } from '@/components';
+import { Labelled, EventListener, Text } from '@/components';
 import type { LabelledProps } from '@/components/Labelled/utils';
 import type { ErrorType } from '@/utilities/type';
 import { labelID } from '@/components/Label/utils';

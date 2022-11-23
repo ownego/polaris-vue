@@ -65,6 +65,7 @@ const slots = useSlots();
 
 const hasHeaderContent = computed(() => {
   return props.title
+    || props.subtitle
     || (props.primaryAction || slots.primaryAction)
     || (
       (props.secondaryActions || slots.secondaryActions)

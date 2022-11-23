@@ -47,9 +47,9 @@ nav(
       v-if="hasSlot(slots.default)",
       aria-live="polite",
     )
-      TextStyle(v-if="hasNext && hasPrevious")
+      Text(v-if="hasNext && hasPrevious", variant="bodyMd", as="span")
         slot
-      TextStyle(v-else, variation="subdued")
+      Text(v-else, variant="bodyMd", color="subdued", as="span")
         slot
     Tooltip(
       v-if="nextTooltip && hasNext",
@@ -78,11 +78,11 @@ nav(
 </template>
 
 <script setup lang="ts">
-import { computed, inject, ref, useAttrs, useSlots } from 'vue';
+import { computed, ref, useAttrs, useSlots } from 'vue';
 import { isInputFocused } from 'polaris/polaris-react/src/utilities/is-input-focused';
 import ChevronLeftMinor from '@icons/ChevronLeftMinor.svg';
 import ChevronRightMinor from '@icons/ChevronRightMinor.svg';
-import { Button, ButtonGroup, KeypressListener, TextStyle, Tooltip } from '@/components';
+import { Button, ButtonGroup, KeypressListener, Text, Tooltip } from '@/components';
 import { UseI18n } from '@/use';
 import { hasSlot } from '@/utilities/has-slot';
 import type { Key } from '../KeypressListener/utils';

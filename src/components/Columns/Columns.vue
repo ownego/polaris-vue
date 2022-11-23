@@ -22,7 +22,9 @@ type Spacing = {
 };
 
 interface Props {
-  /** The space between columns */
+  /** The spacing between columns
+   * @default '4'
+   */
   spacing?: Spacing;
   /** The number of columns to display
    * @default {xs: 6, sm: 6, md: 6, lg: 6, xl: 6}

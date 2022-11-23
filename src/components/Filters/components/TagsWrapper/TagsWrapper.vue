@@ -1,10 +1,10 @@
 <template lang="pug">
-VisuallyHidden(v-if="hidden")
+Text(v-if="hidden", variant="bodySm", as="span", visually-hidden)
   slot
 slot(v-else)
 </template>
 <script setup lang="ts">
-import { VisuallyHidden } from '@/components';
+import { Text } from '@/components';
 
 interface Props {
   hidden: boolean;

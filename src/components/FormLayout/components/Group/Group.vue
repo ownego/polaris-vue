@@ -20,10 +20,14 @@ div(
       )
         component(:is="item")
     slot(v-else)
-  div(
+  Box(
     v-if="slots['help-text'] || helpText",
     :id="helpTextId",
-    :class="styles.HelpText",
+    color="text-subdued",
+    paddingBlockStart="2",
+    paddingInlineStart="5",
+    paddingBlockEnd="0",
+    paddingInlineEnd="5",
   )
     slot(v-if="slots['help-text']", name="help-text")
     template(v-else) {{ helpText }}
@@ -33,11 +37,12 @@ div(
 import { computed, useSlots } from 'vue';
 import type { VNodeArrayChildren } from 'vue';
 import { classNames } from '@/utilities/css';
-import { Item } from '../Item';
 import { hasSlot } from '@/utilities/has-slot';
 import { extractElement } from '@/utilities/extract-fragment';
 import styles from '@/classes/FormLayout.json';
 import { UseUniqueId } from '@/use';
+import { Box } from '@/components';
+import { Item } from '../Item';
 
 /**
  * Setup

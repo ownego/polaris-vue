@@ -4,7 +4,7 @@ div(
   @focus="handleFocus",
   @blur="handleBlur",
 )
-  VisuallyHidden
+  Text(as="span", variant="bodySm", visually-hidden)
     label(:for="searchId") {{ i18n.translate('Polaris.TopBar.SearchField.search') }}
   input(
     :id="searchId",
@@ -39,7 +39,7 @@ import { computed, onMounted, ref } from 'vue';
 import { classNames } from '@/utilities/css';
 import SearchMinor from '@icons/SearchMinor.svg';
 import CircleCancelMinor from '@icons/CircleCancelMinor.svg';
-import { VisuallyHidden, Icon } from '@/components';
+import { Text, Icon } from '@/components';
 import styles from '@/classes/TopBar-SearchField.json';
 import { UseUniqueId, UseI18n } from '@/use';
 

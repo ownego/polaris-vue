@@ -9,7 +9,6 @@ import {
   TopBarSearchField,
   TopBarMenu,
   Icon,
-  VisuallyHidden,
   ActionList,
   NavigationSection,
   Navigation,
@@ -64,7 +63,7 @@ import QuestionMarkMajor from '@icons/QuestionMarkMajor.svg';
 
 export const Template = (args) => ({
   components: {
-    Frame, TopBar, TopBarUserMenu, TopBarMenu, Icon, TopBarSearchField, VisuallyHidden,
+    Frame, TopBar, TopBarUserMenu, TopBarMenu, Icon, TopBarSearchField,
     ActionList, NavigationSection, Navigation, Loading, ContextualSaveBar, Button, Toast
   },
   data() {
@@ -180,7 +179,6 @@ export const Template = (args) => ({
               <template #activatorContent>
                 <span>
                   <Icon :source="QuestionMarkMajor" />
-                  <VisuallyHidden>Secondary menu</VisuallyHidden>
                 </span>
               </template>
             </TopBarMenu>
@@ -277,7 +275,6 @@ The frame component, while not visible in the user interface itself, provides th
                       <template #activatorContent>
                         <span>
                           <Icon :source="QuestionMarkMajor" />
-                          <VisuallyHidden>Secondary menu</VisuallyHidden>
                         </span>
                       </template>
                     </TopBarMenu>
@@ -315,7 +312,7 @@ The frame component, while not visible in the user interface itself, provides th
             <script>
               export default {
                 components: {
-                  Frame, TopBar, TopBarUserMenu, TopBarMenu, Icon, TopBarSearchField, VisuallyHidden,
+                  Frame, TopBar, TopBarUserMenu, TopBarMenu, Icon, TopBarSearchField,
                   ActionList, NavigationSection, Navigation, Loading, ContextualSaveBar, Button, Toast
                 },
                 data() {

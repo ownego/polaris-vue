@@ -9,10 +9,11 @@ div(:class="className")
         TextContainer(
           v-if="heading || hasSlot(slots.default)",
         )
-          DisplayText(v-if="heading", :size="headingSize")
+          Text(v-if="heading", :variant="headingSize", as="p")
             | {{ heading }}
           div(v-if="hasSlot(slots.default)", :class="styles.Content")
-            slot
+            Text(as="span", variant="bodyMd", color="subdued")
+              slot
         div(v-if="action || secondaryAction", :class="styles.Actions")
           Stack(alignment="center", distribution="center", spacing="tight")
             ButtonFrom(
@@ -24,8 +25,8 @@ div(:class="className")
               :action="action",
               :overrides="{ primary: true, size: 'medium' }",
             )
-        div(v-if="hasSlot(slots.footerContent)", :class="styles.FooterContent")
-          TextContainer
+        Box(v-if="hasSlot(slots.footerContent)", paddingBlockStart="4")
+          Text(as="span", variant="bodyMd", color="subdued")
             slot(name="footerContent")
     div(
       v-else,
@@ -55,7 +56,7 @@ import { inject, computed, useSlots } from 'vue';
 import { classNames } from '@/utilities/css';
 import type { ComplexAction } from '@/utilities/interface';
 import { hasSlot } from '@/utilities/has-slot';
-import { Image, ButtonFrom, Stack, TextContainer, DisplayText } from '@/components';
+import { Box, ButtonFrom, Image, Stack, Text, TextContainer } from '@/components';
 import styles from '@/classes/EmptyState.json';
 
 interface EmptyStateProps {
@@ -94,7 +95,7 @@ const className = computed(() => {
   );
 });
 
-const headingSize = computed(() => withinContentContainer ? 'small' : 'medium');
+const headingSize = computed(() => withinContentContainer ? 'headingLg' : 'headingXl');
 
 const hasDetails = computed(() => {
   return (props.heading || hasSlot(slots.default))

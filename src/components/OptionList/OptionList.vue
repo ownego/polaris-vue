@@ -5,10 +5,16 @@ ul(:class="styles.OptionList", :role="role")
       v-for="optionItem, sectionIndex in normalizedOptions",
       :key="optionItem.title || `noTitle-${sectionIndex}`",
     )
-      p(
+      Box(
         v-if="optionItem.title",
-        :class="styles.Title",
-      ) {{ optionItem.title }}
+        :padding-block-start="sectionIndex === 0 ? '2' : '4'",
+        padding-inline-start="2",
+        padding-block-end="2",
+        padding-inline-end="2",
+        :border-block-start="!(sectionIndex === 0) ? 'divider' : undefined",
+      )
+        Text(as="p", variant="headingXs") {{ optionItem.title }}
+
       ul(
         :class="styles.Options",
         :id="`${uniqueId}-${sectionIndex}`",
@@ -43,6 +49,7 @@ import { ref, computed, watch, useSlots } from 'vue';
 import { arraysAreEqual } from 'polaris/polaris-react/src/utilities/arrays';
 import { UseUniqueId } from '@/use';
 import type { OptionDescriptor, SectionDescriptor } from '@/utilities/interface';
+import { Box, Text } from '@/components';
 import styles from '@/classes/OptionList.json';
 import { Option as OptionItem } from './components/Option';
 

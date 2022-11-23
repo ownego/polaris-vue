@@ -112,4 +112,3 @@ export * from './TruncatedText';
 export * from './UnstyledButton';
 export * from './UnstyledLink';
 export * from './VideoThumbnail';
-export * from './VisuallyHidden';

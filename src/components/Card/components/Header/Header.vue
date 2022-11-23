@@ -7,7 +7,7 @@ div(:class="styles.Header")
   )
     StackItem(:fill="true")
       slot(v-if="!isTextOnlyTitle", name="title")
-      Heading(v-else)
+      Text(v-else, as="h2", variant="headingMd")
         slot(name="title")
     StackItem(v-if="actions")
       ButtonGroup
@@ -24,14 +24,13 @@ div(:class="styles.Header")
       v-if="!isTextOnlyTitle",
       name="title"
     )
-    Heading(v-else)
+    Text(v-else, as="h2", variant="headingMd")
       slot(name="title")
 </template>
 <script setup lang="ts">
 import { computed, useSlots } from 'vue';
 import type { DisableableAction } from '@/utilities/interface';
-import { ButtonGroup, Stack, StackItem, Heading } from '@/components';
-import { ButtonFrom } from '@/components/Button';
+import { ButtonGroup, ButtonFrom, Stack, StackItem, Text } from '@/components';
 import styles from '@/classes/Card.json';
 
 interface CardHeaderProps {

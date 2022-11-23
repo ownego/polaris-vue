@@ -12,7 +12,9 @@ Card
       div(:class="styles.CalloutCard")
         div(:class="styles.Content")
           div(:class="styles.Title")
-            Heading {{ title }}
+            Text(as="h2", variant="headingMd")
+              slot(v-if="slots.title", name="title")
+              template(v-else) {{ title }}
           TextContainer
             slot
           div(:class="styles.Buttons")
@@ -34,10 +36,19 @@ Card
 </template>
 
 <script setup lang="ts">
-import { computed, useAttrs } from 'vue';
+import { computed, useAttrs, useSlots } from 'vue';
 import { classNames } from '@/utilities/css';
 import type { Action } from '@/utilities/type';
-import { Card, TextContainer, ButtonGroup, Button, ButtonFrom, Heading, Image, CardSection } from '@/components';
+import {
+  Card,
+  TextContainer,
+  ButtonGroup,
+  Button,
+  ButtonFrom,
+  Text,
+  Image,
+  CardSection,
+} from '@/components';
 import CancelSmallMinor from '@icons/CancelSmallMinor.svg';
 import styles from '@/classes/CalloutCard.json';
 
@@ -55,6 +66,7 @@ interface CalloutCardProps {
 const props = defineProps<CalloutCardProps>();
 
 const attrs = useAttrs();
+const slots = useSlots();
 
 const imageClassName = computed(() => {
   return classNames(

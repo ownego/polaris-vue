@@ -665,9 +665,14 @@ ScrollToExample.parameters = {
 
 export const Example = (args) => ({
   components: { Scrollable },
-  setup() { return {args}; },
+  setup() {
+    const scrollBottom = () => {
+      console.log('bottom');
+    };
+    return {args, scrollBottom};
+  },
   template: `
-  <Scrollable :style="{height: '100px'}" v-bind="args">
+  <Scrollable :style="{height: '100px'}" v-bind="args" @scrolled-to-bottom="scrollBottom">
     <p>
       You must be 18 years or older or at least the age of majority in the
       jurisdiction where you reside or from which you use this Service.

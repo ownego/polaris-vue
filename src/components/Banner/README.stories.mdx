@@ -49,7 +49,10 @@ import dedent from 'ts-dedent';
 export const Template = (args) => ({
   components: { Banner },
   setup() {
-    return { args };
+    const dismissHandler = () => {
+      console.log('Banner dismissed');
+    };
+    return { args, dismissHandler };
   },
   template: `<Banner
     v-bind="args"

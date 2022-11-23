@@ -123,6 +123,7 @@ export const Template = (args, { argTypes }) => ({
   components: { ActionList, Button, Popover },
   data() {
     return {
+      args: args,
       active: true,
       items: [{ content: "Import file" }, { content: "Export file" }],
     };
@@ -135,6 +136,7 @@ export const Template = (args, { argTypes }) => ({
   template: `
     <Popover
       :active="active"
+      v-bind="args"
       autofocusTarget="first-node"
       @close="toggleActive"
     >

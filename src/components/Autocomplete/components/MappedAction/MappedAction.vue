@@ -23,7 +23,7 @@ div(:class="styles.ActionContainer")
               v-if="ellipsis && content",
             ) {{ i18n.translate('Polaris.Autocomplete.ellipsis', {content}) }}
             template(v-else) {{ content }}
-          TextStyle(v-if="hasSlot(slots.helpText)", variation="subdued")
+          Text(v-if="hasSlot(slots.helpText)", variant="bodyMd", color="subdued", as="span")
             slot(name="helpText")
         span(v-if="badge", :class="styles.Suffix")
           Badge(:status="badge.status") {{ badge.content }}
@@ -40,7 +40,7 @@ import { classNames } from '@/utilities/css';
 import { UseI18n } from '@/use';
 import type { IconSource } from '@/utilities/type';
 import { hasSlot } from '@/utilities/has-slot';
-import { Badge, ListboxAction, Icon, TextStyle } from '@/components';
+import { Badge, ListboxAction, Icon, Text } from '@/components';
 import styles from '@/classes/Autocomplete-MappedAction.json';
 
 interface Props {

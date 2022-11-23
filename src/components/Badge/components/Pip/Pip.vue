@@ -1,13 +1,13 @@
 <template lang="pug">
 span(:class="className")
-  VisuallyHidden
+  Text(variant="bodySm", as="span", visually-hidden)
     template(v-if="accessibilityLabelOverride") {{ accessibilityLabelOverride }}
     template(v-else) {{ getDefaultAccessibilityLabel(progress, status) }}
 </template>
 <script setup lang="ts">
 import { computed } from 'vue';
 import { classNames, variationName } from '@/utilities/css';
-import { VisuallyHidden } from '@/components';
+import { Text } from '@/components';
 import type { Progress, Status } from '../../utils';
 import { getDefaultAccessibilityLabel } from '../../utils';
 import styles from '@/classes/Badge-Pip.json';

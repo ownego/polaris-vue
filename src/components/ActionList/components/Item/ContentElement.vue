@@ -16,7 +16,7 @@ span(:class="styles.Content")
       :class="styles.ContentBlock"
     )
       span(:class="styles.ContentBlockInner") {{ contentText }}
-      TextStyle(variation="subdued") {{ helpText }}
+      Text(variant="bodyMd", color="subdued", as="span") {{ helpText }}
     template(v-else) {{ contentText }}
   span(v-if="badge", :class="styles.Suffix")
     Badge(:status="badge.status") {{ badge.content }}
@@ -32,9 +32,7 @@ export default {
 
 <script setup lang="ts">
 import { computed } from 'vue';
-import { TextStyle } from '@/components/TextStyle';
-import { Icon } from '@/components/Icon';
-import { Badge } from '@/components/Badge';
+import { Text, Icon, Badge } from '@/components';
 import styles from '@/classes/ActionList.json';
 import type { IconSource } from '@/utilities/type';
 

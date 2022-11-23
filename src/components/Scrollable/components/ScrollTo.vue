@@ -8,7 +8,7 @@ import { UseUniqueId } from '@/use';
 
 type ScrollToPositionFn = (scrollY: number) => void;
 
-const scrollToPosition = inject<ScrollToPositionFn>('scrollToPositionContext', () => false);
+const scrollToPosition = inject<ScrollToPositionFn>('scrollableContext', () => false);
 
 const anchorNode = ref<HTMLAnchorElement | null>(null);
 

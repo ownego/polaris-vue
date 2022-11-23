@@ -2,7 +2,7 @@ import dedent from 'ts-dedent';
 import { Meta, Story, Canvas, ArgsTable } from '@storybook/addon-docs';
 
 import { ref } from 'vue';
-import { Frame, TopBar, TopBarUserMenu, TopBarSearchField, TopBarMenu, Icon, VisuallyHidden, ActionList } from '@/polaris-vue';
+import { Frame, TopBar, TopBarUserMenu, TopBarSearchField, TopBarMenu, Icon, ActionList } from '@/polaris-vue';
 import ArrowLeftMinor from '@icons/ArrowLeftMinor.svg';
 import QuestionMarkMajor from '@icons/QuestionMarkMajor.svg';
 
@@ -96,7 +96,7 @@ import QuestionMarkMajor from '@icons/QuestionMarkMajor.svg';
 />
 
 export const Template = (args) => ({
-  components: { ArrowLeftMinor, Frame, TopBar, TopBarUserMenu, TopBarMenu, Icon, VisuallyHidden, TopBarSearchField, ActionList },
+  components: { ArrowLeftMinor, Frame, TopBar, TopBarUserMenu, TopBarMenu, Icon, TopBarSearchField, ActionList },
   setup() {
     const logo = {
       width: 30,
@@ -161,7 +161,6 @@ export const Template = (args) => ({
               <template #activatorContent>
                 <span>
                   <Icon :source="QuestionMarkMajor" />
-                  <VisuallyHidden>Secondary menu</VisuallyHidden>
                 </span>
               </template>
             </TopBarMenu>
@@ -227,7 +226,6 @@ The top bar is a header component that allows merchants to search, access menus,
                       <template #activatorContent>
                         <span>
                           <Icon :source="QuestionMarkMajor" />
-                          <VisuallyHidden>Secondary menu</VisuallyHidden>
                         </span>
                       </template>
                     </TopBarMenu>

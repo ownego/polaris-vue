@@ -15,7 +15,12 @@ div(
       :class="styles.Dialog",
     )
       div(:class="classes")
-        KeypressListener(:keyCode="Key.Escape", :handler="() => $emit('close')")
+        KeypressListener(
+          :key-code="Key.Escape",
+          key-event="keydown",
+          :handler="handleKeyDown",
+        )
+        KeypressListener(:keyCode="Key.Escape", :handler="handleKeyUp")
         slot
 div(
   v-else,
@@ -56,9 +61,15 @@ interface Props {
 
 const props = defineProps<Props>();
 
-const emit = defineEmits<{ (event: 'close'): void, (event: 'entered'): void, (event: 'exited'): void  }>();
+const emit = defineEmits<{
+  (event: 'close'): void;
+  (event: 'closing', value: boolean): void;
+  (event: 'entered'): void;
+  (event: 'exited'): void;
+}>();
 
 const dialogNode = ref<HTMLElement | null>(null);
+const closing = ref(false);
 
 const classes = computed(() => {
   return classNames(
@@ -80,7 +91,19 @@ onMounted(() => {
 
 onBeforeUnmount(() => {
   emit('exited');
-})
+});
+
+const handleKeyDown = () => {
+  closing.value = true;
+  emit('closing', true);
+};
+
+const handleKeyUp = () => {
+  closing.value = false;
+  emit('closing', false);
+  emit('close');
+};
+
 </script>
 
 <style lang="scss">

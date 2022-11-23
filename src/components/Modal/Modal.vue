@@ -5,20 +5,22 @@ div
   Portal(v-if="domReady && open", idPrefix="modal")
     Dialog(
       :instant="instant",
-      :labelledBy="headerId",
+      :labelled-by="headerId",
       :large="large",
       :small="small",
-      :limitHeight="limitHeight",
-      :fullScreen="fullScreen",
+      :limit-height="limitHeight",
+      :full-screen="fullScreen",
       @close="emit('close')",
       @entered="handleEntered",
       @exited="handleExited",
+      @closing="setClosing",
     )
       Header(
-        :titleHidden="titleHidden",
+        :title-hidden="titleHidden",
         :id="headerId",
-        @close="emit('close')",
         key="header",
+        :closing="closing",
+        @close="emit('close')",
       )
         slot(name="title")
       div(:class="styles.BodyWrapper", key="body")
@@ -57,7 +59,7 @@ div
             Spinner
           template(v-else)
             Section(v-if="sectioned")
-              slot(name="content", :titleHidden="titleHidden")
+              slot(name="content", :title-hidden="titleHidden")
             slot(v-else, name="content")
       Footer(
         v-if="slots.footer || primaryAction || secondaryActions",
@@ -66,7 +68,10 @@ div
         key="footer",
       )
         slot(name="footer")
-    Backdrop(@click="clickOutsideToClose ? emit('close') : null")
+    Backdrop(
+      @closing="setClosing",
+      @click="clickOutsideToClose ? emit('close') : null",
+    )
 </template>
 
 <script setup lang="ts">
@@ -142,6 +147,7 @@ const headerId = useUniqueId('modal-header');
 const iframeHeight = ref<number>(IFRAME_LOADING_HEIGHT);
 
 const domReady = ref<boolean>(false);
+const closing = ref(false);
 
 const handleIframeLoad = (evt: Event) => {
   const iframe = evt.target as HTMLIFrameElement;
@@ -166,6 +172,10 @@ const handleExited = () => {
   if (node) {
     requestAnimationFrame(() => focusFirstFocusableNode(node));
   }
+};
+
+const setClosing = (v: boolean) => {
+  closing.value = v;
 };
 
 onMounted(() => {

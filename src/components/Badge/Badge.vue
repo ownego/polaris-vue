@@ -7,10 +7,10 @@ span(:class="className")
       :accessibilityLabelOverride="accessibilityLabel",
     )
   template(v-if="hasAccessibilityLabel")
-    VisuallyHidden {{ accessibilityLabel }}
+    Text(variant="bodySm", as="span", visually-hidden) {{ accessibilityLabel }}
   span(v-if="icon", :class="styles.Icon")
     Icon(:source="icon")
-  span(v-if="$slots.default")
+  Text(v-if="$slots.default", as="span", variant="bodySm")
     slot
 </template>
 
@@ -19,9 +19,8 @@ import { inject, ref, computed } from 'vue';
 import { classNames, variationName } from '@/utilities/css';
 import styles from '@/classes/Badge.json';
 import type { IconSource } from '@/utilities/type';
-import { Icon } from '../Icon';
+import { Icon, Text } from '@/components';
 import { Pip } from './components/Pip';
-import { VisuallyHidden } from '../VisuallyHidden';
 import { getDefaultAccessibilityLabel } from './utils';
 import type { Progress, Size, Status } from './utils';
 

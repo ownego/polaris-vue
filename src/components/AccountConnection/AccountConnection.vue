@@ -25,7 +25,7 @@ Card(sectioned)
                 | {{ title }}
             div(v-else-if="accountName") {{ accountName }}
             div(v-if="details || hasSlot(slots.details)")
-              TextStyle(variation="subdued")
+              Text(variant="bodyMd", color="subdued", as="span")
                 template(v-if="hasSlot(slots.details)")
                   slot(name="details")
                 template(v-else)
@@ -40,7 +40,7 @@ Card(sectioned)
 import { computed, useSlots } from 'vue';
 import type { Action } from '@/utilities/type';
 import { hasSlot } from '@/utilities/has-slot';
-import { Avatar, ButtonFrom, Card, Stack, StackItem, TextStyle, SettingAction } from '@/components';
+import { Avatar, ButtonFrom, Card, Stack, StackItem, Text, SettingAction } from '@/components';
 import styles from '@/classes/AccountConnection.json';
 
 interface AccountConnectionProps {

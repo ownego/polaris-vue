@@ -6,9 +6,9 @@ div(:class="fileUploadClassName")
     spacing="tight",
   )
     div(:class="actionClassNames") {{ title }}
-    Caption(v-if="actionHint")
-      TextStyle(variation="subdued") {{ actionHint }}
-  uploadArrow(
+    Text(v-if="actionHint", variant="bodySm", as="p", color="subdued")
+      | {{ actionHint }}
+  UploadArrow(
     v-else,
     width="20",
   )
@@ -18,8 +18,8 @@ div(:class="fileUploadClassName")
 import { computed, inject, toRefs } from 'vue';
 import { classNames } from '@/utilities/css';
 import { capitalize } from 'polaris/polaris-react/src/utilities/capitalize';
-import uploadArrow from 'polaris/polaris-react/src/components/DropZone/images/upload-arrow.svg';
-import { Stack, Caption, TextStyle } from '@/components';
+import UploadArrow from 'polaris/polaris-react/src/components/DropZone/images/upload-arrow.svg?component';
+import { Stack, Text } from '@/components';
 import styles from '@/classes/DropZone-FileUpload.json';
 import { UseI18n } from '@/use';
 import { createAllowMultipleKey } from '../../utils';

@@ -10,8 +10,11 @@ form(
   :autocomplete="autoCompleteInputs",
   @submit="submitHandle",
 )
-  VisuallyHidden(
+  Text(
     v-if="implicitSubmit",
+    variant="bodySm",
+    as="span",
+    visually-hidden,
   )
     button(
       type="submit",
@@ -24,7 +27,7 @@ form(
 
 <script setup lang="ts">
 import { computed } from 'vue';
-import { VisuallyHidden } from '../VisuallyHidden';
+import { Text } from '@/components';
 
 type Enctype =
   | 'application/x-www-form-urlencoded'

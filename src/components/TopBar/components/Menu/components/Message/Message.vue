@@ -6,7 +6,7 @@ div(:class="styles.Section")
       spacing="tight",
     )
       TextContainer
-        Heading
+        Text(as="h2", variant="headingMd")
           | {{ title }}
           Badge(
             v-if="badge",
@@ -25,7 +25,7 @@ div(:class="styles.Section")
 
 <script setup lang="ts">
 import styles from '@/classes/TopBar-Message.json';
-import { PopoverSection, Stack, TextContainer, Heading, Badge, Link, Button } from '@/components';
+import { PopoverSection, Stack, TextContainer, Text, Badge, Link, Button } from '@/components';
 import type { BadgeProps } from './utils';
 
 interface MessageProps {

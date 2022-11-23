@@ -15,8 +15,20 @@ Menu(
         :initials="initials ? initials.replace(' ', '') : undefined",
       )
     span(:class="styles.Details")
-      p(:class="styles.Name") {{ name }}
-      p(:class="styles.Detail") {{ detail }}
+      Text(
+        as="p",
+        variant="bodyMd",
+        alignment="start",
+        font-weight="medium",
+        truncate,
+      ) {{ name }}
+      Text(
+        as="p",
+        variant="bodySm",
+        alignment="start",
+        color="subdued",
+        truncate,
+      ) {{ detail }}
 </template>
 
 <script setup lang="ts">
@@ -25,6 +37,7 @@ import styles from '@/classes/TopBar-UserMenu.json';
 import type { IconableAction } from '@/utilities/type';
 import { MessageIndicator, Avatar } from '@/components';
 import type { AvatarProps } from '@/components/Avatar/utils';
+import { Text } from '@/components';
 import { Menu } from '../Menu';
 import type{ MenuProps } from '../Menu/utils';
 
