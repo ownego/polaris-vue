@@ -71,7 +71,7 @@ The AppProvider component is `required` to use PolarisVue. Without it, the compo
 ```
 
 
-## NUXT 3 
+## NUXT 3
 
 We have tested support for Nuxt 3 in non-SSR mode only. To use with Nuxt 3, follow the below configuration and then use the plugin in your components/pages
 
@@ -101,6 +101,7 @@ export default defineNuxtConfig({
   ...
 });
 ```
+
 
 ## De-duplicating Vue version
 
