@@ -1,8 +1,12 @@
 <template lang="pug">
-component(
-  :is="to ? 'router-link' : 'a'",
-  :href="url",
+router-link(
+  v-if="to",
   :to="to",
+)
+  slot
+a(
+  v-else,
+  :href="url",
   :target="to ? '_blank' : undefined",
   :rel="external ? 'noopener noreferrer' : undefined",
 )
@@ -17,5 +21,5 @@ interface Props {
   external?: boolean;
 }
 
-const props = defineProps<Props>();
+defineProps<Props>();
 </script>
