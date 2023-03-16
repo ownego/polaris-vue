@@ -35,7 +35,7 @@ import { classNames } from '@/utilities/css';
 import styles from '@/classes/Link.json';
 import { UnstyledLink } from '../UnstyledLink';
 
-const props = defineProps<{
+interface LinkProps {
   /** ID for the link */
   id?: string;
   /** The url to link to */
@@ -52,7 +52,9 @@ const props = defineProps<{
   accessibilityLabel?: string;
   /** Indicates whether or not the link is the primary navigation link when rendered inside of an `IndexTable.Row` */
   dataPrimaryLink?: boolean;
-}>();
+}
+
+const props = defineProps<LinkProps>();
 
 const BannerContext = inject('BannerContext', false);
 
