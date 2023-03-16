@@ -3,6 +3,7 @@ import { createWebHistory, createRouter } from 'vue-router';
 import Demo from './Demo.vue';
 import PolarisVue from './polaris-vue';
 
+// Define routes for development stage
 const routes = [
   { path: '/', component: Demo },
 ]
@@ -12,8 +13,7 @@ const router = createRouter({
   routes,
 });
 
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
-createApp(Demo as any)
+createApp(Demo)
   .use(PolarisVue)
   .use(router)
   .mount('#app');
