@@ -1,7 +1,8 @@
 <template lang="pug">
 div(
   v-if="connectedDisclosure",
-  :class="styles.ConnectedDisclosureWrapper"
+  :key="generateUpdateKey('connected')",
+  :class="styles.ConnectedDisclosureWrapper",
 )
   ButtonMarkup(
     v-bind="buttonMarkupProps",
@@ -9,8 +10,8 @@ div(
   )
     slot
   Popover(
-    :active="disclosureActive",
     preferredAlignment="right",
+    :active="disclosureActive",
     @close="toggleDisclosureActive",
   )
     template(#activator)
@@ -18,7 +19,7 @@ div(
         type="button",
         :class="connectedDisclosureClassName",
         :aria-disabled="connectedDisclosureData.disabled",
-        :tabIndex="connectedDisclosureData.disabled ? -1 : undefined"
+        :tabIndex="connectedDisclosureData.disabled ? -1 : undefined",
         :aria-label="connectedDisclosureData.disclosureLabel",
         :aria-describedby="ariaDescribedBy",
         :aria-checked="ariaChecked",
@@ -40,6 +41,7 @@ ButtonMarkup(
   v-else,
   v-bind="buttonMarkupProps",
   v-on="listeners",
+  :key="generateUpdateKey('markup')",
 )
   slot
 </template>
@@ -51,9 +53,7 @@ export default {
 </script>
 
 <script setup lang="ts">
-import {
-  computed, ref, useAttrs, useSlots,
-} from 'vue';
+import { computed, ref, useAttrs, useSlots } from 'vue';
 import { classNames, variationName } from '@/utilities/css';
 import CaretDownMinor from '@icons/CaretDownMinor.svg';
 import { handleMouseUpByBlurring } from '@/utilities/focus';
@@ -154,6 +154,8 @@ interface Props {
   dataPrimaryLink?: boolean;
 }
 
+const MAX_RANDOM_NUMBER = 99999;
+
 const props = withDefaults(defineProps<Props>(), {
   size: 'medium',
   disclosure: undefined,
@@ -164,21 +166,24 @@ const props = withDefaults(defineProps<Props>(), {
 const slots = useSlots();
 const attrs = useAttrs();
 
+const hasChildren = !!slots.default;
+
+const disclosureActive = ref<boolean>(false);
+
 const listeners = computed(() => {
   const events = ['blur', 'click', 'focus', 'keydown', 'keypress', 'keyup', 'mouseover', 'touchstart', 'pointerdown'];
   const eventBindings: Record<string, unknown> = {};
+
   for (const event of events) {
     const eventName = `on${capitalize(event)}`;
+
     if (attrs[eventName]) {
       eventBindings[event] = attrs[eventName];
     }
   }
+
   return eventBindings;
 });
-
-const hasChildren = !!slots.default;
-
-const disclosureActive = ref<boolean>(false);
 
 const isDisabled = computed(() => props.disabled || props.loading);
 
@@ -207,16 +212,16 @@ const className = computed(() => {
 });
 
 const connectedDisclosureClassName = computed(() => {
-  const textAlignVariantion = props.textAlign
+  const textAlignVariation = props.textAlign
     && variationName('textAlign', props.textAlign) as keyof typeof styles;
-  const sizeVariantion = props.size && variationName('size', props.size) as keyof typeof styles;
+  const sizeVariation = props.size && variationName('size', props.size) as keyof typeof styles;
 
   return classNames(
     styles.Button,
     props.primary && styles.primary,
     props.outline && styles.outline,
-    props.size !== 'medium' && sizeVariantion && styles[sizeVariantion],
-    textAlignVariantion && styles[textAlignVariantion],
+    props.size !== 'medium' && sizeVariation && styles[sizeVariation],
+    textAlignVariation && styles[textAlignVariation],
     props.destructive && styles.destructive,
     props.connectedDisclosure && props.connectedDisclosure.disabled && styles.disabled,
     styles.iconOnly,
@@ -226,9 +231,8 @@ const connectedDisclosureClassName = computed(() => {
 });
 
 const commonProps = computed(() => {
-  const {
-    id, accessibilityLabel, role, ariaDescribedBy,
-  } = props;
+  const { id, accessibilityLabel, role, ariaDescribedBy } = props;
+
   return {
     id,
     class: className.value,
@@ -241,20 +245,23 @@ const commonProps = computed(() => {
 
 const linkProps = computed(() => {
   const { url, external, download } = props;
+
   return { url, external, download };
 });
 
 const actionProps = computed(() => {
   const { submit, loading, pressed } = props;
+
   return {
-    submit, loading, pressed, disabled: isDisabled.value,
+    submit,
+    loading,
+    pressed,
+    disabled: isDisabled.value,
   };
 });
 
 const buttonMarkupProps = computed(() => {
-  const {
-    removeUnderline, disclosure, loading, icon,
-  } = props;
+  const { removeUnderline, disclosure, loading, icon } = props;
 
   return {
     commonProps: commonProps.value,
@@ -277,6 +284,7 @@ const connectedDisclosureData = computed(() => {
 
     return { disabled, disclosureLabel };
   }
+
   return {};
 });
 
@@ -285,6 +293,14 @@ const toggleDisclosureActive = () => {
 };
 
 const handleClick = useDisableClick(connectedDisclosureData.value.disabled, toggleDisclosureActive);
+
+const generateUpdateKey = (prefix?: string): string => {
+  return `${prefix}-${getRandomInt(MAX_RANDOM_NUMBER)}-${isDisabled.value}`;
+}
+
+function getRandomInt(max: number): number {
+  return Math.floor(Math.random() * max);
+}
 </script>
 
 <style lang="scss">
