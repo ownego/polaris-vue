@@ -27,17 +27,19 @@ const props = withDefaults(defineProps<Props>(), {
   overrides: () => ({}),
 });
 
+const bindProps = computed(() => {
+  if (!props.action) {
+    return {};
+  }
+
+  const { onAction, content, ...other } = props.action;
+
+  return { ...other, ...props.overrides };
+});
+
 const handleClick = () => {
   if (props.action && props.action.onAction) {
     props.action.onAction();
   }
 };
-
-const bindProps = computed(() => {
-  if (!props.action) {
-    return {};
-  }
-  const { onAction, content, ...other } = props.action;
-  return { ...other, ...props.overrides };
-});
 </script>
