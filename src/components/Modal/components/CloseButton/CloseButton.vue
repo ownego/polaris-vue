@@ -30,7 +30,7 @@ const emit = defineEmits<{
 const className = computed(() => classNames(
   styles.CloseButton,
   props.titleHidden && styles.titleHidden,
-  props.pressed && styles.pressed,
+  // props.pressed && styles.pressed,
 ));
 </script>
 
