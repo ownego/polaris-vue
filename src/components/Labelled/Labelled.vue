@@ -5,13 +5,12 @@ div(:class="className")
       :id="id",
       :requiredIndicator="requiredIndicator",
       :hidden="false",
-      v-bind="$attrs",
     )
       slot(v-if="$slots.label", name="label")
       template(v-else) {{ label }}
     div(
       v-if="action",
-      :class="styles.Action"
+      :class="styles.Action",
     )
       ButtonFrom(
         :action="action",
