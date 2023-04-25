@@ -1,7 +1,6 @@
 <template lang="pug">
 div(
   v-if="connectedDisclosure",
-  :key="generateUpdateKey('connected')",
   :class="styles.ConnectedDisclosureWrapper",
 )
   ButtonMarkup(
@@ -41,7 +40,6 @@ ButtonMarkup(
   v-else,
   v-bind="buttonMarkupProps",
   v-on="listeners",
-  :key="generateUpdateKey('markup')",
 )
   slot
 </template>
@@ -292,15 +290,9 @@ const toggleDisclosureActive = () => {
   disclosureActive.value = !disclosureActive.value;
 };
 
-const handleClick = useDisableClick(connectedDisclosureData.value.disabled, toggleDisclosureActive);
-
-const generateUpdateKey = (prefix?: string): string => {
-  return `${prefix}-${getRandomInt(MAX_RANDOM_NUMBER)}-${isDisabled.value}`;
-}
-
-function getRandomInt(max: number): number {
-  return Math.floor(Math.random() * max);
-}
+const handleClick = computed(
+  () => useDisableClick(connectedDisclosureData.value.disabled, toggleDisclosureActive),
+);
 </script>
 
 <style lang="scss">

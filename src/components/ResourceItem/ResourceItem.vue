@@ -301,7 +301,7 @@ const handleClick = (event: MouseEvent) => {
   const { ctrlKey, metaKey } = event;
   const anchor = node.value && node.value.querySelector('a');
 
-  if (selectMode) {
+  if (selectMode?.value) {
     handleLargerSelectionArea(event);
     return;
   }
@@ -325,7 +325,7 @@ const handleClick = (event: MouseEvent) => {
 const handleKeyUp = (event: KeyboardEvent) => {
   const { key } = event;
 
-  if (key === 'Enter' && props.url && !selectMode) {
+  if (key === 'Enter' && props.url && !selectMode?.value) {
     emits('click', props.id);
   }
 };
