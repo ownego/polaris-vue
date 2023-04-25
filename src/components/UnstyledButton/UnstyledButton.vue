@@ -22,6 +22,7 @@ button(
   :aria-describedby="ariaDescribedBy",
   :aria-checked="ariaChecked",
   :aria-pressed="pressed",
+  @click="handleClick",
   v-on="buttonListeners",
 )
   slot
@@ -64,6 +65,7 @@ const attrs = useAttrs();
 
 const getEventList = (events: string[]) => {
   const eventBindings: Record<string, any> = { mouseup: handleMouseUpByBlurring };
+
   for (const event of events) {
     const eventName = `on${capitalize(event)}`;
     if (attrs[eventName]) {
@@ -71,15 +73,14 @@ const getEventList = (events: string[]) => {
     }
   }
 
-  if (attrs.onClick) {
-    eventBindings.click = useDisableClick(props.disabled, attrs.onClick as any);
-  }
   return eventBindings;
 }
 
 const buttonListeners = getEventList(
-  ['blur', 'click', 'focus', 'keydown', 'keypress', 'keyup', 'mouseover', 'touchstart'],
+  ['blur', 'focus', 'keydown', 'keypress', 'keyup', 'mouseover', 'touchstart'],
 );
+
+const handleClick = computed(() => useDisableClick(props.disabled, attrs.onClick as any))
 
 const linkListeners = getEventList(['blur', 'click', 'focus', 'mouseover', 'touchstart']);
 
