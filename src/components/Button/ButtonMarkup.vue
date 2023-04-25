@@ -16,8 +16,8 @@ UnstyledButton(
       Icon(:source="loading ? 'placeholder': icon")
     span(
       v-if="children",
-      :class="childrenClass",
       :key="actionProps && actionProps.disabled ? 'text-disabled' : 'text'",
+      :class="childrenClass",
     )
       slot
     span(
@@ -68,12 +68,15 @@ const attrs = useAttrs();
 const listeners = computed(() => {
   const events = ['blur', 'click', 'focus', 'keydown', 'keypress', 'keyup', 'mouseover', 'touchstart', 'pointerdown'];
   const eventBindings: Record<string, unknown> = {};
+
   for (const event of events) {
     const eventName = `on${capitalize(event)}`;
+
     if (attrs[eventName]) {
       eventBindings[event] = attrs[eventName];
     }
   }
+
   return eventBindings;
 });
 

@@ -5,7 +5,9 @@ export function useDisableClick(disabled?: boolean, handleClick?: () => void) {
   };
 
   if (!disabled) {
-    return handleClick;
+    // eslint-disable-next-line @typescript-eslint/no-empty-function
+    const fallbackEvent = () => { };
+    return handleClick || fallbackEvent;
   }
 
   return handleClickWrapper;

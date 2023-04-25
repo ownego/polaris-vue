@@ -42,7 +42,13 @@ import { Link } from '@/polaris-vue';
 export const Template = (args) => ({
   components: { Link },
   setup() { return { args }; },
-  template: `<Link v-bind="args">Fulfilling orders</Link>`,
+  template: `
+    <Link v-bind="args">Button</Link>
+    <br/>
+    <Link to="path">Router link</Link>
+    <br/>
+    <Link href="path">Normal link</Link>
+  `,
 });
 
 # Link
@@ -59,7 +65,9 @@ For actions that aren't related to navigation, use the [button component.](/docs
       docs: {
         source: {
           code: dedent`
-            <Link>Fulfilling orders</Link>
+            <Link>Button</Link>
+            <Link to="path">Router link</Link>
+            <Link href="path">Normal link</Link>
           `,
         },
       },

@@ -69,7 +69,7 @@ div(
             UnstyledButton(
               v-else,
               :class="styles.SecondaryAction",
-              @click="secondaryAction && secondaryAction.onAction",
+              @click="triggerSecondaryAction",
             )
               span(:class="styles.Text") {{ secondaryAction.content }}
 </template>
@@ -149,6 +149,12 @@ const { defaultIcon, iconColor, ariaRoleType } = useBannerAttributes(props.statu
 const iconName = computed(() => {
   return props.icon || defaultIcon;
 });
+
+const triggerSecondaryAction = () => {
+  if (props.secondaryAction && props.secondaryAction.onAction) {
+    props.secondaryAction.onAction();
+  }
+}
 
 const className = computed(() => {
   const onDismiss = !!attrs.onDismiss;

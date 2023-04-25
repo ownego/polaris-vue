@@ -70,7 +70,38 @@ The AppProvider component is `required` to use PolarisVue. Without it, the compo
 <script></script>
 ```
 
-<br/>
+
+## NUXT 3
+
+We have tested support for Nuxt 3 in non-SSR mode only. To use with Nuxt 3, follow the below configuration and then use the plugin in your components/pages
+
+### Plugin File
+
+Create a new plugin file at `<project-root>/plugins/polaris.client.ts` and update the content to following
+
+```ts
+import PolarisVue from "@ownego/polaris-vue";
+import "@ownego/polaris-vue/dist/style.css";
+
+export default defineNuxtPlugin(nuxtApp => {
+  nuxtApp.vueApp.use(PolarisVue);
+});
+```
+
+### Nuxt Config
+
+Update `<project-root>/nuxt.config.ts` to include following config values
+
+```ts
+export default defineNuxtConfig({
+  ...
+  build: {
+    transpile: ["@ownego/polaris-vue"],
+  },
+  ...
+});
+```
+
 
 ## De-duplicating Vue version
 

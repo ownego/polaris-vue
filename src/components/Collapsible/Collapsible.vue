@@ -15,7 +15,13 @@ div(
 import { computed, onMounted, onUpdated, ref, watch } from 'vue';
 import { classNames } from '@/utilities/css';
 import styles from '@/classes/Collapsible.json';
-import type { TransitionCollapsible } from './utils';
+
+interface TransitionCollapsible {
+  /** Assign a transition duration to the collapsible animation. */
+  duration?: string;
+  /** Assign a transition timing function to the collapsible animation */
+  timingFunction?: string;
+}
 
 interface CollapsibleProps {
   /** Assign a unique ID to the collapsible. For accessibility, pass this ID as the value of the triggering component’s aria-controls prop. */
