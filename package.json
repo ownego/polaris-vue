@@ -36,7 +36,6 @@
   },
   "dependencies": {
     "@shopify/polaris-icons": "^6.5.0",
-    "polaris": "https://github.com/juzser/polaris.git",
     "vite-svg-loader": "^3.1.2",
     "vue": "^3.2.31",
     "vue-router": "^4.1.6"
@@ -69,6 +68,7 @@
     "fs-extra": "^10.1.0",
     "hash-generator": "^0.1.0",
     "path": "^0.12.7",
+    "polaris": "https://github.com/juzser/polaris.git",
     "postcss": "^7",
     "postcss-modules": "^3",
     "prettier": "^2.5.1",
