@@ -178,7 +178,7 @@ Select lets merchants choose one option from an options menu. Consider select wh
         source: {
           code: dedent`<Select
             placeholder="Select an option"
-            v-model="selectValue"
+            v-model="selectedValue"
             :options="options"
           >
               <template #label>Date Range</template>
@@ -188,15 +188,15 @@ Select lets merchants choose one option from an options menu. Consider select wh
               </template>
             </Select>\n
             setup() {
-              const options: [
+              const options = [
                 { "label": "Today", "value": "today" },
                 { "label": "Yesterday", "value": "yesterday" },
                 { "label": "Last 7 days", "value": "lastWeek" },
                 { "id": "hint", "label": "Option with icon", "value": "hint" },
                 { "label": "Option disabled", "value": "disabled", "disabled": true },
               ],
-              const selectValue = ref('');
-              return { options, selectValue };
+              const selectedValue = ref('');
+              return { options, selectedValue };
             }
           `,
         },

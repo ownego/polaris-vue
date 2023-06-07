@@ -13,7 +13,7 @@ li(
       div(:class="styles.Checkbox")
         Checkbox(
           :id="id",
-          v-model="value",
+          :model-value="value",
           :checked="select",
           :active="active"
           :disabled="disabled",

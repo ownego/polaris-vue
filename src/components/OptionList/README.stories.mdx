@@ -213,7 +213,7 @@ Use sections when you have multiple groups of similar selectable items.
                 v-model="selectedValue"
                 :sections="sections"
                 allow-multiple
-                @change="changeSelectedvalue"
+                @change="changeSelectedValue"
               />
             </Card>\n
             <script setup>
@@ -231,8 +231,8 @@ Use sections when you have multiple groups of similar selectable items.
                     { value: 'path', label: 'Traffic referrer path' },
                   ],
                 }];\n
-              const selected = ref([]);
-              const changeSelected = (value) => { console.log('changeSelected', value) };
+              const selectedValue = ref([]);
+              const changeSelectedValue = (value) => { console.log('changeSelectedValue', value) };
             </script>
           `,
         },
