@@ -7,6 +7,14 @@ We're trying to make it mostly close with Shopify style guide and get a better p
 
 **Follow Polaris React version:** [10.12.0](https://github.com/Shopify/polaris/releases/tag/%40shopify%2Fpolaris%4010.12.0) - Migrated date: *Nov 23rd, 2022*.
 
+---
+
+We're using this library for our apps and got `Built for Shopify` badge, so hopefully it will be helpful for you too.
+
+<img width="631" alt="Screenshot 2023-07-03 at 15 35 54" src="https://github.com/ownego/polaris-vue/assets/5735071/90b10b70-0113-4633-93bf-678cfe1a92db">
+
+
+
 <br/>
 
 ## Documentation
