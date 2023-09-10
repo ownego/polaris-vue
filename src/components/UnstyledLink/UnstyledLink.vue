@@ -7,7 +7,7 @@ router-link(
 a(
   v-else,
   :href="url",
-  :target="to ? '_blank' : undefined",
+  :target="external ? '_blank' : undefined",
   :rel="external ? 'noopener noreferrer' : undefined",
 )
   <!-- Slot for displaying content inside the link -->
