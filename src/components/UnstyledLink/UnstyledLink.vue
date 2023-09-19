@@ -13,6 +13,7 @@ a(
   :href="url",
   :target="targetProperty",
   :rel="relProperty",
+  :download="download",
 )
   slot
 </template>
@@ -25,6 +26,7 @@ interface Props {
   url?: string;
   external?: boolean;
   target?: string;
+  download?: string | boolean;
 }
 
 const props = defineProps<Props>();
