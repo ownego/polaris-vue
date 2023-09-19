@@ -8,6 +8,7 @@ a(
   v-else,
   :href="url",
   :target="to ? '_blank' : undefined",
+  :download="download",
   :rel="external ? 'noopener noreferrer' : undefined",
 )
   <!-- Slot for displaying content inside the link -->
@@ -19,6 +20,7 @@ interface Props {
   to?: string | Record<string, unknown>;
   url?: string;
   external?: boolean;
+  download?: string | boolean;
 }
 
 defineProps<Props>();

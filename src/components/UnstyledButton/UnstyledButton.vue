@@ -87,6 +87,7 @@ const linkListeners = getEventList(['blur', 'click', 'focus', 'mouseover', 'touc
 const commonProps = computed(() => ({
   id: props.id,
   class: attrs.class,
+  download: props.download,
   'aria-label': props.accessibilityLabel,
 }));
 
