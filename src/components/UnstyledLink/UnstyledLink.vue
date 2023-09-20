@@ -1,25 +1,45 @@
 <template lang="pug">
+// Router link
 router-link(
   v-if="to",
   :to="to",
 )
   slot
+
+
+// Just a link
 a(
   v-else,
   :href="url",
-  :target="to ? '_blank' : undefined",
-  :rel="external ? 'noopener noreferrer' : undefined",
+  :target="targetProperty",
+  :rel="relProperty",
+  :download="download",
 )
-  <!-- Slot for displaying content inside the link -->
   slot
 </template>
 
 <script setup lang="ts">
+import { computed } from 'vue';
+
 interface Props {
   to?: string | Record<string, unknown>;
   url?: string;
   external?: boolean;
+  target?: string;
+  download?: string | boolean;
 }
 
-defineProps<Props>();
+const props = defineProps<Props>();
+
+const targetProperty = computed(() => {
+  if (props.external) {
+    return '_blank';
+  }
+
+  return props.target ?? undefined;
+});
+
+const relProperty = computed(() => {
+  return targetProperty.value === '_blank' ? 'noopener noreferrer' : undefined;
+})
 </script>
