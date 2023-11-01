@@ -26,8 +26,6 @@ import type {
 
 import styles from '@/classes/Box.json';
 
-type Element = 'div' | 'span' | 'section';
-
 type Overflow = 'hidden' | 'scroll';
 
 type ColorTokenScale =
@@ -54,7 +52,7 @@ type BorderTokenAlias =
   | 'divider-on-dark'
   | 'transparent';
 
-interface Border {
+type Border = {
   blockStart: BorderTokenAlias;
   blockEnd: BorderTokenAlias;
   inlineStart: BorderTokenAlias;
@@ -80,21 +78,21 @@ type BackgroundColors =
   | ColorsActionTokenAlias
   | ColorsSurfaceTokenAlias;
 
-interface BorderRadius {
+type BorderRadius = {
   startStart: BorderRadiusTokenScale;
   startEnd: BorderRadiusTokenScale;
   endStart: BorderRadiusTokenScale;
   endEnd: BorderRadiusTokenScale;
 }
 
-interface Spacing {
+type Spacing = {
   blockStart: SpacingSpaceScale;
   blockEnd: SpacingSpaceScale;
   inlineStart: SpacingSpaceScale;
   inlineEnd: SpacingSpaceScale;
 }
 
-interface BorderWidth {
+type BorderWidth = {
   blockStart: ShapeBorderWidthScale;
   blockEnd: ShapeBorderWidthScale;
   inlineStart: ShapeBorderWidthScale;
@@ -103,7 +101,7 @@ interface BorderWidth {
 
 interface Props {
   /** HTML Element type */
-  as?: Element;
+  as?: 'div' | 'span' | 'section';
   /** Background color */
   background?: BackgroundColors;
   /** Border style */
