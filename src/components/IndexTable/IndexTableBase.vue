@@ -390,8 +390,7 @@ const handleCanFitStickyColumn = () => {
   if (!scrollableContainerElement.value || !tableHeadings.value.length) {
     return;
   }
-  const scrollableRect =
-    (scrollableContainerElement.value as any).getBoundingClientRect();
+  const scrollableRect = scrollContainerRef.value?.getBoundingClientRect();
   const checkboxColumnWidth = selectable
     ? tableHeadings.value[0].getBoundingClientRect().width
     : 0;
@@ -410,7 +409,7 @@ const handleCanFitStickyColumn = () => {
   // Secure some space for the remaining columns to be visible
   const restOfContentMinWidth = 100;
 
-  canFitStickyColumn.value = scrollableRect.width >
+  canFitStickyColumn.value = (scrollableRect?.width || 0) >
     firstStickyColumnWidth + checkboxColumnWidth + lastStickyColumnWidth + restOfContentMinWidth;
 };
 
