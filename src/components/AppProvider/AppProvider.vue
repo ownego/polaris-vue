@@ -1,73 +1,131 @@
 <template lang="pug">
 .polaris-app-provider
-  EventListener(event="resize", :handler="handleResize")
   slot
-  #PolarisPortalsContainer
-  component(is="style") {{ style }}
+  #PolarisPortalsContainer(ref="portalsContainerRef")
 </template>
 
 <script setup lang="ts">
-import { provide, ref, onMounted } from 'vue';
-import { debounce } from 'polaris/polaris-react/src/utilities/debounce';
-import { ScrollLockManager } from 'polaris/polaris-react/src/utilities/scroll-lock-manager/scroll-lock-manager';
-import { UniqueIdFactory, globalIdGeneratorFactory } from 'polaris/polaris-react/src/utilities/unique-id/unique-id-factory';
-import { navigationBarCollapsed } from '@/utilities/breakpoints';
-import { I18n } from '@/utilities/i18n';
-import lang from 'polaris/polaris-react/locales/en.json';
-import { EventListener } from '@/components';
-import { PortalManager } from '@/utilities/portal-manager';
-import { FocusManager } from '@/utilities/focus-manager';
+import { computed, onMounted, provide, ref } from 'vue';
+import type { ThemeName } from '@shopify/polaris-tokens';
+import {
+  createThemeClassName,
+  themeNameDefault,
+  themeNames,
+} from '@shopify/polaris-tokens';
+import { I18n } from '@polaris/utilities/i18n/I18n';
+import { ScrollLockManager } from '@polaris/utilities/scroll-lock-manager/scroll-lock-manager';
 import { StickyManager } from '@/utilities/sticky-manager';
-import style from '@shopify/polaris-tokens/css/styles.css?raw';
+import type { LinkLikeComponent } from '@/utilities/link';
+import type { FeaturesConfig } from '@/utilities/features';
+import { classNamePolarisSummerEditions2023 } from '@/utilities/features';
+import { getTheme } from '@/utilities/use-theme';
+import { useMediaQueryContext } from '@/use/useMediaQuery';
+import { useFocusManagerContext } from '@/use/useFocusManager';
+import { useEphemeralPresenceManagerContext } from '@/use/useEphemeralPresenceManager';
+
+
+export type AppProviderProps = {
+  theme?: ThemeName;
+  /** A locale object or array of locale objects that overrides default translations. If specifying an array then your primary language dictionary should come first, followed by your fallback language dictionaries */
+  i18n: ConstructorParameters<typeof I18n>[0];
+  /** A custom component to use for all links used by Polaris components */
+  linkComponent?: LinkLikeComponent;
+  /** For toggling features */
+  features?: FeaturesConfig;
+  /** Inner content of the application
+   * @default slot
+  */
+}
+
+const MAX_SCROLLBAR_WIDTH = 20;
+const SCROLLBAR_TEST_ELEMENT_PARENT_SIZE = 30;
+const SCROLLBAR_TEST_ELEMENT_CHILD_SIZE = SCROLLBAR_TEST_ELEMENT_PARENT_SIZE + 10;
+
+const props = defineProps<AppProviderProps>();
 
 const stickyManager = new StickyManager();
-
 const scrollLockManager = new ScrollLockManager();
 
-const portalManager = new PortalManager();
+const { isNavigationCollapsed } = useMediaQueryContext();
+const focusManager = useFocusManagerContext();
+const ephemeralPresenceManager = useEphemeralPresenceManagerContext();
 
-const uniqueIdFactory = ref(new UniqueIdFactory(globalIdGeneratorFactory));
+const portalsContainerRef = ref<HTMLElement | null>(null);
 
-const focusManager = new FocusManager();
-
-const isNavigationCollapsed = ref(navigationBarCollapsed().matches);
-
-const setBodyStyles = () => {
-  // Inlining the following custom properties to maintain backward
-  // compatibility with the legacy ThemeProvider implementation.
-  document.body.style.backgroundColor = 'var(--p-background)';
-  document.body.style.color = 'var(--p-text)';
-};
-
-const handleResize = debounce(
-  () => {
-    if (isNavigationCollapsed.value !== navigationBarCollapsed().matches) {
-      isNavigationCollapsed.value = !isNavigationCollapsed.value;
-    }
-  },
-  40,
-  {trailing: true, leading: true, maxWait: 40},
-);
+const themeName = computed<ThemeName>(() => props.theme ?? themeNameDefault);
 
 onMounted(() => {
-  if (document !== null) {
-    setBodyStyles();
+  if (document != null) {
     stickyManager.setContainer(document);
+    setBodyStyles();
+    setRootAttributes();
   }
+  measureScrollbars();
 });
 
-const i18n = new I18n(lang);
+const setBodyStyles = () => {
+  document.body.style.backgroundColor = 'var(--p-color-bg)';
+  document.body.style.color = 'var(--p-color-text)';
+};
 
-provide('mediaQueryContext', { isNavigationCollapsed: isNavigationCollapsed.value });
-provide('stickyManagerContext', stickyManager);
-provide('scrollLockManager', scrollLockManager);
-provide('portalManager', portalManager);
-provide('uniqueIdFactory', uniqueIdFactory.value);
-provide('focusManager', focusManager);
-provide('lang', lang);
-provide('i18n', i18n);
+const setRootAttributes = () => {
+  const activeThemeName = themeName.value;
+
+  themeNames.forEach((themeName) => {
+    document.documentElement.classList.toggle(
+      createThemeClassName(themeName),
+      themeName === activeThemeName,
+    );
+  });
+
+  document.documentElement.classList.add(classNamePolarisSummerEditions2023);
+};
+
+function measureScrollbars() {
+  const parentEl = document.createElement('div');
+  parentEl.setAttribute(
+    'style',
+    `position: absolute; opacity: 0; transform: translate3d(-9999px, -9999px, 0); pointer-events: none; width:${SCROLLBAR_TEST_ELEMENT_PARENT_SIZE}px; height:${SCROLLBAR_TEST_ELEMENT_PARENT_SIZE}px;`,
+  );
+
+  const child = document.createElement('div');
+  child.setAttribute(
+    'style',
+    `width:100%; height: ${SCROLLBAR_TEST_ELEMENT_CHILD_SIZE}; overflow:scroll`,
+  );
+  parentEl.appendChild(child);
+  document.body.appendChild(parentEl);
+
+  const scrollbarWidth =
+    SCROLLBAR_TEST_ELEMENT_PARENT_SIZE -
+    (parentEl.firstElementChild?.clientWidth ?? 0);
+
+  const scrollbarWidthWithSafetyHatch = Math.min(
+    scrollbarWidth,
+    MAX_SCROLLBAR_WIDTH,
+  );
+
+  document.documentElement.style.setProperty(
+    '--pc-app-provider-scrollbar-width',
+    `${scrollbarWidthWithSafetyHatch}px`,
+  );
+
+  document.body.removeChild(parentEl);
+}
+
+provide('theme', getTheme(themeName.value)); // TODO: This should be reactive
+provide('features', props.features ?? {});
+provide('i18n', new I18n(props.i18n));
+provide('scroll-lock-manager', scrollLockManager);
+provide('sticky-manager', stickyManager);
+provide('link', props.linkComponent);
+provide('media-query', { isNavigationCollapsed });
+provide('portals-manager', portalsContainerRef);
+provide('focus-manager', focusManager);
+provide('ephemeral-presence-manager', ephemeralPresenceManager);
 </script>
 
 <style lang="scss">
-@import 'polaris/polaris-react/src/components/AppProvider/AppProvider.scss';
+@import '@polaris/components/AppProvider/AppProvider.scss';
+@import '@polaris/components/AppProvider/global.scss';
 </style>

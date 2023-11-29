@@ -1,18 +1,17 @@
+import { onBeforeUnmount, ref } from 'vue';
+import {getMediaConditions, themeDefault} from '@shopify/polaris-tokens';
 import type {
   BreakpointsAlias,
   BreakpointsAliasDirection,
   BreakpointsTokenGroup,
 } from '@shopify/polaris-tokens';
 
-import {
-  getMediaConditions,
-  breakpoints,
-} from '@shopify/polaris-tokens';
-
-import {isServer} from 'polaris/polaris-react/src/utilities/target';
+import { isServer } from '@polaris/utilities/target';
 
 const Breakpoints = {
+  // TODO: Update to smDown
   navigationBarCollapsed: '767.95px',
+  // TODO: Update to lgDown
   stackedContent: '1039.95px',
 };
 
@@ -27,7 +26,7 @@ const noWindowMatches: MediaQueryList = {
   dispatchEvent: (_: Event) => true,
 };
 
-function noop() { return; }
+function noop() {}
 
 export function navigationBarCollapsed() {
   return typeof window === 'undefined'
@@ -56,10 +55,19 @@ type BreakpointsMatches = {
   [DirectionAlias in BreakpointsDirectionAlias]: boolean;
 };
 
-const breakpointsQueryEntries = getBreakpointsQueryEntries(breakpoints);
+const breakpointsQueryEntries = getBreakpointsQueryEntries(
+  themeDefault.breakpoints,
+);
 
-function getMatches(defaults?: UseBreakpointsOptions['defaults']) {
-  if (!isServer) {
+function getMatches(
+  defaults?: UseBreakpointsOptions['defaults'],
+  /**
+   * Used to force defaults on initial client side render so they match SSR
+   * values and hence avoid a Hydration error.
+   */
+  forceDefaults?: boolean,
+) {
+  if (!isServer && !forceDefaults) {
     return Object.fromEntries(
       breakpointsQueryEntries.map(([directionAlias, query]) => [
         directionAlias,
@@ -114,28 +122,49 @@ export interface UseBreakpointsOptions {
  * const breakpoints = useBreakpoints({defaults: true});
  * breakpoints //=> All values will be `true` during SSR
  */
-// export function useBreakpoints(options?: UseBreakpointsOptions) {
-//   const [breakpoints, setBreakpoints] = useState(getMatches(options?.defaults));
+export function useBreakpoints(options?: UseBreakpointsOptions) {
+  // On SSR, and initial CSR, we force usage of the defaults to avoid a
+  // hydration mismatch error.
+  // Later, in the effect, we will call this again on the client side without
+  // any defaults to trigger a more accurate client side evaluation.
+  const breakpoints = ref<BreakpointsMatches>(getMatches(options?.defaults, true));
 
-//   useIsomorphicLayoutEffect(() => {
-//     const mediaQueryLists = breakpointsQueryEntries.map(([_, query]) =>
-//       window.matchMedia(query),
-//     );
+  const setBreakpoints = (value: BreakpointsMatches) => {
+    breakpoints.value = value;
+  };
 
-//     const handler = () => setBreakpoints(getMatches());
+  // useIsomorphicLayoutEffect - setup
+  const mediaQueryLists = breakpointsQueryEntries.map(([_, query]) =>
+    window.matchMedia(query),
+  );
 
-//     mediaQueryLists.forEach((mql) => {
-//       mql.addEventListener('change', handler);
-//     });
+  const handler = () => setBreakpoints(getMatches());
 
-//     return () =>
-//       mediaQueryLists.forEach((mql) => {
-//         mql.removeEventListener('change', handler);
-//       });
-//   }, []);
+  mediaQueryLists.forEach((mql) => {
+    if (mql.addListener) {
+      mql.addListener(handler);
+    } else {
+      mql.addEventListener('change', handler);
+    }
+  });
 
-//   return breakpoints;
-// }
+  // Trigger the breakpoint recalculation at least once client-side to ensure
+  // we don't have stale default values from SSR.
+  handler();
+
+  // useIsomorphicLayoutEffect - teardown
+  onBeforeUnmount(() => {
+    mediaQueryLists.forEach((mql) => {
+      if (mql.removeListener) {
+        mql.removeListener(handler);
+      } else {
+        mql.removeEventListener('change', handler);
+      }
+    });
+  });
+
+  return breakpoints;
+}
 
 /**
  * Converts `breakpoints` tokens into directional media query entries.
@@ -151,8 +180,8 @@ export interface UseBreakpointsOptions {
  *   // etc.
  * ]
  */
-export function getBreakpointsQueryEntries(breakpointsValue: BreakpointsTokenGroup) {
-  const mediaConditionEntries = Object.entries(getMediaConditions(breakpointsValue));
+export function getBreakpointsQueryEntries(breakpoints: BreakpointsTokenGroup) {
+  const mediaConditionEntries = Object.entries(getMediaConditions(breakpoints));
 
   return mediaConditionEntries
     .map(([breakpointsToken, mediaConditions]) =>

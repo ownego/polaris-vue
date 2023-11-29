@@ -1,40 +1,37 @@
-import { computed, inject, onBeforeMount, onBeforeUnmount, onMounted, watch } from 'vue';
-import { MissingAppProviderError } from '@/utilities/errors';
-import type { FocusManager } from '@/utilities/focus-manager';
-import UseUniqueId from './UseUniqueId';
+import { inject, ref } from 'vue';
 
-export default function UseFocusManager(props) {
-  const focusManager = inject('focusManager') as FocusManager;
+export default function useFocusManager() {
+  const context = inject('focus-manager');
+  return context;
+}
 
-  const { useUniqueId, uniqueIdRef } = UseUniqueId();
+export function useFocusManagerContext() {
+  const trapFocusList = ref<string[]>([]);
 
-  watch([() => props.trapping], () => {
-    if (props.trapping && uniqueIdRef) {
-      focusManager.add(uniqueIdRef.value);
+  const add = (id: string) => {
+    trapFocusList.value = [...trapFocusList.value, id];
+  };
+
+  const remove = (id: string) => {
+    let removed = true;
+
+    const clone = [...trapFocusList.value];
+    const index = clone.indexOf(id);
+
+    if (index === -1) {
+      removed = false;
+    } else {
+      clone.splice(index, 1);
     }
-  });
 
-  const canSafelyFocus = computed(() => {
-    return focusManager.trapFocusList[0] === uniqueIdRef.value;
-  });
+    trapFocusList.value = clone;
 
-  onBeforeMount(() => {
-    if (!focusManager) {
-      throw new MissingAppProviderError('No FocusManager was provided.');
-    }
-  });
+    return removed;
+  };
 
-  onMounted(() => {
-    const id = useUniqueId();
-
-    if (props.trapping) {
-      focusManager.add(id);
-    }
-  });
-
-  onBeforeUnmount(() => {
-    if (uniqueIdRef.value) {focusManager.remove(uniqueIdRef.value);}
-  });
-
-  return { canSafelyFocus };
+  return {
+    add,
+    remove,
+    trapFocusList,
+  }
 }

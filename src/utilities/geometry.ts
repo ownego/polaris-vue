@@ -1,3 +1,5 @@
+import { VueElementConstructor } from 'vue';
+
 interface RectConfig {
   top?: number;
   left?: number;
@@ -9,21 +11,17 @@ interface Point {
   x: number;
   y: number;
 }
-
 export class Rect {
   static get zero(): Rect {
     return new Rect();
   }
 
   top: number;
-
   left: number;
-
   width: number;
-
   height: number;
 
-  constructor({ top = 0, left = 0, width = 0, height = 0 }: RectConfig = {}) {
+  constructor({top = 0, left = 0, width = 0, height = 0}: RectConfig = {}) {
     this.top = top;
     this.left = left;
     this.width = width;
@@ -38,7 +36,9 @@ export class Rect {
   }
 }
 
-export function getRectForNode(node: Element | Document | Window | null): Rect {
+export function getRectForNode(
+  node: Element | VueElementConstructor | Window | Document,
+): Rect {
   if (!(node instanceof Element)) {
     return new Rect({
       width: window.innerWidth,

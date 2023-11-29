@@ -1,65 +1,35 @@
-import { fileURLToPath, URL } from 'url';
 import { defineConfig } from 'vite';
-import path from 'path';
-import { replaceCodePlugin } from 'vite-plugin-replace';
-import svgLoader from 'vite-svg-loader';
-import checker from 'vite-plugin-checker';
 import vue from '@vitejs/plugin-vue';
+import { fileURLToPath } from 'url';
 import dts from 'vite-plugin-dts';
-import packageJson from './package.json';
 
+// https://vitejs.dev/config/
 export default defineConfig({
-  css: {
-    preprocessorOptions: {
-      scss: {
-        quietDeps: true, // Silent the deprecation warning
-      },
-    },
-  },
   plugins: [
-    checker({
-      overlay: false,
-      vueTsc: true,
-      typescript: true,
-      eslint: {
-        lintCommand: 'eslint . --ext .vue,.js,.cjs,.ts,.tsx --ignore-path .eslintignore --quiet .',
-      },
-    }),
-    replaceCodePlugin({
-      replacements: [
-        {
-          from: '{{POLARIS_VERSION}}',
-          to: packageJson.polaris_version,
-        },
-      ],
-    }),
-    svgLoader(),
-    vue({
-      reactivityTransform: true,
-    }),
+    vue(),
     dts({
       staticImport: true,
-      outputDir: 'dist/types',
+      outDir: 'dist/types',
       exclude: ['dist', 'build'],
     }),
   ],
   resolve: {
     alias: {
-      '@icons': fileURLToPath(new URL('./node_modules/@shopify/polaris-icons/dist/svg', import.meta.url)),
-      '@': fileURLToPath(new URL('./src/', import.meta.url)),
+      '@icons': fileURLToPath(new URL('node_modules/@shopify/polaris-icons/dist/svg', import.meta.url)),
+      '@polaris': fileURLToPath(new URL('./polaris/polaris-react/src', import.meta.url)),
+      '@tokens': fileURLToPath(new URL('./polaris/polaris-tokens/src', import.meta.url)),
+      '@': fileURLToPath(new URL('./src', import.meta.url)),
       '~': fileURLToPath(new URL('./node_modules', import.meta.url)),
-      types: fileURLToPath(new URL('./types', import.meta.url)),
     },
     dedupe: ['vue'],
   },
   build: {
     lib: {
-      entry: path.resolve(__dirname, 'src/polaris-vue.ts'),
+      entry: fileURLToPath(new URL('./src/polaris-vue.ts', import.meta.url)),
       name: 'Polaris Vue',
       fileName: (format) => `polaris-vue.${format}.js`,
     },
     cssCodeSplit: false,
-    cssTarget: 'chrome61',
     rollupOptions: {
       external: ['vue'],
       output: {
@@ -70,4 +40,4 @@ export default defineConfig({
       },
     },
   },
-});
+})

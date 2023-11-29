@@ -1,0 +1,3 @@
+[submodule "polaris"]
+	path = polaris
+	url = https://github.com/Shopify/polaris
