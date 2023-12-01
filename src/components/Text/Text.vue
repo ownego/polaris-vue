@@ -1,9 +1,22 @@
 <template lang="pug">
+component(
+  :is="element",
+  :class="className",
+  :id="id",
+)
+  slot(v-if="slots.default")
+
+  component(
+    v-else-if="children",
+    :is="children",
+  )
 </template>
 
 <script setup lang="ts">
 import {
   type Component,
+  useCssModule,
+  useSlots,
   computed,
 } from 'vue';
 import { classNames } from '@/utilities/css';
@@ -56,8 +69,8 @@ export interface TextProps {
   as: Element;
   /** Prevent text from overflowing */
   breakWord?: boolean;
-  /** Text to display */
-  children: Component | HTMLElement;
+  /** Text to display. in Vue version this props is not required */
+  children?: Component;
   /** Adjust tone of text */
   tone?: Tone;
   /** Adjust weight of text */
@@ -75,6 +88,38 @@ export interface TextProps {
   /** Add a line-through to the text */
   textDecorationLine?: TextDecorationLine;
 }
+
+const styles = useCssModule();
+
+const slots = useSlots();
+
+const props = withDefaults(defineProps<TextProps>(), {
+  numeric: false,
+  truncate: false,
+  visuallyHidden: false,
+});
+
+const className = computed(() => classNames(
+  styles.root,
+  props.variant && styles[props.variant],
+  props.fontWeight && styles[props.fontWeight],
+  (props.alignment || props.truncate) && styles.block,
+  props.alignment && styles[props.alignment],
+  props.breakWord && styles.breakWord,
+  props.tone && styles[props.tone],
+  props.numeric && styles.numeric,
+  props.truncate && styles.truncate,
+  props.visuallyHidden && styles.visuallyHidden, 
+  props.textDecorationLine && styles[props.textDecorationLine],
+))
+
+const element = computed(() => {
+  if (props.as) {
+    return props.as;
+  }
+
+  return props.visuallyHidden ? 'span' : 'p';
+});
 </script>
 
 <style lang="scss" module>
