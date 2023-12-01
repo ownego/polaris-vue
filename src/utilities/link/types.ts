@@ -1,4 +1,4 @@
-import { VueElementConstructor } from 'vue';
+import { type Component } from 'vue';
 import type { Target } from '../types';
 
 export interface LinkLikeComponentProps extends Omit<HTMLAnchorElement, 'target' | 'download'> {
@@ -7,10 +7,10 @@ export interface LinkLikeComponentProps extends Omit<HTMLAnchorElement, 'target'
   /** Makes the link open in a new tab */
   external?: boolean;
   /** Where to display the url */
-  target?: Target;
+  target?: Target
   /** Makes the browser download the url instead of opening it. Provides a hint for the downloaded filename if it is a string value. */
   download?: string | boolean;
   [key: string]: any;
 }
 
-export type LinkLikeComponent = VueElementConstructor<LinkLikeComponentProps>;
+export type LinkLikeComponent = Component<LinkLikeComponentProps>;

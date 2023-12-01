@@ -1,4 +1,4 @@
-import { VueElementConstructor } from 'vue';
+import { type Component } from 'vue';
 
 interface RectConfig {
   top?: number;
@@ -37,7 +37,7 @@ export class Rect {
 }
 
 export function getRectForNode(
-  node: Element | VueElementConstructor | Window | Document,
+  node: Element | Component | Window | Document,
 ): Rect {
   if (!(node instanceof Element)) {
     return new Rect({
