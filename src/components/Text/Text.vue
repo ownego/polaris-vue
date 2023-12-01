@@ -6,8 +6,11 @@ component(
 )
   slot(v-if="slots.default")
 
+  template(v-else-if="typeof children === 'string'")
+    | {{ children }}
+
   component(
-    v-else-if="children",
+    v-else,
     :is="children",
   )
 </template>
@@ -69,8 +72,8 @@ export interface TextProps {
   as: Element;
   /** Prevent text from overflowing */
   breakWord?: boolean;
-  /** Text to display. in Vue version this props is not required */
-  children?: Component;
+  /** Text or Component to display. Using slot will override this props */
+  children?: string | Component;
   /** Adjust tone of text */
   tone?: Tone;
   /** Adjust weight of text */
