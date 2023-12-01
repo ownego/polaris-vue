@@ -5,7 +5,6 @@ component(
   :style="sanitizeCustomProperties(style)",
 )
   slot
-  p {{ styles }}
 </template>
 
 <script setup lang="ts">
