@@ -30,6 +30,11 @@ import { UnstyledLink } from '@/components';
 import { classNames } from '@/utilities/css';
 import type { Target } from '@polaris/types';
 
+/**
+ * This component will not use children props because of slot method in vue can do the same thing
+ * on click fallback will not be defined because of the same reason <Link @click="fallback">
+ */
+
 export interface LinkProps {
   /** ID for the link */
   id?: string;
