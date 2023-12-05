@@ -45,10 +45,14 @@ const linkProps = computed(() => {
 });
 
 const target = computed(() => {
-  return props.target ? `target="${props.target}"` : undefined;
+  if (props.external) {
+    return '_blank';
+  }
+
+  return props.target ?? undefined;
 });
 
 const rel = computed(() => {  
-  return props.target === '_blank' ? 'noopener noreferrer' : undefined;
+  return target.value === '_blank' ? 'noopener noreferrer' : undefined;
 });
 </script>
