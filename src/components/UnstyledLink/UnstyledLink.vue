@@ -12,6 +12,7 @@ a(
   :rel="rel",
   v-bind="{ ...attrs, ...linkProps.rest, ...unstyled.props }",
 )
+  slot
 </template>
 
 <script setup lang="ts">
