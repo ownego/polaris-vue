@@ -4,24 +4,11 @@ component(
   :class="className",
   :id="id",
 )
-  slot(v-if="slots.default")
-
-  template(v-else-if="typeof children === 'string'")
-    | {{ children }}
-
-  component(
-    v-else,
-    :is="children",
-  )
+  slot
 </template>
 
 <script setup lang="ts">
-import {
-  type Component,
-  useCssModule,
-  useSlots,
-  computed,
-} from 'vue';
+import { useCssModule, computed } from 'vue';
 import { classNames } from '@/utilities/css';
 
 type Element =
@@ -65,6 +52,10 @@ type Tone =
 
 type TextDecorationLine = 'line-through';
 
+/**
+ * This component will not use children props because of slot method in vue can do the same thing
+ */
+
 export interface TextProps {
   /** Adjust horizontal alignment of text */
   alignment?: Alignment;
@@ -72,8 +63,6 @@ export interface TextProps {
   as: Element;
   /** Prevent text from overflowing */
   breakWord?: boolean;
-  /** Text or Component to display. Using slot will override this props */
-  children?: string | Component;
   /** Adjust tone of text */
   tone?: Tone;
   /** Adjust weight of text */
@@ -93,8 +82,6 @@ export interface TextProps {
 }
 
 const styles = useCssModule();
-
-const slots = useSlots();
 
 const props = withDefaults(defineProps<TextProps>(), {
   numeric: false,
