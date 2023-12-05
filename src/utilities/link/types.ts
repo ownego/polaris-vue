@@ -1,5 +1,5 @@
 import { type Component } from 'vue';
-import type { Target } from '../types'
+import type { Target } from '@polaris/types';
 
 /**
  * Explain about usage of React.Props<HTMLAnchorElement>

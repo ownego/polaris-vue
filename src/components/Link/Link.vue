@@ -1,6 +1,15 @@
 <template lang="pug">
+router-link(
+  v-if="to",
+  :to="to",
+  :class="className",
+  :aria-label="accessibilityLabel",
+  :data-primary-link="dataPrimaryLink",
+)
+  slot
+
 UnstyledLink(
-  v-if="url",
+  v-else-if="url",
   :class="className",
   :url="url",
   :external="external",
@@ -40,6 +49,8 @@ export interface LinkProps {
   id?: string;
   /** The url to link to */
   url?: string;
+  /** Router link `to` option, if this prop is provided router-link component will be render */
+  to?: string
   /** Makes the link open in a new tab
    * @deprecated use `target` set to `_blank` instead
    */
@@ -58,7 +69,7 @@ export interface LinkProps {
 
 const styles = useCssModule();
 
-const bannerContext = inject('banner-context');
+const bannerContext = inject('banner-context', false);
 
 const props = defineProps<LinkProps>();
 
