@@ -18,7 +18,7 @@ import type { Target } from '../types'
 export interface LinkLikeComponentProps {
   /** The url to link to */
   url: string;
-  /** Makes the link open in a new tab (this props might not be used in Vue version) */
+  /** Makes the link open in a new tab */
   external?: boolean;
   /** Where to display the url */
   target?: Target;
