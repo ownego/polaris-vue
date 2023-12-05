@@ -4,14 +4,16 @@ import type { Target } from '../types'
 /**
  * Explain about usage of React.Props<HTMLAnchorElement>
  * 
- * React.HTMLProps<HTMLAnchorElement> is a TypeScript type used in React to specify that a component will accept all standard HTML attributes of an <a> tag (HTMLAnchorElement). 
- * This allows you to pass any HTML attribute that a regular <a> tag would accept (like href, target, download, etc.) to your component, as well as React-specific attributes like key and ref.
+ * React.HTMLProps<HTMLAnchorElement> is a TypeScript type used in React to
+ * specify that a component will accept all standard HTML attributes of an <a> tag (HTMLAnchorElement). 
+ * This allows you to pass any HTML attribute that a regular <a> tag would accept
+ * (like href, target, download, etc.) to your component, as well as React-specific attributes like key and ref.
  */
 
 /**
- * In react version this interface extends React.HTMLProps<HTMLAnchorElement>
- * but in Vue version we don't need to extend any props because we can just pass
- * them as props to the component. (attrs)
+ * In React version this interface extends React.HTMLProps<HTMLAnchorElement>
+ * but in Vue version we don't need to extend any interface because we can just pass
+ * them as props to the component (useAttrs method or $attrs).
  */
 export interface LinkLikeComponentProps {
   /** The url to link to */
