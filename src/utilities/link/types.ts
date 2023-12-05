@@ -12,8 +12,8 @@ import type { Target } from '@polaris/types'
 
 /**
  * In React version this interface extends React.HTMLProps<HTMLAnchorElement>
- * but in Vue version we don't need to extend any interface because we can just pass
- * them as props to the component (useAttrs method or $attrs).
+ * but in Vue version we don't need to extend any interface because we can use
+ * useAttrs method
  */
 export interface LinkLikeComponentProps {
   /** The url to link to */
