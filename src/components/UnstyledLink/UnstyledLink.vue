@@ -18,7 +18,7 @@ a(
 <script setup lang="ts">
 import { useAttrs, computed } from 'vue';
 import useLink from '@/use/useLink';
-import { unstyled } from '@/components/shared';
+import { unstyled } from '@polaris/components/shared';
 import type { LinkLikeComponentProps } from '@/utilities/link';
 
 export interface UnstyledLinkProps extends LinkLikeComponentProps {}
