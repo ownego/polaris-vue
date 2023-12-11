@@ -8,39 +8,43 @@
     "skipLibCheck": true,
     "paths": {
       "@/*": ["./src/*"],
-      "@polaris/*": ["./polaris/polaris-react/src/*"],
+      "@polaris/*": ["./polaris/polaris-react/src/*"]
     },
     "types": [
-      "vite/client",
+      "node",
+      "vite/client"
     ],
+    "outDir": "dist/types",
 
-    /* Bundler mode */
-    "moduleResolution": "bundler",
+    "noEmit": true,
+    "moduleResolution": "node",
     "allowImportingTsExtensions": true,
     "resolveJsonModule": true,
     "isolatedModules": true,
-    "noEmit": true,
     "jsx": "preserve",
 
-    /* Linting */
     "strict": true,
     "noUnusedLocals": true,
     "noUnusedParameters": true,
     "noFallthroughCasesInSwitch": true,
+    "allowSyntheticDefaultImports": true
   },
   "include": [
     "src/**/*.ts",
     "src/**/*.vue",
-    "dts/*.ts",
+    "dts/*.ts"
   ],
   "exclude": [
     "node_modules",
     "dist",
+    "build",
+    "src/Demo.vue",
+    "src/main.ts"
   ],
   "vueCompilerOptions": {
     "plugins": [
-      "@vue/language-plugin-pug",
-    ],
+      "@vue/language-plugin-pug"
+    ]
   },
   "references": [{ "path": "./tsconfig.node.json" }]
 }

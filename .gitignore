@@ -27,3 +27,8 @@ Demo.vue
 *.njsproj
 *.sln
 *.sw?
+
+# Vitepress
+docs/.vitepress/dist
+docs/.vitepress/cache
+.cache

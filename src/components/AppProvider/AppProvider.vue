@@ -1,5 +1,6 @@
 <template lang="pug">
 .polaris-app-provider
+  //- Hello world
   slot
   #PolarisPortalsContainer(ref="portalsContainerRef")
 </template>
@@ -16,13 +17,12 @@ import { I18n } from '@polaris/utilities/i18n/I18n';
 import { ScrollLockManager } from '@polaris/utilities/scroll-lock-manager/scroll-lock-manager';
 import { StickyManager } from '@/utilities/sticky-manager';
 import type { LinkLikeComponent } from '@/utilities/link';
-import type { FeaturesConfig } from '@/utilities/features';
-import { classNamePolarisSummerEditions2023 } from '@/utilities/features';
+import type { VueNode } from '@/utilities/types';
+import { classNamePolarisSummerEditions2023, type FeaturesConfig } from '@/utilities/features';
 import { getTheme } from '@/utilities/use-theme';
 import { useMediaQueryContext } from '@/use/useMediaQuery';
 import { useFocusManagerContext } from '@/use/useFocusManager';
 import { useEphemeralPresenceManagerContext } from '@/use/useEphemeralPresenceManager';
-
 
 export type AppProviderProps = {
   theme?: ThemeName;
@@ -32,9 +32,11 @@ export type AppProviderProps = {
   linkComponent?: LinkLikeComponent;
   /** For toggling features */
   features?: FeaturesConfig;
-  /** Inner content of the application
-   * @default slot
-  */
+}
+
+export type AppProviderSlots = {
+  /** Inner content of the application */
+  default: (_: VueNode) => null;
 }
 
 const MAX_SCROLLBAR_WIDTH = 20;
@@ -42,6 +44,7 @@ const SCROLLBAR_TEST_ELEMENT_PARENT_SIZE = 30;
 const SCROLLBAR_TEST_ELEMENT_CHILD_SIZE = SCROLLBAR_TEST_ELEMENT_PARENT_SIZE + 10;
 
 const props = defineProps<AppProviderProps>();
+defineSlots<AppProviderSlots>();
 
 const stickyManager = new StickyManager();
 const scrollLockManager = new ScrollLockManager();
