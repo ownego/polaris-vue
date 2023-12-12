@@ -10,53 +10,19 @@ component(
 <script setup lang="ts">
 import { useCssModule, computed } from 'vue';
 import { classNames } from '@/utilities/css';
-
-type Element =
-  | 'dt'
-  | 'dd'
-  | 'h1'
-  | 'h2'
-  | 'h3'
-  | 'h4'
-  | 'h5'
-  | 'h6'
-  | 'p'
-  | 'span'
-  | 'strong'
-  | 'legend';
-
-type Variant =
-  | 'headingSm'
-  | 'headingMd'
-  | 'headingLg'
-  | 'headingXl'
-  | 'heading2xl'
-  | 'heading3xl'
-  | 'bodyXs'
-  | 'bodySm'
-  | 'bodyMd'
-  | 'bodyLg';
-
-type Alignment = 'start' | 'center' | 'end' | 'justify';
-
-type FontWeight = 'regular' | 'medium' | 'semibold' | 'bold';
-
-type Tone =
-  | 'success'
-  | 'critical'
-  | 'caution'
-  | 'subdued'
-  | 'text-inverse'
-  | 'magic'
-  | 'magic-subdued';
-
-type TextDecorationLine = 'line-through';
+import type { VueNode } from '@/utilities/types';
+import type {
+  Alignment,
+  Tone,
+  FontWeight,
+  Variant,
+  TextDecorationLine,
+} from './types';
 
 /**
  * This component will not use children props because of slot method in vue can do the same thing
  */
-
-export interface TextProps {
+export type TextProps = {
   /** Adjust horizontal alignment of text */
   alignment?: Alignment;
   /** The element type */
@@ -81,6 +47,11 @@ export interface TextProps {
   textDecorationLine?: TextDecorationLine;
 }
 
+export type TextSlots = {
+  /** Text to display */
+  default: (_: VueNode) => null;
+}
+
 const styles = useCssModule();
 
 const props = withDefaults(defineProps<TextProps>(), {
@@ -88,6 +59,8 @@ const props = withDefaults(defineProps<TextProps>(), {
   truncate: false,
   visuallyHidden: false,
 });
+
+defineSlots<TextSlots>();
 
 const className = computed(() => classNames(
   styles.root,
@@ -99,7 +72,7 @@ const className = computed(() => classNames(
   props.tone && styles[props.tone],
   props.numeric && styles.numeric,
   props.truncate && styles.truncate,
-  props.visuallyHidden && styles.visuallyHidden, 
+  props.visuallyHidden && styles.visuallyHidden,
   props.textDecorationLine && styles[props.textDecorationLine],
 ))
 

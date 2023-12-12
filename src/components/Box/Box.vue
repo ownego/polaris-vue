@@ -14,11 +14,19 @@ import {
   classNames,
   sanitizeCustomProperties,
 } from '@/utilities/css';
+import type { VueNode } from '@/utilities/types';
 import type { BoxProps } from './types';
+
+export type BoxSlots = {
+  /** Inner content of the box */
+  default: (_: VueNode) => null;
+}
 
 const props = withDefaults(defineProps<BoxProps>(), {
   as: 'div',
 });
+
+defineSlots<BoxSlots>();
 
 const styles = useCssModule();
 

@@ -18,10 +18,15 @@ a(
 <script setup lang="ts">
 import { useAttrs, computed } from 'vue';
 import useLink from '@/use/useLink';
-import { unstyled } from '@/components/shared';
+import { unstyled } from '@polaris/components/shared';
 import type { LinkLikeComponentProps } from '@/utilities/link';
+import type { VueNode } from '@/utilities/types';
 
 export interface UnstyledLinkProps extends LinkLikeComponentProps {}
+export type UnstyledLinkSlots = {
+  /** The content to display inside the link */
+  default: (_: VueNode) => null;
+}
 
 const attrs = useAttrs();
 
@@ -52,7 +57,7 @@ const target = computed(() => {
   return props.target ?? undefined;
 });
 
-const rel = computed(() => {  
+const rel = computed(() => {
   return target.value === '_blank' ? 'noopener noreferrer' : undefined;
 });
 </script>
