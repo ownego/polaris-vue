@@ -8,14 +8,9 @@ import {
   type EventMeta,
   type SlotMeta,
   type PropertyMeta,
-  type PropertyMetaSchema,
   type Declaration,
   createComponentMetaChecker,
 } from 'vue-component-meta';
-
-type PropsStructure = {
-  [key: string]: ComponentApi;
-}
 
 type ComponentPropsMeta =
   Pick<PropertyMeta,
@@ -38,6 +33,8 @@ type ComponentApi = {
   slots: SlotMeta[];
 }
 
+const metaPath = './docs/components-meta';
+
 const ignorePropTypes = [
   'key',
   'ref',
@@ -50,7 +47,30 @@ const ignorePropTypes = [
 const metaOptions: MetaCheckerOptions = {
   forceUseTs: true,
   printer: { newLine: 1 },
-  schema: { ignore: ['undefined'] },
+  noDeclarations: true,
+  schema: {
+    ignore: [
+      'Element',
+      (name) => {
+        const definedType = name.replace(/\s\|\sundefined|undefined/g, '');
+
+        if (
+          definedType === 'VueNode'
+          || definedType === 'LinkLikeComponent'
+          || definedType === 'ColorBackgroundAlias'
+          || definedType === 'ColorBorderAlias'
+          || definedType === 'ColorTextAlias'
+          || definedType.startsWith('ColorBorderAlias')
+          || definedType.startsWith('ComponentOptions')
+          || definedType.startsWith('FunctionalComponent')
+          || definedType.startsWith('ComponentPublicInstanceConstructor')
+        ) {
+          return true; // ignore
+        }
+        return false;
+      }
+    ],
+  },
 }
 
 const metaChecker = createComponentMetaChecker(
@@ -58,23 +78,32 @@ const metaChecker = createComponentMetaChecker(
   metaOptions,
 );
 
-function getMeta(filePaths: string[]): PropsStructure {
-  const ast: PropsStructure = {};
-
+function getMeta(filePaths: string[]): void {
   for (const filePath of filePaths) {
     const componentName = path.parse(filePath).name;
     const meta = metaChecker.getComponentMeta(filePath);
 
     const props = filterProps(meta.props);
 
-    ast[componentName] = {
+    const ast: ComponentApi = {
       props,
       events: meta.events,
       slots: meta.slots,
     };
-  }
 
-  return ast;
+    fs.writeFileSync(
+      path.join(metaPath, `${componentName}.json`),
+      JSON.stringify(ast, undefined, 2),
+    );
+
+    // Append to index.js
+    fs.appendFileSync(
+      path.join(metaPath, 'index.js'),
+      `export { default as ${componentName} } from './${componentName}.json';\n`,
+    );
+
+    console.log(`Component meta generated for ${componentName}`);
+  }
 }
 
 function filterProps(metaProps: PropertyMeta[]): ComponentPropsMeta[] {
@@ -93,7 +122,7 @@ function filterProps(metaProps: PropertyMeta[]): ComponentPropsMeta[] {
       default: prop.default,
       tags: prop.tags,
       declarations: serializeDeclaration(prop.declarations),
-      schema: serializeSchema(prop.schema),
+      schema: prop.schema,
     };
 
     props.push(pureProp);
@@ -111,74 +140,24 @@ function serializeDeclaration(declarations: Declaration[]): Declaration[] {
   return declarations;
 }
 
-function serializeSchema(schema: PropertyMetaSchema): PropertyMetaSchema {
-  if (typeof schema === 'string') {
-    return schema;
-  }
-
-  if (schema.kind === 'object') {
-    return {
-      ...schema,
-      schema: {},
-    };
-  }
-
-  const tmpSchema = { ...schema };
-  const { type } = schema;
-
-  const newType = type.split('|').map(t => {
-    if (t.includes('undefined')) return '';
-    return t;
-  }).filter(t => t);
-
-  tmpSchema.type = newType.length > 1 ? newType.join('|') : newType[0];
-  tmpSchema.schema = schema.schema ? serializeNestedSchema(schema.schema) : [];
-
-  return tmpSchema;
-}
-
-function serializeNestedSchema(schema: PropertyMetaSchema[]): PropertyMetaSchema[] {
-  const tmpSchema = [];
-  for (const s of schema) {
-    // Remove undefined string
-    if (typeof s === 'string') {
-      if (s === 'undefined') continue;
-      tmpSchema.push(s);
-    } else {
-      if (s.kind === 'object') {
-        tmpSchema.push({
-          ...s,
-          schema: {},
-        });
-      } else {
-        tmpSchema.push({
-          ...s,
-          schema: s.schema ? serializeNestedSchema(s.schema) : [],
-        });
-      }
-    }
-  }
-
-  return tmpSchema;
-}
-
 export function generateComponentMeta() {
   globby([
     './src/components/**/*.vue',
   ]).then((paths) => {
-    const ast = getMeta(paths);
-
-    const cacheDir = path.join('./.cache');
-    if (!fs.existsSync(cacheDir)) {
-      fs.mkdirSync(cacheDir, {recursive: true});
+    const metaDir = path.join(metaPath);
+    if (!fs.existsSync(metaDir)) {
+      fs.mkdirSync(metaDir, {recursive: true});
     }
 
     fs.writeFileSync(
-      path.join(cacheDir, 'props.json'),
-      JSON.stringify(ast, undefined, 2),
+      path.join(metaPath, 'index.js'),
+      '',
     );
 
-    console.log('Component meta generated!');
+
+    getMeta(paths);
+
+    console.log('All component meta generated!');
   });
 }
 

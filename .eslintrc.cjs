@@ -8,6 +8,7 @@ module.exports = {
     'plugin:vue/vue3-essential',
     'plugin:vue/vue3-recommended',
     '@vue/typescript/recommended',
+    'plugin:vue-pug/vue3-recommended',
   ],
   parserOptions: {
     ecmaVersion: 2020,

@@ -37,6 +37,9 @@ function generateSideBar() {
   components.forEach(component => {
     if (component === 'index.ts') return;
 
+    // Check README.md exists
+    if (!fs.existsSync(`./src/components/${component}/README.md`)) return;
+
     // Get title & category from README.md
     const content = fs.readFileSync(`./src/components/${component}/README.md`, 'utf-8');
 
