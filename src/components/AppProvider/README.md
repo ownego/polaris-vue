@@ -1,13 +1,33 @@
 ---
+layout: doc
 title: App provider
 category: Utilities
 outline: deep
+description: App provider is a required component that enables sharing global settings throughout the hierarchy of your application.
+bestpractices: The app provider component is required to use Polaris. Without it, the components in your application will not function correctly. You must wrap the root (the top) of your application in the app provider component.
+head:
+  - - meta
+    - name: keywords
+      content: app provider appprovider internationalization i18n localization context translate translation application-wrapper wrapper sdk
 ---
 
-# App provider
+# {{ $frontmatter.title }}
 
-Hello
+<Lede>
+{{ $frontmatter.description }}
+</Lede>
 
+# Insert example here
 
-<<< @/components/AppProvider/AppProvider.vue#props{1 js}
+## Props
+
+<PropsTable />
+
+## Slots
+
+<SlotsTable />
+
+## Best practices
+
+{{ $frontmatter.bestpractices }}
 

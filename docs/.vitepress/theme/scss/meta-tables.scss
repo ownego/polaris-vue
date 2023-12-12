@@ -1,0 +1,104 @@
+:root {
+  --code-contrast: #fff;
+  --code-keyword: #6dffaa;
+  --code-function: var(--code-keyword);
+  --code-string: #c087ff;
+  --code-boolean: #ff6ea1;
+  --code-number: #ff9e5b;
+  --code-operator: var(--text);
+  --code-punctuation: var(--text-subdued);
+  --code-property: var(--code-keyword);
+  --code-selector: var(--code-keyword);
+  --code-comment: #897fff;
+  --code-inserted: var(--code-keyword);
+  --code-deleted: #ffb7d1;
+
+  --font-family-mono: "SF Mono",SFMono-Regular,ui-monospace,"DejaVu Sans Mono",Menlo,Consolas,monospace;
+  --props-table-background-color: hsla(0,0%,100%,.005);
+  --props-table-border-color: hsla(0,0%,100%,.085);
+  --props-table-border-radius: 6px;
+}
+
+.docs-props-table__table {
+  overflow: hidden;
+  font-size: 0.9rem;
+  border-radius: var(--props-table-border-radius);
+  border: 1px solid var(--props-table-border-color);
+}
+
+.docs-props-table__th {
+  display: flex;
+  align-items: center;
+  width: 100%;
+  text-align: left;
+  color: var(--code-keyword);
+  font-family: var(--font-family-mono);
+  padding: 0.66em 1em;
+  background-color: hsla(0,0%,100%,.05);
+}
+
+.docs-props-table__row {
+  display: block;
+  padding: 1em;
+  border-bottom: 1px solid var(--props-table-border-color);
+
+  &:last-child {
+    border-bottom: none;
+  }
+
+  dd {
+    margin-left: 0;
+    font-size: .8rem;
+    opacity: 0.9;
+
+    p {
+      margin: 0;
+      line-height: 1.4rem;
+    }
+  }
+
+  .dpt__name {
+    display: inline-block;
+    margin-right: 0.5rem;
+    color: var(--code-contrast);
+    font-weight: 500;
+  }
+
+  .dpt__type {
+    font-family: var(--font-family-mono);
+    color: var(--code-keyword);
+
+    &[data-props-type="string"] {
+      color: var(--code-string);
+    }
+
+    &[data-props-type="boolean"] {
+      color: var(--code-boolean);
+    }
+
+    &[data-props-type="number"] {
+      color: var(--code-number);
+    }
+  }
+
+  .dpt__types {
+    span:not(.dpt__type) {
+      display: inline-block;
+      margin: 0 0.5rem;
+      font-weight: 500;
+      font-size: 0.7rem;
+    }
+  }
+
+  .dpt__tag {
+    display: flex;
+    margin-top: 0.25rem;
+
+    span {
+      display: inline-block;
+      margin: 0 0.25rem;
+      color: var(--code-string);
+      font-family: var(--font-family-mono);
+    }
+  }
+}

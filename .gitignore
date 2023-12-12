@@ -31,4 +31,6 @@ Demo.vue
 # Vitepress
 docs/.vitepress/dist
 docs/.vitepress/cache
+docs/components-content
+docs/components-meta
 .cache

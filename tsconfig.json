@@ -43,7 +43,7 @@
   ],
   "vueCompilerOptions": {
     "plugins": [
-      "@vue/language-plugin-pug"
+      "@vue/language-plugin-pug",
     ]
   },
   "references": [{ "path": "./tsconfig.node.json" }]

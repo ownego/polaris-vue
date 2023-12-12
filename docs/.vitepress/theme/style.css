@@ -150,6 +150,11 @@
   --vp-home-hero-image-background-image: linear-gradient(-45deg, #0fa47a 50%, #407e9a 50%);
 }
 
+.dark {
+  --vp-c-bg: #161619;
+  --vp-sidebar-bg-color: #1e1e23;
+}
+
 .VPSidebarItem.level-0 > .items {
   padding-left: 16px;
 }
