@@ -83,7 +83,7 @@ function updateComponentDocs(componentName: string, ast: ComponentContent): void
 
     // Remove description, bestpractices, and keywords from frontmatter
     let componentDocNewFrontmatter = componentDocFrontmatter.replace(/\ndescription:.*?($|\n\w)/s, '$1');
-    componentDocNewFrontmatter = componentDocNewFrontmatter.replace(/bestpractices:.*?($|\n\w)/s, '$1');
+    // componentDocNewFrontmatter = componentDocNewFrontmatter.replace(/bestpractices:.*?($|\n\w)/s, '$1');
     componentDocNewFrontmatter = componentDocNewFrontmatter.replace(/head:(.*?)($|\n\w)/s, '$2');
     componentDocNewFrontmatter = componentDocNewFrontmatter.trim();
 
@@ -96,7 +96,6 @@ function updateComponentDocs(componentName: string, ast: ComponentContent): void
     // // Append content to head frontmatter
     componentDocNewFrontmatter = componentDocNewFrontmatter + `
 description: ${ast.description}
-bestpractices: ${ast.bestPractices}
 head:
   - - meta
     - name: keywords
