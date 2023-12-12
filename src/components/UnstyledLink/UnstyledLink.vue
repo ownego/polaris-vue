@@ -22,7 +22,8 @@ import { unstyled } from '@polaris/components/shared';
 import type { LinkLikeComponentProps } from '@/utilities/link';
 import type { VueNode } from '@/utilities/types';
 
-export interface UnstyledLinkProps extends LinkLikeComponentProps {}
+export type UnstyledLinkProps = {} & LinkLikeComponentProps
+
 export type UnstyledLinkSlots = {
   /** The content to display inside the link */
   default: (_: VueNode) => null;
