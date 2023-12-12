@@ -46,5 +46,9 @@
       "@vue/language-plugin-pug",
     ]
   },
+  "ts-node": {
+    "esm": true,
+    "experimentalSpecifierResolution": "node"
+  },
   "references": [{ "path": "./tsconfig.node.json" }]
 }
