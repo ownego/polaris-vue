@@ -37,8 +37,10 @@ import {
 } from 'vue';
 import { UnstyledLink } from '@/components';
 import { classNames } from '@/utilities/css';
-import type { Target } from '@polaris/types';
-import type { VueNode } from '@/utilities/types';
+import type {
+  Target,
+  VueNode,
+} from '@/utilities/types';
 import type { RouteLocationRaw } from './type';
 
 export type LinkProps = {
