@@ -38,19 +38,16 @@ import {
 import { UnstyledLink } from '@/components';
 import { classNames } from '@/utilities/css';
 import type { Target } from '@polaris/types';
+import type { VueNode } from '@/utilities/types';
+import type { RouteLocationRaw } from './type';
 
-/**
- * This component will not use children props because of slot method in vue can do the same thing
- * on click fallback will not be defined because of the same reason <Link @click="fallback">
- */
-
-export interface LinkProps {
+export type LinkProps = {
   /** ID for the link */
   id?: string;
   /** The url to link to */
   url?: string;
   /** Router link `to` option, if this prop is provided router-link component will be render */
-  to?: string
+  to?: RouteLocationRaw
   /** Makes the link open in a new tab
    * @deprecated use `target` set to `_blank` instead
    */
@@ -72,6 +69,11 @@ const styles = useCssModule();
 const bannerContext = inject('banner-context', false);
 
 const props = defineProps<LinkProps>();
+
+defineSlots<{
+  /** Content to display inside the link */
+  default: (_: VueNode) => null;
+}>();
 
 const shouldBeMonochrome = computed(() => Boolean(props.monochrome || bannerContext));
 
