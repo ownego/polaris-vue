@@ -17,7 +17,7 @@ const exampleComponent = defineAsyncComponent(() =>
   import(`../components/${params.value.component}/${params.value.example}.vue`)
 );
 
-const WrapperLayout = () => {
+const wrappedComponent = () => {
   return h(
     AppProvider,
     { i18n: {} },
@@ -28,9 +28,11 @@ const WrapperLayout = () => {
 }
 
 onMounted(() => {
-  const app = createApp(isAppProvider
-    ? exampleComponent
-    : WrapperLayout);
+  const app = createApp(
+    isAppProvider
+      ? exampleComponent
+      : wrappedComponent
+  );
   app.use(PolarisVue);
   app.mount('#preview');
 });
