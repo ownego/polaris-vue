@@ -39,7 +39,7 @@ onMounted(() => {
 </script>
 
 <style lang="scss">
-body {
+html, body {
   background-color: #f1f1f1;
 }
 

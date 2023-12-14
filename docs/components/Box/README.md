@@ -8,10 +8,16 @@ outline: deep
 # {{ $frontmatter.title }}
 
 <Lede>
+
 {{ $frontmatter.description }}
+
 </Lede>
 
-# Insert example here
+<Examples>
+
+<<< ./[examples]
+
+</Examples>
 
 ## Props
 

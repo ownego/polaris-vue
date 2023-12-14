@@ -227,6 +227,11 @@ export default defineConfig({
           });
         }
 
+        if (token.info === '[examples]') {
+          // @ts-ignore
+          token.src = ['', ''];
+        }
+
         if (token.meta && token.meta.startsWith('example')) {
           // Get the example number
           const index = token.meta.split('-')[1];

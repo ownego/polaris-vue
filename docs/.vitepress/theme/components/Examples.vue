@@ -1,5 +1,5 @@
 <template lang="pug">
-.docs-examples()
+.docs-examples(v-if="examples && examples.length > 0")
   //- Tabs for each example
   .docs-examples-tabs
     .docs-examples-tab(v-for="(example, index) in examples" :key="index")
@@ -14,10 +14,12 @@
   //- Iframe to show example
   .preview-wrapper
     iframe.preview-frame(
+      v-show="!isLoadingFrame",
       ref="iframeRef",
       :src="`/preview/${component}-${selectedFile}`",
       height="398",
       :class="`preview-frame__${component}`",
+      @load="iframeLoaded",
     )
 
   //- slot for example code snippet
@@ -27,19 +29,18 @@
 </template>
 
 <script setup lang="ts">
-import { computed, ref, h, defineAsyncComponent, onMounted, createApp } from 'vue';
+import { computed, ref, onMounted } from 'vue';
 import { useData } from 'vitepress';
 import MarkdownIt from 'markdown-it';
 
 const md = new MarkdownIt();
 const { frontmatter, page } = useData();
 
+const isLoadingFrame = ref(true);
 const selectedExampleIndex = ref(0);
 const iframeRef = ref<HTMLIFrameElement | null>(null);
 
-
 const examples = frontmatter.value.examples;
-
 
 const selectedExample = computed(() => {
   return examples[selectedExampleIndex.value];
@@ -65,6 +66,7 @@ const styles = computed(() => {
 
 const switchExample = (index: number) => {
   selectedExampleIndex.value = index;
+  isLoadingFrame.value = true;
 };
 
 // Fix iframe timeStamp
@@ -81,6 +83,13 @@ const fixIframeEvent = () => {
       iframeRef.value.contentWindow.addEventListener(name, handler, true);
     }
   });
+};
+
+const iframeLoaded = () => {
+  console.log('loaded');
+  setTimeout(() => {
+    isLoadingFrame.value = false;
+  }, 200);
 };
 
 onMounted(() => {
@@ -131,6 +140,7 @@ onMounted(() => {
 }
 
 .preview-wrapper {
+  position: relative;
   width: 100%;
   height: 398px;
   background-color: #f1f1f1;
@@ -138,6 +148,11 @@ onMounted(() => {
 }
 
 .preview-frame {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
   width: 100%;
   border: 0;
   border-radius: 6px;
