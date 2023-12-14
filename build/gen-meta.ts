@@ -33,7 +33,7 @@ type ComponentApi = {
   slots: SlotMeta[];
 }
 
-const metaPath = './docs/components-meta';
+const metaPath = './docs/assets/components-meta';
 
 const ignorePropTypes = [
   'key',
@@ -96,12 +96,6 @@ function getMeta(filePaths: string[]): void {
       JSON.stringify(ast, undefined, 2),
     );
 
-    // Append to index.js
-    fs.appendFileSync(
-      path.join(metaPath, 'index.js'),
-      `export { default as ${componentName} } from './${componentName}.json';\n`,
-    );
-
     console.log(`Component meta generated for ${componentName}`);
   }
 }
@@ -148,12 +142,6 @@ export function generateComponentMeta() {
     if (!fs.existsSync(metaDir)) {
       fs.mkdirSync(metaDir, {recursive: true});
     }
-
-    fs.writeFileSync(
-      path.join(metaPath, 'index.js'),
-      '',
-    );
-
 
     getMeta(paths);
 

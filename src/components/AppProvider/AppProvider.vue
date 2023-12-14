@@ -1,6 +1,5 @@
 <template lang="pug">
 .polaris-app-provider
-  //- Hello world
   slot
   #PolarisPortalsContainer(ref="portalsContainerRef")
 </template>

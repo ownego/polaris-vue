@@ -11,8 +11,8 @@ type ComponentContent = {
   keywords: string[];
 }
 
-const contentPath = './docs/components-content';
-const componentsPath = './src/components';
+const contentPath = './docs/assets/components-content';
+const componentsPath = './docs/components';
 
 function getContent(filePaths: string[]): void {
   for (const f of filePaths) {
@@ -50,16 +50,8 @@ function getContent(filePaths: string[]): void {
       JSON.stringify(ast, undefined, 2),
     );
 
-    // Append to index.js
-    fs.appendFileSync(
-      path.join(contentPath, 'index.js'),
-      `export { default as ${componentName} } from './${componentName}.json';\n`,
-    );
-
     // Update component docs
     updateComponentDocs(componentName, ast);
-
-    console.log(`Component content generated for ${componentName}`);
   }
 }
 
@@ -121,12 +113,6 @@ export function generateDocsContent() {
     if (!fs.existsSync(contentDir)) {
       fs.mkdirSync(contentDir, { recursive: true });
     }
-
-    fs.writeFileSync(
-      path.join(contentPath, 'index.js'),
-      '',
-    );
-
 
     getContent(paths);
 

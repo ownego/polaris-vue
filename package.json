@@ -33,10 +33,12 @@
     "remove-trashes": "rimraf dist/index.html dist/favicon.ico dist/images",
     "gen:meta": "build/gen-meta.ts",
     "gen:docs-content": "build/gen-docs-content.ts",
-    "gen:init": "npm install -g ts-node && chmod +x build/gen-meta.ts build/gen-docs-content.ts",
-    "docs:dev": "yarn gen:meta && yarn gen:docs-content && vitepress dev docs",
-    "docs:build": "yarn gen:meta && yarn gen:docs-content && vitepress build docs",
-    "docs:preview": "yarn gen:meta && yarn gen:docs-content && vitepress preview docs"
+    "gen:docs-types": "build/gen-docs-types.ts",
+    "gen:init": "npm install -g ts-node && chmod +x build/gen-meta.ts build/gen-docs-content.ts build/gen-docs-types.ts",
+    "gen:docs": "yarn gen:meta && yarn gen:docs-content && yarn gen:docs-types",
+    "docs:dev": "vitepress dev docs",
+    "docs:build": "yarn gen:docs && vitepress build docs",
+    "docs:preview": "yarn gen:docs && vitepress preview docs"
   },
   "dependencies": {
     "@shopify/polaris-icons": "^7.9.0"
