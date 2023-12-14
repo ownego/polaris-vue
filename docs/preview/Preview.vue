@@ -22,10 +22,14 @@ onMounted(() => {
 </script>
 
 <style lang="scss">
+body {
+  background-color: #f1f1f1;
+}
+
 .preview-wrapper {
   height: 100%;
   width: 100%;
-  background-color: #fafafa;
+  background-color: #f1f1f1;
 }
 #preview {
   display: flex;
@@ -34,6 +38,6 @@ onMounted(() => {
   height: 100vh;
   padding-left: 32px;
   padding-right: 32px;
-  background-color: #fafafa;
+  background-color: #f1f1f1;
 }
 </style>

@@ -121,6 +121,11 @@ export default defineConfig({
   },
 
   vite: {
+    css: {
+      modules: {
+        generateScopedName: `Polaris-[local]`,
+      },
+    },
     resolve: {
       alias: {
         // @ts-ignore

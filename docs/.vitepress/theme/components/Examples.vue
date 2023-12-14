@@ -12,13 +12,13 @@
     v-html="md.render(examples[selectedExampleIndex].description)",
   )
   //- Iframe to show example
-  iframe.preview-frame(
-    ref="iframeRef",
-    :src="`/preview/${component}-${selectedFile}`",
-    name="preview-frame",
-    :class="`preview-frame__${component}`",
-    :data-example-preview="selectedExampleIndex",
-  )
+  .preview-wrapper
+    iframe.preview-frame(
+      ref="iframeRef",
+      :src="`/preview/${component}-${selectedFile}`",
+      height="398",
+      :class="`preview-frame__${component}`",
+    )
 
   //- slot for example code snippet
   slot
@@ -91,6 +91,7 @@ onMounted(() => {
 <style lang="scss">
 .docs-example-code {
   display: none;
+  max-height: 50vh;
 }
 
 .docs-examples-description {
@@ -129,12 +130,18 @@ onMounted(() => {
   }
 }
 
+.preview-wrapper {
+  width: 100%;
+  height: 398px;
+  background-color: #f1f1f1;
+  border-radius: 6px;
+}
+
 .preview-frame {
   width: 100%;
-  height: 400px;
   border: 0;
   border-radius: 6px;
   overflow: auto;
-  background-color: #fafafa;
+  background-color: #f1f1f1;
 }
 </style>

@@ -174,3 +174,7 @@
 .vp-doc div[class*='language-'], .vp-block {
   border: 1px solid #373737;
 }
+
+.VPNavBar.has-sidebar .curtain {
+  display: none;
+}
