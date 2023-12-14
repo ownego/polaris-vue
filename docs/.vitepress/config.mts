@@ -1,6 +1,8 @@
 import fs from 'fs';
+import { default as path } from 'path';
 import { defineConfig } from 'vitepress';
 import { fileURLToPath } from 'url';
+import { globby } from 'globby';
 
 function generateSideBarCategory() {
   const categoryList = [
@@ -67,6 +69,42 @@ function generateSideBar() {
 
   return sidebar;
 };
+
+async function getContent(component: string) {
+  const componentMdFile = convertToKebabCase(component);
+
+  const paths = await globby([
+    './polaris/polaris.shopify.com/content/components/**/*.mdx',
+  ]);
+
+  const path = paths.find(p => p.endsWith(`${componentMdFile}.mdx`));
+
+  if (path) {
+    const content = fs.readFileSync(path, 'utf8');
+
+    // Find the description of component in <Lede> tag
+    const descriptionMatch = content.match(/<Lede>\n\n(.*?)\n\n<\/Lede>/s);
+    const description = descriptionMatch ? descriptionMatch[1] : '';
+
+    // Find keywords in frontmatter
+    const keywordsMatch = content.match(/keywords:(.*?)(<?\n)\w/s);
+    const keywords = keywordsMatch
+      ? keywordsMatch[1].trim().split('-').filter(k => k.trim())
+      : [];
+
+    return {
+      description,
+      keywords,
+    };
+  }
+}
+
+/**
+ * Convert PascalCase to kebab-case
+ */
+function convertToKebabCase(str: string): string {
+  return str.replace(/[A-Z]/g, '-$&').toLowerCase().replace(/^-/, '');
+}
 
 // https://vitepress.dev/reference/site-config
 export default defineConfig({
@@ -204,4 +242,37 @@ export default defineConfig({
       }
     },
   },
+
+  async transformPageData(pageData) {
+    const { frontmatter, relativePath } = pageData;
+
+    if (!frontmatter.title) return;
+
+    const matches = relativePath.match(/\/(\w*)\.md/);
+
+    const componentName = matches ? matches[1] : '';
+
+    if (componentName) {
+      const info = await getContent(componentName);
+
+      if (info.description) {
+        pageData.frontmatter.description = info.description;
+      }
+
+      if (info.keywords) {
+        const keywords = info.keywords.map((keyword) => `${keyword.trim().replace(/\s/g, '-')}`).join(' ');
+
+        pageData.frontmatter.head ??= [];
+        pageData.frontmatter.head.push([
+          'meta',
+          {
+            name: 'keywords',
+            content: keywords,
+          }
+        ]);
+
+        pageData.frontmatter.keywords = info.keywords;
+      }
+    }
+  }
 })

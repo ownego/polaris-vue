@@ -1,7 +1,9 @@
 <template>
 <AppProvider :i18n="{}">
   <Box background="bg-surface-selected">
-    {{ content }}
+    <Text as="h1" variant="headingLg">
+      {{ content }}
+    </Text>
   </Box>
 </AppProvider>
 </template>

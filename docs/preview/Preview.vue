@@ -4,18 +4,33 @@
 </template>
 
 <script setup lang="ts">
-import { createApp, defineAsyncComponent, onMounted } from 'vue';
+import { createApp, defineAsyncComponent, onMounted, h } from 'vue';
 import { useData } from 'vitepress';
 import PolarisVue from '../../src/polaris-vue';
+import { AppProvider } from '../../src/components';
 
 const { params } = useData();
+
+const isAppProvider = params.value.component === 'AppProvider';
 
 const exampleComponent = defineAsyncComponent(() =>
   import(`../components/${params.value.component}/${params.value.example}.vue`)
 );
 
+const WrapperLayout = () => {
+  return h(
+    AppProvider,
+    { i18n: {} },
+    {
+      default: () => h(exampleComponent),
+    }
+  )
+}
+
 onMounted(() => {
-  const app = createApp(exampleComponent);
+  const app = createApp(isAppProvider
+    ? exampleComponent
+    : WrapperLayout);
   app.use(PolarisVue);
   app.mount('#preview');
 });
