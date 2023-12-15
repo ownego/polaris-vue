@@ -34,6 +34,10 @@ examples:
 
 <SlotsTable />
 
+## Events
+
+<EventsTable />
+
 ## Best practices
 
 <BestPractices />

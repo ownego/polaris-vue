@@ -1,8 +1,9 @@
 import fs from 'fs';
-import { default as path } from 'path';
+import path from 'path';
 import { defineConfig } from 'vitepress';
 import { fileURLToPath } from 'url';
 import { globby } from 'globby';
+import type StateBlock from 'markdown-it/lib/rules_block/state_block';
 
 function generateSideBarCategory() {
   const categoryList = [
@@ -188,52 +189,13 @@ export default defineConfig({
        * Automatically generate examples code from the frontmatter
        * PLEASE BE CAREFUL WHEN MODIFYING THIS CODE!
        */
+      md.block.ruler.before('snippet', 'examples-parser', exampleParser);
+
       md.renderer.rules.fence = (...args) => {
         const [tokens, idx, config, page] = args;
         const token = tokens[idx];
 
-        // Replace current token with the first example
-        // Add the rest of the examples to the page
-        if (
-            page.frontmatter.examples
-            && (!token.meta || !token.meta.startsWith('example'))
-          ) {
-          page.frontmatter.examples.forEach((example, index) => {
-            // @ts-ignore
-            const [ filePath, ...rest ] = token.src;
-
-            if (index === 0) {
-              token.meta = `example-${index}`;
-              token.info = `vue[${example.fileName}]`;
-              // @ts-ignore
-              token.src = [ `${filePath}/${example.fileName}`, ...rest ];
-
-              return;
-            }
-
-            const newPath = filePath.replace(/\/[^/]+?$/, '');
-
-            const newToken = {
-              ...token,
-              meta: `example-${index}`,
-              info: `vue[${example.fileName}]`,
-              // @ts-ignore
-              src: [ `${newPath}/${example.fileName}`, ...rest ],
-            };
-
-            // Add the new token to the tokens array
-            // @ts-ignore
-            tokens.splice(idx + index, 0, newToken);
-          });
-        }
-
-        if (token.info === '[examples]') {
-          // @ts-ignore
-          token.src = ['', ''];
-        }
-
         if (token.meta && token.meta.startsWith('example')) {
-          // Get the example number
           const index = token.meta.split('-')[1];
 
           return (
@@ -244,7 +206,7 @@ export default defineConfig({
         }
 
         return (fence(...args));
-      }
+      };
     },
   },
 
@@ -281,3 +243,101 @@ export default defineConfig({
     }
   }
 })
+
+/**
+ * Build token by examples
+ *
+ * @param state
+ * @param startLine
+ * @param endLine
+ * @param silent
+ */
+function exampleParser(state: StateBlock, startLine: number, endLine: number, silent: boolean): boolean {
+  const CH = '<'.charCodeAt(0)
+  const pos = state.bMarks[startLine] + state.tShift[startLine]
+  const max = state.eMarks[startLine]
+
+  // if it's indented more than 3 spaces, it should be a code block
+  if (state.sCount[startLine] - state.blkIndent >= 4) {
+    return false
+  }
+
+  // ignore all lines not starts with <<<
+  for (let i = 0; i < 3; ++i) {
+    const ch = state.src.charCodeAt(pos + i)
+    if (ch !== CH || pos + i >= max) return false
+  }
+
+  // ignore if the line is not [examples]
+  const line = state.src.slice(pos, max)
+
+  if (!line.includes('[examples]')) {
+    return false
+  }
+
+  if (silent) {
+    return true
+  }
+
+  const start = pos + 3
+  const end = state.skipSpacesBack(max, pos)
+
+  const rawPath = state.src
+    .slice(start, end)
+    .trim()
+
+  const { filepath, extension, region, lines, lang, title } =
+    rawPathToToken(rawPath)
+
+  state.line = startLine + 1
+
+  // Build token by examples
+  const { examples } = state.env.frontmatter??{};
+
+  if (examples && examples.length) {
+    examples.forEach((example, index) => {
+      const token = state.push('fence', 'code', 0)
+      token.info = `vue[${example.fileName}]`
+
+      const { realPath, path: _path } = state.env
+      const resolvedPath = path.resolve(path.dirname(realPath ?? _path), example.fileName)
+
+      // @ts-ignore
+      token.src = [resolvedPath, region.slice(1)]
+      token.markup = '```'
+      token.map = [startLine, startLine + 1]
+      token.meta = `example-${index}`
+    });
+  }
+
+  return true;
+}
+
+/**
+ * raw path format: "/path/to/file.extension#region {meta} [title]"
+ *    where #region, {meta} and [title] are optional
+ *    meta can be like '1,2,4-6 lang', 'lang' or '1,2,4-6'
+ *    lang can contain special characters like C++, C#, F#, etc.
+ *    path can be relative to the current file or absolute
+ *    file extension is optional
+ *    path can contain spaces and dots
+ *
+ * captures: ['/path/to/file.extension', 'extension', '#region', '{meta}', '[title]']
+ */
+export const rawPathRegexp =
+  /^(.+?(?:(?:\.([a-z0-9]+))?))(?:(#[\w-]+))?(?: ?(?:{(\d+(?:[,-]\d+)*)? ?(\S+)?}))? ?(?:\[(.+)\])?$/
+
+export function rawPathToToken(rawPath: string) {
+  const [
+    filepath = '',
+    extension = '',
+    region = '',
+    lines = '',
+    lang = '',
+    rawTitle = ''
+  ] = (rawPathRegexp.exec(rawPath) || []).slice(1)
+
+  const title = rawTitle || filepath.split('/').pop() || ''
+
+  return { filepath, extension, region, lines, lang, title }
+}

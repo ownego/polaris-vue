@@ -29,9 +29,11 @@
 </template>
 
 <script setup lang="ts">
-import { computed, ref, onMounted } from 'vue';
+import { computed, ref, onMounted, useSlots } from 'vue';
 import { useData } from 'vitepress';
 import MarkdownIt from 'markdown-it';
+
+const slots = useSlots();
 
 const md = new MarkdownIt();
 const { frontmatter, page } = useData();
@@ -86,7 +88,6 @@ const fixIframeEvent = () => {
 };
 
 const iframeLoaded = () => {
-  console.log('loaded');
   setTimeout(() => {
     isLoadingFrame.value = false;
   }, 200);
@@ -101,11 +102,20 @@ onMounted(() => {
 .docs-example-code {
   display: none;
   max-height: 50vh;
+
+  & > div[class*="language-"] {
+    max-height: 50vh;
+    overflow: auto;
+  }
 }
 
 .docs-examples-description {
   font-size: 0.85rem;
   color: rgb(176, 176, 188);
+
+  p {
+    line-height: 1.25rem;
+  }
 }
 
 .docs-examples-tabs {

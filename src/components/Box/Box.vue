@@ -28,6 +28,13 @@ const props = withDefaults(defineProps<BoxProps>(), {
 
 defineSlots<BoxSlots>();
 
+// defineEmits<{
+//   /** Callback when the theme is changed by the user */
+//   updated: [id: number];
+//   /** Callback when the theme is changed by the user */
+//   bar: [name: string, attr: string, value: number];
+// }>();
+
 const styles = useCssModule();
 
 const borderStyleValue = props.borderStyle

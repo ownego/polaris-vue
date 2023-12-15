@@ -8,6 +8,7 @@ import './style.css'
 import BestPractices from './components/BestPractices.vue';
 import PropsTable from './components/PropsTable.vue';
 import SlotsTable from './components/SlotsTable.vue';
+import EventsTable from './components/EventsTable.vue';
 import Lede from './components/Lede.vue';
 import Examples from './components/Examples.vue';
 
@@ -22,6 +23,7 @@ export default {
     app.component('BestPractices', BestPractices);
     app.component('PropsTable', PropsTable);
     app.component('SlotsTable', SlotsTable);
+    app.component('EventsTable', EventsTable);
     app.component('Lede', Lede);
     app.component('Examples', Examples);
   }
