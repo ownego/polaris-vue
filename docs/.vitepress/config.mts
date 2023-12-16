@@ -155,7 +155,7 @@ export default defineConfig({
 
     footer: {
       message: 'Released under the MIT License.',
-      copyright: 'Copyright © 2021-present. With love by <a href="https://ownego.com" target="_blank">Ownego</a>.',
+      copyright: 'Copyright © 2021-present. With ❤️ by <a href="https://ownego.com" target="_blank">ownego</a>.',
     },
   },
 

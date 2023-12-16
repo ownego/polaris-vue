@@ -2,7 +2,6 @@
 layout: doc
 title: App provider
 category: Utilities
-outline: deep
 examples:
   - fileName: Default.vue
     title: Default

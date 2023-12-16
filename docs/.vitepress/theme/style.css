@@ -171,6 +171,10 @@
   --props-table-th-bg-color: hsla(0,0%,100%,.05);
 }
 
+.VPFeature .title {
+  color: var(--text-strong);
+}
+
 .VPSidebarItem.level-0 > .items {
   padding-left: 16px;
 }
@@ -194,4 +198,29 @@
 
 .VPNavBar.has-sidebar .curtain {
   display: none;
+}
+
+.dark-mode-logo {
+  display: none;
+}
+
+.dark {
+  .light-mode-logo {
+    display: none;
+  }
+
+  .dark-mode-logo {
+    display: block;
+  }
+}
+
+.VPHome #our-shopify-brands {
+  font-size: 1.8rem;
+  font-weight: 700;
+  color: var(--text-strong);
+
+  margin: 48px 0 16px;
+  padding-top: 24px;
+  letter-spacing: -0.02em;
+  line-height: 32px;
 }

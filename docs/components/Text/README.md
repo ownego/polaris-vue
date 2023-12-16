@@ -2,7 +2,6 @@
 layout: doc
 title: Text
 category: Typography
-outline: deep
 ---
 
 # {{ $frontmatter.title }}
