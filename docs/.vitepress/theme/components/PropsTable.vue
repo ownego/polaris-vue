@@ -118,9 +118,16 @@ const expandType = async (type: string, propName: string) => {
   let types = await fetchType(typeName, true);
 
   if (!types) {
+    console.log(`No extra type found for ${typeName}, trying to fetch from types collection...`);
     types = await fetchType(typeName);
   }
 
+  if (!types) {
+    console.log(`No type found for ${typeName}`);
+    return;
+  }
+
+  console.log(`Found type for ${typeName}`);
   extraType.value[propName] = {
     isExpanded: true,
     types,
