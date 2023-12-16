@@ -49,7 +49,7 @@ export function useMeta() {
       }
 
       // String
-      if (types[0] === 'string') {
+      if (types[0].startsWith('string')) {
         return ['string'];
       }
 

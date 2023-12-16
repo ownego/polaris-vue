@@ -5,7 +5,6 @@ import { default as path } from 'path';
 import { default as fs } from 'fs';
 import {
   type MetaCheckerOptions,
-  type EventMeta,
   type SlotMeta,
   type PropertyMeta,
   type Declaration,
@@ -27,9 +26,19 @@ type ComponentPropsMeta =
     defaultValue?: string;
   };
 
+type ComponentEventParams = {
+  [key: string]: string;
+}
+
+type ComponentEventMeta = {
+  name: string;
+  description?: string;
+  params?: ComponentEventParams;
+}
+
 type ComponentApi = {
   props: ComponentPropsMeta[];
-  events: EventMeta[];
+  events: ComponentEventMeta[];
   slots: SlotMeta[];
 }
 
@@ -84,10 +93,11 @@ function getMeta(filePaths: string[]): void {
     const meta = metaChecker.getComponentMeta(filePath);
 
     const props = filterProps(meta.props);
+    const events = getEventMeta(filePath);
 
     const ast: ComponentApi = {
       props,
-      events: meta.events,
+      events,
       slots: meta.slots,
     };
 
@@ -132,6 +142,96 @@ function serializeDeclaration(declarations: Declaration[]): Declaration[] {
   }
 
   return declarations;
+}
+
+function getEventMeta(filePath: string): ComponentEventMeta[] {
+  // Read file content
+  const fileContent = fs.readFileSync(filePath, 'utf8');
+
+  // Build regex to match defineEmits
+  const eventRegex = /defineEmits\<(\{[\s\S]*?\}|[^>]*?)\>/s;
+  const matches = fileContent.match(eventRegex);
+
+  if (matches === null) return [];
+
+  let definition = matches[1];
+
+  if (!matches[1].startsWith('{')) { // If defineEmits is not an object
+    // Find the event type definition
+    const eventRegex = new RegExp(`(type|interface)\\s+${matches[1]}\\s*=?\\s*(\\{[\\s\\S]*?\\})`, 's');
+
+    const defMatches = fileContent.match(eventRegex);
+
+    definition = defMatches ? defMatches[2] : '';
+
+  }
+
+  // Remove start & end brackets
+  definition = definition.replace(/^\{|\}$/g, '').trim();
+
+  // Get the lines of each event from description
+  const lines = definition.split('\n').map(line => line.trim());
+
+  const events: ComponentEventMeta[] = [];
+
+  // Define event and its description
+  let i = 0;
+  while (i < lines.length) {
+    let description = '';
+
+    // Detect description
+    const descriptionRegex = /\/\*\*[\s\S]*?\*\//;
+    if (descriptionRegex.test(lines[i])) {
+      description = lines[i].replace(/\/\*\*|\*\//g, '').trim();
+      i++;
+    }
+
+    // Detect event name & type
+    const eventRegex = /(\w+)\s*\:\s*(.*?)[;,]*$/s;
+    const eventMatches = lines[i].match(eventRegex);
+
+    const name = eventMatches ? eventMatches[1] : '';
+    const type = eventMatches ? eventMatches[2] : '';
+
+    const typeObj = convertStringToObject(type);
+
+    const event: ComponentEventMeta = {
+      name,
+      description,
+      params: typeObj,
+    };
+
+    console.log(event);
+
+    events.push(event);
+    i++;
+  }
+
+  return events;
+}
+
+/**
+ * Convert a string to object
+ * '[name: string, collections: string[], products: Record<string, any>]'
+ * to { name: 'string', collections: 'string[]', products: 'Record<string, any>' }
+ */
+function convertStringToObject(str: string): Record<string, string> {
+  const obj: Record<string, string> = {};
+
+  // Convert string to array
+  const regex = /,?\s*(\w*?|\.\.\.\w*?):/g;
+
+  const parsedStr = str.replace(/^\[|\]$/g, '').replace(regex, '|||$1:').replace(/^\|\|\|/, '');
+  const arr = parsedStr.split('|||');
+
+  // Convert array to object
+  arr.forEach(item => {
+    const [key, value] = item.split(':').map(i => i.trim());
+
+    obj[key] = value;
+  });
+
+  return obj;
 }
 
 export function generateComponentMeta() {

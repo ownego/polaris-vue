@@ -81,6 +81,10 @@
     margin-right: 0.5rem;
     color: var(--code-contrast);
     font-weight: 500;
+
+    .dpt__name--colorize {
+      color: var(--code-comment);
+    }
   }
 
   .dpt__type {
@@ -104,6 +108,11 @@
       position: relative;
       cursor: pointer;
       border-bottom: 1px dashed var(--props-table-border-color);
+    }
+
+    &.dpt-type-separator {
+      font-size: 0.8rem;
+      color: var(--code-contrast);
     }
   }
 

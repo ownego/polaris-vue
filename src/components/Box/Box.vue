@@ -19,7 +19,7 @@ import type { BoxProps } from './types';
 
 export type BoxSlots = {
   /** Inner content of the box */
-  default: (_: VueNode) => null;
+  default: (_: VueNode) => any;
 }
 
 const props = withDefaults(defineProps<BoxProps>(), {
@@ -27,13 +27,6 @@ const props = withDefaults(defineProps<BoxProps>(), {
 });
 
 defineSlots<BoxSlots>();
-
-// defineEmits<{
-//   /** Callback when the theme is changed by the user */
-//   updated: [id: number];
-//   /** Callback when the theme is changed by the user */
-//   bar: [name: string, attr: string, value: number];
-// }>();
 
 const styles = useCssModule();
 

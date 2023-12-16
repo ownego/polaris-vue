@@ -9,16 +9,20 @@
       )
         dt
           span.dpt__name
+            span.dpt__name--colorize @
             | {{ p.name }}
           span.dpt__types
+            | (
             template(
-              v-for="t, index in serializeParams(p.type)",
+              v-for="t, index in serializeParams(p.params)",
               :key="t",
             )
-              span(v-if="index") |
+              span.dpt__type.dpt-type-separator(v-if="index") ,&nbsp;
+              span.dpt__type.dpt-type-name {{ t.name }}:&nbsp;
               span.dpt__type(
-                :data-props-type="defineTypeFormat(t)",
-              ) {{ t }}
+                :data-props-type="defineTypeFormat(t.type)",
+              ) {{ t.type }}
+            | )
 
         dd(v-if="p.description || p.tags.length > 0")
           p.dpt__description(v-html="p.description")
@@ -32,6 +36,10 @@ import { computed } from 'vue';
 import MarkdownIt from 'markdown-it';
 import { useMeta } from '../use/useMeta';
 
+type EventParams = {
+  [key: string]: string;
+};
+
 const {
   cEvents,
   component,
@@ -40,13 +48,20 @@ const {
 } = useMeta();
 const md = new MarkdownIt();
 
-console.log(cEvents);
-
 const noMetaContent = computed(() => {
   return md.render(`
     No slots found for this component, run \`yarn gen:docs\` to generate component meta first.
   `);
 });
+
+const serializeParams = (params: Record<string, any>) => {
+  return Object.keys(params).map((key) => {
+    return {
+      name: key,
+      type: params[key],
+    };
+  });
+};
 </script>
 
 <style lang="scss">

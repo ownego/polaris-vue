@@ -12,12 +12,12 @@
     v-html="md.render(examples[selectedExampleIndex].description)",
   )
   //- Iframe to show example
-  .preview-wrapper
+  .preview-wrapper(:style="{ height: `${frameHeight}px` }")
     iframe.preview-frame(
       v-show="!isLoadingFrame",
       ref="iframeRef",
       :src="`/preview/${component}-${selectedFile}`",
-      height="398",
+      :height="frameHeight",
       :class="`preview-frame__${component}`",
       @load="iframeLoaded",
     )
@@ -50,6 +50,10 @@ const selectedExample = computed(() => {
 
 const selectedFile = computed(() => {
   return selectedExample.value.fileName.replace(/\.vue$/, '');
+});
+
+const frameHeight = computed(() => {
+  return selectedExample.value.frameHeight || 398;
 });
 
 const component = computed(() => {
@@ -154,7 +158,7 @@ onMounted(() => {
   width: 100%;
   height: 398px;
   background-color: #f1f1f1;
-  border-radius: 6px;
+  border-radius: 10px;
 }
 
 .preview-frame {
@@ -165,7 +169,7 @@ onMounted(() => {
   bottom: 0;
   width: 100%;
   border: 0;
-  border-radius: 6px;
+  border-radius: 10px;
   overflow: auto;
   background-color: #f1f1f1;
 }

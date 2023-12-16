@@ -44,17 +44,17 @@ html, body {
 }
 
 .preview-wrapper {
-  height: 100%;
-  width: 100%;
-  background-color: #f1f1f1;
-}
-#preview {
   display: flex;
   align-items: center;
   justify-content: center;
   height: 100vh;
+  width: 100%;
   padding-left: 32px;
   padding-right: 32px;
+  background-color: #f1f1f1;
+}
+#preview {
+  width: 100%;
   background-color: #f1f1f1;
 }
 </style>

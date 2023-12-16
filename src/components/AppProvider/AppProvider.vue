@@ -16,6 +16,7 @@ import { I18n } from '@polaris/utilities/i18n/I18n';
 import { ScrollLockManager } from '@polaris/utilities/scroll-lock-manager/scroll-lock-manager';
 import { StickyManager } from '@/utilities/sticky-manager';
 import type { LinkLikeComponent } from '@/utilities/link';
+import type { VueNode } from '@/utilities/types';
 import { classNamePolarisSummerEditions2023, type FeaturesConfig } from '@/utilities/features';
 import { getTheme } from '@/utilities/use-theme';
 import { useMediaQueryContext } from '@/use/useMediaQuery';
@@ -34,14 +35,7 @@ export type AppProviderProps = {
 
 export type AppProviderSlots = {
   /** Inner content of the application */
-  default?: () => any;
-}
-
-export type AppProviderEvents = {
-  /** Callback when the theme is changed by the user */
-  updated: [id: number];
-  /** Callback when the theme is changed by the user */
-  bar: [name: string, attr: string, value: number];
+  default?: (_: VueNode) => any;
 }
 
 const MAX_SCROLLBAR_WIDTH = 20;
@@ -50,7 +44,6 @@ const SCROLLBAR_TEST_ELEMENT_CHILD_SIZE = SCROLLBAR_TEST_ELEMENT_PARENT_SIZE + 1
 
 const props = defineProps<AppProviderProps>();
 defineSlots<AppProviderSlots>();
-const emits = defineEmits<AppProviderEvents>()
 
 const stickyManager = new StickyManager();
 const scrollLockManager = new ScrollLockManager();
