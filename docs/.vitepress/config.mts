@@ -151,7 +151,12 @@ export default defineConfig({
 
     socialLinks: [
       { icon: 'github', link: 'https://github.com/ownego/polaris-vue' }
-    ]
+    ],
+
+    footer: {
+      message: 'Released under the MIT License.',
+      copyright: 'Copyright © 2021-present. With love by <a href="https://ownego.com" target="_blank">Ownego</a>.',
+    },
   },
 
   rewrites: {

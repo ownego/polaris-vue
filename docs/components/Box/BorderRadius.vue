@@ -1,5 +1,11 @@
 <template>
-<div> Border radius</div>
+<Box background="bg-surface" border-radius="100">
+  <div style="{ color: 'var(--p-color-text)' }">
+    <Text as="p" variant="bodyMd">
+      Content inside a box
+    </Text>
+  </div>
+</Box>
 </template>
 
 <script setup lang="ts">

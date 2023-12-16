@@ -115,7 +115,7 @@ onMounted(() => {
 
 .docs-examples-description {
   font-size: 0.85rem;
-  color: rgb(176, 176, 188);
+  color: var(--text);
 
   p {
     line-height: 1.25rem;
@@ -137,19 +137,19 @@ onMounted(() => {
   display: flex;
   align-items: flex-start;
   background: transparent;
-  box-shadow: inset 0 0 0 1px hsla(0,0%,100%,.12);
+  box-shadow: var(--card-shadow);
   border-radius: 6px;
   font-size: 0.8rem;
   font-weight: 500;
   line-height: 1.33;
-  color: #e7e7f1;
+  color: var(--text-strong);
 
   &:hover {
-    box-shadow: 0 4px 7px hsla(0,0%,100%,.1),inset 0 0 0 1px hsla(0,0%,100%,.12);
+    box-shadow: var(--card-shadow-hover);
   }
 
   &.docs-examples-tab-button--active {
-    background: #373737;
+    background: var(--surface-active);
   }
 }
 

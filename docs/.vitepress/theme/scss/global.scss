@@ -1,0 +1,9 @@
+@import '../../../../polaris//polaris.shopify.com/src/styles/globals.scss';
+
+:root {
+  @extend .light-mode;
+}
+
+.dark {
+  @extend .dark-mode;
+}
