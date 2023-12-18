@@ -94,13 +94,96 @@ The [AppProvider](/components/AppProvider) component is **required** to use Pola
 ```
 :::
 
+## Nuxt 3 (re-checking)
+
+We have tested support for Nuxt 3 in non-SSR mode only. To use with Nuxt 3, follow the below configuration and then use the plugin in your `components/pages`.
+
+#### Plugin
+
+Create a new plugin file at `<project-root>/plugins/polaris.client.ts` and update the content to following
+
+::: code-group
+```ts [polaris.client.ts]
+import PolarisVue from "@ownego/polaris-vue";
+import "@ownego/polaris-vue/dist/style.css";
+
+export default defineNuxtPlugin(nuxtApp => {
+  nuxtApp.vueApp.use(PolarisVue);
+});
+```
+:::
+
+#### Nuxt Config
+
+Update `<project-root>/nuxt.config.ts` to include following config values
+
+::: code-group
+```ts [nuxt.config.ts]
+export default defineNuxtConfig({
+  ...
+  build: {
+    transpile: ["@ownego/polaris-vue"],
+  },
+  ...
+});
+```
+:::
+
 ## Issues & Contributions
 
 Polaris Vue by ownego is an open source project and we are very happy to accept community contributions.
 
 If you notice any bugs, please create issues under [Issues](https://github.com/ownego/polaris-vue/issues).
-
 To contribute, please read [Contributing](/contributing) first.
+
+--
+
+Some common issues:
+
+###  Missing declaration types?
+
+At this moment, you should add the property `skipLibCheck: true` to `tsconfig.json` file. This will skip the check for missing declaration types. We will try to fix this issue in the future.
+
+::: code-group
+```json [tsconfig.json]
+{
+  "compilerOptions": {
+    "skipLibCheck": true
+  }
+}
+```
+:::
+
+### Types & CSS Variables
+
+All tokens & variables are following the [Polaris Design Tokens](https://polaris.shopify.com/tokens/color).
+
+For example, in the `Box` component, there is `background?: ColorBackgroundAlias` property.
+`ColorBackgroundAlias` is a type that contains all the color tokens from Polaris (without prefix `--p-color`)
+
+```vue
+<template>
+<Box background="bg-fill-success">
+  <p>Success</p>
+</Box>
+</template>
+```
+
+### Volar & Vue language service
+
+If you are using Volar (Vue language features) plugin, you can specify global component types by configuring `compilerOptions.types` in `tsconfig.json`.
+
+::: code-group
+```json [tsconfig.json]
+{
+  "compilerOptions": {
+    "types": [
+      "@ownego/polaris-vue/dist/volar"
+    ]
+  }
+}
+```
+:::
 
 ## License
 
