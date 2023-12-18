@@ -5,7 +5,7 @@ outline: deep
 
 # {{ $frontmatter.title }}
 
-Polaris Vue by [Ownego](https://ownego.com) is a component library for [Vue 3](https://vuejs.org) based on [Shopify Polaris style guide](https://polaris.shopify.com). We try to keep the package light-weight and easy to use (mostly similar with original Polaris Library).
+Polaris Vue by [Ownego](https://ownego.com?utm_source=polaris-vue&utm_medium=referral&utm_campaign=website) is a component library for [Vue 3](https://vuejs.org) based on [Shopify Polaris style guide](https://polaris.shopify.com). We try to keep the package light-weight and easy to use (mostly similar with original Polaris Library).
 
 **Following Shopify Polaris React version:** 12.x - Migrated date: *Jan 31st, 2024*.
 
@@ -187,4 +187,4 @@ If you are using Volar (Vue language features) plugin, you can specify global co
 
 Code released under the [MIT License](https://github.com/ownego/polaris-vue/blob/master/LICENSE).
 
-Copyright &copy; 2021 - present by [Ownego](https://ownego.com).
+Copyright &copy; 2021 - present by [Ownego](https://ownego.com?utm_source=polaris-vue&utm_medium=referral&utm_campaign=website).
