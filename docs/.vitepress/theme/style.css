@@ -233,3 +233,7 @@
   border: 1px solid var(--border-color);
   border-bottom: 0;
 }
+
+.outline-title {
+  color: var(--text-strong);
+}

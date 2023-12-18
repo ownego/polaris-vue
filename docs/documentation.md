@@ -11,7 +11,7 @@ Polaris Vue by [Ownego](https://ownego.com) is a component library for [Vue 3](h
 
 ### Prerequisites
 
-- [Node.js](https://nodejs.org/) version 18 or higher.
+- [Node.js](https://nodejs.org/) version 18 or higher. (`lts/hydrogen` is recommended)
 - Vue 3 version 3.3 or higher.
 - [VSCode](https://code.visualstudio.com/) is recommended, along with the [official Vue extension](https://marketplace.visualstudio.com/items?itemName=Vue.volar).
 
@@ -94,7 +94,7 @@ The [AppProvider](/components/AppProvider) component is **required** to use Pola
 ```
 :::
 
-## Nuxt 3 (re-checking)
+## Nuxt 3
 
 We have tested support for Nuxt 3 in non-SSR mode only. To use with Nuxt 3, follow the below configuration and then use the plugin in your `components/pages`.
 
@@ -138,8 +138,6 @@ To contribute, please read [Contributing](/contributing) first.
 
 --
 
-Some common issues:
-
 ###  Missing declaration types?
 
 At this moment, you should add the property `skipLibCheck: true` to `tsconfig.json` file. This will skip the check for missing declaration types. We will try to fix this issue in the future.
@@ -159,7 +157,7 @@ At this moment, you should add the property `skipLibCheck: true` to `tsconfig.js
 All tokens & variables are following the [Polaris Design Tokens](https://polaris.shopify.com/tokens/color).
 
 For example, in the `Box` component, there is `background?: ColorBackgroundAlias` property.
-`ColorBackgroundAlias` is a type that contains all the color tokens from Polaris (without prefix `--p-color`)
+`ColorBackgroundAlias` is a type that contains all the color tokens from Polaris (without prefix `--p-color`), similar with original Shopify Polaris React version.
 
 ```vue
 <template>
