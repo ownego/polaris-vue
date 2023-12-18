@@ -140,7 +140,9 @@ To contribute, please read [Contributing](/contributing) first.
 
 ###  Missing declaration types?
 
-At this moment, you should add the property `skipLibCheck: true` to `tsconfig.json` file. This will skip the check for missing declaration types. We will try to fix this issue in the future.
+At this moment, you should add the property `skipLibCheck: true` to `tsconfig.json` file. This will skip the check for missing declaration types.
+
+Mostly components have been typed, but somehow if you find missing declaration types, please create an issue under [Issues](https://github.com/ownego/polaris-vue/issues).
 
 ::: code-group
 ```json [tsconfig.json]
