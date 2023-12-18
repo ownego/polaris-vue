@@ -224,3 +224,12 @@
   letter-spacing: -0.02em;
   line-height: 32px;
 }
+
+.VPHero .text {
+  color: var(--text-strong);
+}
+
+.vp-code-group .tabs {
+  border: 1px solid var(--border-color);
+  border-bottom: 0;
+}

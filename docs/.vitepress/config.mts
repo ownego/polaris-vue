@@ -140,6 +140,7 @@ export default defineConfig({
           { text: 'Icons', link: '/icons' },
           { text: 'Tokens', link: 'https://polaris.shopify.com/tokens/color' },
           { text: 'Examples', link: '/examples' },
+          { text: 'Contributing', link: '/contributing' },
         ],
       },
       {
