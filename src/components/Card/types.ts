@@ -8,6 +8,9 @@ import type {ResponsiveProp} from '@/utilities/css';
 type Spacing = ResponsiveProp<SpaceScale>;
 
 export interface CardProps {
+  /** Background color
+   * @default 'bg-surface'
+   */
   background?: ColorBackgroundAlias;
   /** The spacing around the card
    * @default {xs: '400', sm: '500'}

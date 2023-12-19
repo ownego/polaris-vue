@@ -41,12 +41,4 @@ const props = withDefaults(defineProps<CardProps>(), {
 const breakpoints = useBreakpoints();
 const defaultBorderRadius: BorderRadiusAliasOrScale = '300';
 const hasBorderRadius = computed<boolean>(() => !!breakpoints.value[`${props.roundedAbove}Up`]);
-
-watch(
-  () => breakpoints.value,
-  () => {
-    console.log('breakpoints.value', breakpoints.value);
-    console.log('hasBorder', hasBorderRadius.value);
-  },
-)
 </script>
