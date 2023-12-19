@@ -1,0 +1,13 @@
+{
+  "filePath": "src/utilities/features/types.ts",
+  "name": "TranslationDictionary",
+  "description": "",
+  "value": "",
+  "members": [
+    {
+      "filePath": "src/utilities/features/types.ts",
+      "name": "[key: string]",
+      "value": "string | TranslationDictionary"
+    }
+  ]
+}

@@ -1,6 +1,5 @@
 <template lang="pug">
 .polaris-app-provider
-  //- Hello world
   slot
   #PolarisPortalsContainer(ref="portalsContainerRef")
 </template>
@@ -36,7 +35,7 @@ export type AppProviderProps = {
 
 export type AppProviderSlots = {
   /** Inner content of the application */
-  default: (_: VueNode) => null;
+  default?: (_: VueNode) => any;
 }
 
 const MAX_SCROLLBAR_WIDTH = 20;
