@@ -14,12 +14,20 @@ import {
   sanitizeCustomProperties,
   getResponsiveProps,
 } from '@/utilities/css';
+import type { VueNode } from '@/utilities/types';
 import type { BlockStackProps } from './types';
+
+export type BlockStackSlots = {
+  /** Inner content of the box */
+  default: (_: VueNode) => any;
+}
 
 const props = withDefaults(defineProps<BlockStackProps>(), {
   as: 'div',
   reverseOrder: false,
 });
+
+defineSlots<BlockStackSlots>();
 
 const styles = useCssModule();
 
