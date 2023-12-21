@@ -41,7 +41,7 @@ import type {
   Target,
   VueNode,
 } from '@/utilities/types';
-import type { RouteLocationRaw } from './type';
+import type { RouteLocationRaw } from './types';
 
 export type LinkProps = {
   /** ID for the link */
@@ -92,3 +92,4 @@ const className = computed(() => classNames(
 <style lang="scss" module>
 @import '@polaris/components/Link/Link.scss';
 </style>
+./types
