@@ -36,10 +36,11 @@
   ],
   "exclude": [
     "node_modules",
+    "docs",
     "dist",
     "build",
     "src/Demo.vue",
-    "src/main.ts"
+    "src/main.ts",
   ],
   "vueCompilerOptions": {
     "plugins": [

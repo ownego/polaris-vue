@@ -141,18 +141,38 @@
  * CUSTOM STYLES
  * -------------------------------------------------------------------------- */
 :root {
-  --vp-c-brand-1: #1aab87;
+  --vp-layout-max-width: 95vw;
+
+  --vp-c-brand-1: #4e52b8;
   --vp-c-brand-2: #0f8060;
   --vp-c-brand-3: #02735c;
   --vp-nav-logo-height: 42px;
   --vp-home-hero-name-color: transparent;
   --vp-home-hero-name-background: -webkit-linear-gradient(120deg, #11a47a 30%, #e9af58);
   --vp-home-hero-image-background-image: linear-gradient(-45deg, #0fa47a 50%, #407e9a 50%);
+
+  --props-table-background-color: hsla(0,0%,100%,.005);
+  --props-table-border-color: hsla(0,0%,100%,.085);
+  --props-table-border-radius: 6px;
+  --props-table-border-color: var(--border-color);
+  --props-table-th-bg-color: rgba(0,0,0,.02);
 }
 
 .dark {
+  --vp-c-brand-1: #1aab87;
+  --vp-c-brand-2: #0f8060;
+  --vp-c-brand-3: #02735c;
   --vp-c-bg: #161619;
   --vp-sidebar-bg-color: #1e1e23;
+  --vp-code-block-bg: #131315;
+
+  --props-table-background-color: hsla(0,0%,100%,.005);
+  --props-table-border-color: hsla(0,0%,100%,.085);
+  --props-table-th-bg-color: hsla(0,0%,100%,.05);
+}
+
+.VPFeature .title {
+  color: var(--text-strong);
 }
 
 .VPSidebarItem.level-0 > .items {
@@ -162,4 +182,58 @@
 .VPSidebarItem.level-0 > .item > .text {
   font-size: 16px;
   font-weight: 500;
+}
+
+.VPDoc.has-aside .content-container.content-container {
+  max-width: 896px;
+}
+
+.vp-doc div[class*='language-'], .vp-block {
+  border: 1px solid var(--border-color);
+}
+
+.vp-doc h1, .vp-doc h2, .vp-doc h3, .vp-doc h4, .vp-doc h5, .vp-doc h6 {
+  color: var(--text-strong);
+}
+
+.VPNavBar.has-sidebar .curtain {
+  display: none;
+}
+
+.dark-mode-logo {
+  display: none;
+}
+
+.dark {
+  .light-mode-logo {
+    display: none;
+  }
+
+  .dark-mode-logo {
+    display: block;
+  }
+}
+
+.VPHome #our-shopify-brands {
+  font-size: 1.8rem;
+  font-weight: 700;
+  color: var(--text-strong);
+
+  margin: 48px 0 16px;
+  padding-top: 24px;
+  letter-spacing: -0.02em;
+  line-height: 32px;
+}
+
+.VPHero .text {
+  color: var(--text-strong);
+}
+
+.vp-code-group .tabs {
+  border: 1px solid var(--border-color);
+  border-bottom: 0;
+}
+
+.outline-title {
+  color: var(--text-strong);
 }

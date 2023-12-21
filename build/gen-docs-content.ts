@@ -11,8 +11,7 @@ type ComponentContent = {
   keywords: string[];
 }
 
-const contentPath = './docs/components-content';
-const componentsPath = './src/components';
+const contentPath = './docs/assets/components-content';
 
 function getContent(filePaths: string[]): void {
   for (const f of filePaths) {
@@ -49,66 +48,6 @@ function getContent(filePaths: string[]): void {
       path.join(contentPath, `${componentName}.json`),
       JSON.stringify(ast, undefined, 2),
     );
-
-    // Append to index.js
-    fs.appendFileSync(
-      path.join(contentPath, 'index.js'),
-      `export { default as ${componentName} } from './${componentName}.json';\n`,
-    );
-
-    // Update component docs
-    updateComponentDocs(componentName, ast);
-
-    console.log(`Component content generated for ${componentName}`);
-  }
-}
-
-/**
- * Update source component docs with content from Polaris docs
- *
- * @param componentName
- * @param ast
- */
-function updateComponentDocs(componentName: string, ast: ComponentContent): void {
-  // Find docs from src/components to add content to
-  const componentDir = path.join(componentsPath, componentName);
-  const componentDocPath = path.join(componentDir, 'README.md');
-
-  if (fs.existsSync(componentDir) && fs.existsSync(componentDocPath)) {
-    const componentDoc = fs.readFileSync(componentDocPath, 'utf8');
-
-    // Get the frontmatter
-    const componentDocMatch = componentDoc.match(/---\n(.*?)\n---/s);
-    const componentDocFrontmatter = componentDocMatch ? componentDocMatch[1] : '';
-
-    // Remove description, bestpractices, and keywords from frontmatter
-    let componentDocNewFrontmatter = componentDocFrontmatter.replace(/\ndescription:.*?($|\n\w)/s, '$1');
-    // componentDocNewFrontmatter = componentDocNewFrontmatter.replace(/bestpractices:.*?($|\n\w)/s, '$1');
-    componentDocNewFrontmatter = componentDocNewFrontmatter.replace(/head:(.*?)($|\n\w)/s, '$2');
-    componentDocNewFrontmatter = componentDocNewFrontmatter.trim();
-
-    // Serialize keywords to
-    // keywords:
-    //   - foo
-    //   - bar
-    const keywords = ast.keywords.map((keyword) => `${keyword.trim().replace(/\s/g, '-')}`).join(' ');
-
-    // // Append content to head frontmatter
-    componentDocNewFrontmatter = componentDocNewFrontmatter + `
-description: ${ast.description}
-head:
-  - - meta
-    - name: keywords
-      content: ${keywords}`;
-
-    // Replace frontmatter
-    const componentDocNew = componentDoc.replace(componentDocFrontmatter, componentDocNewFrontmatter);
-
-    // Write to file
-    fs.writeFileSync(
-      componentDocPath,
-      componentDocNew,
-    );
   }
 }
 
@@ -121,12 +60,6 @@ export function generateDocsContent() {
     if (!fs.existsSync(contentDir)) {
       fs.mkdirSync(contentDir, { recursive: true });
     }
-
-    fs.writeFileSync(
-      path.join(contentPath, 'index.js'),
-      '',
-    );
-
 
     getContent(paths);
 
