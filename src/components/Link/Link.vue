@@ -48,7 +48,10 @@ export type LinkProps = {
   id?: string;
   /** The url to link to */
   url?: string;
-  /** Router link `to` option, if this prop is provided router-link component will be render */
+  /**
+   * Router link 'to' option, if this prop is provided router-link component will be render
+   * <a href="https://router.vuejs.org/api/interfaces/RouterLinkProps.html#to" target="blank"> details </a>
+   */
   to?: RouteLocationRaw
   /** Makes the link open in a new tab
    * @deprecated use `target` set to `_blank` instead
