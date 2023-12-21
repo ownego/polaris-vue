@@ -9,12 +9,12 @@ examples:
   - fileName: Monochrome.vue
     title: Monochrome
     description: Use for text links that are the same color as the surrounding text.
-  # - fileName: MonochromeBanner.vue
-  #   title: Monochrome in a banner
-  #   description: Monochrome styles will be applied to links rendered within a `Banner`.
-  # - fileName: External.vue
-  #   title: External link
-  #   description: Use for text links that should open in a new browser tab (or window, depending on the merchant’s browser settings). Use this only when a default link might disrupt the merchant’s workflow.
+  - fileName: MonochromeBanner.vue
+    title: Monochrome in a banner
+    description: Monochrome styles will be applied to links rendered within a `Banner`.
+  - fileName: External.vue
+    title: External link
+    description: Use for text links that should open in a new browser tab (or window, depending on the merchant’s browser settings). Use this only when a default link might disrupt the merchant’s workflow.
 ---
 
 # {{ $frontmatter.title }}
