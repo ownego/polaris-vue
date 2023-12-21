@@ -9,8 +9,8 @@ component(
 
 <script setup lang="ts">
 import { computed, useCssModule } from 'vue';
-import {getResponsiveValue} from '@/utilities/css';
-import type {ResponsiveProp} from '@/utilities/css';
+import { getResponsiveValue } from '@/utilities/css';
+import type { ResponsiveProp } from '@/utilities/css';
 import type { ShadowBevelProps } from './types';
 
 const props = withDefaults(defineProps<ShadowBevelProps>(), {
