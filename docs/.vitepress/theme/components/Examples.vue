@@ -71,6 +71,10 @@ const styles = computed(() => {
 });
 
 const switchExample = (index: number) => {
+  if (index === selectedExampleIndex.value) {
+    return;
+  }
+
   selectedExampleIndex.value = index;
   isLoadingFrame.value = true;
 };
