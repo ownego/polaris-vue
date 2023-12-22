@@ -150,6 +150,7 @@
   --vp-home-hero-name-color: transparent;
   --vp-home-hero-name-background: -webkit-linear-gradient(120deg, #11a47a 30%, #e9af58);
   --vp-home-hero-image-background-image: linear-gradient(-45deg, #0fa47a 50%, #407e9a 50%);
+  --vp-c-bg-alt: var(--vp-sidebar-bg-color);
 
   --props-table-background-color: hsla(0,0%,100%,.005);
   --props-table-border-color: hsla(0,0%,100%,.085);
@@ -169,6 +170,10 @@
   --props-table-background-color: hsla(0,0%,100%,.005);
   --props-table-border-color: hsla(0,0%,100%,.085);
   --props-table-th-bg-color: hsla(0,0%,100%,.05);
+}
+
+html:not(.example-preview) {
+  background-color: var(--vp-c-bg);
 }
 
 .VPFeature .title {
