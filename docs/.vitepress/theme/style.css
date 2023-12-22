@@ -151,6 +151,7 @@
   --vp-home-hero-name-background: -webkit-linear-gradient(120deg, #11a47a 30%, #e9af58);
   --vp-home-hero-image-background-image: linear-gradient(-45deg, #0fa47a 50%, #407e9a 50%);
   --vp-c-bg-alt: var(--vp-sidebar-bg-color);
+  --vp-code-font-size: 0.875rem;
 
   --props-table-background-color: hsla(0,0%,100%,.005);
   --props-table-border-color: hsla(0,0%,100%,.085);
@@ -170,6 +171,10 @@
   --props-table-background-color: hsla(0,0%,100%,.005);
   --props-table-border-color: hsla(0,0%,100%,.085);
   --props-table-th-bg-color: hsla(0,0%,100%,.05);
+}
+
+h1, h2, h3, h4, h5, h6, p {
+  font-size: inherit;
 }
 
 html:not(.example-preview) {

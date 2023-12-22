@@ -8,11 +8,12 @@
   @extend .dark-mode;
 }
 
-:root {
-  --p-font-weight-regular: 400;
-}
-
 html:not(.example-preview),
 html:not(.example-preview) body {
   font-size: var(--p-font-size-400);
+}
+
+html.example-preview body {
+  background: inherit;
+  color: inherit;
 }
