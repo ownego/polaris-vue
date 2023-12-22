@@ -4,7 +4,7 @@
     <div
       :style="spacingStyleWithMargin"
     >
-      <InlineStack gap="400" wrap="false" blockAlign="center">
+      <InlineStack gap="400" :wrap="false" block-align="center">
         <Placeholder width="106px" height="36px" />
         <Placeholder width="106px" height="20px" />
         <Placeholder width="106px" height="20px" />
@@ -13,7 +13,7 @@
     </div>
   </InlineStack>
   <div :style="spacingStyleNoMargin">
-    <InlineStack gap="400" wrap="false" blockAlign="end">
+    <InlineStack gap="400" :wrap="false" block-align="end">
       <Placeholder width="106px" height="20px" />
       <Placeholder width="106px" height="20px" />
     </InlineStack>
