@@ -11,14 +11,16 @@ examples:
     title: Gap
     description: >-
       Control the horizontal and vertical space between children using the `gap` prop. The `gap` prop supports responsive spacing with the [Breakpoints tokens](https://polaris.shopify.com/tokens/breakpoints).
-  # - fileName: inline-stack-with-block-align.tsx
-  #   title: Block align
-  #   description: >-
-  #     Control the vertical alignment of children using the `blockAlign` prop.
-  # - fileName: inline-stack-with-align.tsx
-  #   title: Align
-  #   description: >-
-  #     Control the horizontal alignment of children using the `align` prop.
+  - fileName: BlockAlign.vue
+    frameHeight: 700
+    title: Block align
+    description: >-
+      Control the vertical alignment of children using the `blockAlign` prop.
+  - fileName: Align.vue
+    frameHeight: 700
+    title: Align
+    description: >-
+      Control the horizontal alignment of children using the `align` prop.
 ---
 
 # {{ $frontmatter.title }}
