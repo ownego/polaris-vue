@@ -12,6 +12,3 @@
     Sales this year
   </Text>
 </template>
-
-<script setup lang="ts">
-</script>
