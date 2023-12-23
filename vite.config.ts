@@ -1,6 +1,7 @@
 import { defineConfig, loadEnv } from 'vite';
 import vue from '@vitejs/plugin-vue';
 import { fileURLToPath } from 'url';
+import { generateScopedName } from './build/namespaced-classname.js';
 
 // https://vitejs.dev/config/
 export default ({ mode }) => {
@@ -21,8 +22,14 @@ export default ({ mode }) => {
       dedupe: ['vue'],
     },
     css: {
+      preprocessorOptions: {
+        scss: {
+          quietDeps: true, // Silent the deprecation warning
+        },
+      },
       modules: {
-        generateScopedName: `${env.VITE_CLASS_PREFIX}-[local]`,
+        // generateScopedName: `${env.VITE_CLASS_PREFIX}-[local]`,
+        generateScopedName,
       },
     },
     build: {
