@@ -17,10 +17,10 @@ ShadowBevel(
 <script setup lang="ts">
 import { computed } from 'vue';
 import type { BorderRadiusAliasOrScale } from '@shopify/polaris-tokens';
-import {useBreakpoints} from '@/utilities/breakpoints';
+import { useBreakpoints } from '@/utilities/breakpoints';
+import type { VueNode } from '@/utilities/types';
 import Box from '../Box/Box.vue';
 import ShadowBevel from '../ShadowBevel/ShadowBevel.vue';
-import type { VueNode } from '@/utilities/types';
 import type { CardProps } from './types';
 
 export type CardSlots = {

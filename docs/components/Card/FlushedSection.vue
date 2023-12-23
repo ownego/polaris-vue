@@ -7,7 +7,7 @@
     />
     <Box background="bg-surface-secondary" padding="400">
       <Text as="p" variant="bodyMd">
-        You can use sales reports to see information about your customers’
+        You can use sales reports to see information about your customers'
         orders based on criteria such as sales over time, by channel, or by
         staff.
       </Text>

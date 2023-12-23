@@ -1,8 +1,4 @@
 <template>
-
-<Text as="h2" variant="headingSm">
-  On hold! Waiting for `ResourceList` component to be implemented.
-</Text>
 <Card roundedAbove="sm">
   <BlockStack gap="200">
     <InlineGrid columns="1fr auto">
@@ -35,36 +31,20 @@
       </Text>
     </BlockStack>
     <div>
-      <!-- <ResourceList
-        resourceName={{singular: 'sale', plural: 'sales'}}
-        items="[
-          {
-            sales: 'Orders',
-            amount: 'USD$0.00',
-            url: '#',
-          },
-          {
-            sales: 'Returns',
-            amount: '-USD$250.00',
-            url: '#',
-          },
-        ]"
-        renderItem={(item) => {
-          const {sales, amount, url} = item;
-          return (
-            <ResourceList.Item
-              :id="sales"
-              :url="url"
-              accessibilityLabel="`View Sales for ${sales}`"
-            >
-              <InlineStack align="space-between">
-                <div>{sales}</div>
-                <div>{amount}</div>
-              </InlineStack>
-            </ResourceList.Item>
-          );
-        }}
-      /> -->
+      <ResourceList :resourceName="{singular: 'sale', plural: 'sales'}">
+        <ResourceItem
+          v-for="item in resourceItems"
+          :key="item.sales"
+          :id="item.sales"
+          :url="item.url"
+          :accessibilityLabel="`View Sales for ${item.sales}`"
+        >
+          <InlineStack align="space-between">
+            <div>{{ item.sales }}</div>
+            <div>{{ item.amount }}</div>
+          </InlineStack>
+        </ResourceItem>
+      </ResourceList>
     </div>
     <Bleed marginInline="400">
       <Box
@@ -77,8 +57,8 @@
             Deactivated reports
           </Text>
           <List>
-            <List.Item>Payouts</List.Item>
-            <List.Item>Total Sales By Channel</List.Item>
+            <ListItem>Payouts</ListItem>
+            <ListItem>Total Sales By Channel</ListItem>
           </List>
         </BlockStack>
       </Box>
@@ -114,6 +94,19 @@
 import { ref } from 'vue';
 
 const items = [{content: 'Gross Sales'}, {content: 'Net Sales'}];
+
+const resourceItems = [
+  {
+    sales: 'Orders',
+    amount: 'USD$0.00',
+    url: '#',
+  },
+  {
+    sales: 'Returns',
+    amount: '-USD$250.00',
+    url: '#',
+  },
+];
 
 const actionActive = ref(false);
 

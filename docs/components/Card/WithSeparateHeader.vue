@@ -14,22 +14,21 @@
           Preview
         </Button>
         <Popover
-          active={actionActive}
-          activator={disclosureButtonActivator}
+          :active="actionActive"
           @close="handleToggleAction"
         >
-          <ActionList :items="items" />
           <template #activator>
             <Button variant="plain" disclosure @click="handleToggleAction">
               Add account
             </Button>
           </template>
+          <ActionList :items="items" />
         </Popover>
       </ButtonGroup>
     </InlineGrid>
     <List>
-      <List.Item>Felix Crafford</List.Item>
-      <List.Item>Ezequiel Manno</List.Item>
+      <ListItem>Felix Crafford</ListItem>
+      <ListItem>Ezequiel Manno</ListItem>
     </List>
   </BlockStack>
 </Card>

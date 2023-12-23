@@ -9,7 +9,7 @@
         Reports
       </Text>
       <Text as="p" variant="bodyMd">
-        View a summary of your online store’s performance.
+        View a summary of your online store's performance.
       </Text>
     </BlockStack>
   </Box>
@@ -19,7 +19,7 @@
         Summary
       </Text>
       <Text as="p" variant="bodyMd">
-        View a summary of your online store’s performance, including sales,
+        View a summary of your online store's performance, including sales,
         visitors, top products, and referrals.
       </Text>
     </BlockStack>

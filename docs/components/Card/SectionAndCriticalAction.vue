@@ -19,14 +19,14 @@
             variant="plain"
             tone="critical"
             accessibilityLabel="Delete"
-            @Click="() => {}"
+            @click="() => {}"
           >
             Delete
           </Button>
           <Button
             variant="plain"
             accessibilityLabel="Edit"
-            @Click="() => {}"
+            @click="() => {}"
           >
             Edit
           </Button>

@@ -9,8 +9,8 @@
         Items
       </Text>
       <List>
-        <List.Item>1 × Oasis Glass, 4-Pack</List.Item>
-        <List.Item>1 × Anubis Cup, 2-Pack</List.Item>
+        <ListItem>1 &times; Oasis Glass, 4-Pack</ListItem>
+        <ListItem>1 &times; Anubis Cup, 2-Pack</ListItem>
       </List>
     </BlockStack>
     <InlineStack align="end">
@@ -25,8 +25,8 @@
         </Button>
         <Button
           variant="primary"
-          @click="() => {}"
           accessibilityLabel="Add tracking number"
+          @click="() => {}"
         >
           Add tracking number
         </Button>

@@ -5,7 +5,7 @@
   </Text>
   <Box paddingBlockStart="200">
     <Text as="p" variant="bodyMd">
-      View a summary of your online store’s performance.
+      View a summary of your online store's performance.
     </Text>
   </Box>
 </Card>

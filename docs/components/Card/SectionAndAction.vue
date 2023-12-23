@@ -16,7 +16,7 @@
         </Text>
         <Button
           variant="plain"
-          onClick={() => {}}
+          @click="() => {}"
           accessibilityLabel="Edit"
         >
           Edit
