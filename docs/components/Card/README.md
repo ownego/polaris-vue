@@ -1,6 +1,6 @@
 ---
 layout: doc
-title:
+title: Card
 category: Layout and structure
 examples:
   - fileName: Default.vue
