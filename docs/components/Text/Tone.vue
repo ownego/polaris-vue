@@ -18,6 +18,3 @@
     a downward trend.
   </Text>
 </template>
-
-<script setup lang="ts">
-</script>

@@ -3,6 +3,3 @@
     $100.00
   </Text>
 </template>
-
-<script setup lang="ts">
-</script>

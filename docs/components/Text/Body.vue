@@ -16,6 +16,3 @@
     Available for iPad, iPhone, and Android.
   </Text>
 </template>
-
-<script setup lang="ts">
-</script>

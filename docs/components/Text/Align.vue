@@ -16,6 +16,3 @@
     to your dashboard, and order management, all from your smartphone.
   </Text>
 </template>
-
-<script setup lang="ts">
-</script>

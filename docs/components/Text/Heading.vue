@@ -18,6 +18,3 @@
     Online store dashboard
   </Text>
 </template>
-
-<script setup lang="ts">
-</script>
