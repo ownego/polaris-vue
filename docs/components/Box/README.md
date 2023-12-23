@@ -2,6 +2,7 @@
 layout: doc
 title: Box
 category: Layout and structure
+outline: deep
 examples:
   - fileName: Color.vue
     frameHeight: 212

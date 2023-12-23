@@ -16,7 +16,7 @@
     ],
     "outDir": "dist/types",
 
-    "noEmit": true,
+    // "noEmit": true,
     "moduleResolution": "node",
     "allowImportingTsExtensions": true,
     "resolveJsonModule": true,
@@ -37,6 +37,7 @@
   "exclude": [
     "node_modules",
     "docs",
+    "docs/**/*.vue",
     "dist",
     "build",
     "src/Demo.vue",
