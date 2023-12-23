@@ -2429,6 +2429,11 @@ vite-plugin-eslint@^1.8.1:
     "@types/eslint" "^8.4.5"
     rollup "^2.77.2"
 
+vite-plugin-replace@^0.1.1:
+  version "0.1.1"
+  resolved "https://registry.yarnpkg.com/vite-plugin-replace/-/vite-plugin-replace-0.1.1.tgz#d9fdd04ac98d4d2552ef9ff3d6c2768e825c8562"
+  integrity sha512-v+okl3JNt2pf1jDYijw+WPVt6h9FWa/atTi+qnSFBqmKThLTDhlesx0r3bh+oFPmxRJmis5tNx9HtN6lGFoqWg==
+
 vite@^5.0.2:
   version "5.0.4"
   resolved "https://registry.yarnpkg.com/vite/-/vite-5.0.4.tgz#d984d2aaa8bac30f1ca9b9eea9b97e052f88c307"

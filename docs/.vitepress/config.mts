@@ -1,6 +1,9 @@
 import { defineConfig } from 'vitepress';
 import { fileURLToPath } from 'url';
+import { replaceCodePlugin } from 'vite-plugin-replace';
 
+import packageJson from '../../package.json';
+import { generateScopedName } from '../../build/namespaced-classname';
 import { getComponentContent, getCategoryContent } from '../script/content';
 import { generateSideBar } from '../script/sidebar';
 import { oeIcon } from '../script/svg';
@@ -74,9 +77,19 @@ export default defineConfig({
   },
 
   vite: {
+    plugins: [
+      replaceCodePlugin({
+        replacements: [
+          {
+            from: '%POLARIS_VERSION%',
+            to: packageJson.polaris_version,
+          },
+        ],
+      }),
+    ],
     css: {
       modules: {
-        generateScopedName: `Polaris-[local]`,
+        generateScopedName,
       },
     },
     resolve: {

@@ -1,6 +1,8 @@
 import { defineConfig, loadEnv } from 'vite';
 import vue from '@vitejs/plugin-vue';
 import { fileURLToPath } from 'url';
+import { replaceCodePlugin } from 'vite-plugin-replace';
+import packageJson from './package.json';
 import { generateScopedName } from './build/namespaced-classname.js';
 
 // https://vitejs.dev/config/
@@ -10,6 +12,14 @@ export default ({ mode }) => {
   return defineConfig({
     plugins: [
       vue(),
+      replaceCodePlugin({
+        replacements: [
+          {
+            from: '%POLARIS_VERSION%',
+            to: packageJson.polaris_version,
+          },
+        ],
+      }),
     ],
     resolve: {
       alias: {
