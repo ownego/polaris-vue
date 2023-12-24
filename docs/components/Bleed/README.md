@@ -3,10 +3,10 @@ layout: doc
 title: Bleed
 category: Layout and structure
 examples:
-  # - fileName: bleed-horizontal.tsx
-  #   title: Horizontal
-  #   description: >-
-  #     Content will bleed horizontally into the surrounding layout using the `marginInline` prop.
+  - fileName: Default.vue
+    title: Horizontal
+    description: >-
+      Content will bleed horizontally into the surrounding layout using the `marginInline` prop.
   # - fileName: bleed-vertical.tsx
   #   title: Vertical
   #   description: >-
