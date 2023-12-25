@@ -1,5 +1,5 @@
 <template>
-<Page narrowWidth>
+<Page narrow-width>
   <BlockStack gap="1600">
     <InlineStack align="start">
       <Placeholder width="106px" label="Start" />
