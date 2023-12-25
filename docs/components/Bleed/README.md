@@ -35,6 +35,10 @@ examples:
 
 <PropsTable />
 
+## Slots
+
+<SlotsTable />
+
 ## Bleed values
 
 Content should never go beyond the edges of the parent container. Choose a bleed value that works within the containing layout.

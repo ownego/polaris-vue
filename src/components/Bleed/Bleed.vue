@@ -11,6 +11,7 @@ import {
   sanitizeCustomProperties,
   classNames,
 } from '@/utilities/css';
+import type { VueNode } from '@/utilities/types';
 import type { ResponsiveProp } from '../../utilities/css';
 
 type Spacing = ResponsiveProp<SpaceScale>;
@@ -29,6 +30,13 @@ interface BleedProps {
   /** Negative right space around children */
   marginInlineEnd?: Spacing;
 }
+
+export type BleedSlots = {
+  /** Inner content of the box */
+  default: (_: VueNode) => any;
+}
+
+defineSlots<BleedSlots>();
 
 const props = defineProps<BleedProps>();
 
