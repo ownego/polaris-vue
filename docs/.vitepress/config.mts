@@ -43,6 +43,7 @@ export default defineConfig({
       { text: 'Documentation', link: '/documentation' },
       { text: 'Examples', link: '/examples' }
     ],
+    outline: { level: [2, 3] },
 
     sidebar: [
       {
