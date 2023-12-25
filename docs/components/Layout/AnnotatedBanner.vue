@@ -15,14 +15,14 @@
         <FormLayout>
           <TextField
             label="Store name"
-            @change="() => {}"
             autoComplete="off"
+            @change="() => {}"
           />
           <TextField
             type="email"
             label="Account email"
-            @change="() => {}"
             autoComplete="email"
+            @change="() => {}"
           />
         </FormLayout>
       </LegacyCard>

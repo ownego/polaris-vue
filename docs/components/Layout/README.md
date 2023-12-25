@@ -2,7 +2,6 @@
 layout: doc
 title: Layout
 category: Layout and structure
-outline: deep
 examples:
   - fileName: OneColumn.vue
     frameHeight: 300

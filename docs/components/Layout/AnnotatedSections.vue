@@ -25,8 +25,8 @@
           <TextField
             type="email"
             label="Account email"
-            @change="() => {}"
             autoComplete="email"
+            @change="() => {}"
           />
         </FormLayout>
       </LegacyCard>
