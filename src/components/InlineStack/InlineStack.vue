@@ -13,7 +13,6 @@ import { getResponsiveProps, classNames } from '@/utilities/css';
 import type { InlineStackProps } from './types';
 
 export type InlineStackSlots = {
-  /** Inner content of the box */
   default: (_: VueNode) => any;
 }
 
