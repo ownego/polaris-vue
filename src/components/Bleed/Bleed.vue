@@ -40,34 +40,8 @@ const className = computed(() => {
   );
 });
 
-const getNegativeMargins = (direction: string) => {
-    const xAxis = ['marginInlineStart', 'marginInlineEnd'];
-    const yAxis = ['marginBlockStart', 'marginBlockEnd'];
-
-    const directionValues: {[key: string]: Spacing | undefined} = {
-      marginBlockStart: props.marginBlockStart,
-      marginBlockEnd: props.marginBlockEnd,
-      marginInlineStart: props.marginInlineStart,
-      marginInlineEnd: props.marginInlineEnd,
-      marginInline: props.marginInline,
-      marginBlock: props.marginBlock,
-    };
-
-    if (directionValues[direction]) {
-      return directionValues[direction];
-    } else if (xAxis.includes(direction) && props.marginInline) {
-      return directionValues.marginInline;
-    } else if (yAxis.includes(direction) && props.marginBlock) {
-      return directionValues.marginBlock;
-    }
-  };
-
-  const negativeMarginBlockStart = getNegativeMargins('marginBlockStart');
-  const negativeMarginBlockEnd = getNegativeMargins('marginBlockEnd');
-  const negativeMarginInlineStart = getNegativeMargins('marginInlineStart');
-  const negativeMarginInlineEnd = getNegativeMargins('marginInlineEnd');
-
-  const style = {
+const style = computed(() => {
+  return {
     ...getResponsiveProps(
       'bleed',
       'margin-block-start',
@@ -93,7 +67,34 @@ const getNegativeMargins = (direction: string) => {
       negativeMarginInlineEnd,
     ),
   };
+});
 
+const getNegativeMargins = (direction: string) => {
+    const xAxis = ['marginInlineStart', 'marginInlineEnd'];
+    const yAxis = ['marginBlockStart', 'marginBlockEnd'];
+
+    const directionValues: {[key: string]: Spacing | undefined} = {
+      marginBlockStart: props.marginBlockStart,
+      marginBlockEnd: props.marginBlockEnd,
+      marginInlineStart: props.marginInlineStart,
+      marginInlineEnd: props.marginInlineEnd,
+      marginInline: props.marginInline,
+      marginBlock: props.marginBlock,
+    };
+
+    if (directionValues[direction]) {
+      return directionValues[direction];
+    } else if (xAxis.includes(direction) && props.marginInline) {
+      return directionValues.marginInline;
+    } else if (yAxis.includes(direction) && props.marginBlock) {
+      return directionValues.marginBlock;
+    }
+  };
+
+const negativeMarginBlockStart = getNegativeMargins('marginBlockStart');
+const negativeMarginBlockEnd = getNegativeMargins('marginBlockEnd');
+const negativeMarginInlineStart = getNegativeMargins('marginInlineStart');
+const negativeMarginInlineEnd = getNegativeMargins('marginInlineEnd');
 </script>
 
 <style lang="scss" module>

@@ -7,10 +7,10 @@ examples:
     title: Horizontal
     description: >-
       Content will bleed horizontally into the surrounding layout using the `marginInline` prop.
-  # - fileName: bleed-vertical.tsx
-  #   title: Vertical
-  #   description: >-
-  #     Content will bleed vertically into the surrounding layout using the `marginBlock` prop.
+  - fileName: Vertical.vue
+    title: Vertical
+    description: >-
+      Content will bleed vertically into the surrounding layout using the `marginBlock` prop.
   # - fileName: bleed-specific-direction.tsx
   #   title: Specific direction
   #   description: >-
