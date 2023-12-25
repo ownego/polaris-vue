@@ -20,6 +20,8 @@
 </template>
 
 <script setup lang="ts">
+import { computed } from 'vue';
+
 interface PlaceholderProps {
   height?: string;
   width?: string;
@@ -38,16 +40,18 @@ const props = withDefaults(defineProps<PlaceholderProps>(), {
   padding: '6px 0px',
 });
 
-const style = {
-  background: 'var(--p-color-text-info)',
-  height: props.height,
-  width: props.width,
-  borderInlineStart: props.showBorder
-    ? '1px dashed var(--p-color-bg-surface-success)'
-    : 'none',
-  borderBlockStart: props.showBorderTop
-    ? '1px dashed var(--p-color-bg-surface-success)'
-    : 'none',
-  padding: props.padding,
-};
+const style = computed(() => {
+  return {
+    background: 'var(--p-color-text-info)',
+    height: props.height,
+    width: props.width,
+    borderInlineStart: props.showBorder
+      ? '1px dashed var(--p-color-bg-surface-success)'
+      : 'none',
+    borderBlockStart: props.showBorderTop
+      ? '1px dashed var(--p-color-bg-surface-success)'
+      : 'none',
+    padding: props.padding,
+  }
+});
 </script>
