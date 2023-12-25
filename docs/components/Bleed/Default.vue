@@ -14,7 +14,7 @@
           <Text
             as="h2"
             variant="bodyMd"
-            fontWeight="regular"
+            font-weight="regular"
             tone="text-inverse"
           >
             marginInline

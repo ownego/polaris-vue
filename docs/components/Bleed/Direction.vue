@@ -1,22 +1,22 @@
 <template>
 <BlockStack gap="600">
   <Card>
-    <Bleed marginInlineStart="800">
+    <Bleed margin-inline-start="800">
       <Placeholder label="marginInlineStart" />
     </Bleed>
   </Card>
   <Card>
-    <Bleed marginInlineEnd="800">
+    <Bleed margin-inline-end="800">
       <Placeholder label="marginInlineEnd" />
     </Bleed>
   </Card>
   <Card>
-    <Bleed marginBlockStart="800">
+    <Bleed margin-block-start="800">
       <Placeholder label="marginBlockStart" />
     </Bleed>
   </Card>
   <Card>
-    <Bleed marginBlockEnd="800">
+    <Bleed margin-block-end="800">
       <Placeholder label="marginBlockEnd" />
     </Bleed>
   </Card>
