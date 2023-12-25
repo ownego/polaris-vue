@@ -1,6 +1,9 @@
 import { defineConfig } from 'vitepress';
 import { fileURLToPath } from 'url';
+import { replaceCodePlugin } from 'vite-plugin-replace';
 
+import packageJson from '../../package.json';
+import { generateScopedName } from '../../build/namespaced-classname';
 import { getComponentContent, getCategoryContent } from '../script/content';
 import { generateSideBar } from '../script/sidebar';
 import { oeIcon } from '../script/svg';
@@ -14,7 +17,11 @@ export default defineConfig({
   title: "Polaris Vue",
   titleTemplate: ":title — Shopify Polaris Vue by ownego",
   description: "Shopify Polaris for VueJS 3",
-  head: [['link', { rel: 'icon', href: '/assets/images/favicon.ico' }]],
+  head: [
+    ['link', { rel: 'icon', href: '/assets/images/favicon.ico' }],
+    ['link', { rel: 'preconnect', href: 'https://cdn.shopify.com/' }],
+    ['link', { rel: 'stylesheet', href: 'https://cdn.shopify.com/static/fonts/inter/inter.css', id: 'inter-font-link' }],
+  ],
 
   rewrites: {
     'docs/:pkg': ':pkg',
@@ -59,7 +66,7 @@ export default defineConfig({
     socialLinks: [
       { icon: 'github', link: 'https://github.com/ownego/polaris-vue' },
       { icon: { svg: oeIcon },
-        link: 'https://ownego.com?utm_source=polaris-vue&utm_medium=referral&utm_campaign=app-listing'
+        link: 'https://ownego.com?utm_source=polaris-vue&utm_medium=referral&utm_campaign=website'
       },
     ],
 
@@ -70,9 +77,19 @@ export default defineConfig({
   },
 
   vite: {
+    plugins: [
+      replaceCodePlugin({
+        replacements: [
+          {
+            from: '%POLARIS_VERSION%',
+            to: packageJson.polaris_version,
+          },
+        ],
+      }),
+    ],
     css: {
       modules: {
-        generateScopedName: `Polaris-[local]`,
+        generateScopedName,
       },
     },
     resolve: {
