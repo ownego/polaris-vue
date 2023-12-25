@@ -66,6 +66,9 @@ For more details, please check `AppProvider` component documentation in `docs/co
 3. Run `yarn gen:docs` to generate component's metadata & content. (You have to run this command every time you change the component's props, events or slots)
 4. Preview the docs by: `yarn docs:dev`
 
+### Create examples
+
+Check this PR for more details: [Text component examples](https://github.com/ownego/polaris-vue/pull/232/files)
 
 
 
