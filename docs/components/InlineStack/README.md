@@ -41,6 +41,10 @@ examples:
 
 <PropsTable />
 
+## Slots
+
+<SlotsTable />
+
 ## Related components
 
 - To create the large-scale structure of pages, [use the InlineGrid component](https://polaris.shopify.com/components/layout-and-structure/inline-grid)
