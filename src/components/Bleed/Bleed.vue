@@ -32,7 +32,6 @@ interface BleedProps {
 }
 
 export type BleedSlots = {
-  /** Inner content of the box */
   default: (_: VueNode) => any;
 }
 
