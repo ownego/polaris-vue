@@ -8,6 +8,12 @@
   @extend .dark-mode;
 }
 
-// body, html {
-//   color: var(--vp-c-text-1);
-// }
+html:not(.example-preview),
+html:not(.example-preview) body {
+  font-size: var(--p-font-size-400);
+}
+
+html.example-preview body {
+  background: inherit;
+  color: inherit;
+}

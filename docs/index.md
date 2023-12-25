@@ -79,14 +79,14 @@ features:
 We're using this library in our Shopify apps, and gain Built for Shopify badge. Check it out!
 
 <div style="display: flex; justify-content: center; align-items: center; flex-wrap: wrap; gap: 30px">
-  <a href="https://qikify.com" target="_blank" rel="noopener noreferrer">
+  <a href="https://qikify.com?utm_source=polaris-vue&utm_medium=referral&utm_campaign=website" target="_blank" rel="noopener noreferrer">
     <img src="/assets/images/qikify.svg" alt="Ownego" class="light-mode-logo" width="44" style="margin: 20px auto;">
     <img src="/assets/images/qikify-white.svg" alt="Ownego" class="dark-mode-logo" width="44" style="margin: 20px auto;">
   </a>
 
-  <a href="https://teeinblue.com" target="_blank" rel="noopener noreferrer">
-    <img src="/assets/images/teeinblue.svg" alt="Ownego" class="light-mode-logo" width="60" style="margin: 20px auto;">
-    <img src="/assets/images/teeinblue-white.svg" alt="Ownego" class="dark-mode-logo" width="60" style="margin: 20px auto;">
+  <a href="https://teeinblue.com?utm_source=polaris-vue&utm_medium=referral&utm_campaign=website" target="_blank" rel="noopener noreferrer">
+    <img src="/assets/images/teeinblue.svg" alt="Ownego" class="light-mode-logo" width="50" style="margin: 20px auto;">
+    <img src="/assets/images/teeinblue-white.svg" alt="Ownego" class="dark-mode-logo" width="50" style="margin: 20px auto;">
   </a>
 </div>
 

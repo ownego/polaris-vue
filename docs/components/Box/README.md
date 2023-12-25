@@ -46,6 +46,12 @@ examples:
 
 ## Props
 
+<div style="font-size: 0.8125rem">
+
+Some types of props are following the [Polaris Design Tokens](https://polaris.shopify.com/tokens).
+
+</div>
+
 <PropsTable />
 
 ## Slots

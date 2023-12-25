@@ -1,18 +1,21 @@
 <template lang="pug">
 .docs-best-practices(v-if="content")
-  .docs-best-practices__content(v-html="content.bestPractices")
+  .docs-best-practices__content(v-html="markdownContent")
 </template>
 
 <script setup lang="ts">
 import { computed, onMounted, ref } from 'vue';
 import { useData } from 'vitepress';
-import type { ComponentApi } from '../types';
 import MarkdownIt from 'markdown-it';
 
 const { page } = useData();
 const md = new MarkdownIt();
 
-const content = ref<ComponentApi>();
+const content = ref<Record<string, any>>();
+
+const markdownContent = computed(() => {
+  return md.render(content.value?.bestPractices || '');
+});
 
 const component = computed(() => {
   const componentName = page.value.filePath.match(/\/(\w*)\/README\.md/);
@@ -28,7 +31,7 @@ onMounted(async () => {
   content.value = await fetchContent();
 });
 
-function fetchContent(): Promise<ComponentApi | undefined> {
+function fetchContent(): Promise<Record<string, any> | undefined> {
   const url = `/assets/components-content/${component.value}.json`;
 
   return new Promise((resolve, reject) => {

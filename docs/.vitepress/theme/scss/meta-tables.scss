@@ -24,7 +24,7 @@
   .docs-props-table__close {
     display: inline-block;
     padding: 0.25em 0.25em 0.25em 0.5em;
-    color: var(--code-contrast);
+    color: var(--text-strong);
     opacity: 0.5;
     cursor: pointer;
 
@@ -57,7 +57,7 @@
   .dpt__name {
     display: inline-block;
     margin-right: 0.5rem;
-    color: var(--code-contrast);
+    color: var(--text-strong);
     font-weight: 500;
 
     .dpt__name--colorize {
@@ -90,7 +90,7 @@
 
     &.dpt-type-separator {
       font-size: 0.8rem;
-      color: var(--code-contrast);
+      color: var(--text-strong);
     }
   }
 

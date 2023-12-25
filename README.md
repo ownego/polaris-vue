@@ -1,18 +1,52 @@
-# Vue 3 + TypeScript + Vite
+# Shopify Polaris Vue
 
-This template should help get you started developing with Vue 3 and TypeScript in Vite. The template uses Vue 3 `<script setup>` SFCs, check out the [script setup docs](https://v3.vuejs.org/api/sfc-script-setup.html#sfc-script-setup) to learn more.
+Polaris Vue by Ownego only supports **Vue 3.3+**.
 
-## Recommended IDE Setup
+Polaris Vue based on [Shopify Polaris style guide](https://polaris.shopify.com/), built especially for Vue 3.
+We're trying to make it mostly close with Shopify style guide and get a better performance.
 
-- [VS Code](https://code.visualstudio.com/) + [Volar](https://marketplace.visualstudio.com/items?itemName=Vue.volar) (and disable Vetur) + [TypeScript Vue Plugin (Volar)](https://marketplace.visualstudio.com/items?itemName=Vue.vscode-typescript-vue-plugin).
+**Follow Polaris React version:** [12.1.1](https://github.com/Shopify/polaris/releases/tag/%40shopify%2Fpolaris%4012.1.1) - Migrated date: *Jan 31st, 2024*.
 
-## Type Support For `.vue` Imports in TS
+---
 
-TypeScript cannot handle type information for `.vue` imports by default, so we replace the `tsc` CLI with `vue-tsc` for type checking. In editors, we need [TypeScript Vue Plugin (Volar)](https://marketplace.visualstudio.com/items?itemName=Vue.vscode-typescript-vue-plugin) to make the TypeScript language service aware of `.vue` types.
+We're using this library for our apps and got `Built for Shopify` badge, so hopefully it will be helpful for you too.
 
-If the standalone TypeScript plugin doesn't feel fast enough to you, Volar has also implemented a [Take Over Mode](https://github.com/johnsoncodehk/volar/discussions/471#discussioncomment-1361669) that is more performant. You can enable it by the following steps:
+<img width="631" alt="Screenshot 2023-07-03 at 15 35 54" src="https://github.com/ownego/polaris-vue/assets/5735071/90b10b70-0113-4633-93bf-678cfe1a92db">
 
-1. Disable the built-in TypeScript Extension
-   1. Run `Extensions: Show Built-in Extensions` from VSCode's command palette
-   2. Find `TypeScript and JavaScript Language Features`, right click and select `Disable (Workspace)`
-2. Reload the VSCode window by running `Developer: Reload Window` from the command palette.
+
+
+<br/>
+
+## Documentation
+
+Online documentation: [Click Here](https://ownego.github.io/polaris-vue/)
+
+<br/>
+
+## Installation
+
+Via NPM:
+
+```bash
+npm install @ownego/polaris-vue
+```
+
+Via Yarn:
+
+```bash
+yarn add @ownego/polaris-vue
+```
+
+## Contributing
+
+Polaris Vue by Ownego is an open source project and we are very happy to accept community contributions.
+
+If you notice any bugs, please create issues under [Issues](https://github.com/ownego/polaris-vue/issues).
+We will update the contribution rules later.
+
+## License
+
+Code released under the  [MIT License](https://github.com/ownego/polaris-vue/LICENSE).
+Copyright (c) 2021-present Ownego
+
+**Thank you!** :tada:
