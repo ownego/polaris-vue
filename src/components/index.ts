@@ -3,6 +3,7 @@ export * from './Box';
 export * from './Layout';
 export * from './Text';
 export * from './UnstyledLink';
+export * from './Bleed';
 export * from './BlockStack';
 export * from './ShadowBevel';
 export * from './Card';
