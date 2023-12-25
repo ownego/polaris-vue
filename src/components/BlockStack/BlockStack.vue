@@ -31,12 +31,14 @@ defineSlots<BlockStackSlots>();
 
 const styles = useCssModule();
 
-const style: any = {
-  '--pc-block-stack-align': props.align ? `${props.align}` : null,
-  '--pc-block-stack-inline-align': props.inlineAlign ? `${props.inlineAlign}` : null,
-  '--pc-block-stack-order': props.reverseOrder ? 'column-reverse' : 'column',
-  ...getResponsiveProps('block-stack', 'gap', 'space', props.gap),
-};
+const style = computed<any>(() => {
+  return {
+    '--pc-block-stack-align': props.align ? `${props.align}` : null,
+    '--pc-block-stack-inline-align': props.inlineAlign ? `${props.inlineAlign}` : null,
+    '--pc-block-stack-order': props.reverseOrder ? 'column-reverse' : 'column',
+    ...getResponsiveProps('block-stack', 'gap', 'space', props.gap),
+  }
+});
 
 const className = computed(() => {
   return classNames(

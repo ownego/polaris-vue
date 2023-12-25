@@ -35,6 +35,8 @@ onMounted(() => {
   );
   app.use(PolarisVue);
   app.mount('#preview');
+
+  document.documentElement.classList.add('example-preview');
 });
 </script>
 
