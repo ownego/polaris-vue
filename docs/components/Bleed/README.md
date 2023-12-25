@@ -11,10 +11,10 @@ examples:
     title: Vertical
     description: >-
       Content will bleed vertically into the surrounding layout using the `marginBlock` prop.
-  # - fileName: bleed-specific-direction.tsx
-  #   title: Specific direction
-  #   description: >-
-  #     Negative margins can be added in a specific direction using the [Space tokens](https://polaris.shopify.com/tokens/space).
+  - fileName: Direction.vue
+    title: Specific direction
+    description: >-
+      Negative margins can be added in a specific direction using the [Space tokens](https://polaris.shopify.com/tokens/space).
 ---
 
 # {{ $frontmatter.title }}

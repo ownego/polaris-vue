@@ -1,17 +1,10 @@
 <template>
 <div
-  style={{
-    background: 'var(--p-color-text-info)',
-    padding: '14px var(--p-space-200)',
-    height: height,
-    width: width,
-  }}
+  :style="styles"
 >
   <InlineStack gap="400" align="center">
     <div
-      style={{
-        color: 'var(--p-color-text-info-on-bg-fill)',
-      }}
+      style="color: var(--p-color-text-info-on-bg-fill)"
     >
       <Text
         as="h2"
@@ -19,7 +12,7 @@
         fontWeight="regular"
         tone="text-inverse"
       >
-        {label}
+        {{ label }}
       </Text>
     </div>
   </InlineStack>
@@ -27,11 +20,26 @@
 </template>
 
 <script setup lang="ts">
+import { computed } from 'vue';
+
 interface Props {
   label: string;
   height?: string;
   width?: string;
 }
 
-const props = withDefaults()
+const props = withDefaults(defineProps<Props>(), {
+  height: 'auto',
+  width: 'auto',
+  label: '',
+});
+
+const styles = computed(() => {
+  return {
+    background: 'var(--p-color-text-info)',
+    padding: '14px var(--p-space-200)',
+    height: props.height,
+    width: props.width,
+  }
+});
 </script>
