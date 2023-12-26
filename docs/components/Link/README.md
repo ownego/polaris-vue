@@ -68,10 +68,127 @@ Avoid using the [external icon](/icons?icon=ExternalMinor&q=external), as it can
 
 Edge cases: External icons should not be used to indicate a new tab or window is being opened. However, they may be used sparingly in features where symbols help merchants scan and pick from a list of several kinds of navigation options, like the admin's global search results.
 
+<DoDont>
+
+#### Do
+
+Instead of using an external icon, consider using an icon with more meaning to strenghten your message
+
+![Shopify admin search search results with an example of an icon being used as a decorative element](https://polaris.shopify.com/_next/image?url=%2Fimages%2Fcomponents%2Fnavigation%2Flink%2Fexternal-link-icon-decorative%402x.png&w=1080&q=75)
+
+#### Don’t
+
+Avoid using the icon beside link text
+
+![Shopify admin page with an example of an external link to the Shopify help center with no icon](https://polaris.shopify.com/_next/image?url=%2Fimages%2Fcomponents%2Fnavigation%2Flink%2Fexternal-link-dont-example%402x.png&w=1080&q=75)
+
+</DoDont>
+
+### Unstyled links
+
+If the existing link styles don’t meet the needs of your project, then use the `UnstyledLink` component to create a custom link style.
+
+---
+
+## Content guidelines
+
+The link component should follow the content guidelines for [links](https://polaris.shopify.com/content/actionable-language#links).
+
+---
+
+## Related components
+
+- For actions that don’t appear within or directly following a sentence, use the [button component](https://polaris.shopify.com/components/actions/button)
+
+---
+
+## Accessibility
+
+Use the `url` prop to give the link component a valid `href` value. This allows the element to be identified as a link to assistive technologies and gives it default keyboard support.
+
+The Link component is underlined to give interactive elements a shape. This allows links to not rely on color from being the only way users can tell if an element is interactive.
+
+<DoDont>
+
+#### Do
+
+- Remove the link underline when link is repeated in a list or navigation
+- Use underlines for links when used inline content
+
+```jsx
+<p>
+  Learn more about <Link>Fraud Protect</Link>.
+</p>
+```
+
+#### Don’t
+
+- Remove underlines when the user cannot determine it's interactivity
+
+```jsx
+<Link removeUnderline>Learn more about Fraud Protect.</Link>
+```
+
+</DoDont>
+
+### Submitting data
+
+Merchants generally expect links to navigate, and not to submit data or take action. If you need a component that doesn’t have a URL associated with it, then use the [button component](https://polaris.shopify.com/components/actions/button) instead.
+
+### Labeling
+
+Give links text that clearly describes their purpose.
+
+The `accessibilityLabel` prop adds an `aria-label` attribute to the link, which can be accessed by assistive technologies like screen readers. Typically, this label text replaces the visible text on the link for merchants who use assistive technology.
+
+To provide consistency and clarity:
+
+- Use the same text for links that navigate to the same content
+- Use different text for links that navigate to different content
+
+<DoDont>
+
+#### Do
+
+```jsx
+<Link url="https://help.shopify.com/manual">fulfilling orders</Link>
+```
+
+#### Don’t
+
+```jsx
+<Link>fulfilling orders</Link>
+```
+
+</DoDont>
+
+<DoDont>
+
+#### Do
+
+```jsx
+/* Somewhere in the code: */
+<Link url="https://help.shopify.com/manual">fulfilling orders</Link>
+
+/* Elsewhere in the code: */
+<Link url="https://help.shopify.com/manual">fulfilling orders</Link>
+```
+
+#### Don’t
+
+```jsx
+/* Somewhere in the code: */
+<Link url="https://help.shopify.com/manual">fulfilling orders</Link>
+
+/* Elsewhere in the code: */
+<Link url="https://help.shopify.com/manual">order fulfillment section</Link>
+```
+
+</DoDont>
+
 ### Keyboard support
 
 Links use browser defaults for keyboard interaction.
 
 - Give links keyboard focus with the <kbd>tab</kbd> key (or <kbd>shift</kbd> + <kbd>tab</kbd> when tabbing backwards)
 - Activate links with the <kbd>enter</kbd>/<kbd>return</kbd> key
-
