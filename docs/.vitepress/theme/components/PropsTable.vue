@@ -84,7 +84,7 @@
 </template>
 
 <script setup lang="ts">
-import { computed, reactive, ref } from 'vue';
+import { computed, ref } from 'vue';
 import MarkdownIt from 'markdown-it';
 import { useMeta } from '../use/useMeta';
 
@@ -115,16 +115,21 @@ const expandType = async (type: string, propName: string) => {
   // Remove [] from type
   const typeName = type.replace(/\[\]/g, '');
 
-  let types = await fetchType(typeName, true);
+  let types = null;
+
+  try {
+    types = await fetchType(typeName, true);
+  } catch (error) {
+  }
 
   if (!types) {
     console.log(`No extra type found for ${typeName}, trying to fetch from types collection...`);
     types = await fetchType(typeName);
-  }
 
-  if (!types) {
-    console.log(`No type found for ${typeName}`);
-    return;
+    if (!types) {
+      console.log(`No type found for ${typeName}`);
+      return;
+    }
   }
 
   console.log(`Found type for ${typeName}`);
@@ -143,7 +148,7 @@ function fetchType(type: string, isExtra?: boolean) {
     fetch(url, {
       method: 'GET',
       headers: {
-          'Accept': 'application/json',
+        'Accept': 'application/json',
       },
     })
       .then(response => {

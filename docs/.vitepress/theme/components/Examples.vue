@@ -71,6 +71,10 @@ const styles = computed(() => {
 });
 
 const switchExample = (index: number) => {
+  if (index === selectedExampleIndex.value) {
+    return;
+  }
+
   selectedExampleIndex.value = index;
   isLoadingFrame.value = true;
 };
@@ -94,7 +98,7 @@ const fixIframeEvent = () => {
 const iframeLoaded = () => {
   setTimeout(() => {
     isLoadingFrame.value = false;
-  }, 200);
+  }, 500);
 };
 
 onMounted(() => {
@@ -156,7 +160,6 @@ onMounted(() => {
 .preview-wrapper {
   position: relative;
   width: 100%;
-  height: 398px;
   background-color: #f1f1f1;
   border-radius: 10px;
 }
