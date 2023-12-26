@@ -51,7 +51,10 @@ const styles = useCssModule();
 const props = defineProps<IconProps>();
 
 const sourceType = computed<Source>(() => {
-  if (typeof props.source === 'function') {
+  // Because of svgLoader so we need to check if the source is a function AND an object
+  const functionTypes = ['function', 'object']
+
+  if (functionTypes.includes(typeof props.source)) {
     return 'function';
   }
 

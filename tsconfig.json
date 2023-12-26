@@ -39,8 +39,6 @@
     "docs",
     "dist",
     "build",
-    "src/Demo.vue",
-    "src/main.ts",
   ],
   "vueCompilerOptions": {
     "plugins": [
