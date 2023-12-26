@@ -3,18 +3,18 @@ layout: doc
 title: Inline grid
 category: Layout and structure
 examples:
-  # - fileName: inline-grid-with-varying-gap.tsx
-  #   title: Gap
-  #   description: >-
-  #     Use the `gap` prop to set the amount of space between columns. The `gap` prop supports responsive spacing with the [Breakpoints tokens](https://polaris.shopify.com/tokens/breakpoints).
-  # - fileName: inline-grid-with-fixed-widths.tsx
-  #   title: Column width
-  #   description: >-
-  #     The `columns` property accepts CSS column shorthand syntax, or an array of strings mapping to common widths in the admin such as `oneThird`, `oneHalf`, and `twoThirds`. For responsive columns, use the same syntax passed into an object with the breakpoints.
-  # - fileName: inline-grid-with-set-number.tsx
-  #   title: Number of columns
-  #   description: >-
-  #     Control the number of columns using the `columns` prop. Column numbers can be responsively set using the [Breakpoints tokens](https://polaris.shopify.com/tokens/breakpoints).
+  - fileName: Gap.vue
+    title: Gap
+    description: >-
+      Use the `gap` prop to set the amount of space between columns. The `gap` prop supports responsive spacing with the [Breakpoints tokens](https://polaris.shopify.com/tokens/breakpoints).
+  - fileName: ColumnWidth.vue
+    title: Column width
+    description: >-
+      The `columns` property accepts CSS column shorthand syntax, or an array of strings mapping to common widths in the admin such as `oneThird`, `oneHalf`, and `twoThirds`. For responsive columns, use the same syntax passed into an object with the breakpoints.
+  - fileName: ColumnNumber.vue
+    title: Number of columns
+    description: >-
+      Control the number of columns using the `columns` prop. Column numbers can be responsively set using the [Breakpoints tokens](https://polaris.shopify.com/tokens/breakpoints).
 ---
 
 # {{ $frontmatter.title }}

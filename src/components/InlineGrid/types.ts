@@ -2,10 +2,11 @@ import type { SpaceScale } from '@shopify/polaris-tokens';
 import type { ResponsiveProp } from '@/utilities/css';
 
 type ColumnsAlias = 'oneThird' | 'oneHalf' | 'twoThirds';
-type ColumnsType = number | string | ColumnsAlias[];
-type Columns = ResponsiveProp<ColumnsType>;
 type Gap = ResponsiveProp<SpaceScale>;
 type InlineGridAlignItems = 'start' | 'end' | 'center';
+
+export type ColumnsType = number | string | ColumnsAlias[];
+export type Columns = ResponsiveProp<ColumnsType>;
 
 export interface InlineGridProps {
   /** The number of columns to display. Accepts either a single value or an object of values for different screen sizes.
