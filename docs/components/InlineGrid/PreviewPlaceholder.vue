@@ -50,7 +50,7 @@ const style = computed(() => {
 const inlineDivStyle = computed(() => {
   return {
     color: 'var(--p-color-text-info-on-bg-fill)',
-    width: props.width ?? undefined,
+    width: props.width || undefined,
   };
 });
 </script>

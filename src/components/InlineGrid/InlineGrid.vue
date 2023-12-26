@@ -17,9 +17,12 @@ import type { ResponsiveValue } from '@/utilities/css';
 import type { VueNode } from '@/utilities/types';
 import type { InlineGridProps, Columns, ColumnsType } from './types';
 
-defineSlots<{
+export type InlineGridSlots = {
   default: (_: VueNode) => any;
-}>();
+}
+
+defineSlots<InlineGridSlots>();
+
 
 const props = defineProps<InlineGridProps>();
 
