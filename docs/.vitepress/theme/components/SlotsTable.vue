@@ -26,7 +26,7 @@
 
             span.dpt__type.dpt-type-separator(v-if="!isString(p.schema)") &nbsp;&rcub;
 
-        dd(v-if="p.description || p.tags.length > 0")
+        dd(v-if="p.description || (ptags && p.tags.length > 0)")
           p.dpt__description(v-html="p.description")
 
   .docs-props-table--non-prop(v-else)
