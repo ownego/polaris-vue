@@ -92,4 +92,3 @@ const className = computed(() => classNames(
 <style lang="scss" module>
 @import '@polaris/components/Link/Link.scss';
 </style>
-./types

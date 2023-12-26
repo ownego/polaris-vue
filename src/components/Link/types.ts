@@ -41,22 +41,22 @@ interface RouteQueryAndHash {
  * Common options for all navigation methods.
  */
 export declare interface RouteLocationOptions {
-    /**
-     * Replace the entry in the history instead of pushing a new entry
-     */
-    replace?: boolean;
-    /**
-     * Triggers the navigation even if the location is the same as the current one.
-     * Note this will also add a new entry to the history unless `replace: true`
-     * is passed.
-     */
-    force?: boolean;
-    /**
-     * State to save using the History API. This cannot contain any reactive
-     * values and some primitives like Symbols are forbidden. More info at
-     * https://developer.mozilla.org/en-US/docs/Web/API/History/state
-     */
-    state?: HistoryState;
+  /**
+   * Replace the entry in the history instead of pushing a new entry
+   */
+  replace?: boolean;
+  /**
+   * Triggers the navigation even if the location is the same as the current one.
+   * Note this will also add a new entry to the history unless `replace: true`
+   * is passed.
+   */
+  force?: boolean;
+  /**
+   * State to save using the History API. This cannot contain any reactive
+   * values and some primitives like Symbols are forbidden. More info at
+   * https://developer.mozilla.org/en-US/docs/Web/API/History/state
+   */
+  state?: HistoryState;
 }
 
 /** Route Location that can infer the necessary params based on the name. */
