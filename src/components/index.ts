@@ -9,3 +9,4 @@ export * from './Bleed';
 export * from './BlockStack';
 export * from './ShadowBevel';
 export * from './Card';
+export * from './Spinner';
