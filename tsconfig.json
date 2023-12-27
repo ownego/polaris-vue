@@ -30,13 +30,13 @@
     "allowSyntheticDefaultImports": true
   },
   "include": [
+    "docs/components/Icon/*.vue",
     "src/**/*.ts",
     "src/**/*.vue",
     "dts/*.ts"
   ],
   "exclude": [
     "node_modules",
-    "docs",
     "dist",
     "build",
   ],
