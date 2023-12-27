@@ -8,4 +8,5 @@ export * from './Bleed';
 export * from './BlockStack';
 export * from './ShadowBevel';
 export * from './Card';
+export * from './InlineGrid';
 export * from './Grid';
