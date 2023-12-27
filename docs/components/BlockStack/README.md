@@ -37,6 +37,10 @@ examples:
 
 <PropsTable />
 
+## Slots
+
+<SlotsTable />
+
 <div style="font-size: 0.8125rem">
 
 ## Best practices

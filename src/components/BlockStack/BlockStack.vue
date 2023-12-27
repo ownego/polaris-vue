@@ -18,7 +18,6 @@ import type { VueNode } from '@/utilities/types';
 import type { BlockStackProps } from './types';
 
 export type BlockStackSlots = {
-  /** Inner content of the box */
   default: (_: VueNode) => any;
 }
 
