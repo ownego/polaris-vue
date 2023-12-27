@@ -1,5 +1,6 @@
 import { defineConfig, loadEnv } from 'vite';
 import vue from '@vitejs/plugin-vue';
+import svgLoader from 'vite-svg-loader';
 import { fileURLToPath } from 'url';
 import { replaceCodePlugin } from 'vite-plugin-replace';
 import packageJson from './package.json';
@@ -12,6 +13,7 @@ export default ({ mode }) => {
   return defineConfig({
     plugins: [
       vue(),
+      svgLoader(),
       replaceCodePlugin({
         replacements: [
           {

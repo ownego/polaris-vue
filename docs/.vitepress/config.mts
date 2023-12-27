@@ -1,6 +1,7 @@
 import { defineConfig } from 'vitepress';
 import { fileURLToPath } from 'url';
 import { replaceCodePlugin } from 'vite-plugin-replace';
+import svgLoader from 'vite-svg-loader';
 
 import packageJson from '../../package.json';
 import { generateScopedName } from '../../build/namespaced-classname';
@@ -79,6 +80,7 @@ export default defineConfig({
 
   vite: {
     plugins: [
+      svgLoader(),
       replaceCodePlugin({
         replacements: [
           {
