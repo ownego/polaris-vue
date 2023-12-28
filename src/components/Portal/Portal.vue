@@ -18,8 +18,8 @@ export type PortalProps = {
   idPrefix?: string;
 }
 
-interface PortalEmits {
-  (event: 'portal-created'): void;
+type PortalEmits = {
+  'portal-created': [];
 }
 
 const props = defineProps<PortalProps>();
