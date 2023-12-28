@@ -30,7 +30,7 @@
     "allowSyntheticDefaultImports": true
   },
   "include": [
-    "docs/components/Icon/*.vue",
+    "docs/components/**/*.vue",
     "src/**/*.ts",
     "src/**/*.vue",
     "dts/*.ts"
