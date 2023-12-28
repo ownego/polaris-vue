@@ -39,6 +39,8 @@ examples:
 
 <SlotsTable />
 
+<div style="font-size: 0.8125rem">
+
 ## Best practices
 
 ### Buttons versus links
@@ -192,3 +194,5 @@ Links use browser defaults for keyboard interaction.
 
 - Give links keyboard focus with the <kbd>tab</kbd> key (or <kbd>shift</kbd> + <kbd>tab</kbd> when tabbing backwards)
 - Activate links with the <kbd>enter</kbd>/<kbd>return</kbd> key
+
+</div>
