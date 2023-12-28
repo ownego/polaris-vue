@@ -154,7 +154,7 @@ onMounted(() => {
   const currentScrollArea = scrollArea.value;
 
   if (currentScrollArea) {
-    stickyManager.value?.setContainer(currentScrollArea);
+    stickyManager.value.setContainer(currentScrollArea);
     currentScrollArea.addEventListener('scroll', handleScroll);
     globalThis.addEventListener('resize', handleResize);
   }
