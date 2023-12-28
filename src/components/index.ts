@@ -3,6 +3,7 @@ export * from './Box';
 export * from './Layout';
 export * from './Popover';
 export * from './Portal';
+export * from './Scrollable';
 export * from './Text';
 export * from './UnstyledLink';
 export * from './InlineStack';
