@@ -1,7 +1,7 @@
 <template lang="pug">
 teleport(
   v-if="container",
-  to="container",
+  :to="PORTAL_CONTAINER_ID",
 )
   div(:data-portal-id="portalId")
     slot
@@ -12,6 +12,8 @@ import { computed } from 'vue';
 import useId from '@/use/useId';
 import usePortalsManager from '@/use/usePortalsManager';
 
+const PORTAL_CONTAINER_ID = '#PolarisPortalsContainer';
+
 export type PortalProps = {
   idPrefix?: string;
 }
@@ -20,12 +22,12 @@ interface PortalEmits {
   (event: 'portal-created'): void;
 }
 
-
 const props = defineProps<PortalProps>();
 
 const emits = defineEmits<PortalEmits>();
 
-const { container } = usePortalsManager();
+// This variable to make sure that Portal is within AppProvider
+const container = usePortalsManager();
 const uniqueId = useId();
 
 const portalId =  computed(() => {
