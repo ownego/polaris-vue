@@ -8,7 +8,10 @@ teleport(
 </template>
 
 <script setup lang="ts">
-import { computed } from 'vue';
+import {
+  computed,
+  onMounted,
+} from 'vue';
 import useId from '@/use/useId';
 import usePortalsManager from '@/use/usePortalsManager';
 
@@ -34,5 +37,9 @@ const portalId =  computed(() => {
   return props.idPrefix
     ? `${props.idPrefix}-${uniqueId}`
     : uniqueId;
-})
+});
+
+onMounted(() => {
+  emits('portal-created');
+});
 </script>
