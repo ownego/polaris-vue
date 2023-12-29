@@ -12,6 +12,7 @@ import SlotsTable from './components/SlotsTable.vue';
 import EventsTable from './components/EventsTable.vue';
 import Lede from './components/Lede.vue';
 import Examples from './components/Examples.vue';
+import ListComponents from './components/ListComponents.vue'
 
 export default {
   extends: DefaultTheme,
@@ -27,5 +28,6 @@ export default {
     app.component('EventsTable', EventsTable);
     app.component('Lede', Lede);
     app.component('Examples', Examples);
+    app.component('ListComponents', ListComponents);
   }
 } satisfies Theme

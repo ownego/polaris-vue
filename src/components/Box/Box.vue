@@ -30,7 +30,7 @@ defineSlots<BoxSlots>();
 
 const styles = useCssModule();
 
-const borderStyleValue = props.borderStyle
+const borderStyleValue = computed(() => (props.borderStyle
   ? props.borderStyle
   : props.borderColor ||
     props.borderWidth ||
@@ -39,16 +39,18 @@ const borderStyleValue = props.borderStyle
     props.borderInlineStartWidth ||
     props.borderInlineEndWidth
   ? 'solid'
-  : undefined;
+  : undefined
+));
 
 // eslint-disable-next-line no-nested-ternary
-const outlineStyleValue = props.outlineStyle
+const outlineStyleValue = computed(() => (props.outlineStyle
   ? props.outlineStyle
   : props.outlineColor || props.outlineWidth
   ? 'solid'
-  : undefined;
+  : undefined
+));
 
-const style = {
+const style = computed<any>(() => ({
   '--pc-box-color': props.color ? `var(--p-color-${props.color})` : undefined,
   '--pc-box-background': props.background
     ? `var(--p-color-${props.background})`
@@ -143,7 +145,7 @@ const style = {
     : undefined,
   zIndex: props.zIndex,
   opacity: props.opacity,
-}
+}));
 
 const className = computed(() => {
   return classNames(

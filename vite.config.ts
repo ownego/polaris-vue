@@ -1,6 +1,10 @@
 import { defineConfig, loadEnv } from 'vite';
 import vue from '@vitejs/plugin-vue';
+import svgLoader from 'vite-svg-loader';
 import { fileURLToPath } from 'url';
+import { replaceCodePlugin } from 'vite-plugin-replace';
+import packageJson from './package.json';
+import { generateScopedName } from './build/namespaced-classname.js';
 
 // https://vitejs.dev/config/
 export default ({ mode }) => {
@@ -9,6 +13,15 @@ export default ({ mode }) => {
   return defineConfig({
     plugins: [
       vue(),
+      svgLoader(),
+      replaceCodePlugin({
+        replacements: [
+          {
+            from: '%POLARIS_VERSION%',
+            to: packageJson.polaris_version,
+          },
+        ],
+      }),
     ],
     resolve: {
       alias: {
@@ -21,8 +34,14 @@ export default ({ mode }) => {
       dedupe: ['vue'],
     },
     css: {
+      preprocessorOptions: {
+        scss: {
+          quietDeps: true, // Silent the deprecation warning
+        },
+      },
       modules: {
-        generateScopedName: `${env.VITE_CLASS_PREFIX}-[local]`,
+        // generateScopedName: `${env.VITE_CLASS_PREFIX}-[local]`,
+        generateScopedName,
       },
     },
     build: {

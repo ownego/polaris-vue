@@ -9,6 +9,7 @@ type ComponentContent = {
   description: string;
   bestPractices: string;
   keywords: string[];
+  previewImg: string;
 }
 
 const contentPath = './docs/assets/components-content';
@@ -31,6 +32,11 @@ function getContent(filePaths: string[]): void {
     const bestPracticesMatch = content.match(/\#\# Best practices\n\n(.*?)\n\n---/s);
     const bestPractices = bestPracticesMatch ? bestPracticesMatch[1] : '';
 
+    // Find the previewImg of component
+    const previewImgMatch = content.match(/previewImg:\s(.*?)(\n|$)/s);
+    const previewImgRootFile = previewImgMatch ? previewImgMatch[1] : '';
+    const previewImg = previewImgRootFile ? path.basename(previewImgRootFile) : '';
+
     // Find keywords in frontmatter
     const keywordsMatch = content.match(/keywords:(.*?)(<?\n)\w/s);
     const keywords = keywordsMatch
@@ -42,6 +48,15 @@ function getContent(filePaths: string[]): void {
       description,
       bestPractices,
       keywords,
+      previewImg,
+    }
+
+    // Copy image from previewImage to /images folder
+    if (previewImg) {
+      const previewImgPath = path.join('./polaris/polaris.shopify.com', 'public', previewImgRootFile);
+      const previewImgDest = path.join(contentPath, 'images', path.basename(previewImgPath));
+
+      fs.copyFileSync(previewImgPath, previewImgDest);
     }
 
     fs.writeFileSync(
@@ -59,6 +74,10 @@ export function generateDocsContent() {
 
     if (!fs.existsSync(contentDir)) {
       fs.mkdirSync(contentDir, { recursive: true });
+    }
+
+    if (!fs.existsSync(`${contentDir}/images`)) {
+      fs.mkdirSync(`${contentDir}/images`, { recursive: true });
     }
 
     getContent(paths);
