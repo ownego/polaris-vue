@@ -1,6 +1,7 @@
 export * from './AppProvider';
 export * from './Box';
 export * from './Icon';
+export * from './Link';
 export * from './Layout';
 export * from './Text';
 export * from './UnstyledLink';
@@ -9,3 +10,5 @@ export * from './Bleed';
 export * from './BlockStack';
 export * from './ShadowBevel';
 export * from './Card';
+export * from './InlineGrid';
+export * from './Grid';
