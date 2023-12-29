@@ -1,7 +1,7 @@
 <template lang="pug">
 a(
   ref="anchorNode",
-  :id="id",
+  :id="String(id)",
 )
 </template>
 
