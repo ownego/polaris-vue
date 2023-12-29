@@ -12,3 +12,4 @@ export * from './Card';
 export * from './InlineGrid';
 export * from './Grid';
 export * from './Spinner';
+export * from './Button';
