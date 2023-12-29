@@ -16,7 +16,6 @@ import {
   computed,
   onMounted,
   onBeforeUnmount,
-  defineExpose,
   provide,
 } from 'vue';
 import { scrollable } from '@polaris/components/shared';
@@ -136,12 +135,6 @@ const handleScroll = () => {
   });
 };
 
-const forNode = (node: HTMLElement): HTMLElement | Document => {
-  const closestElement = node.closest(scrollable.selector);
-  
-  return closestElement instanceof HTMLElement ? closestElement : document;
-};
-
 const handleResize = debounce(handleScroll, 50, { trailing: true });
 
 onMounted(() => {
@@ -197,8 +190,6 @@ function performScrollHint(elem?: HTMLDivElement | null) {
   elem.addEventListener('scroll', goBackToTop);
   elem.scrollTo({top: MAX_SCROLL_HINT_DISTANCE, behavior: 'smooth'});
 }
-
-defineExpose({ forNode });
 
 /**
  * AppProvider and this component both provide the stickyManager, check them if there is problem with injection
