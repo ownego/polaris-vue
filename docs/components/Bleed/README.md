@@ -39,6 +39,8 @@ examples:
 
 <SlotsTable />
 
+<div style="font-size: 0.8125rem">
+
 ## Bleed values
 
 Content should never go beyond the edges of the parent container. Choose a bleed value that works within the containing layout.
@@ -46,3 +48,5 @@ Content should never go beyond the edges of the parent container. Choose a bleed
 ## Related resources
 
 - Bleed props are named following the convention of CSS logical properties, such as 'margin-inline-start' and 'margin-block-start'. Learn more about [CSS logicial properties](https://developer.mozilla.org/en-US/docs/Web/CSS/CSS_Logical_Properties).
+
+</div>

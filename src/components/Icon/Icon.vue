@@ -1,9 +1,9 @@
 <template lang="pug">
 span(:class="className")
   Text(
-    v-if="accessibilityLabel",
     as="span",
-  )
+    visually-hidden,
+  ) {{ accessibilityLabel }}
 
   component(
     :is="source",
