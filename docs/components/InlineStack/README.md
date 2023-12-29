@@ -45,6 +45,8 @@ examples:
 
 <SlotsTable />
 
+<div style="font-size: 0.8125rem">
+
 ## Related components
 
 - To create the large-scale structure of pages, [use the InlineGrid component](https://polaris.shopify.com/components/layout-and-structure/inline-grid)
@@ -54,3 +56,4 @@ examples:
 
 - InlineStack props are named following the convention of CSS logical properties, such as `align="start"` vs. `align="left"` and `blockAlign="end"` vs. `verticalAlign="bottom"`. Learn more about [CSS logicial properties](https://developer.mozilla.org/en-US/docs/Web/CSS/CSS_Logical_Properties).
 
+</div>
