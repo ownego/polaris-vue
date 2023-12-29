@@ -1,0 +1,8 @@
+<template>
+  <Link url="https://help.shopify.com/manual" external>
+    Shopify Help Center
+  </Link> 
+</template>
+
+<script setup lang="ts">
+</script>

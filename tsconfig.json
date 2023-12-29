@@ -30,17 +30,15 @@
     "allowSyntheticDefaultImports": true
   },
   "include": [
+    "docs/components/**/*.vue",
     "src/**/*.ts",
     "src/**/*.vue",
     "dts/*.ts"
   ],
   "exclude": [
     "node_modules",
-    "docs",
     "dist",
     "build",
-    "src/Demo.vue",
-    "src/main.ts",
   ],
   "vueCompilerOptions": {
     "plugins": [
