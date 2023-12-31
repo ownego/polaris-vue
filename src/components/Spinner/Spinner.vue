@@ -52,10 +52,12 @@ const props = withDefaults(defineProps<SpinnerProps>(), {
  * }
  */
 const isAfterInitialMount = ref(false);
-const spanAttributes = ref({
-  ...(!props.hasFocusableParent && { role: 'status' }),
-});
 
+const spanAttributes = computed(() => {
+  return {
+    ...(!props.hasFocusableParent && { role: 'status' }),
+  };
+});
 const className = computed(() => {
   return classNames(
     styles.Spinner,
