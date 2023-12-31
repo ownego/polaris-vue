@@ -35,14 +35,14 @@ span(
     @click="$emit('remove')",
     @mouseup="onMouseUp",
   )
-    //- Icon(:source="CancelSmallMinor")
+    Icon(:source="CancelSmallMinor")
 </template>
 
 <script setup lang="ts">
 import { computed, useAttrs, useCssModule, useSlots } from 'vue';
 import { classNames } from '@/utilities/css';
 import { handleMouseUpByBlurring } from '@polaris/utilities/focus';
-// import CancelSmallMinor from '@icons/CancelSmallMinor.svg';
+import CancelSmallMinor from '@icons/CancelSmallMinor.svg';
 
 const attrs = useAttrs();
 const styles = useCssModule();

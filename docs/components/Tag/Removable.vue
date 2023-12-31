@@ -2,7 +2,9 @@
 <LegacyStack spacing="tight">
   <div v-for="option in selectedTags">
     <Card :key="option">
-      <Tag @remove="handleRemove(option)">{{option}}</Tag>
+      <Tag @remove="handleRemove(option)">
+        {{ option }}
+      </Tag>
     </Card>
   </div>
 </LegacyStack>

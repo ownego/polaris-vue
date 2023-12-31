@@ -10,5 +10,6 @@
 </template>
 
 <script setup lang="ts">
+import WandMinor from '@icons/WandMinor.svg';
 </script>
 
