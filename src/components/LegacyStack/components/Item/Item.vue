@@ -1,8 +1,11 @@
 <template lang="pug">
+div(:class="className")
+  slot
 </template>
 
 <script setup lang="ts">
-import { ref, computed, useCssModule } from 'vue';
+import { computed, useCssModule } from 'vue';
+import type { VueNode } from '@/utilities/types';
 import { classNames } from '@/utilities/css';
 
 export interface LegacyItemProps {
@@ -15,6 +18,11 @@ export interface LegacyItemProps {
 
 const styles = useCssModule();
 
+defineSlots<{
+  /** The content to display inside the layout. */
+  default: (_: VueNode) => any;
+}>();
+
 const props = withDefaults(defineProps<LegacyItemProps>(), {
   fill: false,
 });
@@ -22,7 +30,7 @@ const props = withDefaults(defineProps<LegacyItemProps>(), {
 const className = computed(() => {
   return classNames(
     styles.Item,
-    props.fill && styles['Item-fill'],c
+    props.fill && styles['Item-fill'],
   );
 });
 </script>
