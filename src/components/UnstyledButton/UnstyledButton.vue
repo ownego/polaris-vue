@@ -3,7 +3,7 @@ a(v-if="url && disabled", v-bind="commonProps")
   slot
 UnstyledLink(
   v-else-if="url && !disabled",
-  v-bind="interactiveProps",
+  v-bind="{ ...interactiveProps, ...$attrs }",
   :url="url",
   :external="external",
   :download="download",
@@ -14,7 +14,7 @@ UnstyledLink(
   slot
 button(
   v-else,
-  v-bind="interactiveProps",
+  v-bind="{ ...interactiveProps, ...$attrs }",
   :aria-disabled="disabled",
   :disabled="disabled",
   :type="submit ? 'submit' : 'button'",
@@ -72,7 +72,6 @@ export type UnstyledButtonProps = {
   ariaDescribedBy?: string;
   /** Indicates the current checked state of the button when acting as a toggle or switch */
   ariaChecked?: 'false' | 'true';
-  others?: Record<string, unknown>;
 }
 
 const props = defineProps<UnstyledButtonProps>();
@@ -105,7 +104,6 @@ const commonProps = computed(() => ({
 
 const interactiveProps = computed(() => ({
   ...commonProps.value,
-  ...props.others,
   role: props.role,
 }));
 
