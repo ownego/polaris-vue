@@ -81,6 +81,10 @@ Some types of props are following the [Polaris Design Tokens](https://polaris.sh
 
 <SlotsTable />
 
+## Events
+
+<EventsTable typeFile="ButtonEmits" />
+
 <div style="font-size: 0.8125rem">
 
 ## Best practices

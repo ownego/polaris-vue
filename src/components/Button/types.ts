@@ -64,15 +64,15 @@ export type ButtonEmits = {
   /** Callback when focus leaves button */
   'blur': [];
   /** Callback when a keypress event is registered on the button */
-  'keypress': [KeyboardEvent];
+  'keypress': [event: KeyboardEvent];
   /** Call back when a keyup event is registered on the button */
-  'keyup': [KeyboardEvent];
+  'keyup': [event: KeyboardEvent];
   /** Callback when a keydown event is registered on the button */
-  'keydown': [KeyboardEvent];
+  'keydown': [event: KeyboardEvent];
   /** Callback when mouse enter */
   'mouseenter': [];
   /** Callback when element is touched */
   'touchstart': [];
   /** Callback when pointerdown event is being triggered */
-  'pointerdown': [PointerEvent];
+  'pointerdown': [event: PointerEvent];
 }
