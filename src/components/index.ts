@@ -14,3 +14,4 @@ export * from './Card';
 export * from './Spinner';
 export * from './InlineGrid';
 export * from './Grid';
+export * from './TextField';
