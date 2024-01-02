@@ -64,7 +64,7 @@ const handleUrlChange = (url: string) => {
 
 const handleSubmit = () => {
   value.value = '';
-};3
+};
 
 watch(
   () => loading.value,
