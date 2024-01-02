@@ -187,7 +187,7 @@ function getEventMeta(filePath: string): ComponentEventMeta[] {
     }
 
     // Detect event name & type
-    const eventRegex = /(\w+)\s*\:\s*(.*?)[;,]*$/s;
+    const eventRegex = /['"]?(\w+)['"]?\s*\:\s*(.*?)[;,]*$/s;
     const eventMatches = lines[i].match(eventRegex);
 
     const name = eventMatches ? eventMatches[1] : '';
@@ -200,8 +200,6 @@ function getEventMeta(filePath: string): ComponentEventMeta[] {
       description,
       params: typeObj,
     };
-
-    console.log(event);
 
     events.push(event);
     i++;
