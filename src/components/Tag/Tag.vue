@@ -86,9 +86,9 @@ const tagTitle = computed(() => {
     return props.accessibilityLabel;
   }
 
-  if (slots.default && slots.default()[0].children) {
-    return slots.default()[0].children as string;
-  }
+  // if (slots.default && slots.default()[0].children) {
+  //   return slots.default()[0].children as string;
+  // }
 
   return '';
 });
