@@ -77,10 +77,6 @@ Some types of props are following the [Polaris Design Tokens](https://polaris.sh
 
 <PropsTable />
 
-## Events
-
-<EventsTable />
-
 ## Slots
 
 <SlotsTable />

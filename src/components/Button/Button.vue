@@ -34,7 +34,7 @@ UnstyledButton(
         :class="disclosureClassName",
       )
         Icon(
-          :source="loading ? 'placeholder' : getDisclosureIconSource(disclosure, ChevronUpMinor, ChevronDownMinor)"
+          :source="disclosureIconSource"
         )
 </template>
 
@@ -42,7 +42,7 @@ UnstyledButton(
 import { computed, useCssModule, useSlots, useAttrs } from 'vue';
 import { capitalize } from '@polaris/utilities/capitalize';
 import { classNames, variationName } from '@/utilities/css';
-import type { IconSource, VueNode } from '@/utilities/types';
+import type { VueNode } from '@/utilities/types';
 import useI18n from '@/use/useI18n';
 import type { ButtonProps, ButtonEmits } from './types';
 import { Spinner, Icon } from '@/components';
@@ -58,8 +58,6 @@ defineSlots<{
   /** The content to display inside the button */
   default: (_: VueNode) => any;
 }>();
-
-defineEmits<ButtonEmits>();
 
 const styles = useCssModule();
 const slots = useSlots();
@@ -136,18 +134,17 @@ const actionProps = computed(() => {
   };
 });
 
-function getDisclosureIconSource(
-  disclosure: NonNullable<ButtonProps['disclosure']>,
-  upIcon: IconSource,
-  downIcon: IconSource,
-) {
-  if (disclosure === 'select') {
+const disclosureIconSource = computed(() => {
+  if (props.loading) {
+    return 'placeholder';
+  }
+
+  if (props.disclosure === 'select') {
     return SelectMinor;
   }
 
-  return disclosure === 'up' ? upIcon : downIcon;
-}
-
+  return props.disclosure === 'up' ? ChevronUpMinor : ChevronDownMinor;
+})
 </script>
 
 <style lang="scss" module>
