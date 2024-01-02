@@ -11,18 +11,18 @@ UnstyledButton(
     )
       Spinner(
         size="small"
-        :accessibility-label="i18n.translate('Polaris.spinnerAccessibilityLabel')"
+        :accessibility-label="i18n.translate('Polaris.Button.spinnerAccessibilityLabel')"
       )
     span(
       v-if="icon",
-      :class="classNames(styles.Icon, loading && styles.hidden)",
+      :class="iconClassName",
     )
       Icon(
         :source="loading ? 'placeholder' : icon",
       )
     span(
       v-if="hasChildren",
-      :class="classNames(styles.Text, removeUnderline && styles.removeUnderline)",
+      :class="textClassName",
       :key="disabled ? 'text-disabled' : 'text'"
     )
       slot
@@ -31,7 +31,7 @@ UnstyledButton(
       :class="styles.Icon",
     )
       div(
-        :class="classNames(styles.DisclosureIcon, loading && styles.hidden)",
+        :class="disclosureClassName",
       )
         Icon(
           :source="loading ? 'placeholder' : getDisclosureIconSource(disclosure, ChevronUpMinor, ChevronDownMinor)"
@@ -44,7 +44,7 @@ import { capitalize } from '@polaris/utilities/capitalize';
 import { classNames, variationName } from '@/utilities/css';
 import type { IconSource, VueNode } from '@/utilities/types';
 import useI18n from '@/use/useI18n';
-import type { ButtonProps } from './types';
+import type { ButtonProps, ButtonEmits } from './types';
 import { Spinner, Icon } from '@/components';
 import { UnstyledButton } from '../UnstyledButton';
 import SelectMinor from '@icons/SelectMinor.svg';
@@ -58,6 +58,8 @@ defineSlots<{
   /** The content to display inside the button */
   default: (_: VueNode) => any;
 }>();
+
+defineEmits<ButtonEmits>();
 
 const styles = useCssModule();
 const slots = useSlots();
@@ -83,7 +85,6 @@ const listeners = computed(() => {
 
 const hasChildren = computed(() => !!slots.default);
 const isDisabled = computed(() => props.disabled || props.loading);
-
 const className = computed(() => classNames(
   styles.Button,
   props.fullWidth && styles.fullWidth,
@@ -97,7 +98,9 @@ const className = computed(() => classNames(
   props.tone && styles[variationName('tone', props.tone)],
   props.variant && styles[variationName('variant', props.variant)],
 ));
-
+const iconClassName = computed(() => classNames(styles.Icon, props.loading && styles.hidden));
+const textClassName = computed(() => classNames(styles.Text, props.removeUnderline && styles.removeUnderline));
+const disclosureClassName = computed(() => classNames(styles.DisclosureIcon, props.loading && styles.hidden));
 const commonProps = computed(() => {
   const { id, accessibilityLabel, ariaDescribedBy, role } = props;
 
@@ -110,7 +113,6 @@ const commonProps = computed(() => {
     'data-primary-link': props.dataPrimaryLink,
   };
 });
-
 const linkProps = computed(() => {
   const { external, url, download } = props;
 
@@ -120,7 +122,6 @@ const linkProps = computed(() => {
     download,
   };
 });
-
 const actionProps = computed(() => {
   const { submit, loading, ariaChecked, ariaControls, ariaExpanded, pressed } = props;
 

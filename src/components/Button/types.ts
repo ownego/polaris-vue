@@ -55,3 +55,24 @@ export interface ButtonProps {
   /** Changes the visual appearance of the Button. */
   variant?: 'plain' | 'primary' | 'tertiary' | 'monochromePlain';
 }
+
+export type ButtonEmits = {
+  /** Callback when clicked */
+  'click': [];
+  /** Callback when button becomes focussed */
+  'focus': [];
+  /** Callback when focus leaves button */
+  'blur': [];
+  /** Callback when a keypress event is registered on the button */
+  'keypress': [KeyboardEvent];
+  /** Call back when a keyup event is registered on the button */
+  'keyup': [KeyboardEvent];
+  /** Callback when a keydown event is registered on the button */
+  'keydown': [KeyboardEvent];
+  /** Callback when mouse enter */
+  'mouseenter': [];
+  /** Callback when element is touched */
+  'touchstart': [];
+  /** Callback when pointerdown event is being triggered */
+  'pointerdown': [PointerEvent];
+}
