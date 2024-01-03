@@ -90,19 +90,13 @@ Avoid using the icon beside link text
 
 If the existing link styles don’t meet the needs of your project, then use the `UnstyledLink` component to create a custom link style.
 
----
-
 ## Content guidelines
 
 The link component should follow the content guidelines for [links](https://polaris.shopify.com/content/actionable-language#links).
 
----
-
 ## Related components
 
 - For actions that don’t appear within or directly following a sentence, use the [button component](https://polaris.shopify.com/components/actions/button)
-
----
 
 ## Accessibility
 
