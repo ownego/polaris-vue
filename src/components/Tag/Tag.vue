@@ -39,14 +39,19 @@ span(
 </template>
 
 <script setup lang="ts">
-import { computed, useAttrs, useCssModule, useSlots } from 'vue';
+import { computed, useAttrs, useCssModule } from 'vue';
 import { classNames } from '@/utilities/css';
+import type { VueNode } from '@/utilities/types';
 import { handleMouseUpByBlurring } from '@polaris/utilities/focus';
 import CancelSmallMinor from '@icons/CancelSmallMinor.svg';
 
 const attrs = useAttrs();
 const styles = useCssModule();
-const slots = useSlots();
+
+const slots = defineSlots<{
+  /** Elements to display inside the tag1 */
+  default: (_: VueNode) => any;
+}>()
 
 export type TagProps = {
   /** Disables the tag  */
@@ -86,9 +91,9 @@ const tagTitle = computed(() => {
     return props.accessibilityLabel;
   }
 
-  // if (slots.default && slots.default()[0].children) {
-  //   return slots.default()[0].children as string;
-  // }
+  if (slots.default && slots.default()[0].children) {
+    return slots.default()[0].children as string;
+  }
 
   return '';
 });

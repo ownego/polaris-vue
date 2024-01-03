@@ -47,6 +47,10 @@ Some types of props are following the [Polaris Design Tokens](https://polaris.sh
 
 <PropsTable />
 
+## Slots
+
+<SlotsTable />
+
 <div style="font-size: 0.8125rem">
 
 ## Best practices
