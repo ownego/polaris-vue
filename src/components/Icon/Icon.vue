@@ -8,14 +8,14 @@ span(:class="className")
   component(
     :is="source",
     v-if="sourceType === 'function'",
-    :class="className",
+    :class="styles.Svg",
     :focusable="false",
     :aria-hidden="true",
   )
 
   div(
     v-if="sourceType === 'placeholder'",
-    :class="styles.placeholder",
+    :class="styles.Placeholder",
   )
 
   img(
@@ -64,6 +64,7 @@ const sourceType = computed<Source>(() => {
 const className = computed(() => classNames(
   styles.Icon,
   props.tone && styles[variationName('tone', props.tone)],
+  props.tone && styles.applyColor,
 ))
 
 if (

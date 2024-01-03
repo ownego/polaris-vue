@@ -13,6 +13,7 @@ import EventsTable from './components/EventsTable.vue';
 import Lede from './components/Lede.vue';
 import Examples from './components/Examples.vue';
 import ListComponents from './components/ListComponents.vue'
+import DoDont from './components/DoDont.vue'
 
 export default {
   extends: DefaultTheme,
@@ -29,5 +30,6 @@ export default {
     app.component('Lede', Lede);
     app.component('Examples', Examples);
     app.component('ListComponents', ListComponents);
+    app.component('DoDont', DoDont);
   }
 } satisfies Theme
