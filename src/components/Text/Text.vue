@@ -13,6 +13,7 @@ import { classNames } from '@/utilities/css';
 import type { VueNode } from '@/utilities/types';
 import type {
   Alignment,
+  Element,
   Tone,
   FontWeight,
   Variant,
