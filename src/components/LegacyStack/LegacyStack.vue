@@ -44,7 +44,6 @@ type Distribution =
   | 'fillEvenly';
 
 export interface LegacyStackProps {
-  /** Elements to display inside stack */
   /** Wrap stack elements to additional rows as needed on small screens (Defaults to true) */
   wrap?: boolean;
   /** Stack the elements vertically */
@@ -90,8 +89,6 @@ const className = computed(() => {
     );
   }
 );
-
-console.log(slotsElms.value);
 </script>
 
 <style lang="scss" module>
