@@ -4,6 +4,7 @@ export * from './Icon';
 export * from './Link';
 export * from './Layout';
 export * from './Portal';
+export * from './Scrollable';
 export * from './Text';
 export * from './UnstyledLink';
 export * from './InlineStack';
