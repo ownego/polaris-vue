@@ -9,7 +9,12 @@ div(
   )
     LegacyStackItem
       component(:is="item")
-  slot(v-else)
+  template(
+    v-else-if="slotsElms.length > 1",
+    v-for="(item, index) in slotsElms",
+  )
+    LegacyStackItem
+      component(:is="item")
 </template>
 
 <script setup lang="ts">
@@ -51,11 +56,6 @@ export interface LegacyStackProps {
   /** Adjust horizontal alignment of elements */
   distribution?: Distribution;
 }
-
-// defineSlots<{
-//   /** Elements to display inside stack */
-//   default: (_: VueNode) => any;
-// }>();
 
 const styles = useCssModule();
 const slots = defineSlots<{
