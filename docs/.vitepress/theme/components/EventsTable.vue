@@ -78,7 +78,6 @@ onMounted(async () => {
   const events = await fetchTypes(props.typeFile);
 
   metaEvents.value = events.members.map((e) => {
-    console.log(convertStringToObject(e.value));
     return {
       name: e.name.replace(/["']/g, ''),
       description: e.description,
