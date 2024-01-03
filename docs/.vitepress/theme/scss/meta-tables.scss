@@ -95,12 +95,18 @@
   }
 
   .dpt__types {
+    font-family: var(--font-family-mono);
+
     span:not(.dpt__type) {
       display: inline-block;
       margin: 0 0.5rem;
       font-weight: 500;
       font-size: 0.7rem;
     }
+  }
+
+  .dpt-type-name {
+    color: var(--text);
   }
 
   .dpt__tag {
