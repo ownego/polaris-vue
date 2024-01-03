@@ -41,7 +41,6 @@ export function useMeta() {
       let tmpSchema = schema;
 
       if (tmpSchema.startsWith('ComponentOptions')) {
-        console.log(tmpSchema);
         tmpSchema = 'Component';
       }
 
