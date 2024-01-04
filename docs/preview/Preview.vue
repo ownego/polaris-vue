@@ -20,7 +20,25 @@ const exampleComponent = defineAsyncComponent(() =>
 const wrappedComponent = () => {
   return h(
     AppProvider,
-    { i18n: {} },
+    { i18n: {
+        Polaris: {
+          ResourceList: {
+            sortingLabel: 'Sort by',
+            defaultItemSingular: 'item',
+            defaultItemPlural: 'items',
+            showing: 'Showing {itemsCount} {resource}',
+            Item: {
+              viewItem: 'View details for {itemName}',
+            },
+          },
+          Common: {
+            checkbox: 'checkbox',
+          },
+          Button: {
+            spinnerAccessibilityLabel: 'Loading',
+          },
+        },
+      }},
     {
       default: () => h(exampleComponent),
     }
