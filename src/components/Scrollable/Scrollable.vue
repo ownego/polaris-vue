@@ -49,9 +49,9 @@ export type ScrollableProps = {
   focusable?: boolean;
 }
 
-type Emits = {
+export type ScrollableEmits = {
   /** Called when scrolled to the bottom of the scroll area */
-  'scrolled-to-bottom': [];
+  scrolledToBottom: [];
 }
 
 export interface ScrollToOptions {
@@ -78,7 +78,7 @@ const props = withDefaults(defineProps<ScrollableProps>(), {
 
 const textSlots = defineSlots<ScrollableSlot>();
 
-const emits = defineEmits<Emits>();
+const emits = defineEmits<ScrollableEmits>();
 
 const topShadow = ref<boolean>(false);
 const bottomShadow = ref<boolean>(false);
@@ -130,7 +130,7 @@ const handleScroll = () => {
     setBottomShadow(!isAtBottomOfScroll);
 
     if (canScroll && isAtBottomOfScroll) {
-      emits('scrolled-to-bottom')
+      emits('scrolledToBottom')
     }
   });
 };
@@ -162,7 +162,7 @@ onBeforeUnmount(() => {
   }
 });
 
-function prefersReducedMotion() {
+const prefersReducedMotion = () =>{
   try {
     return window.matchMedia('(prefers-reduced-motion: reduce)').matches;
   } catch (err) {
@@ -170,7 +170,7 @@ function prefersReducedMotion() {
   }
 }
 
-function performScrollHint(elem?: HTMLDivElement | null) {
+const performScrollHint = (elem?: HTMLDivElement | null) => {
   if (!elem || prefersReducedMotion()) {
     return;
   }
