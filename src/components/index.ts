@@ -13,6 +13,7 @@ export * from './Layout';
 export * from './Link';
 export * from './Portal';
 export * from './PositionedOverlay';
+export * from './Scrollable';
 export * from './ShadowBevel';
 export * from './Spinner';
 export * from './Text';
