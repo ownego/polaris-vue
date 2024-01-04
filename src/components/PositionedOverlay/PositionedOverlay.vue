@@ -332,5 +332,5 @@ function handleMeasurement() {
 </script>
 
 <style lang="scss" module>
-@import '@polaris/components/PositionedOverlay/PositionOverlay.scss';
+@import '@polaris/components/PositionedOverlay/PositionedOverlay.scss';
 </style>
