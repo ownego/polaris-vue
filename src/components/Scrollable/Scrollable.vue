@@ -162,7 +162,7 @@ onBeforeUnmount(() => {
   }
 });
 
-function prefersReducedMotion() {
+const prefersReducedMotion = () =>{
   try {
     return window.matchMedia('(prefers-reduced-motion: reduce)').matches;
   } catch (err) {
@@ -170,7 +170,7 @@ function prefersReducedMotion() {
   }
 }
 
-function performScrollHint(elem?: HTMLDivElement | null) {
+const performScrollHint = (elem?: HTMLDivElement | null) => {
   if (!elem || prefersReducedMotion()) {
     return;
   }
