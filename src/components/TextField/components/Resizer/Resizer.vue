@@ -6,18 +6,18 @@ div(
   div(
     ref="contentNode",
     :class="styles.DummyInput",
-    v-html="getFinalContents(contents)"
+    v-html="finalContents",
   )
   div(
     v-if="minimumLines",
     ref="minimumLinesNode",
     :class="styles.DummyInput",
-    v-html="getContentsForMinimumLines(minimumLines)"
+    v-html="contentsForMinimumLines",
   )
 </template>
 
 <script setup lang="ts">
-import { ref, useCssModule } from 'vue';
+import { computed, onMounted, ref, useCssModule } from 'vue';
 import { useEventListener } from '@/utilities/use-event-listener';
 
 export type ResizerProps = {
@@ -37,22 +37,59 @@ const emits = defineEmits<ResizerEvents>();
 
 const styles = useCssModule();
 
-useEventListener('resize', handleHeightCheck);
-
 const contentNode = ref<HTMLDivElement | null>(null);
 const minimumLinesNode = ref<HTMLDivElement | null>(null);
 const animationFrame = ref<number>();
 const currentHeight = ref<number | null>(props.currentHeight ?? null);
 
 if (props.currentHeight !== currentHeight.value) {
-  currentHeight.value = props.currentHeight;
+  currentHeight.value = props.currentHeight || null;
 }
 
-
-const getFinalContents = (contents?: string) => {
-  return contents
-    ? `${contents.replace(REPLACE_REGEX, replaceEntity)}<br>`
+const finalContents = computed(() => {
+  return props.contents
+    ? `${props.contents.replace(REPLACE_REGEX, replaceEntity)}<br>`
     : '<br>';
+});
+
+const contentsForMinimumLines = computed(() => {
+  if (!props.minimumLines) return '';
+  let content = '';
+
+  for (let line = 0; line < props.minimumLines; line++) {
+    content += '<br>';
+  }
+
+  return content;
+});
+
+onMounted(() => {
+  useEventListener('resize', handleHeightCheck);
+
+  if (animationFrame.value) {
+    cancelAnimationFrame(animationFrame.value);
+  }
+});
+
+const handleHeightCheck = () => {
+  if (animationFrame.value) {
+    cancelAnimationFrame(animationFrame.value);
+  }
+
+  animationFrame.value = requestAnimationFrame(() => {
+    if (!contentNode.value || !minimumLinesNode.value) {
+      return;
+    }
+
+    const newHeight = Math.max(
+      contentNode.value.offsetHeight,
+      minimumLinesNode.value.offsetHeight,
+    );
+
+    if (newHeight !== currentHeight.value) {
+      emits('height-change', newHeight);
+    }
+  });
 };
 
 const ENTITIES_TO_REPLACE = {
@@ -68,18 +105,8 @@ const REPLACE_REGEX = new RegExp(
   'g',
 );
 
-function replaceEntity(entity: keyof typeof ENTITIES_TO_REPLACE) {
-  return ENTITIES_TO_REPLACE[entity];
-}
-
-function getContentsForMinimumLines(minimumLines: number) {
-  let content = '';
-
-  for (let line = 0; line < minimumLines; line++) {
-    content += '<br>';
-  }
-
-  return content;
+function replaceEntity(entity: string) {
+  return ENTITIES_TO_REPLACE[entity as keyof typeof ENTITIES_TO_REPLACE];
 }
 </script>
 
