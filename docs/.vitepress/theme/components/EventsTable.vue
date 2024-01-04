@@ -1,10 +1,10 @@
 <template lang="pug">
 .docs-props-table
-  .docs-props-table__wrapper(v-if="metaEvents")
+  .docs-props-table__wrapper(v-if="metaEvents || cEvents")
     .docs-props-table__table
       .docs-props-table__th {{ component }} events
       .docs-props-table__row(
-        v-for="p in metaEvents",
+        v-for="p in (typeFile ? metaEvents : cEvents)",
         :key="p.name",
       )
         dt
@@ -71,6 +71,7 @@ const noMetaContent = computed(() => {
 
 onMounted(async () => {
   if (!props.typeFile) {
+    console.log(cEvents.value);
     metaEvents.value = cEvents.value;
     return;
   }

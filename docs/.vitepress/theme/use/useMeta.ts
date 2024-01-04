@@ -38,8 +38,22 @@ export function useMeta() {
 
   const serializeSchema = (schema: PropertyMetaSchema): string[] => {
     if (typeof schema === 'string') { // string
-      return schema.split('|').map(s => s.trim()).filter((t) => t !== 'undefined');
+      let tmpSchema = schema;
+
+      if (tmpSchema.startsWith('ComponentOptions')) {
+        tmpSchema = 'Component';
+      }
+
+      if (
+        tmpSchema.startsWith('FunctionalComponent')
+        || tmpSchema.startsWith('ComponentPublicInstanceConstructor')
+      ) {
+        tmpSchema = '';
+      }
+
+      return tmpSchema.split('|').map(s => s.trim()).filter((t) => t && t !== 'undefined');
     }
+
     const types = schema.type.split('|').map(s => s.trim()).filter((t) => t !== 'undefined');
 
     if (types.length === 1) {
