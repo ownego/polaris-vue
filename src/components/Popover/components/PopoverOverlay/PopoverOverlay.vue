@@ -6,6 +6,7 @@ import { useCssModule } from 'vue';
 import { themeDefault } from '@shopify/polaris-tokens';
 import { classNames } from '@/utilities/css';
 import { findFirstKeyboardFocusableNode } from '@/utilities/focus';
+import { EventListener, PositionedOverlay } from '@/components';
 
 const styles = useCssModule();
 </script>
