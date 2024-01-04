@@ -32,13 +32,14 @@ examples:
 
 <PropsTable />
 
-## Events
-
-<EventsTable />
 
 ## Slots
 
 <SlotsTable />
+
+## Events
+
+<EventsTable />
 
 <div style="font-size: 0.8125rem">
 
