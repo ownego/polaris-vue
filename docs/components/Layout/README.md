@@ -71,7 +71,7 @@ The content that appears in the layout component comes from cards and annotated 
 
 ### Cards
 
-Content from cards should follow the content guidelines for [cards](components/Card#content-guidelines).
+Content from cards should follow the content guidelines for [cards](/components/Card#content-guidelines).
 
 ### Annotated section titles
 

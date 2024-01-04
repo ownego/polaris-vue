@@ -177,6 +177,26 @@ h1, h2, h3, h4, h5, h6, p {
   font-size: inherit;
 }
 
+.vp-doc {
+  h3 {
+    font-size: var(--font-size-600);
+  }
+
+  h4 {
+    font-size: var(--font-size-400);
+  }
+
+  div[style*="font-size:0.8125rem"] {
+    p {
+      line-height: 24px;
+    }
+
+    h3 {
+      margin-bottom: 1.5rem;
+    }
+  }
+}
+
 html:not(.example-preview) {
   background-color: var(--vp-c-bg);
 }
