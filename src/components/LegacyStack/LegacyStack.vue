@@ -3,18 +3,18 @@ div(
   :class="className",
 )
   template(
-    v-if="slotsElms.length && slotsElms[0].children",
-    v-for="(item, index) in slotsElms[0].children",
-    :key="index",
+    v-if="hasSlot(slots.default) && slotsElms.length && slotsElms[0]?.children",
+    v-for="item in slotsElms[0]?.children",
   )
     LegacyStackItem
       component(:is="item")
   template(
-    v-else-if="slotsElms.length > 1",
-    v-for="(item, index) in slotsElms",
+    v-else-if="hasSlot(slots.default) && slotsElms.length > 1",
+    v-for="item in slotsElms",
   )
     LegacyStackItem
       component(:is="item")
+  slot(v-else)
 </template>
 
 <script setup lang="ts">
@@ -23,6 +23,7 @@ import type { VNodeArrayChildren } from 'vue';
 import { classNames, variationName } from '@/utilities/css';
 import type { VueNode } from '@/utilities/types';
 import { extractElement } from '@/utilities/extract-fragment';
+import { hasSlot } from '@/utilities/has-slot';
 import LegacyStackItem from './components/Item/Item.vue';
 
 type Spacing =
@@ -92,5 +93,5 @@ const className = computed(() => {
 </script>
 
 <style lang="scss" module>
-@import '@polaris/components/LegacyStack/LegacyStack.scss'
+@import '@polaris/components/LegacyStack/LegacyStack.scss';
 </style>
