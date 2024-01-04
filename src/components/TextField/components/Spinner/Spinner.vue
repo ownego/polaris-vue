@@ -1,8 +1,8 @@
 <template lang="pug">
 div(
   :class="styles.Spinner",
+  aria-hidden,
   @click="onClick",
-  aria-hidden="",
 )
   div(
     role="button",
@@ -29,7 +29,7 @@ div(
 </template>
 
 <script setup lang="ts">
-import { ref, useCssModule } from 'vue';
+import { useCssModule } from 'vue';
 import { Icon } from '@/components';
 import ChevronDownMinor from '@icons/ChevronDownMinor.svg';
 import ChevronUpMinor from '@icons/ChevronUpMinor.svg';
@@ -37,7 +37,7 @@ import ChevronUpMinor from '@icons/ChevronUpMinor.svg';
 type HandleStepFn = (step: number) => void;
 
 type SpinnerEvents = {
-  'change': [fn: HandleStepFn];
+  'change': [step: number];
   'click': [e: Event];
   'mousedown': [fn: HandleStepFn];
   'mouseup': [];
