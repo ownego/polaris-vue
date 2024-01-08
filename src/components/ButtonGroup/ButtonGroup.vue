@@ -14,7 +14,7 @@ div(
 </template>
 
 <script setup lang="ts">
-import { onMounted, computed, useCssModule, type VNode } from 'vue';
+import { computed, useCssModule, type VNode } from 'vue';
 import type { VNodeArrayChildren } from 'vue';
 import { classNames, variationName } from '@/utilities/css';
 import { extractElement } from '@/utilities/extract-fragment';
