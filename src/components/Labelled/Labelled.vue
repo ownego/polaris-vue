@@ -2,14 +2,48 @@
 div(:class="className")
   //- labelMarkup
   div(
-    v-if="slot.label"
+    v-if="hasSlot(slots.label)"
+    :class="styles.LabelWrapper",
   )
+    Label(
+      :id="id",
+      :required-indicator="requiredIndicator",
+      :hidden="false",
+      v-bind="rest",
+    )
+      slot(name="label")
+  //- Children
+  slot
+  //- errorMarkup
+  div(
+    v-if="error && (typeof error !== 'boolean')",
+    :class="styles.Error",
+  )
+    InlineError(
+      :message="error",
+      :field-id="id",
+    )
+  //- helpTextMarkup
+  div(
+    v-if="hasSlot(slots.helpText)",
+    :class="styles.HelpText",
+    :id="helpTextID(id)",
+    :aria-disabled="disabled",
+  )
+    Text(
+      break-word,
+      as="span",
+      tone="subdued",
+    )
+      slot(name="helpText")
 </template>
 
 <script setup lang="ts">
 import { computed, useCssModule, useAttrs } from 'vue';
 import { classNames } from '@/utilities/css';
-import type { Action, VueNode } from '@/utilities/types';
+import { hasSlot } from '@/utilities/has-slot';
+import type { Action, VueNode, Error } from '@/utilities/types';
+import { Label, InlineError, Text } from '@/components';
 import type { LabelProps } from '@/components/Label/Label.vue';
 
 interface LabelledProps {
@@ -60,10 +94,6 @@ const className = computed(() => {
     props.readOnly && styles.readOnly,
   )
 });
-
-function errorID(id: string) {
-  return `${id}Error`;
-}
 
 function helpTextID(id: string) {
   return `${id}HelpText`;

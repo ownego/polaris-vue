@@ -15,3 +15,6 @@ export * from './InlineGrid';
 export * from './Grid';
 export * from './Spinner';
 export * from './Button';
+export * from './Label';
+export * from './Labelled';
+export * from './InlineError';

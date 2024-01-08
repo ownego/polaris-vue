@@ -2,7 +2,7 @@
 div(
   v-if="message",
   :class="styles.InlineError",
-  :id="errorTextId(fieldID)",
+  :id="errorTextId(fieldId)",
 )
   div(:class="styles.Icon")
     Icon(
@@ -14,13 +14,14 @@ div(
 <script setup lang="ts">
 import { useCssModule } from 'vue';
 import { Icon } from '@/components';
+import type { Error } from '@/utilities/types';
 import CircleAlertMajor from '@icons/CircleAlertMajor.svg';
 
 interface InlineErrorProps {
   /** Content briefly explaining how to resolve the invalid form field input. */
-  message: string;
+  message: Error;
   /** Unique identifier of the invalid form field that the message describes */
-  fieldID: string;
+  fieldId: string;
 }
 
 const styles = useCssModule();

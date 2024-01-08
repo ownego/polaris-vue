@@ -59,3 +59,5 @@ export interface Action {
   /** Callback when element is touched */
   onTouchStart?(): void;
 }
+
+export type Error = string | Element | (string | Element)[];
