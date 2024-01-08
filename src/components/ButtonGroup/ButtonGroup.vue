@@ -9,7 +9,7 @@ div(
   Item(
     v-for="item, index in slots.default()",
     :key="index",
-    :button-prop="item",
+    :button-elm="item",
   )
 </template>
 

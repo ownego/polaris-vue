@@ -4,7 +4,7 @@ div(
   @focus="forceTrueFocused",
   @blur="forceFalseFocused",
 )
-  component(:is="buttonProp")
+  component(:is="buttonElm")
 </template>
 
 <script setup lang="ts">
@@ -12,7 +12,7 @@ import { ref, computed, useCssModule } from 'vue';
 import { classNames } from '@/utilities/css';
 
 interface ItemProps {
-  buttonProp: Element | any;
+  buttonElm: Element | any;
 }
 
 const styles = useCssModule();
@@ -32,7 +32,7 @@ const forceFalseFocused = () => {
 const className = computed(() => classNames(
   styles.Item,
   focusValue.value && styles['Item-focused'],
-  props.buttonProp.props?.variant === 'plain' && styles['Item-plain'],
+  props.buttonElm.props?.variant === 'plain' && styles['Item-plain'],
 ));
 </script>
 
