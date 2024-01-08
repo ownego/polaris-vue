@@ -85,8 +85,7 @@ import {
 } from '@/components';
 import { classNames } from '@/utilities/css';
 import { hasSlot } from '@/utilities/has-slot';
-import type { VueNode } from '@/utilities/types';
-import type { ComplexAction } from '../Button/types';
+import type { VueNode, ComplexAction } from '@/utilities/types';
 
 interface EmptyStateProps {
   /** The empty state heading */
