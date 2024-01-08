@@ -12,7 +12,7 @@ img(
 import { computed } from 'vue';
 
 interface SourceSet {
-  source: string;
+  source?: string;
   descriptor?: string;
 }
 
