@@ -14,7 +14,7 @@ div(
 </template>
 
 <script setup lang="ts">
-import { computed, useCssModule } from 'vue';
+import { onMounted, computed, useCssModule, type VNode } from 'vue';
 import type { VNodeArrayChildren } from 'vue';
 import { classNames, variationName } from '@/utilities/css';
 import { extractElement } from '@/utilities/extract-fragment';
@@ -28,7 +28,7 @@ const props = defineProps<ButtonGroupProps>();
 
 const slots = defineSlots<{
   /** Button components */
-  default: (_: VueNode) => any;
+  default: (_?: VueNode) => any;
 }>();
 
 const className = computed(() => classNames(
@@ -39,12 +39,10 @@ const className = computed(() => classNames(
   props.noWrap && styles.noWrap,
 ));
 
-console.log(1, variationName('variant', props.variant as string));
-
 const itemMarkup = computed(() => {
   let elms : VNodeArrayChildren = [];
   if (slots.default) {
-    const groups = slots.default().map(group => {
+    const groups = slots.default().map((group: VNode) => {
       return extractElement(group);
     });
     elms = groups.flat();
