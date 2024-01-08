@@ -22,6 +22,7 @@ import {
   onMounted,
   onUpdated,
   onUnmounted,
+  defineExpose,
 } from 'vue';
 import { classNames } from '@/utilities/css';
 import { getRectForNode, Rect } from '@/utilities/geometry';
@@ -221,7 +222,6 @@ const unregisterScrollHandlers = () => {
   });
 };
 
-// Don't know if this method is needed
 const forceUpdatePosition = () => {
   // Wait a single animation frame before re-measuring.
   // Consumer's may also need to setup their own timers for
@@ -329,6 +329,10 @@ function handleMeasurement() {
   observer.value.observe(overlay.value, OBSERVER_CONFIG);
   observer.value.observe(activator, OBSERVER_CONFIG);
 }
+
+defineExpose({
+  forceUpdatePosition,
+});
 </script>
 
 <style lang="scss" module>

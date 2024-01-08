@@ -9,6 +9,7 @@ export * from './Grid';
 export * from './Icon';
 export * from './InlineGrid';
 export * from './InlineStack';
+export * from './KeypressListener';
 export * from './Layout';
 export * from './Link';
 export * from './Portal';
