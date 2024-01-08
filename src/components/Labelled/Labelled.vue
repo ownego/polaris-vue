@@ -1,10 +1,15 @@
 <template lang="pug">
+div(:class="className")
+  //- labelMarkup
+  div(
+    v-if="slot.label"
+  )
 </template>
 
 <script setup lang="ts">
-import { computed, useCssModule } from 'vue';
+import { computed, useCssModule, useAttrs } from 'vue';
 import { classNames } from '@/utilities/css';
-import type { Action } from '@/utilities/types';
+import type { Action, VueNode } from '@/utilities/types';
 import type { LabelProps } from '@/components/Label/Label.vue';
 
 interface LabelledProps {
@@ -14,7 +19,7 @@ interface LabelledProps {
   error?: Error | boolean;
   /** An action */
   action?: Action;
-  /** Visually hide the label */
+  /** Additional hint text to display */
   labelHidden?: boolean;
   /** Visual required indicator for the label */
   requiredIndicator?: boolean;
@@ -25,8 +30,28 @@ interface LabelledProps {
 }
 
 const styles = useCssModule();
+const attrs = useAttrs();
 
 const props = defineProps<LabelledProps>();
+const slots = defineSlots<{
+  /** Text for the label */
+  label: (_?: VueNode) => any;
+  /** Label content */
+  default: (_?: VueNode) => any;
+  /** Hint text to display */
+  helpText: (_?: VueNode) => any;
+}>();
+
+const {
+  id,
+  error,
+  action,
+  labelHidden,
+  requiredIndicator,
+  disabled,
+  readOnly,
+  ...rest
+}: any = attrs
 
 const className = computed(() => {
   return classNames(
@@ -35,6 +60,14 @@ const className = computed(() => {
     props.readOnly && styles.readOnly,
   )
 });
+
+function errorID(id: string) {
+  return `${id}Error`;
+}
+
+function helpTextID(id: string) {
+  return `${id}HelpText`;
+}
 </script>
 
 <style module lang="scss">
