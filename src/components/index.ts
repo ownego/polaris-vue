@@ -16,3 +16,4 @@ export * from './Grid';
 export * from './Spinner';
 export * from './Button';
 export * from './Image';
+export * from './EmptyState';
