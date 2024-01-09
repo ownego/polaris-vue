@@ -17,3 +17,4 @@ export * from './Grid';
 export * from './LegacyStack';
 export * from './Spinner';
 export * from './Button';
+export * from './ButtonGroup';

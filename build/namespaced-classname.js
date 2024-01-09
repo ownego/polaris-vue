@@ -6,12 +6,17 @@ const SUBCOMPONENT_VARIATION_SELECTOR = /^\w+-\w+$/;
 const NESTED_COMPONENT_PATH_REGEX = /.*\/components\/(.*)\/components/;
 
 export function generateScopedName(name, filename) {
-  const componentName = basename(filename, '.scss').replace(/\.vue.*/, '');
+  let componentName = basename(filename, '.scss').replace(/\.vue.*/, '');
   const nestedComponentMatch = NESTED_COMPONENT_PATH_REGEX.exec(filename);
+
+  // Avoid module for nested components
+  if (nestedComponentMatch) {
+    componentName = nestedComponentMatch[1];
+  }
 
   const polarisComponentName =
     nestedComponentMatch && nestedComponentMatch.length > 1
-      ? `${polarisClassName(nestedComponentMatch[1])}-${componentName}`
+      ? `${polarisClassName(nestedComponentMatch[1])}`
       : polarisClassName(componentName);
 
   let className;
@@ -19,8 +24,8 @@ export function generateScopedName(name, filename) {
   if (isComponent(name)) {
     className =
       componentName === name
-        ? polarisComponentName
-        : subcomponentClassName(polarisComponentName, name);
+      ? polarisComponentName
+      : subcomponentClassName(polarisComponentName, name);
   } else if (SUBCOMPONENT_VARIATION_SELECTOR.test(name)) {
     const [subcomponent, variation] = name.split('-');
     const subcomponentName = subcomponentClassName(
