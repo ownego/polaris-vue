@@ -49,8 +49,8 @@ const attrs = useAttrs();
 const styles = useCssModule();
 
 const slots = defineSlots<{
-  /** Elements to display inside the tag1 */
-  default: (_: VueNode) => any;
+  /** Elements to display inside the tag*/
+  default: (_?: VueNode) => any;
 }>()
 
 export type TagProps = {
