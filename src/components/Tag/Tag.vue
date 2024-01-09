@@ -32,7 +32,7 @@ span(
     :aria-label="ariaLabel",
     :class="classRemove",
     :disabled="disabled",
-    @click="$emit('remove')",
+    @click="emits('remove')",
     @mouseup="onMouseUp",
   )
     Icon(:source="CancelSmallMinor")
@@ -65,6 +65,10 @@ export type TagProps = {
 const props = withDefaults(defineProps<TagProps>(), {
   disabled: false,
 });
+
+const emits = defineEmits<{
+  'remove': [];
+}>();
 
 // Computed
 const hasEventClick = computed(() => Boolean(attrs['onClick']));

@@ -3,13 +3,7 @@ div(
   :class="className",
 )
   template(
-    v-if="hasSlot(slots.default) && slotsElms.length && slotsElms[0]?.children",
-    v-for="item in slotsElms[0]?.children",
-  )
-    LegacyStackItem
-      component(:is="item")
-  template(
-    v-else-if="hasSlot(slots.default) && slotsElms.length > 1",
+    v-if="hasSlot(slots.default) && slotsElms.length > 1",
     v-for="item in slotsElms",
   )
     LegacyStackItem
@@ -19,11 +13,10 @@ div(
 
 <script setup lang="ts">
 import { computed, useCssModule } from 'vue';
-import type { VNodeArrayChildren } from 'vue';
+import { useHasSlot } from '@/use/useHasSlot';
+import { useExtractFragment } from '@/use/useExtractFragment';
 import { classNames, variationName } from '@/utilities/css';
 import type { VueNode } from '@/utilities/types';
-import { extractElement } from '@/utilities/extract-fragment';
-import { hasSlot } from '@/utilities/has-slot';
 import LegacyStackItem from './components/Item/Item.vue';
 
 type Spacing =
@@ -57,26 +50,19 @@ export interface LegacyStackProps {
   distribution?: Distribution;
 }
 
-const styles = useCssModule();
 const slots = defineSlots<{
   /** Elements to display inside stack */
   default: (_: VueNode) => any;
 }>()
 
+const styles = useCssModule();
+const { hasSlot } = useHasSlot();
+const { slotsElms } = useExtractFragment(slots.default);
+
+// console.log(slotsElms.value);
+
 const props = withDefaults(defineProps<LegacyStackProps>(), {
   wrap: true,
-});
-
-const slotsElms = computed(() => {
-  let elms : VNodeArrayChildren = [];
-  if (slots.default) {
-    const groups = slots.default().map(group => {
-      return extractElement(group);
-    });
-    elms = groups.flat();
-  }
-
-  return elms;
 });
 
 const className = computed(() => {
