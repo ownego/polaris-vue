@@ -17,3 +17,6 @@ export * from './TextField';
 export * from './Spinner';
 export * from './Button';
 export * from './ButtonGroup';
+export * from './Label';
+export * from './Labelled';
+export * from './InlineError';

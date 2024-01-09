@@ -38,3 +38,26 @@ export interface BaseButton {
   /** Indicates the current checked state of the button when acting as a toggle or switch */
   ariaChecked?: 'false' | 'true';
 }
+
+export interface Action {
+  /** A unique identifier for the action */
+  id?: string;
+  /** Content the action displays */
+  content?: string;
+  /** Visually hidden text for screen readers */
+  accessibilityLabel?: string;
+  /** A destination to link to, rendered in the action */
+  url?: string;
+  /** Forces url to open in a new tab */
+  external?: boolean;
+  /** Where to display the url */
+  target?: Target;
+  /** Callback when an action takes place */
+  onAction?(): void;
+  /** Callback when mouse enter */
+  onMouseEnter?(): void;
+  /** Callback when element is touched */
+  onTouchStart?(): void;
+}
+
+export type Error = string | Element | (string | Element)[];
