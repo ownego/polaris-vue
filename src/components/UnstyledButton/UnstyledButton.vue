@@ -98,7 +98,6 @@ const {
   ...rest
 }: any = attrs;
 
-
 const getEventList = (events: string[]) => {
   const eventBindings: Record<string, any> = { mouseup: handleMouseUpByBlurring };
 

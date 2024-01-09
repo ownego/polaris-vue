@@ -16,3 +16,4 @@ export * from './Grid';
 export * from './TextField';
 export * from './Spinner';
 export * from './Button';
+export * from './ButtonGroup';
