@@ -20,3 +20,5 @@ export * from './ButtonGroup';
 export * from './Label';
 export * from './Labelled';
 export * from './InlineError';
+export * from './Image';
+export * from './EmptyState';

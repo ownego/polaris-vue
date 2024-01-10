@@ -9,6 +9,7 @@
       ) {{ example.title }}
 
   .docs-examples-description(
+    v-if="examples[selectedExampleIndex].description",
     v-html="md.render(examples[selectedExampleIndex].description)",
   )
   //- Iframe to show example

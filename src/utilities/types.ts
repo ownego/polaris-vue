@@ -163,3 +163,42 @@ export enum Key {
   CloseBracket = 221,
   SingleQuote = 222,
 }
+
+export interface DisableableAction extends Action {
+  /** Whether or not the action is disabled */
+  disabled?: boolean;
+}
+
+export interface DestructableAction extends Action {
+  /** Destructive action */
+  destructive?: boolean;
+}
+
+export interface IconableAction extends Action {
+  /** Source of the icon */
+  icon?: IconSource;
+}
+
+export interface LoadableAction extends Action {
+  /** Should a spinner be displayed */
+  loading?: boolean;
+}
+
+export interface OutlineableAction extends Action {
+  /** Should action be displayed as an outlined button */
+  outline?: boolean;
+}
+
+export interface PlainAction extends Action {
+  /** Should action be displayed as a plain link */
+  plain?: boolean;
+}
+
+export interface ComplexAction
+  extends Action,
+    DisableableAction,
+    DestructableAction,
+    IconableAction,
+    OutlineableAction,
+    LoadableAction,
+    PlainAction {}
