@@ -1,12 +1,14 @@
-<template lang="pug">
-
+<template>
+<TextField
+  type="email"
+  label="Email"
+  v-model="value"
+  autoComplete="email"
+/>
 </template>
 
 <script setup lang="ts">
 import { ref } from 'vue';
 
-interface Props {
-}
-
-const props = defineProps<Props>();
+const value = ref('contact@qikify.com');
 </script>

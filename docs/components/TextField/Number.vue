@@ -1,12 +1,14 @@
-<template lang="pug">
-
+<template>
+<TextField
+  type="number"
+  label="Quantity"
+  v-model="value"
+  autoComplete="off"
+/>
 </template>
 
 <script setup lang="ts">
 import { ref } from 'vue';
 
-interface Props {
-}
-
-const props = defineProps<Props>();
+const value = ref('1');
 </script>

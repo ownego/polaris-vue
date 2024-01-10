@@ -4,21 +4,27 @@ title: Text field
 category: Selection and input
 examples:
   - fileName: Default.vue
+    frameHeight: 250
     title: Default
     description: Use to allow merchants to provide text input when the expected input is short. For longer input, use the auto grow or multiline options.
   - fileName: Number.vue
+    frameHeight: 250
     title: Number
     description: Use when input text should be a number.
   - fileName: Email.vue
+    frameHeight: 250
     title: Email
     description: Use when the text input should be an email address.
   - fileName: Multiline.vue
+    frameHeight: 280
     title: Multiline
     description: Use when the expected input could be more than one line. The field will automatically grow to accommodate additional text.
   - fileName: HiddenLabel.vue
+    frameHeight: 280
     title: With hidden label
     description: Use to visually hide the label when the text field’s purpose is clear from context. The label will remain available to screen readers. Use this option with care. In almost all cases, show the label.
   - fileName: LabelAction.vue
+    frameHeight: 250
     title: With label action
     description: Use when an optional, secondary action is closely associated with a text field. For example, on a field for entering a customs tariff code, a label action might be to look up the appropriate code from a table.
   - fileName: RightAlignText.vue
@@ -87,6 +93,10 @@ examples:
 
 <SlotsTable />
 
+## Events
+
+<EventsTable typeFile="TextFieldEvents" />
+
 <div style="font-size: 0.8125rem">
 
 
@@ -140,7 +150,7 @@ Chrome does seem to turn autocomplete off when using the value nope (or any non 
 
 ### Virtual keyboard
 
-![Examples of different number keyboards set with inputMode](/images/components/selection-and-input/text-field/virtual-keyboards.png)
+![Examples of different number keyboards set with inputMode](https://polaris.shopify.com/images/components/selection-and-input/text-field/virtual-keyboards.png)
 
 The `inputMode` property should be set to select the appropriate virtual keyboard for the type of data expected to be entered by the user. Above are examples of different number keyboards set with `inputMode`.
 

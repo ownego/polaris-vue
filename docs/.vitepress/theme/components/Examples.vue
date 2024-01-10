@@ -30,19 +30,28 @@
 
 <script setup lang="ts">
 import { computed, ref, onMounted, useSlots } from 'vue';
-import { useData } from 'vitepress';
+import { useData, useRouter } from 'vitepress';
 import MarkdownIt from 'markdown-it';
 
 const slots = useSlots();
 
 const md = new MarkdownIt();
 const { frontmatter, page } = useData();
+const { route } = useRouter();
 
 const isLoadingFrame = ref(true);
 const selectedExampleIndex = ref(0);
 const iframeRef = ref<HTMLIFrameElement | null>(null);
 
 const examples = frontmatter.value.examples;
+const pageSlug = page.value.title.replace(/\s+/g, '-').toLowerCase();
+
+const examplesSlugs = computed(() => {
+  return examples.map((example) => {
+    const name = example.title.replace(/\s+/g, '-').toLowerCase();
+    return `${pageSlug}-${name}`;
+  });
+});
 
 const selectedExample = computed(() => {
   return examples[selectedExampleIndex.value];
@@ -75,6 +84,19 @@ const switchExample = (index: number) => {
     return;
   }
 
+  // Change url
+  const example = examplesSlugs.value[index];
+  const q = queryStringParse(window.location.search);
+  q.example = example;
+
+  Object.keys(q).forEach((key) => {
+    if (!q[key]) {
+      delete q[key];
+    }
+  });
+
+  history.pushState(null, '', `${route.path}?${new URLSearchParams(q).toString()}`);
+
   selectedExampleIndex.value = index;
   isLoadingFrame.value = true;
 };
@@ -101,9 +123,29 @@ const iframeLoaded = () => {
   }, 500);
 };
 
+// Initialize example query param
+const { example } = queryStringParse(window.location.search);
+if (example) {
+  const index = examplesSlugs.value.indexOf(example);
+
+  if (index !== -1) {
+    selectedExampleIndex.value = index;
+  }
+}
+
 onMounted(() => {
   fixIframeEvent();
 });
+
+function queryStringParse(queryString: string) {
+  const query: any = {};
+  const pairs = (queryString[0] === '?' ? queryString.substr(1) : queryString).split('&');
+  for (let i = 0; i < pairs.length; i++) {
+    const pair = pairs[i].split('=');
+    query[decodeURIComponent(pair[0])] = decodeURIComponent(pair[1] || '');
+  }
+  return query;
+}
 </script>
 
 <style lang="scss">

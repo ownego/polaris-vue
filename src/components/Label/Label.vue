@@ -14,6 +14,7 @@ div(
 import { computed, useCssModule } from 'vue';
 import { classNames } from '@/utilities/css';
 import type { VueNode } from '@/utilities/types';
+import { labelId } from './utils';
 
 export type LabelProps = {
   /** A unique identifier for the label */
@@ -42,10 +43,6 @@ const requiredIndicator = computed(() => classNames(
   styles.Text,
   props.requiredIndicator && styles.requiredIndicator,
 ));
-
-function labelId(id: string): string {
-  return `${id}Label`;
-}
 </script>
 
 <style lang="scss" module>

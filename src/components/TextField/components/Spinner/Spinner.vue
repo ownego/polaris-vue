@@ -1,5 +1,6 @@
 <template lang="pug">
 div(
+  ref="spinnerRef",
   :class="styles.Spinner",
   aria-hidden,
   @click="onClick",
@@ -9,7 +10,7 @@ div(
     :class="styles.Segment",
     tabindex="-1",
     @click="handleStep(1)",
-    @mousedown="handleMouseDown(handleStep(1))",
+    @mousedown="handleMouseDown($event, 1)",
     @mouseup="onMouseUp",
     @blur="onBlur",
   )
@@ -20,7 +21,7 @@ div(
     :class="styles.Segment",
     tabindex="-1",
     @click="handleStep(-1)",
-    @mousedown="handleMouseDown(handleStep(-1))",
+    @mousedown="handleMouseDown($event, -1)",
     @mouseup="onMouseUp",
     @blur="onBlur",
   )
@@ -29,17 +30,15 @@ div(
 </template>
 
 <script setup lang="ts">
-import { useCssModule } from 'vue';
+import { ref, useCssModule } from 'vue';
 import { Icon } from '@/components';
 import ChevronDownMinor from '@icons/ChevronDownMinor.svg';
 import ChevronUpMinor from '@icons/ChevronUpMinor.svg';
 
-type HandleStepFn = (step: number) => void;
-
-type SpinnerEvents = {
+export type SpinnerEvents = {
   'change': [step: number];
   'click': [e: Event];
-  'mousedown': [fn: HandleStepFn];
+  'mousedown': [step: number];
   'mouseup': [];
   'blur': [e: FocusEvent];
 }
@@ -48,18 +47,15 @@ const emits = defineEmits<SpinnerEvents>();
 
 const styles = useCssModule();
 
+const spinnerRef = ref<HTMLDivElement | null>(null);
+
 const handleStep = (step: number) => {
-  return () => {
-    emits('change', step);
-  };
+  emits('change', step);
 };
 
-const handleMouseDown = (onChange: HandleStepFn) => {
-  return (e: MouseEvent) => {
-    if (e.button !== 0) return;
-
-    emits('mousedown', onChange);
-  };
+const handleMouseDown = (e: MouseEvent, step: number) => {
+  if (e.button !== 0) return;
+  emits('mousedown', step);
 };
 
 const onClick = (e: MouseEvent) => {
@@ -73,6 +69,11 @@ const onMouseUp = () => {
 const onBlur = (e: FocusEvent) => {
   emits('blur', e);
 };
+
+defineExpose({
+  spinnerWrapperRef: spinnerRef,
+  handleStep,
+});
 </script>
 
 <style lang="scss" module>

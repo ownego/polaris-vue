@@ -1,3 +1,5 @@
+import type { LabelledProps } from '../Labelled/types';
+import type { Error, VueNode } from '@/utilities/types';
 
 type Type =
   | 'text'
@@ -32,19 +34,15 @@ interface SelectSuggestion {
 }
 
 interface SelectTextOnFocus {
-  selectTextOnFocus?: true;
+  selectTextOnFocus?: boolean;
 }
 
 interface Readonly {
-  readonly?: true;
+  readonly?: boolean;
 }
 
 interface Disabled {
-  disabled?: true;
-}
-
-interface Interactive {
-  onChange(value: string, id: string): void;
+  disabled?: boolean;
 }
 
 interface NonMutuallyExclusiveProps {
@@ -56,12 +54,10 @@ interface NonMutuallyExclusiveProps {
   verticalContent?: string;
   /** Hint text to display */
   placeholder?: string;
-  /** Initial value for the input */
-  value?: string;
   /** Additional hint text to display */
-  helpText?: React.ReactNode;
+  helpText?: string;
   /** Label for the input */
-  label: React.ReactNode;
+  label?: string;
   /** Adds an action to the label */
   labelAction?: LabelledProps['action'];
   /** Visually hide the label */
@@ -84,10 +80,6 @@ interface NonMutuallyExclusiveProps {
   multiline?: boolean | number;
   /** Error to display beneath the label */
   error?: Error | boolean;
-  /** An element connected to the right of the input */
-  connectedRight?: React.ReactNode;
-  /** An element connected to the left of the input */
-  connectedLeft?: React.ReactNode;
   /** Determine type of input */
   type?: Type;
   /** Name of the input */
@@ -140,26 +132,39 @@ interface NonMutuallyExclusiveProps {
    * @default 'inherit'
    */
   variant?: 'inherit' | 'borderless';
-  /** Callback fired when clear button is clicked */
-  onClearButtonClick?(id: string): void;
-  /** Callback fired when value is changed */
-  onChange?(value: string, id: string): void;
-  /** When provided, callback fired instead of onChange when value is changed via the number step control  */
-  onSpinnerChange?(value: string, id: string): void;
-  /** Callback fired when input is focused */
-  onFocus?: (event?: React.FocusEvent) => void;
-  /** Callback fired when input is blurred */
-  onBlur?(event?: React.FocusEvent): void;
   /** Indicates the tone of the text field */
   tone?: 'magic';
 }
+
+export type TextFieldSlots = {
+  /** Additional hint text to display */
+  helpText?: (_?: VueNode) => null;
+  /** Label for the input */
+  label?: (_?: VueNode) => null;
+  /** An element connected to the right of the input */
+  connectedRight?: (_?: VueNode) => null;
+  /** An element connected to the left of the input */
+  connectedLeft?: (_?: VueNode) => null;
+};
+
+export type TextFieldEvents = {
+  /** Callback fired when clear button is clicked */
+  'clear-button-click': [id: string];
+  /** Callback fired when value is changed */
+  'change': [value: string, id: string];
+  /** When provided, callback fired instead of onChange when value is changed via the number step control  */
+  'spinner-change': [value: string, id: string];
+  /** Callback fired when input is focused */
+  'focus': [event: FocusEvent];
+  /** Callback fired when input is blurred */
+  'blur': [event: FocusEvent];
+};
 
 export type MutuallyExclusiveSelectionProps =
   | SelectSuggestion
   | SelectTextOnFocus;
 
 export type MutuallyExclusiveInteractionProps =
-  | Interactive
   | Readonly
   | Disabled;
 

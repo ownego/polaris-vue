@@ -1,12 +1,14 @@
-<template lang="pug">
-
+<template>
+<TextField
+  label="Shipping address"
+  v-model="value"
+  :multiline="4"
+  autoComplete="off"
+/>
 </template>
 
 <script setup lang="ts">
 import { ref } from 'vue';
 
-interface Props {
-}
-
-const props = defineProps<Props>();
+const value = ref('1776 Barnes Street\nOrlando, FL 32801');
 </script>
