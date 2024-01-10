@@ -90,7 +90,7 @@ const accessibilityLabel = computed(() => {
 const progressIconMap = computed<any>(() => {
   return {
     complete: CompleteSvg,
-    partially: PartiallySvg,
+    partiallyComplete: PartiallySvg,
     incomplete: IncompleteSvg,
   }
 });

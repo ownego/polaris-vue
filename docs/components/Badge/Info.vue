@@ -1,6 +1,6 @@
 <template>
 <Card>
-  <Badge tone="info" progress="complete">Draft</Badge>
+  <Badge tone="info">Draft</Badge>
 </Card>
 </template>
 
