@@ -8,7 +8,7 @@ div(
     event="resize",
     :handler="handleMeasurement",
   )
-  slot(:overlay-details="overlayDetails")
+  slot(v-bind="overlayDetails")
 </template>
 
 <script setup lang="ts">
@@ -143,7 +143,7 @@ const firstScrollableContainer = computed<HTMLElement | Document | null>(() => {
   return scrollableContainers.value[0] ?? null;
 });
 
-const overlayDetails = (): OverlayDetails => {
+const overlayDetails = computed<OverlayDetails>(() => {
   const {
     measuring,
     left,
@@ -163,7 +163,7 @@ const overlayDetails = (): OverlayDetails => {
     activatorRect,
     chevronOffset,
   };
-};
+});
 
 onMounted(() => {
   setScrollableContainers();

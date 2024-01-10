@@ -7,15 +7,21 @@ import {
   ref,
   reactive,
   computed,
+  watch,
   onMounted,
-  onUpdated,
   onBeforeUnmount,
 } from 'vue';
 import { themeDefault } from '@shopify/polaris-tokens';
 import { overlay } from '@polaris/components/shared';
 import { classNames } from '@/utilities/css';
+import { usePortalsManager } from '@/use/usePortalsManager';
 import { findFirstKeyboardFocusableNode } from '@/utilities/focus';
 import { isElementOfType, wrapWithComponent } from '@/utilities/component';
+import {
+  nodeContainsDescendant,
+  wasContentNodeDescendant,
+  wasPolarisPortalDescendant,
+} from './utilities';
 
 import {
   EventListener,
@@ -68,9 +74,17 @@ interface State {
   transitionStatus: TransitionStatus;
 }
 
+type Emit = {
+  close: [event: PopoverCloseSource];
+}
+
 const styles = useCssModule();
 
+const context = usePortalsManager();
+
 const props = defineProps<PopoverOverlayProps>();
+
+const emits = defineEmits<Emit>();
 
 const state = reactive<State>({
   transitionStatus: props.active
@@ -82,11 +96,40 @@ const contentNode = ref<HTMLElement | null>(null);
 const enteringTimer = ref<number | undefined>(undefined);
 const overlayRef = ref<HTMLElement | null>(null);
 
-const className = computed(() => {
-    styles.PopoverOverlay,
-    state.transitionStatus === TransitionStatus.Entering && styles['PopoverOverlay-entering'],
-    state.transitionStatus === TransitionStatus.Entered && styles['PopoverOverlay-open'],
-    state.transitionStatus === TransitionStatus.Exiting && styles['PopoverOverlay-exiting']
+watch(
+  () => props.active,
+  (newVal, oldVal) => {
+    if (newVal && !oldVal) {
+      focusContent();
+      changeTransitionStatus(TransitionStatus.Entering, () => {
+        clearTransitionTimeout();
+
+        enteringTimer.value = window.setTimeout(() => {
+          state.transitionStatus = TransitionStatus.Entered;
+          // Important: This will not update when the active theme changes.
+          // Update this to `useTheme` once converted to a function component.
+        }, parseInt(themeDefault.motion['motion-duration-100'], 10));
+      })
+    }
+
+    if (!newVal && oldVal) {
+      clearTransitionTimeout();
+
+      state.transitionStatus = TransitionStatus.Exited;
+    }
+  }
+);
+
+onMounted(() => {
+  if (props.active) {
+    focusContent();
+    
+    changeTransitionStatus(TransitionStatus.Entered);
+  }
+});
+
+onBeforeUnmount(() => {
+  clearTransitionTimeout();
 });
 
 const changeTransitionStatus = (transitionStatus: TransitionStatus, callback?: () => void) => {
@@ -117,34 +160,63 @@ function focusContent() {
 
     const focusableChild = findFirstKeyboardFocusableNode(contentNode.value);
 
+    // TODO: check if env variables is using correctly
     if (focusableChild && autofocusTarget === 'first-node') {
       focusableChild.focus({
-        preventScroll: import.meta.env.MODE === 'development',
-      });
+        preventScroll: process.env.NODE_ENV === 'development',
+      })!;
     } else {
       contentNode.value.focus({
-        preventScroll: import.meta.env.MODE === 'development',
+        preventScroll: process.env.NODE_ENV === 'development',
       });
     }
   });
 }
 
-function renderPopover(overlayDetails) {
-  const { measuring, desiredHeight, positioning } = overlayDetails;
+function handleClick(event: Event) {
+  const target = event.target as HTMLElement;
+  const tmpContentNode = contentNode.value;
+  const { activator, preventCloseOnChildOverlayClick } = props;
+  const composedPath = event.composedPath();
+  const wasDescendant = preventCloseOnChildOverlayClick
+    ? wasContentNodeDescendant(composedPath, target)
+    : nodeContainsDescendant(composedPath, tmpContentNode);
+  const isActivatorDescendant = nodeContainsDescendant(activator, target);
 
-  const {
-    id,
-    children,
-    sectioned,
-    fullWidth,
-    fullHeight,
-    fluidContent,
-    hideOnPrint,
-    autofocusTarget,
-    captureOverscroll,
-  } = props;
+  if (
+    wasDescendant
+    || isActivatorDescendant
+    || state.transitionStatus !== TransitionStatus.Entered
+  ) {
+    return;
+  }
 
-  
+  emits('close', PopoverCloseSource.Click);
+}
+
+function handleScrollOut() {
+  emits('close', PopoverCloseSource.ScrollOut);
+}
+
+function handleEscape(event: Event) {
+  const target = event.target as HTMLElement;
+  const tmpContentNode = contentNode.value;
+  const activator = props;
+  const composedPath = event.composedPath();
+  const wasDescendant = wasContentNodeDescendant(composedPath, tmpContentNode);
+  const isActivatorDescendant = nodeContainsDescendant(activator, target);
+
+  if (wasDescendant || isActivatorDescendant) {
+    emits('close', PopoverCloseSource.EscapeKeypress);
+  }
+}
+
+function handleFocusFirstItem() {
+  emits('close', PopoverCloseSource.FocusOut);
+}
+
+function handleFocusLastItem() {
+  emits('close', PopoverCloseSource.FocusOut);
 }
 </script>
 

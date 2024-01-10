@@ -1,1 +1,1 @@
-export { default as KeypressListener } from 'KeypressListener.vue';
+export { default as KeypressListener } from './KeypressListener.vue';
