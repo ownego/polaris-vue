@@ -1,4 +1,30 @@
 <template lang="pug">
+span(:class="className")
+  span(
+    v-if="progress && !icon",
+    :class="styles.Icon",
+  )
+    Icon(
+      :source="progressIconMap[progress]",
+      :accessibility-label="accessibilityLabel",
+    )
+  Text(
+    v-if="Boolean(accessibilityLabel)",
+    as="span",
+    visually-hidden,
+  ) {{ accessibilityLabel }}
+  span(
+    v-if="icon",
+    :class="styles.Icon",
+  )
+    Icon(:source="icon")
+  Text(
+    v-if="hasSlot(slots.default)",
+    as="span",
+    variant="bodySm",
+    :font-weight="tone === 'new' ? 'medium' : undefined",
+  )
+    slot
 </template>
 
 <script setup lang="ts">
@@ -6,6 +32,7 @@ import { computed, inject, useCssModule } from 'vue';
 import { Text, Icon } from '@/components';
 import { classNames, variationName } from '@/utilities/css';
 import { getDefaultAccessibilityLabel } from './utils';
+import { useHasSlot } from '@/use/useHasSlot';
 import type { Tone, Progress, Size } from './types';
 import type { IconSource, VueNode } from '@/utilities/types';
 import CompleteSvg from '@/assets/Badge/complete.svg';
@@ -14,8 +41,6 @@ import IncompleteSvg from '@/assets/Badge/incomplete.svg'
 
 const DEFAULT_SIZE: Size = 'medium';
 interface NonMutuallyExclusiveProps {
-  /** The content to display inside the badge. */
-  children?: string;
   /** Colors and labels the badge with the given tone. */
   tone?: Tone;
   /** Render a pip showing the progress of a given task. */
@@ -37,11 +62,13 @@ export type BadgeProps = NonMutuallyExclusiveProps &
   );
 
 const styles = useCssModule();
+const { hasSlot } = useHasSlot();
 
 const props = withDefaults(defineProps<BadgeProps>(), {
   size: DEFAULT_SIZE,
 });
-defineSlots<{
+const slots = defineSlots<{
+  /** The content to display inside the badge. */
   default: (_: VueNode) => any;
 }>();
 
@@ -60,7 +87,7 @@ const accessibilityLabel = computed(() => {
     ? props.toneAndProgressLabelOverride
     : getDefaultAccessibilityLabel(props.progress, props.tone);
 });
-const progressIconMap = computed(() => {
+const progressIconMap = computed<any>(() => {
   return {
     complete: CompleteSvg,
     partially: PartiallySvg,
