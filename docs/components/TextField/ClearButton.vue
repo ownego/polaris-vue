@@ -1,12 +1,19 @@
-<template lang="pug">
-
+<template>
+<TextField
+  label="Store name"
+  v-model="textFieldValue"
+  clear-button
+  @clear-button-click="handleClearButtonClick"
+  autoComplete="off"
+/>
 </template>
 
 <script setup lang="ts">
 import { ref } from 'vue';
 
-interface Props {
-}
+const textFieldValue = ref('Ownego');
 
-const props = defineProps<Props>();
+const handleClearButtonClick = () => {
+  textFieldValue.value = '';
+};
 </script>

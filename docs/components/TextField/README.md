@@ -28,45 +28,59 @@ examples:
     title: With label action
     description: Use when an optional, secondary action is closely associated with a text field. For example, on a field for entering a customs tariff code, a label action might be to look up the appropriate code from a table.
   - fileName: RightAlignText.vue
+    frameHeight: 250
     title: With right aligned text
     description: Use when input text should be aligned right.
   - fileName: PlaceholderText.vue
+    frameHeight: 250
     title: With placeholder text
     description: Use to provide a short, non-essential hint about the expected input. Placeholder text is low-contrast, so don’t rely on it for important information.
   - fileName: HelpText.vue
+    frameHeight: 250
     title: With help text
     description: Use to show short instructional content below the text field. Help text works to help merchants understand how to fix errors that result from incorrect formatting (such as dates or passwords with specific character requirements). If more explanation is needed, link to the Shopify Help Center.
   - fileName: PrefixSuffix.vue
+    frameHeight: 250
     title: With prefix or suffix
     description: Use as a special form of help text that works best inline. Use a prefix for things like currency symbols (“\$”, “¥”, “£”). Use suffix for things like units of measure (“in”, “cm”).
   - fileName: VerticalContent.vue
+    frameHeight: 250
     title: With vertical content
     description: Use to include custom vertical content above the input value, like selected tags.
   - fileName: ConnectedFields.vue
+    frameHeight: 250
     title: With connected fields
     description: Use when a text field and several related fields make up a logical unit. If inputting weight as a number and a separate unit of measurement, use a text field with a [select dropdown menu](https://polaris.shopify.com/components/select) (for example “kg”, “lb”) as a connected field.
   - fileName: ValidationError.vue
+    frameHeight: 250
     title: With validation error
     description: Use to let merchants know if their input is valid or if there’s an error. Whenever possible, validate input as soon as merchants have finished interacting with a field (but not before). If a field already has an error, validate and remove errors as merchants type so they can immediately see when an error has been fixed.
   - fileName: SeparateValidationError.vue
+    frameHeight: 250
     title: With separate validation error
     description: Use to let merchants know when their text field input is invalid in the context of a group of form inputs that the text field depends on.
   - fileName: Disabled.vue
+    frameHeight: 250
     title: Disabled
     description: Use to show that a textfield is not available for interaction. Most often used in forms when information is required only in a particular state. For example, the text field next to Other in a choice list when Other is not selected.
   - fileName: CharacterCount.vue
+    frameHeight: 250
     title: With character count
     description: Use to display the current number of characters in a text field. Use in conjunction with max length to display the current remaining number of characters in the text field.
   - fileName: ClearButton.vue
+    frameHeight: 250
     title: With clear button
     description: Use to allow merchants to clear the content from a text field.
   - fileName: MonospacedFont.vue
+    frameHeight: 250
     title: With monospaced font
     description: Use to apply a monospaced font to the TextField
   - fileName: ValueSelectedOnFocus.vue
+    frameHeight: 250
     title: With value selected on focus
     description: Use to select all text inside TextField on focus.
   - fileName: InlineSuggestion.vue
+    frameHeight: 250
     title: With inline suggestion
     description: Use to provide an autocomplete suggestion inline with the input value. See the combobox component's tag multi-select example for full implementation of the inline autocomplete pattern.
 ---

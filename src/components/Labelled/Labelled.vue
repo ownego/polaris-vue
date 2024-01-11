@@ -18,7 +18,10 @@ div(:class="className")
       v-if="action"
       :class="styles.Action",
     )
-
+      ButtonFrom(
+        :action="action",
+        :overrides="{ variant: 'plain' }",
+      )
   //- Children
   slot
   //- errorMarkup
@@ -50,7 +53,7 @@ import { computed, useCssModule } from 'vue';
 import { classNames } from '@/utilities/css';
 import { hasSlot } from '@/utilities/has-slot';
 import type { VueNode } from '@/utilities/types';
-import { Label, InlineError, Text } from '@/components';
+import { Label, InlineError, Text, ButtonFrom } from '@/components';
 import type { LabelledProps } from './types';
 import { helpTextID } from './utils';
 

@@ -87,16 +87,10 @@ const switchExample = (index: number) => {
 
   // Change url
   const example = examplesSlugs.value[index];
-  const q = queryStringParse(window.location.search);
-  q.example = example;
+  const q = new URLSearchParams(window.location.search);
+  q.set('example', example);
 
-  Object.keys(q).forEach((key) => {
-    if (!q[key]) {
-      delete q[key];
-    }
-  });
-
-  history.pushState(null, '', `${route.path}?${new URLSearchParams(q).toString()}`);
+  history.pushState(null, '', `${route.path}?${q.toString()}`);
 
   selectedExampleIndex.value = index;
   isLoadingFrame.value = true;
@@ -125,7 +119,9 @@ const iframeLoaded = () => {
 };
 
 // Initialize example query param
-const { example } = queryStringParse(window.location.search);
+const urlQuery = new URLSearchParams(window.location.search);
+const example = urlQuery.get('example');
+
 if (example) {
   const index = examplesSlugs.value.indexOf(example);
 
@@ -137,16 +133,6 @@ if (example) {
 onMounted(() => {
   fixIframeEvent();
 });
-
-function queryStringParse(queryString: string) {
-  const query: any = {};
-  const pairs = (queryString[0] === '?' ? queryString.substr(1) : queryString).split('&');
-  for (let i = 0; i < pairs.length; i++) {
-    const pair = pairs[i].split('=');
-    query[decodeURIComponent(pair[0])] = decodeURIComponent(pair[1] || '');
-  }
-  return query;
-}
 </script>
 
 <style lang="scss">

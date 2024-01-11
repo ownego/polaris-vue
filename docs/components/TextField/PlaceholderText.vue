@@ -1,12 +1,14 @@
-<template lang="pug">
-
+<template>
+<TextField
+  label="Shipping zone name"
+  v-model="textFieldValue"
+  placeholder="Example: North America, Europe"
+  autoComplete="off"
+/>
 </template>
 
 <script setup lang="ts">
 import { ref } from 'vue';
 
-interface Props {
-}
-
-const props = defineProps<Props>();
+const textFieldValue = ref('');
 </script>

@@ -1,12 +1,14 @@
-<template lang="pug">
-
+<template>
+<TextField
+  label="Store name"
+  v-model="textFieldValue"
+  select-text-on-focus
+  autoComplete="off"
+/>
 </template>
 
 <script setup lang="ts">
 import { ref } from 'vue';
 
-interface Props {
-}
-
-const props = defineProps<Props>();
+const textFieldValue = ref('Qikify');
 </script>

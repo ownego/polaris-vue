@@ -24,29 +24,34 @@ Labelled(
       ref="textFieldRef",
     )
       div(
-        v-if="prefix",
+        v-if="slots.prefix || prefix",
         :class="styles.Prefix",
         :id="`${id}-Prefix`",
         ref="prefixRef",
-      ) {{ prefix }}
+      )
+        slot(v-if="slots.prefix", name="prefix")
+        template(v-else) {{ prefix }}
 
       div(
-        v-if="verticalContent",
+        v-if="slots.verticalContent || verticalContent",
         :class="styles.VerticalContent",
         :id="`${id}-VerticalContent`",
         ref="verticalContentRef",
         @click="handleClickChild",
       )
-        | {{ verticalContent }}
+        slot(v-if="slots.verticalContent", name="verticalContent")
+        template(v-else) {{ verticalContent }}
         component(:is="input")
       component(v-else, :is="input")
 
       div(
-        v-if="suffix",
+        v-if="slots.suffix || suffix",
         :class="styles.Suffix",
         :id="`${id}-Suffix`",
         ref="suffixRef",
-      ) {{ suffix }}
+      )
+        slot(v-if="slots.suffix", name="suffix")
+        template(v-else) {{ suffix }}
 
       div(
         v-if="props.showCharacterCount",
@@ -166,18 +171,16 @@ watch(
       props.type === 'password';
 
     if (!inputRef.value || !isSupportedInputType || !props.suggestion || !model.value) return;
-
     inputRef.value.setSelectionRange(model.value.length, props.suggestion.length);
   },
+  { flush: 'post' },
 );
 
 onMounted(() => {
   isAfterInitial.value = true;
 });
 
-const normalizedValue = computed(() => {
-  return props.suggestion ? props.suggestion : model.value;
-});
+const normalizedValue = computed(() => props.suggestion ? props.suggestion : model.value);
 
 const normalizedStep = computed(() => {
   return props.step || 1;
@@ -193,7 +196,7 @@ const normalizedMin = computed(() => {
 
 const className = computed(() => classNames(
   styles.TextField,
-  Boolean(normalizedValue) && styles.hasValue,
+  Boolean(normalizedValue.value) && styles.hasValue,
   props.disabled && styles.disabled,
   props.readOnly && styles.readOnly,
   props.error && styles.error,
@@ -379,7 +382,7 @@ const input = () => h(props.multiline ? 'textarea' : 'input', {
   role: props.role,
   autoFocus: props.autoFocus,
   value: normalizedValue.value,
-  modelValue: normalizedValue,
+  // modelValue: model,
   placeholder: props.placeholder,
   style: style.value,
   autoComplete: props.autoComplete,
@@ -425,6 +428,7 @@ function handleInput(e: Event) {
   model.value = (e.target as HTMLInputElement).value;
 
   if (props.suggestion) {
+    (e.target as HTMLInputElement).value = props.suggestion;
     handleChange(e);
   }
 }

@@ -145,11 +145,19 @@ export type TextFieldSlots = {
   connectedRight?: (_?: VueNode) => null;
   /** An element connected to the left of the input */
   connectedLeft?: (_?: VueNode) => null;
+  /** Content to vertically display above the input value */
+  verticalContent?: (_?: VueNode) => null;
+  /** Text to display before value */
+  prefix?: (_?: VueNode) => null;
+  /** Text to display after value */
+  suffix?: (_?: VueNode) => null;
 };
 
 export type TextFieldEvents = {
   /** Callback fired when clear button is clicked */
   'clear-button-click': [id: string];
+  /** Callback fired when value is changed */
+  'input': [e: InputEvent];
   /** Callback fired when value is changed */
   'change': [value: string, id: string];
   /** When provided, callback fired instead of onChange when value is changed via the number step control  */
