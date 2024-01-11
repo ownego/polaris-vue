@@ -57,7 +57,7 @@ const {
   cEvents,
   component,
   defineTypeFormat,
-} = useMeta();
+} = useMeta(Boolean(props.typeFile));
 
 const md = new MarkdownIt();
 
@@ -71,7 +71,6 @@ const noMetaContent = computed(() => {
 
 onMounted(async () => {
   if (!props.typeFile) {
-    console.log(cEvents.value);
     metaEvents.value = cEvents.value;
     return;
   }
