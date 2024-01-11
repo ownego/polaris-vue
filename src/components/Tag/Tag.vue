@@ -4,6 +4,7 @@ button(
   type="button",
   :disabled="disabled",
   :class="className",
+  @click="emits('click')",
 )
   slot
 span(
@@ -39,14 +40,14 @@ span(
 </template>
 
 <script setup lang="ts">
-import { computed, useAttrs, useCssModule } from 'vue';
+import { computed, useCssModule, getCurrentInstance } from 'vue';
 import { classNames } from '@/utilities/css';
 import type { VueNode } from '@/utilities/types';
-import { handleMouseUpByBlurring } from '@polaris/utilities/focus';
+import { handleMouseUpByBlurring } from '@/utilities/focus';
 import CancelSmallMinor from '@icons/CancelSmallMinor.svg';
 
-const attrs = useAttrs();
 const styles = useCssModule();
+const currentInstance = getCurrentInstance();
 
 const slots = defineSlots<{
   /** Elements to display inside the tag*/
@@ -67,12 +68,13 @@ const props = withDefaults(defineProps<TagProps>(), {
 });
 
 const emits = defineEmits<{
-  'remove': [];
+  (event: 'remove'): void;
+  (event: 'click'): void;
 }>();
 
 // Computed
-const hasEventClick = computed(() => Boolean(attrs['onClick']));
-const hasEventRemove = computed(() => Boolean(attrs['onRemove']));
+const hasEventClick = computed(() => Boolean(currentInstance?.vnode.props?.onClick));
+const hasEventRemove = computed(() => Boolean(currentInstance?.vnode.props?.onRemove));
 const segmented = computed(() => hasEventClick.value && props.url);
 
 const className = computed(() => {
