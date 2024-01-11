@@ -2,7 +2,7 @@
 div(
   v-if="message",
   :class="styles.InlineError",
-  :id="errorTextId(fieldId)",
+  :id="errorTextID(fieldId)",
 )
   div(:class="styles.Icon")
     Icon(
@@ -15,6 +15,7 @@ div(
 import { useCssModule } from 'vue';
 import { Icon } from '@/components';
 import type { Error } from '@/utilities/types';
+import { errorTextID } from './utils';
 import CircleAlertMajor from '@icons/CircleAlertMajor.svg';
 
 interface InlineErrorProps {
@@ -27,10 +28,6 @@ interface InlineErrorProps {
 const styles = useCssModule();
 
 defineProps<InlineErrorProps>();
-
-function errorTextId(id: string): string {
-  return `${id}Error`;
-}
 </script>
 
 <style lang="scss" module>

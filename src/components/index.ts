@@ -24,3 +24,5 @@ export * from './Labelled';
 export * from './InlineError';
 export * from './Image';
 export * from './EmptyState';
+export * from './Choice';
+export * from './Checkbox';
