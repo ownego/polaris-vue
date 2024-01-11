@@ -44,7 +44,7 @@ import { capitalize } from '@polaris/utilities/capitalize';
 import { classNames, variationName } from '@/utilities/css';
 import type { VueNode } from '@/utilities/types';
 import useI18n from '@/use/useI18n';
-import type { ButtonProps, ButtonEmits } from './types';
+import type { ButtonProps } from './types';
 import { Spinner, Icon } from '@/components';
 import { UnstyledButton } from '../UnstyledButton';
 import SelectMinor from '@icons/SelectMinor.svg';
@@ -104,7 +104,7 @@ const commonProps = computed(() => {
 
   return {
     id,
-    class: className.value,
+    className: className.value,
     role,
     accessibilityLabel,
     ariaDescribedBy,
