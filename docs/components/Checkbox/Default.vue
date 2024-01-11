@@ -1,7 +1,7 @@
 <template>
 <Checkbox
   label="Basic checkbox"
-  :checked="checked"
+  v-model="checked"
 />
 </template>
 
