@@ -18,3 +18,4 @@ export * from './LegacyStack';
 export * from './Spinner';
 export * from './Button';
 export * from './ButtonGroup';
+export * from './ChoiceList';
