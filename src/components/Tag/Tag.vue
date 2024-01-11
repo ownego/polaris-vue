@@ -68,8 +68,10 @@ const props = withDefaults(defineProps<TagProps>(), {
 });
 
 const emits = defineEmits<{
-  (event: 'remove'): void;
-  (event: 'click'): void;
+  /** Callback when remove button is clicked or keypressed. */
+  'remove': [];
+  /** Callback when tag is clicked or keypressed. Renders without remove button or url when set. */
+  'click': [];
 }>();
 
 // Computed
