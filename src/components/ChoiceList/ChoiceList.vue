@@ -3,10 +3,12 @@
 </template>
 
 <script setup lang="ts">
-import { ref } from 'vue';
+// import { ref } from 'vue';
+// import type { ChoiceListProps, ChoiceListSlots } from './types';
+// import { Box, Bleed, BlockStack, InlineError } from '@/components';
 
-interface Props {
-}
+// const props = defineProps<ChoiceListProps>();
+// const slots = defineSlots<ChoiceListSlots>();
 
-const props = defineProps<Props>();
+
 </script>
