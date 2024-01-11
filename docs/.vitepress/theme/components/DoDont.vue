@@ -95,6 +95,7 @@ h4.docs-dodont__title {
   letter-spacing: 0;
   width: -moz-fit-content;
   width: fit-content;
+  margin-top: 0;
   font-weight: var(--font-weight-600);
   border-radius: var(--border-radius-500);
   padding-right: 0.5rem;
