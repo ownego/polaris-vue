@@ -59,8 +59,11 @@ onMounted(() => {
 </script>
 
 <style lang="scss">
-html, body {
-  background-color: #f1f1f1;
+html.example-preview {
+  &,
+  body {
+    background-color: #f1f1f1;
+  }
 }
 
 .preview-wrapper {

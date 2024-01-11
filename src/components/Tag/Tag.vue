@@ -42,7 +42,7 @@ span(
 import { computed, useAttrs, useCssModule } from 'vue';
 import { classNames } from '@/utilities/css';
 import type { VueNode } from '@/utilities/types';
-import { handleMouseUpByBlurring } from '@polaris/utilities/focus';
+import { handleMouseUpByBlurring } from '@/utilities/focus';
 import CancelSmallMinor from '@icons/CancelSmallMinor.svg';
 
 const attrs = useAttrs();

@@ -1,12 +1,43 @@
-<template lang="pug">
-p I18n
+<template>
+<AppProvider :i18n="locales">
+  <Page>
+    <LegacyCard>
+      <ResourceList show-header>
+        <ResourceListItem
+          v-for="item in items"
+          :key="item.id"
+          :id="item.id"
+          :url="item.url"
+        >
+          <Text variant="bodyMd" font-weight="bold" as="h3">{{ item.name }}</Text>
+          <div>{{ item.location }}</div>
+
+          <template #media>
+            <Avatar customer size="md" :name="item.name" />
+          </template>
+        </ResourceListItem>
+      </ResourceList>
+    </LegacyCard>
+  </Page>
+</AppProvider>
 </template>
 
 <script setup lang="ts">
-import { ref } from 'vue';
+// import locales from '@ownego/polaris-vue/dist/locales/en.json';
+import locales from './en.json'; // Let's use the import as above, this is just for demo purpose
 
-interface Props {
-}
-
-const props = defineProps<Props>();
+const items = [
+  {
+    id: '341',
+    url: '#',
+    name: 'Mae Jemison',
+    location: 'Decatur, USA',
+  },
+  {
+    id: '256',
+    url: '#',
+    name: 'Ellen Ochoa',
+    location: 'Los Angeles, USA',
+  },
+];
 </script>

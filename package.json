@@ -25,11 +25,12 @@
   "module": "./dist/polaris-vue.es.js",
   "scripts": {
     "dev": "vite",
-    "build": "rimraf dist && vite build && vue-tsc --declaration --emitDeclarationOnly && npm run gen-dts && npm run remove-trashes",
+    "build": "rimraf dist && vite build && vue-tsc --declaration --emitDeclarationOnly && npm run gen-dts && npm run copy-locales && npm run remove-trashes",
     "preview": "vite preview --port 5050",
     "lint": "eslint . --ext .vue,.js,.jsx,.cjs,.mjs,.ts,.tsx,.cts,.mts --fix --ignore-path .gitignore",
     "gen-dts": "esbuild build/gen-component-declaration.js --bundle --platform=node | node && npm run move-dts",
     "move-dts": "mv volar.d.ts dist/volar.d.ts",
+    "copy-locales": "cp -R polaris/polaris-react/locales dist/",
     "remove-trashes": "rimraf dist/index.html dist/favicon.ico dist/images",
     "gen:meta": "build/gen-meta.ts",
     "gen:docs-content": "build/gen-docs-content.ts",
