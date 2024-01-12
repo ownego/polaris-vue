@@ -3,7 +3,7 @@ import { useData } from 'vitepress';
 import type { PropertyMetaSchema } from 'vue-component-meta';
 import type { ComponentApi } from '../types';
 
-export function useMeta() {
+export function useMeta(ignoreFetch = false) {
   const { page } = useData();
 
   const meta = ref<ComponentApi>();
@@ -33,6 +33,10 @@ export function useMeta() {
   });
 
   onMounted(async () => {
+    if (ignoreFetch) {
+      return;
+    }
+
     meta.value = await fetchMeta();
   });
 
@@ -80,7 +84,9 @@ export function useMeta() {
     return types;
   }
 
-  const defineTypeFormat = (t: string) => {
+  const defineTypeFormat = (t?: string) => {
+    if (!t) return 'object';
+
     if (
       (t.startsWith('"') && t.endsWith('"'))
       || (t.startsWith('\'') && t.endsWith('\''))

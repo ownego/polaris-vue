@@ -9,6 +9,7 @@
       ) {{ example.title }}
 
   .docs-examples-description(
+    v-if="examples[selectedExampleIndex].description",
     v-html="md.render(examples[selectedExampleIndex].description)",
   )
   //- Iframe to show example
@@ -30,19 +31,28 @@
 
 <script setup lang="ts">
 import { computed, ref, onMounted, useSlots } from 'vue';
-import { useData } from 'vitepress';
+import { useData, useRouter } from 'vitepress';
 import MarkdownIt from 'markdown-it';
 
 const slots = useSlots();
 
 const md = new MarkdownIt();
 const { frontmatter, page } = useData();
+const { route } = useRouter();
 
 const isLoadingFrame = ref(true);
 const selectedExampleIndex = ref(0);
 const iframeRef = ref<HTMLIFrameElement | null>(null);
 
 const examples = frontmatter.value.examples;
+const pageSlug = page.value.title.replace(/\s+/g, '-').toLowerCase();
+
+const examplesSlugs = computed(() => {
+  return examples.map((example) => {
+    const name = example.title.replace(/\s+/g, '-').toLowerCase();
+    return `${pageSlug}-${name}`;
+  });
+});
 
 const selectedExample = computed(() => {
   return examples[selectedExampleIndex.value];
@@ -75,6 +85,13 @@ const switchExample = (index: number) => {
     return;
   }
 
+  // Change url
+  const example = examplesSlugs.value[index];
+  const q = new URLSearchParams(window.location.search);
+  q.set('example', example);
+
+  history.pushState(null, '', `${route.path}?${q.toString()}`);
+
   selectedExampleIndex.value = index;
   isLoadingFrame.value = true;
 };
@@ -100,6 +117,18 @@ const iframeLoaded = () => {
     isLoadingFrame.value = false;
   }, 500);
 };
+
+// Initialize example query param
+const urlQuery = new URLSearchParams(window.location.search);
+const example = urlQuery.get('example');
+
+if (example) {
+  const index = examplesSlugs.value.indexOf(example);
+
+  if (index !== -1) {
+    selectedExampleIndex.value = index;
+  }
+}
 
 onMounted(() => {
   fixIframeEvent();
