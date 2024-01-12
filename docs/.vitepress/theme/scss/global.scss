@@ -11,6 +11,8 @@
 html:not(.example-preview),
 html:not(.example-preview) body {
   font-size: var(--p-font-size-400);
+  color: var(--text);
+  background-color: var(--surface);
 }
 
 html.example-preview body {

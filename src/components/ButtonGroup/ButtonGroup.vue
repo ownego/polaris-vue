@@ -7,7 +7,7 @@ div(
   :data-buttongroup-no-wrap="noWrap",
 )
   Item(
-    v-for="item, index in slots.default()",
+    v-for="item, index in slotsElms",
     :key="index",
     :button-elm="item",
   )
@@ -15,19 +15,21 @@ div(
 
 <script setup lang="ts">
 import { computed, useCssModule } from 'vue';
+import { useExtractFragment } from '@/use/useExtractFragment';
 import { classNames, variationName } from '@/utilities/css';
 import type { VueNode } from '@/utilities/types';
 import { Item } from './components';
 import type { ButtonGroupProps } from './types';
 
-const styles = useCssModule();
-
-const props = defineProps<ButtonGroupProps>();
-
 const slots = defineSlots<{
   /** Button components */
   default: (_?: VueNode) => any;
 }>();
+
+const styles = useCssModule();
+const { slotsElms } = useExtractFragment(slots.default);
+
+const props = defineProps<ButtonGroupProps>();
 
 const className = computed(() => classNames(
   styles.ButtonGroup,
@@ -39,5 +41,5 @@ const className = computed(() => classNames(
 </script>
 
 <style lang="scss" module>
-@import '@polaris/components/ButtonGroup/ButtonGroup.scss';
+@import '@polaris/components/ButtonGroup/ButtonGroup.module.scss';
 </style>

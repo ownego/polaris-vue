@@ -83,8 +83,8 @@ import {
   BlockStack,
   InlineStack,
 } from '@/components';
+import { useHasSlot } from '@/use/useHasSlot';
 import { classNames } from '@/utilities/css';
-import { hasSlot } from '@/utilities/has-slot';
 import type { VueNode, ComplexAction } from '@/utilities/types';
 
 interface EmptyStateProps {
@@ -108,6 +108,7 @@ interface EmptyStateProps {
 }
 
 const styles = useCssModule();
+const { hasSlot } = useHasSlot();
 
 const slots = defineSlots<{
   /** Elements to display inside empty state */
@@ -133,5 +134,5 @@ const sourceSet = computed(() => {
 </script>
 
 <style lang="scss" module>
-@import '@polaris/components/EmptyState/EmptyState.scss';
+@import '@polaris/components/EmptyState/EmptyState.module.scss';
 </style>

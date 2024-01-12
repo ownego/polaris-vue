@@ -75,5 +75,5 @@ const style = computed(() => {
 </script>
 
 <style module lang="scss">
-@import '@polaris/components/Grid/components/Cell/Cell.scss';
+@import '@polaris/components/Grid/components/Cell/Cell.module.scss';
 </style>

@@ -72,6 +72,10 @@ features:
     icon: <svg xmlns="http://www.w3.org/2000/svg" width="30" viewBox="0 0 256 220.8"><path fill="#41B883" d="M204.8 0H256L128 220.8 0 0h97.92L128 51.2 157.44 0h47.36Z"></path><path fill="#41B883" d="m0 0 128 220.8L256 0h-51.2L128 132.48 50.56 0H0Z"></path><path fill="#35495E" d="M50.56 0 128 133.12 204.8 0h-47.36L128 51.2 97.92 0H50.56Z"></path></svg>
 ---
 
+<script setup>
+import { withBase } from 'vitepress';
+</script>
+
 <div style="text-align: center; margin-top: 40px;">
 
 ## Our Shopify brands
@@ -80,13 +84,13 @@ We're using this library in our Shopify apps, and gain Built for Shopify badge. 
 
 <div style="display: flex; justify-content: center; align-items: center; flex-wrap: wrap; gap: 30px">
   <a href="https://qikify.com?utm_source=polaris-vue&utm_medium=referral&utm_campaign=website" target="_blank" rel="noopener noreferrer">
-    <img src="/assets/images/qikify.svg" alt="Ownego" class="light-mode-logo" width="44" style="margin: 20px auto;">
-    <img src="/assets/images/qikify-white.svg" alt="Ownego" class="dark-mode-logo" width="44" style="margin: 20px auto;">
+    <img :src="withBase('/assets/images/qikify.svg')" alt="Ownego" class="light-mode-logo" width="44" style="margin: 20px auto;">
+    <img :src="withBase('/assets/images/qikify-white.svg')" alt="Ownego" class="dark-mode-logo" width="44" style="margin: 20px auto;">
   </a>
 
   <a href="https://teeinblue.com?utm_source=polaris-vue&utm_medium=referral&utm_campaign=website" target="_blank" rel="noopener noreferrer">
-    <img src="/assets/images/teeinblue.svg" alt="Ownego" class="light-mode-logo" width="50" style="margin: 20px auto;">
-    <img src="/assets/images/teeinblue-white.svg" alt="Ownego" class="dark-mode-logo" width="50" style="margin: 20px auto;">
+    <img :src="withBase('/assets/images/teeinblue.svg')" alt="Ownego" class="light-mode-logo" width="50" style="margin: 20px auto;">
+    <img :src="withBase('/assets/images/teeinblue-white.svg')" alt="Ownego" class="dark-mode-logo" width="50" style="margin: 20px auto;">
   </a>
 </div>
 

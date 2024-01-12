@@ -77,5 +77,5 @@ if (
 </script>
 
 <style lang="scss" module>
-@import '@polaris/components/Icon/Icon.scss';
+@import '@polaris/components/Icon/Icon.module.scss';
 </style>
