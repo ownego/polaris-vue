@@ -1,4 +1,4 @@
-import { type Ref, inject } from 'vue';
+import { type Ref, inject, ref } from 'vue';
 
 export interface NavigableOption {
   domId: string;
@@ -21,13 +21,13 @@ export function useListbox() {
 }
 
 export function useWithinListbox() {
-  const context = inject('within-listbox') as Ref<boolean>;
+  const context = inject('within-listbox', ref(false)) as Ref<boolean>;
 
   return context;
 }
 
 export function useAction() {
-  const context = inject('action') as Ref<boolean>;
+  const context = inject('action', ref(false)) as Ref<boolean>;
 
   return context;
 }

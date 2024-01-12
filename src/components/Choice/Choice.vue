@@ -58,7 +58,7 @@ import {
 } from '@/utilities/css';
 import { useHasSlot } from '@/use/useHasSlot';
 import { InlineError } from '@/components';
-import { ChoiceProps, ChoiceSlots } from './types';
+import type { ChoiceProps, ChoiceSlots } from './types';
 import { helpTextID } from './utils';
 
 type ChoiceEvents = {

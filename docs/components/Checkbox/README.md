@@ -4,6 +4,7 @@ title: Checkbox
 category: Selection and input
 examples:
   - fileName: Default.vue
+    frameHeight: 250
     title: Default
     description: Use in forms to toggle the state of something on or off. Default checkboxes can appear as selected and disabled, or unselected.
 ---
@@ -31,6 +32,10 @@ examples:
 <SlotsTable />
 
 <div style="font-size: 0.8125rem">
+
+## Events
+
+<EventsTable />
 
 ## Best practices
 

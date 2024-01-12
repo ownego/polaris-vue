@@ -54,15 +54,15 @@ Choice(
         textRendering="geometricPrecision"
       )
         path(
-          :class="classNames(checked && styles.checked)"
+          :class="svgPathClassName"
           d="M1.5,5.5L3.44655,8.22517C3.72862,8.62007,4.30578,8.64717,4.62362,8.28044L10.5,1.5"
           transform="translate(2 2.980376)"
           opacity="0"
           fill="none"
           stroke="currentColor"
-          strokeWidth="2"
-          strokeLinecap="round"
-          strokeLinejoin="round"
+          stroke-width="2"
+          stroke-linecap="round"
+          stroke-linejoin="round"
           pathLength="1"
         )
 </template>
@@ -135,7 +135,7 @@ const props = defineProps<CheckboxProps>();
 const slots = defineSlots<CheckboxSlots>();
 const emits = defineEmits<CheckboxEvents>();
 
-const model = defineModel();
+const model = defineModel<Boolean>();
 
 const styles = useCssModule();
 const isWithinListbox = useWithinListbox();
@@ -202,6 +202,8 @@ const extraChoiceProps = computed(() => ({
   bleedInlineEnd: props.bleedInlineEnd,
 }));
 
+const svgPathClassName = computed(() => classNames(model.value && styles.checked));
+
 const handleBlur = () => {
   emits('blur');
 };
@@ -215,9 +217,9 @@ const handleOnClick = () => {
     return;
   }
 
-  model.value = !inputNode.value.checked;
+  model.value = inputNode.value.checked;
   inputNode.value.focus();
-  emits('change', !inputNode.value.checked, id.value);
+  emits('change', inputNode.value.checked, id.value);
 };
 </script>
 
