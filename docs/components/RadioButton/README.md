@@ -4,6 +4,7 @@ title: Radio button
 category: Selection and input
 examples:
   - fileName: Default.vue
+    frameHeight: 280
     title: Default
     description: Use radio buttons where merchants must make a single selection.
 ---
