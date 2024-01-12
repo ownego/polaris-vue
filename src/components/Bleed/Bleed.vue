@@ -105,5 +105,5 @@ const negativeMarginInlineEnd = getNegativeMargins('marginInlineEnd');
 </script>
 
 <style lang="scss" module>
-@import '@polaris/components/Bleed/Bleed.scss';
+@import '@polaris/components/Bleed/Bleed.module.scss';
 </style>

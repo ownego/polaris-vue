@@ -75,5 +75,5 @@ function formatAreas(areas?: string[]) {
 </script>
 
 <style lang="scss" module>
-@import '@polaris/components/Grid/Grid.scss';
+@import '@polaris/components/Grid/Grid.module.scss';
 </style>

@@ -54,7 +54,7 @@ Stacks should:
 
 ## Related components
 
-- To display elements horizontally, [use the InlineStack component](https://polaris.shopify.com/components/layout-and-structure/inline-stack)
+- To display elements horizontally, [use the InlineStack component](/components/InlineStack)
 
 ## Related resources
 

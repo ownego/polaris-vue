@@ -26,5 +26,5 @@ const styles = useCssModule();
 </script>
 
 <style lang="scss" module>
-@import '@polaris/components/Layout/Layout.scss';
+@import '@polaris/components/Layout/Layout.module.scss';
 </style>

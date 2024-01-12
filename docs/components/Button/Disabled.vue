@@ -20,6 +20,3 @@
   </Button>
 </ButtonGroup>
 </template>
-
-<script setup lang="ts">
-</script>

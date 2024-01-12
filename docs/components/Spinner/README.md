@@ -66,7 +66,7 @@ Spinner accessibility label should:
 
 ## Related components
 
-- To improve user experience and reduce the appearance of long loading times, use the [Progress bar](https://polaris.shopify.com/components/progress-bar) component.
-- To better represent loading content, use [Skeleton page](https://polaris.shopify.com/components/skeleton-page) along with [Skeleton body text](https://polaris.shopify.com/components/feedback-indicators/skeleton-body-text) and [Skeleton display text](https://polaris.shopify.com/components/skeleton-display-text) components.
+- To improve user experience and reduce the appearance of long loading times, use the [Progress bar](/components/ProgressBar) component.
+- To better represent loading content, use [Skeleton page](/components/SkeletonPage) along with [Skeleton body text](/components/SkeletonBodyText) and [Skeleton display text](/components/SkeletonDisplayText) components.
 
 </div>

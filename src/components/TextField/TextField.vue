@@ -25,7 +25,7 @@ Labelled(
     )
       div(
         v-if="slots.prefix || prefix",
-        :class="styles.Prefix",
+        :class="classNames(styles.Prefix, isIconPrefix && styles.PrefixIcon)",
         :id="`${id}-Prefix`",
         ref="prefixRef",
       )
@@ -295,6 +295,11 @@ const backdropClassName = computed(() => classNames(
   slots.connectedLeft && styles['Backdrop-connectedLeft'],
   slots.connectedRight && styles['Backdrop-connectedRight'],
 ));
+
+const isIconPrefix = computed(() => {
+  const prefixElm = slots.prefix && slots.prefix()[0];
+  return (prefixElm?.type as any)?.__name;
+});
 
 const handleNumberChange = (steps: number, stepAmount = normalizedStep.value) => {
   const dpl = (num: number) => {
@@ -605,5 +610,5 @@ function normalizeAriaMultiline(multiline?: boolean | number) {
 </script>
 
 <style module lang="scss">
-@import '@polaris/components/TextField/TextField.scss';
+@import '@polaris/components/TextField/TextField.module.scss';
 </style>

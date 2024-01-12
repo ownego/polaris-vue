@@ -70,5 +70,5 @@ onMounted(() => {
 });
 </script>
 <style module lang="scss">
-@import'@polaris/components/Spinner/Spinner.scss';
+@import '@polaris/components/Spinner/Spinner.module.scss';
 </style>

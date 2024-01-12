@@ -1,3 +1,4 @@
+import { VNode } from 'vue';
 import type { LabelledProps } from '../Labelled/types';
 import type { Error, VueNode } from '@/utilities/types';
 
@@ -138,19 +139,19 @@ interface NonMutuallyExclusiveProps {
 
 export type TextFieldSlots = {
   /** Additional hint text to display */
-  helpText?: (_?: VueNode) => null;
+  helpText?: (_?: VueNode) => VNode[];
   /** Label for the input */
-  label?: (_?: VueNode) => null;
+  label?: (_?: VueNode) => VNode[];
   /** An element connected to the right of the input */
-  connectedRight?: (_?: VueNode) => null;
+  connectedRight?: (_?: VueNode) => VNode[];
   /** An element connected to the left of the input */
-  connectedLeft?: (_?: VueNode) => null;
+  connectedLeft?: (_?: VueNode) => VNode[];
   /** Content to vertically display above the input value */
-  verticalContent?: (_?: VueNode) => null;
+  verticalContent?: (_?: VueNode) => VNode[];
   /** Text to display before value */
-  prefix?: (_?: VueNode) => null;
+  prefix?: (_?: VueNode) => VNode[];
   /** Text to display after value */
-  suffix?: (_?: VueNode) => null;
+  suffix?: (_?: VueNode) => VNode[];
 };
 
 export type TextFieldEvents = {
