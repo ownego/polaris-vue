@@ -3,7 +3,7 @@ span(:class="className")
   Text(
     visually-hidden,
     as="span",
-  ) {{ accessibilityLabel}}
+  ) {{ accessibilityLabel }}
 </template>
 
 <script setup lang="ts">
