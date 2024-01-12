@@ -2,7 +2,7 @@
 div(
   ref="scrollArea",
   :class="[attrs.class, finalClassName]",
-  :tab-index="focusable ? 0 : undefined",
+  :tabindex="focusable ? 0 : undefined",
   v-bind="{ ...scrollable.props, ...attrs }",
 )
   slot
