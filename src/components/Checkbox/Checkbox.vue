@@ -224,5 +224,5 @@ const handleOnClick = () => {
 </script>
 
 <style lang="scss" module>
-@import '@polaris/components/Checkbox/Checkbox.scss';
+@import '@polaris/components/Checkbox/Checkbox.module.scss';
 </style>

@@ -135,8 +135,8 @@ Buttons should follow the content guidelines for [buttons](https://polaris.shopi
 
 ## Related components
 
-- To combine or lay out multiple buttons, [use the button group component](https://polaris.shopify.com/components/actions/button-group)
-- For navigational actions that appear within or directly following a sentence, use the [link component](https://polaris.shopify.com/components/link)
+- To combine or lay out multiple buttons, [use the button group component](/components/ButtonGroup)
+- For navigational actions that appear within or directly following a sentence, use the [link component](/components/Link)
 
 ---
 
@@ -153,7 +153,7 @@ Buttons can have different states that are visually and programmatically conveye
 
 Merchants generally expect buttons to submit data or take action, and for links to navigate. If navigation is required for the button component, use the `url` prop. The control will output an anchor styled as a button, instead of a button in HTML, to help convey this difference.
 
-For more information on making accessible links, see the [link component](https://polaris.shopify.com/components/link).
+For more information on making accessible links, see the [link component](/components/Link).
 
 ### Labeling
 
@@ -201,7 +201,7 @@ When you use the button component to create a link to an external resource:
 - Use the `icon` prop to add the `external` icon to the button
 - Use the `accessibilityLabel` prop to include the warning about opening a new tab in the button text for non-visual screen reader users
 
-For more information on making accessible links, see the [link component](https://polaris.shopify.com/components/link).
+For more information on making accessible links, see the [link component](/components/Link).
 
 <DoDont>
 

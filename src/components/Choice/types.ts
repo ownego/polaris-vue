@@ -46,8 +46,6 @@ export interface ChoiceProps extends ChoiceBleedProps {
   disabled?: boolean;
   /** Visually hide the label */
   labelHidden?: boolean;
-  /** Callback when clicked */
-  onClick?(): void;
   /** Added to the label element */
   labelClassName?: string;
   /** Grow to fill the space. Equivalent to width: 100%; height: 100% */

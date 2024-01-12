@@ -121,5 +121,5 @@ const labelStyle = computed(() => ({
 </script>
 
 <style module lang="scss">
-@import '@polaris/components/Choice/Choice.scss';
+@import '@polaris/components/Choice/Choice.module.scss';
 </style>

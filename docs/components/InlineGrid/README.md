@@ -43,8 +43,8 @@ examples:
 
 ## Related components
 
-- For more control over padding and widths, [use the Box component](https://polaris.shopify.com/components/box)
-- To lay out a set of smaller components horizontally, [use the InlineStack component](https://polaris.shopify.com/components/layout-and-structure/inline-stack)
+- For more control over padding and widths, [use the Box component](/components/Box)
+- To lay out a set of smaller components horizontally, [use the InlineStack component](/components/InlineStack)
 
 ## Related resources
 
