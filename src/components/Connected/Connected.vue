@@ -25,5 +25,5 @@ const slots = defineSlots<ConnectedSlots>();
 </script>
 
 <style module lang="scss">
-@import '@polaris/components/Connected/Connected.scss';
+@import '@polaris/components/Connected/Connected.module.scss';
 </style>

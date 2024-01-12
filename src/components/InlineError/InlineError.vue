@@ -31,5 +31,5 @@ defineProps<InlineErrorProps>();
 </script>
 
 <style lang="scss" module>
-@import '@polaris/components/InlineError/InlineError.scss';
+@import '@polaris/components/InlineError/InlineError.module.scss';
 </style>

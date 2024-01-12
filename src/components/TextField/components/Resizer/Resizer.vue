@@ -111,5 +111,5 @@ function replaceEntity(entity: string) {
 </script>
 
 <style lang="scss" module>
-@import '@polaris/components/TextField/TextField.scss';
+@import '@polaris/components/TextField/TextField.module.scss';
 </style>
