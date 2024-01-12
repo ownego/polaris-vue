@@ -1,4 +1,18 @@
 <template lang="pug">
+PositionedOverlay(
+  v-if="state.transitionStatus === TransitionStatus.Exited && !active",
+  ref="overlayRef",
+  :full-width="fullWidth",
+  :active="active",
+  :activator="activator",
+  :prefer-input-activator="preferInputActivator",
+  :preferred-position="preferredPosition",
+  :preferred-alignment="preferredAlignment",
+  :fixed="fixed",
+  :class="positionOverlayClass",
+  :z-index-override="zIndexOverride",
+  @scroll-out="handleScrollOut",
+)
 </template>
 
 <script setup lang="ts">
@@ -82,7 +96,11 @@ const styles = useCssModule();
 
 const context = usePortalsManager();
 
-const props = defineProps<PopoverOverlayProps>();
+const props = withDefaults(defineProps<PopoverOverlayProps>(), {
+  preferredPosition: 'below',
+  preferredAlignment: 'center',
+  preferInputActivator: true,
+});
 
 const emits = defineEmits<Emit>();
 
@@ -95,6 +113,15 @@ const state = reactive<State>({
 const contentNode = ref<HTMLElement | null>(null);
 const enteringTimer = ref<number | undefined>(undefined);
 const overlayRef = ref<HTMLElement | null>(null);
+
+const positionOverlayClass = computed(() => {
+  return classNames(
+    styles.PopoverOverlay,
+    state.transitionStatus === TransitionStatus.Entering && styles['PopoverOverlay-entering'],
+    state.transitionStatus === TransitionStatus.Entered && styles['PopoverOverlay-open'],
+    state.transitionStatus === TransitionStatus.Exiting && styles['PopoverOverlay-exiting'],
+  )
+})
 
 watch(
   () => props.active,
