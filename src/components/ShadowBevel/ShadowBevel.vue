@@ -64,5 +64,5 @@ function mapResponsiveProp(
 </script>
 
 <style lang="scss" module>
-@import '@polaris/components/ShadowBevel/ShadowBevel.scss';
+@import '@polaris/components/ShadowBevel/ShadowBevel.module.scss';
 </style>

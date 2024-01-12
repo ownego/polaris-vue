@@ -59,7 +59,7 @@ examples:
 
 ## Variant tokens
 
-Each variant uses a predetermined combination of the [font tokens](/tokens/font) to set the font size and line height. Heading variants have a set font weight but can be overridden by using the `fontWeight` prop. Nested Text components will inherit properties from its parent Text container.
+Each variant uses a predetermined combination of the [font tokens](https://polaris.shopify.com/tokens/font) to set the font size and line height. Heading variants have a set font weight but can be overridden by using the `fontWeight` prop. Nested Text components will inherit properties from its parent Text container.
 
 | Variant      | Font size token     | px value | rem value | Font line height token | Font weight token          | Reponsive |
 | ------------ | ------------------- | -------- | --------- | ---------------------- | -------------------------- | --------- |

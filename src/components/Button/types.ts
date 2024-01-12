@@ -1,36 +1,6 @@
-import { Target, IconSource } from "@/utilities/types";
+import { IconSource, BaseButton } from "@/utilities/types";
 
-export interface ButtonProps {
-   /** A unique identifier for the button */
-  id?: string;
-  /** A destination to link to, rendered in the href attribute of a link */
-  url?: string;
-  /** Forces url to open in a new tab */
-  external?: boolean;
-  /** Where to display the url */
-  target?: Target;
-  /** Tells the browser to download the url instead of opening it. Provides a hint for the downloaded filename if it is a string value */
-  download?: string | boolean;
-  /** Allows the button to submit a form */
-  submit?: boolean;
-  /** Disables the button, disallowing merchant interaction */
-  disabled?: boolean;
-  /** Replaces button text with a spinner while a background action is being performed */
-  loading?: boolean;
-  /** Sets the button in a pressed state */
-  pressed?: boolean;
-  /** Visually hidden text for screen readers */
-  accessibilityLabel?: string;
-  /** A valid WAI-ARIA role to define the semantic value of this element */
-  role?: string;
-  /** Id of the element the button controls */
-  ariaControls?: string;
-  /** Tells screen reader the controlled element is expanded */
-  ariaExpanded?: boolean;
-  /** Indicates the ID of the element that describes the button */
-  ariaDescribedBy?: string;
-  /** Indicates the current checked state of the button when acting as a toggle or switch */
-  ariaChecked?: 'false' | 'true';
+export interface ButtonProps extends BaseButton {
   /**
    * Changes the size of the button, giving it more or less padding
    * @default 'medium'
@@ -53,7 +23,7 @@ export interface ButtonProps {
   /** Sets the color treatment of the Button. */
   tone?: 'critical' | 'success';
   /** Changes the visual appearance of the Button. */
-  variant?: 'plain' | 'primary' | 'tertiary' | 'monochromePlain';
+  variant?: 'plain' | 'primary' | 'secondary' | 'tertiary' | 'monochromePlain';
 }
 
 export type ButtonEmits = {
@@ -76,3 +46,4 @@ export type ButtonEmits = {
   /** Callback when pointerdown event is being triggered */
   'pointerdown': [event: PointerEvent];
 }
+

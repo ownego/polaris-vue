@@ -8,6 +8,7 @@ import { createApp, defineAsyncComponent, onMounted, h } from 'vue';
 import { useData } from 'vitepress';
 import PolarisVue from '../../src/polaris-vue';
 import { AppProvider } from '../../src/components';
+import lang from '../../polaris/polaris-react/locales/en.json';
 
 const { params } = useData();
 
@@ -20,25 +21,7 @@ const exampleComponent = defineAsyncComponent(() =>
 const wrappedComponent = () => {
   return h(
     AppProvider,
-    { i18n: {
-        Polaris: {
-          ResourceList: {
-            sortingLabel: 'Sort by',
-            defaultItemSingular: 'item',
-            defaultItemPlural: 'items',
-            showing: 'Showing {itemsCount} {resource}',
-            Item: {
-              viewItem: 'View details for {itemName}',
-            },
-          },
-          Common: {
-            checkbox: 'checkbox',
-          },
-          Button: {
-            spinnerAccessibilityLabel: 'Loading',
-          },
-        },
-      }},
+    { i18n: lang },
     {
       default: () => h(exampleComponent),
     }
@@ -59,8 +42,11 @@ onMounted(() => {
 </script>
 
 <style lang="scss">
-html, body {
-  background-color: #f1f1f1;
+html.example-preview {
+  &,
+  body {
+    background-color: #f1f1f1;
+  }
 }
 
 .preview-wrapper {

@@ -87,6 +87,6 @@ const element = computed(() => {
 </script>
 
 <style lang="scss" module>
-@import '@polaris/components/Text/Text.scss';
+@import '@polaris/components/Text/Text.module.scss';
 </style>
 

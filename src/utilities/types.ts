@@ -140,3 +140,62 @@ export enum Key {
   CloseBracket = 221,
   SingleQuote = 222,
 }
+export interface Action {
+  /** A unique identifier for the action */
+  id?: string;
+  /** Content the action displays */
+  content?: string;
+  /** Visually hidden text for screen readers */
+  accessibilityLabel?: string;
+  /** A destination to link to, rendered in the action */
+  url?: string;
+  /** Forces url to open in a new tab */
+  external?: boolean;
+  /** Where to display the url */
+  target?: Target;
+  /** Callback when an action takes place */
+  onAction?(): void;
+  /** Callback when mouse enter */
+  onMouseEnter?(): void;
+  /** Callback when element is touched */
+  onTouchStart?(): void;
+}
+
+export interface DisableableAction extends Action {
+  /** Whether or not the action is disabled */
+  disabled?: boolean;
+}
+
+export interface DestructableAction extends Action {
+  /** Destructive action */
+  destructive?: boolean;
+}
+
+export interface IconableAction extends Action {
+  /** Source of the icon */
+  icon?: IconSource;
+}
+
+export interface LoadableAction extends Action {
+  /** Should a spinner be displayed */
+  loading?: boolean;
+}
+
+export interface OutlineableAction extends Action {
+  /** Should action be displayed as an outlined button */
+  outline?: boolean;
+}
+
+export interface PlainAction extends Action {
+  /** Should action be displayed as a plain link */
+  plain?: boolean;
+}
+
+export interface ComplexAction
+  extends Action,
+    DisableableAction,
+    DestructableAction,
+    IconableAction,
+    OutlineableAction,
+    LoadableAction,
+    PlainAction {}
