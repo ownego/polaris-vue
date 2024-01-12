@@ -199,5 +199,5 @@ provide('sticky-manager', stickyManager);
 </script>
 
 <style lang="scss" module>
-@import '@polaris/components/Scrollable/Scrollable.scss';
+@import '@polaris/components/Scrollable/Scrollable.module.scss';
 </style>

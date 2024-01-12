@@ -4,51 +4,67 @@ title: Button
 category: Actions
 examples:
   - fileName: Default.vue
+    frameHeight: 250
     title: Default
     description: Used most in the interface. Only use another style if a button requires more or less visual weight.
   - fileName: Plain.vue
+    frameHeight: 250
     title: Plain
     description: Use for less important or less commonly used actions since they’re less prominent. For example, plain buttons are used as actions in cards.
   - fileName: Tertiary.vue
+    frameHeight: 250
     title: Tertiary
     description: Use for tertiary actions. Can be paired with any other button style to create visual variation.
   - fileName: PlainCritical.vue
+    frameHeight: 250
     title: Plain critical
     description: Use for actions that will delete merchant data or be otherwise difficult to recover from. Since they’re less prominent, use for less important or less commonly used critical actions. For example, plain buttons are used as actions in cards.
   - fileName: Primary.vue
+    frameHeight: 250
     title: Primary
     description: Use to highlight the most important actions in any experience. Don’t use more than one primary button in a section or screen to avoid overwhelming merchants.
   - fileName: PrimaryCritical.vue
+    frameHeight: 250
     title: Primary critical
     description: Use when the action will delete merchant data or be otherwise difficult to recover from. Critical buttons should trigger a confirmation dialog before the action is completed. Be thoughtful about using critical buttons because they can feel stressful for merchants.
   - fileName: Large.vue
+    frameHeight: 250
     title: Large
     description: Use for the main call to action in empty states or for calls to action shown with large illustrations.
   - fileName: FullWidth.vue
+    frameHeight: 250
     title: Full-width
     description: Use for buttons placed in a narrow column (especially when stacking multiple buttons) or for creating a set of buttons of equal width. Full-width buttons should rarely exceed 320 px wide.
   - fileName: TextAligned.vue
+    frameHeight: 250
     title: Text-aligned
     description: Use for plain or monochrome buttons that could have a long length and should be aligned when they potentially overflow onto the next line.
   - fileName: Pressed.vue
+    frameHeight: 250
     title: Pressed
     description: Buttons are sometimes used as a toggle for other parts of the user interface.
   - fileName: PlainDisclosure.vue
+    frameHeight: 250
     title: Plain disclosure
     description: Use to indicate that more content can be disclosed on click, like text in a collapsible.
   - fileName: RightAlignedDisclosure.vue
+    frameHeight: 250
     title: Right-aligned disclosure
     description: When working with `fullWidth + textAlign="left"`, the `disclosure` will align itself to the far right.
   - fileName: SelectDisclosure.vue
+    frameHeight: 250
     title: Select disclosure
     description: Use to indicate that multiple options are available from this control, similar to a `<select />` HTML element.
   - fileName: Split.vue
+    frameHeight: 250
     title: Split
     description: Use when there is only one primary action but other related actions can be taken.
   - fileName: Disabled.vue
+    frameHeight: 250
     title: Disabled state
     description: Use for actions that aren’t currently available. The surrounding interface should make it clear why the button is disabled and what needs to be done to enable it.
   - fileName: Loading.vue
+    frameHeight: 250
     title: Loading state
     description: Use when a button has been pressed and the associated action is in progress.
 ---

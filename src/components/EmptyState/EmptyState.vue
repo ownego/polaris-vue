@@ -134,5 +134,5 @@ const sourceSet = computed(() => {
 </script>
 
 <style lang="scss" module>
-@import '@polaris/components/EmptyState/EmptyState.scss';
+@import '@polaris/components/EmptyState/EmptyState.module.scss';
 </style>

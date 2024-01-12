@@ -79,5 +79,5 @@ const className = computed(() => {
 </script>
 
 <style lang="scss" module>
-@import '@polaris/components/LegacyStack/LegacyStack.scss';
+@import '@polaris/components/LegacyStack/LegacyStack.module.scss';
 </style>

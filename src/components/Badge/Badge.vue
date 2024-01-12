@@ -97,6 +97,6 @@ const progressIconMap = computed<any>(() => {
 </script>
 
 <style lang="scss" module>
-@import '@polaris/components/Badge/Badge.scss';
+@import '@polaris/components/Badge/Badge.module.scss';
 </style>
 

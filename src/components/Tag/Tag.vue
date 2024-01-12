@@ -117,5 +117,5 @@ const onMouseUp = handleMouseUpByBlurring;
 </script>
 
 <style lang="scss" module>
-@import '@polaris/components/Tag/Tag.scss';
+@import '@polaris/components/Tag/Tag.module.scss';
 </style>

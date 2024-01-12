@@ -49,5 +49,5 @@ const className = computed(() => {
 </script>
 
 <style lang="scss" module>
-@import '@polaris/components/BlockStack/BlockStack.scss';
+@import '@polaris/components/BlockStack/BlockStack.module.scss';
 </style>

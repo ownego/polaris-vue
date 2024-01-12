@@ -40,5 +40,5 @@ const accessibilityLabel = computed(() => {
 </script>
 
 <style lang="scss" module>
-@import '@polaris/components/Badge/components/Pip/Pip.scss';
+@import '@polaris/components/Badge/components/Pip/Pip.module.scss';
 </style>
