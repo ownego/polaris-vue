@@ -81,5 +81,5 @@ function getColumnValue(columns?: ColumnsType) {
 }
 </script>
 <style lang="scss" module>
-@import '@polaris/components/InlineGrid/InlineGrid.scss';
+@import '@polaris/components/InlineGrid/InlineGrid.module.scss';
 </style>

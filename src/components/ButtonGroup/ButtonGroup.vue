@@ -41,5 +41,5 @@ const className = computed(() => classNames(
 </script>
 
 <style lang="scss" module>
-@import '@polaris/components/ButtonGroup/ButtonGroup.scss';
+@import '@polaris/components/ButtonGroup/ButtonGroup.module.scss';
 </style>

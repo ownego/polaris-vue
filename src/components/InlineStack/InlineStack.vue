@@ -1,5 +1,6 @@
 <template lang="pug">
-div(
+component(
+  :is="as",
   :class="className",
   :style="style",
 )
@@ -19,6 +20,7 @@ export type InlineStackSlots = {
 defineSlots<InlineStackSlots>();
 
 const props = withDefaults(defineProps<InlineStackProps>(), {
+  as: 'div',
   wrap: true,
 });
 
@@ -41,5 +43,5 @@ const className = computed(() => {
 </script>
 
 <style lang="scss" module>
-@import '@polaris/components/InlineStack/InlineStack.scss'
+@import '@polaris/components/InlineStack/InlineStack.module.scss'
 </style>

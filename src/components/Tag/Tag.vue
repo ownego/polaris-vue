@@ -4,6 +4,7 @@ button(
   type="button",
   :disabled="disabled",
   :class="className",
+  @click="emits('click')",
 )
   slot
 span(
@@ -39,14 +40,14 @@ span(
 </template>
 
 <script setup lang="ts">
-import { computed, useAttrs, useCssModule } from 'vue';
+import { computed, useCssModule, getCurrentInstance } from 'vue';
 import { classNames } from '@/utilities/css';
 import type { VueNode } from '@/utilities/types';
-import { handleMouseUpByBlurring } from '@polaris/utilities/focus';
+import { handleMouseUpByBlurring } from '@/utilities/focus';
 import CancelSmallMinor from '@icons/CancelSmallMinor.svg';
 
-const attrs = useAttrs();
 const styles = useCssModule();
+const currentInstance = getCurrentInstance();
 
 const slots = defineSlots<{
   /** Elements to display inside the tag*/
@@ -67,12 +68,15 @@ const props = withDefaults(defineProps<TagProps>(), {
 });
 
 const emits = defineEmits<{
+  /** Callback when remove button is clicked or keypressed. */
   'remove': [];
+  /** Callback when tag is clicked or keypressed. Renders without remove button or url when set. */
+  'click': [];
 }>();
 
 // Computed
-const hasEventClick = computed(() => Boolean(attrs['onClick']));
-const hasEventRemove = computed(() => Boolean(attrs['onRemove']));
+const hasEventClick = computed(() => Boolean(currentInstance?.vnode.props?.onClick));
+const hasEventRemove = computed(() => Boolean(currentInstance?.vnode.props?.onRemove));
 const segmented = computed(() => hasEventClick.value && props.url);
 
 const className = computed(() => {
@@ -113,5 +117,5 @@ const onMouseUp = handleMouseUpByBlurring;
 </script>
 
 <style lang="scss" module>
-@import '@polaris/components/Tag/Tag.scss';
+@import '@polaris/components/Tag/Tag.module.scss';
 </style>
