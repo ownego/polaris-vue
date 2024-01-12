@@ -34,5 +34,5 @@ function errorTextId(id: string): string {
 </script>
 
 <style lang="scss" module>
-@import '@polaris/components/InlineError/InlineError.scss';
+@import '@polaris/components/InlineError/InlineError.module.scss';
 </style>
