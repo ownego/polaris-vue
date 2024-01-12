@@ -13,6 +13,9 @@ PositionedOverlay(
   :z-index-override="zIndexOverride",
   @scroll-out="handleScrollOut",
 )
+  div(
+    :class="",
+  )
 </template>
 
 <script setup lang="ts">
@@ -112,7 +115,11 @@ const state = reactive<State>({
 
 const contentNode = ref<HTMLElement | null>(null);
 const enteringTimer = ref<number | undefined>(undefined);
-const overlayRef = ref<HTMLElement | null>(null);
+const overlayRef = ref<InstanceType<typeof PositionedOverlay> | HTMLElement | null>(null);
+
+const overlayDetails = computed(() => {
+  return (overlayRef.value as InstanceType<typeof PositionedOverlay>).overlayDetails
+});
 
 const positionOverlayClass = computed(() => {
   return classNames(
@@ -121,7 +128,20 @@ const positionOverlayClass = computed(() => {
     state.transitionStatus === TransitionStatus.Entered && styles['PopoverOverlay-open'],
     state.transitionStatus === TransitionStatus.Exiting && styles['PopoverOverlay-exiting'],
   )
-})
+});
+
+const contentStyles = computed(() => {
+  return overlayDetails.value.measuring ? undefined : { height: `${overlayDetails.value.desiredHeight}px` };
+});
+
+const popoverOverlayClass = computed(() => {
+  return classNames(
+    styles.Popover,
+    overlayDetails.value.positioning === 'above' && styles.positionedAbove,
+    props.fullWidth && styles['Popover-fullWidth'],
+    props.fluidContent && styles['Popover-fluidContent'],
+  );
+});
 
 watch(
   () => props.active,
