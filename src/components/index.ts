@@ -21,3 +21,4 @@ export * from './Button';
 export * from './Image';
 export * from './EmptyState';
 export * from './ButtonGroup';
+export * from './Badge';
