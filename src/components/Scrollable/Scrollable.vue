@@ -195,7 +195,7 @@ const performScrollHint = (elem?: HTMLDivElement | null) => {
  * AppProvider and this component both provide the stickyManager, check them if there is problem with injection
  */
 provide('scrollable', scrollTo);
-provide('sticky-manager', stickyManager.value);
+provide('sticky-manager', stickyManager);
 </script>
 
 <style lang="scss" module>
