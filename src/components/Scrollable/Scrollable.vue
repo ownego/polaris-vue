@@ -10,7 +10,6 @@ div(
 
 <script setup lang="ts">
 import {
-  useCssModule,
   useAttrs,
   ref,
   computed,
@@ -24,6 +23,7 @@ import { classNames } from '@/utilities/css';
 import { StickyManager } from '@/utilities/sticky-manager';
 import useLazyRef from '@/use/useLazyRef';
 import type { VueNode } from '@/utilities/types';
+import styles from '@polaris/components/Scrollable/Scrollable.module.scss';
 
 const MAX_SCROLL_HINT_DISTANCE = 100;
 const LOW_RES_BUFFER = 2;
@@ -67,7 +67,6 @@ export type ScrollableSlot = {
   default: (_: VueNode) => null;
 }
 
-const styles = useCssModule();
 const attrs = useAttrs();
 
 // Don't need to work with ...rest of props, attrs is enough
@@ -197,7 +196,3 @@ const performScrollHint = (elem?: HTMLDivElement | null) => {
 provide('scrollable', scrollTo);
 provide('sticky-manager', stickyManager);
 </script>
-
-<style lang="scss" module>
-@import '@polaris/components/Scrollable/Scrollable.module.scss';
-</style>

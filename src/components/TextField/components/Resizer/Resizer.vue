@@ -17,8 +17,9 @@ div(
 </template>
 
 <script setup lang="ts">
-import { computed, onMounted, ref, useCssModule } from 'vue';
+import { computed, onMounted, ref } from 'vue';
 import { useEventListener } from '@/utilities/use-event-listener';
+import styles from '@polaris/components/TextField/TextField.module.scss';
 
 export type ResizerProps = {
   contents?: string;
@@ -34,8 +35,6 @@ type ResizerEvents = {
 const props = defineProps<ResizerProps>();
 
 const emits = defineEmits<ResizerEvents>();
-
-const styles = useCssModule();
 
 const contentNode = ref<HTMLDivElement | null>(null);
 const minimumLinesNode = ref<HTMLDivElement | null>(null);
@@ -109,7 +108,3 @@ function replaceEntity(entity: string) {
   return ENTITIES_TO_REPLACE[entity as keyof typeof ENTITIES_TO_REPLACE];
 }
 </script>
-
-<style lang="scss" module>
-@import '@polaris/components/TextField/TextField.module.scss';
-</style>
