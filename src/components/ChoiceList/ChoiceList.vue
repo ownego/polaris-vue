@@ -54,12 +54,13 @@ BlockStack(
 </template>
 
 <script setup lang="ts">
-import { computed, getCurrentInstance, useCssModule } from 'vue';
+import { computed, getCurrentInstance } from 'vue';
 import { useHasSlot } from '@/use/useHasSlot';
 // @ts-ignore Note: using component:is in template
 import { Box, Bleed, BlockStack, Checkbox, InlineError, RadioButton } from '@/components';
 import { errorTextID } from '@/components/InlineError/utils';
 import type { Choice, ChoiceListProps, ChoiceListSlots, ChoiceListEvents } from './types';
+import styles from '@polaris/components/ChoiceList/ChoiceList.module.scss';
 
 const props = withDefaults(defineProps<ChoiceListProps>(), {
   disabled: false,
@@ -71,7 +72,6 @@ const model = defineModel<string[]>({
   default: [],
 });
 
-const styles = useCssModule();
 const { hasSlot } = useHasSlot();
 
 const uniqId = getCurrentInstance()?.uid;
@@ -98,7 +98,3 @@ function updateSelectedChoices(
   return model.value.filter((selectedChoice) => selectedChoice !== value);
 }
 </script>
-
-<style lang="scss" module>
-@import '@polaris/components/ChoiceList/ChoiceList.module.scss';
-</style>
