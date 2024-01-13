@@ -4,21 +4,27 @@ title: Select
 category: Selection and input
 examples:
   - fileName: Default.vue
+    frameHeight: 250
     title: Default
     description: Presents a classic dropdown menu or equivalent picker as determined by merchants’ browsers.
   - fileName: InlineLabel.vue
+    frameHeight: 250
     title: With inline label
     description: Use only for cases where the select must fit on a single line, such as in a toolbar.
   - fileName: Disabled.vue
+    frameHeight: 250
     title: Disabled
     description: Use for selections that aren’t currently available. The surrounding interface should make it clear why the select box is disabled and how to activate it.
   - fileName: WithPrefix.vue
+    frameHeight: 250
     title: With prefix
     description: Renders any React element to the left of individual select options. Does not show in the dropdown.
   - fileName: ValidationError.vue
+    frameHeight: 250
     title: With validation error
     description: Use to let merchants know if there’s a problem with their selection. For selects, a selection is typically invalid only when using a placeholder option (“Select”) and no other selection has been made.
   - fileName: SeparateValidationError.vue
+    frameHeight: 250
     title: With separate validation error
     description: Use to let merchants know when their select input is invalid in the context of a group of form inputs that the select depends on.
 ---
@@ -47,7 +53,7 @@ examples:
 
 ## Events
 
-<EventsTable />
+<EventsTable typeFile="SelectEvents" />
 
 <div style="font-size: 0.8125rem">
 

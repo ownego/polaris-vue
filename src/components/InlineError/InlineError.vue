@@ -8,7 +8,9 @@ div(
     Icon(
       :source="CircleAlertMajor",
     )
-  span {{ message }}
+  template(v-if="typeof message === 'string'")
+    span {{ message }}
+  component(v-else, :is="message")
 </template>
 
 <script setup lang="ts">

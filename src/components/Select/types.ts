@@ -35,7 +35,7 @@ export interface SelectGroup {
 
 export type SelectProps = {
   /** List of options or option groups to choose from */
-  options?: (SelectOption | SelectGroup)[];
+  options?: ((string | StrictOption) | SelectGroup)[];
   /** Label for the select */
   label?: string;
   /** Adds an action to the label */
@@ -66,9 +66,9 @@ export type SelectProps = {
 
 export type SelectSlots = {
   /** Label for the select */
-  label: (_?: VueNode) => VNode[];
+  label?: (_?: VueNode) => VNode[];
   /** Additional text to aide in use */
-  helpText: (_?: VueNode) => VNode[];
+  helpText?: (_?: VueNode) => VNode[];
 }
 
 export type SelectEvents = {

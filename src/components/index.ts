@@ -21,6 +21,7 @@ export * from './LegacyStack';
 export * from './Link';
 export * from './Portal';
 export * from './Scrollable';
+export * from './Select';
 export * from './ShadowBevel';
 export * from './Spinner';
 export * from './Tag';
