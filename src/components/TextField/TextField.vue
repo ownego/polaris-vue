@@ -95,7 +95,7 @@ Labelled(
 </template>
 
 <script setup lang="ts">
-import { computed, h, onMounted, ref, useCssModule, watch } from 'vue';
+import { computed, h, onMounted, ref, watch } from 'vue';
 import useI18n from '@/use/useI18n';
 import useId from '@/use/useId';
 import { classNames, variationName } from '@/utilities/css';
@@ -108,6 +108,7 @@ import { Connected } from '../Connected';
 import { Icon } from '../Icon';
 import { Text } from '../Text';
 import CircleCancelMinor from '@icons/CircleCancelMinor.svg';
+import styles from '@polaris/components/TextField/TextField.module.scss';
 
 import type { TextFieldProps, TextFieldSlots, TextFieldEvents } from './types';
 import { Resizer, Spinner } from './components';
@@ -121,7 +122,6 @@ const props = withDefaults(defineProps<TextFieldProps>(), {
 const slots = defineSlots<TextFieldSlots>();
 const emits = defineEmits<TextFieldEvents>();
 
-const styles = useCssModule();
 const i18n = useI18n();
 
 const model = defineModel<string>();
@@ -608,7 +608,3 @@ function normalizeAriaMultiline(multiline?: boolean | number) {
     : undefined;
 }
 </script>
-
-<style module lang="scss">
-@import '@polaris/components/TextField/TextField.module.scss';
-</style>

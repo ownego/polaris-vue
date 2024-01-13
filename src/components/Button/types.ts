@@ -1,4 +1,13 @@
-import { IconSource, BaseButton } from "@/utilities/types";
+import { IconSource, BaseButton } from '@/utilities/types';
+import type {
+  Action,
+  DisableableAction,
+  DestructableAction,
+  IconableAction,
+  OutlineableAction,
+  LoadableAction,
+  PlainAction,
+} from '@/utilities/types';
 
 export interface ButtonProps extends BaseButton {
   /**
@@ -47,3 +56,11 @@ export type ButtonEmits = {
   'pointerdown': [event: PointerEvent];
 }
 
+export interface ComplexAction
+  extends Action,
+    DisableableAction,
+    DestructableAction,
+    IconableAction,
+    OutlineableAction,
+    LoadableAction,
+    PlainAction {}

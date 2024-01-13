@@ -28,7 +28,7 @@ span(:class="className")
 </template>
 
 <script setup lang="ts">
-import { computed, inject, useCssModule } from 'vue';
+import { computed, inject } from 'vue';
 import { Text, Icon } from '@/components';
 import { classNames, variationName } from '@/utilities/css';
 import { getDefaultAccessibilityLabel } from './utils';
@@ -38,6 +38,7 @@ import type { IconSource, VueNode } from '@/utilities/types';
 import CompleteSvg from '@/assets/Badge/complete.svg';
 import PartiallySvg from '@/assets/Badge/partially.svg';
 import IncompleteSvg from '@/assets/Badge/incomplete.svg'
+import styles from '@polaris/components/Badge/Badge.module.scss';
 
 const DEFAULT_SIZE: Size = 'medium';
 interface NonMutuallyExclusiveProps {
@@ -61,7 +62,6 @@ export type BadgeProps = NonMutuallyExclusiveProps &
     | {icon?: IconSource; progress?: undefined}
   );
 
-const styles = useCssModule();
 const { hasSlot } = useHasSlot();
 
 const props = withDefaults(defineProps<BadgeProps>(), {
@@ -95,8 +95,4 @@ const progressIconMap = computed<any>(() => {
   }
 });
 </script>
-
-<style lang="scss" module>
-@import '@polaris/components/Badge/Badge.module.scss';
-</style>
 

@@ -34,7 +34,7 @@ Choice(
 </template>
 
 <script setup lang="ts">
-import { computed, getCurrentInstance, ref, useCssModule } from 'vue';
+import { computed, getCurrentInstance, ref } from 'vue';
 import { classNames, variationName } from '@/utilities/css';
 import { Choice } from '@/components/Choice';
 import { helpTextID } from '@/components/Choice/utils';
@@ -44,12 +44,12 @@ import type {
   RadioButtonSlots,
   RadioButtonEvents,
 } from './types';
+import styles from '@polaris/components/RadioButton/RadioButton.module.scss';
 
 const props = defineProps<RadioButtonProps>();
 const slots = defineSlots<RadioButtonSlots>();
 const emits = defineEmits<RadioButtonEvents>();
 
-const styles = useCssModule();
 const { hasSlot } = useHasSlot();
 
 const uniqId = getCurrentInstance()?.uid;
@@ -103,7 +103,3 @@ const handleFocus = () => {
   emits('focus');
 };
 </script>
-
-<style lang="scss" module>
-@import '@polaris/components/RadioButton/RadioButton.module.scss';
-</style>
