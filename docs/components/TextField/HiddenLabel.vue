@@ -3,15 +3,14 @@
   <ChoiceList
     title="Gift card auto-expiration"
     :choices="choices"
-    :selected="selected"
-    @change="handleChoiceChange"
+    v-model="selected"
   />
   <TextField
     label="Gift cards expire after"
     type="number"
     label-hidden
     v-model="value"
-    :disabled="selected === 'no'"
+    :disabled="selected.includes('no')"
     autoComplete="off"
   >
     <template #connectedRight>
@@ -36,9 +35,5 @@ const choices = [
 const options = ['months after purchase'];
 
 const value = ref('12');
-const selected = ref('yes');
-
-const handleChoiceChange = (selections: string[]) => {
-  selected.value = selections[0];
-}
+const selected = ref(['yes']);
 </script>
