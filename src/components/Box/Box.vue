@@ -8,7 +8,7 @@ component(
 </template>
 
 <script setup lang="ts">
-import { computed, useCssModule } from 'vue';
+import { computed } from 'vue';
 import {
   getResponsiveProps,
   classNames,
@@ -16,6 +16,7 @@ import {
 } from '@/utilities/css';
 import type { VueNode } from '@/utilities/types';
 import type { BoxProps } from './types';
+import styles from '@polaris/components/Box/Box.module.scss';
 
 export type BoxSlots = {
   /** Inner content of the box */
@@ -28,7 +29,6 @@ const props = withDefaults(defineProps<BoxProps>(), {
 
 defineSlots<BoxSlots>();
 
-const styles = useCssModule();
 
 const borderStyleValue = computed(() => (props.borderStyle
   ? props.borderStyle
@@ -156,7 +156,3 @@ const className = computed(() => {
   );
 });
 </script>
-
-<style lang="scss" module>
-@import '@polaris/components/Box/Box.module.scss';
-</style>

@@ -40,13 +40,13 @@ span(
 </template>
 
 <script setup lang="ts">
-import { computed, useCssModule, getCurrentInstance } from 'vue';
+import { computed, getCurrentInstance } from 'vue';
 import { classNames } from '@/utilities/css';
 import type { VueNode } from '@/utilities/types';
 import { handleMouseUpByBlurring } from '@/utilities/focus';
 import CancelSmallMinor from '@icons/CancelSmallMinor.svg';
+import styles from '@polaris/components/Tag/Tag.module.scss';
 
-const styles = useCssModule();
 const currentInstance = getCurrentInstance();
 
 const slots = defineSlots<{
@@ -115,7 +115,3 @@ const ariaLabel = computed(() => {
  */
 const onMouseUp = handleMouseUpByBlurring;
 </script>
-
-<style lang="scss" module>
-@import '@polaris/components/Tag/Tag.module.scss';
-</style>
