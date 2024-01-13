@@ -7,8 +7,9 @@ div(
 </template>
 
 <script setup lang="ts">
-import { computed, useCssModule } from 'vue';
+import { computed } from 'vue';
 import type { VueNode } from '@/utilities/types';
+import styles from '@polaris/components/Grid/Grid.module.scss';
 
 export type GridSlots = {
   default: (_: VueNode) => any;
@@ -46,8 +47,6 @@ interface GridProps {
 
 const props = defineProps<GridProps>();
 
-const styles = useCssModule();
-
 const style = computed(() => {
   return {
     '--pc-grid-gap-xs': props.gap?.xs,
@@ -73,7 +72,3 @@ function formatAreas(areas?: string[]) {
   return `'${areas?.join(`' '`)}'`;
 }
 </script>
-
-<style lang="scss" module>
-@import '@polaris/components/Grid/Grid.module.scss';
-</style>

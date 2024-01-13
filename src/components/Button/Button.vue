@@ -28,7 +28,7 @@ UnstyledButton(
 </template>
 
 <script setup lang="ts">
-import { computed, useCssModule, useSlots, useAttrs } from 'vue';
+import { computed, useSlots, useAttrs } from 'vue';
 import { capitalize } from '@polaris/utilities/capitalize';
 import { classNames, variationName } from '@/utilities/css';
 import type { VueNode } from '@/utilities/types';
@@ -41,13 +41,13 @@ import SelectMinor from '@icons/SelectMinor.svg';
 import ChevronDownMinor from '@icons/ChevronDownMinor.svg';
 import ChevronUpMinor from '@icons/ChevronUpMinor.svg';
 import { handleMouseUpByBlurring } from '@/utilities/focus';
+import styles from '@polaris/components/Button/Button.module.scss';
 
 defineSlots<{
   /** The content to display inside the button */
   default: (_: VueNode) => any;
 }>();
 
-const styles = useCssModule();
 const slots = useSlots();
 const attrs = useAttrs();
 const i18n = useI18n();
@@ -140,7 +140,3 @@ const disclosureIconSource = computed(() => {
   return props.disclosure === 'up' ? ChevronUpMinor : ChevronDownMinor;
 })
 </script>
-
-<style lang="scss" module>
-@import '@polaris/components/Button/Button.module.scss';
-</style>

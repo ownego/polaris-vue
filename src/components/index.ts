@@ -12,7 +12,6 @@ export * from './EmptyState';
 export * from './Grid';
 export * from './Icon';
 export * from './Image';
-export * from './Image';
 export * from './InlineError';
 export * from './InlineGrid';
 export * from './InlineStack';

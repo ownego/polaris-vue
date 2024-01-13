@@ -28,7 +28,7 @@
           </FormLayoutGroup>
         </FormLayout>
         <div :style="{marginTop: '4px'}">
-          <InlineError :message="errorMessage" :fieldID="textFieldID" />
+          <InlineError :message="errorMessage" :field-id="textFieldID" />
         </div>
       </LegacyStackItem>
       <Button :icon="DeleteMinor" accessibilityLabel="Remove item" />

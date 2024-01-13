@@ -49,15 +49,15 @@ div(:class="className")
 </template>
 
 <script setup lang="ts">
-import { computed, useCssModule } from 'vue';
+import { computed } from 'vue';
 import { classNames } from '@/utilities/css';
 import type { VueNode } from '@/utilities/types';
 import { useHasSlot } from '@/use/useHasSlot';
 import { Label, InlineError, Text, ButtonFrom } from '@/components';
 import type { LabelledProps } from './types';
 import { helpTextID } from './utils';
+import styles from '@polaris/components/Labelled/Labelled.module.scss';
 
-const styles = useCssModule();
 const { hasSlot } = useHasSlot();
 
 const props = defineProps<LabelledProps>();
@@ -89,7 +89,3 @@ const className = computed(() => {
   )
 });
 </script>
-
-<style module lang="scss">
-@import '@polaris/components/Labelled/Labelled.module.scss';
-</style>

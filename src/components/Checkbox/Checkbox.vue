@@ -68,7 +68,7 @@ Choice(
 </template>
 
 <script setup lang="ts">
-import { computed, ref, useCssModule } from 'vue';
+import { computed, ref } from 'vue';
 import { classNames, variationName, type ResponsiveProp } from '@/utilities/css';
 import type { Error, VueNode } from '@/utilities/types';
 import { useWithinListbox } from '@/use/useListbox';
@@ -83,6 +83,7 @@ import type { ChoiceBleedProps } from '../Choice/types';
 import { errorTextID } from '../InlineError/utils';
 
 import MinusMinor from '@icons/MinusMinor.svg';
+import styles from '@polaris/components/Checkbox/Checkbox.module.scss';
 
 export interface CheckboxProps extends ChoiceBleedProps {
   /** Indicates the ID of the element that is controlled by the checkbox */
@@ -137,7 +138,6 @@ const emits = defineEmits<CheckboxEvents>();
 
 const model = defineModel<Boolean>();
 
-const styles = useCssModule();
 const isWithinListbox = useWithinListbox();
 const uniqId = useId();
 const { hasSlot } = useHasSlot();
@@ -222,7 +222,3 @@ const handleOnClick = () => {
   emits('change', inputNode.value.checked, id.value);
 };
 </script>
-
-<style lang="scss" module>
-@import '@polaris/components/Checkbox/Checkbox.module.scss';
-</style>

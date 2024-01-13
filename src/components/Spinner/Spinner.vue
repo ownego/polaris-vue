@@ -11,11 +11,12 @@ span(v-bind="spanAttributes")
 </template>
 
 <script setup lang="ts">
-import { computed, onMounted, ref, useCssModule } from 'vue';
+import { computed, onMounted, ref } from 'vue';
 import { classNames, variationName } from '@/utilities/css';
 import { Text } from '@/components';
 import SpinnerIconLarge from '@/assets/spinner-large.svg';
 import SpinnerIconSmall from '@/assets/spinner-small.svg';
+import styles from '@polaris/components/Spinner/Spinner.module.scss';
 
 type Size = 'small' | 'large';
 
@@ -30,8 +31,6 @@ export interface SpinnerProps {
   /** Allows the component to apply the correct accessibility roles based on focus */
   hasFocusableParent?: boolean;
 }
-
-const styles = useCssModule();
 
 const props = withDefaults(defineProps<SpinnerProps>(), {
   size: 'large',
@@ -69,6 +68,3 @@ onMounted(() => {
   isAfterInitialMount.value = true;
 });
 </script>
-<style module lang="scss">
-@import '@polaris/components/Spinner/Spinner.module.scss';
-</style>
