@@ -9,9 +9,9 @@ div(:class="styles.Connected")
 </template>
 
 <script setup lang="ts">
-import { useCssModule } from 'vue';
 import { Item } from './components';
 import { type VueNode } from '@/utilities/types';
+import styles from '@polaris/components/Connected/Connected.module.scss';
 
 type ConnectedSlots = {
   left?: (_?: VueNode) => null;
@@ -19,11 +19,5 @@ type ConnectedSlots = {
   default: (_?: VueNode) => null;
 };
 
-const styles = useCssModule();
-
 const slots = defineSlots<ConnectedSlots>();
 </script>
-
-<style module lang="scss">
-@import '@polaris/components/Connected/Connected.scss';
-</style>

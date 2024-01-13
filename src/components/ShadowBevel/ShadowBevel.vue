@@ -8,18 +8,17 @@ component(
 </template>
 
 <script setup lang="ts">
-import { computed, useCssModule } from 'vue';
+import { computed } from 'vue';
 import { getResponsiveValue } from '@/utilities/css';
 import type { ResponsiveProp } from '@/utilities/css';
 import type { ShadowBevelProps } from './types';
+import styles from '@polaris/components/ShadowBevel/ShadowBevel.module.scss';
 
 const props = withDefaults(defineProps<ShadowBevelProps>(), {
   as: 'div',
   zIndex: '0',
   bevel: true,
 });
-
-const styles = useCssModule();
 
 const style = computed(() => ({
   '--pc-shadow-bevel-z-index': props.zIndex,
@@ -62,7 +61,3 @@ function mapResponsiveProp(
   );
 }
 </script>
-
-<style lang="scss" module>
-@import '@polaris/components/ShadowBevel/ShadowBevel.scss';
-</style>

@@ -12,7 +12,13 @@ type BlockAlign = 'start' | 'center' | 'end' | 'baseline' | 'stretch';
 
 type Gap = ResponsiveProp<SpaceScale>;
 
+export type Element = 'div' | 'span' | 'li' | 'ol' | 'ul';
+
 export interface InlineStackProps {
+  /** HTML Element type
+   * @default 'div'
+   */
+  as?: Element;
   /** Horizontal alignment of children */
   align?: Align;
   /** Vertical alignment of children */

@@ -8,7 +8,7 @@ component(
 </template>
 
 <script setup lang="ts">
-import { useCssModule, computed } from 'vue';
+import { computed } from 'vue';
 import { classNames } from '@/utilities/css';
 import type { VueNode } from '@/utilities/types';
 import type {
@@ -19,6 +19,7 @@ import type {
   Variant,
   TextDecorationLine,
 } from './types';
+import styles from '@polaris/components/Text/Text.module.scss';
 
 /**
  * This component will not use children props because of slot method in vue can do the same thing
@@ -53,8 +54,6 @@ export type TextSlots = {
   default: (_: VueNode) => null;
 }
 
-const styles = useCssModule();
-
 const props = withDefaults(defineProps<TextProps>(), {
   numeric: false,
   truncate: false,
@@ -85,8 +84,3 @@ const element = computed(() => {
   return props.visuallyHidden ? 'span' : 'p';
 });
 </script>
-
-<style lang="scss" module>
-@import '@polaris/components/Text/Text.scss';
-</style>
-

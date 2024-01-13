@@ -4,8 +4,9 @@ div(:class="className")
 </template>
 
 <script setup lang="ts">
-import { computed, useCssModule } from 'vue';
+import { computed } from 'vue';
 import { classNames } from '@/utilities/css';
+import styles from '@polaris/components/Layout/Layout.module.scss';
 
 export type SectionProps = {
   variant?: 'oneHalf' | 'oneThird' | 'fullWidth';
@@ -13,11 +14,5 @@ export type SectionProps = {
 
 const props = defineProps<SectionProps>();
 
-const styles = useCssModule();
-
 const className = computed(() => classNames(styles.Section, styles[`Section-${props.variant}`]));
 </script>
-
-<style lang="scss" module>
-@import '@polaris/components/Layout/Layout.scss';
-</style>

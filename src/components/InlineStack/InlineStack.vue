@@ -1,5 +1,6 @@
 <template lang="pug">
-div(
+component(
+  :is="as",
   :class="className",
   :style="style",
 )
@@ -7,10 +8,11 @@ div(
 </template>
 
 <script setup lang="ts">
-import { computed, useCssModule } from 'vue';
+import { computed } from 'vue';
 import type { VueNode } from '@/utilities/types';
 import { getResponsiveProps, classNames } from '@/utilities/css';
 import type { InlineStackProps } from './types';
+import styles from '@polaris/components/InlineStack/InlineStack.module.scss';
 
 export type InlineStackSlots = {
   default: (_: VueNode) => any;
@@ -19,10 +21,9 @@ export type InlineStackSlots = {
 defineSlots<InlineStackSlots>();
 
 const props = withDefaults(defineProps<InlineStackProps>(), {
+  as: 'div',
   wrap: true,
 });
-
-const styles = useCssModule();
 
 const style = computed(() => {
   return {
@@ -39,7 +40,3 @@ const className = computed(() => {
   );
 });
 </script>
-
-<style lang="scss" module>
-@import '@polaris/components/InlineStack/InlineStack.scss'
-</style>

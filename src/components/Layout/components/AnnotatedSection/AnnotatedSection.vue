@@ -15,8 +15,9 @@ div(:class="styles.AnnotatedSection")
 </template>
 
 <script setup lang="ts">
-import { computed, useCssModule } from 'vue';
+import { computed } from 'vue';
 import type { VueNode } from '@/utilities/types';
+import styles from '@polaris/components/Layout/Layout.module.scss';
 
 export type AnnotatedSectionProps = {
   id?: string;
@@ -32,11 +33,5 @@ const slots = defineSlots<{
   description?: (_: VueNode) => any;
 }>();
 
-const styles = useCssModule();
-
 const hasDescription = computed(() => Boolean(slots.description || props.description));
 </script>
-
-<style lang="scss" module>
-@import '@polaris/components/Layout/Layout.scss';
-</style>

@@ -31,7 +31,6 @@ button(
 
 <script setup lang="ts">
 import {
-  useCssModule,
   inject,
   computed,
 } from 'vue';
@@ -42,6 +41,7 @@ import type {
   VueNode,
 } from '@/utilities/types';
 import type { RouteLocationRaw } from './types';
+import styles from '@polaris/components/Link/Link.module.scss';
 
 export type LinkProps = {
   /** ID for the link */
@@ -69,8 +69,6 @@ export type LinkProps = {
   dataPrimaryLink?: boolean;
 }
 
-const styles = useCssModule();
-
 const bannerContext = inject('banner-context', false);
 
 const props = defineProps<LinkProps>();
@@ -88,7 +86,3 @@ const className = computed(() => classNames(
   props.removeUnderline && styles.removeUnderline,
 ));
 </script>
-
-<style lang="scss" module>
-@import '@polaris/components/Link/Link.scss';
-</style>

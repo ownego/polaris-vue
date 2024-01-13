@@ -25,7 +25,7 @@ Labelled(
     )
       div(
         v-if="slots.prefix || prefix",
-        :class="styles.Prefix",
+        :class="classNames(styles.Prefix, isIconPrefix && styles.PrefixIcon)",
         :id="`${id}-Prefix`",
         ref="prefixRef",
       )
@@ -95,7 +95,7 @@ Labelled(
 </template>
 
 <script setup lang="ts">
-import { computed, h, onMounted, ref, useCssModule, watch } from 'vue';
+import { computed, h, onMounted, ref, watch } from 'vue';
 import useI18n from '@/use/useI18n';
 import useId from '@/use/useId';
 import { classNames, variationName } from '@/utilities/css';
@@ -108,6 +108,7 @@ import { Connected } from '../Connected';
 import { Icon } from '../Icon';
 import { Text } from '../Text';
 import CircleCancelMinor from '@icons/CircleCancelMinor.svg';
+import styles from '@polaris/components/TextField/TextField.module.scss';
 
 import type { TextFieldProps, TextFieldSlots, TextFieldEvents } from './types';
 import { Resizer, Spinner } from './components';
@@ -121,7 +122,6 @@ const props = withDefaults(defineProps<TextFieldProps>(), {
 const slots = defineSlots<TextFieldSlots>();
 const emits = defineEmits<TextFieldEvents>();
 
-const styles = useCssModule();
 const i18n = useI18n();
 
 const model = defineModel<string>();
@@ -295,6 +295,11 @@ const backdropClassName = computed(() => classNames(
   slots.connectedLeft && styles['Backdrop-connectedLeft'],
   slots.connectedRight && styles['Backdrop-connectedRight'],
 ));
+
+const isIconPrefix = computed(() => {
+  const prefixElm = slots.prefix && slots.prefix()[0];
+  return (prefixElm?.type as any)?.__name;
+});
 
 const handleNumberChange = (steps: number, stepAmount = normalizedStep.value) => {
   const dpl = (num: number) => {
@@ -603,7 +608,3 @@ function normalizeAriaMultiline(multiline?: boolean | number) {
     : undefined;
 }
 </script>
-
-<style module lang="scss">
-@import '@polaris/components/TextField/TextField.scss';
-</style>

@@ -8,9 +8,10 @@ div(
 </template>
 
 <script setup lang="ts">
-import { computed, useCssModule } from 'vue';
+import { computed } from 'vue';
 import { classNames } from '@/utilities/css';
 import { useToggle } from '@/use/useToggle';
+import styles from '@polaris/components/Connected/Connected.module.scss';
 
 type ItemPosition = 'left' | 'right' | 'primary';
 
@@ -20,8 +21,6 @@ type ItemProps = {
 }
 
 const props = defineProps<ItemProps>();
-
-const styles = useCssModule();
 
 const {
   value: focused,
@@ -35,7 +34,3 @@ const className = computed(() => classNames(
   props.position === 'primary' ? styles['Item-primary'] : styles['Item-connection'],
 ));
 </script>
-
-<style module lang="scss">
-@import '@polaris/components/Connected/Connected.scss';
-</style>

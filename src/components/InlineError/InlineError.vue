@@ -12,11 +12,11 @@ div(
 </template>
 
 <script setup lang="ts">
-import { useCssModule } from 'vue';
 import { Icon } from '@/components';
 import type { Error } from '@/utilities/types';
 import { errorTextID } from './utils';
 import CircleAlertMajor from '@icons/CircleAlertMajor.svg';
+import styles from '@polaris/components/InlineError/InlineError.module.scss';
 
 interface InlineErrorProps {
   /** Content briefly explaining how to resolve the invalid form field input. */
@@ -25,11 +25,5 @@ interface InlineErrorProps {
   fieldId: string;
 }
 
-const styles = useCssModule();
-
 defineProps<InlineErrorProps>();
 </script>
-
-<style lang="scss" module>
-@import '@polaris/components/InlineError/InlineError.scss';
-</style>

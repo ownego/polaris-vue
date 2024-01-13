@@ -1,7 +1,7 @@
 {
   "name": "@ownego/polaris-vue",
   "version": "2.0.0-beta.1",
-  "polaris_version": "12.1.1",
+  "polaris_version": "12.9.0",
   "description": "Shopify Polaris 12 - UI library for Vue 3",
   "author": "Ownego Team",
   "type": "module",
@@ -43,11 +43,13 @@
     "docs:assets": "cp -r docs/assets/** docs/dist/assets"
   },
   "dependencies": {
-    "@shopify/polaris-icons": "^7.9.0",
+    "@shopify/polaris-icons": "^7.13.0",
     "vite-svg-loader": "^5.1.0"
   },
   "devDependencies": {
-    "@shopify/polaris-tokens": "^8.1.0",
+    "@csstools/postcss-global-data": "^2.1.1",
+    "@shopify/polaris-tokens": "^8.5.0",
+    "@shopify/postcss-plugin": "^5.0.2",
     "@types/node": "^20.10.4",
     "@vitejs/plugin-vue": "^5.0.2",
     "@vue/language-plugin-pug": "^1.8.27",
@@ -60,6 +62,8 @@
     "globby": "^14.0.0",
     "markdown-it": "^14.0.0",
     "path": "^0.12.7",
+    "postcss-custom-media": "^10.0.2",
+    "postcss-pxtorem": "^6.0.0",
     "pug": "^3.0.2",
     "sass": "^1.69.5",
     "typescript": "^5.3.3",

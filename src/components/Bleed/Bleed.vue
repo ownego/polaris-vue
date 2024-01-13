@@ -4,7 +4,7 @@ div(:className="className" :style="sanitizeCustomProperties(style)")
 </template>
 
 <script setup lang="ts">
-import { computed, useCssModule } from 'vue';
+import { computed } from 'vue';
 import type { SpaceScale } from '@shopify/polaris-tokens';
 import {
   getResponsiveProps,
@@ -13,6 +13,7 @@ import {
 } from '@/utilities/css';
 import type { VueNode } from '@/utilities/types';
 import type { ResponsiveProp } from '../../utilities/css';
+import styles from '@polaris/components/Bleed/Bleed.module.scss';
 
 type Spacing = ResponsiveProp<SpaceScale>;
 
@@ -38,8 +39,6 @@ export type BleedSlots = {
 defineSlots<BleedSlots>();
 
 const props = defineProps<BleedProps>();
-
-const styles = useCssModule();
 
 const className = computed(() => {
   return classNames(
@@ -103,7 +102,3 @@ const negativeMarginBlockEnd = getNegativeMargins('marginBlockEnd');
 const negativeMarginInlineStart = getNegativeMargins('marginInlineStart');
 const negativeMarginInlineEnd = getNegativeMargins('marginInlineEnd');
 </script>
-
-<style lang="scss" module>
-@import '@polaris/components/Bleed/Bleed.scss';
-</style>

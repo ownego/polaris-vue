@@ -5,6 +5,3 @@
   long but a customer could potentially name something this long.
 </Button>
 </template>
-
-<script setup lang="ts">
-</script>

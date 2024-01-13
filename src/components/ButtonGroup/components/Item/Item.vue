@@ -8,14 +8,13 @@ div(
 </template>
 
 <script setup lang="ts">
-import { ref, computed, useCssModule } from 'vue';
+import { ref, computed } from 'vue';
 import { classNames } from '@/utilities/css';
+import styles from '@polaris/components/ButtonGroup/ButtonGroup.module.scss';
 
 interface ItemProps {
   buttonElm: Element | any;
 }
-
-const styles = useCssModule();
 
 const props = defineProps<ItemProps>();
 
@@ -35,7 +34,3 @@ const className = computed(() => classNames(
   props.buttonElm.props?.variant === 'plain' && styles['Item-plain'],
 ));
 </script>
-
-<style lang="scss" module>
-@import '@polaris/components/ButtonGroup/ButtonGroup.scss';
-</style>

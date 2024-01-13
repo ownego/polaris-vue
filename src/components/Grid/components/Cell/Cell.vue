@@ -7,8 +7,9 @@ div(
 </template>
 
 <script setup lang="ts">
-import { computed, useCssModule } from 'vue';
+import { computed } from 'vue';
 import { classNames } from '@/utilities/css';
+import styles from '@polaris/components/Grid/components/Cell/Cell.module.scss';
 
 type Breakpoints = 'xs' | 'sm' | 'md' | 'lg' | 'xl';
 
@@ -44,8 +45,6 @@ interface CellProps {
 
 const props = defineProps<CellProps>();
 
-const styles = useCssModule();
-
 const className = computed(() => {
   return classNames(
     styles.Cell,
@@ -73,7 +72,3 @@ const style = computed(() => {
   };
 });
 </script>
-
-<style module lang="scss">
-@import '@polaris/components/Grid/components/Cell/Cell.scss';
-</style>

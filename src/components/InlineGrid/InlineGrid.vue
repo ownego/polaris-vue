@@ -7,7 +7,7 @@ div(
 </template>
 
 <script setup lang="ts">
-import { computed, useCssModule } from 'vue';
+import { computed } from 'vue';
 import {
   getResponsiveProps,
   getResponsiveValue,
@@ -16,6 +16,7 @@ import {
 import type { ResponsiveValue } from '@/utilities/css';
 import type { VueNode } from '@/utilities/types';
 import type { InlineGridProps, Columns, ColumnsType } from './types';
+import styles from '@polaris/components/InlineGrid/InlineGrid.module.scss';
 
 export type InlineGridSlots = {
   default: (_: VueNode) => any;
@@ -25,8 +26,6 @@ defineSlots<InlineGridSlots>();
 
 
 const props = defineProps<InlineGridProps>();
-
-const styles = useCssModule();
 
 const style = computed(() => {
   return {
@@ -80,6 +79,3 @@ function getColumnValue(columns?: ColumnsType) {
     .join(' ');
 }
 </script>
-<style lang="scss" module>
-@import '@polaris/components/InlineGrid/InlineGrid.scss';
-</style>

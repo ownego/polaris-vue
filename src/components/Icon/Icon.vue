@@ -28,7 +28,7 @@ span(:class="className")
 </template>
 
 <script setup lang="ts">
-import { useCssModule, computed } from 'vue';
+import { computed } from 'vue';
 import { classNames, variationName } from '@/utilities/css';
 import { Text } from '@/components';
 import type { IconSource } from '@/utilities/types';
@@ -36,6 +36,7 @@ import type {
   Tone,
   Source,
 } from './type';
+import styles from '@polaris/components/Icon/Icon.module.scss';
 
 export type IconProps = {
   /** The SVG contents to display in the icon (icons should fit in a 20 × 20 pixel viewBox) */
@@ -45,8 +46,6 @@ export type IconProps = {
   /** Descriptive text to be read to screenreaders */
   accessibilityLabel?: string;
 };
-
-const styles = useCssModule();
 
 const props = defineProps<IconProps>();
 
@@ -75,7 +74,3 @@ if (
   console.warn('Recoloring external SVGs is not supported. Set the intended color on your SVG instead.');
 }
 </script>
-
-<style lang="scss" module>
-@import '@polaris/components/Icon/Icon.scss';
-</style>

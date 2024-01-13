@@ -12,12 +12,13 @@ div(
 </template>
 
 <script setup lang="ts">
-import { computed, useCssModule } from 'vue';
+import { computed } from 'vue';
 import { useHasSlot } from '@/use/useHasSlot';
 import { useExtractFragment } from '@/use/useExtractFragment';
 import { classNames, variationName } from '@/utilities/css';
 import type { VueNode } from '@/utilities/types';
 import LegacyStackItem from './components/Item/Item.vue';
+import styles from '@polaris/components/LegacyStack/LegacyStack.module.scss';
 
 type Spacing =
   | 'extraTight'
@@ -55,7 +56,6 @@ const slots = defineSlots<{
   default: (_: VueNode) => any;
 }>()
 
-const styles = useCssModule();
 const { hasSlot } = useHasSlot();
 const { slotsElms } = useExtractFragment(slots.default);
 
@@ -77,7 +77,3 @@ const className = computed(() => {
   }
 );
 </script>
-
-<style lang="scss" module>
-@import '@polaris/components/LegacyStack/LegacyStack.scss';
-</style>

@@ -19,7 +19,6 @@ examples:
     description: >-
       Border radius can be adjusted using the [Border tokens](https://polaris.shopify.com/tokens/border).
   - fileName: Padding.vue
-    frameHeight: 212
     title: Padding
     description: >-
       Padding can be added to either all sides, left, right, top, and bottom, using the [Space tokens](https://polaris.shopify.com/tokens/space). The `padding` prop supports responsive spacing with the [Breakpoints tokens](https://polaris.shopify.com/tokens/breakpoints).

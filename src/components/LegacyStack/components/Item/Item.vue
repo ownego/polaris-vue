@@ -4,9 +4,10 @@ div(:class="className")
 </template>
 
 <script setup lang="ts">
-import { computed, useCssModule } from 'vue';
+import { computed } from 'vue';
 import type { VueNode } from '@/utilities/types';
 import { classNames } from '@/utilities/css';
+import styles from '@polaris/components/LegacyStack/LegacyStack.module.scss';
 
 export interface LegacyItemProps {
   /** Fill the remaining horizontal space in the stack with the item  */
@@ -15,8 +16,6 @@ export interface LegacyItemProps {
    * @default false
    */
 }
-
-const styles = useCssModule();
 
 defineSlots<{
   /** The content to display inside the layout. */
@@ -34,7 +33,3 @@ const className = computed(() => {
   );
 });
 </script>
-
-<style lang="scss" module>
-@import '@polaris/components/LegacyStack/LegacyStack.scss';
-</style>

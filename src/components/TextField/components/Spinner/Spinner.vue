@@ -30,10 +30,11 @@ div(
 </template>
 
 <script setup lang="ts">
-import { ref, useCssModule } from 'vue';
+import { ref } from 'vue';
 import { Icon } from '@/components';
 import ChevronDownMinor from '@icons/ChevronDownMinor.svg';
 import ChevronUpMinor from '@icons/ChevronUpMinor.svg';
+import styles from '@polaris/components/TextField/TextField.module.scss';
 
 export type SpinnerEvents = {
   'change': [step: number];
@@ -45,7 +46,7 @@ export type SpinnerEvents = {
 
 const emits = defineEmits<SpinnerEvents>();
 
-const styles = useCssModule();
+// const styles = useCssModule();
 
 const spinnerRef = ref<HTMLDivElement | null>(null);
 
@@ -75,7 +76,3 @@ defineExpose({
   handleStep,
 });
 </script>
-
-<style lang="scss" module>
-@import '@polaris/components/TextField/TextField.scss';
-</style>
