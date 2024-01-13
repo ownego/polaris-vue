@@ -48,7 +48,7 @@ label(
 </template>
 
 <script setup lang="ts">
-import { computed, useCssModule } from 'vue';
+import { computed } from 'vue';
 import {
   classNames,
   variationName,
@@ -60,6 +60,7 @@ import { useHasSlot } from '@/use/useHasSlot';
 import { InlineError } from '@/components';
 import type { ChoiceProps, ChoiceSlots } from './types';
 import { helpTextID } from './utils';
+import styles from '@polaris/components/Choice/Choice.module.scss';
 
 type ChoiceEvents = {
   'click': [];
@@ -69,7 +70,6 @@ const props = defineProps<ChoiceProps>();
 const slots = defineSlots<ChoiceSlots>();
 const emits = defineEmits<ChoiceEvents>();
 
-const styles = useCssModule();
 const { hasSlot } = useHasSlot();
 
 const hasHelpText = computed(() => Boolean(slots.helpText) || props.helpText);
@@ -119,7 +119,3 @@ const labelStyle = computed(() => ({
   ),
 }));
 </script>
-
-<style module lang="scss">
-@import '@polaris/components/Choice/Choice.module.scss';
-</style>
