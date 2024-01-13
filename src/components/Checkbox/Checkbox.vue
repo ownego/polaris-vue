@@ -8,11 +8,11 @@ Choice(
   :tone="tone",
   v-bind="extraChoiceProps",
 )
-  template(#label)
+  template(v-if="hasSlot(slots.label) || label", #label)
     slot(v-if="hasSlot(slots.label)", name="label")
     template(v-else) {{ props.label }}
 
-  template(#helpText)
+  template(v-if="hasSlot(slots.helpText) || helpText", #helpText)
     slot(v-if="hasSlot(slots.helpText)", name="helpText")
     template(v-else) {{ props.helpText }}
 
@@ -50,8 +50,8 @@ Choice(
       svg(
         v-else
         viewBox="0 0 16 16"
-        shapeRendering="geometricPrecision"
-        textRendering="geometricPrecision"
+        shape-rendering="geometricPrecision"
+        text-rendering="geometricPrecision"
       )
         path(
           :class="svgPathClassName"
@@ -135,7 +135,7 @@ const props = defineProps<CheckboxProps>();
 const slots = defineSlots<CheckboxSlots>();
 const emits = defineEmits<CheckboxEvents>();
 
-const model = defineModel<Boolean>();
+const model = defineModel<boolean | string>();
 
 const styles = useCssModule();
 const isWithinListbox = useWithinListbox();
@@ -180,7 +180,8 @@ const wrapperClassName = computed(() => classNames(styles.Checkbox, props.error 
 
 const isIndeterminate = computed(() => props.checked === 'indeterminate');
 
-const isChecked = computed(() => !isIndeterminate.value && Boolean(props.checked));
+const isChecked = computed(() => (!isIndeterminate.value && Boolean(props.checked))
+  || (typeof model.value === 'boolean' && model.value === true));
 
 const indeterminateAttributes = computed(() => isIndeterminate.value
   ? {indeterminate: true, 'aria-checked': 'mixed' as const}
@@ -202,7 +203,7 @@ const extraChoiceProps = computed(() => ({
   bleedInlineEnd: props.bleedInlineEnd,
 }));
 
-const svgPathClassName = computed(() => classNames(model.value && styles.checked));
+const svgPathClassName = computed(() => classNames(isChecked.value && styles.checked));
 
 const handleBlur = () => {
   emits('blur');
@@ -219,7 +220,7 @@ const handleOnClick = () => {
 
   model.value = inputNode.value.checked;
   inputNode.value.focus();
-  emits('change', inputNode.value.checked, id.value);
+  emits('change', inputNode.value.checked, props.value || id.value);
 };
 </script>
 

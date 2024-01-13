@@ -1,6 +1,7 @@
-import { VueNode } from '@/utilities/types';
+import type { VNode } from 'vue';
+import type { VueNode, Error } from '@/utilities/types';
 
-interface Choice {
+export interface Choice {
   /** Value of the choice */
   value: string;
   /** Label for the choice */
@@ -13,6 +14,8 @@ interface Choice {
   helpText?: string;
   /** Indicates that the choice is aria-describedBy the error message */
   describedByError?: boolean;
+  /**  Method to render children with a choice */
+  renderChildren?: VueNode;
 }
 
 export interface ChoiceListProps {
@@ -20,8 +23,6 @@ export interface ChoiceListProps {
   title?: string;
   /** Collection of choices */
   choices: Choice[];
-  /** Collection of selected choices */
-  selected: string[];
   /** Name for form input */
   name?: string;
   /** Allow merchants to select multiple options at once */
@@ -32,20 +33,16 @@ export interface ChoiceListProps {
   error?: Error;
   /** Disable all choices **/
   disabled?: boolean;
-  /** Callback when the selected choices change */
-  onChange?(selected: string[], name: string): void;
   /** Indicates the tone of the choice list */
   tone?: 'magic';
 }
 
 export type ChoiceListSlots = {
   /** Label for list of choices */
-  title: (_: VueNode) => void;
+  title: (_: VueNode) => VNode[];
 }
 
-export type ChoiceSlots = {
-  /** Label for the choice */
-  label: (_: VueNode) => void;
-  /** Additional text to aide in use */
-  helpText: (_: VueNode) => void;
+export type ChoiceListEvents = {
+  /** Callback when the selected choices change */
+  'change': [value: string[], name: string];
 }

@@ -4,18 +4,22 @@ title: Icon
 category: Images and icons
 examples:
   - fileName: Default.vue
+    frameHeight: 250
     title: Default
     description: >-
       Use to visually communicate core parts of the product and available actions.
   - fileName: Colored.vue
+    frameHeight: 250
     title: Colored
     description: >-
       Apply a color to the icon.
-  - fileName: CustomSvg.vue 
+  - fileName: CustomSvg.vue
+    frameHeight: 250
     title: With custom SVG
     description: >-
       Specify an SVG as a string to render it in an image tag, instead of an inline SVG to prevent script injection.
   - fileName: CustomSvgColor.vue
+    frameHeight: 250
     title: With custom SVG and color
     description: >-
       When using changing color of an svg and it uses currentColor, the white color is applied.

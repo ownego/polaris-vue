@@ -1,14 +1,104 @@
 <template lang="pug">
+BlockStack(
+  as="fieldset"
+  :gap="{xs: '400', md: '0'}"
+  :aria-invalid="error != null"
+  :id="finalName"
+)
+  Box(
+    v-if="hasSlot(slots.title) || title"
+    as="legend"
+    :padding-block-end="{xs: '500', md: '100'}"
+    :visually-hidden="titleHidden"
+  )
+    slot(v-if="hasSlot(slots.title)", name="title")
+    template(v-else) {{ title }}
 
+  BlockStack(
+    as="ul"
+    :gap="{xs: '400', md: '0'}"
+  )
+    li(
+      v-for="choice in choices",
+      :key="choice.value",
+    )
+      Bleed(:margin-block-end="choice.helpText ? {xs: '100', md: '0'} : {xs: '0'}")
+        component(
+          :is="allowMultiple ? 'Checkbox' : 'RadioButton'"
+          :name="finalName"
+          :value="choice.value"
+          :id="choice.id"
+          :disabled="choice.disabled || disabled"
+          :fill="{xs: true, sm: false}"
+          :checked="choiceIsSelected(choice)"
+          :aria-describedby="error && choice.describedByError ? errorTextID(finalName) : undefined"
+          :tone="tone"
+          @change="handleChange"
+        )
+          template(#label, v-if="choice.label") {{ choice.label }}
+          template(#helpText, v-if="choice.helpText") {{ choice.helpText }}
+
+        div(
+          v-if="choice.renderChildren",
+          :class="styles.ChoiceChildren",
+        )
+          Box(:padding-block-start="{xs: '400', md: '0'}")
+            component(:is="choice.renderChildren")
+
+  Box(
+    v-if="error"
+    :padding-block-start="{xs: '0', md: '100'}"
+    padding-block-end="200"
+  )
+    InlineError(:message="error" :field-id="finalName")
 </template>
 
 <script setup lang="ts">
-// import { ref } from 'vue';
-// import type { ChoiceListProps, ChoiceListSlots } from './types';
-// import { Box, Bleed, BlockStack, InlineError } from '@/components';
+import { computed, getCurrentInstance, useCssModule } from 'vue';
+import { useHasSlot } from '@/use/useHasSlot';
+// @ts-ignore Note: using component:is in template
+import { Box, Bleed, BlockStack, Checkbox, InlineError, RadioButton } from '@/components';
+import { errorTextID } from '@/components/InlineError/utils';
+import type { Choice, ChoiceListProps, ChoiceListSlots, ChoiceListEvents } from './types';
 
-// const props = defineProps<ChoiceListProps>();
-// const slots = defineSlots<ChoiceListSlots>();
+const props = withDefaults(defineProps<ChoiceListProps>(), {
+  disabled: false,
+});
+const slots = defineSlots<ChoiceListSlots>();
+const emits = defineEmits<ChoiceListEvents>();
 
+const model = defineModel<string[]>({
+  default: [],
+});
 
+const styles = useCssModule();
+const { hasSlot } = useHasSlot();
+
+const uniqId = getCurrentInstance()?.uid;
+const name = computed(() => String(props.name ?? uniqId));
+const finalName = computed(() => props.allowMultiple ? `${name.value}[]` : name.value);
+
+const handleChange = (checked: boolean, value: string): void => {
+  model.value = updateSelectedChoices(value, checked);
+  emits('change', model.value, value);
+}
+
+const choiceIsSelected = ({value}: Choice) => {
+  return model.value.includes(value);
+}
+
+function updateSelectedChoices(
+  value: string,
+  checked: boolean,
+) {
+  if (checked) {
+    return props.allowMultiple ? [...model.value, value] : [value];
+  }
+
+  return model.value.filter((selectedChoice) => selectedChoice !== value);
+}
 </script>
+
+<style lang="scss" module>
+@import '@polaris/components/ChoiceList/ChoiceList.module.scss';
+</style>

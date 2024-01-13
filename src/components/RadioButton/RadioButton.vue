@@ -8,10 +8,10 @@ Choice(
   :tone="model === normalizedValue ? tone : undefined",
   v-bind="extraChoiceProps",
 )
-  template(#label)
+  template(v-if="hasSlot(slots.label) || label", #label)
     slot(v-if="hasSlot(slots.label)", name="label")
     template(v-else) {{ label }}
-  template(#helpText)
+  template(v-if="hasSlot(slots.helpText) || helpText", #helpText)
     slot(v-if="hasSlot(slots.helpText)", name="helpText")
     template(v-else) {{ helpText }}
 
@@ -22,7 +22,7 @@ Choice(
       :name="`${name}`",
       :value="value",
       type="radio",
-      :checked="model === normalizedValue",
+      :checked="checked || model === normalizedValue",
       :disabled="disabled",
       :class="inputClassName",
       :aria-describedby="ariaDescribedBy",
