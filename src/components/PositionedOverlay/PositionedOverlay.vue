@@ -332,9 +332,10 @@ function handleMeasurement() {
 
 defineExpose({
   forceUpdatePosition,
+  overlayDetails,
 });
 </script>
 
 <style lang="scss" module>
-@import '@polaris/components/PositionedOverlay/PositionedOverlay.scss';
+@import '@polaris/components/PositionedOverlay/PositionedOverlay.module.scss';
 </style>
