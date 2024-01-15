@@ -14,7 +14,6 @@ div(
 <script setup lang="ts">
 import {
   type StyleValue,
-  useCssModule,
   nextTick,
   ref,
   reactive,
@@ -24,6 +23,7 @@ import {
   onUnmounted,
   defineExpose,
 } from 'vue';
+import styles from '@polaris/components/PositionedOverlay/PositionedOverlay.module.scss';
 import { classNames } from '@/utilities/css';
 import { getRectForNode, Rect } from '@/utilities/geometry';
 import { forNode } from '@/utilities/scrollable/for-node';
@@ -94,8 +94,6 @@ const OBSERVER_CONFIG = {
   characterData: true,
   attributeFilter: ['style'],
 };
-
-const styles = useCssModule();
 
 const props = defineProps<PositionedOverlayProps>();
 
@@ -335,7 +333,3 @@ defineExpose({
   overlayDetails: overlayDetails(),
 });
 </script>
-
-<style lang="scss" module>
-@import '@polaris/components/PositionedOverlay/PositionedOverlay.scss';
-</style>

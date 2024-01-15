@@ -1,7 +1,6 @@
 import {
   type Component as ComponentType,
   h,
-  isVNode,
   VNode
 } from 'vue';
 
@@ -21,15 +20,22 @@ export function wrapWithComponent(
 }
 
 // Checks whether `element` is a Vue component of type `Component`.
+// Note: There will be type errors in this method, but we will improve them later
 export function isElementOfType(
   element: VNode | null | undefined,
   Component: ComponentType,
 ): boolean {
-  if (element == null || !isVNode(element)) {
+  if (element == null) {
     return false;
   }
 
-  const type = element.type;
+  // First we need to check if the element is a Vue component
+  if (!element.type || !element.type.__name) {
+    return false; 
+  }
 
-  return type === Component;
+  const elementType = element.type.__name;
+  const componentType = Component.__name; 
+
+  return elementType === componentType;
 }

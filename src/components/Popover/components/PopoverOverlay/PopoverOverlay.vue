@@ -14,13 +14,38 @@ PositionedOverlay(
   @scroll-out="handleScrollOut",
 )
   div(
-    :class="",
+    v-bind="{ ...overlay.props }",
+    :class="popoverOverlayClass",
   )
+    EventListener(event="click", :handler="handleClick")
+    EventListener(event="touchStart", :handler="handleClick")
+    KeypressListener(:key-code="Key.Escape", :handler="handleEscape")
+    div(
+      tabindex="0",
+      :class="styles.FocusTracker",
+      @focus="handleFocusFirstItem",
+    )
+    div(:class="styles.ContentContainer")
+      div(
+        ref="contentNode",
+        :id="id",
+        :tabindex="autofocusTarget === 'none' ? undefined : -1",
+        :class="contentClassNames",
+        :style="contentStyles",
+      )
+        slot
+        component(:is="renderPopoverContent")
+    div(
+      :class="styles.FocusTracker",
+      tabindex="0",
+      @focus="handleFocusLastItem",
+    )
 </template>
 
 <script setup lang="ts">
 import {
-  useCssModule,
+  type Ref,
+  useSlots,
   ref,
   reactive,
   computed,
@@ -28,27 +53,22 @@ import {
   onMounted,
   onBeforeUnmount,
 } from 'vue';
+import styles from '@polaris/components/Popover/Popover.module.scss';
 import { themeDefault } from '@shopify/polaris-tokens';
 import { overlay } from '@polaris/components/shared';
 import { classNames } from '@/utilities/css';
-import { usePortalsManager } from '@/use/usePortalsManager';
+import usePortalsManager from '@/use/usePortalsManager';
 import { findFirstKeyboardFocusableNode } from '@/utilities/focus';
 import { isElementOfType, wrapWithComponent } from '@/utilities/component';
-import {
-  nodeContainsDescendant,
-  wasContentNodeDescendant,
-  wasPolarisPortalDescendant,
-} from './utilities';
 
 import {
   EventListener,
-  KeyPressListener,
+  KeypressListener,
   PositionedOverlay,
 } from '@/components';
 import { Pane } from '../Pane';
 
-import type{ Key } from '@/utilities/types';
-import type { PortalsContainerElement } from '@polaris/utilities/portals';
+import { Key } from '@/utilities/types';
 import type { PositionedOverlayProps } from '@/components/PositionedOverlay/PositionedOverlay.vue';
 import type { PaneProps } from '../Pane/Pane.vue';
 
@@ -95,7 +115,7 @@ type Emit = {
   close: [event: PopoverCloseSource];
 }
 
-const styles = useCssModule();
+const slots = useSlots();
 
 const context = usePortalsManager();
 
@@ -113,7 +133,7 @@ const state = reactive<State>({
     : TransitionStatus.Exited,
 });
 
-const contentNode = ref<HTMLElement | null>(null);
+const contentNode = ref<HTMLDivElement | null>(null);
 const enteringTimer = ref<number | undefined>(undefined);
 const overlayRef = ref<InstanceType<typeof PositionedOverlay> | HTMLElement | null>(null);
 
@@ -130,16 +150,25 @@ const positionOverlayClass = computed(() => {
   )
 });
 
-const contentStyles = computed(() => {
-  return overlayDetails.value.measuring ? undefined : { height: `${overlayDetails.value.desiredHeight}px` };
-});
-
 const popoverOverlayClass = computed(() => {
   return classNames(
     styles.Popover,
     overlayDetails.value.positioning === 'above' && styles.positionedAbove,
-    props.fullWidth && styles['Popover-fullWidth'],
-    props.fluidContent && styles['Popover-fluidContent'],
+    props.fullWidth && styles.fullWidth,
+    overlayDetails.value.measuring && styles.measuring,
+    props.hideOnPrint && styles['PopoverOverlay-hideOnPrint'],
+  );
+});
+
+const contentStyles = computed(() => {
+  return overlayDetails.value.measuring ? undefined : { height: `${overlayDetails.value.desiredHeight}px` };
+});
+
+const contentClassNames = computed(() => {
+  return classNames(
+    styles.Content,
+    props.fullHeight && styles['Content-fullHeight'],
+    props.fluidContent && styles['Content-fluidContent'],
   );
 });
 
@@ -222,12 +251,11 @@ function focusContent() {
 
 function handleClick(event: Event) {
   const target = event.target as HTMLElement;
-  const tmpContentNode = contentNode.value;
   const { activator, preventCloseOnChildOverlayClick } = props;
   const composedPath = event.composedPath();
   const wasDescendant = preventCloseOnChildOverlayClick
-    ? wasContentNodeDescendant(composedPath, target)
-    : nodeContainsDescendant(composedPath, tmpContentNode);
+    ? wasPolarisPortalDescendant(composedPath, context)
+    : wasContentNodeDescendant(composedPath, contentNode);
   const isActivatorDescendant = nodeContainsDescendant(activator, target);
 
   if (
@@ -247,10 +275,9 @@ function handleScrollOut() {
 
 function handleEscape(event: Event) {
   const target = event.target as HTMLElement;
-  const tmpContentNode = contentNode.value;
-  const activator = props;
+  const { activator } = props;
   const composedPath = event.composedPath();
-  const wasDescendant = wasContentNodeDescendant(composedPath, tmpContentNode);
+  const wasDescendant = wasContentNodeDescendant(composedPath, contentNode);
   const isActivatorDescendant = nodeContainsDescendant(activator, target);
 
   if (wasDescendant || isActivatorDescendant) {
@@ -264,6 +291,52 @@ function handleFocusFirstItem() {
 
 function handleFocusLastItem() {
   emits('close', PopoverCloseSource.FocusOut);
+}
+
+function renderPopoverContent(props: PaneProps) {
+  const childrenArray = slots.default?.() || [];
+
+  if (isElementOfType(childrenArray[0], Pane)) {
+    return childrenArray;
+  }
+
+  return wrapWithComponent(Pane, props, childrenArray);
+}
+
+function nodeContainsDescendant(
+  rootNode: HTMLElement,
+  descendant: HTMLElement,
+): boolean {
+  if (rootNode === descendant) {
+    return true;
+  }
+
+  let parent = descendant.parentNode;
+
+  while (parent != null) {
+    if (parent === rootNode) {
+      return true;
+    }
+    parent = parent.parentNode;
+  }
+
+  return false;
+}
+
+function wasContentNodeDescendant(
+  composedPath: readonly EventTarget[],
+  contentNode: Ref<HTMLDivElement | null>,
+) {
+  return (contentNode.value != null && composedPath.includes(contentNode.value)
+  );
+}
+
+function wasPolarisPortalDescendant(
+  composedPath: readonly EventTarget[],
+  portalsContainerElement: Ref<HTMLElement | null>,
+): boolean {
+  return composedPath
+    .some((eventTarget) => eventTarget instanceof Node && portalsContainerElement.value?.contains(eventTarget));
 }
 </script>
 
