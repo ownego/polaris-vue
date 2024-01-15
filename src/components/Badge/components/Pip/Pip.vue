@@ -7,11 +7,12 @@ span(:class="className")
 </template>
 
 <script setup lang="ts">
-import { computed, useCssModule } from 'vue';
+import { computed } from 'vue';
 import { classNames, variationName } from '@/utilities/css';
 import { Text } from '@/components';
 import { getDefaultAccessibilityLabel } from '../../utils';
 import type { Tone, Progress } from '../../types';
+import styles from '@polaris/components/Badge/components/Pip/Pip.module.scss';
 
 interface PipProps {
   tone?: Tone;
@@ -19,7 +20,6 @@ interface PipProps {
   accessibilityLabelOverride?: string;
 }
 
-const styles = useCssModule();
 
 const props = withDefaults(defineProps<PipProps>(), {
   progress: 'complete'
@@ -38,7 +38,3 @@ const accessibilityLabel = computed(() => {
     : getDefaultAccessibilityLabel(props.progress, props.tone);
 })
 </script>
-
-<style lang="scss" module>
-@import '@polaris/components/Badge/components/Pip/Pip.module.scss';
-</style>

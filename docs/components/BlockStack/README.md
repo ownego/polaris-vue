@@ -1,6 +1,6 @@
 ---
 layout: doc
-title: BlockStack
+title: Block stack
 category: Layout and structure
 examples:
   - fileName: Gap.vue

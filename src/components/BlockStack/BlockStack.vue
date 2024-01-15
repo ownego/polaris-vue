@@ -8,7 +8,7 @@ component(
 </template>
 
 <script setup lang="ts">
-import { computed, useCssModule } from 'vue';
+import { computed } from 'vue';
 import {
   classNames,
   sanitizeCustomProperties,
@@ -16,6 +16,7 @@ import {
 } from '@/utilities/css';
 import type { VueNode } from '@/utilities/types';
 import type { BlockStackProps } from './types';
+import styles from '@polaris/components/BlockStack/BlockStack.module.scss';
 
 export type BlockStackSlots = {
   default: (_: VueNode) => any;
@@ -27,8 +28,6 @@ const props = withDefaults(defineProps<BlockStackProps>(), {
 });
 
 defineSlots<BlockStackSlots>();
-
-const styles = useCssModule();
 
 const style = computed<any>(() => {
   return {
@@ -47,7 +46,3 @@ const className = computed(() => {
   );
 });
 </script>
-
-<style lang="scss" module>
-@import '@polaris/components/BlockStack/BlockStack.module.scss';
-</style>

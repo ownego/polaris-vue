@@ -232,6 +232,14 @@ html:not(.example-preview) {
   font-weight: 500;
 }
 
+#VPSidebarNav .group:last-child .VPSidebarItem.level-1 {
+  padding-bottom: 1rem;
+}
+
+.VPSidebarItem.level-2 > .item > .VPLink > .text {
+  padding: 0;
+}
+
 .VPDoc.has-aside .content-container.content-container {
   max-width: 896px;
 }

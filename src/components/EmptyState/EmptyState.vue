@@ -74,7 +74,7 @@ Box(
 </template>
 
 <script setup lang="ts">
-import { computed, useCssModule } from 'vue';
+import { computed } from 'vue';
 import {
   Box,
   ButtonFrom,
@@ -86,6 +86,7 @@ import {
 import { useHasSlot } from '@/use/useHasSlot';
 import { classNames } from '@/utilities/css';
 import type { VueNode, ComplexAction } from '@/utilities/types';
+import styles from '@polaris/components/EmptyState/EmptyState.module.scss';
 
 interface EmptyStateProps {
   /** The empty state heading */
@@ -107,7 +108,6 @@ interface EmptyStateProps {
   secondaryAction?: ComplexAction;
 }
 
-const styles = useCssModule();
 const { hasSlot } = useHasSlot();
 
 const slots = defineSlots<{
@@ -132,7 +132,3 @@ const sourceSet = computed(() => {
   ];
 });
 </script>
-
-<style lang="scss" module>
-@import '@polaris/components/EmptyState/EmptyState.module.scss';
-</style>
