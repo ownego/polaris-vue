@@ -76,7 +76,7 @@ Labelled(
 </template>
 
 <script setup lang="ts">
-import { computed, getCurrentInstance } from 'vue';
+import { computed } from 'vue';
 import { classNames, variationName } from '@/utilities/css';
 import { Labelled, Box, Icon, Text } from '@/components';
 import { helpTextID } from '@/components/Labelled/utils';
