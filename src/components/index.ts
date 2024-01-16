@@ -20,6 +20,7 @@ export * from './Layout';
 export * from './LegacyStack';
 export * from './Link';
 export * from './Portal';
+export * from './RangeSlider';
 export * from './Scrollable';
 export * from './ShadowBevel';
 export * from './Spinner';
