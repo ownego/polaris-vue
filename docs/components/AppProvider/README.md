@@ -8,7 +8,7 @@ examples:
     description: AppProvider works by default without any additional options passed to it.
   - fileName: I18n.vue
     title: With i18n
-    description: With an `i18n`, `AppProvider` will provide these translations to polaris components. See [using translations](https://polaris.shopify.com/components/app-provider#using-translations)
+    description: With an `i18n`, `AppProvider` will provide these translations to polaris components. See [using translations](/components/AppProvider#using-translations)
 ---
 
 # {{ $frontmatter.title }}

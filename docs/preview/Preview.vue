@@ -5,6 +5,7 @@
 
 <script setup lang="ts">
 import { createApp, defineAsyncComponent, onMounted, h } from 'vue';
+import { createWebHistory, createRouter } from 'vue-router';
 import { useData } from 'vitepress';
 import PolarisVue from '../../src/polaris-vue';
 import { AppProvider } from '../../src/components';
@@ -28,12 +29,23 @@ const wrappedComponent = () => {
   )
 }
 
+const router = createRouter({
+  history: createWebHistory(),
+  routes: [
+    {
+      path: '/preview/:example',
+      component: {},
+    },
+  ],
+});
+
 onMounted(() => {
   const app = createApp(
     isAppProvider
       ? exampleComponent
       : wrappedComponent
   );
+  app.use(router)
   app.use(PolarisVue);
   app.mount('#preview');
 

@@ -43,7 +43,3 @@ const requiredIndicator = computed(() => classNames(
   props.requiredIndicator && styles.requiredIndicator,
 ));
 </script>
-
-<style lang="scss" module>
-@import '@polaris/components/Label/Label.module.scss';
-</style>

@@ -43,7 +43,7 @@ examples:
 
 ## Related components
 
-- To lay out a set of smaller components in a row, [use the vertical stack component](https://polaris.shopify.com/components/layout-and-structure/vertical-stack)
-- To lay out form fields, [use the form layout component](https://polaris.shopify.com/components/form-layout)
+- To lay out a set of smaller components in a row, [use the vertical stack component](/components/VerticalStack)
+- To lay out form fields, [use the form layout component](/components/FormLayout)
 
 </div>
