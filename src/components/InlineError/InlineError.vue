@@ -2,7 +2,7 @@
 div(
   v-if="message",
   :class="styles.InlineError",
-  :id="errorTextId(fieldId)",
+  :id="errorTextID(fieldId)",
 )
   div(:class="styles.Icon")
     Icon(
@@ -14,6 +14,7 @@ div(
 <script setup lang="ts">
 import { Icon } from '@/components';
 import type { Error } from '@/utilities/types';
+import { errorTextID } from './utils';
 import CircleAlertMajor from '@icons/CircleAlertMajor.svg';
 import styles from '@polaris/components/InlineError/InlineError.module.scss';
 
@@ -25,8 +26,4 @@ interface InlineErrorProps {
 }
 
 defineProps<InlineErrorProps>();
-
-function errorTextId(id: string): string {
-  return `${id}Error`;
-}
 </script>
