@@ -34,11 +34,12 @@ Choice(
 </template>
 
 <script setup lang="ts">
-import { computed, getCurrentInstance, ref } from 'vue';
+import { computed, ref } from 'vue';
 import { classNames, variationName } from '@/utilities/css';
 import { Choice } from '@/components/Choice';
 import { helpTextID } from '@/components/Choice/utils';
 import { useHasSlot } from '@/use/useHasSlot';
+import useId from '@/use/useId';
 import type {
   RadioButtonProps,
   RadioButtonSlots,
@@ -52,7 +53,7 @@ const emits = defineEmits<RadioButtonEvents>();
 
 const { hasSlot } = useHasSlot();
 
-const uniqId = getCurrentInstance()?.uid;
+const uniqId = useId();
 
 const model = defineModel<string>();
 
