@@ -7,6 +7,8 @@ export * from './Button';
 export * from './ButtonGroup';
 export * from './Card';
 export * from './EmptyState';
+export * from './Form';
+export * from './FormLayout';
 export * from './Grid';
 export * from './Icon';
 export * from './Image';
