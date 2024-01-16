@@ -123,9 +123,9 @@ const observer = ref<MutationObserver>(new MutationObserver(handleMeasurement));
 const style = computed(() => {
   return {
     top: state.top == null || isNaN(state.top) ? undefined : `${state.top}px`,
-    left: state.left == null || isNaN(state.left) ? undefined : state.left,
-    right: state.right == null || isNaN(state.right) ? undefined : state.right,
-    width: state.width == null || isNaN(state.width) ? undefined : state.width,
+    left: state.left == null || isNaN(state.left) ? undefined : `${state.left}px`,
+    right: state.right == null || isNaN(state.right) ? undefined : `${state.right}px`,
+    width: state.width == null || isNaN(state.width) ? undefined : `${state.width}px`,
     zIndex: props.zIndexOverride || state.zIndex || undefined,
   } as StyleValue;
 });

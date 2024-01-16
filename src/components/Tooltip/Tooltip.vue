@@ -3,7 +3,7 @@ component(
   ref="activatorContainer",
   :is="activatorWrapper",
   :class="wrapperClassName",
-  @focus="() => { handleFocus(); handleOpen(); }",
+  @focus="() => { handleOpen(); handleFocus(); }",
   @blur="() => { handleBlur(); handleClose(); }",
   @mouseleave="handleMouseLeave",
   @mouseenter="handleMouseEnterFix",
@@ -24,7 +24,9 @@ component(
       :borderRadius="borderRadius"
       :zIndexOverride="zIndexOverride"
       :instant="!shouldAnimate",
-    ) {{ content }}
+    )
+      slot(v-if="slots.content", name="content")
+      template(v-else) {{ content }}
 </template>
 
 <script setup lang="ts">
@@ -36,6 +38,7 @@ import useId from '@/use/useId';
 import { useToggle } from '@/use/useToggle';
 import { Portal } from '../Portal';
 import { TooltipOverlay } from './components';
+import type { VueNode } from '@/utilities/types';
 import type { TooltipOverlayProps } from './components/TooltipOverlay/TooltipOverlay.vue';
 import type { Width, Padding, BorderRadius } from './types';
 import styles from '@polaris/components/Tooltip/Tooltip.module.scss';
@@ -44,9 +47,9 @@ const HOVER_OUT_TIMEOUT = 150;
 
 export interface TooltipProps {
   /** Content to display within the tooltip */
-  content: string;
+  content?: string;
   /** Toggle whether the tooltip is visible */
-  active?: boolean;
+  active?: boolean | undefined;
   /** Delay in milliseconds while hovering over an element before the tooltip is visible */
   hoverDelay?: number;
   /** Dismiss tooltip when not interacting with its children */
@@ -91,6 +94,7 @@ const props = withDefaults(defineProps<TooltipProps>(), {
   activatorWrapper: 'span',
   width: 'default',
   padding: 'default',
+  active: undefined,
 });
 
 const emits = defineEmits<{
@@ -102,7 +106,9 @@ const emits = defineEmits<{
 
 const slots = defineSlots<{
   /** The element to activate the tooltip */
-  default: [];
+  default: (_?: VueNode) => any;
+  /** Content to display within the tooltip */
+  content?: (_?: VueNode) => any;
 }>();
 
 const { presenceList, addPresence, removePresence } = useEphemeralPresenceManagerContext();
