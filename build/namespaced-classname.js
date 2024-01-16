@@ -9,14 +9,9 @@ export function generateScopedName(name, filename) {
   let componentName = basename(filename, '.module.scss').replace(/\.vue.*/, '');
   const nestedComponentMatch = NESTED_COMPONENT_PATH_REGEX.exec(filename);
 
-  // Avoid module for nested components
-  if (nestedComponentMatch) {
-    componentName = nestedComponentMatch[1];
-  }
-
   const polarisComponentName =
     nestedComponentMatch && nestedComponentMatch.length > 1
-      ? `${polarisClassName(nestedComponentMatch[1])}`
+      ? `${polarisClassName(nestedComponentMatch[1])}-${componentName}`
       : polarisClassName(componentName);
 
   let className;
@@ -56,19 +51,4 @@ function subcomponentClassName(component, subcomponent) {
 
 function variationClassName(component, variation) {
   return `${component}--${variation}`;
-}
-
-// Taken from the string-hash package
-function stringHash(str) {
-  let hash = 5381;
-  let i = str.length;
-
-  while (i) {
-    hash = (hash * 33) ^ str.charCodeAt(--i);
-  }
-
-  /* JavaScript does bitwise operations (like XOR, above) on 32-bit signed
-   * integers. Since we want the results to be always positive, convert the
-   * signed int to an unsigned by doing an unsigned bitshift. */
-  return hash >>> 0;
 }
