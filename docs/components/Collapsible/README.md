@@ -30,6 +30,10 @@ examples:
 
 <SlotsTable />
 
+## Events
+
+<EventsTable />
+
 <div style="font-size: 0.8125rem">
 
 ## Best practices
@@ -43,20 +47,20 @@ The collapsible component should:
 
 ## Content guidelines
 
-Collapsible containers are cards with expandable and collapsible functionality, and should follow the content guidelines for [cards](https://polaris.shopify.com/components/layout-and-structure/legacy-card#content-guidelines).
+Collapsible containers are cards with expandable and collapsible functionality, and should follow the content guidelines for [cards](/components/LegacyCard#content-guidelines).
 
 ---
 
 ## Related components
 
-- To control a collapsible component, use the [button](https://polaris.shopify.com/components/actions/button) component
-- To put long sections of information in a container that allows for scrolling, [use the scrollable component](https://polaris.shopify.com/components/scrollable)
+- To control a collapsible component, use the [button](/components/Button) component
+- To put long sections of information in a container that allows for scrolling, [use the scrollable component](/components/Scrollable)
 
 ---
 
 ## Accessibility
 
-Use the collapsible component in conjunction with a [button](https://polaris.shopify.com/components/actions/button). Place the collapsible content immediately after the button that controls it, so merchants with vision or attention issues can easily discover what content is being affected.
+Use the collapsible component in conjunction with a [button](/components/Button). Place the collapsible content immediately after the button that controls it, so merchants with vision or attention issues can easily discover what content is being affected.
 
 - Use the required `id` prop of the collapsible component to give the content a unique `id` value
 - Use the `ariaExpanded` prop on the button component to add an `aria-expanded` attribute, which conveys the expanded or collapsed state to screen reader users

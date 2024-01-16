@@ -26,7 +26,7 @@ export type CollapsibleProps = {
   /** Toggle whether the collapsible is expanded or not. */
   open: boolean;
   /** Override transition properties. When set to false, disables transition completely.
-   * @default transition={{duration: 'var(--p-motion-duration-150)', timingFunction: 'var(--p-motion-ease-in-out)'}}
+   * @default :transition="{duration: 'var(--p-motion-duration-150)', timingFunction: 'var(--p-motion-ease-in-out)'}"
    */
   transition?: boolean | Transition;
 }
