@@ -27,3 +27,4 @@ export * from './Tag';
 export * from './Text';
 export * from './TextField';
 export * from './UnstyledLink';
+export * from './Collapsible';
