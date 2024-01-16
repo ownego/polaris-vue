@@ -91,6 +91,7 @@ const handleSubmit = (e: Event) => {
   }
 
   e.preventDefault();
+  console.log('object');
   emits('submit', e);
 }
 

@@ -1,5 +1,4 @@
 <template>
-<Text v-if="submitted" as="p">Submitted!</Text>
 <Form @submit="handleSubmit">
   <FormLayout>
     <Checkbox
@@ -18,7 +17,7 @@
       </template>
     </TextField>
 
-    <Button submit>Submit</Button>
+    <Button type="submit">Submit</Button>
   </FormLayout>
 </Form>
 </template>
@@ -28,11 +27,9 @@ import { ref } from 'vue';
 
 const newsletter = ref(false);
 const email = ref('');
-const submitted = ref(false);
 
 const handleSubmit = () => {
   newsletter.value = false;
   email.value = '';
-  submitted.value = true;
 };
 </script>

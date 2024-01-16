@@ -41,8 +41,6 @@ const { slotsElms } = useExtractFragment(slots.default);
 const itemRefs = ref<any[]>([]);
 
 const isGroup = (child: VNode) => {
-  console.log(child);
-
   return typeof child.type !== 'string'
     && (
       (child.type as Record<string, any>).name === 'FormLayoutGroup'

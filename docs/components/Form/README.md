@@ -4,9 +4,11 @@ title: Form
 category: Selection and input
 examples:
   - fileName: FormSubmit.vue
+    frameHeight: 350
     title: Custom onSubmit
     description: Use onSubmit as a callback for when your form is submitted.
   - fileName: WithoutValidation.vue
+    frameHeight: 350
     title: Without native validation
     description: Use in forms to toggle native form validation.
 ---
