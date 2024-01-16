@@ -32,33 +32,23 @@ PositionedOverlay(
 </template>
 
 <script setup lang="ts">
-import { computed, ref, useCssModule } from 'vue';
+import { computed, ref } from 'vue';
 import { layer } from '@polaris/components/shared';
 import useI18n from '@/use/useI18n';
 import { classNames } from '@/utilities/css';
 import { PositionedOverlay } from '@/components';
 import type { PositionedOverlayProps } from '@/components/PositionedOverlay/PositionedOverlay.vue';
-import type { Width, Padding, BorderRadius } from '../../types';
 import TailDownPathsVue from './TailDownPaths.vue';
 import TailUpPaths from './TailUpPaths.vue';
+import type { TooltipOverlayBaseProps } from './utils';
+import styles from '@polaris/components/Tooltip/components/TooltipOverlay/TooltipOverlay.module.scss';
 
-export type TooltipOverlayProps = {
-  id: string;
-  active: boolean;
+export type TooltipOverlayProps = TooltipOverlayBaseProps & {
   preventInteraction?: PositionedOverlayProps['preventInteraction'];
   preferredPosition?: PositionedOverlayProps['preferredPosition'];
-  activator: HTMLElement;
-  accessibilityLabel?: string;
-  width?: Width;
-  padding?: Padding;
-  borderRadius?: BorderRadius;
-  zIndexOverride?: number;
-  onClose(): void;
-  instant?: boolean;
-};
+}
 
 const i18n = useI18n();
-const styles = useCssModule();
 
 const props = withDefaults(defineProps<TooltipOverlayProps>(), {
   preferredPosition: 'above',
@@ -97,7 +87,3 @@ const style = computed(() => {
   }
 })
 </script>
-
-<style lang="scss" module>
-@import '@polaris/components/Tooltip/components/TooltipOverlay/TooltipOverlay.scss';
-</style>

@@ -1,6 +1,6 @@
 import type { Width, Padding, BorderRadius } from '../../types';
 
-export type TooltipOverlayProps = {
+export type TooltipOverlayBaseProps = {
   id: string;
   active: boolean;
   activator: HTMLElement;
@@ -9,6 +9,6 @@ export type TooltipOverlayProps = {
   padding?: Padding;
   borderRadius?: BorderRadius;
   zIndexOverride?: number;
-  onClose(): void;
+  onClose?(): void;
   instant?: boolean;
 };
