@@ -5,7 +5,7 @@ import type { Slot } from 'vue';
  *
  * @returns {hasSlot} A function that returns true if the slot is not empty.
  */
-export function useHasSlot () {
+export function useHasSlot() {
   const hasSlot = (slot?: Slot) => {
     if (!slot) { return false; }
 
