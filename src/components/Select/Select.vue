@@ -82,6 +82,7 @@ import { Labelled, Box, Icon, Text } from '@/components';
 import { helpTextID } from '@/components/Labelled/utils';
 import { useToggle } from '@/use/useToggle';
 import { useHasSlot } from '@/use/useHasSlot';
+import useId from '@/use/useId';
 import type {
   SelectProps,
   SelectSlots,
@@ -112,7 +113,7 @@ const {
 } = useToggle(false);
 const { hasSlot } = useHasSlot();
 
-const uniqId = getCurrentInstance()?.uid;
+const uniqId = useId();
 
 const id = computed(() => props.id || uniqId);
 const labelHidden = computed(() => props.labelInline ? true : props.labelHidden);
