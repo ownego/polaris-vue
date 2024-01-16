@@ -7,6 +7,8 @@ export type DualValue = [number, number];
 export type RangeSliderValue = number | DualValue;
 
 export type RangeSliderProps = {
+  /** Initial value for range input */
+  modelValue: RangeSliderValue;
   /** Label for the range input */
   label?: string;
   /** Adds an action to the label */

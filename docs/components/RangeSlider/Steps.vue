@@ -1,8 +1,18 @@
 <template>
+  <LegacyCard sectioned title="Navigation branding">
+    <RangeSlider
+      output
+      label="Logo offset"
+      :min="-20"
+      :max="20"
+      :step="4"
+      v-model="rangeValue"
+    />
+  </LegacyCard>
+  </template>
 
-</template>
+  <script setup lang="ts">
+  import { ref } from 'vue';
 
-<script setup lang="ts">
-import { ref } from 'vue';
-
-</script>
+  const rangeValue = ref(0);
+  </script>

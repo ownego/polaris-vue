@@ -5,7 +5,9 @@ component(
   :min="min",
   :max="max",
   :step="step",
+  v-bind="sharedProps",
   v-model="model",
+
 )
   template(v-if="hasLabel", #label)
     slot(v-if="slots.label", name="label")
@@ -57,6 +59,11 @@ const hasLabel = computed(() => hasSlot(slots.label) || props.label);
 const hasHelpText = computed(() => hasSlot(slots.helpText) || props.helpText);
 const hasPrefix = computed(() => hasSlot(slots.prefix) || props.prefix);
 const hasSuffix = computed(() => hasSlot(slots.suffix) || props.suffix);
+
+const sharedProps = computed(() => {
+  const { id, min, max, step, ...rest } = props;
+  return rest;
+});
 
 const elm = isDualThumb(model.value)
   ? h(DualThumb)

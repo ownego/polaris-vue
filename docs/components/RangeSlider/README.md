@@ -44,7 +44,7 @@ examples:
 
 ## Events
 
-<EventsTable />
+<EventsTable typeFile="RangeSliderEvents" />
 
 <div style="font-size: 0.8125rem">
 
