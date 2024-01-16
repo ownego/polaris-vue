@@ -1,19 +1,19 @@
 <template lang="pug">
 component(
+  ref="activatorContainer",
   :is="activatorWrapper",
-  :ref="setActivator",
   :class="wrapperClassName",
   @focus="() => { handleFocus(); handleOpen(); }",
   @blur="() => { handleBlur(); handleClose(); }",
-  @mouseLeave="handleMouseLeave",
-  @mouseEntered="handleMouseEnterFix",
-  @mouseDown="persistOnClick ? togglePersisting() : undefined",
-  @keyUp="handleKeyUp",
+  @mouseleave="handleMouseLeave",
+  @mouseenter="handleMouseEnterFix",
+  @mousedown="persistOnClick ? togglePersisting() : undefined",
+  @keyup="handleKeyUp",
 )
   slot
   Portal(v-if="activatorNode", id-prefix="tooltip")
     TooltipOverlay(
-      :id="(String(id))",
+      :id="(String(id))",topBarOffset
       :preferredPosition="preferredPosition"
       :activator="activatorNode"
       :active="active"
@@ -24,8 +24,7 @@ component(
       :borderRadius="borderRadius"
       :zIndexOverride="zIndexOverride"
       :instant="!shouldAnimate",
-    )
-      slot(name="content")
+    ) {{ content }}
 </template>
 
 <script setup lang="ts">
@@ -44,6 +43,8 @@ import styles from '@polaris/components/Tooltip/Tooltip.module.scss';
 const HOVER_OUT_TIMEOUT = 150;
 
 export interface TooltipProps {
+  /** Content to display within the tooltip */
+  content: string;
   /** Toggle whether the tooltip is visible */
   active?: boolean;
   /** Delay in milliseconds while hovering over an element before the tooltip is visible */
@@ -97,6 +98,11 @@ const emits = defineEmits<{
   open: [];
   /* Callback fired when the tooltip is dismissed */
   close: [];
+}>();
+
+const slots = defineSlots<{
+  /** The element to activate the tooltip */
+  default: [];
 }>();
 
 const { presenceList, addPresence, removePresence } = useEphemeralPresenceManagerContext();
@@ -203,6 +209,8 @@ function handleMouseEnterFix() {
 
 onMounted(
   () => {
+    setActivator(activatorContainer.value);
+
     // Set accesibility attributes on activator
     const firstFocusable = activatorContainer.value
       ? findFirstFocusableNode(activatorContainer.value)
@@ -227,7 +235,8 @@ onMounted(
   }
 );
 
-watch([props.active, active.value],
+watch(
+  () => [props.active, active.value],
   () => {
     if (props.active === false && active.value) {
       handleClose();
