@@ -19,7 +19,7 @@ import { classNames } from '@/utilities/css';
 import styles from '@polaris/components/Collapsible/Collapsible.module.scss';
 
 export type CollapsibleProps = {
-  /** Assign a unique ID to the collapsible. For accessibility, pass this ID as the value of the triggering componentâ€™s aria-controls prop. */
+  /** Assign a unique ID to the collapsible. For accessibility, pass this ID as the value of the triggering component’s aria-controls prop. */
   id?: string;
   /** Option to show collapsible content when printing */
   expandOnPrint?: boolean;
