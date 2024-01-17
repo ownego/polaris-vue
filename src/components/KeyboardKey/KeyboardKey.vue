@@ -1,5 +1,5 @@
 <template lang="pug">
-div(
+kbd(
   :class="className",
 )
   slot
