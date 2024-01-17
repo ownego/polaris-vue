@@ -47,6 +47,8 @@ Use thumbnails as a visual anchor and identifier for an object. They should be u
 
 <PropsTable />
 
+<div style="font-size: 0.8125rem">
+
 ## Best practices
 
 On web, thumbnails should:
@@ -81,3 +83,5 @@ For thumbnails, we recommend using a format that describes what will show in the
 ## Related components
 
 - To present a thumbnail representation of an individual or business in the interface, [use the avatar component](/components/Avatar)
+
+</div>
