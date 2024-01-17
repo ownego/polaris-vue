@@ -92,10 +92,8 @@ const transitionStyles = computed(() =>
 const collapsibleStyles = computed(() => {
   return {
     ...transitionStyles.value,
-    ...{
-      maxHeight: isFullyOpen.value ? 'none' : `${height.value}px`,
-      overflow: isFullyOpen.value ? 'visible' : 'hidden',
-    },
+    maxHeight: isFullyOpen.value ? 'none' : `${height.value}px`,
+    overflow: isFullyOpen.value ? 'visible' : 'hidden',
   };
 });
 
