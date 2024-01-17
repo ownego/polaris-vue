@@ -8,6 +8,7 @@ export * from './ButtonGroup';
 export * from './Card';
 export * from './Checkbox';
 export * from './Choice';
+export * from './ChoiceList';
 export * from './EmptyState';
 export * from './Grid';
 export * from './Icon';
