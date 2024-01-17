@@ -6,7 +6,7 @@ ScrollTo(v-if="active")
 component(
   :is="url ? UnstyledLink : 'button'",
   v-bind="url ? linkAttr : buttonAttr",
-  @click="disabled ? null : onAction",
+  @click="disabled ? null : emit('action')",
   @mouseup="url ? null : handleMouseUpByBlurring",
   @mouseenter="url ? null : onMouseEnter",
 )
@@ -88,7 +88,10 @@ type ItemProps = ActionListItemDescriptor;
 const props = withDefaults(defineProps<ItemProps>(), {
   variant: 'default',
 });
-
+const emit = defineEmits<{
+  /** Callback when any item is clicked or keypressed */
+  'action': [];
+}>();
 const slots = defineSlots<{
   default?: (_?: VueNode) => VNode[];
   /** Additional hint text to display with item */

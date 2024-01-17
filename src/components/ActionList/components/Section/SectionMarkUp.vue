@@ -41,7 +41,6 @@ Box(
           :content="item.content",
           :help-text="item.helpText",
           :role="actionRole",
-          :onAction="handleAction(item.onAction)",
           :url="item.url",
           :disabled="item.disabled",
           :icon="item.icon",
@@ -55,6 +54,7 @@ Box(
           :target="item.target",
           :accessibility-label="item.accessibilityLabel",
           :variant="item.variant",
+          @action="handleAction(item.onAction)",
         )
 
 </template>
@@ -87,15 +87,17 @@ const props = defineProps<Props>();
 const slots = defineSlots<{
   title?: (_?: VueNode) => VNode[];
 }>()
+const emit = defineEmits<{
+  'action-any-item': [];
+}>();
 
 const handleAction = (itemOnAction: ActionListItemDescriptor['onAction']) => {
   return () => {
     if (itemOnAction) {
       itemOnAction();
     }
-    if (props.onActionAnyItem) {
-      props.onActionAnyItem();
-    }
+
+    emit('action-any-item');
   };
 };
 
