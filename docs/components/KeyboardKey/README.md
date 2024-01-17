@@ -16,9 +16,15 @@ Keyboard key is used to educate merchants about keyboard shortcuts.
 
 </Lede>
 
-<Examples />
+<Examples>
 
-<Props componentName={frontmatter.title} />
+<<< ./[examples]
+
+</Examples>
+
+## Props
+
+<PropsTable />
 
 ## Best practices
 
