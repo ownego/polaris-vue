@@ -8,6 +8,8 @@ export * from './ButtonGroup';
 export * from './Card';
 export * from './Checkbox';
 export * from './Choice';
+export * from './ChoiceList';
+export * from './Collapsible';
 export * from './ColorPicker';
 export * from './EmptyState';
 export * from './EventListener';
