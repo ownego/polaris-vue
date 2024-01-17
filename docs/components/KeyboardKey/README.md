@@ -26,6 +26,8 @@ Keyboard key is used to educate merchants about keyboard shortcuts.
 
 <PropsTable />
 
+<div style="font-size: 0.8125rem">
+
 ## Best practices
 
 The keyboard key component should:
@@ -84,3 +86,5 @@ Use <KeyboardKey>Ctrl</KeyboardKey>
 ```
 
 </DoDont>
+
+</div>
