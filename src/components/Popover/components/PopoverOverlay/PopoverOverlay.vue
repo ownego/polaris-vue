@@ -199,7 +199,7 @@ watch(
 onMounted(() => {
   if (props.active) {
     focusContent();
-    
+
     changeTransitionStatus(TransitionStatus.Entered);
   }
 });
@@ -338,6 +338,14 @@ function wasPolarisPortalDescendant(
   return composedPath
     .some((eventTarget) => eventTarget instanceof Node && portalsContainerElement.value?.contains(eventTarget));
 }
+
+function forceUpdatePosition() {
+  (overlayRef.value as InstanceType<typeof PositionedOverlay>).forceUpdatePosition();
+}
+
+defineExpose({
+  forceUpdatePosition,
+});
 </script>
 
 <style lang="scss" module>
