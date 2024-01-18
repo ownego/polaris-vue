@@ -22,6 +22,7 @@ export * from './Layout';
 export * from './LegacyStack';
 export * from './Link';
 export * from './Portal';
+export * from './ProgressBar';
 export * from './RadioButton';
 export * from './Scrollable';
 export * from './Select';
