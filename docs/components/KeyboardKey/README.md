@@ -4,6 +4,7 @@ title: Keyboard key
 category: Images and icons
 examples:
   - fileName: Default.vue
+    frameHeight: 250
     title: Default
     description: Use to list a related set of keyboard shortcuts.
 ---
