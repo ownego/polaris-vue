@@ -15,7 +15,7 @@ div(:class="className")
       :class="classNames(styles.Indicator)",
       :style="indicatorStyles",
     )
-      span(:class="styles.Label") {{ parsedProgress + " %" }}
+      span(:class="styles.Label") {{ parsedProgress }}%
 </template>
 
 <script setup lang="ts">
@@ -117,6 +117,6 @@ const onTransitionEnter = (el: Element, done: () => void) => {
   setTimeout(() => {
     el.classList.add(styles.IndicatorAppearDone);
     done();
-  }, 1);
+  }, 50);
 }
 </script>
