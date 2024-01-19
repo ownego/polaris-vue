@@ -10,7 +10,7 @@ component(
   )
     PopoverOverlay(
       ref="overlayRef"
-      :id="id"
+      :id="String(id)"
       :activator="activatorNode"
       :preferInputActivator="preferInputActivator"
       :active="active"
@@ -22,7 +22,7 @@ component(
 </template>
 
 <script setup lang="ts">
-import { ref } from 'vue';
+import { onMounted, ref } from 'vue';
 import { findFirstFocusableNodeIncludingDisabled, focusNextFocusableNode } from '@/utilities/focus';
 import {
   Portal,
@@ -33,14 +33,8 @@ import {
 import { portal } from '@polaris/components/shared';
 import { setActivatorAttributes } from './set-activator-attributes';
 import type { PopoverOverlayProps, PopoverAutofocusTarget } from '@/components/Popover/components/PopoverOverlay/PopoverOverlay.vue';
+import { PopoverCloseSource } from '@/components/Popover/components/PopoverOverlay/PopoverOverlay.vue';
 import useId from '@/use/useId';
-
-export enum PopoverCloseSource {
-  Click,
-  EscapeKeypress,
-  FocusOut,
-  ScrollOut,
-}
 
 interface PopoverProps {
    /** The preferred direction to open the popover */
@@ -155,7 +149,7 @@ const handleClose = (source: PopoverCloseSource) => {
   }
 };
 
-const seAccessibilityAttributes = () => {
+const setAccessibilityAttributes = () => {
   if (activatorContainer.value == null) {
     return;
   }
@@ -179,8 +173,26 @@ const seAccessibilityAttributes = () => {
   });
 }
 function forceUpdatePosition() {
-  overlayRef.value?.forceUpdatePosition();
+  (overlayRef.value as InstanceType<typeof PopoverOverlay>).forceUpdatePosition();
 }
+
+onMounted(() => {
+  if (!activatorNode.value && activatorContainer.value) {
+    activatorNode.value = activatorContainer.value.firstElementChild as HTMLElement;
+  } else if (
+    activatorNode &&
+    activatorContainer.value &&
+    !activatorContainer.value.contains(activatorNode.value)
+  ) {
+    activatorNode.value = activatorContainer.value.firstElementChild as HTMLElement;
+  }
+
+  if (activatorNode.value && activatorContainer.value) {
+    activatorNode.value = activatorContainer.value.firstElementChild as HTMLElement;
+  }
+
+  setAccessibilityAttributes();
+});
 
 defineExpose({
   forceUpdatePosition,

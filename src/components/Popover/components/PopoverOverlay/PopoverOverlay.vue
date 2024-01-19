@@ -42,6 +42,15 @@ PositionedOverlay(
     )
 </template>
 
+<script lang="ts">
+export enum PopoverCloseSource {
+  Click,
+  EscapeKeypress,
+  FocusOut,
+  ScrollOut,
+}
+</script>
+
 <script setup lang="ts">
 import {
   type Ref,
@@ -72,12 +81,12 @@ import { Key } from '@/utilities/types';
 import type { PositionedOverlayProps } from '@/components/PositionedOverlay/PositionedOverlay.vue';
 import type { PaneProps } from '../Pane/Pane.vue';
 
-export enum PopoverCloseSource {
-  Click,
-  EscapeKeypress,
-  FocusOut,
-  ScrollOut,
-}
+// export enum PopoverCloseSource {
+//   Click,
+//   EscapeKeypress,
+//   FocusOut,
+//   ScrollOut,
+// }
 
 export type PopoverAutofocusTarget = 'none' | 'first-node' | 'container';
 
@@ -347,7 +356,3 @@ defineExpose({
   forceUpdatePosition,
 });
 </script>
-
-<style lang="scss" module>
-@import '@polaris/components/Popover/Popover.scss';
-</style>
