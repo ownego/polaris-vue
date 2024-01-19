@@ -6,14 +6,52 @@ div(:class="styles.MonthContainer")
 
     thead
       tr(:class="styles.WeekHeadings")
-        {weekdays}
+        Weekday(
+          v-for="weekday in weekdaysOrdered",
+          :key="weekday",
+          :title="i18n.translate(`Polaris.DatePicker.daysAbbreviated.${weekdayName(weekday)}`)",
+          :label="weekdayLabel(weekday)",
+          :current="current && new Date().getDay() === weekday",
+        )
 
     tbody
-      {weeksMarkup}
+      tr(
+        v-for="week, index in weeks",
+        :key="index",
+        :class="styles.Week",
+      )
+        template(
+          v-for="day, dayIndex in week",
+          :key="dayIndex",
+        )
+          Day(
+            v-if="!day",
+            :last-day-of-month="lastDayOfMonth",
+            @hover="emits('hover', null)",
+          )
+          Day(
+            v-else,
+            :selected-accessibility-label-prefix="accessibilityLabelPrefix(day)",
+            :weekday="weekdayLabel(dayIndex)",
+            :focused="focusedDate && isSameDay(day, focusedDate)",
+            :day="day",
+            :selected="selected && dateIsSelected(day, selected)",
+            :in-range="selected && dateIsInRange(day, selected)",
+            :disabled="isDayDisabled(day)",
+            :in-hovering-range="selected && hoverDate && isInHoveringRange(day, selected, hoverDate)",
+            :is-last-selected-day="isLastSelectedDay(day)",
+            :is-first-selected-day="isFirstSelectedDay(day)",
+            :is-hovering-right="isHoveringRight(day)",
+            :range-is-different="rangeIsDifferent",
+            @focus="emits('focus', day)",
+            @click="handleDateClick(day)",
+            @hover="emits('hover', day)",
+          )
+
 </template>
 
 <script setup lang="ts">
-import { computed, ref } from 'vue';
+import { computed } from 'vue';
 import { classNames } from '@/utilities/css';
 import {
   isDateBefore,
@@ -34,7 +72,7 @@ import { Weekday } from '../Weekday';
 import { monthName, weekdayName } from '@polaris/components/DatePicker/utilities';
 import styles from '@polaris/components/DatePicker/DatePicker.module.scss';
 
-export type MonthProps {
+export type MonthProps = {
   focusedDate?: Date;
   selected?: Range;
   hoverDate?: Date;
@@ -50,7 +88,7 @@ export type MonthProps {
 
 type MonthEvents = {
   'change': [date: Range];
-  'hover': [hoverEnd: Date];
+  'hover': [hoverEnd: Date | null];
   'focus': [date: Date];
 }
 
@@ -68,13 +106,17 @@ const className = computed(() => classNames(
   current.value && styles['Month-current'],
 ));
 
-const weeks = computed(() => getWeeksForMonth(props.year, props.month, props.weekStartsOn));
+const weeks = computed(() => getWeeksForMonth(props.month, props.year, props.weekStartsOn));
 
 const lastDayOfMonth = computed(() => {
   return new Date(props.year, (props.month as number) + 1, 0);
 });
 
 const rangeIsDifferent = computed(() => !(props.selected && isSameDay(props.selected.start, props.selected.end)));
+
+const weekdaysOrdered = computed(() => {
+  return getOrderedWeekdays(props.weekStartsOn);
+});
 
 const isDayDisabled = (day: Date) => {
   return (props.disableDatesBefore && isDateBefore(day, props.disableDatesBefore)) ||
@@ -123,7 +165,7 @@ const handleDateClick = (selectedDate: Date) => {
   emits('change', selectedValue);
 };
 
-function weekdayLabel(weekday: number) {
+const weekdayLabel = (weekday: number) => {
   return i18n.translate(`Polaris.DatePicker.days.${weekdayName(weekday)}`);
 }
 
