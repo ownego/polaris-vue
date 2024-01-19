@@ -5,6 +5,7 @@
   v-model="selectedDates"
   @month-change="handleMonthChange"
 />
+<p :style="{marginTop: '1rem'}">Selected Date: {{ selectedDates }}</p>
 </template>
 
 <script setup lang="ts">
