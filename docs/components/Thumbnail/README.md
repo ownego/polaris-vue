@@ -1,16 +1,7 @@
 ---
 layout: doc
 title: Thumbnail
-shortDescription: Used as a visual anchor and identifier for an object, along with text to provide context.
 category: Images and icons
-keywords:
-  - photo
-  - picture
-  - image
-  - small thumbnail
-  - medium thumbnail
-  - large thumbnail
-  - image preview
 examples:
   - fileName: Default.vue
     title: Default
