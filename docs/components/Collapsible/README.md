@@ -4,6 +4,7 @@ title: Collapsible
 category: Utilities
 examples:
   - fileName: Default.vue
+    frameHeight: 300
     title: Default
     description: Use for a basic “show more” interaction when you need to display more content.
 ---

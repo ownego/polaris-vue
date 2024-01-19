@@ -4,12 +4,15 @@ title: Spinner
 category: Feedback indicators
 examples:
   - fileName: Default.vue
+    frameHeight: 280
     title: Default
     description: Use to notify merchants that their requested action is being processed.
   - fileName: Small.vue
+    frameHeight: 280
     title: Small
     description: Smaller than the default spinner.
   - fileName: FocusManagement.vue
+    frameHeight: 280
     title: With focus management
     description: Use to direct the focus state from the control to the spinner, to the content.
 ---
