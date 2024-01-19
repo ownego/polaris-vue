@@ -4,18 +4,23 @@ title: Range slider
 category: Selection and input
 examples:
   - fileName: Default.vue
+    frameHeight: 250
     title: Default
     description: Use when a single value between `0 and 100` needs to be selected.
   - fileName: MinMax.vue
+    frameHeight: 250
     title: With min and max
     description: Use when a single value needs to be selected from a number range with a specific minimum and maximum.
   - fileName: Steps.vue
+    frameHeight: 250
     title: With steps
     description: Use when a single value of a specific increment needs to be selected from a range of numbers.
   - fileName: PrefixSuffix.vue
+    frameHeight: 250
     title: With prefix and suffix
     description: Use when the start or end of the range input benefits from additional content. The height of the range slider component varies based on the presence or absence of props like `label` and `helpText`. Setting a React element on the `prefix` and `suffix` props is supported to enable control of spacing and alignment.
   - fileName: WithDualThumb.vue
+    frameHeight: 250
     title: With dual thumb
     description: Use when two values need to be selected from a range of numbers.
 ---
