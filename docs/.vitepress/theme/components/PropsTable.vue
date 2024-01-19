@@ -105,9 +105,16 @@ const noMetaContent = computed(() => {
 });
 
 const doubleQuoteToSingleQuote = (str: string) => str.replace(/"/g, "'");
+/**
+ * Some types include () in the type name, e.g. (a | b)[]
+ * Remove the () to make it easier to search for the type
+ */
+const getTypeName = (str: string) => str.replace(/\(|\)/g, '');
 
-const expandType = async (type: string, propName: string) => {
-  if (extraType.value[propName]) {
+const expandType = async (t: string, propName: string) => {
+  const type = getTypeName(t);
+
+  if (extraType.value[propName] && extraType.value[propName].isExpanded) {
     extraType.value[propName].isExpanded = !extraType.value[propName].isExpanded;
     return;
   }
