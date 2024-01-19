@@ -16,6 +16,7 @@ export * from './Image';
 export * from './InlineError';
 export * from './InlineGrid';
 export * from './InlineStack';
+export * from './KeyboardKey';
 export * from './Label';
 export * from './Labelled';
 export * from './Layout';
