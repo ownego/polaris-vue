@@ -10,6 +10,8 @@ export * from './Checkbox';
 export * from './Choice';
 export * from './ChoiceList';
 export * from './EmptyState';
+export * from './Form';
+export * from './FormLayout';
 export * from './Grid';
 export * from './Icon';
 export * from './Image';
