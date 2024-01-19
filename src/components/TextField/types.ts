@@ -55,6 +55,8 @@ interface NonMutuallyExclusiveProps {
   verticalContent?: string;
   /** Hint text to display */
   placeholder?: string;
+  /** Initial value for the input */
+  value?: string;
   /** Additional hint text to display */
   helpText?: string;
   /** Label for the input */
@@ -158,7 +160,7 @@ export type TextFieldEvents = {
   /** Callback fired when clear button is clicked */
   'clear-button-click': [id: string];
   /** Callback fired when value is changed */
-  'input': [e: InputEvent];
+  'input': [e: InputEvent, value: string];
   /** Callback fired when value is changed */
   'change': [value: string, id: string];
   /** When provided, callback fired instead of onChange when value is changed via the number step control  */

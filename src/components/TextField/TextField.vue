@@ -400,8 +400,7 @@ const input = () => h(props.multiline ? 'textarea' : 'input', {
   readOnly: props.readOnly,
   role: props.role,
   autoFocus: props.autoFocus,
-  value: normalizedValue.value,
-  // modelValue: model,
+  value: normalizedValue.value || props.value,
   placeholder: props.placeholder,
   style: style.value,
   autoComplete: props.autoComplete,
@@ -445,6 +444,7 @@ function handleChange(e: Event) {
 
 function handleInput(e: Event) {
   model.value = (e.target as HTMLInputElement).value;
+  emits('input', e as InputEvent, (e.target as HTMLInputElement).value);
 
   if (props.suggestion) {
     (e.target as HTMLInputElement).value = props.suggestion;
