@@ -43,6 +43,7 @@ import {
   windowRect,
 } from './utilities/math';
 import type { PreferredPosition, PreferredAlignment } from './utilities/math';
+import type { VueNode } from '@/utilities/types';
 
 type Positioning = 'above' | 'below';
 
@@ -98,6 +99,9 @@ const OBSERVER_CONFIG = {
 const props = defineProps<PositionedOverlayProps>();
 
 const emits = defineEmits<Emits>();
+const slots = defineSlots<{
+  default?: (_?: VueNode) => any;
+}>();
 
 const state = reactive<State>({
   measuring: true,
@@ -120,9 +124,9 @@ const observer = ref<MutationObserver>(new MutationObserver(handleMeasurement));
 
 const style = computed(() => {
   return {
-    top: state.top == null || isNaN(state.top) ? undefined : top,
-    left: state.left == null || isNaN(state.left) ? undefined : state.left,
-    right: state.right == null || isNaN(state.right) ? undefined : state.right,
+    top: state.top == null || isNaN(state.top) ? undefined : `${top}px`,
+    left: state.left == null || isNaN(state.left) ? undefined : `${state.left}px`,
+    right: state.right == null || isNaN(state.right) ? undefined : `${state.right}px`,
     width: state.width == null || isNaN(state.width) ? undefined : state.width,
     zIndex: props.zIndexOverride || state.zIndex || undefined,
   } as StyleValue;

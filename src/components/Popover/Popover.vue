@@ -35,6 +35,7 @@ import { setActivatorAttributes } from './set-activator-attributes';
 import type { PopoverOverlayProps, PopoverAutofocusTarget } from '@/components/Popover/components/PopoverOverlay/PopoverOverlay.vue';
 import { PopoverCloseSource } from '@/components/Popover/components/PopoverOverlay/PopoverOverlay.vue';
 import useId from '@/use/useId';
+import type { VueNode } from '@/utilities/types';
 
 interface PopoverProps {
    /** The preferred direction to open the popover */
@@ -98,6 +99,12 @@ const props = withDefaults(defineProps<PopoverProps>(), {
 const emits = defineEmits<{
   /** Callback when popover is closed */
   'close': [event: PopoverCloseSource];
+}>();
+const slots = defineSlots<{
+  /** The content to display inside the popover */
+  default?: (_?: VueNode) => any;
+  /** The content to display as the activator */
+  activator?: (_?: VueNode) => any;
 }>();
 
 const id = useId();
