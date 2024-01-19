@@ -24,6 +24,7 @@ export * from './LegacyStack';
 export * from './Link';
 export * from './Portal';
 export * from './RadioButton';
+export * from './RangeSlider';
 export * from './Scrollable';
 export * from './Select';
 export * from './ShadowBevel';
