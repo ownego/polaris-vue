@@ -21,6 +21,7 @@ export * from './Labelled';
 export * from './Layout';
 export * from './LegacyStack';
 export * from './Link';
+export * from './Popover';
 export * from './Portal';
 export * from './PositionedOverlay';
 export * from './Scrollable';

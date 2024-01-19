@@ -17,12 +17,13 @@ Scrollable(
 </template>
 
 <script setup lang="ts">
-import { useCssModule, computed } from 'vue';
+import { computed } from 'vue';
 import { classNames } from '@/utilities/css';
 import { wrapWithComponent } from '@/utilities/component';
 import type { VueNode } from '@/utilities/types';
 import { Scrollable } from '@/components';
 import { Section } from '../Section';
+import styles from '@polaris/components/Popover/Popover.module.scss';
 
 export type PaneProps = {
   /** Fix the pane to the top of the popover */
@@ -45,7 +46,7 @@ export type PaneProps = {
 
 type Slots = {
   /** Default slot */
-  default: (_: VueNode) => null;
+  default: (_?: VueNode) => any;
 }
 
 type Emits = {
@@ -53,10 +54,8 @@ type Emits = {
   'scrolled-to-bottom': [];
 }
 
-const styles = useCssModule();
-
 const props = withDefaults(defineProps<PaneProps>(), {
-  captureOverscroll: false,  
+  captureOverscroll: false,
 })
 
 const emits = defineEmits<Emits>();
@@ -68,7 +67,7 @@ const children = computed(() => {
 });
 
 const content = computed(() => {
-  return props.sectioned ? wrapWithComponent(children.value, Section, {}) : children.value;
+  return props.sectioned ? wrapWithComponent(children.value(), Section, {}) : children.value;
 })
 
 const className = computed(() => classNames(
@@ -86,9 +85,3 @@ const style = computed(() => props.height
   }
   : undefined);
 </script>
-
-<style lang="scss" module>
-@import '@polaris/components/Popover/Popover.scss';
-</style>
-
-

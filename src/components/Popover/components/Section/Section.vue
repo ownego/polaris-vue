@@ -10,14 +10,8 @@ div(:class="styles.Section")
 </template>
 
 <script setup lang="ts">
-import { useCssModule } from 'vue';
 import { Box } from '@/components';
-
-const styles = useCssModule();
+import styles from '@polaris/components/Box/Box.module.scss';
 </script>
-
-<style lang="scss" module>
-@import '@polaris/components/Box/Box.scss';
-</style>
 
 
