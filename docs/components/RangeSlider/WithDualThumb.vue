@@ -36,7 +36,6 @@
     </LegacyStack>
   </div>
 </LegacyCard>
-<p>{{ rangeValue, lowerTextFieldValue, upperTextFieldValue }}</p>
 </template>
 
 <script setup lang="ts">

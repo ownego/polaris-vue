@@ -6,8 +6,6 @@
     output
   />
 </LegacyCard>
-
-<p>{{ rangeValue }}</p>
 </template>
 
 <script setup lang="ts">
