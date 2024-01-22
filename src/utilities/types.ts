@@ -202,3 +202,17 @@ export interface ComplexAction
     OutlineableAction,
     LoadableAction,
     PlainAction {}
+
+export interface NavigableOption {
+  domId: string;
+  value: string;
+  element: HTMLElement;
+  disabled: boolean;
+  isAction?: boolean;
+  index?: number;
+}
+
+export interface ListboxContextType {
+  onOptionSelect(option: NavigableOption): void;
+  setLoading(label?: string): void;
+}
