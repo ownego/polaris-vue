@@ -36,3 +36,4 @@ export * from './Text';
 export * from './TextField';
 export * from './UnstyledLink';
 export * from './Collapsible';
+export * from './DescriptionList';
