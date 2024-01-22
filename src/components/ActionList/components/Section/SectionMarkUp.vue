@@ -32,35 +32,26 @@ Box(
   )
     Box(
       as="li",
-      v-for="(item, index) in section.items",
-      :key="`${item.content}-${index}`",
+      v-for="({content, helpText, onAction, ...item}, index) in section.items",
+      :key="`${content}-${index}`",
       :role="actionRole === 'menuitem' ? 'presentation' : undefined",
     )
       InlineStack(:wrap="false")
         Item(
-          :content="item.content",
-          :help-text="item.helpText",
+          v-bind="item",
+          :content="content",
+          :help-text="helpText",
           :role="actionRole",
-          :url="item.url",
-          :disabled="item.disabled",
-          :icon="item.icon",
-          :image="item.image",
-          :prefix="item.prefix",
-          :badge="item.badge",
-          :truncate="item.truncate",
-          :ellipsis="item.ellipsis",
-          :active="item.active",
-          :external="item.external",
-          :target="item.target",
-          :accessibility-label="item.accessibilityLabel",
-          :variant="item.variant",
-          @action="handleAction(item.onAction)",
+          @action="handleAction(onAction)",
         )
-
+          template(v-if="item.prefixId", #prefix)
+            slot(:name="`prefix-${item.prefixId}`")
+          template(v-if="item.suffixId", #suffix)
+            slot(:name="`suffix-${item.suffixId}`")
 </template>
 
 <script setup lang="ts">
-import { VNode, computed } from 'vue';
+import { computed, useSlots } from 'vue';
 import {
   Box,
   Text,
@@ -68,7 +59,7 @@ import {
   BlockStack,
 } from '@/components';
 import Item from '../Item/Item.vue';
-import type { ActionListItemDescriptor, ActionListSection, VueNode } from '../../../../utilities/types';
+import type { ActionListItemDescriptor, ActionListSection } from '../../../../utilities/types';
 
 interface Props {
     /** Section of action items */
@@ -84,9 +75,7 @@ interface Props {
 }
 
 const props = defineProps<Props>();
-const slots = defineSlots<{
-  title?: (_?: VueNode) => VNode[];
-}>()
+const slots = useSlots();
 const emit = defineEmits<{
   'action-any-item': [];
 }>();

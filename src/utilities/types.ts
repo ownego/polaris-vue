@@ -214,9 +214,9 @@ export interface ActionListItemDescriptor
     content: string;
   };
     /** Prefix source */
-  prefix?: string;
+  prefixId?: string;
   /** Suffix source */
-  suffix?: string;
+  suffixId?: string;
   /** Additional hint text to display with item */
   helpText?: string;
   /** @deprecated Source of the icon */

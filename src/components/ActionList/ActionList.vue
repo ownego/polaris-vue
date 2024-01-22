@@ -16,34 +16,38 @@ template(v-if="(allowFiltering || filterActions) && hasManyActions && isFilterab
     )
       template(#prefix)
         Icon(:source="SearchMinor")
-  Box(
-    :as="HasMultipleSections ? 'ul' : 'div'",
-    ref="actionListRef",
-    :role="elementRole",
-    :tabindex="elementTabIndex",
-  )
-    //- Listeners
-    template(v-if="actionRole === 'menuitem'")
-      KeypressListener(
-        keyEvent="keydown",
-        :keyCode="Key.DownArrow",
-        :handler="handleFocusNextItem",
-      )
-      KeypressListener(
-        keyEvent="keydown",
-        :keyCode="Key.UpArrow"
-        :handler="handleFocusPreviousItem",
-      )
-    //- SectionMarkup
-    template(v-for="section, index in finalSections")
-      Section(
-        v-if="section.items && section.items.length > 0",
-        :key="section.title || index",
-        :section="section",
-        :hasMultipleSections="HasMultipleSections",
-        :actionRole="actionRole",
-        @action-any-item="emit('action-any-item')",
-      )
+Box(
+  :as="HasMultipleSections ? 'ul' : 'div'",
+  ref="actionListRef",
+  :role="elementRole",
+  :tabindex="elementTabIndex",
+)
+  //- Listeners
+  template(v-if="actionRole === 'menuitem'")
+    KeypressListener(
+      keyEvent="keydown",
+      :keyCode="Key.DownArrow",
+      :handler="handleFocusNextItem",
+    )
+    KeypressListener(
+      keyEvent="keydown",
+      :keyCode="Key.UpArrow"
+      :handler="handleFocusPreviousItem",
+    )
+  //- SectionMarkup
+  template(v-for="section, index in finalSections")
+    Section(
+      v-if="section.items && section.items.length > 0",
+      :key="section.title || index",
+      :section="section",
+      :hasMultipleSections="HasMultipleSections",
+      :actionRole="actionRole",
+      @action-any-item="emit('action-any-item')",
+    )
+      template(v-for="{ prefixId } in section.items" #[`prefix-${prefixId}`])
+        slot(:name="`prefix-${prefixId}`")
+      template(v-for="{ suffixId } in section.items" #[`suffix-${suffixId}`])
+        slot(:name="`suffix-${suffixId}`")
 </template>
 
 <script setup lang="ts">
@@ -54,7 +58,7 @@ import {
   Icon,
   KeypressListener,
 } from '@/components';
-import { Item, Section } from './components';
+import { Section } from './components';
 import SearchMinor from '@icons/SearchMinor.svg';
 import {
   wrapFocusNextFocusableMenuItem,

@@ -3,12 +3,15 @@
 ScrollTo(v-if="active")
 
 //- Control
-component(
-  :is="url ? UnstyledLink : 'button'",
-  v-bind="url ? linkAttr : buttonAttr",
+UnstyledLink(
+  v-if="url",
+  :id="id",
+  :url="disabled ? null : url",
+  :class="className",
+  :external="external",
+  :role="role",
+  :aria-label="accessibilityLabel",
   @click="disabled ? null : emit('action')",
-  @mouseup="url ? null : handleMouseUpByBlurring",
-  @mouseenter="url ? null : onMouseEnter",
 )
   Box(width="100%")
     InlineStack(
@@ -18,11 +21,10 @@ component(
     )
       //- PrefixMarkup
       span(
-        v-if="slots.prefix || prefix",
+        v-if="prefixId",
         :className="styles.Prefix",
       )
-        slot(v-if="slots.prefix", name="prefix")
-        template(v-else) {{ prefix }}
+        slot(name="prefix")
 
       span(
         v-if="icon",
@@ -60,14 +62,77 @@ component(
       )
         Badge(:tone="badge.tone") {{ badge.content }}
       //- SuffixMarkup
-      Box(v-if="slots.suffix || suffix")
+      Box(v-if="suffixId")
         span(:className="styles.Suffix")
-          slot(v-if="slots.suffix", name="suffix")
-          template(v-else) {{ suffix }}
+          slot(name="suffix")
+button(
+  v-else,
+  :id="id",
+  type="button",
+  :class="className",
+  :disabled="disabled",
+  :role="role",
+  :aria-label="accessibilityLabel",
+  @click="emit('action')",
+  @mouseup="handleMouseUpByBlurring",
+  @mouseenter="onMouseEnter",
+)
+  Box(width="100%")
+    InlineStack(
+      block-align="center",
+      gap="150",
+      :wrap="!truncate",
+    )
+      //- PrefixMarkup
+      span(
+        v-if="prefixId",
+        :className="styles.Prefix",
+      )
+        slot(name="prefix")
+
+      span(
+        v-if="icon",
+        :class="styles.Prefix",
+      )
+        Icon(:source="icon")
+      span(
+        v-if="image",
+        role="presentation",
+        :class="styles.Prefix",
+        :style="{ backgroundImage: `url(${image})`}",
+      )
+      //- TextMarkup
+      span(
+        :className="styles.Text",
+      )
+        div(v-if="helpText")
+          Box
+            TruncateText(v-if="truncate && content") {{ content }}
+            template(v-else-if="ellipsis") {{ `${content}...` }}
+            template(v-else) {{ content }}
+          Text(
+            as="span",
+            variant="bodySm",
+            :tone="active || disabled ? undefined : 'subdued'",
+          ) {{ helpText }}
+        div(v-else)
+          TruncateText(v-if="truncate && content") {{ content }}
+          template(v-else-if="ellipsis") {{ `${content}...` }}
+          template(v-else) {{ content }}
+      //- BadgeMarkup
+      span(
+        v-if="badge",
+        :class="styles.Suffix",
+      )
+        Badge(:tone="badge.tone") {{ badge.content }}
+      //- SuffixMarkup
+      Box(v-if="suffixId")
+        span(:className="styles.Suffix")
+          slot(name="suffix")
 </template>
 
 <script setup lang="ts">
-import {  VNode, computed } from 'vue';
+import { type VNode, computed } from 'vue';
 import { classNames } from '@/utilities/css';
 import { handleMouseUpByBlurring } from '@/utilities/focus';
 import {
@@ -111,27 +176,4 @@ const className = computed(() => classNames(
   props.variant === 'indented' && styles.indented,
   props.variant === 'menu' && styles.menu,
 ));
-const buttonAttr = computed(() => {
-  const { id, disabled, role, accessibilityLabel } = props;
-  return {
-    id,
-    disabled,
-    role,
-    'aria-label': accessibilityLabel,
-    type: 'button',
-    class: className.value,
-  };
-});
-
-const linkAttr = computed(() => {
-  const { id, disabled, url, role, accessibilityLabel, external } = props;
-  return {
-    id,
-    url: disabled ? null : url,
-    role,
-    external,
-    'aria-label': accessibilityLabel,
-    class: className.value,
-  };
-});
 </script>
