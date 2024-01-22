@@ -72,7 +72,7 @@ const emits = defineEmits<ChoiceEvents>();
 
 const { hasSlot } = useHasSlot();
 
-const hasHelpText = computed(() => Boolean(slots.helpText) || props.helpText);
+const hasHelpText = computed(() => hasSlot(slots.helpText) || props.helpText);
 const hasError = computed(() => props.error && typeof props.error !== 'boolean');
 const hasDescription = computed(() => hasHelpText.value || hasError.value);
 

@@ -36,48 +36,48 @@
               )
                 | Default to
                 span {{ tag.text }}
-          .dpt__type-table(v-if="extraType[p.name] && extraType[p.name].isExpanded")
-            template(v-if="extraType[p.name].types")
-              .docs-props-table__th
-                span {{ syntaxKindToDeveloperFriendlyString(extraType[p.name].syntaxKind) }} {{ extraType[p.name].types.name }}
-                .docs-props-table__close(
-                  @click="extraType[p.name].isExpanded = false",
-                ) &times;
-              template(v-if="extraType[p.name].types.members.length")
-                .docs-props-table__row(
-                  v-for="m in extraType[p.name].types.members",
-                  :key="m.name",
-                )
-                  dt
-                    span.dpt__name
-                      | {{ m.name }}
-                      span.dpt__optional(v-if="m.isOptional") ?
-                    span.dpt__types
-                      template(
-                        v-for="s, sIndex in serializeSchema(m.value)",
-                        :key="s",
-                      )
-                        span(v-if="sIndex") |
-                        span.dpt__type(
-                          :data-props-type="defineTypeFormat(s)",
-                        ) {{ doubleQuoteToSingleQuote(s) }}
-                  dd(v-if="m.description")
-                    p.dpt__description(v-html="p.description")
-
-              .docs-props-table__row(v-else)
+        .dpt__type-table(v-if="extraType[p.name] && extraType[p.name].isExpanded")
+          template(v-if="extraType[p.name].types")
+            .docs-props-table__th
+              span {{ syntaxKindToDeveloperFriendlyString(extraType[p.name].syntaxKind) }} {{ extraType[p.name].types.name }}
+              .docs-props-table__close(
+                @click="extraType[p.name].isExpanded = false",
+              ) &times;
+            template(v-if="extraType[p.name].types.members.length")
+              .docs-props-table__row(
+                v-for="m in extraType[p.name].types.members",
+                :key="m.name",
+              )
                 dt
+                  span.dpt__name
+                    | {{ m.name }}
+                    span.dpt__optional(v-if="m.isOptional") ?
                   span.dpt__types
                     template(
-                      v-for="v, vIndex in serializeSchema(extraType[p.name].types.value)",
-                      :key="v",
+                      v-for="s, sIndex in serializeSchema(m.value)",
+                      :key="s",
                     )
-                      span(v-if="vIndex") |
+                      span(v-if="sIndex") |
                       span.dpt__type(
-                        :data-props-type="defineTypeFormat(v)",
-                      ) {{ doubleQuoteToSingleQuote(v) }}
+                        :data-props-type="defineTypeFormat(s)",
+                      ) {{ doubleQuoteToSingleQuote(s) }}
+                dd(v-if="m.description")
+                  p.dpt__description(v-html="p.description")
 
-            template(v-else)
-              .docs-props-table__row No type found for this prop.
+            .docs-props-table__row(v-else)
+              dt
+                span.dpt__types
+                  template(
+                    v-for="v, vIndex in serializeSchema(extraType[p.name].types.value)",
+                    :key="v",
+                  )
+                    span(v-if="vIndex") |
+                    span.dpt__type(
+                      :data-props-type="defineTypeFormat(v)",
+                    ) {{ doubleQuoteToSingleQuote(v) }}
+
+          template(v-else)
+            .docs-props-table__row No type found for this prop.
 
   .docs-props-table--non-prop(v-else)
     div(v-html="noMetaContent")
@@ -105,9 +105,16 @@ const noMetaContent = computed(() => {
 });
 
 const doubleQuoteToSingleQuote = (str: string) => str.replace(/"/g, "'");
+/**
+ * Some types include () in the type name, e.g. (a | b)[]
+ * Remove the () to make it easier to search for the type
+ */
+const getTypeName = (str: string) => str.replace(/\(|\)/g, '');
 
-const expandType = async (type: string, propName: string) => {
-  if (extraType.value[propName]) {
+const expandType = async (t: string, propName: string) => {
+  const type = getTypeName(t);
+
+  if (extraType.value[propName] && extraType.value[propName].isExpanded) {
     extraType.value[propName].isExpanded = !extraType.value[propName].isExpanded;
     return;
   }
