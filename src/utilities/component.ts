@@ -1,29 +1,11 @@
-import {
-  type Component as ComponentType,
-  h,
-  VNode
-} from 'vue';
-
-// Wraps `element` in `Component`, if it is not already an instance of
-// `Component`. If `props` is passed, those will be added as props on the
-// wrapped component. If `element` is null, the component is not wrapped.
-export function wrapWithComponent(
-  element: VNode | null | undefined,
-  Component: ComponentType,
-  props: Record<string, any>,
-): VNode | null {
-  if (element == null) {
-    return null;
-  }
-
-  return isElementOfType(element, Component) ? element : h(Component, props, element);
-}
+import { type Component, h } from 'vue';
+import type { VueNode } from './types';
 
 // Checks whether `element` is a Vue component of type `Component`.
 // Note: There will be type errors in this method, but we will improve them later
 export function isElementOfType(
-  element: VNode | null | undefined,
-  Component: ComponentType,
+  element: VueNode,
+  component: Component,
 ): boolean {
   if (element == null) {
     return false;
@@ -35,7 +17,7 @@ export function isElementOfType(
   }
 
   const elementType = element.type.__name;
-  const componentType = Component.__name; 
+  const componentType = component.__name; 
 
   return elementType === componentType;
 }

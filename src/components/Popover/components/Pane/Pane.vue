@@ -4,7 +4,11 @@ div(
   :class="className",
   :styles="style",
 )
-  component(:is="content")
+  template(v-if="sectioned")
+    Section
+      slot
+  template(v-else)
+    slot
 
 Scrollable(
   v-else,
@@ -13,13 +17,16 @@ Scrollable(
   :class="className",
   @scrolled-to-bottom="emits('scrolled-to-bottom')",
 )
-  component(:is="content")
+  template(v-if="sectioned")
+    Section
+      slot
+  template(v-else)
+    slot
 </template>
 
 <script setup lang="ts">
 import { computed } from 'vue';
 import { classNames } from '@/utilities/css';
-import { wrapWithComponent } from '@/utilities/component';
 import type { VueNode } from '@/utilities/types';
 import { Scrollable } from '@/components';
 import { Section } from '../Section';
@@ -61,14 +68,6 @@ const props = withDefaults(defineProps<PaneProps>(), {
 const emits = defineEmits<Emits>();
 
 const slots = defineSlots<Slots>();
-
-const children = computed(() => {
-  return slots.default;
-});
-
-const content = computed(() => {
-  return props.sectioned ? wrapWithComponent(children.value(), Section, {}) : children.value;
-})
 
 const className = computed(() => classNames(
   styles.Pane,

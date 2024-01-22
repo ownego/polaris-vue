@@ -1,6 +1,6 @@
 <template lang="pug">
 PositionedOverlay(
-  v-if="state.transitionStatus === TransitionStatus.Exited && !active",
+  v-if="state.transitionStatus !== TransitionStatus.Exited && active",
   ref="overlayRef",
   :full-width="fullWidth",
   :active="active",
@@ -11,6 +11,7 @@ PositionedOverlay(
   :fixed="fixed",
   :class="positionOverlayClass",
   :z-index-override="zIndexOverride",
+  @render="updateOverlayDetails",
   @scroll-out="handleScrollOut",
 )
   div(
@@ -33,23 +34,17 @@ PositionedOverlay(
         :class="contentClassNames",
         :style="contentStyles",
       )
-        slot
-        component(:is="renderPopoverContent")
+        template(v-if="isChildContentWrappedByPane")
+          slot
+        template(v-else)
+          Pane
+            slot
     div(
       :class="styles.FocusTracker",
       tabindex="0",
       @focus="handleFocusLastItem",
     )
 </template>
-
-<script lang="ts">
-export enum PopoverCloseSource {
-  Click,
-  EscapeKeypress,
-  FocusOut,
-  ScrollOut,
-}
-</script>
 
 <script setup lang="ts">
 import {
@@ -68,7 +63,7 @@ import { overlay } from '@polaris/components/shared';
 import { classNames } from '@/utilities/css';
 import usePortalsManager from '@/use/usePortalsManager';
 import { findFirstKeyboardFocusableNode } from '@/utilities/focus';
-import { isElementOfType, wrapWithComponent } from '@/utilities/component';
+import { isElementOfType } from '@/utilities/component';
 
 import {
   EventListener,
@@ -78,42 +73,20 @@ import {
 import { Pane } from '../Pane';
 
 import { Key } from '@/utilities/types';
-import type { PositionedOverlayProps } from '@/components/PositionedOverlay/PositionedOverlay.vue';
-import type { PaneProps } from '../Pane/Pane.vue';
+import type { PopoverOverlayProps } from './types';
+import { PopoverCloseSource } from './types';
 
-// export enum PopoverCloseSource {
-//   Click,
-//   EscapeKeypress,
-//   FocusOut,
-//   ScrollOut,
-// }
-
-export type PopoverAutofocusTarget = 'none' | 'first-node' | 'container';
+const DEFAULT_OVERLAY_DETAILS = {
+  measuring: true,
+  positioning: 'below',
+  desiredHeight: 0,
+};
 
 enum TransitionStatus {
   Entering = 'entering',
   Entered = 'entered',
   Exiting = 'exiting',
   Exited = 'exited',
-}
-
-export interface PopoverOverlayProps {
-  fullWidth?: boolean;
-  fullHeight?: boolean;
-  fluidContent?: boolean;
-  preferredPosition?: PositionedOverlayProps['preferredPosition'];
-  preferredAlignment?: PositionedOverlayProps['preferredAlignment'];
-  active: boolean;
-  id: string;
-  zIndexOverride?: number;
-  activator: HTMLElement;
-  preferInputActivator?: PositionedOverlayProps['preferInputActivator'];
-  sectioned?: boolean;
-  fixed?: boolean;
-  hideOnPrint?: boolean;
-  autofocusTarget?: PopoverAutofocusTarget;
-  preventCloseOnChildOverlayClick?: boolean;
-  captureOverscroll?: boolean;
 }
 
 interface State {
@@ -144,11 +117,8 @@ const state = reactive<State>({
 
 const contentNode = ref<HTMLDivElement | null>(null);
 const enteringTimer = ref<number | undefined>(undefined);
+const overlayDetails = ref(DEFAULT_OVERLAY_DETAILS);
 const overlayRef = ref<InstanceType<typeof PositionedOverlay> | HTMLElement | null>(null);
-
-const overlayDetails = computed(() => {
-  return (overlayRef.value as InstanceType<typeof PositionedOverlay>).overlayDetails
-});
 
 const positionOverlayClass = computed(() => {
   return classNames(
@@ -179,6 +149,12 @@ const contentClassNames = computed(() => {
     props.fullHeight && styles['Content-fullHeight'],
     props.fluidContent && styles['Content-fluidContent'],
   );
+});
+
+const isChildContentWrappedByPane = computed(() => {
+  const childrenArray = slots.default?.() || [];
+
+  return isElementOfType(childrenArray[0], Pane);
 });
 
 watch(
@@ -223,6 +199,10 @@ const changeTransitionStatus = (transitionStatus: TransitionStatus, callback?: (
   callback && callback();
 
   contentNode.value && contentNode.value.getBoundingClientRect();
+};
+
+const updateOverlayDetails = (details: any) => {
+  overlayDetails.value = details;
 };
 
 function clearTransitionTimeout() {
@@ -302,16 +282,6 @@ function handleFocusLastItem() {
   emits('close', PopoverCloseSource.FocusOut);
 }
 
-function renderPopoverContent(props: PaneProps) {
-  const childrenArray = slots.default?.() || [];
-
-  if (isElementOfType(childrenArray[0], Pane)) {
-    return childrenArray;
-  }
-
-  return wrapWithComponent(Pane, props, childrenArray);
-}
-
 function nodeContainsDescendant(
   rootNode: HTMLElement,
   descendant: HTMLElement,
@@ -336,8 +306,7 @@ function wasContentNodeDescendant(
   composedPath: readonly EventTarget[],
   contentNode: Ref<HTMLDivElement | null>,
 ) {
-  return (contentNode.value != null && composedPath.includes(contentNode.value)
-  );
+  return (contentNode.value != null && composedPath.includes(contentNode.value));
 }
 
 function wasPolarisPortalDescendant(

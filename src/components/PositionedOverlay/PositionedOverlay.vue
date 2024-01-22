@@ -1,14 +1,16 @@
 <template lang="pug">
 div(
   ref="overlay",
+  :key="String(active)",
   :class="className",
   :style="style",
 )
+  p {{ active }}
   EventListener(
     event="resize",
     :handler="handleMeasurement",
   )
-    slot
+  slot
 </template>
 
 <script setup lang="ts">
@@ -86,6 +88,7 @@ interface State {
 }
 
 type Emits = {
+  render: [OverlayDetails];
   scrollOut: [];
 }
 
@@ -99,6 +102,7 @@ const OBSERVER_CONFIG = {
 const props = defineProps<PositionedOverlayProps>();
 
 const emits = defineEmits<Emits>();
+
 const slots = defineSlots<{
   default?: (_?: VueNode) => any;
 }>();
@@ -124,10 +128,10 @@ const observer = ref<MutationObserver>(new MutationObserver(handleMeasurement));
 
 const style = computed(() => {
   return {
-    top: state.top == null || isNaN(state.top) ? undefined : `${top}px`,
+    top: state.top == null || isNaN(state.top) ? undefined : `${state.top}px`,
     left: state.left == null || isNaN(state.left) ? undefined : `${state.left}px`,
     right: state.right == null || isNaN(state.right) ? undefined : `${state.right}px`,
-    width: state.width == null || isNaN(state.width) ? undefined : state.width,
+    width: state.width == null || isNaN(state.width) ? undefined : `${state.width}px`,
     zIndex: props.zIndexOverride || state.zIndex || undefined,
   } as StyleValue;
 });
@@ -145,27 +149,17 @@ const firstScrollableContainer = computed<HTMLElement | Document | null>(() => {
   return scrollableContainers.value[0] ?? null;
 });
 
-const overlayDetails = (): OverlayDetails => {
-  const {
-    measuring,
-    left,
-    right,
-    positioning,
-    height,
-    activatorRect,
-    chevronOffset,
-  } = state;
-
+const overlayDetails = computed<OverlayDetails>(() => {
   return {
-    measuring,
-    left,
-    right,
-    desiredHeight: height,
-    positioning,
-    activatorRect,
-    chevronOffset,
-  };
-};
+    measuring: state.measuring,
+    left: state.left,
+    right: state.right,
+    desiredHeight: state.height,
+    positioning: state.positioning,
+    activatorRect: state.activatorRect,
+    chevronOffset: state.chevronOffset,
+  }
+});
 
 onMounted(() => {
   setScrollableContainers();
@@ -175,6 +169,8 @@ onMounted(() => {
   }
 
   handleMeasurement();
+
+  emits('render', overlayDetails.value);
 });
 
 onUpdated(() => {
@@ -236,7 +232,7 @@ function handleMeasurement() {
   const { lockPosition, top } = state;
 
   observer.value.disconnect();
-
+  
   // Set state
   state.height = 0;
   state.positioning = 'below';
@@ -262,6 +258,7 @@ function handleMeasurement() {
   const activatorRect = getRectForNode(preferredActivator);
 
   const currentOverlayRect = getRectForNode(overlay.value);
+
   const scrollableElement = isDocument(firstScrollableContainer.value)
     ? document.body
     : firstScrollableContainer.value;
@@ -301,6 +298,7 @@ function handleMeasurement() {
     fixed,
     topBarOffset,
   );
+
   const horizontalPosition = calculateHorizontalPosition(
     activatorRect,
     overlayRect,
@@ -332,8 +330,5 @@ function handleMeasurement() {
   observer.value.observe(activator, OBSERVER_CONFIG);
 }
 
-defineExpose({
-  forceUpdatePosition,
-  overlayDetails: overlayDetails(),
-});
+defineExpose({ forceUpdatePosition });
 </script>

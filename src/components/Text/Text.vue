@@ -8,7 +8,7 @@ component(
 </template>
 
 <script setup lang="ts">
-import { computed, useSlots } from 'vue';
+import { computed } from 'vue';
 import { classNames } from '@/utilities/css';
 import type { VueNode } from '@/utilities/types';
 import type {
@@ -20,9 +20,6 @@ import type {
   TextDecorationLine,
 } from './types';
 import styles from '@polaris/components/Text/Text.module.scss';
-
-import { isElementOfType } from '@/utilities/component';
-import { Box } from '@/components';
 
 /**
  * This component will not use children props because of slot method in vue can do the same thing
@@ -62,10 +59,6 @@ const props = withDefaults(defineProps<TextProps>(), {
   truncate: false,
   visuallyHidden: false,
 });
-
-const slots = useSlots();
-
-console.log(isElementOfType(slots.default()[0] as any, Box));
 
 const className = computed(() => classNames(
   styles.root,
