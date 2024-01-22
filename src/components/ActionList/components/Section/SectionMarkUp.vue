@@ -2,7 +2,7 @@
 //- TittleMarkup
 template(v-if="slots.title || section.title")
   Box(
-    v-if="section.title && !slots.title",
+    v-if="section.title",
     paddingBlockStart="300"
     paddingBlockEnd="100"
     paddingInlineStart="300"

@@ -12,7 +12,7 @@
     </template>
     <ActionList
       actionRole="menuitem"
-      :items="actionItems"
+      :sections="sections"
     />
   </Popover>
 </div>
@@ -20,6 +20,9 @@
 
 <script setup lang="ts">
 import { ref } from 'vue';
+import DeleteMinor from '@icons/DeleteMinor.svg';
+import ExportMinor from '@icons/ExportMinor.svg';
+import ImportMinor from '@icons/ImportMinor.svg';
 
 const active = ref(false);
 
@@ -27,18 +30,22 @@ const toggleActive = () => {
   active.value = !active.value;
 };
 
-const handleImportedAction = () => console.log('Imported action');
-
-const handleExportedAction = () => console.log('Exported action');
-
-const actionItems = [
+const sections = [
   {
-    content: 'Import file',
-    onAction: handleImportedAction,
-  },
-  {
-    content: 'Export file',
-    onAction: handleExportedAction,
+    title: 'File options',
+    items: [
+      {
+        active: true,
+        content: 'Import file',
+        icon: ImportMinor,
+      },
+      { content: 'Export file', icon: ExportMinor },
+      {
+        destructive: true,
+        content: 'Delete file',
+        icon: DeleteMinor,
+      },
+    ],
   },
 ];
 </script>

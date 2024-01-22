@@ -51,7 +51,7 @@ Box(
 </template>
 
 <script setup lang="ts">
-import { computed, ref } from 'vue';
+import { type VNode, computed, ref } from 'vue';
 import {
   Box,
   TextField,
@@ -67,7 +67,7 @@ import {
 import useFilterActions from '@/use/useFilterActions';
 import useI18n from '@/use/useI18n';
 import { Key } from '@/utilities/types';
-import type { ActionListItemDescriptor, ActionListSection } from '../../utilities/types';
+import type { ActionListItemDescriptor, ActionListSection, VueNode } from '../../utilities/types';
 
 interface ActionListProps {
   /** Collection of actions for list */
@@ -82,11 +82,20 @@ interface ActionListProps {
 
 const FILTER_ACTIONS_THRESHOLD = 8;
 
+type ActionListSlots = {
+  /** Slot to custom prefix for each item of ActionList by `prefixId` */
+  'prefix-{prefixId}': (_?: VueNode) => VNode[];
+  /** Slot to custom suffix for each item of ActionList by `suffixId` */
+  'suffix-{suffixId}': (_?: VueNode) => VNode[];
+  [key: string]: (_?: VueNode) => VNode[];
+}
+
 const props = defineProps<ActionListProps>();
 const emit = defineEmits<{
   /** Callback when any item is clicked or keypressed */
   'action-any-item': [];
 }>();
+const slots = defineSlots<ActionListSlots>();
 
 const filterActions = useFilterActions();
 const i18n = useI18n();

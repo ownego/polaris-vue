@@ -12,7 +12,7 @@
     </template>
     <ActionList
       actionRole="menuitem"
-      :items="actionItems"
+      :sections="sections"
     />
   </Popover>
 </div>
@@ -27,18 +27,18 @@ const toggleActive = () => {
   active.value = !active.value;
 };
 
-const handleImportedAction = () => console.log('Imported action');
-
-const handleExportedAction = () => console.log('Exported action');
-
-const actionItems = [
+const sections = [
   {
-    content: 'Import file',
-    onAction: handleImportedAction,
-  },
-  {
-    content: 'Export file',
-    onAction: handleExportedAction,
+    items: [
+      {
+        content: 'Blog posts',
+        helpText: 'Manage your blog articles',
+      },
+      {
+        content: 'Blogs',
+        helpText: 'Manage blogs published to your Online Store',
+      },
+    ],
   },
 ];
 </script>

@@ -20,6 +20,8 @@
 
 <script setup lang="ts">
 import { ref } from 'vue';
+import DuplicateIcon from '@icons/DuplicateMinor.svg';
+import ArchiveIcon from '@icons/ArchiveMinor.svg';
 
 const active = ref(false);
 
@@ -27,18 +29,15 @@ const toggleActive = () => {
   active.value = !active.value;
 };
 
-const handleImportedAction = () => console.log('Imported action');
-
-const handleExportedAction = () => console.log('Exported action');
-
 const actionItems = [
   {
-    content: 'Import file',
-    onAction: handleImportedAction,
+    content: 'Duplicate',
+    icon: DuplicateIcon,
   },
   {
-    content: 'Export file',
-    onAction: handleExportedAction,
+    content: 'Archive',
+    icon: ArchiveIcon,
   },
 ];
 </script>
+

@@ -13,13 +13,20 @@
     <ActionList
       actionRole="menuitem"
       :items="actionItems"
-    />
+    >
+      <template #suffix-import>
+        <Icon :source="TickSmallMinor" />
+      </template>
+    </ActionList>
   </Popover>
 </div>
 </template>
 
 <script setup lang="ts">
 import { ref } from 'vue';
+import ImportMinor from '@icons/ImportMinor.svg';
+import ExportMinor from '@icons/ExportMinor.svg';
+import TickSmallMinor from '@icons/TickSmallMinor.svg';
 
 const active = ref(false);
 
@@ -27,18 +34,16 @@ const toggleActive = () => {
   active.value = !active.value;
 };
 
-const handleImportedAction = () => console.log('Imported action');
-
-const handleExportedAction = () => console.log('Exported action');
-
 const actionItems = [
   {
+    active: true,
     content: 'Import file',
-    onAction: handleImportedAction,
+    icon: ImportMinor,
+    suffixId: "import",
   },
   {
     content: 'Export file',
-    onAction: handleExportedAction,
+    icon: ExportMinor,
   },
 ];
 </script>
