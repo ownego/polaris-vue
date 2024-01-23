@@ -61,7 +61,7 @@ Some types of props are following the [Polaris Design Tokens](https://polaris.sh
 
 ## Related components
 
-- For more specific use cases, [use the Card component](https://polaris.shopify.com/components/Card)
+- For more specific use cases, [use the Card component](/components/Card)
 
 ## Related resources
 
