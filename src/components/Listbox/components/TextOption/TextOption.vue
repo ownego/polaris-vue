@@ -13,15 +13,17 @@ div(
       )
         template(#label)
           slot
-    Box(v-else, width="100%")
-      InlineStack(
-        :wrap="false",
-        align="space-between",
-        gap="200",
-      )
-        slot
-        InlineStack(align="end")
-          Icon(:source="TickMinor")
+    template(v-else)
+      Box(v-if="selected", width="100%")
+        InlineStack(
+          :wrap="false",
+          align="space-between",
+          gap="200",
+        )
+          slot
+          InlineStack(align="end")
+            Icon(:source="TickMinor")
+      slot(v-else)
 </template>
 
 <script setup lang="ts">

@@ -14,8 +14,8 @@ li(
   :aria-disabled="disabled",
   :aria-label="accessibilityLabel",
   :aria-selected="selected",
-  @click="disabled ? undefined : handleOptionSelect",
-  @keydown="disabled ? undefined : handleOptionSelect",
+  @click="handleOptionSelect",
+  @keydown="handleOptionSelect",
   @mousedown="handleMouseDown",
 )
   UnstyledLink(
@@ -24,7 +24,7 @@ li(
     :external="external",
   )
     slot(
-      v-if="hasSlot(slots.default)",
+      v-if="isSlotContainHTMLTag",
     )
     TextOption(
       v-else,
@@ -33,22 +33,21 @@ li(
     )
       slot
   template(v-else)
-    slot(
-      v-if="hasSlot(slots.default)",
-    )
     TextOption(
-      v-else,
+      v-if="!isSlotContainHTMLTag",
       :selected="selected",
       :disabled="disabled",
     )
       slot
+    slot(
+      v-else,
+    )
 </template>
 
 <script setup lang="ts">
 import { inject, ref, computed, type VNode } from 'vue';
 import { classNames } from '@/utilities/css';
 import useId from '@/use/useId';
-import { useHasSlot } from '@/use/useHasSlot';
 import { listboxWithinSectionDataSelector } from '@polaris/components/Listbox/components/Section/selectors';
 import TextOption from '../TextOption/TextOption.vue';
 import { UnstyledLink } from '@/components';
@@ -70,9 +69,7 @@ interface OptionProps {
   divider?: boolean;
 }
 
-const props = withDefaults(defineProps<OptionProps>(), {
-  disabled: false,
-});
+const props = defineProps<OptionProps>();
 const slots = defineSlots<{
   // Children. When a string, children are rendered in a styled TextOption
   default?: (_?: VueNode) => VNode[];
@@ -85,11 +82,11 @@ const listboxContext = inject<ListboxContextType>('listboxContext', {
   onOptionSelect() { return },
   setLoading() { return },
 });
+
 const isAction = inject<boolean>('isAction', false);
 
 const { role, url, external, onAction, destructive } = mappedActionContext;
 const { onOptionSelect } = listboxContext;
-const { hasSlot } = useHasSlot();
 
 const listItemRef = ref<HTMLElement | null>(null);
 const domId = String(useId());
@@ -100,12 +97,25 @@ const className = computed(() => classNames(
   styles.Option,
   props.divider && styles.divider,
 ));
+const isSlotContainHTMLTag = computed(() => {
+  return Boolean(
+    slots.default
+      && (slots.default().length >= 2
+        || (slots.default()[0]
+          && (slots.default()[0].type.toString() !== 'Symbol(Text)'
+          && slots.default()[0].type.toString() !== 'Symbol()'
+          && slots.default()[0].type.toString() !== 'Symbol(v-txt)')
+        )),
+  );
+});
 
 const sectionAttributes = {
   [listboxWithinSectionDataSelector.attribute]: isWithinSection.value,
 };
 
 const handleOptionSelect = (event: MouseEvent | KeyboardEvent) => {
+  if (props.disabled) return;
+
   event.preventDefault();
   event.stopPropagation();
   onAction && onAction();
