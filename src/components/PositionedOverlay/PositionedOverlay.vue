@@ -47,7 +47,7 @@ import type { VueNode } from '@/utilities/types';
 
 type Positioning = 'above' | 'below';
 
-interface OverlayDetails {
+export interface OverlayDetails {
   left?: number;
   right?: number;
   desiredHeight: number;
@@ -86,6 +86,7 @@ interface State {
 }
 
 type Emits = {
+  render: [details: OverlayDetails];
   scrollOut: [];
 }
 
@@ -146,17 +147,16 @@ const firstScrollableContainer = computed<HTMLElement | Document | null>(() => {
   return scrollableContainers.value[0] ?? null;
 });
 
-const overlayDetails = computed<OverlayDetails>(() => {
-  return {
-    measuring: state.measuring,
-    left: state.left,
-    right: state.right,
-    desiredHeight: state.height,
-    positioning: state.positioning,
-    activatorRect: state.activatorRect,
-    chevronOffset: state.chevronOffset,
-  }
-});
+// NOTE: reactive for this variable is not needed
+const overlayDetails = {
+  measuring: state.measuring,
+  left: state.left,
+  right: state.right,
+  desiredHeight: state.height,
+  positioning: state.positioning,
+  activatorRect: state.activatorRect,
+  chevronOffset: state.chevronOffset,
+}
 
 onMounted(() => {
   setScrollableContainers();
@@ -166,6 +166,8 @@ onMounted(() => {
   }
 
   handleMeasurement();
+
+  emits('render', overlayDetails);
 });
 
 onUpdated(() => {

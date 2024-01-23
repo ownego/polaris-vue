@@ -11,6 +11,7 @@ PositionedOverlay(
   :fixed="fixed",
   :class="positionOverlayClass",
   :z-index-override="zIndexOverride",
+  @render="updateOverlay",
   @scroll-out="handleScrollOut",
 )
   div(
@@ -63,6 +64,7 @@ import { classNames } from '@/utilities/css';
 import usePortalsManager from '@/use/usePortalsManager';
 import { findFirstKeyboardFocusableNode } from '@/utilities/focus';
 import { isElementOfType } from '@/utilities/component';
+import type { OverlayDetails } from '@/components/PositionedOverlay/PositionedOverlay.vue';
 
 import {
   EventListener,
@@ -111,6 +113,7 @@ const state = reactive<State>({
 const contentNode = ref<HTMLDivElement | null>(null);
 const enteringTimer = ref<number | undefined>(undefined);
 const overlayRef = ref<InstanceType<typeof PositionedOverlay> | HTMLElement | null>(null);
+const overlayDetails = ref<OverlayDetails | null>(null);
 
 const positionOverlayClass = computed(() => {
   return classNames(
@@ -119,12 +122,6 @@ const positionOverlayClass = computed(() => {
     state.transitionStatus === TransitionStatus.Entered && styles['PopoverOverlay-open'],
     state.transitionStatus === TransitionStatus.Exiting && styles['PopoverOverlay-exiting'],
   )
-});
-
-const overlayDetails = computed(() => {
-  return overlayRef.value
-    ? (overlayRef.value as InstanceType<typeof PositionedOverlay>).overlayDetails
-    : null;
 });
 
 const popoverOverlayClass = computed(() => {
@@ -192,6 +189,10 @@ onMounted(() => {
 onBeforeUnmount(() => {
   clearTransitionTimeout();
 });
+
+const updateOverlay = (overlayData: OverlayDetails) => {
+  overlayDetails.value = overlayData;
+}
 
 const changeTransitionStatus = (transitionStatus: TransitionStatus, callback?: () => void) => {
   state.transitionStatus = transitionStatus;
