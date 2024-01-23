@@ -40,14 +40,17 @@ const router = createRouter({
 });
 
 onMounted(() => {
-  const app = createApp(
-    isAppProvider
-      ? exampleComponent
-      : wrappedComponent
-  );
-  app.use(router)
-  app.use(PolarisVue);
-  app.mount('#preview');
+  // 400ms - To fit with the example iframe delay on loaded
+  setTimeout(() => {
+    const app = createApp(
+      isAppProvider
+        ? exampleComponent
+        : wrappedComponent
+    );
+    app.use(router)
+    app.use(PolarisVue);
+    app.mount('#preview');
+  }, 400);
 
   document.documentElement.classList.add('example-preview');
 });
