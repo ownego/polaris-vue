@@ -3,12 +3,12 @@ layout: doc
 title: List box
 category: Lists
 examples:
-  # - fileName: listbox-default.tsx
-  #   title: Default
-  #   description: Basic implementation of a control element used to let merchants select options
-  # - fileName: listbox-with-loading.tsx
-  #   title: With Loading
-  #   description: Implementation of a control element showing a loading indicator to let merchants know more options are being loaded
+  - fileName: Default.vue
+    title: Default
+    description: Basic implementation of a control element used to let merchants select options
+  - fileName: WithLoading.vue
+    title: With Loading
+    description: Implementation of a control element showing a loading indicator to let merchants know more options are being loaded
   # - fileName: listbox-with-action.tsx
   #   title: With Action
   #   description: Implementation of a control element used to let merchants take an action
@@ -46,7 +46,7 @@ examples:
 
 ## Anatomy
 
-![A diagram of the Listbox component showing the smaller primitive components it can be composed of.](/images/components/lists/listbox/listbox-anatomy@2x.png)
+![A diagram of the Listbox component showing the smaller primitive components it can be composed of.]
 
 A listbox can be composed of:
 

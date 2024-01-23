@@ -13,12 +13,12 @@ li(
 </template>
 
 <script setup lang="ts">
-import { VNode, computed, provide } from 'vue';
+import { type VNode, computed, provide } from 'vue';
 import { classNames } from '@/utilities/css';
 import type { VueNode } from '@/utilities/types';
 import useId from '@/use/useId';
 import { listboxSectionDataSelector } from '@polaris/components/Listbox/components/Section/selectors';
-import styles from '@polaris/components/Listbox/components/Section/Section.module.css';
+import styles from '@polaris/components/Listbox/components/Section/Section.module.scss';
 
 interface SectionProps {
   divider?: boolean;

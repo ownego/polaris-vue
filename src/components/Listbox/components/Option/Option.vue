@@ -52,7 +52,7 @@ import { useHasSlot } from '@/use/useHasSlot';
 import { listboxWithinSectionDataSelector } from '@polaris/components/Listbox/components/Section/selectors';
 import TextOption from '../TextOption/TextOption.vue';
 import { UnstyledLink } from '@/components';
-import styles from '@polaris/components/Listbox/components/Option/Option.module.css';
+import styles from '@polaris/components/Listbox/components/Option/Option.module.scss';
 import type { VueNode } from '@/utilities/types';
 import type { MappedActionContextType } from '@/utilities/auto-complete';
 import type { ListboxContextType } from '@/utilities/types';

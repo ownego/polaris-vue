@@ -34,7 +34,7 @@ import {
   InlineStack,
   Icon,
 } from '@/components';
-import styles from '@polaris/components/ListBox/components/TextOption/TextOption.module.css';
+import styles from '@polaris/components/Listbox/components/TextOption/TextOption.module.scss';
 
 interface TextOptionProps {
   // Whether the option is selected
