@@ -180,8 +180,7 @@ const wrapperClassName = computed(() => classNames(styles.Checkbox, props.error 
 
 const isIndeterminate = computed(() => props.checked === 'indeterminate');
 
-const isChecked = computed(() => (!isIndeterminate.value && Boolean(props.checked))
-  || (typeof model.value === 'boolean' && model.value === true));
+const isChecked = computed(() => Boolean(!isIndeterminate.value && model.value));
 
 const indeterminateAttributes = computed(() => isIndeterminate.value
   ? {indeterminate: true, 'aria-checked': 'mixed' as const}

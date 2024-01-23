@@ -4,21 +4,27 @@ title: Tag
 category: Selection and input
 examples:
   - fileName: Default.vue
+    frameHeight: 300
     title: Default
     description: Use to signify the attributes of an object.
   - fileName: Removable.vue
+    frameHeight: 300
     title: Removable
     description: Use to allow merchants to remove attributes from an object.
   - fileName: Clickable.vue
+    frameHeight: 300
     title: Clickable
     description: Use to allow merchants to add attributes to an object.
   - fileName: Link.vue
+    frameHeight: 300
     title: With link
     description: Use to allow merchants to navigate to a resource. For example a customer segment or a smart collection
   - fileName: CustomContent.vue
+    frameHeight: 300
     title: With custom content
     description: Use when a tag needs to be visually distinguished from others, like when it's added automatically.
   - fileName: RemovableWithLink.vue
+    frameHeight: 300
     title: Removable with link
     description: A removable attribute to an object that allows merchants to navigate to a resource.
 ---
