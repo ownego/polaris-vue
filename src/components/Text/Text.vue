@@ -60,8 +60,6 @@ const props = withDefaults(defineProps<TextProps>(), {
   visuallyHidden: false,
 });
 
-defineSlots<TextSlots>();
-
 const className = computed(() => classNames(
   styles.root,
   props.variant && styles[props.variant],
