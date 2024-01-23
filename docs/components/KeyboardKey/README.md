@@ -8,11 +8,11 @@ examples:
     description: Use to list a related set of keyboard shortcuts.
 ---
 
-# {frontmatter.title}
+# {{ $frontmatter.title }}
 
 <Lede>
 
-Keyboard key is used to educate merchants about keyboard shortcuts.
+{{ $frontmatter.description }}
 
 </Lede>
 

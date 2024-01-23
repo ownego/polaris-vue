@@ -20,11 +20,11 @@ examples:
     description: Use to render an icon inside of thumbnail.
 ---
 
-# {frontmatter.title}
+# {{ $frontmatter.title }}
 
 <Lede>
 
-Use thumbnails as a visual anchor and identifier for an object. They should be used along with text to provide context.
+{{ $frontmatter.description }}
 
 </Lede>
 
