@@ -23,7 +23,7 @@ Labelled(
       BlockStack(gap="200", inline-align="center")
         Icon(
           v-if="size === 'small'",
-          :source="UploadMajor",
+          :source="UploadIcon",
           tone="critical",
         )
         Text(
@@ -40,7 +40,7 @@ Labelled(
       BlockStack(gap="200", inline-align="center")
         Icon(
           v-if="size === 'small'",
-          :source="CircleAlertMajor",
+          :source="AlertCircleIcon",
           tone="critical",
         )
         Text(
@@ -92,8 +92,8 @@ import {
   createAllowMultipleKey,
   type DropZoneEvent,
 } from './utils';
-import UploadMajor from '@icons/UploadMajor.svg';
-import CircleAlertMajor from '@icons/CircleAlertMajor.svg';
+import UploadIcon from '@icons/UploadIcon.svg';
+import AlertCircleIcon from '@icons/AlertCircleIcon.svg';
 import styles from '@polaris/components/DropZone/DropZone.module.scss';
 
 export type DropZoneFileType = 'file' | 'image' | 'video';

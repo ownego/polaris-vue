@@ -21,7 +21,7 @@
           :source="
             validImageTypes.indexOf(file.type) > -1
               ? getSource(file)
-              : NoteMinor
+              : NoteIcon
           "
         />
         <div>
@@ -36,8 +36,8 @@
 
 <script setup lang="ts">
 import { ref } from 'vue';
-// import NoteMinor from '@shopify/polaris-icons/dist/svg/NoteMinor.svg';
-import NoteMinor from '@icons/NoteMinor.svg';
+// import NoteIcon from '@shopify/polaris-icons/dist/svg/NoteIcon.svg';
+import NoteIcon from '@icons/NoteIcon.svg';
 
 const validImageTypes = ['image/gif', 'image/jpeg', 'image/png'];
 

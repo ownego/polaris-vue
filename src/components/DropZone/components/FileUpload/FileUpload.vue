@@ -17,7 +17,7 @@ div(:class="fileUploadClassName")
     v-else,
     :class="classNames(styles.UploadIcon, disabled && styles.disabled)",
   )
-    Icon(:source="UploadMajor")
+    Icon(:source="UploadIcon")
 </template>
 
 <script setup lang="ts">
@@ -29,7 +29,7 @@ import { BlockStack, Icon, Text } from '@/components';
 import { createAllowMultipleKey } from '../../utils';
 import { useDropZoneContext } from '../../useDropZoneContext';
 import styles from '@polaris/components/DropZone/components/FileUpload/FileUpload.module.scss';
-import UploadMajor from '@icons/UploadMajor.svg';
+import UploadIcon from '@icons/UploadIcon.svg';
 
 type FileUploadProps = {
   actionTitle?: string;

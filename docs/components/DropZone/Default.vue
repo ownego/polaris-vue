@@ -10,7 +10,7 @@
         <Thumbnail
           size="small"
           :alt="file.name"
-          :source="validImageTypes.includes(file.type) ? getSource(file) : NoteMinor"
+          :source="validImageTypes.includes(file.type) ? getSource(file) : NoteIcon"
         />
         <div>
           {{ file.name }}&nbsp;
@@ -25,8 +25,8 @@
 
 <script setup lang="ts">
 import { ref } from 'vue';
-// import NoteMinor from '@shopify/polaris-icons/dist/svg/NoteMinor.svg';
-import NoteMinor from '@icons/NoteMinor.svg';
+// import NoteIcon from '@shopify/polaris-icons/dist/svg/NoteIcon.svg';
+import NoteIcon from '@icons/NoteIcon.svg';
 
 const validImageTypes = ['image/gif', 'image/jpeg', 'image/png'];
 
