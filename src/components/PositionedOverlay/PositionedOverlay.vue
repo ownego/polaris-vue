@@ -333,5 +333,8 @@ function handleMeasurement() {
   });
 }
 
-defineExpose({ forceUpdatePosition });
+defineExpose({
+  forceUpdatePosition,
+  overlayDetails,
+});
 </script>
