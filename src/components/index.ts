@@ -1,5 +1,6 @@
 export * from './AppProvider';
 export * from './Badge';
+export * from './Banner';
 export * from './Bleed';
 export * from './BlockStack';
 export * from './Box';
