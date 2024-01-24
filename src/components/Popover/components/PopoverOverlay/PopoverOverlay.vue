@@ -190,8 +190,8 @@ onBeforeUnmount(() => {
   clearTransitionTimeout();
 });
 
-const updateOverlay = (overlayData: OverlayDetails) => {
-  overlayDetails.value = overlayData;
+const updateOverlay = (newOverlay: OverlayDetails) => {
+  overlayDetails.value = newOverlay;
 }
 
 const changeTransitionStatus = (transitionStatus: TransitionStatus, callback?: () => void) => {

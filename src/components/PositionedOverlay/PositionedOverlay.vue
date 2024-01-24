@@ -147,16 +147,18 @@ const firstScrollableContainer = computed<HTMLElement | Document | null>(() => {
   return scrollableContainers.value[0] ?? null;
 });
 
-// NOTE: reactive for this variable is not needed
-const overlayDetails = {
-  measuring: state.measuring,
-  left: state.left,
-  right: state.right,
-  desiredHeight: state.height,
-  positioning: state.positioning,
-  activatorRect: state.activatorRect,
-  chevronOffset: state.chevronOffset,
-}
+const overlayDetails = computed<OverlayDetails>(() => {
+  return {
+    measuring: state.measuring,
+    left: state.left,
+    right: state.right,
+    // Temporary add -21 for unexpected height
+    desiredHeight: state.height ? state.height - 21 : 0, 
+    positioning: state.positioning,
+    activatorRect: state.activatorRect,
+    chevronOffset: state.chevronOffset,
+  }
+});
 
 onMounted(() => {
   setScrollableContainers();
@@ -166,8 +168,6 @@ onMounted(() => {
   }
 
   handleMeasurement();
-
-  emits('render', overlayDetails);
 });
 
 onUpdated(() => {
@@ -328,11 +328,10 @@ function handleMeasurement() {
       observer.value.observe(overlay.value, OBSERVER_CONFIG);
       observer.value.observe(activator, OBSERVER_CONFIG);
     });
-  })
+
+    emits('render', overlayDetails.value);
+  });
 }
 
-defineExpose({
-  forceUpdatePosition,
-  overlayDetails,
-});
+defineExpose({ forceUpdatePosition });
 </script>
