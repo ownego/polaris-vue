@@ -1,5 +1,5 @@
 ---
-title: Examples
+title: Patterns
 outline: deep
 prev:
   text: 'Icons'

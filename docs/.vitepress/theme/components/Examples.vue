@@ -114,7 +114,7 @@ const fixIframeEvent = () => {
 const iframeLoaded = () => {
   setTimeout(() => {
     isLoadingFrame.value = false;
-  }, 500);
+  }, 400);
 };
 
 // Initialize example query param

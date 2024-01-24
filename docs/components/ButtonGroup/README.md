@@ -4,12 +4,15 @@ title: Button group
 category: Actions
 examples:
   - fileName: Default.vue
+    frameHeight: 250
     title: Default
     description: Use when you have multiple buttons to space them out evenly.
   - fileName: Segmented.vue
+    frameHeight: 250
     title: With segmented buttons
     description: Use to emphasize several buttons as a thematically-related set among other controls.
   - fileName: Pressed.vue
+    frameHeight: 250
     title: Pressed with segmented buttons
     description: Pressed buttons can be used in combination to create a toggle for other parts of the user interface.
 ---
