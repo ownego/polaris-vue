@@ -10,6 +10,7 @@ component(
   )
     PopoverOverlay(
       ref="overlayRef",
+      v-bind="{ ...props }",
       :id="String(id)",
       :activator="activatorNode",
       :preferInputActivator="preferInputActivator",
@@ -97,6 +98,7 @@ const emits = defineEmits<{
   /** Callback when popover is closed */
   'close': [event: PopoverCloseSource];
 }>();
+
 const slots = defineSlots<{
   /** The content to display inside the popover */
   default?: (_?: VueNode) => any;

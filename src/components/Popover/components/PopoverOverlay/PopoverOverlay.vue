@@ -36,7 +36,10 @@ PositionedOverlay(
         template(v-if="isChildContentWrappedByPane")
           slot
         template(v-else)
-          Pane
+          Pane(
+            :capture-overscroll="captureOverscroll",
+            :sectioned="sectioned",
+          )
             slot
     div(
       :class="styles.FocusTracker",

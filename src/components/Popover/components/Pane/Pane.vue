@@ -29,7 +29,7 @@ import { computed } from 'vue';
 import { classNames } from '@/utilities/css';
 import type { VueNode } from '@/utilities/types';
 import { Scrollable } from '@/components';
-import { Section } from '../Section';
+import { PopoverSection as Section } from '../Section';
 import styles from '@polaris/components/Popover/Popover.module.scss';
 
 export type PaneProps = {

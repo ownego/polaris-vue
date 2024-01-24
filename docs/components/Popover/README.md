@@ -6,12 +6,12 @@ examples:
   - fileName: WithActionList.vue
     title: With action list
     description: Use when presenting a set of actions in a disclosable menu.
-  # - fileName: popover-with-content-and-actions.tsx
-  #   title: With content and actions
-  #   description: Use to present a combination of content, instructions, and actions in a panel for tasks that are of low or secondary importance to the current page. When used this way, popovers provide useful entry points to related features without overwhelming merchants.
-  # - fileName: popover-with-form-components.tsx
-  #   title: With form components
-  #   description: Use to present secondary input tasks on demand.
+  - fileName: WithContentAndActions.vue 
+    title: With content and actions
+    description: Use to present a combination of content, instructions, and actions in a panel for tasks that are of low or secondary importance to the current page. When used this way, popovers provide useful entry points to related features without overwhelming merchants.
+  - fileName: WithFormComponents.vue
+    title: With form components
+    description: Use to present secondary input tasks on demand.
   # - fileName: popover-with-lazy-loaded-list.tsx
   #   title: With lazy loaded list
   #   description: Use to present merchants with a list that dynamically loads more items on scroll or arrow down.

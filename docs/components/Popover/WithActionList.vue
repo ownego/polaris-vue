@@ -8,11 +8,10 @@
     <template #activator>
       <Button @click="togglePopoverActive" disclosure>More actions</Button>
     </template>
-    <!-- <ActionList
+    <ActionList
       actionRole="menuitem"
       :items="actionListItem"
-    ></ActionList> -->
-    <p> Haild test</p>
+    ></ActionList>
   </Popover>
 </div>
 </template>
