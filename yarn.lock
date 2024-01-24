@@ -470,10 +470,10 @@
   resolved "https://registry.yarnpkg.com/@rollup/rollup-win32-x64-msvc/-/rollup-win32-x64-msvc-4.6.1.tgz#45785b5caf83200a34a9867ba50d69560880c120"
   integrity sha512-0zfTlFAIhgz8V2G8STq8toAjsYYA6eci1hnXuyOTUFnymrtJwnS6uGKiv3v5UrPZkBlamLvrLV2iiaeqCKzb0A==
 
-"@shopify/polaris-icons@7.13":
-  version "7.13.0"
-  resolved "https://registry.yarnpkg.com/@shopify/polaris-icons/-/polaris-icons-7.13.0.tgz#7c2c3a5ae56b8285a8853470aba9ebbe28d1b70d"
-  integrity sha512-+KW2GbEDtw0WzfQlslk3Qo76lf609NvK14eBPCMCYkDP16zPfT4ydui1wRqpRPSCaW1oFOnX3A8bNpwKzOVM0Q==
+"@shopify/polaris-icons@^8.0.0":
+  version "8.0.0"
+  resolved "https://registry.yarnpkg.com/@shopify/polaris-icons/-/polaris-icons-8.0.0.tgz#22b1540e2c5bf9e2f05bfe662db38ef6999b00e0"
+  integrity sha512-NyO/gkBvJfLiIDHywTFRQpwrA+wHHb9xk3uiApArBBB3zluWK1Gos+6zldfXPRZzHSzk2gB6IP2dQDJ2zJmIcg==
 
 "@shopify/polaris-tokens@^8.5.0":
   version "8.5.0"

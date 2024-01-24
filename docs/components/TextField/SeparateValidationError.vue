@@ -31,7 +31,7 @@
           <InlineError :message="errorMessage" :field-id="textFieldID" />
         </div>
       </LegacyStackItem>
-      <Button :icon="DeleteMinor" accessibilityLabel="Remove item" />
+      <Button :icon="DeleteIcon" accessibilityLabel="Remove item" />
     </LegacyStack>
   </FormLayout>
 </LegacyCard>
@@ -39,7 +39,7 @@
 
 <script setup lang="ts">
 import { computed, ref } from 'vue';
-import DeleteMinor from '@icons/DeleteMinor.svg';
+import DeleteIcon from '@icons/DeleteIcon.svg';
 
 const textFieldValue = ref('');
 const selectTypeValue = ref('Product type');

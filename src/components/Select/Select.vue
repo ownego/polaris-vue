@@ -70,7 +70,7 @@ Labelled(
 
       span(:class="styles.SelectedOption") {{ selectedOption.label }}
       span(:class="styles.Icon")
-        Icon(:source="SelectMinor")
+        Icon(:source="SelectIcon")
 
     div(:class="styles.Backdrop")
 </template>
@@ -94,7 +94,7 @@ import type {
   StrictGroup,
 } from './types';
 
-import SelectMinor from '@icons/SelectMinor.svg';
+import SelectIcon from '@icons/SelectIcon.svg';
 import styles from '@polaris/components/Select/Select.module.scss';
 
 const PLACEHOLDER_VALUE = '';
