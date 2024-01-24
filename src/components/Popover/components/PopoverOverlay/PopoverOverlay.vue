@@ -148,9 +148,17 @@ const contentClassNames = computed(() => {
 });
 
 const isChildContentWrappedByPane = computed(() => {
-  const childrenArray = slots.default?.() || [];
+  const childContents: any = slots.default?.() || [];
 
-  return isElementOfType(childrenArray[0], Pane);
+  if (!childContents.length) {
+    return false; 
+  }
+
+  const children = childContents[0].children && childContents[0].children.length
+    ? childContents[0].children[0]
+    : childContents[0];
+
+  return isElementOfType(children, Pane);
 });
 
 watch(
@@ -188,10 +196,6 @@ onMounted(() => {
 onBeforeUnmount(() => {
   clearTransitionTimeout();
 });
-
-// const updateOverlay = (newOverlay: OverlayDetails) => {
-//   overlayDetails.value = newOverlay;
-// }
 
 const changeTransitionStatus = (transitionStatus: TransitionStatus, callback?: () => void) => {
   state.transitionStatus = transitionStatus;
