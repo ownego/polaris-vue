@@ -1,1 +1,1 @@
-export { default as FileUpload } from './FileUpload.vue';
+export { default as DropZoneFileUpload } from './FileUpload.vue';

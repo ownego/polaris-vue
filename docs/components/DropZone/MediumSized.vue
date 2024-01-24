@@ -1,8 +1,7 @@
 <template>
-
+<div :style="{width: '114px', height: '114px'}">
+  <DropZone>
+    <DropZoneFileUpload />
+  </DropZone>
+</div>
 </template>
-
-<script setup lang="ts">
-import { ref } from 'vue';
-
-</script>

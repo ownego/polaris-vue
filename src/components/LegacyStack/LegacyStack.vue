@@ -3,7 +3,7 @@ div(
   :class="className",
 )
   template(
-    v-if="hasSlot(slots.default) && slotsElms.length > 1",
+    v-if="hasSlot(slots.default) && slotsElms.length > 0",
     v-for="item in slotsElms",
   )
     LegacyStackItem
@@ -53,13 +53,11 @@ export interface LegacyStackProps {
 
 const slots = defineSlots<{
   /** Elements to display inside stack */
-  default: (_: VueNode) => any;
+  default: (_?: VueNode) => any;
 }>()
 
 const { hasSlot } = useHasSlot();
 const { slotsElms } = useExtractFragment(slots.default);
-
-// console.log(slotsElms.value);
 
 const props = withDefaults(defineProps<LegacyStackProps>(), {
   wrap: true,

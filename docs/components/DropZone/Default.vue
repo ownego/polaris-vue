@@ -1,5 +1,5 @@
 <template>
-<DropZone @drop="handleDropZoneDrop">
+<DropZone @drop="handleDrop">
   <div v-if="files.length" :style="{padding: '0'}">
     <LegacyStack vertical>
       <LegacyStack
@@ -13,15 +13,13 @@
           :source="validImageTypes.includes(file.type) ? getSource(file) : NoteMinor"
         />
         <div>
-          | {{ file.name }}&nbsp;
-          <Text variant="bodySm" as="p">
-            | {{ file.size }} bytes
-          </Text>
+          {{ file.name }}&nbsp;
+          <Text variant="bodySm" as="p">{{ file.size }} bytes</Text>
         </div>
       </LegacyStack>
     </LegacyStack>
   </div>
-  <FileUpload v-else />
+  <DropZoneFileUpload v-else />
 </DropZone>
 </template>
 
@@ -34,12 +32,11 @@ const validImageTypes = ['image/gif', 'image/jpeg', 'image/png'];
 
 const files = ref<File[]>([]);
 
-const handleDropZoneDrop = (_dropFiles: File[], acceptedFiles: File[], _rejectedFiles: File[]) => {
-  console.log(_dropFiles, acceptedFiles, _rejectedFiles);
+const handleDrop = (_dropFiles: File[], acceptedFiles: File[], _rejectedFiles: File[]) => {
   files.value = [...files.value, ...acceptedFiles];
 };
 
 const getSource = (file: File) => {
-  window.URL.createObjectURL(file);
+  return window.URL.createObjectURL(file);
 }
 </script>

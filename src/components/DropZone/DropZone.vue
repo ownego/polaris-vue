@@ -6,15 +6,15 @@ Labelled(
 )
   template(v-if="hasLabel", #label)
     slot(v-if="slots.label", name="label")
-    template(v-else-if="label")
+    template(v-else-if="label") {{ label }}
     template(v-else) {{ i18n.translate(`Polaris.DropZone.${allowMultipleKey}.label${typeSuffix}`) }}
 
   div(
-    ref="node",
+    ref="dropNodeRef",
     :class="classes",
     :aria-disabled="disabled",
     @click="handleClick",
-    @drag-start.prevent.stop="() => {}",
+    @dragstart="stopEvent",
   )
     div(
       v-if="showDragOverlay",
@@ -73,7 +73,7 @@ Labelled(
 </template>
 
 <script setup lang="ts">
-import { type VNode, provide, ref, computed, onMounted, watch, getCurrentInstance, reactive } from 'vue';
+import { type VNode, provide, ref, computed, onMounted, watch, getCurrentInstance, reactive, onBeforeUnmount } from 'vue';
 import { debounce } from '@polaris/utilities/debounce';
 import { capitalize } from '@polaris/utilities/capitalize';
 import useI18n from '@/use/useI18n';
@@ -84,7 +84,6 @@ import type { VueNode } from '@/utilities/types';
 import { classNames, variationName } from '@/utilities/css';
 import { BlockStack, Icon, Text, Labelled } from '@/components';
 import type { LabelledProps } from '@/components/Labelled/types';
-import { useEventListener } from '@/utilities/use-event-listener';
 import type { DropZoneContextType } from './useDropZoneContext';
 import {
   fileAccepted,
@@ -192,7 +191,7 @@ const { hasSlot } = useHasSlot();
 
 const currentInstance = getCurrentInstance();
 
-const node = ref<HTMLDivElement | null>(null);
+const dropNodeRef = ref<HTMLDivElement | null>(null);
 const inputRef = ref<HTMLInputElement | null>(null);
 const dragTargets = ref<HTMLElement[]>([]);
 
@@ -207,24 +206,18 @@ const typeSuffix = computed(() => capitalize(props.type));
 const allowMultipleKey = computed(() => createAllowMultipleKey(props.allowMultiple));
 
 const overlayTextWithDefault = computed(() => !props.overlayText
-  ? i18n.translate(`Polaris.DropZone.${allowMultipleKey}.overlayText${typeSuffix}`)
+  ? i18n.translate(`Polaris.DropZone.${allowMultipleKey.value}.overlayText${typeSuffix.value}`)
   : props.overlayText,
 );
 
 const errorOverlayTextWithDefault = computed(() => !props.errorOverlayText
-  ? i18n.translate(`Polaris.DropZone.errorOverlayText${typeSuffix}`)
+  ? i18n.translate(`Polaris.DropZone.errorOverlayText${typeSuffix.value}`)
   : props.errorOverlayText,
 );
 
 const hasLabel = computed(() => hasSlot(slots.label) || props.label);
 
 const labelHiddenValue = computed(() => props.label ? props.labelHidden : true);
-
-const dropNode = computed(() => {
-  if (!props.dropOnPage) return node.value;
-
-  return document;
-});
 
 const classes = computed(() => classNames(
   styles.DropZone,
@@ -247,7 +240,7 @@ const showDragOverlay = computed(() => (
 const showDragErrorOverlay = computed(() => (dragging.value && (internalError.value || props.error)));
 
 const adjustSize = debounce(() => {
-  if (!node.value) return;
+  if (!dropNodeRef.value) return;
 
   if (props.variableHeight) {
     measuring.value = false;
@@ -255,7 +248,7 @@ const adjustSize = debounce(() => {
   }
 
   let tmpSize = 'large';
-  const width = node.value.getBoundingClientRect().width;
+  const width = dropNodeRef.value.getBoundingClientRect().width;
 
   if (width < 100) {
     tmpSize = 'small';
@@ -287,8 +280,7 @@ const getValidatedFiles = (files: File[] | DataTransferItem[]) => {
 };
 
 const handleDrop = (event: Event) => {
-  event.preventDefault();
-  event.stopPropagation();
+  stopEvent(event);
 
   if (props.disabled) return;
 
@@ -309,13 +301,12 @@ const handleDrop = (event: Event) => {
   event.target.value = '';
 };
 
-const handleDragEnter = (event: DropZoneEvent) => {
-  event.preventDefault();
-  event.stopPropagation();
+const handleDragEnter = (event: Event) => {
+  stopEvent(event);
 
   if (props.disabled) return;
 
-  const fileList = getDataTransferFiles(event);
+  const fileList = getDataTransferFiles(event as DropZoneEvent);
 
   if (event.target && !dragTargets.value.includes(event.target as HTMLElement)) {
     dragTargets.value.push(event.target as HTMLElement);
@@ -331,23 +322,21 @@ const handleDragEnter = (event: DropZoneEvent) => {
   emits('drag-enter');
 };
 
-const handleDragOver = (event: DropZoneEvent) => {
-  event.preventDefault();
-  event.stopPropagation();
+const handleDragOver = (event: Event) => {
+  stopEvent(event);
 
   if (props.disabled) return;
 
   emits('drag-over');
 };
 
-const handleDragLeave = (event: DropZoneEvent) => {
-  event.preventDefault();
-  event.stopPropagation();
+const handleDragLeave = (event: Event) => {
+  stopEvent(event);
 
   if (props.disabled) return;
 
   dragTargets.value = dragTargets.value.filter((el) => {
-    const compareNode = props.dropOnPage ? document : node.value;
+    const compareNode = props.dropOnPage ? document : dropNodeRef.value;
 
     return el !== event.target && compareNode && compareNode.contains(el);
   });
@@ -380,11 +369,10 @@ const handleClick = (event: MouseEvent) => {
   }
 };
 
-useEventListener('drop', handleDrop, dropNode.value);
-useEventListener('dragover', handleDragOver, dropNode.value);
-useEventListener('dragenter', handleDragEnter, dropNode.value);
-useEventListener('dragleave', handleDragLeave, dropNode.value);
-useEventListener('resize', adjustSize, window);
+const stopEvent = (event: Event) => {
+  event.preventDefault();
+  event.stopPropagation();
+};
 
 watch(
   () => props.openFileDialog,
@@ -395,6 +383,28 @@ watch(
 
 onMounted(() => {
   adjustSize();
+
+  const dropNode = props.dropOnPage ? document : dropNodeRef.value;
+
+  if (!dropNode) return;
+
+  dropNode.addEventListener('drop', handleDrop);
+  dropNode.addEventListener('dragover', handleDragOver);
+  dropNode.addEventListener('dragenter', handleDragEnter);
+  dropNode.addEventListener('dragleave', handleDragLeave);
+  window.addEventListener('resize', adjustSize);
+});
+
+onBeforeUnmount(() => {
+  const dropNode = props.dropOnPage ? document : dropNodeRef.value;
+
+  if (!dropNode) return;
+
+  dropNode.removeEventListener('drop', handleDrop);
+  dropNode.removeEventListener('dragover', handleDragOver);
+  dropNode.removeEventListener('dragenter', handleDragEnter);
+  dropNode.removeEventListener('dragleave', handleDragLeave);
+  window.removeEventListener('resize', adjustSize);
 });
 
 const context = reactive<DropZoneContextType>({

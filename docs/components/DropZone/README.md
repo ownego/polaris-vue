@@ -4,36 +4,47 @@ title: Drop zone
 category: Selection and input
 examples:
   - fileName: Default.vue
+    frameHeight: 300
     title: Default
     description: Use to allow merchants to upload files. They can drag and drop files into the dashed area, or upload traditionally by clicking the “Add file” button or anywhere inside the dashed area.
   - fileName: WithLabel.vue
+    frameHeight: 300
     title: With a label
     description: Use to pair with a label for better accessibility.
   - fileName: WithImageUpload.vue
+    frameHeight: 300
     title: With image file upload
     description: Use for cases that accept image file formats.
   - fileName: WithSingleUpload.vue
+    frameHeight: 300
     title: With single file upload
     description: Use to accept only one file.
   - fileName: WithDropOnPage.vue
+    frameHeight: 300
     title: With drop on page
     description: Use to accept files for upload when dropped anywhere on the page.
   - fileName: AcceptsSvgOnly.vue
+    frameHeight: 300
     title: Accepts only SVG files
     description: Use to accept only SVG files.
   - fileName: Nested.vue
+    frameHeight: 300
     title: Nested
     description: Use to allow merchants to upload files in a wider area than the visible drop zone.
   - fileName: MediumSized.vue
+    frameHeight: 300
     title: Medium-sized
     description: Use for cases with limited space. To improve usability, nest medium-sized drop zone in a larger drop zone with no outline. See the nested dropzone example.
   - fileName: SmallSized.vue
+    frameHeight: 300
     title: Small-sized
     description: Use for cases with tight space constraints, such as variant thumbnails on the Product details page. To improve usability, nest small-sized drop zone in a larger drop zone with no outline. See the nested dropzone example.
-  - fileName: CusstomFileUploadText.vue
+  - fileName: CustomFileUploadText.vue
+    frameHeight: 300
     title: With custom FileUpload text
     description: Use for cases where you want the child contents of the dropzone to determine its height.
   - fileName: CustomFileDialogTrigger.vue
+    frameHeight: 300
     title: With custom file dialog trigger
     description: Use to trigger the file dialog from an action somewhere else on the page.
 ---
@@ -111,13 +122,17 @@ Upload error messages should:
 - Show the name of the file(s) that were not uploaded successfully
 - Describe why the file(s) couldn’t be uploaded and what merchants should change to upload their file successfully, as seen below
 
-```
+::: code-group
+
+``` text [example]
 The following images couldn’t be uploaded:
 
 * “keep-it-real.png” is too large. Try a file size less than 20MB.
 * “realer-than-real.zip” is not supported. File type must be .gif, .jpg, .png or .svg.
 * “so-so-real.png” was interrupted due to weak network connection, [retry upload](#)
 ```
+
+:::
 
 ---
 
