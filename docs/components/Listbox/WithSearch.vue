@@ -12,7 +12,7 @@
           :focused="showFooterAction"
           :ariaActiveDescendant="activeOptionId"
           :ariaControls="listboxId"
-          @change="handleQueryChange"
+          @input="handleQueryChange"
           @clear-button-click="handleQueryClear"
         >
           <template #prefix>
@@ -193,15 +193,14 @@ const handleFilterSegments = (query: string) => {
   filteredSegments.value = nextFilteredSegments;
 };
 
-const handleQueryChange = (value: string) => {
-  console.log('query', value);
+const handleQueryChange = (e: Event, value: string) => {
   query.value = value;
 
   if (query.value.length >= 2) handleFilterSegments(query.value);
 };
 
-const handleQueryClear = () => {
-  handleQueryChange('');
+const handleQueryClear = (e) => {
+  handleQueryChange(e, '');
 };
 
 const handleSegmentSelect = (segmentIndex: string) => {
@@ -244,11 +243,4 @@ const handleLazyLoadSegments = () => {
     }, 1000);
   }
 };
-
-watch(
-  () => query.value,
-  (newVal) => {
-    handleQueryChange(newVal);
-  }
-)
 </script>
