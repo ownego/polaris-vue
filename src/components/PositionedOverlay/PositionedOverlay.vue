@@ -86,7 +86,6 @@ interface State {
 }
 
 type Emits = {
-  render: [details: OverlayDetails];
   scrollOut: [];
 }
 
@@ -328,8 +327,6 @@ function handleMeasurement() {
       observer.value.observe(overlay.value, OBSERVER_CONFIG);
       observer.value.observe(activator, OBSERVER_CONFIG);
     });
-
-    emits('render', overlayDetails.value);
   });
 }
 
