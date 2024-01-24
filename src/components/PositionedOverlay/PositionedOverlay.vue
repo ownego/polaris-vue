@@ -1,6 +1,5 @@
 <template lang="pug">
 div(
-  ref="overlay",
   :class="className",
   :style="style",
 )
@@ -8,7 +7,10 @@ div(
     event="resize",
     :handler="handleMeasurement",
   )
-  slot
+  // Some how we have to use a div here instead of a wrapper div above but it work just fine
+  // It's just add a div wrap the content of slot so it's not a big deal (i think so)
+  div(ref="overlay")
+    slot
 </template>
 
 <script setup lang="ts">
