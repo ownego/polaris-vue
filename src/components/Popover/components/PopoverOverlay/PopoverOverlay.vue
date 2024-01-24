@@ -11,7 +11,7 @@ PositionedOverlay(
   :fixed="fixed",
   :class="positionOverlayClass",
   :z-index-override="zIndexOverride",
-  @render="updateOverlayDetails",
+  @render="updateOverlay",
   @scroll-out="handleScrollOut",
 )
   div(
@@ -19,7 +19,7 @@ PositionedOverlay(
     :class="popoverOverlayClass",
   )
     EventListener(event="click", :handler="handleClick")
-    EventListener(event="touchStart", :handler="handleClick")
+    EventListener(event="touchstart", :handler="handleClick")
     KeypressListener(:key-code="Key.Escape", :handler="handleEscape")
     div(
       tabindex="0",
@@ -64,6 +64,7 @@ import { classNames } from '@/utilities/css';
 import usePortalsManager from '@/use/usePortalsManager';
 import { findFirstKeyboardFocusableNode } from '@/utilities/focus';
 import { isElementOfType } from '@/utilities/component';
+import type { OverlayDetails } from '@/components/PositionedOverlay/PositionedOverlay.vue';
 
 import {
   EventListener,
@@ -75,12 +76,6 @@ import { Pane } from '../Pane';
 import { Key } from '@/utilities/types';
 import type { PopoverOverlayProps } from './types';
 import { PopoverCloseSource } from './types';
-
-const DEFAULT_OVERLAY_DETAILS = {
-  measuring: true,
-  positioning: 'below',
-  desiredHeight: 0,
-};
 
 enum TransitionStatus {
   Entering = 'entering',
@@ -117,8 +112,8 @@ const state = reactive<State>({
 
 const contentNode = ref<HTMLDivElement | null>(null);
 const enteringTimer = ref<number | undefined>(undefined);
-const overlayDetails = ref(DEFAULT_OVERLAY_DETAILS);
 const overlayRef = ref<InstanceType<typeof PositionedOverlay> | HTMLElement | null>(null);
+const overlayDetails = ref<OverlayDetails | null>(null);
 
 const positionOverlayClass = computed(() => {
   return classNames(
@@ -132,15 +127,17 @@ const positionOverlayClass = computed(() => {
 const popoverOverlayClass = computed(() => {
   return classNames(
     styles.Popover,
-    overlayDetails.value.positioning === 'above' && styles.positionedAbove,
+    overlayDetails.value?.positioning === 'above' && styles.positionedAbove,
     props.fullWidth && styles.fullWidth,
-    overlayDetails.value.measuring && styles.measuring,
+    overlayDetails.value?.measuring && styles.measuring,
     props.hideOnPrint && styles['PopoverOverlay-hideOnPrint'],
   );
 });
 
 const contentStyles = computed(() => {
-  return overlayDetails.value.measuring ? undefined : { height: `${overlayDetails.value.desiredHeight}px` };
+  return overlayDetails.value?.measuring
+    ? undefined
+    : { height: `${overlayDetails.value?.desiredHeight}px` };
 });
 
 const contentClassNames = computed(() => {
@@ -193,16 +190,16 @@ onBeforeUnmount(() => {
   clearTransitionTimeout();
 });
 
+const updateOverlay = (overlayData: OverlayDetails) => {
+  overlayDetails.value = overlayData;
+}
+
 const changeTransitionStatus = (transitionStatus: TransitionStatus, callback?: () => void) => {
   state.transitionStatus = transitionStatus;
 
   callback && callback();
 
   contentNode.value && contentNode.value.getBoundingClientRect();
-};
-
-const updateOverlayDetails = (details: any) => {
-  overlayDetails.value = details;
 };
 
 function clearTransitionTimeout() {
@@ -296,6 +293,7 @@ function nodeContainsDescendant(
     if (parent === rootNode) {
       return true;
     }
+    
     parent = parent.parentNode;
   }
 
@@ -321,7 +319,5 @@ function forceUpdatePosition() {
   (overlayRef.value as InstanceType<typeof PositionedOverlay>).forceUpdatePosition();
 }
 
-defineExpose({
-  forceUpdatePosition,
-});
+defineExpose({ forceUpdatePosition });
 </script>

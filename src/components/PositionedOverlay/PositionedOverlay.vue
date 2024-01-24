@@ -1,11 +1,9 @@
 <template lang="pug">
 div(
   ref="overlay",
-  :key="String(active)",
   :class="className",
   :style="style",
 )
-  p {{ active }}
   EventListener(
     event="resize",
     :handler="handleMeasurement",
@@ -22,7 +20,7 @@ import {
   computed,
   onMounted,
   onUpdated,
-  onUnmounted,
+  onBeforeUnmount,
   defineExpose,
 } from 'vue';
 import styles from '@polaris/components/PositionedOverlay/PositionedOverlay.module.scss';
@@ -49,7 +47,7 @@ import type { VueNode } from '@/utilities/types';
 
 type Positioning = 'above' | 'below';
 
-interface OverlayDetails {
+export interface OverlayDetails {
   left?: number;
   right?: number;
   desiredHeight: number;
@@ -88,7 +86,7 @@ interface State {
 }
 
 type Emits = {
-  render: [OverlayDetails];
+  render: [details: OverlayDetails];
   scrollOut: [];
 }
 
@@ -149,17 +147,16 @@ const firstScrollableContainer = computed<HTMLElement | Document | null>(() => {
   return scrollableContainers.value[0] ?? null;
 });
 
-const overlayDetails = computed<OverlayDetails>(() => {
-  return {
-    measuring: state.measuring,
-    left: state.left,
-    right: state.right,
-    desiredHeight: state.height,
-    positioning: state.positioning,
-    activatorRect: state.activatorRect,
-    chevronOffset: state.chevronOffset,
-  }
-});
+// NOTE: reactive for this variable is not needed
+const overlayDetails = {
+  measuring: state.measuring,
+  left: state.left,
+  right: state.right,
+  desiredHeight: state.height,
+  positioning: state.positioning,
+  activatorRect: state.activatorRect,
+  chevronOffset: state.chevronOffset,
+}
 
 onMounted(() => {
   setScrollableContainers();
@@ -170,7 +167,7 @@ onMounted(() => {
 
   handleMeasurement();
 
-  emits('render', overlayDetails.value);
+  emits('render', overlayDetails);
 });
 
 onUpdated(() => {
@@ -183,7 +180,7 @@ onUpdated(() => {
   }
 });
 
-onUnmounted(() => {
+onBeforeUnmount(() => {
   observer.value.disconnect();
 
   if (scrollableContainers.value.length && !props.fixed) {
@@ -238,97 +235,104 @@ function handleMeasurement() {
   state.positioning = 'below';
   state.measuring = true;
 
-  if (overlay.value === null || firstScrollableContainer.value === null) {
-    return;
-  }
+  nextTick(() => {
+    if (overlay.value === null || firstScrollableContainer.value === null) {
+      return;
+    }
 
-  const {
-    activator,
-    preferredPosition = 'below',
-    preferredAlignment = 'center',
-    fullWidth,
-    fixed,
-    preferInputActivator = true,
-  } = props;
+    const {
+      activator,
+      preferredPosition = 'below',
+      preferredAlignment = 'center',
+      fullWidth,
+      fixed,
+      preferInputActivator = true,
+    } = props;
 
-  const preferredActivator = preferInputActivator
-    ? activator.querySelector('input') || activator
-    : activator;
+    const preferredActivator = preferInputActivator
+      ? activator.querySelector('input') || activator
+      : activator;
 
-  const activatorRect = getRectForNode(preferredActivator);
+    const activatorRect = getRectForNode(preferredActivator);
 
-  const currentOverlayRect = getRectForNode(overlay.value);
+    const currentOverlayRect = getRectForNode(overlay.value);
 
-  const scrollableElement = isDocument(firstScrollableContainer.value)
-    ? document.body
-    : firstScrollableContainer.value;
-  const scrollableContainerRect = getRectForNode(scrollableElement);
+    const scrollableElement = isDocument(firstScrollableContainer.value)
+      ? document.body
+      : firstScrollableContainer.value;
+    const scrollableContainerRect = getRectForNode(scrollableElement);
 
-  const overlayRect = fullWidth
-    ? new Rect({ ...currentOverlayRect, width: activatorRect.width })
-    : currentOverlayRect;
+    const overlayRect = fullWidth
+      ? new Rect({ ...currentOverlayRect, width: activatorRect.width })
+      : currentOverlayRect;
 
-  // If `body` is 100% height, it still acts as though it were not constrained to that size. This adjusts for that.
-  if (scrollableElement === document.body) {
-    scrollableContainerRect.height = document.body.scrollHeight;
-  }
+    // If `body` is 100% height, it still acts as though it were not constrained to that size. This adjusts for that.
+    if (scrollableElement === document.body) {
+      scrollableContainerRect.height = document.body.scrollHeight;
+    }
 
-  let topBarOffset = 0;
+    let topBarOffset = 0;
 
-  const topBarElement = scrollableElement.querySelector(`${dataPolarisTopBar.selector}`);
+    const topBarElement = scrollableElement.querySelector(`${dataPolarisTopBar.selector}`);
 
-  if (topBarElement) {
-    topBarOffset = topBarElement.clientHeight;
-  }
+    if (topBarElement) {
+      topBarOffset = topBarElement.clientHeight;
+    }
 
-  const overlayMargins = overlay.value.firstElementChild && overlay.value.firstChild instanceof HTMLElement
-    ? getMarginsForNode(overlay.value.firstElementChild as HTMLElement)
-    : { activator: 0, container: 0, horizontal: 0 };
+    const overlayMargins = overlay.value.firstElementChild && overlay.value.firstChild instanceof HTMLElement
+      ? getMarginsForNode(overlay.value.firstElementChild as HTMLElement)
+      : { activator: 0, container: 0, horizontal: 0 };
 
-  const containerRect = windowRect();
-  const zIndexForLayer = getZIndexForLayerFromNode(activator);
-  const zIndex = zIndexForLayer == null ? zIndexForLayer : zIndexForLayer + 1;
-  const verticalPosition = calculateVerticalPosition(
-    activatorRect,
-    overlayRect,
-    overlayMargins,
-    scrollableContainerRect,
-    containerRect,
-    preferredPosition,
-    fixed,
-    topBarOffset,
-  );
+    const containerRect = windowRect();
+    const zIndexForLayer = getZIndexForLayerFromNode(activator);
+    const zIndex = zIndexForLayer == null ? zIndexForLayer : zIndexForLayer + 1;
+    const verticalPosition = calculateVerticalPosition(
+      activatorRect,
+      overlayRect,
+      overlayMargins,
+      scrollableContainerRect,
+      containerRect,
+      preferredPosition,
+      fixed,
+      topBarOffset,
+    );
 
-  const horizontalPosition = calculateHorizontalPosition(
-    activatorRect,
-    overlayRect,
-    containerRect,
-    overlayMargins,
-    preferredAlignment,
-  );
+    const horizontalPosition = calculateHorizontalPosition(
+      activatorRect,
+      overlayRect,
+      containerRect,
+      overlayMargins,
+      preferredAlignment,
+    );
 
-  const tmpChevronOffset = activatorRect.center.x - horizontalPosition + overlayMargins.horizontal * 2;
+    const tmpChevronOffset = activatorRect.center.x - horizontalPosition + overlayMargins.horizontal * 2;
 
-  state.measuring = false;
-  state.activatorRect = getRectForNode(activator);
-  state.left = preferredAlignment !== 'right' ? horizontalPosition : undefined;
-  state.right = preferredAlignment === 'right' ? horizontalPosition : undefined;
-  state.top = lockPosition ? top : verticalPosition.top;
-  state.lockPosition = Boolean(fixed);
-  state.height = verticalPosition.height || 0;
-  state.width = fullWidth ? overlayRect.width : null;
-  state.positioning = verticalPosition.positioning as Positioning;
-  state.outsideScrollableContainer = rectIsOutsideOfRect(activatorRect, intersectionWithViewport(scrollableContainerRect));
-  state.zIndex = zIndex;
-  state.chevronOffset = tmpChevronOffset;
+    state.measuring = false;
+    state.activatorRect = getRectForNode(activator);
+    state.left = preferredAlignment !== 'right' ? horizontalPosition : undefined;
+    state.right = preferredAlignment === 'right' ? horizontalPosition : undefined;
+    state.top = lockPosition ? top : verticalPosition.top;
+    state.lockPosition = Boolean(fixed);
+    state.height = verticalPosition.height || 0;
+    state.width = fullWidth ? overlayRect.width : null;
+    state.positioning = verticalPosition.positioning as Positioning;
+    state.outsideScrollableContainer = rectIsOutsideOfRect(activatorRect, intersectionWithViewport(scrollableContainerRect));
+    state.zIndex = zIndex;
+    state.chevronOffset = tmpChevronOffset;
 
-  if (!overlay.value) {
-    return;
-  }
+    nextTick(() => {
+      if (!overlay.value) {
+        return;
+      }
 
-  observer.value.observe(overlay.value, OBSERVER_CONFIG);
-  observer.value.observe(activator, OBSERVER_CONFIG);
+      observer.value.observe(overlay.value, OBSERVER_CONFIG);
+      observer.value.observe(activator, OBSERVER_CONFIG);
+    });
+  })
 }
 
-defineExpose({ forceUpdatePosition });
+defineExpose({
+  forceUpdatePosition,
+  overlayDetails,
+});
 </script>

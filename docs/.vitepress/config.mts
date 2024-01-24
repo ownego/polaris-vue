@@ -42,7 +42,7 @@ export default defineConfig({
     nav: [
       { text: 'Home', link: '/' },
       { text: 'Documentation', link: '/documentation' },
-      { text: 'Examples', link: '/examples' }
+      { text: 'Patterns', link: '/patterns' }
     ],
     outline: { level: [2, 3] },
 
@@ -54,7 +54,7 @@ export default defineConfig({
           { text: 'Installation', link: '/documentation' },
           { text: 'Icons', link: '/icons' },
           { text: 'Tokens', link: 'https://polaris.shopify.com/tokens/color' },
-          { text: 'Examples', link: '/examples' },
+          { text: 'Patterns', link: '/patterns' },
           { text: 'Contributing', link: '/contributing' },
         ],
       },
