@@ -95,9 +95,9 @@ Every item in a list should:
 
 ## Related components
 
-- To create a list of checkboxes or radio buttons, [use the choice list component](https://polaris.shopify.com/components/ChoiceList)
-- To present a collection of objects of the same type such as customers, products, or orders, [use the resource list component](https://polaris.shopify.com/components/ResourceList)
-- When text labels for each item are useful for describing the content, [use the Description List component](https://polaris.shopify.com/components/DescriptionList)
+- To create a list of checkboxes or radio buttons, [use the choice list component](/components/ChoiceList)
+- To present a collection of objects of the same type such as customers, products, or orders, [use the resource list component](/components/ResourceList)
+- When text labels for each item are useful for describing the content, [use the Description List component](/components/DescriptionList)
 
 ---
 
@@ -105,6 +105,6 @@ Every item in a list should:
 
 The list component outputs list items (`<li>`) inside a list wrapper (`<ul>` for bullet lists or `<ol>` for numbered lists). By default, list items are conveyed as a group of related elements to assistive technology users.
 
-To group items for layout only, consider using the [vertical stack component](https://polaris.shopify.com/components/VerticalStack).
+To group items for layout only, consider using the [vertical stack component](/components/VerticalStack).
 
 </div>
