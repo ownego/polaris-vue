@@ -4,12 +4,15 @@ title: Spinner
 category: Feedback indicators
 examples:
   - fileName: Default.vue
+    frameHeight: 280
     title: Default
     description: Use to notify merchants that their requested action is being processed.
   - fileName: Small.vue
+    frameHeight: 280
     title: Small
     description: Smaller than the default spinner.
   - fileName: FocusManagement.vue
+    frameHeight: 280
     title: With focus management
     description: Use to direct the focus state from the control to the spinner, to the content.
 ---
@@ -66,7 +69,7 @@ Spinner accessibility label should:
 
 ## Related components
 
-- To improve user experience and reduce the appearance of long loading times, use the [Progress bar](https://polaris.shopify.com/components/progress-bar) component.
-- To better represent loading content, use [Skeleton page](https://polaris.shopify.com/components/skeleton-page) along with [Skeleton body text](https://polaris.shopify.com/components/feedback-indicators/skeleton-body-text) and [Skeleton display text](https://polaris.shopify.com/components/skeleton-display-text) components.
+- To improve user experience and reduce the appearance of long loading times, use the [Progress bar](/components/ProgressBar) component.
+- To better represent loading content, use [Skeleton page](/components/SkeletonPage) along with [Skeleton body text](/components/SkeletonBodyText) and [Skeleton display text](/components/SkeletonDisplayText) components.
 
 </div>

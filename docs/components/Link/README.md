@@ -4,15 +4,19 @@ title: Link
 category: Navigation
 examples:
   - fileName: Default.vue
+    frameHeight: 250
     title: Default links
     description: Use for text links inside a paragraph or for standalone text. Default links open in the same browser tab.
   - fileName: Monochrome.vue
+    frameHeight: 250
     title: Monochrome
     description: Use for text links that are the same color as the surrounding text.
   - fileName: MonochromeBanner.vue
+    frameHeight: 250
     title: Monochrome in a banner
     description: Monochrome styles will be applied to links rendered within a `Banner`.
   - fileName: External.vue
+    frameHeight: 250
     title: External link
     description: Use for text links that should open in a new browser tab (or window, depending on the merchant’s browser settings). Use this only when a default link might disrupt the merchant’s workflow.
 ---
@@ -96,7 +100,7 @@ The link component should follow the content guidelines for [links](https://pola
 
 ## Related components
 
-- For actions that don’t appear within or directly following a sentence, use the [button component](https://polaris.shopify.com/components/actions/button)
+- For actions that don’t appear within or directly following a sentence, use the [button component](/components/Button)
 
 ## Accessibility
 
@@ -129,7 +133,7 @@ The Link component is underlined to give interactive elements a shape. This allo
 
 ### Submitting data
 
-Merchants generally expect links to navigate, and not to submit data or take action. If you need a component that doesn’t have a URL associated with it, then use the [button component](https://polaris.shopify.com/components/actions/button) instead.
+Merchants generally expect links to navigate, and not to submit data or take action. If you need a component that doesn’t have a URL associated with it, then use the [button component](/components/Button) instead.
 
 ### Labeling
 

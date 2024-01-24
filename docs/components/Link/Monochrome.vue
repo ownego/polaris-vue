@@ -3,6 +3,3 @@
     fulfilling orders
   </Link>
 </template>
-
-<script setup lang="ts">
-</script>

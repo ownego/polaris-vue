@@ -12,7 +12,8 @@ import type { VNode, VNodeArrayChildren } from 'vue';
  */
 export function useExtractFragment(slot?: any) {
   const slotsElms = computed(() => {
-    let elm: VNodeArrayChildren = [];
+    let elm: VNode[] = [];
+
     if (slot) {
       const groups = slot().map((group: VNode) => {
         if (group.children && group.children.length) {

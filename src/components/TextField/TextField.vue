@@ -8,8 +8,13 @@ Labelled(
   :disabled="disabled",
   :read-only="readOnly",
 )
-  template(v-if="label", #label) {{ label }}
-  template(v-if="helpText", #helpText) {{ helpText }}
+  template(v-if="hasLabel", #label)
+    slot(v-if="slots.label", name="label")
+    template(v-else) {{ label }}
+
+  template(v-if="hasHelpText", #helpText)
+    slot(v-if="slots.helpText", name="helpText")
+    template(v-else) {{ helpText }}
 
   Connected
     template(v-if="Boolean(slots.connectedLeft)", #left)
@@ -24,7 +29,7 @@ Labelled(
       ref="textFieldRef",
     )
       div(
-        v-if="slots.prefix || prefix",
+        v-if="hasPrefix",
         :class="classNames(styles.Prefix, isIconPrefix && styles.PrefixIcon)",
         :id="`${id}-Prefix`",
         ref="prefixRef",
@@ -33,7 +38,7 @@ Labelled(
         template(v-else) {{ prefix }}
 
       div(
-        v-if="slots.verticalContent || verticalContent",
+        v-if="hasVerticalContent",
         :class="styles.VerticalContent",
         :id="`${id}-VerticalContent`",
         ref="verticalContentRef",
@@ -42,10 +47,11 @@ Labelled(
         slot(v-if="slots.verticalContent", name="verticalContent")
         template(v-else) {{ verticalContent }}
         component(:is="input")
+
       component(v-else, :is="input")
 
       div(
-        v-if="slots.suffix || suffix",
+        v-if="hasSuffix",
         :class="styles.Suffix",
         :id="`${id}-Suffix`",
         ref="suffixRef",
@@ -98,6 +104,7 @@ Labelled(
 import { computed, h, onMounted, ref, watch } from 'vue';
 import useI18n from '@/use/useI18n';
 import useId from '@/use/useId';
+import { useHasSlot } from '@/use/useHasSlot';
 import { classNames, variationName } from '@/utilities/css';
 import { Key } from '@/utilities/types';
 import { useEventListener } from '@/utilities/use-event-listener';
@@ -123,6 +130,7 @@ const slots = defineSlots<TextFieldSlots>();
 const emits = defineEmits<TextFieldEvents>();
 
 const i18n = useI18n();
+const { hasSlot } = useHasSlot();
 
 const model = defineModel<string>();
 
@@ -179,6 +187,12 @@ watch(
 onMounted(() => {
   isAfterInitial.value = true;
 });
+
+const hasLabel = computed(() => hasSlot(slots.label) || props.label);
+const hasHelpText = computed(() => hasSlot(slots.helpText) || props.helpText);
+const hasSuffix = computed(() => hasSlot(slots.suffix) || props.suffix);
+const hasPrefix = computed(() => hasSlot(slots.prefix) || props.prefix);
+const hasVerticalContent = computed(() => hasSlot(slots.verticalContent) || props.verticalContent);
 
 const normalizedValue = computed(() => props.suggestion ? props.suggestion : model.value);
 
@@ -386,8 +400,7 @@ const input = () => h(props.multiline ? 'textarea' : 'input', {
   readOnly: props.readOnly,
   role: props.role,
   autoFocus: props.autoFocus,
-  value: normalizedValue.value,
-  // modelValue: model,
+  value: normalizedValue.value || props.value,
   placeholder: props.placeholder,
   style: style.value,
   autoComplete: props.autoComplete,
@@ -431,6 +444,7 @@ function handleChange(e: Event) {
 
 function handleInput(e: Event) {
   model.value = (e.target as HTMLInputElement).value;
+  emits('input', e as InputEvent, (e.target as HTMLInputElement).value);
 
   if (props.suggestion) {
     (e.target as HTMLInputElement).value = props.suggestion;
