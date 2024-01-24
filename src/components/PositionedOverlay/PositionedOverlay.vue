@@ -151,8 +151,7 @@ const overlayDetails = computed<OverlayDetails>(() => {
     measuring: state.measuring,
     left: state.left,
     right: state.right,
-    // Temporary add -21 for unexpected height
-    desiredHeight: state.height ? state.height - 21 : 0, 
+    desiredHeight: state.height, 
     positioning: state.positioning,
     activatorRect: state.activatorRect,
     chevronOffset: state.chevronOffset,
