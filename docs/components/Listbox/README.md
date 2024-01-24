@@ -9,15 +9,15 @@ examples:
   - fileName: WithLoading.vue
     title: With Loading
     description: Implementation of a control element showing a loading indicator to let merchants know more options are being loaded
-  # - fileName: listbox-with-action.tsx
-  #   title: With Action
-  #   description: Implementation of a control element used to let merchants take an action
-  # - fileName: listbox-with-custom-element.tsx
-  #   title: With custom element
-  #   description: Implementation of a control with custom rendering of options
-  # - fileName: listbox-with-search.tsx
-  #   title: With search
-  #   description: Use to help merchants browse, filter, and choose from a list of options.
+  - fileName: WithAction.vue
+    title: With Action
+    description: Implementation of a control element used to let merchants take an action
+  - fileName: WithCustomElement.vue
+    title: With custom element
+    description: Implementation of a control with custom rendering of options
+  - fileName: WithSearch.vue
+    title: With search
+    description: Use to help merchants browse, filter, and choose from a list of options.
 ---
 
 # {{ $frontmatter.title }}
