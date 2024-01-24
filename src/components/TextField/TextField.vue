@@ -77,7 +77,7 @@ Labelled(
       )
         Text(as="span", visually-hidden)
           | {{ i18n.translate('Polaris.Common.clear') }}
-        Icon(:source="CircleCancelMinor", tone="base")
+        Icon(:source="XCircleIcon", tone="base")
 
       Spinner(
         v-if="isNumericType && step !== 0 && !disabled && !readOnly",
@@ -114,7 +114,7 @@ import { Labelled } from '../Labelled';
 import { Connected } from '../Connected';
 import { Icon } from '../Icon';
 import { Text } from '../Text';
-import CircleCancelMinor from '@icons/CircleCancelMinor.svg';
+import XCircleIcon from '@icons/XCircleIcon.svg';
 import styles from '@polaris/components/TextField/TextField.module.scss';
 
 import type { TextFieldProps, TextFieldSlots, TextFieldEvents } from './types';
