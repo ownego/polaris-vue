@@ -78,9 +78,9 @@ const className = computed(() => classNames(
 
 const style = computed(() => props.height
   ? {
-    height: props.height,
-    maxHeight: props.height,
-    mingHeight: props.height,
+    height: `${props.height}px`,
+    maxHeight: `${props.height}px`,
+    minHeight: `${props.height}px`,
   }
   : undefined);
 </script>
