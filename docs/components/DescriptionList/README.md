@@ -99,7 +99,7 @@ Terms descriptions should be:
 
 ## Related components
 
-- To create a list of actions or navigation, [use the action list component](https://polaris.shopify.com/components/ActionList).
+- To create a list of actions or navigation, [use the action list component](/components/ActionList).
 
 ---
 
