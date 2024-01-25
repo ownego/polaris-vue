@@ -10,7 +10,7 @@ component(
   )
     PopoverOverlay(
       ref="overlayRef",
-      v-bind="{ ...props }",
+      v-bind="props",
       :id="String(id)",
       :activator="activatorNode",
       :preferInputActivator="preferInputActivator",
