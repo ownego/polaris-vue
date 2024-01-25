@@ -26,7 +26,9 @@ export function nextFocusableNode(
 
   for (const focusableElement of focusableElementsAfterNode) {
     if (
-      isElementInViewport(focusableElement) && (!filter || (filter && filter(focusableElement)))
+      isElementInViewport(focusableElement) &&
+      // (!filter || (filter && filter(focusableElement)))
+      (!filter || (filter && Boolean(filter(focusableElement))))
     ) {
       return focusableElement;
     }
