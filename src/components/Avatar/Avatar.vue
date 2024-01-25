@@ -10,7 +10,7 @@ span(
   )
     svg(
       :class="styles.Svg",
-      view-box="0 0 40 40",
+      viewBox="0 0 40 40",
     )
       template(v-if="customer || !initials")
         path(
