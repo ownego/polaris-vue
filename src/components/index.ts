@@ -40,3 +40,4 @@ export * from './Text';
 export * from './TextField';
 export * from './Thumbnail';
 export * from './UnstyledLink';
+export * from './Optionlist';

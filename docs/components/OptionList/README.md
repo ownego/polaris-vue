@@ -6,15 +6,15 @@ examples:
   - fileName: Default.vue
     title: Default
     description: Use for a group of similar selectable items when only one should be selectable at once.
-  # - fileName: option-list-multiple.tsx
-  #   title: Multiple
-  #   description: Use when you have a group of similar selectable items and more than one item can be selected at once.
-  # - fileName: option-list-with-sections.tsx
-  #   title: With sections
-  #   description: Use sections when you have multiple groups of similar selectable items.
-  # - fileName: option-list-in-a-popover.tsx
-  #   title: In a popover
-  #   description: Use when a set of selections won’t fit in the available screen space.
+  - fileName: Multiple.vue
+    title: Multiple
+    description: Use when you have a group of similar selectable items and more than one item can be selected at once.
+  - fileName: WithSection.vue
+    title: With sections
+    description: Use sections when you have multiple groups of similar selectable items.
+  - fileName: InPopover.vue
+    title: In a popover
+    description: Use when a set of selections won’t fit in the available screen space.
 ---
 
 # {{ $frontmatter.title }}
@@ -35,9 +35,9 @@ examples:
 
 <PropsTable />
 
-## Slots
+## Events
 
-<SlotsTable />
+<EventsTable />
 
 <div style="font-size: 0.8125rem">
 

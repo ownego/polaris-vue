@@ -18,7 +18,7 @@ li(
         :id="id",
         :checked="select",
         :disabled="disabled",
-        :model-value="value",
+        :model-value="select",
         @change="handleClick"
       )
     div(
@@ -64,7 +64,7 @@ import {
 } from '@/components';
 import type { InlineStackProps } from '@/components/InlineStack/types';
 import type { IconProps } from '@/components/Icon/Icon.vue';
-import type { AvatarProps } from '@/components/Avatar/Avatar.vue';
+import type { AvatarProps } from '@/components/Avatar/utils';
 import type { ThumbnailProps } from '@/components/Thumbnail/Thumbnail.vue';
 import CheckIcon from '@icons/CheckIcon.svg';
 import styles from '@polaris/components/OptionList/components/Option/Option.module.scss';

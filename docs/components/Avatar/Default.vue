@@ -1,3 +1,3 @@
 <template>
-<Avatar customer name="Farrah"/>
+<Avatar customer name="Farrah" size="xl"/>
 </template>
