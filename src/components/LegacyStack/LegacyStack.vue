@@ -5,7 +5,7 @@ div(
   template(v-if="isChildContentWrappedByItem")
     slot
   template(
-    v-else-if="hasSlot(slots.default) && slotsElms.length > 1",
+    v-else-if="hasSlot(slots.default)",
     v-for="item in slotsElms",
   )
     LegacyStackItem
