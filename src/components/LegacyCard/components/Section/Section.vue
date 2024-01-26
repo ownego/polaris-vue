@@ -1,8 +1,8 @@
 <template lang="pug">
-div(:className="className")
+div(:class="className")
   div(
     v-if="title || hasSlot(slots.title) || actions",
-    :className="styles.SectionHeader",
+    :class="styles.SectionHeader",
   )
     LegacyStack(
       v-if="actions",
