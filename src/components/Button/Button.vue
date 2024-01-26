@@ -37,9 +37,9 @@ import { useHasSlot } from '@/use/useHasSlot';
 import type { ButtonProps } from './types';
 import { Spinner, Icon } from '@/components';
 import { UnstyledButton } from '../UnstyledButton';
-import SelectMinor from '@icons/SelectMinor.svg';
-import ChevronDownMinor from '@icons/ChevronDownMinor.svg';
-import ChevronUpMinor from '@icons/ChevronUpMinor.svg';
+import SelectIcon from '@icons/SelectIcon.svg';
+import ChevronDownIcon from '@icons/ChevronDownIcon.svg';
+import ChevronUpIcon from '@icons/ChevronUpIcon.svg';
 import { handleMouseUpByBlurring } from '@/utilities/focus';
 import styles from '@polaris/components/Button/Button.module.scss';
 
@@ -134,9 +134,9 @@ const disclosureIconSource = computed(() => {
   }
 
   if (props.disclosure === 'select') {
-    return SelectMinor;
+    return SelectIcon;
   }
 
-  return props.disclosure === 'up' ? ChevronUpMinor : ChevronDownMinor;
+  return props.disclosure === 'up' ? ChevronUpIcon : ChevronDownIcon;
 })
 </script>

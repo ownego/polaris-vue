@@ -9,20 +9,20 @@
 <script setup lang="ts">
 import { h, ref } from 'vue';
 import { Icon } from '@/components';
-import CaretDownMinor from '@icons/CaretDownMinor.svg';
-import CaretUpMinor from '@icons/CaretUpMinor.svg';
+import CaretDownIcon from '@icons/CaretDownIcon.svg';
+import CaretUpIcon from '@icons/CaretUpIcon.svg';
 /**
  * Use this snippet in your component instead:
  *
  * import { Icon } from '@ownego/polaris-vue';
- * import CaretDownMinor from '@shopify/polaris-icons/dist/svg/CaretDownMinor.svg';
- * import CaretUpMinor from '@shopify/polaris-icons/dist/svg/CaretUpMinor.svg
+ * import CaretDownIcon from '@shopify/polaris-icons/dist/svg/CaretDownIcon.svg';
+ * import CaretUpIcon from '@shopify/polaris-icons/dist/svg/CaretUpIcon.svg
  */
 
 const selected = ref('enabled');
 
-const caretUp = h(Icon, { source: CaretUpMinor });
-const caretDown = h(Icon, { source: CaretDownMinor });
+const caretUp = h(Icon, { source: CaretUpIcon });
+const caretDown = h(Icon, { source: CaretDownIcon });
 
 const options = [
   {

@@ -15,7 +15,7 @@ div(
     @blur="onBlur",
   )
     div(:class="styles.SpinnerIcon")
-      Icon(:source="ChevronUpMinor")
+      Icon(:source="ChevronUpIcon")
   div(
     role="button",
     :class="styles.Segment",
@@ -26,14 +26,14 @@ div(
     @blur="onBlur",
   )
     div(:class="styles.SpinnerIcon")
-      Icon(:source="ChevronDownMinor")
+      Icon(:source="ChevronDownIcon")
 </template>
 
 <script setup lang="ts">
 import { ref } from 'vue';
 import { Icon } from '@/components';
-import ChevronDownMinor from '@icons/ChevronDownMinor.svg';
-import ChevronUpMinor from '@icons/ChevronUpMinor.svg';
+import ChevronDownIcon from '@icons/ChevronDownIcon.svg';
+import ChevronUpIcon from '@icons/ChevronUpIcon.svg';
 import styles from '@polaris/components/TextField/TextField.module.scss';
 
 export type SpinnerEvents = {

@@ -2,7 +2,7 @@
  <Card>
   <Tag url="#">
     <LegacyStack spacing="extraTight">
-      <Icon :source="WandMinor" />
+      <Icon :source="WandIcon" />
       <span>Wholesale</span>
     </LegacyStack>
   </Tag>
@@ -10,6 +10,6 @@
 </template>
 
 <script setup lang="ts">
-import WandMinor from '@icons/WandMinor.svg';
+import WandIcon from '@icons/WandIcon.svg';
 </script>
 
