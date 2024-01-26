@@ -6,7 +6,7 @@ div(
 )
   div(:class="styles.Icon")
     Icon(
-      :source="CircleAlertMajor",
+      :source="AlertCircleIcon",
     )
   template(v-if="typeof message === 'string'")
     span {{ message }}
@@ -17,7 +17,7 @@ div(
 import { Icon } from '@/components';
 import type { Error } from '@/utilities/types';
 import { errorTextID } from './utils';
-import CircleAlertMajor from '@icons/CircleAlertMajor.svg';
+import AlertCircleIcon from '@icons/AlertCircleIcon.svg';
 import styles from '@polaris/components/InlineError/InlineError.module.scss';
 
 interface InlineErrorProps {

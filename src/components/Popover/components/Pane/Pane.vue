@@ -29,7 +29,7 @@ import { computed } from 'vue';
 import { classNames } from '@/utilities/css';
 import type { VueNode } from '@/utilities/types';
 import { Scrollable } from '@/components';
-import { Section } from '../Section';
+import { PopoverSection as Section } from '../Section';
 import styles from '@polaris/components/Popover/Popover.module.scss';
 
 export type PaneProps = {
@@ -51,12 +51,12 @@ export type PaneProps = {
   subdued?: boolean;
 }
 
-type Slots = {
+type PaneSlots = {
   /** Default slot */
   default: (_?: VueNode) => any;
 }
 
-type Emits = {
+type PaneEmits = {
   /** Called when scrolled to the bottom of the scroll area */
   'scrolled-to-bottom': [];
 }
@@ -65,9 +65,9 @@ const props = withDefaults(defineProps<PaneProps>(), {
   captureOverscroll: false,
 })
 
-const emits = defineEmits<Emits>();
+const emits = defineEmits<PaneEmits>();
 
-const slots = defineSlots<Slots>();
+const slots = defineSlots<PaneSlots>();
 
 const className = computed(() => classNames(
   styles.Pane,
@@ -78,9 +78,9 @@ const className = computed(() => classNames(
 
 const style = computed(() => props.height
   ? {
-    height: props.height,
-    maxHeight: props.height,
-    mingHeight: props.height,
+    height: `${props.height}px`,
+    maxHeight: `${props.height}px`,
+    minHeight: `${props.height}px`,
   }
   : undefined);
 </script>

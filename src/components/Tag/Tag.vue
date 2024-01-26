@@ -36,7 +36,7 @@ span(
     @click="emits('remove')",
     @mouseup="onMouseUp",
   )
-    Icon(:source="CancelSmallMinor")
+    Icon(:source="XSmallIcon")
 </template>
 
 <script setup lang="ts">
@@ -44,7 +44,7 @@ import { computed, getCurrentInstance } from 'vue';
 import { classNames } from '@/utilities/css';
 import type { VueNode } from '@/utilities/types';
 import { handleMouseUpByBlurring } from '@/utilities/focus';
-import CancelSmallMinor from '@icons/CancelSmallMinor.svg';
+import XSmallIcon from '@icons/XSmallIcon.svg';
 import styles from '@polaris/components/Tag/Tag.module.scss';
 
 const currentInstance = getCurrentInstance();

@@ -11,11 +11,10 @@ PositionedOverlay(
   :fixed="fixed",
   :class="positionOverlayClass",
   :z-index-override="zIndexOverride",
-  @render="updateOverlay",
   @scroll-out="handleScrollOut",
 )
   div(
-    v-bind="{ ...overlay.props }",
+    v-bind="overlay.props",
     :class="popoverOverlayClass",
   )
     EventListener(event="click", :handler="handleClick")
@@ -37,7 +36,10 @@ PositionedOverlay(
         template(v-if="isChildContentWrappedByPane")
           slot
         template(v-else)
-          Pane
+          Pane(
+            :capture-overscroll="captureOverscroll",
+            :sectioned="sectioned",
+          )
             slot
     div(
       :class="styles.FocusTracker",
@@ -64,7 +66,6 @@ import { classNames } from '@/utilities/css';
 import usePortalsManager from '@/use/usePortalsManager';
 import { findFirstKeyboardFocusableNode } from '@/utilities/focus';
 import { isElementOfType } from '@/utilities/component';
-import type { OverlayDetails } from '@/components/PositionedOverlay/PositionedOverlay.vue';
 
 import {
   EventListener,
@@ -112,8 +113,9 @@ const state = reactive<State>({
 
 const contentNode = ref<HTMLDivElement | null>(null);
 const enteringTimer = ref<number | undefined>(undefined);
-const overlayRef = ref<InstanceType<typeof PositionedOverlay> | HTMLElement | null>(null);
-const overlayDetails = ref<OverlayDetails | null>(null);
+const overlayRef = ref<InstanceType<typeof PositionedOverlay> | null>(null);
+
+const overlayDetails = computed(() => (overlayRef.value as InstanceType<typeof PositionedOverlay>)?.overlayDetails);
 
 const positionOverlayClass = computed(() => {
   return classNames(
@@ -149,9 +151,17 @@ const contentClassNames = computed(() => {
 });
 
 const isChildContentWrappedByPane = computed(() => {
-  const childrenArray = slots.default?.() || [];
+  const childContents: any = slots.default?.() || [];
 
-  return isElementOfType(childrenArray[0], Pane);
+  if (!childContents.length) {
+    return false; 
+  }
+
+  const children = childContents[0].children && childContents[0].children.length
+    ? childContents[0].children[0]
+    : childContents[0];
+
+  return isElementOfType(children, Pane);
 });
 
 watch(
@@ -189,10 +199,6 @@ onMounted(() => {
 onBeforeUnmount(() => {
   clearTransitionTimeout();
 });
-
-const updateOverlay = (newOverlay: OverlayDetails) => {
-  overlayDetails.value = newOverlay;
-}
 
 const changeTransitionStatus = (transitionStatus: TransitionStatus, callback?: () => void) => {
   state.transitionStatus = transitionStatus;

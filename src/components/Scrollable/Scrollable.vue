@@ -1,16 +1,15 @@
 <template lang="pug">
 div(
   ref="scrollArea",
-  :class="[attrs.class, finalClassName]",
+  :class="finalClassName",
   :tabindex="focusable ? 0 : undefined",
-  v-bind="{ ...scrollable.props, ...attrs }",
+  v-bind="scrollable.props",
 )
   slot
 </template>
 
 <script setup lang="ts">
 import {
-  useAttrs,
   ref,
   computed,
   onMounted,
@@ -66,8 +65,6 @@ export type ScrollableSlot = {
   /** Content inside scrollable */
   default: (_: VueNode) => null;
 }
-
-const attrs = useAttrs();
 
 // Don't need to work with ...rest of props, attrs is enough
 const props = withDefaults(defineProps<ScrollableProps>(), {
