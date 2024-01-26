@@ -11,8 +11,6 @@ Box(
     v-bind="SectionMarkUpProps",
     @action-any-item="$emit('action-any-item')",
   )
-    template(#title)
-      slot(name="title")
     template(v-for="{prefixId} in section.items" #[`prefix-${prefixId}`])
       slot(:name="`prefix-${prefixId}`")
     template(v-for="{suffixId} in section.items" #[`suffix-${suffixId}`])
@@ -22,8 +20,6 @@ template(v-else)
     v-bind="SectionMarkUpProps",
     @action-any-item="$emit('action-any-item')",
   )
-    template(#title)
-      slot(name="title")
     template(v-for="{prefixId} in section.items" #[`prefix-${prefixId}`])
       slot(:name="`prefix-${prefixId}`")
     template(v-for="{suffixId} in section.items" #[`suffix-${suffixId}`])

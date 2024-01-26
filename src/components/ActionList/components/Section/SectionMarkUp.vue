@@ -1,6 +1,6 @@
 <template lang="pug">
 //- TittleMarkup
-template(v-if="slots.title || section.title")
+template(v-if="section.title")
   Box(
     v-if="section.title",
     paddingBlockStart="300"
@@ -12,12 +12,6 @@ template(v-if="slots.title || section.title")
       as="p",
       variant="headingSm"
     ) {{ section.title }}
-  Box(
-    v-else,
-    padding="200",
-    paddingInlineEnd="150",
-  )
-    slot(name="title")
 //- End TittleMarkup
 Box(
   as="div",
