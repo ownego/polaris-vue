@@ -22,7 +22,7 @@
 </template>
 
 <script setup lang="ts">
-import ChevronRightIcon from '@icons/ChevronRightMinor.svg';
+import ChevronRightIcon from '@icons/ChevronRightIcon.svg';
 const actionListItem = [
   {
     content: "Go here",

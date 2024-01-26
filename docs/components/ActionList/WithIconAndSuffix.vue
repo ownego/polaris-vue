@@ -15,7 +15,7 @@
       :items="actionItems"
     >
       <template #suffix-import>
-        <Icon :source="TickSmallMinor" />
+        <Icon :source="CheckSmallIcon" />
       </template>
     </ActionList>
   </Popover>
@@ -24,9 +24,9 @@
 
 <script setup lang="ts">
 import { ref } from 'vue';
-import ImportMinor from '@icons/ImportMinor.svg';
-import ExportMinor from '@icons/ExportMinor.svg';
-import TickSmallMinor from '@icons/TickSmallMinor.svg';
+import ImportIcon from '@icons/ImportIcon.svg';
+import ExportIcon from '@icons/ExportIcon.svg';
+import CheckSmallIcon from '@icons/CheckSmallIcon.svg';
 
 const active = ref(false);
 
@@ -38,12 +38,12 @@ const actionItems = [
   {
     active: true,
     content: 'Import file',
-    icon: ImportMinor,
+    icon: ImportIcon,
     suffixId: "import",
   },
   {
     content: 'Export file',
-    icon: ExportMinor,
+    icon: ExportIcon,
   },
 ];
 </script>
