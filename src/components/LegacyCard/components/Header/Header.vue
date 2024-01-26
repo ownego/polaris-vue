@@ -62,8 +62,8 @@ const isTextOnlyTitle = computed(() => {
     } else {
       return slots.title()[0].children
         && slots.title()[0].children?.length === 1
-        && (slots.title()[0].children?.[0].type.toString() === 'Symbol(v-txt)'
-        || slots.title()[0].children?.[0].type.toString() === 'Symbol()');
+        && ((slots.title()[0] as any).children?.[0].type.toString() === 'Symbol(v-txt)'
+        || (slots.title()[0] as any).children?.[0].type.toString() === 'Symbol()');
     }
   }
 

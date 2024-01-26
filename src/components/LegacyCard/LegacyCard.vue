@@ -1,6 +1,6 @@
 <template lang="pug">
 div(
-  ref="legacyCard",
+  ref="legacyCardRef",
   :className="className",
 )
   Header(
@@ -62,7 +62,7 @@ div(
 </template>
 
 <script setup lang="ts">
-import { computed, useSlots } from 'vue';
+import { computed, useSlots, provide } from 'vue';
 import type {
   VueNode,
   ComplexAction,
@@ -108,7 +108,7 @@ const props = withDefaults(defineProps<LegacyCardProps & {
 
 const i18n = useI18n();
 const slots = useSlots();
-const legacyCard = useLegacyCardPaddingObserverRef();
+const legacyCardRef = useLegacyCardPaddingObserverRef();
 const { hasSlot } = useHasSlot();
 
 const {
@@ -130,4 +130,6 @@ const footerMarkupStyle = computed(() =>
     props.footerActionAlignment === 'left' && styles.LeftJustified,
   ),
 );
+
+provide('WithinContentContext', true);
 </script>

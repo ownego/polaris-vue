@@ -18,24 +18,24 @@ examples:
   - fileName: LegacyCardWithCustomFooterActions.vue
     title: With custom footer actions
     description: Use to present actionable content that is optional or not the primary purpose of the page.
-#   - fileName: LegacyCardWithDestructiveFooterAction.vue
-#     title: With destructive footer action
-#     description: Use when a card action will delete merchant data or be otherwise difficult to recover from.
-#   - fileName: LegacyCardWithMultipleSections.vue
-#     title: With multiple sections
-#     description: Use when you have two related but distinct pieces of information to communicate to merchants. Multiple sections can help break up complicated concepts to make them easier to scan and understand.
-#   - fileName: LegacyCardWithMultipleTitledSections.vue
-#     title: With multiple titled sections
-#     description: Use when you have two related but distinct pieces of information to communicate to merchants that are complex enough to require a title to introduce them.
-#   - fileName: LegacyCardWithSectionsAndActions.vue
-#     title: With sections and actions
-#     description: Use when your card section has actions that apply only to that section.
-#   - fileName: LegacyCardWithSubsection.vue
-#     title: With subsection
-#     description: Use when your card sections need further categorization.
-#   - fileName: LegacyCardWithDestructiveAction.vue
-#     title: With destructive action
-#     description: Use when a card action applies only to one section and will delete merchant data or be otherwise difficult to recover from.
+  - fileName: LegacyCardWithDestructiveFooterAction.vue
+    title: With destructive footer action
+    description: Use when a card action will delete merchant data or be otherwise difficult to recover from.
+  - fileName: LegacyCardWithMultipleSections.vue
+    title: With multiple sections
+    description: Use when you have two related but distinct pieces of information to communicate to merchants. Multiple sections can help break up complicated concepts to make them easier to scan and understand.
+  - fileName: LegacyCardWithMultipleTitledSections.vue
+    title: With multiple titled sections
+    description: Use when you have two related but distinct pieces of information to communicate to merchants that are complex enough to require a title to introduce them.
+  - fileName: LegacyCardWithSectionsAndActions.vue
+    title: With sections and actions
+    description: Use when your card section has actions that apply only to that section.
+  - fileName: LegacyCardWithSubsection.vue
+    title: With subsection
+    description: Use when your card sections need further categorization.
+  - fileName: LegacyCardWithDestructiveAction.vue
+    title: With destructive action
+    description: Use when a card action applies only to one section and will delete merchant data or be otherwise difficult to recover from.
 #   - fileName: LegacyCardWithSubduedSection.vue
 #     title: With a subdued section
 #     description: Use to indicate when one of the sections in your card contains inactive or disabled content.
