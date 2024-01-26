@@ -1,5 +1,3 @@
-
-import { useSlots } from 'vue';
 <template lang="pug">
 div(:className="styles.Header")
   InlineStack(
@@ -9,14 +7,12 @@ div(:className="styles.Header")
     :wrap="false",
     :gap="200",
   )
+    slot(v-if="isTextOnlyTitle", name="title")
     Text(
-      v-if="isTextOnlyTitle",
+      v-else-if="title",
       variant="headingSm",
       as="h2",
-    )
-      slot(name="title")
-    slot(v-else-if="hasSlot(slots.title)", name="title")
-
+    ) {{ title }}
     InlineStack(
       blockAlign="center",
       :wrap="false",
@@ -31,13 +27,12 @@ div(:className="styles.Header")
         )
       slot(v-if="hasSlot(slots.default)")
   template(v-else)
+    slot(v-if="isTextOnlyTitle", name="title")
     Text(
-      v-if="isTextOnlyTitle",
+      v-else-if="title",
       variant="headingSm",
       as="h2",
-    )
-      slot(name="title")
-    slot(v-else="hasSlot(slots.title)", name="title")
+    ) {{ title }}
 </template>
 
 <script setup lang="ts">
@@ -47,6 +42,7 @@ import { useHasSlot } from '@/use/useHasSlot';
 import type { DisableableAction } from '@/utilities/types';
 
 export interface LegacyCardHeaderProps {
+  title?: string;
   actions?: DisableableAction[];
 }
 

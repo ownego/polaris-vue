@@ -1,7 +1,7 @@
 <template lang="pug">
 div(:className="className")
   div(
-    v-if="typeof title === 'string' || actions",
+    v-if="title || hasSlot(slots.title) || actions",
     :className="styles.SectionHeader",
   )
     LegacyStack(
@@ -15,7 +15,7 @@ div(:className="className")
           as="h3",
           fontWeight="medium"
         ) {{ title }}
-        template(v-else, name="title")
+        slot(v-else, name="title")
       ButtonGroup(v-if="actions")
         ButtonFrom(
           v-for="action, index in actions",
@@ -30,7 +30,7 @@ div(:className="className")
         as="h3",
         fontWeight="medium",
       ) {{ title }}
-      template(v-else, name="title")
+      slot(v-else, name="title")
   slot(v-if="hasSlot(slots.default)")
 </template>
 

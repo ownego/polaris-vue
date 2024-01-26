@@ -36,24 +36,24 @@ examples:
   - fileName: LegacyCardWithDestructiveAction.vue
     title: With destructive action
     description: Use when a card action applies only to one section and will delete merchant data or be otherwise difficult to recover from.
-#   - fileName: LegacyCardWithSubduedSection.vue
-#     title: With a subdued section
-#     description: Use to indicate when one of the sections in your card contains inactive or disabled content.
-#   - fileName: LegacyCardWithSubduedForSecondaryContent.vue
-#     title: With subdued for secondary content
-#     description: Use for content that you want to deprioritize. Subdued cards don’t stand out as much as cards with white backgrounds so don’t use them for information or actions that are critical to merchants.
-#   - fileName: LegacyCardWithSeparateHeader.vue
-#     title: With separate header
-#     description: Use to be able to use custom React elements as header content.
-#   - fileName: LegacyCardWithCustomTitle.vue
-#     title: With custom React Node title
-#     description: Use to render custom content such as icons, links, or buttons in a card section’s header.
-#   - fileName: LegacyCardWithAllElements.vue
-#     title: With all elements
-#     description: Use as a broad example that includes most props available to card.
-#   - fileName: LegacyCardWithFlushedSections.vue
-#     title: With flushed sections
-#     description: Use when you need further control over the spacing of your card sections.
+  - fileName: LegacyCardWithSubduedSection.vue
+    title: With a subdued section
+    description: Use to indicate when one of the sections in your card contains inactive or disabled content.
+  - fileName: LegacyCardWithSubduedForSecondaryContent.vue
+    title: With subdued for secondary content
+    description: Use for content that you want to deprioritize. Subdued cards don’t stand out as much as cards with white backgrounds so don’t use them for information or actions that are critical to merchants.
+  - fileName: LegacyCardWithSeparateHeader.vue
+    title: With separate header
+    description: Use to be able to use custom React elements as header content.
+  - fileName: LegacyCardWithCustomTitle.vue
+    title: With custom Vue Node title
+    description: Use to render custom content such as icons, links, or buttons in a card section’s header.
+  - fileName: LegacyCardWithAllElements.vue
+    title: With all elements
+    description: Use as a broad example that includes most props available to card.
+  - fileName: LegacyCardWithFlushedSections.vue
+    title: With flushed sections
+    description: Use when you need further control over the spacing of your card sections.
 ---
 
 # {{ $frontmatter.title }}

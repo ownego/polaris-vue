@@ -1,6 +1,6 @@
 <template>
 <LegacyCard title="Customer">
-  <LegacyCardSection title="Reports">
+  <LegacyCardSection>
     <Text as="p">John Smith</Text>
   </LegacyCardSection>
 

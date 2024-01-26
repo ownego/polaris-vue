@@ -6,10 +6,9 @@ div(
   Header(
     v-if="title || hasSlot(slots.title) || actions",
     :actions="actions",
+    :title="title",
   )
-    template(#title)
-      slot(v-if="hasSlot(slots.title)", name="title")
-      template(v-else) {{ title }}
+    slot(v-if="hasSlot(slots.title)", name="title")
   Section(v-if="sectioned")
     slot
   slot(v-else)
@@ -64,7 +63,6 @@ div(
 <script setup lang="ts">
 import { computed, useSlots, provide } from 'vue';
 import type {
-  VueNode,
   ComplexAction,
   DisableableAction,
 } from '@/utilities/types';
@@ -78,6 +76,8 @@ import styles from '@polaris/components/LegacyCard/LegacyCard.module.scss';
 import { Header, Section, Subsection } from './components';
 
 interface LegacyCardProps {
+  /** Title content for the card */
+  title?: string;
   /** A less prominent card */
   subdued?: boolean;
   /** Auto wrap content in section */
@@ -94,8 +94,6 @@ interface LegacyCardProps {
   footerActionAlignment?: 'right' | 'left';
   /** Allow the card to be hidden when printing */
   hideOnPrint?: boolean;
-  /** Title content for the card */
-  title?: (_?: VueNode) => any;
 }
 
 const props = withDefaults(defineProps<LegacyCardProps & {
