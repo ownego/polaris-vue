@@ -1,4 +1,4 @@
-import { type Component, h } from 'vue';
+import { type Component } from 'vue';
 import type { VueNode } from './types';
 
 // Checks whether `element` is a Vue component of type `Component`.

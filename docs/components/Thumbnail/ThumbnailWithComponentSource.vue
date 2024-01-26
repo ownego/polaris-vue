@@ -1,7 +1,7 @@
 <template>
-  <Thumbnail :source="NoteMinor" size="large" alt="Small document" />
+  <Thumbnail :source="NoteIcon" size="large" alt="Small document" />
 </template>
 
 <script setup>
-import NoteMinor from '@icons/NoteMinor.svg';
+import NoteIcon from '@icons/NoteIcon.svg';
 </script>

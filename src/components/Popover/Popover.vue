@@ -10,6 +10,7 @@ component(
   )
     PopoverOverlay(
       ref="overlayRef",
+      v-bind="props",
       :id="String(id)",
       :activator="activatorNode",
       :preferInputActivator="preferInputActivator",
@@ -46,11 +47,6 @@ interface PopoverProps {
   preferredAlignment?: PopoverOverlayProps['preferredAlignment'];
   /** Show or hide the Popover */
   active: boolean;
-  // /** The element to activate the Popover.
-  //  * If using a button, use the default or tertiary variant
-  //  * which will show an active state when popover is active
-  //  */
-  // activator: React.ReactElement;
   /**
    * Use the activator's input element to calculate the Popover position
    * @default true
@@ -102,6 +98,7 @@ const emits = defineEmits<{
   /** Callback when popover is closed */
   'close': [event: PopoverCloseSource];
 }>();
+
 const slots = defineSlots<{
   /** The content to display inside the popover */
   default?: (_?: VueNode) => any;

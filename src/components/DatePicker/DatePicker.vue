@@ -8,13 +8,13 @@ div(
   div(:class="styles.Header")
     Button(
       variant="tertiary",
-      :icon="ArrowLeftMinor",
+      :icon="ArrowLeftIcon",
       :accessibility-label="i18n.translate('Polaris.DatePicker.previousMonth', { previousMonthName, showPreviousYear })",
       @click="() => handleMonthChangeClick(showPreviousMonth, showPreviousYear)",
     )
     Button(
       variant="tertiary",
-      :icon="ArrowRightMinor",
+      :icon="ArrowRightIcon",
       :accessibility-label="i18n.translate('Polaris.DatePicker.nextMonth', { nextMonth, nextYear })",
       @click="() => handleMonthChangeClick(showNextMonth, showNextYear)",
     )
@@ -72,8 +72,8 @@ import { Button } from '@/components';
 import { monthName } from '@polaris/components/DatePicker/utilities';
 import { Month } from './components';
 import styles from '@polaris/components/DatePicker/DatePicker.module.scss';
-import ArrowLeftMinor from '@icons/ArrowLeftMinor.svg';
-import ArrowRightMinor from '@icons/ArrowRightMinor.svg';
+import ArrowLeftIcon from '@icons/ArrowLeftIcon.svg';
+import ArrowRightIcon from '@icons/ArrowRightIcon.svg';
 
 export type DatePickerProps = {
   /** ID for the element */

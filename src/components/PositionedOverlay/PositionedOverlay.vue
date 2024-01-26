@@ -1,6 +1,5 @@
 <template lang="pug">
 div(
-  ref="overlay",
   :class="className",
   :style="style",
 )
@@ -8,7 +7,10 @@ div(
     event="resize",
     :handler="handleMeasurement",
   )
-  slot
+  // Some how we have to use a div here instead of a wrapper div above but it work just fine
+  // It's just add a div wrap the content of slot so it's not a big deal (i think so)
+  div(ref="overlay")
+    slot
 </template>
 
 <script setup lang="ts">
@@ -85,9 +87,11 @@ interface State {
   chevronOffset: number;
 }
 
-type Emits = {
-  render: [details: OverlayDetails];
-  scrollOut: [];
+type PositionedOverlayEmits = {
+  'scroll-out': [];
+}
+type PositionedOverlaySlots = {
+  default: (_?: VueNode) => any;
 }
 
 const OBSERVER_CONFIG = {
@@ -99,11 +103,9 @@ const OBSERVER_CONFIG = {
 
 const props = defineProps<PositionedOverlayProps>();
 
-const emits = defineEmits<Emits>();
+const emits = defineEmits<PositionedOverlayEmits>();
 
-const slots = defineSlots<{
-  default?: (_?: VueNode) => any;
-}>();
+const slots = defineSlots<PositionedOverlaySlots>();
 
 const state = reactive<State>({
   measuring: true,
@@ -147,16 +149,17 @@ const firstScrollableContainer = computed<HTMLElement | Document | null>(() => {
   return scrollableContainers.value[0] ?? null;
 });
 
-// NOTE: reactive for this variable is not needed
-const overlayDetails = {
-  measuring: state.measuring,
-  left: state.left,
-  right: state.right,
-  desiredHeight: state.height,
-  positioning: state.positioning,
-  activatorRect: state.activatorRect,
-  chevronOffset: state.chevronOffset,
-}
+const overlayDetails = computed<OverlayDetails>(() => {
+  return {
+    measuring: state.measuring,
+    left: state.left,
+    right: state.right,
+    desiredHeight: state.height, 
+    positioning: state.positioning,
+    activatorRect: state.activatorRect,
+    chevronOffset: state.chevronOffset,
+  }
+});
 
 onMounted(() => {
   setScrollableContainers();
@@ -166,8 +169,6 @@ onMounted(() => {
   }
 
   handleMeasurement();
-
-  emits('render', overlayDetails);
 });
 
 onUpdated(() => {
@@ -176,7 +177,7 @@ onUpdated(() => {
     && state.top !== 0
     && state.outsideScrollableContainer
   ) {
-    emits('scrollOut');
+    emits('scroll-out');
   }
 });
 
@@ -328,7 +329,7 @@ function handleMeasurement() {
       observer.value.observe(overlay.value, OBSERVER_CONFIG);
       observer.value.observe(activator, OBSERVER_CONFIG);
     });
-  })
+  });
 }
 
 defineExpose({
