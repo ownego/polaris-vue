@@ -1,7 +1,7 @@
 <template lang="pug">
 div(
   ref="legacyCardRef",
-  :className="className",
+  :class="className",
 )
   Header(
     v-if="title || hasSlot(slots.title) || actions",
@@ -14,7 +14,7 @@ div(
   slot(v-else)
   div(
     v-if="primaryFooterAction || (secondaryFooterActions && secondaryFooterActions.length)",
-    :className="footerMarkupStyle",
+    :class="footerMarkupStyle",
   )
     ButtonGroup(v-if="footerActionAlignment === 'right'")
       ButtonFrom(

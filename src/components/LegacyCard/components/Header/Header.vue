@@ -1,5 +1,5 @@
 <template lang="pug">
-div(:className="styles.Header")
+div(:class="styles.Header")
   InlineStack(
     v-if="actions || hasSlot(slots.default)",
     align="space-between",
