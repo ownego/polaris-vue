@@ -45,7 +45,7 @@ Choice(
     )
       Icon(
         v-if="isIndeterminate",
-        :source="MinusMinor",
+        :source="MinusIcon",
       )
       svg(
         v-else
@@ -82,7 +82,7 @@ import { helpTextID } from '../Choice/utils';
 import type { ChoiceBleedProps } from '../Choice/types';
 import { errorTextID } from '../InlineError/utils';
 
-import MinusMinor from '@icons/MinusMinor.svg';
+import MinusIcon from '@icons/MinusIcon.svg';
 import styles from '@polaris/components/Checkbox/Checkbox.module.scss';
 
 export interface CheckboxProps extends ChoiceBleedProps {

@@ -15,11 +15,10 @@
   //- Iframe to show example
   .preview-wrapper(:style="{ height: `${frameHeight}px` }")
     iframe.preview-frame(
-      v-show="!isLoadingFrame",
       ref="iframeRef",
       :src="`/preview/${component}-${selectedFile}`",
       :height="frameHeight",
-      :class="`preview-frame__${component}`",
+      :class="`preview-frame__${component} ${isLoadingFrame ? 'preview-frame--loading' : ''}`",
       @load="iframeLoaded",
     )
 
@@ -115,7 +114,7 @@ const fixIframeEvent = () => {
 const iframeLoaded = () => {
   setTimeout(() => {
     isLoadingFrame.value = false;
-  }, 500);
+  }, 400);
 };
 
 // Initialize example query param
@@ -195,14 +194,21 @@ onMounted(() => {
 
 .preview-frame {
   position: absolute;
+  z-index: 10;
   top: 0;
   left: 0;
   right: 0;
   bottom: 0;
   width: 100%;
   border: 0;
+  opacity: 1;
   border-radius: 10px;
   overflow: auto;
   background-color: #f1f1f1;
+}
+
+.preview-frame--loading {
+  opacity: 0;
+  z-index: -1;
 }
 </style>
