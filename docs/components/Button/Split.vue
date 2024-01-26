@@ -13,7 +13,7 @@
         <template #activator>
           <Button
             variant="primary"
-            :icon="ChevronDownMinor"
+            :icon="ChevronDownIcon"
             accessibility-label="Other save actions"
             @click="toggleActive('popover1')"
           ></Button>
@@ -37,7 +37,7 @@
       >
         <template #activator>
           <Button
-            :icon="ChevronDownMinor"
+            :icon="ChevronDownIcon"
             accessibility-label="Other save actions"
             @click="toggleActive('popover2')"
           ></Button>
@@ -54,7 +54,7 @@
 
 <script setup lang="ts">
 import { ref } from 'vue';
-import ChevronDownMinor from '@icons/ChevronDownMinor.svg';
+import ChevronDownIcon from '@icons/ChevronDownIcon.svg';
 
 const active = ref<string | null>(null);
 
