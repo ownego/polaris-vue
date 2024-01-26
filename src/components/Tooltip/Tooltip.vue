@@ -128,8 +128,8 @@ const activatorNode = ref<HTMLElement | null>(null);
 const activatorContainer = ref<HTMLElement | null>(null);
 const mouseEntered = ref(false);
 const shouldAnimate = ref(!props.active);
-const hoverDelayTimeout = ref<number | null>(null);
-const hoverOutTimeout = ref<number | null>(null);
+const hoverDelayTimeout = ref<NodeJS.Timeout | null>(null);
+const hoverOutTimeout = ref<NodeJS.Timeout | null>(null);
 
 const wrapperClassName = computed(() =>
   classNames(
