@@ -87,8 +87,11 @@ interface State {
   chevronOffset: number;
 }
 
-type Emits = {
-  scrollOut: [];
+type PositionedOverlayEmits = {
+  'scroll-out': [];
+}
+type PositionedOverlaySlots = {
+  default: (_?: VueNode) => any;
 }
 
 const OBSERVER_CONFIG = {
@@ -100,11 +103,9 @@ const OBSERVER_CONFIG = {
 
 const props = defineProps<PositionedOverlayProps>();
 
-const emits = defineEmits<Emits>();
+const emits = defineEmits<PositionedOverlayEmits>();
 
-const slots = defineSlots<{
-  default?: (_?: VueNode) => any;
-}>();
+const slots = defineSlots<PositionedOverlaySlots>();
 
 const state = reactive<State>({
   measuring: true,
@@ -176,7 +177,7 @@ onUpdated(() => {
     && state.top !== 0
     && state.outsideScrollableContainer
   ) {
-    emits('scrollOut');
+    emits('scroll-out');
   }
 });
 

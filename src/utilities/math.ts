@@ -1,4 +1,4 @@
-import {Rect} from '../../../utilities/geometry';
+import { Rect } from '@/utilities/geometry';
 
 export type PreferredPosition = 'above' | 'below' | 'mostSpace';
 

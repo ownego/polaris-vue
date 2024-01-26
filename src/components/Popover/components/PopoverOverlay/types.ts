@@ -1,4 +1,4 @@
-import type { PositionedOverlayProps } from "@/components/PositionedOverlay/PositionedOverlay.vue";
+import type { PositionedOverlayProps } from '@/components/PositionedOverlay/PositionedOverlay.vue';
 
 export enum PopoverCloseSource {
   Click,

@@ -51,12 +51,12 @@ export type PaneProps = {
   subdued?: boolean;
 }
 
-type Slots = {
+type PaneSlots = {
   /** Default slot */
   default: (_?: VueNode) => any;
 }
 
-type Emits = {
+type PaneEmits = {
   /** Called when scrolled to the bottom of the scroll area */
   'scrolled-to-bottom': [];
 }
@@ -65,9 +65,9 @@ const props = withDefaults(defineProps<PaneProps>(), {
   captureOverscroll: false,
 })
 
-const emits = defineEmits<Emits>();
+const emits = defineEmits<PaneEmits>();
 
-const slots = defineSlots<Slots>();
+const slots = defineSlots<PaneSlots>();
 
 const className = computed(() => classNames(
   styles.Pane,

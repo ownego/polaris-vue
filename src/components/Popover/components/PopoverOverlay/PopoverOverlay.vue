@@ -14,7 +14,7 @@ PositionedOverlay(
   @scroll-out="handleScrollOut",
 )
   div(
-    v-bind="{ ...overlay.props }",
+    v-bind="overlay.props",
     :class="popoverOverlayClass",
   )
     EventListener(event="click", :handler="handleClick")
