@@ -15,7 +15,7 @@ template(v-if="(allowFiltering || filterActions) && hasManyActions && isFilterab
       @clear-button-click="() => setSearchText('')"
     )
       template(#prefix)
-        Icon(:source="SearchMinor")
+        Icon(:source="SearchIcon")
 Box(
   :as="HasMultipleSections ? 'ul' : 'div'",
   ref="actionListRef",
@@ -59,7 +59,7 @@ import {
   KeypressListener,
 } from '@/components';
 import { Section } from './components';
-import SearchMinor from '@icons/SearchMinor.svg';
+import SearchIcon from '@icons/SearchIcon.svg';
 import {
   wrapFocusNextFocusableMenuItem,
   wrapFocusPreviousFocusableMenuItem,

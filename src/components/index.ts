@@ -27,6 +27,7 @@ export * from './KeypressListener';
 export * from './Label';
 export * from './Labelled';
 export * from './Layout';
+export * from './LegacyCard';
 export * from './LegacyStack';
 export * from './Link';
 export * from './List';
