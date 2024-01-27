@@ -1,3 +1,4 @@
+export * from './ActionList';
 export * from './AppProvider';
 export * from './Badge';
 export * from './Bleed';
@@ -45,5 +46,6 @@ export * from './Spinner';
 export * from './Tag';
 export * from './Text';
 export * from './TextField';
+export * from './Tooltip';
 export * from './Thumbnail';
 export * from './UnstyledLink';

@@ -154,7 +154,7 @@ const overlayDetails = computed<OverlayDetails>(() => {
     measuring: state.measuring,
     left: state.left,
     right: state.right,
-    desiredHeight: state.height, 
+    desiredHeight: state.height,
     positioning: state.positioning,
     activatorRect: state.activatorRect,
     chevronOffset: state.chevronOffset,
@@ -230,7 +230,7 @@ function handleMeasurement() {
   const { lockPosition, top } = state;
 
   observer.value.disconnect();
-  
+
   // Set state
   state.height = 0;
   state.positioning = 'below';
