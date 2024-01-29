@@ -31,11 +31,11 @@ Box(
 import type { VueNode } from '@/utilities/types';
 import type { BannerLayoutProps } from '../types';
 
-type BannerLayoutSlots = {
+type BannerWithinContentContainerSlots = {
   default: (_: VueNode) => any;
 };
 
-const slots = defineSlots<BannerLayoutSlots>();
+defineSlots<BannerWithinContentContainerSlots>();
 
 defineProps<BannerLayoutProps & {
   bannerTitle?: (_: VueNode) => any;

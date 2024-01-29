@@ -9,10 +9,10 @@ import type {
   LoadableAction,
   IconSource,
 } from '@/utilities/types';
-import DiamondAlertMinor from '@icons/DiamondAlertMinor.svg';
-import InfoMinor from '@icons/InfoMinor.svg';
-import RiskMinor from '@icons/RiskMinor.svg';
-import TickMinor from '@icons/TickMinor.svg';
+import AlertDiamondIcon from '@icons/AlertDiamondIcon.svg';
+import InfoIcon from '@icons/InfoIcon.svg';
+import AlertTriangleIcon from '@icons/AlertTriangleIcon.svg';
+import CheckIcon from '@icons/CheckIcon.svg';
 import { BoxProps } from '../Box/types';
 
 interface BannerColorAliases {
@@ -63,7 +63,7 @@ export const bannerAttributes: {[key in BannerTone]: BannerAttributes} = {
       text: 'text-success',
       icon: 'text-success',
     },
-    icon: TickMinor,
+    icon: CheckIcon,
   },
   warning: {
     withinPage: {
@@ -76,7 +76,7 @@ export const bannerAttributes: {[key in BannerTone]: BannerAttributes} = {
       text: 'text-warning',
       icon: 'text-warning',
     },
-    icon: RiskMinor,
+    icon: AlertTriangleIcon,
   },
   critical: {
     withinPage: {
@@ -89,7 +89,7 @@ export const bannerAttributes: {[key in BannerTone]: BannerAttributes} = {
       text: 'text-critical',
       icon: 'text-critical',
     },
-    icon: DiamondAlertMinor,
+    icon: AlertDiamondIcon,
   },
   info: {
     withinPage: {
@@ -102,6 +102,6 @@ export const bannerAttributes: {[key in BannerTone]: BannerAttributes} = {
       text: 'text-info',
       icon: 'text-info',
     },
-    icon: InfoMinor,
+    icon: InfoIcon,
   },
 };

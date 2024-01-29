@@ -7,7 +7,7 @@
         <Link url="">Let us know what you think</Link>
       </Text>
     </Banner>
-    <Text as="p">View a summary of your online store’s performance.</Text>
+    <Text as="p">View a summary of your online store's performance.</Text>
   </TextContainer>
 </LegacyCard>
 </template>

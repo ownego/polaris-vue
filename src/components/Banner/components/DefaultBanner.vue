@@ -40,19 +40,20 @@ import type { VueNode } from '@/utilities/types';
 import { useBreakpoints } from '@/utilities/breakpoints';
 import type { BannerLayoutProps } from '../types';
 
-type BannerLayoutSlots = {
+type DefaultBannerSlots = {
   default: (_: VueNode) => any;
 };
 
-const slot = defineSlots<BannerLayoutSlots>();
+const slots = defineSlots<DefaultBannerSlots>();
+
 const props = defineProps<BannerLayoutProps & {
   bannerIcon?: (_: VueNode) => any;
   bannerTitle?: (_: VueNode) => any;
   actionButtons?: (_: VueNode) => any;
   dismissButton?: (_: VueNode) => any;
-}>()
+}>();
 
 const breakpoints = useBreakpoints();
 
-const hasContent = computed(() => slot.default || props.actionButtons);
+const hasContent = computed(() => slots.default || props.actionButtons);
 </script>

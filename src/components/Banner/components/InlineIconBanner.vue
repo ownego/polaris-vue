@@ -27,7 +27,10 @@ Box(
             slot
             template(v-if="actionButtons")
               component(:is="actionButtons")
-    div(ref="dismissIconNode", :className="styles.DismissIcon")
+    div(
+      ref="dismissIconNode",
+      :class="styles.DismissIcon",
+    )
       template(v-if="dismissButton")
         component(:is="dismissButton")
 </template>
@@ -43,13 +46,13 @@ type BannerLayoutSlots = {
   default: (_: VueNode) => any;
 };
 
-const slots = defineSlots<BannerLayoutSlots>();
+defineSlots<BannerLayoutSlots>();
 
 defineProps<BannerLayoutProps & {
   bannerIcon?: (_: VueNode) => any;
   actionButtons?: (_: VueNode) => any;
   dismissButton?: (_: VueNode) => any;
-}>()
+}>();
 
 const blockAlign = ref<InlineStackProps['blockAlign']>('center');
 const contentNode = ref<HTMLDivElement | null>(null);

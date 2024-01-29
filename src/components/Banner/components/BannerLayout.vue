@@ -7,6 +7,7 @@ WithinContentContainerBanner(
   :actionButtons="actionButtons",
   :dismissButton="dismissButton",
 )
+  slot
 template(v-else)
   InlineIconBanner(
     v-if="isInlineIconBanner",
@@ -28,17 +29,16 @@ template(v-else)
 </template>
 
 <script setup lang="ts">
-import { computed, h, useAttrs } from 'vue';
+import { computed, h, useAttrs, inject } from 'vue';
 import styles from '@polaris/components/Banner/Banner.module.scss';
 import useI18n from '@/use/useI18n';
-import { useWithinContent } from '@/use/useContent';
 import type { VueNode } from '@/utilities/types';
 import { Icon, ButtonGroup, Text, Button } from '@/components';
-import CancelMinor from '@icons/CancelMinor.svg';
+import XIcon from '@icons/XIcon.svg';
 import type { BannerProps } from '../types';
 import { bannerAttributes } from '../types';
 
-const slot = defineSlots<{
+defineSlots<{
   /** The content to display inside the button */
   default: (_: VueNode) => any;
 }>();
@@ -49,9 +49,10 @@ const props = withDefaults(defineProps<BannerProps>(), {
 
 const i18n = useI18n();
 const attrs = useAttrs();
-const withinContentContainer = useWithinContent();
 
-const isInlineIconBanner = computed(() => !props.title && !withinContentContainer.value);
+const withinContentContainer = inject<boolean>('WithinContentContext', false);
+
+const isInlineIconBanner = computed(() => !props.title && !withinContentContainer);
 
 const bannerTone = computed(() => Object.keys(bannerAttributes).includes(props.tone)
   ? props.tone
@@ -60,8 +61,8 @@ const bannerTone = computed(() => Object.keys(bannerAttributes).includes(props.t
 
 const bannerColors = computed(() =>
   bannerAttributes[bannerTone.value][
-  withinContentContainer ? 'withinContentContainer' : 'withinPage'
-  ],
+    withinContentContainer ? 'withinContentContainer' : 'withinPage'
+  ]
 );
 
 const sharedBannerProps = computed(() => {
@@ -82,7 +83,7 @@ const bannerTitle = computed(() =>
 const bannerIcon = computed(() =>
   !props.hideIcon && h(
     'span',
-    { className: styles[bannerColors.value.icon] },
+    { class: styles[bannerColors.value.icon] },
     [
       h(Icon, { source: props.icon || bannerAttributes[bannerTone.value].icon, }),
     ],
@@ -107,19 +108,19 @@ const dismissListener = computed(() => {
   }
 });
 
-const dismissButton = computed(() =>
-  dismissListener.value && h(
+const dismissButton = computed(() => {
+  return dismissListener.value && h(
     Button,
     {
       variant: 'tertiary',
       icon: h(
         'span',
-        { className: isInlineIconBanner ? 'icon-secondary' : bannerColors.value.icon },
-        [ h(Icon, { source: CancelMinor }) ],
+        { class: styles[isInlineIconBanner.value ? 'icon-secondary' : bannerColors.value.icon] },
+        [ h(Icon, { source: XIcon }) ],
       ),
       onClick: () => { dismissListener.value },
-      accessibilityLabel: i18n.translate('Polaris.Banner.dismissButton')
+      accessibilityLabel: i18n.translate('Polaris.Banner.dismissButton'),
     }
   )
-);
+});
 </script>

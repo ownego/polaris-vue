@@ -17,14 +17,13 @@ div(
 </template>
 
 <script setup lang="ts">
-import { computed, ref, useAttrs } from 'vue';
+import { computed, ref, inject, useAttrs } from 'vue';
 import { classNames } from '@/utilities/css';
-import { useWithinContent } from '@/use/useContent';
 import type { VueNode } from '@/utilities/types';
 import styles from '@polaris/components/Banner/Banner.module.scss';
 import type { BannerProps } from './types';
 
-const slot = defineSlots<{
+defineSlots<{
   /** The content to display inside the button */
   default: (_: VueNode) => any;
 }>();
@@ -33,7 +32,6 @@ const props = withDefaults(defineProps<BannerProps>(), {
   tone: 'info',
 });
 
-const withinContentContainer = useWithinContent();
 const attrs = useAttrs();
 
 defineExpose({
@@ -44,6 +42,8 @@ defineExpose({
     }
   },
 });
+
+const withinContentContainer = inject<boolean>('WithinContentContext', false);
 
 const wrapperRef = ref<HTMLInputElement | null>(null);
 const shouldShowFocus = ref<boolean>(false);
@@ -79,7 +79,7 @@ const className = computed(() =>
   classNames(
     styles.Banner,
     shouldShowFocus.value && styles.keyFocused,
-    withinContentContainer.value ? styles.withinContentContainer : styles.withinPage,
+    withinContentContainer ? styles.withinContentContainer : styles.withinPage,
   ),
 );
 </script>
