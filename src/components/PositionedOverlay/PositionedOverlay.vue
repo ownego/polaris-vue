@@ -1,29 +1,31 @@
 <template lang="pug">
 div(
-  ref="overlay",
   :class="className",
   :style="style",
+  ref="overlay"
 )
   EventListener(
     event="resize",
     :handler="handleMeasurement",
   )
-  slot(v-bind="overlayDetails")
+  // Some how we have to use a div here instead of a wrapper div above but it work just fine
+  // It's just add a div wrap the content of slot so it's not a big deal (i think so)
+  slot
 </template>
 
 <script setup lang="ts">
 import {
   type StyleValue,
-  useCssModule,
   nextTick,
   ref,
   reactive,
   computed,
   onMounted,
   onUpdated,
-  onUnmounted,
+  onBeforeUnmount,
   defineExpose,
 } from 'vue';
+import styles from '@polaris/components/PositionedOverlay/PositionedOverlay.module.scss';
 import { classNames } from '@/utilities/css';
 import { getRectForNode, Rect } from '@/utilities/geometry';
 import { forNode } from '@/utilities/scrollable/for-node';
@@ -43,10 +45,14 @@ import {
   windowRect,
 } from './utilities/math';
 import type { PreferredPosition, PreferredAlignment } from './utilities/math';
+import type { VueNode } from '@/utilities/types';
+
+// The unknown gap unexpected when the overlay render has the white space at the bottom.
+const DESIRE_HEIGHT_GAP_UNEXPECTED = 21;
 
 type Positioning = 'above' | 'below';
 
-interface OverlayDetails {
+export interface OverlayDetails {
   left?: number;
   right?: number;
   desiredHeight: number;
@@ -84,8 +90,11 @@ interface State {
   chevronOffset: number;
 }
 
-type Emits = {
-  scrollOut: [];
+type PositionedOverlayEmits = {
+  'scroll-out': [];
+}
+type PositionedOverlaySlots = {
+  default: (_?: VueNode) => any;
 }
 
 const OBSERVER_CONFIG = {
@@ -95,11 +104,11 @@ const OBSERVER_CONFIG = {
   attributeFilter: ['style'],
 };
 
-const styles = useCssModule();
-
 const props = defineProps<PositionedOverlayProps>();
 
-const emits = defineEmits<Emits>();
+const emits = defineEmits<PositionedOverlayEmits>();
+
+const slots = defineSlots<PositionedOverlaySlots>();
 
 const state = reactive<State>({
   measuring: true,
@@ -144,25 +153,15 @@ const firstScrollableContainer = computed<HTMLElement | Document | null>(() => {
 });
 
 const overlayDetails = computed<OverlayDetails>(() => {
-  const {
-    measuring,
-    left,
-    right,
-    positioning,
-    height,
-    activatorRect,
-    chevronOffset,
-  } = state;
-
   return {
-    measuring,
-    left,
-    right,
-    desiredHeight: height,
-    positioning,
-    activatorRect,
-    chevronOffset,
-  };
+    measuring: state.measuring,
+    left: state.left,
+    right: state.right,
+    desiredHeight: state.height > DESIRE_HEIGHT_GAP_UNEXPECTED ? state.height - DESIRE_HEIGHT_GAP_UNEXPECTED : state.height,
+    positioning: state.positioning,
+    activatorRect: state.activatorRect,
+    chevronOffset: state.chevronOffset,
+  }
 });
 
 onMounted(() => {
@@ -181,11 +180,11 @@ onUpdated(() => {
     && state.top !== 0
     && state.outsideScrollableContainer
   ) {
-    emits('scrollOut');
+    emits('scroll-out');
   }
 });
 
-onUnmounted(() => {
+onBeforeUnmount(() => {
   observer.value.disconnect();
 
   if (scrollableContainers.value.length && !props.fixed) {
@@ -240,94 +239,100 @@ function handleMeasurement() {
   state.positioning = 'below';
   state.measuring = true;
 
-  if (overlay.value === null || firstScrollableContainer.value === null) {
-    return;
-  }
+  nextTick(() => {
+    if (overlay.value === null || firstScrollableContainer.value === null) {
+      return;
+    }
 
-  const {
-    activator,
-    preferredPosition = 'below',
-    preferredAlignment = 'center',
-    fullWidth,
-    fixed,
-    preferInputActivator = true,
-  } = props;
+    const {
+      activator,
+      preferredPosition = 'below',
+      preferredAlignment = 'center',
+      fullWidth,
+      fixed,
+      preferInputActivator = true,
+    } = props;
 
-  const preferredActivator = preferInputActivator
-    ? activator.querySelector('input') || activator
-    : activator;
+    const preferredActivator = preferInputActivator
+      ? activator.querySelector('input') || activator
+      : activator;
 
-  const activatorRect = getRectForNode(preferredActivator);
+    const activatorRect = getRectForNode(preferredActivator);
 
-  const currentOverlayRect = getRectForNode(overlay.value);
-  const scrollableElement = isDocument(firstScrollableContainer.value)
-    ? document.body
-    : firstScrollableContainer.value;
-  const scrollableContainerRect = getRectForNode(scrollableElement);
+    const currentOverlayRect = getRectForNode(overlay.value);
 
-  const overlayRect = fullWidth
-    ? new Rect({ ...currentOverlayRect, width: activatorRect.width })
-    : currentOverlayRect;
+    const scrollableElement = isDocument(firstScrollableContainer.value)
+      ? document.body
+      : firstScrollableContainer.value;
+    const scrollableContainerRect = getRectForNode(scrollableElement);
 
-  // If `body` is 100% height, it still acts as though it were not constrained to that size. This adjusts for that.
-  if (scrollableElement === document.body) {
-    scrollableContainerRect.height = document.body.scrollHeight;
-  }
+    const overlayRect = fullWidth
+      ? new Rect({ ...currentOverlayRect, width: activatorRect.width })
+      : currentOverlayRect;
 
-  let topBarOffset = 0;
+    // If `body` is 100% height, it still acts as though it were not constrained to that size. This adjusts for that.
+    if (scrollableElement === document.body) {
+      scrollableContainerRect.height = document.body.scrollHeight;
+    }
 
-  const topBarElement = scrollableElement.querySelector(`${dataPolarisTopBar.selector}`);
+    let topBarOffset = 0;
 
-  if (topBarElement) {
-    topBarOffset = topBarElement.clientHeight;
-  }
+    const topBarElement = scrollableElement.querySelector(`${dataPolarisTopBar.selector}`);
 
-  const overlayMargins = overlay.value.firstElementChild && overlay.value.firstChild instanceof HTMLElement
-    ? getMarginsForNode(overlay.value.firstElementChild as HTMLElement)
-    : { activator: 0, container: 0, horizontal: 0 };
+    if (topBarElement) {
+      topBarOffset = topBarElement.clientHeight;
+    }
 
-  const containerRect = windowRect();
-  const zIndexForLayer = getZIndexForLayerFromNode(activator);
-  const zIndex = zIndexForLayer == null ? zIndexForLayer : zIndexForLayer + 1;
-  const verticalPosition = calculateVerticalPosition(
-    activatorRect,
-    overlayRect,
-    overlayMargins,
-    scrollableContainerRect,
-    containerRect,
-    preferredPosition,
-    fixed,
-    topBarOffset,
-  );
-  const horizontalPosition = calculateHorizontalPosition(
-    activatorRect,
-    overlayRect,
-    containerRect,
-    overlayMargins,
-    preferredAlignment,
-  );
+    const overlayMargins = overlay.value.firstElementChild && overlay.value.firstChild instanceof HTMLElement
+      ? getMarginsForNode(overlay.value.firstElementChild as HTMLElement)
+      : { activator: 0, container: 0, horizontal: 0 };
 
-  const tmpChevronOffset = activatorRect.center.x - horizontalPosition + overlayMargins.horizontal * 2;
+    const containerRect = windowRect();
+    const zIndexForLayer = getZIndexForLayerFromNode(activator);
+    const zIndex = zIndexForLayer == null ? zIndexForLayer : zIndexForLayer + 1;
+    const verticalPosition = calculateVerticalPosition(
+      activatorRect,
+      overlayRect,
+      overlayMargins,
+      scrollableContainerRect,
+      containerRect,
+      preferredPosition,
+      fixed,
+      topBarOffset,
+    );
 
-  state.measuring = false;
-  state.activatorRect = getRectForNode(activator);
-  state.left = preferredAlignment !== 'right' ? horizontalPosition : undefined;
-  state.right = preferredAlignment === 'right' ? horizontalPosition : undefined;
-  state.top = lockPosition ? top : verticalPosition.top;
-  state.lockPosition = Boolean(fixed);
-  state.height = verticalPosition.height || 0;
-  state.width = fullWidth ? overlayRect.width : null;
-  state.positioning = verticalPosition.positioning as Positioning;
-  state.outsideScrollableContainer = rectIsOutsideOfRect(activatorRect, intersectionWithViewport(scrollableContainerRect));
-  state.zIndex = zIndex;
-  state.chevronOffset = tmpChevronOffset;
+    const horizontalPosition = calculateHorizontalPosition(
+      activatorRect,
+      overlayRect,
+      containerRect,
+      overlayMargins,
+      preferredAlignment,
+    );
 
-  if (!overlay.value) {
-    return;
-  }
+    const tmpChevronOffset = activatorRect.center.x - horizontalPosition + overlayMargins.horizontal * 2;
 
-  observer.value.observe(overlay.value, OBSERVER_CONFIG);
-  observer.value.observe(activator, OBSERVER_CONFIG);
+    state.measuring = false;
+    state.activatorRect = getRectForNode(activator);
+    state.left = preferredAlignment !== 'right' ? horizontalPosition : undefined;
+    state.right = preferredAlignment === 'right' ? horizontalPosition : undefined;
+    state.top = lockPosition ? top : verticalPosition.top;
+    state.lockPosition = Boolean(fixed);
+    state.height = verticalPosition.height || 0;
+    state.width = fullWidth ? overlayRect.width : null;
+    state.positioning = verticalPosition.positioning as Positioning;
+    state.outsideScrollableContainer = rectIsOutsideOfRect(activatorRect, intersectionWithViewport(scrollableContainerRect));
+    state.zIndex = zIndex;
+    state.chevronOffset = tmpChevronOffset;
+
+    nextTick(() => {
+      if (!overlay.value) {
+        return;
+      }
+
+      observer.value.observe(overlay.value, OBSERVER_CONFIG);
+      observer.value.observe(activator, OBSERVER_CONFIG);
+    });
+  });
 }
 
 defineExpose({
@@ -335,7 +340,3 @@ defineExpose({
   overlayDetails,
 });
 </script>
-
-<style lang="scss" module>
-@import '@polaris/components/PositionedOverlay/PositionedOverlay.module.scss';
-</style>

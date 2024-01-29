@@ -4,7 +4,11 @@ div(
   :class="className",
   :styles="style",
 )
-  component(:is="content")
+  template(v-if="sectioned")
+    Section
+      slot
+  template(v-else)
+    slot
 
 Scrollable(
   v-else,
@@ -13,16 +17,20 @@ Scrollable(
   :class="className",
   @scrolled-to-bottom="emits('scrolled-to-bottom')",
 )
-  component(:is="content")
+  template(v-if="sectioned")
+    Section
+      slot
+  template(v-else)
+    slot
 </template>
 
 <script setup lang="ts">
-import { useCssModule, computed } from 'vue';
+import { computed } from 'vue';
 import { classNames } from '@/utilities/css';
-import { wrapWithComponent } from '@/utilities/component';
 import type { VueNode } from '@/utilities/types';
 import { Scrollable } from '@/components';
-import { Section } from '../Section';
+import { PopoverSection as Section } from '../Section';
+import styles from '@polaris/components/Popover/Popover.module.scss';
 
 export type PaneProps = {
   /** Fix the pane to the top of the popover */
@@ -43,33 +51,23 @@ export type PaneProps = {
   subdued?: boolean;
 }
 
-type Slots = {
+type PaneSlots = {
   /** Default slot */
-  default: (_: VueNode) => null;
+  default: (_?: VueNode) => any;
 }
 
-type Emits = {
+type PaneEmits = {
   /** Called when scrolled to the bottom of the scroll area */
   'scrolled-to-bottom': [];
 }
 
-const styles = useCssModule();
-
 const props = withDefaults(defineProps<PaneProps>(), {
-  captureOverscroll: false,  
+  captureOverscroll: false,
 })
 
-const emits = defineEmits<Emits>();
+const emits = defineEmits<PaneEmits>();
 
-const slots = defineSlots<Slots>();
-
-const children = computed(() => {
-  return slots.default;
-});
-
-const content = computed(() => {
-  return props.sectioned ? wrapWithComponent(children.value, Section, {}) : children.value;
-})
+const slots = defineSlots<PaneSlots>();
 
 const className = computed(() => classNames(
   styles.Pane,
@@ -80,15 +78,9 @@ const className = computed(() => classNames(
 
 const style = computed(() => props.height
   ? {
-    height: props.height,
-    maxHeight: props.height,
-    mingHeight: props.height,
+    height: `${props.height}px`,
+    maxHeight: `${props.height}px`,
+    minHeight: `${props.height}px`,
   }
   : undefined);
 </script>
-
-<style lang="scss" module>
-@import '@polaris/components/Popover/Popover.scss';
-</style>
-
-

@@ -1,9 +1,57 @@
 <template lang="pug">
+PositionedOverlay(
+  v-if="state.transitionStatus !== TransitionStatus.Exited && active",
+  ref="overlayRef",
+  :full-width="fullWidth",
+  :active="active",
+  :activator="activator",
+  :prefer-input-activator="preferInputActivator",
+  :preferred-position="preferredPosition",
+  :preferred-alignment="preferredAlignment",
+  :fixed="fixed",
+  :class="positionOverlayClass",
+  :z-index-override="zIndexOverride",
+  @scroll-out="handleScrollOut",
+)
+  div(
+    v-bind="overlay.props",
+    :class="popoverOverlayClass",
+  )
+    EventListener(event="click", :handler="handleClick")
+    EventListener(event="touchstart", :handler="handleClick")
+    KeypressListener(:key-code="Key.Escape", :handler="handleEscape")
+    div(
+      tabindex="0",
+      :class="styles.FocusTracker",
+      @focus="handleFocusFirstItem",
+    )
+    div(:class="styles.ContentContainer")
+      div(
+        ref="contentNode",
+        :id="id",
+        :tabindex="autofocusTarget === 'none' ? undefined : -1",
+        :class="contentClassNames",
+        :style="contentStyles",
+      )
+        template(v-if="isChildContentWrappedByPane")
+          slot
+        template(v-else)
+          Pane(
+            :capture-overscroll="captureOverscroll",
+            :sectioned="sectioned",
+          )
+            slot
+    div(
+      :class="styles.FocusTracker",
+      tabindex="0",
+      @focus="handleFocusLastItem",
+    )
 </template>
 
 <script setup lang="ts">
 import {
-  useCssModule,
+  type Ref,
+  useSlots,
   ref,
   reactive,
   computed,
@@ -11,63 +59,30 @@ import {
   onMounted,
   onBeforeUnmount,
 } from 'vue';
+import styles from '@polaris/components/Popover/Popover.module.scss';
 import { themeDefault } from '@shopify/polaris-tokens';
 import { overlay } from '@polaris/components/shared';
 import { classNames } from '@/utilities/css';
-import { usePortalsManager } from '@/use/usePortalsManager';
+import usePortalsManager from '@/use/usePortalsManager';
 import { findFirstKeyboardFocusableNode } from '@/utilities/focus';
-import { isElementOfType, wrapWithComponent } from '@/utilities/component';
-import {
-  nodeContainsDescendant,
-  wasContentNodeDescendant,
-  wasPolarisPortalDescendant,
-} from './utilities';
+import { isElementOfType } from '@/utilities/component';
 
 import {
   EventListener,
-  KeyPressListener,
+  KeypressListener,
   PositionedOverlay,
 } from '@/components';
 import { Pane } from '../Pane';
 
-import type{ Key } from '@/utilities/types';
-import type { PortalsContainerElement } from '@polaris/utilities/portals';
-import type { PositionedOverlayProps } from '@/components/PositionedOverlay/PositionedOverlay.vue';
-import type { PaneProps } from '../Pane/Pane.vue';
-
-export enum PopoverCloseSource {
-  Click,
-  EscapeKeypress,
-  FocusOut,
-  ScrollOut,
-}
-
-export type PopoverAutofocusTarget = 'none' | 'first-node' | 'container';
+import { Key } from '@/utilities/types';
+import type { PopoverOverlayProps } from './types';
+import { PopoverCloseSource } from './types';
 
 enum TransitionStatus {
   Entering = 'entering',
   Entered = 'entered',
   Exiting = 'exiting',
   Exited = 'exited',
-}
-
-export interface PopoverOverlayProps {
-  fullWidth?: boolean;
-  fullHeight?: boolean;
-  fluidContent?: boolean;
-  preferredPosition?: PositionedOverlayProps['preferredPosition'];
-  preferredAlignment?: PositionedOverlayProps['preferredAlignment'];
-  active: boolean;
-  id: string;
-  zIndexOverride?: number;
-  activator: HTMLElement;
-  preferInputActivator?: PositionedOverlayProps['preferInputActivator'];
-  sectioned?: boolean;
-  fixed?: boolean;
-  hideOnPrint?: boolean;
-  autofocusTarget?: PopoverAutofocusTarget;
-  preventCloseOnChildOverlayClick?: boolean;
-  captureOverscroll?: boolean;
 }
 
 interface State {
@@ -78,11 +93,15 @@ type Emit = {
   close: [event: PopoverCloseSource];
 }
 
-const styles = useCssModule();
+const slots = useSlots();
 
 const context = usePortalsManager();
 
-const props = defineProps<PopoverOverlayProps>();
+const props = withDefaults(defineProps<PopoverOverlayProps>(), {
+  preferredPosition: 'below',
+  preferredAlignment: 'center',
+  preferInputActivator: true,
+});
 
 const emits = defineEmits<Emit>();
 
@@ -92,9 +111,58 @@ const state = reactive<State>({
     : TransitionStatus.Exited,
 });
 
-const contentNode = ref<HTMLElement | null>(null);
+const contentNode = ref<HTMLDivElement | null>(null);
 const enteringTimer = ref<number | undefined>(undefined);
-const overlayRef = ref<HTMLElement | null>(null);
+const overlayRef = ref<InstanceType<typeof PositionedOverlay> | null>(null);
+
+const overlayDetails = computed(() => (overlayRef.value as InstanceType<typeof PositionedOverlay>)?.overlayDetails);
+
+const positionOverlayClass = computed(() => {
+  return classNames(
+    styles.PopoverOverlay,
+    state.transitionStatus === TransitionStatus.Entering && styles['PopoverOverlay-entering'],
+    state.transitionStatus === TransitionStatus.Entered && styles['PopoverOverlay-open'],
+    state.transitionStatus === TransitionStatus.Exiting && styles['PopoverOverlay-exiting'],
+  )
+});
+
+const popoverOverlayClass = computed(() => {
+  return classNames(
+    styles.Popover,
+    overlayDetails.value?.positioning === 'above' && styles.positionedAbove,
+    props.fullWidth && styles.fullWidth,
+    overlayDetails.value?.measuring && styles.measuring,
+    props.hideOnPrint && styles['PopoverOverlay-hideOnPrint'],
+  );
+});
+
+const contentStyles = computed(() => {
+  return overlayDetails.value?.measuring
+    ? undefined
+    : { height: `${overlayDetails.value?.desiredHeight}px` };
+});
+
+const contentClassNames = computed(() => {
+  return classNames(
+    styles.Content,
+    props.fullHeight && styles['Content-fullHeight'],
+    props.fluidContent && styles['Content-fluidContent'],
+  );
+});
+
+const isChildContentWrappedByPane = computed(() => {
+  const childContents: any = slots.default?.() || [];
+
+  if (!childContents.length) {
+    return false; 
+  }
+
+  const children = childContents[0].children && childContents[0].children.length
+    ? childContents[0].children[0]
+    : childContents[0];
+
+  return isElementOfType(children, Pane);
+});
 
 watch(
   () => props.active,
@@ -123,7 +191,7 @@ watch(
 onMounted(() => {
   if (props.active) {
     focusContent();
-    
+
     changeTransitionStatus(TransitionStatus.Entered);
   }
 });
@@ -175,12 +243,11 @@ function focusContent() {
 
 function handleClick(event: Event) {
   const target = event.target as HTMLElement;
-  const tmpContentNode = contentNode.value;
   const { activator, preventCloseOnChildOverlayClick } = props;
   const composedPath = event.composedPath();
   const wasDescendant = preventCloseOnChildOverlayClick
-    ? wasContentNodeDescendant(composedPath, target)
-    : nodeContainsDescendant(composedPath, tmpContentNode);
+    ? wasPolarisPortalDescendant(composedPath, context)
+    : wasContentNodeDescendant(composedPath, contentNode);
   const isActivatorDescendant = nodeContainsDescendant(activator, target);
 
   if (
@@ -200,10 +267,9 @@ function handleScrollOut() {
 
 function handleEscape(event: Event) {
   const target = event.target as HTMLElement;
-  const tmpContentNode = contentNode.value;
-  const activator = props;
+  const { activator } = props;
   const composedPath = event.composedPath();
-  const wasDescendant = wasContentNodeDescendant(composedPath, tmpContentNode);
+  const wasDescendant = wasContentNodeDescendant(composedPath, contentNode);
   const isActivatorDescendant = nodeContainsDescendant(activator, target);
 
   if (wasDescendant || isActivatorDescendant) {
@@ -218,8 +284,46 @@ function handleFocusFirstItem() {
 function handleFocusLastItem() {
   emits('close', PopoverCloseSource.FocusOut);
 }
-</script>
 
-<style lang="scss" module>
-@import '@polaris/components/Popover/Popover.scss';
-</style>
+function nodeContainsDescendant(
+  rootNode: HTMLElement,
+  descendant: HTMLElement,
+): boolean {
+  if (rootNode === descendant) {
+    return true;
+  }
+
+  let parent = descendant.parentNode;
+
+  while (parent != null) {
+    if (parent === rootNode) {
+      return true;
+    }
+    
+    parent = parent.parentNode;
+  }
+
+  return false;
+}
+
+function wasContentNodeDescendant(
+  composedPath: readonly EventTarget[],
+  contentNode: Ref<HTMLDivElement | null>,
+) {
+  return (contentNode.value != null && composedPath.includes(contentNode.value));
+}
+
+function wasPolarisPortalDescendant(
+  composedPath: readonly EventTarget[],
+  portalsContainerElement: Ref<HTMLElement | null>,
+): boolean {
+  return composedPath
+    .some((eventTarget) => eventTarget instanceof Node && portalsContainerElement.value?.contains(eventTarget));
+}
+
+function forceUpdatePosition() {
+  (overlayRef.value as InstanceType<typeof PositionedOverlay>).forceUpdatePosition();
+}
+
+defineExpose({ forceUpdatePosition });
+</script>
