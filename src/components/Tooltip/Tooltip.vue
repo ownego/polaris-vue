@@ -49,7 +49,7 @@ export interface TooltipProps {
   /** Content to display within the tooltip */
   content?: string;
   /** Toggle whether the tooltip is visible */
-  active?: boolean | undefined;
+  active?: boolean;
   /** Delay in milliseconds while hovering over an element before the tooltip is visible */
   hoverDelay?: number;
   /** Dismiss tooltip when not interacting with its children */
@@ -94,7 +94,6 @@ const props = withDefaults(defineProps<TooltipProps>(), {
   activatorWrapper: 'span',
   width: 'default',
   padding: 'default',
-  active: undefined,
 });
 
 const emits = defineEmits<{
