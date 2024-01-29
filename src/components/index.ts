@@ -23,6 +23,7 @@ export * from './FormLayout';
 export * from './Grid';
 export * from './Icon';
 export * from './Image';
+export * from './Indicator';
 export * from './InlineError';
 export * from './InlineGrid';
 export * from './InlineStack';
