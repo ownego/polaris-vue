@@ -127,8 +127,8 @@ const activatorNode = ref<HTMLElement | null>(null);
 const activatorContainer = ref<HTMLElement | null>(null);
 const mouseEntered = ref(false);
 const shouldAnimate = ref(!props.active);
-const hoverDelayTimeout = ref<NodeJS.Timeout | null>(null);
-const hoverOutTimeout = ref<NodeJS.Timeout | null>(null);
+const hoverDelayTimeout = ref<ReturnType<typeof setTimeout> | undefined>(undefined);
+const hoverOutTimeout = ref<ReturnType<typeof setTimeout> | undefined>(undefined);
 
 const wrapperClassName = computed(() =>
   classNames(
@@ -195,7 +195,7 @@ function handleMouseEnter() {
 function handleMouseLeave() {
   if (hoverDelayTimeout.value) {
     clearTimeout(hoverDelayTimeout.value);
-    hoverDelayTimeout.value = null;
+    hoverDelayTimeout.value = undefined;
   }
 
   mouseEntered.value = false;
@@ -231,11 +231,11 @@ onMounted(
     // Clear timeouts
     if (hoverDelayTimeout.value) {
       clearTimeout(hoverDelayTimeout.value);
-      hoverDelayTimeout.value = null;
+      hoverDelayTimeout.value = undefined;
     }
     if (hoverOutTimeout.value) {
       clearTimeout(hoverOutTimeout.value);
-      hoverOutTimeout.value = null;
+      hoverOutTimeout.value = undefined;
     }
   }
 );
