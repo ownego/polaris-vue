@@ -2,7 +2,7 @@
 div(:class="className", @click="$emit('toggle-all')")
   div(:class="styles.Checkbox")
     Checkbox(
-      v-model="selected",
+      v-model="selectedValue",
       ref="checkBoxRef",
       labelHidden,
       :label="accessibilityLabel",
@@ -33,7 +33,7 @@ interface CheckableButtonProps {
   disabled?: boolean;
 }
 
-withDefaults(defineProps<CheckableButtonProps>(), {
+const props = withDefaults(defineProps<CheckableButtonProps>(), {
   label: '',
 });
 const emits = defineEmits<{
@@ -43,6 +43,7 @@ const emits = defineEmits<{
 const checkBoxRef = ref<CheckboxHandles | null>(null);
 
 const className = computed(() => classNames(styles.CheckableButton));
+const selectedValue = computed(() => props.selected ?? false);
 
 function focus() {
   checkBoxRef.value?.focus();

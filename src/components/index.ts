@@ -54,3 +54,4 @@ export * from './Thumbnail';
 export * from './Tooltip';
 export * from './UnstyledButton';
 export * from './UnstyledLink';
+export * from './Pagination';
