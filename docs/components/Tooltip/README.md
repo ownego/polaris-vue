@@ -80,6 +80,6 @@ To continue using Shopify, this amount must be paid immediately.
 
 ## Related components
 
-- To make helpful content more visible to merchants, use the help text portions of form components such as [text fields](https://polaris.shopify.com/components/TextField), [footer help](https://polaris.shopify.com/components/FooterHelp), or [an inline link to help](https://polaris.shopify.com/components/Link)
+- To make helpful content more visible to merchants, use the help text portions of form components such as [text fields](/components/TextField), [footer help](/components/FooterHelp), or [an inline link to help](/components/Link)
 
 </div>
