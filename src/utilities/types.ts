@@ -213,16 +213,16 @@ export interface ActionListItemDescriptor
     tone: 'new';
     content: string;
   };
+    /** Prefix source */
+  prefixId?: string;
+  /** Suffix source */
+  suffixId?: string;
   /** Additional hint text to display with item */
-  helpText?: (_: VueNode) => any;
+  helpText?: string;
   /** @deprecated Source of the icon */
   icon?: IconSource;
   /** @deprecated Image source */
   image?: string;
-  /** Prefix source */
-  prefix?: (_: VueNode) => any;
-  /** Suffix source */
-  suffix?: (_: VueNode) => any;
   /** @deprecated Add an ellipsis suffix to action content. ellipsis appends `...` without truncating. Use truncate instead. */
   ellipsis?: boolean;
   /** Truncate the action content either at the beginning or at the end */
@@ -233,4 +233,11 @@ export interface ActionListItemDescriptor
   variant?: 'default' | 'menu' | 'indented';
   /** Defines a role for the action */
   role?: string;
+}
+
+export interface ActionListSection {
+  /** Section title */
+  title?: string;
+  /** Collection of action items for the list */
+  items: readonly ActionListItemDescriptor[];
 }
