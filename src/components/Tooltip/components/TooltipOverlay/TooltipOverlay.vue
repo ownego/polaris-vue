@@ -26,7 +26,7 @@ PositionedOverlay(
       role="tooltip",
       :class="contentClassName",
       :style="{ ...contentStyles, ...style }",
-      :aria-label="accessibilityLabel ? i18n.translate('Polaris.Tooltip.overlayLabel', { label: accessibilityLabel }) : undefined",
+      :aria-label="accessibilityLabel && i18n.translate('Polaris.Tooltip.overlayLabel', { label: accessibilityLabel })",
     )
       slot
 </template>
@@ -64,11 +64,11 @@ const containerClassName = computed(() => classNames(
   !overlayDetails.value?.measuring && styles.measured,
   props.instant && styles.instant,
   overlayDetails.value?.positioning === 'above' && styles.positionedAbove,
-  ));
+));
 const contentClassName = computed(() => classNames(
   styles.Content,
   props.width && styles[props.width],
-  ));
+));
 const contentStyles = computed(() => {
   return overlayDetails.value?.measuring
     ? undefined
@@ -85,5 +85,5 @@ const style = computed(() => {
         ? 'var(--p-space-100) var(--p-space-200)'
         : `var(--p-space-${props.padding})`,
   }
-})
+});
 </script>
