@@ -31,7 +31,6 @@ div(:class="styles.BulkActionButton", ref="bulkActionButton")
 import { computed, ref, onMounted } from 'vue';
 import {
   Button,
-  Icon,
   Indicator,
   Tooltip,
 } from '@/components';
