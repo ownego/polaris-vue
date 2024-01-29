@@ -1,9 +1,9 @@
 <template lang="pug">
 LegacyCard
-  div(:className="mediaCardClassName")
-    div(:className="mediaContainerClassName")
+  div(:class="mediaCardClassName")
+    div(:class="mediaContainerClassName")
       slot
-    div(:className="infoContainerClassName")
+    div(:class="infoContainerClassName")
       Box(:padding="500")
         BlockStack(:gap="200")
           InlineStack(
@@ -11,9 +11,12 @@ LegacyCard
             :wrap="false",
             :gap="200",
           )
-            span(v-if="typeof title === 'string'")
-              Text(variant="headingSm", as="h2") {{ title }}
-              component(v-else, :is="title")
+            Text(
+              v-if="typeof title === 'string'",
+              variant="headingSm",
+              as="h2"
+            ) {{ title }}
+            slot(v-else, name="title")
             Box(
               v-if="popoverActions.length > 0 || attrs['onDismiss']",
               position="absolute",
@@ -24,11 +27,19 @@ LegacyCard
                 Popover(
                   v-if="popoverActions.length > 0",
                   :active="popoverActive",
-                  :activator="popoverActivator",
                   :onClose="togglePopoverActive",
                   preferredAlignment="left"
                   preferredPosition="below"
                 )
+                  template(#activator)
+                    InlineStack(blockAlign="center")
+                      Button(
+                        variant="tertiary",
+                        size="slim",
+                        :icon="MenuHorizontalIcon",
+                        :accessibilityLabel="i18n.translate('Polaris.MediaCard.popoverButton')",
+                        @click="togglePopoverActive",
+                      )
                   ActionList(
                     :items="popoverActions",
                     @action-any-item="togglePopoverActive",
@@ -37,15 +48,15 @@ LegacyCard
                   v-if="attrs['onDismiss']",
                   size="slim",
                   variant="tertiary",
-                  :icon="CancelMinor"
+                  :icon="XIcon"
                   :accessibilityLabel="i18n.translate('Polaris.MediaCard.dismissButton')",
                   @click="attrs['onDismiss']",
                 )
-          p(:className="styles.Description") {{ description }}
-          div(:className="actionClassName")
+          p(:class="styles.Description") {{ description }}
+          div(:class="actionClassName")
             ButtonGroup
-              FormButton(v-if="primaryAction", :action="primaryAction")
-              FormButton(v-if="secondaryAction", :action="secondaryAction")
+              ButtonFrom(v-if="primaryAction", :action="primaryAction")
+              ButtonFrom(v-if="secondaryAction", :action="secondaryAction")
 </template>
 
 <script setup lang="ts">
@@ -59,6 +70,9 @@ import type {
 } from '@/utilities/types';
 import { useToggle } from '@/use/useToggle';
 import { classNames } from '@/utilities/css';
+import MenuHorizontalIcon from '@icons/MenuHorizontalIcon.svg';
+import XIcon from'@icons/XIcon.svg';
+import { ButtonFrom } from '../Button';
 
 type Size = 'small' | 'medium';
 
@@ -79,6 +93,8 @@ interface MediaCardProps {
    * @default 'medium'
    */
   size?: Size;
+  /** Heading content. */
+  title?: string;
 }
 
 const slots = defineSlots<{
@@ -102,10 +118,7 @@ type MediaCardEmits = {
 const emits = defineEmits<MediaCardEmits>();
 
 const i18n = useI18n();
-const {
-  value: focused,
-  toggle: toggleFocused,
-} = useToggle(false);
+const { value: popoverActive, toggle: togglePopoverActive } = useToggle(false);
 const attrs = useAttrs();
 
 const mediaCardClassName = computed(() =>
@@ -129,5 +142,10 @@ const infoContainerClassName = computed(() =>
     props.portrait && styles.portrait,
     props.size === 'small' && styles.sizeSmall,
   ),
+);
+
+const actionClassName = classNames(
+  styles.ActionContainer,
+  props.portrait && styles.portrait,
 );
 </script>

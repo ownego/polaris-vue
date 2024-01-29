@@ -33,6 +33,7 @@ export * from './LegacyCard';
 export * from './LegacyStack';
 export * from './Link';
 export * from './List';
+export * from './MediaCard';
 export * from './Popover';
 export * from './Portal';
 export * from './PositionedOverlay';
