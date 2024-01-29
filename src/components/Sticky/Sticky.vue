@@ -1,4 +1,8 @@
 <template lang="pug">
+div
+  div(ref="placeHolderNode")
+  div(ref="stickyNode", :style="style")
+    slot
 </template>
 
 <script setup lang="ts">
@@ -89,8 +93,4 @@ const adjustPlaceHolderNode = (add: boolean) => {
       : '0px';
   }
 };
-
-function isFunction(arg: any): boolean {
-  return typeof arg === 'function';
-}
 </script>
