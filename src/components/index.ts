@@ -50,3 +50,4 @@ export * from './TextField';
 export * from './Thumbnail';
 export * from './Tooltip';
 export * from './UnstyledLink';
+export * from './VideoThumbnail';
