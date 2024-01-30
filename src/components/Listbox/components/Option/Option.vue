@@ -52,9 +52,9 @@ import { listboxWithinSectionDataSelector } from '@polaris/components/Listbox/co
 import TextOption from '../TextOption/TextOption.vue';
 import { UnstyledLink } from '@/components';
 import styles from '@polaris/components/Listbox/components/Option/Option.module.scss';
+import { useListbox, useSection, useAction } from '@/use/useListbox';
 import type { VueNode } from '@/utilities/types';
 import type { MappedActionContextType } from '@/utilities/auto-complete';
-import type { ListboxContextType } from '@/utilities/types';
 
 interface OptionProps {
   // Unique item value
@@ -76,17 +76,14 @@ const slots = defineSlots<{
 }>();
 
 //- Inject
-const mappedActionContext = inject<MappedActionContextType>('mappedActionContext', {});
-const sectionId = inject<string>('sectionContext', '');
-const listboxContext = inject<ListboxContextType>('listboxContext', {
-  onOptionSelect() { return },
-  setLoading() { return },
-});
+const mappedActionContext = inject<MappedActionContextType>('mapped-action-context', {});
+const sectionId = useSection();
+const listboxContext = useListbox();
 
-const isAction = inject<boolean>('isAction', false);
+const isAction = useAction();
 
 const { role, url, external, onAction, destructive } = mappedActionContext;
-const { onOptionSelect } = listboxContext;
+const { onOptionSelect } = listboxContext.value;
 
 const listItemRef = ref<HTMLElement | null>(null);
 const domId = String(useId());

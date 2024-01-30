@@ -6,7 +6,7 @@
   </ListboxOption>
   <ListboxAction value="ActionValue">
     <LegacyStack spacing="tight">
-      <Icon :source="PlusMinor" tone="base" />
+      <Icon :source="PlusCircleIcon" tone="base" />
       <div>Add item</div>
     </LegacyStack>
   </ListboxAction>
@@ -14,5 +14,5 @@
 </template>
 
 <script setup lang="ts">
-import PlusMinor from '@icons/PlusMinor.svg';
+import PlusCircleIcon from '@icons/PlusCircleIcon.svg';
 </script>

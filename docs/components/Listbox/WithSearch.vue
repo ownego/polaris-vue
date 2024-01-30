@@ -1,65 +1,65 @@
 <template>
-  <LegacyCard>
-    <div :style="cardStyle">
-      <div style="padding: 12px">
-        <TextField
-          clearButton
-          labelHidden
-          label="Customer segments"
-          placeholder="Search segments"
-          autoComplete="off"
-          v-model="query"
-          :focused="showFooterAction"
-          :ariaActiveDescendant="activeOptionId"
-          :ariaControls="listboxId"
-          @input="handleQueryChange"
-          @clear-button-click="handleQueryClear"
-        >
-          <template #prefix>
-            <Icon :source="SearchMinor"/>
-          </template>
-        </TextField>
-      </div>
-      <Scrollable
-        shadow
-        :style="scrollableStyle"
-        @scrolled-to-bottom="handleLazyLoadSegments"
+<LegacyCard>
+  <div :style="cardStyle">
+    <div style="padding: 12px">
+      <TextField
+        clearButton
+        labelHidden
+        label="Customer segments"
+        placeholder="Search segments"
+        autoComplete="off"
+        v-model="query"
+        :focused="showFooterAction"
+        :ariaActiveDescendant="activeOptionId"
+        :ariaControls="listboxId"
+        @input="handleQueryChange"
+        @clear-button-click="handleQueryClear"
       >
-        <Listbox
-          enableKeyboardControl
-          accessibilityLabel="Search for and select a customer segment"
-          autoSelection="FIRST_SELECTED"
-          :customListId="listboxId"
-          @select="handleSegmentSelect"
-          @on-active-option-change="handleActiveOptionChange"
-        >
-          <template v-if="segmentOptions.length > 0">
-            <template v-for="{label, id, value} in segmentList" :key="id">
-              <ListboxOption :value="value" :selected="segments[selectedSegmentIndex].value === value">
-                <ListboxTextOption :selected="segments[selectedSegmentIndex].value === value">
-                  {{ label }}
-                </ListboxTextOption>
-              </ListboxOption>
-            </template>
-          </template>
-          <ListboxAction v-if="showFooterAction" :value="actionValue">
-            <span style="color: var(--p-color-text-emphasis)">
-              Show all 111 segments
-            </span>
-          </ListboxAction>
-          <EmptySearchResult
-            v-if="segmentOptions.length === 0"
-            title=""
-            :description="`No segments found matching ${query}`"
-          />
-          <ListboxLoading
-            v-if="lazyLoading"
-            :accessibilityLabel="`${query ? 'Filtering' : 'Loading'} customer segments`"
-          />
-        </Listbox>
-      </Scrollable>
+        <template #prefix>
+          <Icon :source="SearchMinor"/>
+        </template>
+      </TextField>
     </div>
-  </LegacyCard>
+    <Scrollable
+      shadow
+      :style="scrollableStyle"
+      @scrolled-to-bottom="handleLazyLoadSegments"
+    >
+      <Listbox
+        enableKeyboardControl
+        accessibilityLabel="Search for and select a customer segment"
+        autoSelection="FIRST_SELECTED"
+        :customListId="listboxId"
+        @select="handleSegmentSelect"
+        @on-active-option-change="handleActiveOptionChange"
+      >
+        <template v-if="segmentOptions.length > 0">
+          <template v-for="{label, id, value} in segmentList" :key="id">
+            <ListboxOption :value="value" :selected="segments[selectedSegmentIndex].value === value">
+              <ListboxTextOption :selected="segments[selectedSegmentIndex].value === value">
+                {{ label }}
+              </ListboxTextOption>
+            </ListboxOption>
+          </template>
+        </template>
+        <ListboxAction v-if="showFooterAction" :value="actionValue">
+          <span style="color: var(--p-color-text-emphasis)">
+            Show all 111 segments
+          </span>
+        </ListboxAction>
+        <EmptySearchResult
+          v-if="segmentOptions.length === 0"
+          title=""
+          :description="`No segments found matching ${query}`"
+        />
+        <ListboxLoading
+          v-if="lazyLoading"
+          :accessibilityLabel="`${query ? 'Filtering' : 'Loading'} customer segments`"
+        />
+      </Listbox>
+    </Scrollable>
+  </div>
+</LegacyCard>
 </template>
 
 <script setup lang="ts">
@@ -183,7 +183,6 @@ const handleClickShowAll = () => {
 };
 
 const handleFilterSegments = (query: string) => {
-  console.log('filter', query);
   const nextFilteredSegments = segments.filter((segment) => {
     return segment.label
       .toLocaleLowerCase()
@@ -209,7 +208,6 @@ const handleSegmentSelect = (segmentIndex: string) => {
   }
 
   selectedSegmentIndex.value = (Number(segmentIndex));
-  console.log(2, selectedSegmentIndex.value);
 };
 
 const handleActiveOptionChange = (_: string, domId: string) => {

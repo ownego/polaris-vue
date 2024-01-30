@@ -13,11 +13,12 @@ div(:id="sectionId", aria-hidden)
 </template>
 
 <script setup lang="ts">
-import { inject, useSlots } from 'vue';
+import { useSlots } from 'vue';
 import { Box, Text } from '@/components';
 import { useHasSlot } from '@/use/useHasSlot';
+import { useSection } from '@/use/useListbox';
 
-const sectionId = inject('sectionContext', '');
+const sectionId = useSection();
 const slots = useSlots();
 const { hasSlot } = useHasSlot();
 </script>

@@ -30,7 +30,7 @@ interface ActionProps {
   icon?: IconSource;
 }
 
-provide('actionContext', true);
+provide('action', true);
 
 const props = defineProps<ActionProps>();
 

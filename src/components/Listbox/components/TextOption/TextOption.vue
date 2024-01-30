@@ -27,9 +27,10 @@ div(
 </template>
 
 <script setup lang="ts">
-import { computed, inject } from 'vue';
+import { computed } from 'vue';
 import TickMinor from '@icons/TickMinor.svg';
 import { classNames } from '@/utilities/css';
+import { useComboboxListboxOption, useAction } from '@/use/useListbox';
 import {
   Box,
   Checkbox,
@@ -47,8 +48,8 @@ interface TextOptionProps {
 
 const props = defineProps<TextOptionProps>();
 
-const { allowMultiple } = inject('combobox-list-option-context', { allowMultiple: false });
-const isAction = inject('action-context', false);
+const { allowMultiple } = useComboboxListboxOption();
+const isAction = useAction();
 
 const className = computed(() => classNames(
   styles.TextOption,

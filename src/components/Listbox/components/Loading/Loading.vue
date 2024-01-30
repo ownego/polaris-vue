@@ -9,9 +9,9 @@ li(:class="styles.ListItem", role="presentation")
 </template>
 
 <script setup lang="ts">
-import { inject, watch, useSlots } from 'vue';
+import { watch, useSlots } from 'vue';
 import { Spinner } from '@/components';
-import type { ListboxContextType } from '@/utilities/types';
+import { useListbox } from '@/use/useListbox';
 import styles from '@polaris/components/Listbox/components/Loading/Loading.module.scss';
 
 interface LoadingProps {
@@ -21,12 +21,9 @@ interface LoadingProps {
 const props = defineProps<LoadingProps>();
 const slots = useSlots();
 
-const listboxContext = inject<ListboxContextType>('listboxContext', {
-  onOptionSelect(): void { return },
-  setLoading(): void { return },
-});
+const listboxContext = useListbox();
 
-const { setLoading } = listboxContext;
+const { setLoading } = listboxContext.value;
 
 watch(
   () => props.accessibilityLabel,

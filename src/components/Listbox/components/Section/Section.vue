@@ -41,5 +41,5 @@ const className = computed(() => classNames(
   !props.divider && styles.noDivider,
 ));
 
-provide('sectionContext', sectionId);
+provide('section-context', sectionId);
 </script>

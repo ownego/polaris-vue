@@ -80,7 +80,7 @@ const slots = defineSlots<{
   default?: (_?: VueNode) => VNode[];
 }>();
 
-const comboboxListboxContext = inject<ComboboxListboxType>('comboboxListboxContext', {});
+const comboboxListboxContext = inject<ComboboxListboxType>('combobox-listbox-context', {});
 
 const {
   listboxId,
@@ -106,8 +106,7 @@ const activeOption = ref<NavigableOption | undefined>();
 const uniqueId = String(useId());
 const listId = computed(() => props.customListId || uniqueId);
 const inCombobox = computed(() => Boolean(setActiveOptionId));
-
-const getNavigableOptions = (): [] | HTMLElement[] => {
+const getNavigableOptions = computed<[] | HTMLElement[]>(() => {
   if (!listboxRef.value) {
     return [];
   }
@@ -117,7 +116,7 @@ const getNavigableOptions = (): [] | HTMLElement[] => {
       listboxRef.value.querySelectorAll<HTMLElement>(OPTION_SELECTOR),
     ),
   ];
-};
+});
 
 const getFirstNavigableOption = (
   currentOpts: HTMLElement[],
@@ -198,7 +197,7 @@ const getFormattedOption = (
 
 const resetActiveOption = (): void => {
   let nextOption;
-  const nextOptions = getNavigableOptions();
+  const nextOptions = getNavigableOptions.value;
   const nextActiveOption = getFirstNavigableOption(nextOptions);
 
   if (nextOptions.length === 0 && currentOptions.value.length > 0) {
@@ -272,7 +271,7 @@ const getNextValidOption = async (key: ArrowKeys): Promise<Record<string, any>> 
   let totalOptions = -1;
 
   if (!activeOption.value && props.autoSelection === AutoSelection.None) {
-    const nextOptions = getNavigableOptions();
+    const nextOptions = getNavigableOptions.value;
     const nextActiveOption = getFirstNavigableOption(nextOptions);
     currentOptions.value = nextOptions;
 
@@ -430,7 +429,7 @@ onMounted(() => {
   }
 });
 
-provide('listboxContext', { onOptionSelect, setLoading });
-provide('withinListboxContext', true);
+provide('listbox-context', { onOptionSelect, setLoading });
+provide('within-listbox-context', true);
 
 </script>
