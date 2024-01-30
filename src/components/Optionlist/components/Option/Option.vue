@@ -99,10 +99,15 @@ const slots = defineSlots<{
   media?: (_?: VueNode) => VNode[];
 }>();
 
+const {
+  value: focused,
+  toggle: toggleFocused,
+} = useToggle(false);
+
 const singleSelectClassName = computed(() => {
   return classNames(
     styles.SingleSelectOption,
-    focused && styles.focused,
+    focused.value && styles.focused,
     props.disabled && styles.disabled,
     props.select && styles.select,
     props.active && styles.active,
@@ -120,11 +125,6 @@ const multiSelectClassName = computed(() => {
     props.allowMultiple && styles.MultiSelectOption,
   );
 });
-
-const {
-  value: focused,
-  toggle: toggleFocused,
-} = useToggle(false);
 
 const handleClick = () => {
   if (props.disabled) return;
