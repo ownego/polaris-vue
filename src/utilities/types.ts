@@ -169,6 +169,13 @@ export interface DisableableAction extends Action {
   disabled?: boolean;
 }
 
+export interface BadgeAction {
+  badge?: {
+    status: 'new';
+    content: string;
+  };
+}
+
 export interface DestructableAction extends Action {
   /** Destructive action */
   destructive?: boolean;
@@ -240,4 +247,23 @@ export interface ActionListSection {
   title?: string;
   /** Collection of action items for the list */
   items: readonly ActionListItemDescriptor[];
+}
+
+
+export interface MenuActionDescriptor extends ComplexAction {
+  /** Zero-indexed numerical position. Overrides the action's order in the menu */
+  index?: number;
+}
+
+export interface MenuGroupDescriptor extends BadgeAction {
+  /** Menu group title */
+  title: string;
+  /** List of actions */
+  actions: ActionListItemDescriptor[];
+  /** Icon to display */
+  icon?: IconableAction['icon'];
+  /** Disables action button */
+  disabled?: boolean;
+  /** Zero-indexed numerical position. Overrides the group's order in the menu. */
+  index?: number;
 }
