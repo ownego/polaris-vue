@@ -47,4 +47,5 @@ export * from './Tag';
 export * from './Text';
 export * from './TextField';
 export * from './Thumbnail';
+export * from './Tooltip';
 export * from './UnstyledLink';

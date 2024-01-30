@@ -2,6 +2,7 @@
 div(
   :class="className",
   :style="style",
+  ref="overlay"
 )
   EventListener(
     event="resize",
@@ -9,8 +10,7 @@ div(
   )
   // Some how we have to use a div here instead of a wrapper div above but it work just fine
   // It's just add a div wrap the content of slot so it's not a big deal (i think so)
-  div(ref="overlay")
-    slot
+  slot
 </template>
 
 <script setup lang="ts">
@@ -46,6 +46,9 @@ import {
 } from './utilities/math';
 import type { PreferredPosition, PreferredAlignment } from './utilities/math';
 import type { VueNode } from '@/utilities/types';
+
+// The unknown gap unexpected when the overlay render has the white space at the bottom.
+const DESIRE_HEIGHT_GAP_UNEXPECTED = 21;
 
 type Positioning = 'above' | 'below';
 
@@ -154,7 +157,7 @@ const overlayDetails = computed<OverlayDetails>(() => {
     measuring: state.measuring,
     left: state.left,
     right: state.right,
-    desiredHeight: state.height, 
+    desiredHeight: state.height > DESIRE_HEIGHT_GAP_UNEXPECTED ? state.height - DESIRE_HEIGHT_GAP_UNEXPECTED : state.height,
     positioning: state.positioning,
     activatorRect: state.activatorRect,
     chevronOffset: state.chevronOffset,
@@ -230,7 +233,7 @@ function handleMeasurement() {
   const { lockPosition, top } = state;
 
   observer.value.disconnect();
-  
+
   // Set state
   state.height = 0;
   state.positioning = 'below';
