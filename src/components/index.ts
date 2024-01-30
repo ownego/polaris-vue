@@ -41,6 +41,7 @@ export * from './RangeSlider';
 export * from './Scrollable';
 export * from './Select';
 export * from './ShadowBevel';
+export * from './SkeletonBodyText';
 export * from './Spinner';
 export * from './Tag';
 export * from './Text';
