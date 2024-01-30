@@ -41,7 +41,7 @@ Choice(
       @keyup.stop="() => {}",
     )
     span(
-      :class="classNames(styles.Icon, !isIndeterminate && styles.animated)",,
+      :class="classNames(styles.Icon, !isIndeterminate && styles.animated)",
     )
       Icon(
         v-if="isIndeterminate",
