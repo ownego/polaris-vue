@@ -21,7 +21,7 @@ export interface ComboboxListboxOptionType {
 
 
 export function useListbox() {
-  const context = inject('listbox') as Ref<ListboxContextType>;
+  const context = inject('listbox') as ListboxContextType;
 
   return context;
 }

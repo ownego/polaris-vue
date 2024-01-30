@@ -429,7 +429,7 @@ onMounted(() => {
   }
 });
 
-provide('listbox-context', { onOptionSelect, setLoading });
-provide('within-listbox-context', true);
+provide('listbox', { onOptionSelect, setLoading });
+provide('within-listbox', true);
 
 </script>

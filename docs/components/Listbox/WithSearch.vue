@@ -16,7 +16,7 @@
         @clear-button-click="handleQueryClear"
       >
         <template #prefix>
-          <Icon :source="SearchMinor"/>
+          <Icon :source="SearchIcon"/>
         </template>
       </TextField>
     </div>
@@ -63,8 +63,8 @@
 </template>
 
 <script setup lang="ts">
-import { ref, computed, watch } from 'vue';
-import SearchMinor from '@icons/SearchMajor.svg';
+import { ref, computed } from 'vue';
+import SearchIcon from '@icons/SearchIcon.svg';
 
 const actionValue = '__ACTION__';
 const interval = 25;

@@ -23,7 +23,7 @@ const slots = useSlots();
 
 const listboxContext = useListbox();
 
-const { setLoading } = listboxContext.value;
+const { setLoading } = listboxContext;
 
 watch(
   () => props.accessibilityLabel,

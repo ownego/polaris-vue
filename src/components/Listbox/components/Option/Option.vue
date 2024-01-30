@@ -83,7 +83,7 @@ const listboxContext = useListbox();
 const isAction = useAction();
 
 const { role, url, external, onAction, destructive } = mappedActionContext;
-const { onOptionSelect } = listboxContext.value;
+const { onOptionSelect } = listboxContext;
 
 const listItemRef = ref<HTMLElement | null>(null);
 const domId = String(useId());

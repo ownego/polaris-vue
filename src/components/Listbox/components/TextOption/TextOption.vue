@@ -22,13 +22,13 @@ div(
         )
           slot
           InlineStack(align="end")
-            Icon(:source="TickMinor")
+            Icon(:source="CheckIcon")
       slot(v-else)
 </template>
 
 <script setup lang="ts">
 import { computed } from 'vue';
-import TickMinor from '@icons/TickMinor.svg';
+import CheckIcon from '@icons/CheckIcon.svg';
 import { classNames } from '@/utilities/css';
 import { useComboboxListboxOption, useAction } from '@/use/useListbox';
 import {
