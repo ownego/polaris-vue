@@ -5,9 +5,8 @@ div(
   template(v-if="isChildContentWrappedByItem")
     slot
   template(
-    v-if="hasSlot(slots.default) && slotsElms.length > 0",
-    v-for="item, index in slotsElms",
-    :key="index",
+    v-if="hasSlot(slots.default)",
+    v-for="item in slotsElms",
   )
     LegacyStackItem
       component(:is="item")
