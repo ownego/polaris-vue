@@ -42,7 +42,7 @@ Box(
       :section="section",
       :hasMultipleSections="HasMultipleSections",
       :actionRole="actionRole",
-      @action-any-item="emit('action-any-item')",
+      @action-any-item="emits('action-any-item')",
     )
       template(v-for="{ prefixId } in section.items" #[`prefix-${prefixId}`])
         slot(:name="`prefix-${prefixId}`")
@@ -91,7 +91,7 @@ type ActionListSlots = {
 }
 
 const props = defineProps<ActionListProps>();
-const emit = defineEmits<{
+const emits = defineEmits<{
   /** Callback when any item is clicked or keypressed */
   'action-any-item': [];
 }>();

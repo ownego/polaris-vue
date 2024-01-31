@@ -70,7 +70,7 @@ interface Props {
 
 const props = defineProps<Props>();
 const slots = useSlots();
-const emit = defineEmits<{
+const emits = defineEmits<{
   'action-any-item': [];
 }>();
 
@@ -80,7 +80,7 @@ const handleAction = (itemOnAction: ActionListItemDescriptor['onAction']) => {
       itemOnAction();
     }
 
-    emit('action-any-item');
+    emits('action-any-item');
   };
 };
 
