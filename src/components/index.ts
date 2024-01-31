@@ -44,6 +44,7 @@ export * from './ShadowBevel';
 export * from './Spinner';
 export * from './Tag';
 export * from './Text';
+export * from './TextContainer';
 export * from './TextField';
 export * from './Thumbnail';
 export * from './Tooltip';
