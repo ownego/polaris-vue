@@ -6,6 +6,7 @@ export * from './BlockStack';
 export * from './Box';
 export * from './Button';
 export * from './ButtonGroup';
+export * from './CalloutCard';
 export * from './Card';
 export * from './Checkbox';
 export * from './Choice';
