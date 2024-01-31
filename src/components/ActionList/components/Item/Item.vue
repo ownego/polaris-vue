@@ -11,7 +11,7 @@ UnstyledLink(
   :external="external",
   :role="role",
   :aria-label="accessibilityLabel",
-  @click="disabled ? null : emit('action')",
+  @click="disabled ? null : emits('action')",
 )
   Box(width="100%")
     InlineStack(
@@ -73,7 +73,7 @@ button(
   :disabled="disabled",
   :role="role",
   :aria-label="accessibilityLabel",
-  @click="emit('action')",
+  @click="emits('action')",
   @mouseup="handleMouseUpByBlurring",
   @mouseenter="onMouseEnter",
 )
@@ -153,7 +153,7 @@ type ItemProps = ActionListItemDescriptor;
 const props = withDefaults(defineProps<ItemProps>(), {
   variant: 'default',
 });
-const emit = defineEmits<{
+const emits = defineEmits<{
   /** Callback when any item is clicked or keypressed */
   'action': [];
 }>();
