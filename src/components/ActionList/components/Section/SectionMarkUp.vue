@@ -38,14 +38,10 @@ Box(
           :role="actionRole",
           @action="handleAction(onAction)",
         )
-          template(v-if="item.prefixId", #prefix)
-            slot(:name="`prefix-${item.prefixId}`")
-          template(v-if="item.suffixId", #suffix)
-            slot(:name="`suffix-${item.suffixId}`")
 </template>
 
 <script setup lang="ts">
-import { computed, useSlots } from 'vue';
+import { computed } from 'vue';
 import {
   Box,
   Text,
@@ -69,7 +65,6 @@ interface Props {
 }
 
 const props = defineProps<Props>();
-const slots = useSlots();
 const emits = defineEmits<{
   'action-any-item': [];
 }>();

@@ -22,17 +22,23 @@
 </template>
 
 <script setup lang="ts">
+import { h } from 'vue';
+import { Icon } from '@/components';
 import ChevronRightIcon from '@icons/ChevronRightIcon.svg';
+
+const prefixHere = h(Icon, { source: ChevronRightIcon });
+// const prefixThere = h(Avatar, { customer: true, name: "Farrah", size: "sm" });
+const suffixThere = h(Icon, { source: ChevronRightIcon });
+
 const actionListItem = [
   {
     content: "Go here",
-    prefixId: "here",
-    suffixId: "here",
+    prefix: prefixHere,
   },
   {
     content: "Or there",
-    prefixId: "there",
-    suffixId: "there",
+    // prefix: prefixThere,
+    suffix: suffixThere,
   },
 ];
 </script>

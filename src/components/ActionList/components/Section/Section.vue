@@ -11,19 +11,11 @@ Box(
     v-bind="SectionMarkUpProps",
     @action-any-item="emits('action-any-item')",
   )
-    template(v-for="{prefixId} in section.items" #[`prefix-${prefixId}`])
-      slot(:name="`prefix-${prefixId}`")
-    template(v-for="{suffixId} in section.items" #[`suffix-${suffixId}`])
-      slot(:name="`suffix-${suffixId}`")
 template(v-else)
   SectionMarkUp(
     v-bind="SectionMarkUpProps",
     @action-any-item="emits('action-any-item')",
   )
-    template(v-for="{prefixId} in section.items" #[`prefix-${prefixId}`])
-      slot(:name="`prefix-${prefixId}`")
-    template(v-for="{suffixId} in section.items" #[`suffix-${suffixId}`])
-      slot(:name="`suffix-${suffixId}`")
 </template>
 
 <script setup lang="ts">

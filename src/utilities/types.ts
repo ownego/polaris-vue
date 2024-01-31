@@ -214,10 +214,10 @@ export interface ActionListItemDescriptor
     tone: 'new';
     content: string;
   };
-    /** Prefix source */
-  prefixId?: string;
+  /** Prefix source */
+  prefix?: VueNode;
   /** Suffix source */
-  suffixId?: string;
+  suffix?: VueNode;
   /** Additional hint text to display with item */
   helpText?: string;
   /** @deprecated Source of the icon */
