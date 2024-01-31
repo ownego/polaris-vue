@@ -1,13 +1,6 @@
 <template>
 <div style="height: 250px; maxWidth: 350px">
   <ActionList :items="actionListItem">
-    <template #prefix-here>
-       <Thumbnail
-        source="https://burst.shopifycdn.com/photos/black-leather-choker-necklace_373x@2x.jpg"
-        size="small"
-        alt="Black leather pet collar"
-      />
-    </template>
   </ActionList>
 </div>
 </template>
