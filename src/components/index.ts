@@ -33,6 +33,7 @@ export * from './Layout';
 export * from './LegacyStack';
 export * from './Link';
 export * from './List';
+export * from './Listbox';
 export * from './Popover';
 export * from './Portal';
 export * from './PositionedOverlay';
