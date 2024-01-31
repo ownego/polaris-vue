@@ -1,4 +1,5 @@
 import type { Component } from 'vue';
+import type { ComputedRef, Ref } from 'vue';
 
 export type Target = '_blank' | '_self' | '_parent' | '_top';
 
@@ -240,4 +241,42 @@ export interface ActionListSection {
   title?: string;
   /** Collection of action items for the list */
   items: readonly ActionListItemDescriptor[];
+}
+
+export interface NavigableOption {
+  domId: string;
+  value: string;
+  element: HTMLElement;
+  disabled: boolean;
+  isAction?: boolean;
+  index?: number;
+}
+
+export interface ListboxContextType {
+  onOptionSelect(option: NavigableOption): void;
+  setLoading(label?: string): void;
+}
+
+export interface ComboboxListboxOptionType {
+  // Whether the option should visually support multiple selection
+  allowMultiple?: boolean;
+}
+
+export interface ComboboxListboxType {
+  // Value of the Texfields ID for listbox aria-labelledby
+  textFieldLabelId?: Ref<string>;
+  // Enables/disables keyboard control
+  textFieldFocused?: Ref<boolean>;
+  // Unique ID to set on the listbox. Used to set the Combobox aria-owns and TextField aria-controls attributes.
+  listboxId?: Ref<string>;
+  // Whether or not more options are available to lazy load. Use the hasMoreResults boolean provided by the GraphQL API of the paginated data. */
+  willLoadMoreOptions?: ComputedRef<boolean | undefined>;
+  // Sets the value for the TextField aria-activedescendant attribute.
+  setActiveOptionId?(id: string): void;
+  // Callback to set a generated listbox ID.
+  setListboxId?(id: string): void;
+  // Callback fired when an option is selected.
+  onOptionSelected?(): void;
+  // Callback fired when keyboard user navigates to the last item. Use to lazy load when listbox option data is paginated.
+  onKeyToBottom?(): void;
 }
