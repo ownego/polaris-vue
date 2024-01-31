@@ -1,4 +1,5 @@
 export * from './AppProvider';
+export * from './Avatar';
 export * from './Badge';
 export * from './Bleed';
 export * from './BlockStack';
@@ -53,3 +54,4 @@ export * from './TextField';
 export * from './Thumbnail';
 export * from './Tooltip';
 export * from './UnstyledLink';
+export * from './Optionlist';
