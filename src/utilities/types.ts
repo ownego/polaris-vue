@@ -1,4 +1,5 @@
 import type { Component } from 'vue';
+import type { ComputedRef, Ref } from 'vue';
 
 export type Target = '_blank' | '_self' | '_parent' | '_top';
 
@@ -202,3 +203,100 @@ export interface ComplexAction
     OutlineableAction,
     LoadableAction,
     PlainAction {}
+
+export interface ActionListItemDescriptor
+  extends DisableableAction,
+    DestructableAction {
+  /** Visually hidden text for screen readers */
+  accessibilityLabel?: string;
+  /** @deprecated Badge component */
+  badge?: {
+    tone: 'new';
+    content: string;
+  };
+  /** Prefix source */
+  prefix?: VueNode;
+  /** Suffix source */
+  suffix?: VueNode;
+  /** Additional hint text to display with item */
+  helpText?: string;
+  /** @deprecated Source of the icon */
+  icon?: IconSource;
+  /** @deprecated Image source */
+  image?: string;
+  /** @deprecated Add an ellipsis suffix to action content. ellipsis appends `...` without truncating. Use truncate instead. */
+  ellipsis?: boolean;
+  /** Truncate the action content either at the beginning or at the end */
+  truncate?: boolean;
+  /** Whether the action is active or not */
+  active?: boolean;
+  /** The item variations */
+  variant?: 'default' | 'menu' | 'indented';
+  /** Defines a role for the action */
+  role?: string;
+}
+
+export interface ActionListSection {
+  /** Section title */
+  title?: string;
+  /** Collection of action items for the list */
+  items: readonly ActionListItemDescriptor[];
+}
+export interface OptionDescriptor {
+  /** Value of the option */
+  value: string;
+  /** Whether the option is disabled or not */
+  disabled?: boolean;
+  /** Whether the option is active or not */
+  active?: boolean;
+  /** Unique identifier for the option */
+  id?: string;
+  /** Display label for the option */
+  label: string,
+}
+
+export interface SectionDescriptor {
+  /** Collection of options within the section */
+  options: OptionDescriptor[];
+  /** Section title */
+  title?: string;
+}
+
+export type Descriptor = SectionDescriptor | OptionDescriptor;
+export interface NavigableOption {
+  domId: string;
+  value: string;
+  element: HTMLElement;
+  disabled: boolean;
+  isAction?: boolean;
+  index?: number;
+}
+
+export interface ListboxContextType {
+  onOptionSelect(option: NavigableOption): void;
+  setLoading(label?: string): void;
+}
+
+export interface ComboboxListboxOptionType {
+  // Whether the option should visually support multiple selection
+  allowMultiple?: boolean;
+}
+
+export interface ComboboxListboxType {
+  // Value of the Texfields ID for listbox aria-labelledby
+  textFieldLabelId?: Ref<string>;
+  // Enables/disables keyboard control
+  textFieldFocused?: Ref<boolean>;
+  // Unique ID to set on the listbox. Used to set the Combobox aria-owns and TextField aria-controls attributes.
+  listboxId?: Ref<string>;
+  // Whether or not more options are available to lazy load. Use the hasMoreResults boolean provided by the GraphQL API of the paginated data. */
+  willLoadMoreOptions?: ComputedRef<boolean | undefined>;
+  // Sets the value for the TextField aria-activedescendant attribute.
+  setActiveOptionId?(id: string): void;
+  // Callback to set a generated listbox ID.
+  setListboxId?(id: string): void;
+  // Callback fired when an option is selected.
+  onOptionSelected?(): void;
+  // Callback fired when keyboard user navigates to the last item. Use to lazy load when listbox option data is paginated.
+  onKeyToBottom?(): void;
+}

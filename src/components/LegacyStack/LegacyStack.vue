@@ -2,13 +2,14 @@
 div(
   :class="className",
 )
+  template(v-if="isChildContentWrappedByItem")
+    slot
   template(
-    v-if="hasSlot(slots.default) && slotsElms.length > 1",
+    v-if="hasSlot(slots.default)",
     v-for="item in slotsElms",
   )
     LegacyStackItem
       component(:is="item")
-  slot(v-else)
 </template>
 
 <script setup lang="ts">
@@ -18,6 +19,7 @@ import { useExtractFragment } from '@/use/useExtractFragment';
 import { classNames, variationName } from '@/utilities/css';
 import type { VueNode } from '@/utilities/types';
 import LegacyStackItem from './components/Item/Item.vue';
+import { isElementOfType } from '@/utilities/component';
 import styles from '@polaris/components/LegacyStack/LegacyStack.module.scss';
 
 type Spacing =
@@ -53,13 +55,11 @@ export interface LegacyStackProps {
 
 const slots = defineSlots<{
   /** Elements to display inside stack */
-  default: (_: VueNode) => any;
+  default: (_?: VueNode) => any;
 }>()
 
 const { hasSlot } = useHasSlot();
 const { slotsElms } = useExtractFragment(slots.default);
-
-// console.log(slotsElms.value);
 
 const props = withDefaults(defineProps<LegacyStackProps>(), {
   wrap: true,
@@ -76,4 +76,18 @@ const className = computed(() => {
     );
   }
 );
+const isChildContentWrappedByItem = computed(() => {
+  const childContents: any = slots.default?.() || [];
+
+  if (!childContents.length) {
+    return false;
+  }
+
+  const children = childContents[0].children && childContents[0].children.length
+    ? childContents[0].children[0]
+    : childContents[0];
+
+  return isElementOfType(children, LegacyStackItem);
+});
+
 </script>

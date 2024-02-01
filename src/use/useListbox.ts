@@ -14,8 +14,14 @@ export interface ListboxContextType {
   setLoading(label?: string): void;
 }
 
+export interface ComboboxListboxOptionType {
+  // Whether the option should visually support multiple selection
+  allowMultiple?: boolean;
+}
+
+
 export function useListbox() {
-  const context = inject('listbox') as Ref<ListboxContextType>;
+  const context = inject('listbox') as ListboxContextType;
 
   return context;
 }
@@ -27,7 +33,19 @@ export function useWithinListbox() {
 }
 
 export function useAction() {
-  const context = inject('action', ref(false)) as Ref<boolean>;
+  const context = inject('action', false);
+
+  return context;
+}
+
+export function useComboboxListboxOption() {
+  const context = inject('combobox-listbox-option', { allowMultiple: false }) as ComboboxListboxOptionType;
+
+  return context;
+}
+
+export function useSection() {
+  const context = inject('section-context', '') as string;
 
   return context;
 }
