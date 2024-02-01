@@ -199,7 +199,7 @@ type AccessibilityLabels = {
   next: string;
 }
 
-interface PaginationProps {
+export interface PaginationProps {
   /** Keyboard shortcuts for the next button */
   nextKeys?: Key[];
   /** Keyboard shortcuts for the previous button */
