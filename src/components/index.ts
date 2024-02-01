@@ -15,6 +15,7 @@ export * from './Collapsible';
 export * from './ColorPicker';
 export * from './DatePicker';
 export * from './DescriptionList';
+export * from './Divider';
 export * from './DropZone';
 export * from './EmptyState';
 export * from './EventListener';
