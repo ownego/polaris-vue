@@ -242,7 +242,6 @@ export interface ActionListSection {
   /** Collection of action items for the list */
   items: readonly ActionListItemDescriptor[];
 }
-
 export interface OptionDescriptor {
   /** Value of the option */
   value: string;
@@ -264,7 +263,6 @@ export interface SectionDescriptor {
 }
 
 export type Descriptor = SectionDescriptor | OptionDescriptor;
-
 export interface NavigableOption {
   domId: string;
   value: string;
