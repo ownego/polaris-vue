@@ -24,9 +24,6 @@ examples:
   - fileName: BannerCritical.vue
     title: Critical
     description: Use to communicate problems that have to be resolved immediately for merchants to complete a task. For example, you will show this banner for orders with high fraud risk. Seeing these banners can be stressful for merchants so be cautious about using them.
-  - fileName: BannerInModal.vue
-    title: In a modal
-    description: Banners inside of modals render with less spacing and a pared-back design to fit within a content context.
   - fileName: BannerWithFocus.vue
     title: With focus
     description: Banner can programmatically receive focus. Use this functionality to draw the merchant’s attention to the banner.
