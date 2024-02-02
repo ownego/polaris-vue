@@ -1,29 +1,23 @@
 <template>
 <LegacyCard>
   <ResourceList
-    :resourceName="{ singular: 'blog post', plural: 'blog posts' }"
+    :resourceName="{singular: 'blog post', plural: 'blog posts'}"
     :items="items"
     :selectedItems="selectedItems"
-    onSelectionChange={setSelectedItems}
+    @selection-change="onSelectionChange"
     selectable
-    renderItem={(item) => {
-      const {id, url, title, author} = item;
-      const authorMarkup = author ? <div>by {author}</div> : null;
-      return (
-        <ResourceItem
-          id={id}
-          url={url}
-          accessibilityLabel={`View details for ${title}`}
-          name={title}
-        >
-          <Text variant="bodyMd" fontWeight="bold" as="h3">
-            {title}
-          </Text>
-          {authorMarkup}
-        </ResourceItem>
-      );
-    }}
-  />
+  >
+    <ResourceItem
+      v-for="item in items"
+      :id="`${item.id}`"
+      :url="item.url"
+      :accessibilityLabel="`View details for ${item.title}`"
+      :name="item.title"
+    >
+      <Text variation="bodyMd" font-weight="bold" as="h3">{{ item.title }}</Text>
+      <div v-if="item.author">by {{ item.author }}</div>
+    </ResourceItem>
+  </ResourceList>
 </LegacyCard>
 </template>
 
@@ -39,5 +33,8 @@ const items = [
   },
 ];
 
-const selectedItem = ref([]);
+const selectedItems = ref([]);
+const onSelectionChange = (value: any) => {
+  selectedItems.value = value;
+};
 </script>

@@ -37,7 +37,7 @@ div(
             slot(name="alternateTool")
           div(v-if="showSortingSelect && sortOptions", :className="styles.SortWrapper")
             Select(
-              v-model="sortValue",
+              v-model="sortValueSelect",
               :labelInline="!smallScreen",
               :labelHidden="smallScreen",
               :options="sortOptions",
@@ -97,7 +97,7 @@ div(
           accessibilityLabel="Items are loading",
         )
       li(:class="styles.LoadingOverlay")
-      slot
+    slot
   //- Empty Search
   template(v-if="showEmptySearchState && hasSlot(slots.emptySearchState)")
     slot(name="emptySearchState")
@@ -126,7 +126,7 @@ import { classNames } from '@/utilities/css';
 import useI18n from '@/use/useI18n';
 import { useExtractFragment } from '@/use/useExtractFragment';
 import { useHasSlot } from '@/use/useHasSlot';
-import { CheckableButtons, CheckboxHandles, VueNode, ResourceListContextType } from '@/utilities/types';
+import type { CheckableButtons, CheckboxHandles, VueNode, ResourceListContextType } from '@/utilities/types';
 import {
   Button,
   EventListener,
@@ -149,9 +149,9 @@ import CheckboxIcon from '@icons/CheckboxIcon.svg';
 const SMALL_SPINNER_HEIGHT = 28;
 const LARGE_SPINNER_HEIGHT = 45;
 
-export type ResourceListSelectedItems = string[] | 'All';
+type ResourceListSelectedItems = string[] | 'All';
 
-export const SELECT_ALL_ITEMS = 'All';
+const SELECT_ALL_ITEMS = 'All';
 
 interface ResourceListItemData {
   [data: string]: any;
@@ -252,6 +252,7 @@ export type ResourceListSlots = {
 
 const props = withDefaults(defineProps<ResourceListProps>(), {
   selectedItems: [] as any,
+  showHeader: true,
 });
 const emits = defineEmits<ResourceListEmits>();
 const slots = defineSlots<ResourceListSlots>();
@@ -302,7 +303,10 @@ const items = computed(() => {
 
   return tmpItems;
 });
-
+console.log('items', items.value);
+const sortValueSelect = computed(() => {
+  return props.sortValue || '';
+});
 
 const isSelectable = computed(() => {
   return Boolean(

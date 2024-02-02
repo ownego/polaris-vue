@@ -86,7 +86,7 @@ import {
 import { BulkActionButton, BulkActionMenu } from './components';
 import type { BulkAction, BulkActionListSection, BulkActionsProps } from './utils';
 import type { MenuGroupDescriptor, ActionListSection } from '@/utilities/types';
-import styles from '@polaris/components/BulkAction/BulkAction.module.scss';
+import styles from '@polaris/components/BulkActions/BulkActions.module.scss';
 
 type TransitionStatus = 'entering' | 'entered' | 'exiting' | 'exited';
 
@@ -239,7 +239,7 @@ const groupClassName = computed(() => {
   return classNames(
     styles.Group,
     !props.isSticky && styles['Group-not-sticky'],
-    !measuring.value && props.isSticky && styles[`Group-${statusTransitionGroup.value}`],
+    !(measuring.value) && props.isSticky && styles[`Group-${statusTransitionGroup.value}`],
     measuring.value && styles['Group-measuring'],
   );
 });
@@ -322,5 +322,5 @@ onMounted(() => {
       measuring.value = false;
     }
   }, 10);
-}),
+});
 </script>

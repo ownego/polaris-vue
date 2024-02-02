@@ -45,6 +45,8 @@ export * from './PositionedOverlay';
 export * from './ProgressBar';
 export * from './RadioButton';
 export * from './RangeSlider';
+export * from './ResourceItem';
+export * from './ResourceList';
 export * from './Scrollable';
 export * from './Select';
 export * from './SelectAllActions';

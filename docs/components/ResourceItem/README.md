@@ -1,6 +1,6 @@
 ---
 layout: doc
-title: Resource list
+title: Resource item
 category: Lists
 examples:
   - fileName: Default.vue

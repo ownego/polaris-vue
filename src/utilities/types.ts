@@ -249,7 +249,6 @@ export interface ActionListSection {
   items: readonly ActionListItemDescriptor[];
 }
 
-
 export interface MenuActionDescriptor extends ComplexAction {
   /** Zero-indexed numerical position. Overrides the action's order in the menu */
   index?: number;
