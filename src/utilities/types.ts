@@ -267,3 +267,29 @@ export interface MenuGroupDescriptor extends BadgeAction {
   /** Zero-indexed numerical position. Overrides the group's order in the menu. */
   index?: number;
 }
+
+export interface CheckboxHandles {
+  focus(): void;
+}
+
+export interface ResourceListContextType {
+  selectMode?: boolean;
+  selectable?: boolean;
+  selectedItems?: ResourceListSelectedItems;
+  resourceName?: {
+    singular: string;
+    plural: string;
+  };
+  loading?: boolean;
+  hasBulkActions?: boolean;
+  onSelectionChange?(
+    selected: boolean,
+    id: string,
+    sortNumber: number | undefined,
+    shiftKey: boolean,
+  ): void;
+}
+
+export type ResourceListSelectedItems = string[] | 'All';
+export type CheckableButtonKey = 'plain' | 'bulkSm' | 'bulkLg';
+export type CheckableButtons = Map<CheckableButtonKey, CheckboxHandles>;

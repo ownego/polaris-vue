@@ -143,7 +143,7 @@ import {
 import { useBreakpoints } from '@/utilities/breakpoints';
 import type { DisableableAction } from '@/utilities/types';
 import { SELECT_ALL_ITEMS } from '@polaris/utilities/resource-list';
-import type { ResourceListSelectedItems, ResourceListContextType } from '@polaris/utilities/resource-list';
+import type { ResourceListSelectedItems, ResourceListContextType } from '@/utilities/types';
 import type { InlineStackProps } from '../InlineStack/types';
 import styles from '@polaris/components/ResourceItem/ResourceItem.module.scss';
 import MenuHorizontalIcon from '@icons/MenuHorizontalIcon.svg';

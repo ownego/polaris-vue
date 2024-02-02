@@ -1,15 +1,132 @@
 <template lang="pug">
+div(
+  ref="tableMeasurerRef",
+  :class="resourceListWrapperClassName",
+)
+  //-FilterControl
+  div(
+    v-if="hasSlot(slots.filterControl)",
+    :class="classNames(!flushFilters && styles.FiltersWrapper)",
+  )
+    slot(name="filterControl")
+  //-HeaderMarkup
+  div(
+    v-if="showHeaderMarkup",
+    :class="styles.HeaderOuterWrapper",
+  )
+    Sticky(
+      :bounding-element="listRef",
+      @sticky-change="handleStickyChange",
+    )
+      div(:class="headerClassName")
+        EventListener(event="resize", :handler="handleResize")
+        div(v-if="loading", :class="styles['HeaderWrapper-overlay']")
+        div(:class="styles.HeaderContentWrapper")
+          div(:class="styles.HeaderTitleWrapper") {{ headerTitle }}
+          div(v-if="isSelectable", :class="styles.CheckableButtonWrapper")
+            CheckableButton(
+              :accessibilityLabel="bulkActionsAccessibilityLabel",
+              :label="headerTitle",
+              :disabled="loading",
+              @toggle-all="handleToggleAll",
+            )
+          div(
+            v-if="hasSlot(slots.alternateTool) && !showSortingSelect",
+            :class="styles.AlternateToolWrapper",
+          )
+            slot(name="alternateTool")
+          div(v-if="showSortingSelect && sortOptions", :className="styles.SortWrapper")
+            Select(
+              v-model="sortValue",
+              :labelInline="!smallScreen",
+              :labelHidden="smallScreen",
+              :options="sortOptions",
+              :disabled="selectMode",
+              @change="onSortChange",
+            )
+              template(#label) {{ i18n.translate('Polaris.ResourceList.sortingLabel') }}
+
+          div(v-if="isSelectable", :class="styles.SelectButtonWrapper")
+            Button(
+              :disabled="selectMode",
+              :icon="CheckboxIcon",
+              @click="() => handleSelectMode(true)",
+            ) {{ i18n.translate('Polaris.ResourceList.selectButtonText') }}
+        div(v-if="isSelectable", :class="styles.SelectAllActionsWrapper")
+          SelectAllActions(
+            ref="checkableButtonRef"
+            :label="bulkActionsLabel",
+            :accessibilityLabel="bulkActionsAccessibilityLabel",
+            :selected="selectAllSelectState",
+            :selectMode="selectMode",
+            :paginatedSelectAllAction="paginatedSelectAllAction",
+            :paginatedSelectAllText="paginatedSelectAllText",
+            :disabled="loading",
+            @toggle-all="handleToggleAll",
+          )
+  //- BulkAction
+  div(
+    v-if="showBulkActions",
+    :class="bulkActionsClassName",
+    :style="bulkActionsStyle",
+  )
+    BulkActions(
+      :promotedActions="promotedBulkActions",
+      :actions="bulkActions",
+      :disabled="loading",
+      :is-sticky="isBulkActionsSticky",
+      :width="bulkActionsMaxWidth",
+      :select-mode="selectMode",
+      @select-mode-toggle="handleSelectMode",
+    )
+  //-List
+  ul(
+    v-if="itemsExist",
+    :class="resourceListClassName",
+    :aria-busy="loading",
+    ref="listRef",
+    aria-live="polite",
+  )
+    template(v-if="loading")
+      li(
+        :class="styles.SpinnerContainer",
+        :style="spinnerStyle",
+      )
+        Spinner(
+          :size="spinnerSize",
+          accessibilityLabel="Items are loading",
+        )
+      li(:class="styles.LoadingOverlay")
+      slot
+  //- Empty Search
+  template(v-if="showEmptySearchState && hasSlot(slots.emptySearchState)")
+    slot(name="emptySearchState")
+  template(v-else-if="showEmptySearchState")
+    div(:class="styles.EmptySearchResultWrapper")
+      EmptySearchResult(v-bind="emptySearchResultText", with-illustration)
+  //- Empty State
+  template(v-if="showEmptyState")
+    slot(name="emptyState")
+  //- Loading
+  div(v-if="loading && !itemsExist", :class="className", tabindex="-1")
+    template(v-if="loading")
+      li(:class="styles.SpinnerContainer", :style="spinnerStyle")
+        Spinner(:size="spinnerSize", accessibilityLabel="Items are loading")
+      li(:class="styles.LoadingOverlay")
+  //- Pagination
+  Pagination(v-if="pagination", type="table", v-bind="pagination")
+div(ref="bulkActionsIntersectionRef")
 </template>
 
 <script setup lang="ts">
-import { type VNode , type VNodeArrayChildren, ref, computed } from 'vue';
+import { type VNode , type VNodeArrayChildren, ref, computed, onMounted, watch, provide } from 'vue';
 import { themeDefault, toPx } from '@shopify/polaris-tokens';
 import { debounce } from '@polaris/utilities/debounce';
 import { classNames } from '@/utilities/css';
 import useI18n from '@/use/useI18n';
 import { useExtractFragment } from '@/use/useExtractFragment';
 import { useHasSlot } from '@/use/useHasSlot';
-import { VueNode } from '@/utilities/types';
+import { CheckableButtons, CheckboxHandles, VueNode, ResourceListContextType } from '@/utilities/types';
 import {
   Button,
   EventListener,
@@ -23,9 +140,11 @@ import {
   SelectAllActions,
 } from '@/components';
 import type { PaginationProps } from '@/components/Pagination/Pagination.vue';
-import type { BulkActionsProps } from '@/components/BulkAction/utils';
+import type { BulkActionsProps } from '@/components/BulkActions/utils';
 import type { SelectOption } from '@/components/Select/types';
+import { useIsBulkActionsSticky } from '../BulkActions/hooks/use-bulk-action-sticky';
 import styles from '@polaris/components/ResourceList/ResourceList.module.scss';
+import CheckboxIcon from '@icons/CheckboxIcon.svg';
 
 const SMALL_SPINNER_HEIGHT = 28;
 const LARGE_SPINNER_HEIGHT = 45;
@@ -64,7 +183,7 @@ function defaultIdForItem<TItemType extends ResourceListItemData>(
 }
 
 export type ResourceListPaginationProps = Omit<PaginationProps, 'type'>;
-
+type TItemType = any;
 export interface ResourceListProps<
   TItemType extends ResourceListItemData = ResourceListItemData,
 > {
@@ -115,7 +234,7 @@ export type ResourceListEmits = {
   /** Callback when sort option is changed */
   'selection-change': [selectedItems: ResourceListSelectedItems];
   /** Callback when selection is changed */
-  'sort-change': [selected: string, id: string];
+  'sort-change': [selected: string, id?: string];
 };
 
 export type ResourceListSlots = {
@@ -132,7 +251,7 @@ export type ResourceListSlots = {
 };
 
 const props = withDefaults(defineProps<ResourceListProps>(), {
-  selectedItems: [],
+  selectedItems: [] as any,
 });
 const emits = defineEmits<ResourceListEmits>();
 const slots = defineSlots<ResourceListSlots>();
@@ -145,8 +264,17 @@ const selectMode = ref<boolean>(Boolean(props.selectedItems && props.selectedIte
 const loadingPosition = ref(0);
 const lastSelected = ref<number | undefined>();
 const smallScreen = ref(isBreakpointsXS());
-const checkableButtons = ref<HTMLInputElement | null>(null);
+const checkableButtons = ref<CheckableButtons>(new Map());
 const isSticky = ref(false);
+const {
+  bulkActionsIntersectionRef,
+  tableMeasurerRef,
+  isBulkActionsSticky,
+  bulkActionsAbsoluteOffset,
+  bulkActionsMaxWidth,
+  bulkActionsOffsetLeft,
+  computeTableDimensions,
+} = useIsBulkActionsSticky(selectMode.value);
 
 
 const defaultResourceName = {
@@ -155,8 +283,14 @@ const defaultResourceName = {
 };
 
 const listRef = ref<HTMLUListElement | null>(null);
-const headerRef = ref<HTMLDivElement | null>(null);
 
+const bulkActionsStyle = computed(() => {
+  return {
+    top: isBulkActionsSticky ? undefined : `${bulkActionsAbsoluteOffset.value}px`,
+    maxWidth: `${bulkActionsMaxWidth.value}px`,
+    left: isBulkActionsSticky ? `${bulkActionsOffsetLeft.value}px` : undefined,
+  };
+});
 const items = computed(() => {
   let tmpItems: VNodeArrayChildren = [];
   if (slots.default) {
@@ -206,6 +340,11 @@ const showEmptySearchState = computed(() => !showEmptyState.value && hasSlot(slo
 
 const showSortingSelect = computed(() => props.sortOptions && props.sortOptions.length > 0 && !hasSlot(slots.alternateTool));
 
+const showBulkActions = computed(() => {
+  return Boolean(isSelectable.value && selectMode.value
+    && (props.bulkActions || props.promotedBulkActions));
+});
+
 const showHeaderMarkup = computed(() => {
   return !showEmptyState.value
     && props.showHeader
@@ -217,6 +356,12 @@ const defaultTopPadding = 8;
 const topPadding = computed(() => loadingPosition.value > 0 ? loadingPosition.value : defaultTopPadding);
 const spinnerStyle = computed(() => ({ paddingTop: `${topPadding.value}px` }));
 const spinnerSize = computed(() => items.value.length < 2 ? 'small' : 'large');
+
+const resourceListWrapperClassName = computed(() => classNames(
+  styles.ResourceListWrapper,
+  showBulkActions.value && selectMode.value
+    && props.bulkActions && styles.ResourceListWrapperWithBulkActions,
+));
 
 const headerClassName = computed(() => {
   return classNames(
@@ -232,6 +377,12 @@ const headerClassName = computed(() => {
     isSticky.value && styles['HeaderWrapper-isSticky'],
   );
 });
+
+const bulkActionsClassName = computed(() => classNames(
+  styles.BulkActionsWrapper,
+  isBulkActionsSticky.value && styles.BulkActionsWrapperSticky,
+  props.loading && styles['BulkActionsWrapper-disabled'],
+));
 
 const headerTitle = computed(() => {
   const itemsCount = items.value.length;
@@ -307,6 +458,10 @@ const bulkActionsAccessibilityLabel = computed(() => {
   }
 });
 
+const handleStickyChange = (value: boolean) => {
+  isSticky.value = value;
+};
+
 const selectAllSelectState = (): boolean | 'indeterminate' => {
   const { selectedItems, items } = props;
   let selectState: boolean | 'indeterminate' = 'indeterminate';
@@ -372,6 +527,13 @@ const paginatedSelectAllAction = computed(() => {
   };
 });
 
+const generateItemId = (item: any, index: number) => {
+  if (props.idForItem) {
+    return props.idForItem(item, index);
+  }
+  return defaultIdForItem(item, index);
+};
+
 const emptySearchResultText = computed(() => ({
   title: i18n.translate('Polaris.ResourceList.emptySearchResultTitle', {
     resourceNamePlural: resourceName.value.plural,
@@ -380,4 +542,221 @@ const emptySearchResultText = computed(() => ({
     'Polaris.ResourceList.emptySearchResultDescription',
   ),
 }));
+
+const handleSelectAllItemsInStore = () => {
+  const newlySelectedItems =
+    props.selectedItems === SELECT_ALL_ITEMS
+    || (Array.isArray(props.selectedItems) && props.selectedItems.length === items.value.length)
+      ? []
+      : getAllItemsOnPage(items.value, generateItemId);
+
+  emits('selection-change', newlySelectedItems);
+};
+
+const handleSelectMode = (tmpSelectMode: boolean) => {
+  selectMode.value = tmpSelectMode;
+  if (!tmpSelectMode) {
+    emits('selection-change', []);
+  }
+};
+
+const handleResize = debounce(
+  () => {
+    const newSmallScreen = isBreakpointsXS();
+
+    if (
+      props.selectedItems &&
+      props.selectedItems.length === 0 &&
+      selectMode &&
+      !newSmallScreen
+    ) {
+      handleSelectMode(false);
+    }
+
+    if (smallScreen.value !== newSmallScreen) {
+      smallScreen.value = newSmallScreen;
+    }
+  },
+  50,
+  {leading: true, trailing: true, maxWait: 50},
+);
+
+const setLoadingPosition = () => {
+  if (listRef.value != null) {
+    if (typeof window === 'undefined') {
+      return;
+    }
+
+    const overlay = listRef.value.getBoundingClientRect();
+
+    const viewportHeight = Math.max(
+      document.documentElement ? document.documentElement.clientHeight : 0,
+      window.innerHeight || 0,
+    );
+
+    const overflow = viewportHeight - overlay.height;
+
+    const spinnerHeight =
+      items.value.length === 1 ? SMALL_SPINNER_HEIGHT : LARGE_SPINNER_HEIGHT;
+
+    const spinnerPosition =
+      overflow > 0
+        ? (overlay.height - spinnerHeight) / 2
+        : (viewportHeight - overlay.top - spinnerHeight) / 2;
+
+    loadingPosition.value = spinnerPosition;
+  }
+};
+
+const handleMultiSelectionChange = (
+  lastSelectedChange: number,
+  currentSelected: number,
+  resolveItemId: (item: TItemType) => string,
+) => {
+  const min = Math.min(lastSelectedChange, currentSelected);
+  const max = Math.max(lastSelectedChange, currentSelected);
+  return items.value.slice(min, max + 1).map(resolveItemId);
+};
+
+const handleSelectionChange = (
+  selected: boolean,
+  id: string,
+  sortOrder: number | undefined,
+  shiftKey: boolean,
+) => {
+  if (props.selectedItems === null) {
+    return;
+  }
+
+  let newlySelectedItems =
+    props.selectedItems === SELECT_ALL_ITEMS
+    || (Array.isArray(props.selectedItems) && props.selectedItems.length === items.value.length)
+      ? getAllItemsOnPage(items.value, generateItemId)
+      : [...(props.selectedItems as string[])];
+
+  if (sortOrder !== undefined) {
+    lastSelected.value = sortOrder;
+  }
+
+  const lastSelectedFromState = lastSelected.value;
+
+  let selectedIds: string[] = [id];
+
+  if (
+    shiftKey &&
+    lastSelectedFromState != null &&
+    sortOrder !== undefined &&
+    props.resolveItemId
+  ) {
+    selectedIds = handleMultiSelectionChange(
+      lastSelectedFromState,
+      sortOrder,
+      props.resolveItemId,
+    );
+  }
+  newlySelectedItems = [...new Set([...newlySelectedItems, ...selectedIds])];
+
+  if (!selected) {
+    for (const selectedId of selectedIds) {
+      newlySelectedItems.splice(newlySelectedItems.indexOf(selectedId), 1);
+    }
+  }
+
+  if (newlySelectedItems.length === 0 && !isBreakpointsXS()) {
+    handleSelectMode(false);
+  } else if (newlySelectedItems.length > 0) {
+    handleSelectMode(true);
+  }
+
+  emits('selection-change', newlySelectedItems);
+};
+
+const onSortChange = (selected: string) => {
+  emits('sort-change', selected);
+};
+
+const handleToggleAll = () => {
+  let newlySelectedItems: string[];
+
+  if (
+    (Array.isArray(props.selectedItems) && props.selectedItems.length === items.value.length)
+    || props.selectedItems === SELECT_ALL_ITEMS
+  ) {
+    newlySelectedItems = [];
+  } else {
+    newlySelectedItems = items.value.map((item, index) => {
+      const ids = generateItemId && generateItemId(item, index);
+      return ids;
+    });
+  }
+
+  if (newlySelectedItems.length === 0 && !isBreakpointsXS()) {
+    handleSelectMode(false);
+  } else if (newlySelectedItems.length > 0) {
+    handleSelectMode(true);
+  }
+
+  let checkbox: CheckboxHandles | undefined;
+
+  if (isBreakpointsXS()) {
+    checkbox = checkableButtons.value.get('bulkSm');
+  } else if (newlySelectedItems.length === 0) {
+    checkbox = checkableButtons.value.get('plain');
+  } else {
+    checkbox = checkableButtons.value.get('bulkLg');
+  }
+
+  emits('selection-change', newlySelectedItems);
+
+  // setTimeout ensures execution after the Transition on BulkActions
+  setTimeout(() => {
+    checkbox && checkbox.focus();
+  }, 0);
+};
+
+onMounted(() => {
+  if (props.loading) {
+    setLoadingPosition();
+  }
+});
+
+watch(
+  () => props.loading,
+  (newLoading) => {
+    if (newLoading) {
+      setLoadingPosition();
+    }
+  },
+);
+
+watch(
+  () => [props.selectedItems, selectMode.value],
+  ([newSelectedItems, newSelectMode], [oldSelectedItems]) => {
+    if (newSelectedItems !== oldSelectedItems) {
+      if (newSelectedItems && (newSelectedItems as string[]).length > 0 && !newSelectMode) {
+        selectMode.value = true;
+      }
+      if ((!newSelectedItems || (newSelectedItems as string[]).length === 0) && !isBreakpointsXS()) {
+        selectMode.value = false;
+      }
+    }
+  },
+);
+
+watch(
+  () => items.value.length,
+  () => {
+    computeTableDimensions();
+  },
+);
+
+provide<ResourceListContextType>('resource-list-context', {
+  selectable: isSelectable.value,
+  selectedItems: props.selectedItems,
+  selectMode: selectMode.value,
+  resourceName: props.resourceName,
+  loading: props.loading,
+  hasBulkActions: Boolean(props.bulkActions),
+  onSelectionChange: handleSelectionChange,
+});
 </script>
