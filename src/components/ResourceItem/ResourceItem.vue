@@ -197,7 +197,7 @@ const {
   loading,
   resourceName,
   onSelectionChange,
-} = inject('ResourceListContext', {}) as ResourceListContextType;
+} = inject('resource-list-context', {}) as ResourceListContextType;
 
 const actionsMenuVisible = ref(false);
 const focused = ref(false);
