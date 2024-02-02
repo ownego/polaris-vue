@@ -4,7 +4,7 @@ BlockStack(:gap="400", inlineAlign="center")
     width="100%",
     :padding="0",
     :paddingInlineStart="{sm: '600'}",
-    :paddingInlineEnd="{sm: '600'}"
+    :paddingInlineEnd="{sm: '600'}",
     :maxWidth="maxWidth",
     :aria-label="i18n.translate('Polaris.SkeletonPage.loadingLabel')",
     role="status",
