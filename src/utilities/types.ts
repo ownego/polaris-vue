@@ -273,15 +273,15 @@ export interface CheckboxHandles {
 }
 
 export interface ResourceListContextType {
-  selectMode?: boolean;
-  selectable?: boolean;
-  selectedItems?: ResourceListSelectedItems;
+  selectMode?: Ref<boolean>;
+  selectable?: ComputedRef<boolean>;
+  selectedItems?: ComputedRef<ResourceListSelectedItems>;
   resourceName?: {
     singular: string;
     plural: string;
   };
-  loading?: boolean;
   hasBulkActions?: boolean;
+  loading?: boolean;
   onSelectionChange?(
     selected: boolean,
     id: string,

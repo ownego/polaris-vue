@@ -55,11 +55,12 @@ li(:class="listItemClassName", :dataHref="dataHref")
                 @click="stopPropagation",
                 @change="handleLargerSelectionArea",
               )
+                p 1: {{ selected }}
                 Checkbox(
+                  :selected="selected",
+                  labelHidden,
                   :id="String(checkboxId)",
                   :label="checkboxAccessibilityLabel",
-                  labelHidden,
-                  :checked="selected",
                   :disabled="loading",
                 )
               div(v-if="hasSlot(slots.media)")
@@ -202,7 +203,7 @@ const {
 const actionsMenuVisible = ref(false);
 const focused = ref(false);
 const focusedInner = ref(false);
-const selected = ref(isSelected(props.id, selectedItems));
+const selected = ref(isSelected(props.id, selectedItems?.value));
 
 const checkboxId = useId();
 const overlayId = useId();
@@ -247,8 +248,9 @@ const ariaLabel = computed(() => {
 });
 
 watch(
-  () => selectedItems,
+  () => selectedItems?.value,
   (newVal, oldVal) => {
+    console.log(1, selectedItems);
     if (newVal !== oldVal) {
       selected.value = isSelected(props.id, newVal);
     }

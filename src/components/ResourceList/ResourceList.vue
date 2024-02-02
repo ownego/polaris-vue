@@ -754,10 +754,14 @@ watch(
   },
 );
 
+const selected = computed<ResourceListSelectedItems>(() => {
+  return Object.keys(props.selectedItems || {}).map(key => props.selectedItems?.key);
+});
+
 provide<ResourceListContextType>('resource-list-context', {
-  selectable: isSelectable.value,
-  selectedItems: props.selectedItems,
-  selectMode: selectMode.value,
+  selectable: isSelectable,
+  selectedItems: selected,
+  selectMode: selectMode,
   resourceName: props.resourceName,
   loading: props.loading,
   hasBulkActions: Boolean(props.bulkActions),

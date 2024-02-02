@@ -9,9 +9,9 @@ examples:
   # - fileName: resource-list-with-empty-state.tsx
   #   title: With empty state
   #   description: Use to explain the purpose of a list of resources when no resources exist yet. This allows a smooth transition from a list in a loading state to a list where zero, one, or many resources exist.
-  # - fileName: resource-list-with-selection-and-no-bulk-actions.tsx
-  #   title: With selection and no bulk actions
-  #   description: A resource list with simple items and selection.
+  - fileName: WithSectionsAndNoBulkActions.vue
+    title: With selection and no bulk actions
+    description: A resource list with simple items and selection.
   # - fileName: resource-list-with-bulk-actions.tsx
   #   title: With bulk actions
   #   description: Allows merchants to select items and perform an action on the selection.

@@ -29,7 +29,7 @@ const slots = defineSlots<{
 }>();
 
 
-const stickyManager = inject<StickyManager>('stickyManagerContext', {} as StickyManager);
+const stickyManager = inject<StickyManager>('sticky-manager-context', {} as StickyManager);
 
 const isSticky = ref(false);
 const style = ref({});
