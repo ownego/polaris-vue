@@ -163,7 +163,6 @@ function getEventMeta(filePath: string): ComponentEventMeta[] {
     const defMatches = fileContent.match(eventRegex);
 
     definition = defMatches ? defMatches[2] : '';
-
   }
 
   // Remove start & end brackets
@@ -187,7 +186,7 @@ function getEventMeta(filePath: string): ComponentEventMeta[] {
     }
 
     // Detect event name & type
-    const eventRegex = /['"]?(\w+)['"]?\s*\:\s*(.*?)[;,]*$/s;
+    const eventRegex = /['"]?([\w-]+)['"]?\s*\:\s*(.*?)[;,]*$/s;
     const eventMatches = lines[i].match(eventRegex);
 
     const name = eventMatches ? eventMatches[1] : '';

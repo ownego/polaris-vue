@@ -1,4 +1,5 @@
 import type { Component } from 'vue';
+import type { ComputedRef, Ref } from 'vue';
 
 export type Target = '_blank' | '_self' | '_parent' | '_top';
 
@@ -220,10 +221,10 @@ export interface ActionListItemDescriptor
     tone: 'new';
     content: string;
   };
-    /** Prefix source */
-  prefixId?: string;
+  /** Prefix source */
+  prefix?: VueNode;
   /** Suffix source */
-  suffixId?: string;
+  suffix?: VueNode;
   /** Additional hint text to display with item */
   helpText?: string;
   /** @deprecated Source of the icon */
@@ -292,3 +293,61 @@ export interface ResourceListContextType {
 export type ResourceListSelectedItems = string[] | 'All';
 export type CheckableButtonKey = 'plain' | 'bulkSm' | 'bulkLg';
 export type CheckableButtons = Map<CheckableButtonKey, CheckboxHandles>;
+export interface OptionDescriptor {
+  /** Value of the option */
+  value: string;
+  /** Whether the option is disabled or not */
+  disabled?: boolean;
+  /** Whether the option is active or not */
+  active?: boolean;
+  /** Unique identifier for the option */
+  id?: string;
+  /** Display label for the option */
+  label: string,
+}
+
+export interface SectionDescriptor {
+  /** Collection of options within the section */
+  options: OptionDescriptor[];
+  /** Section title */
+  title?: string;
+}
+
+export type Descriptor = SectionDescriptor | OptionDescriptor;
+export interface NavigableOption {
+  domId: string;
+  value: string;
+  element: HTMLElement;
+  disabled: boolean;
+  isAction?: boolean;
+  index?: number;
+}
+
+export interface ListboxContextType {
+  onOptionSelect(option: NavigableOption): void;
+  setLoading(label?: string): void;
+}
+
+export interface ComboboxListboxOptionType {
+  // Whether the option should visually support multiple selection
+  allowMultiple?: boolean;
+}
+
+export interface ComboboxListboxType {
+  // Value of the Texfields ID for listbox aria-labelledby
+  textFieldLabelId?: Ref<string>;
+  // Enables/disables keyboard control
+  textFieldFocused?: Ref<boolean>;
+  // Unique ID to set on the listbox. Used to set the Combobox aria-owns and TextField aria-controls attributes.
+  listboxId?: Ref<string>;
+  // Whether or not more options are available to lazy load. Use the hasMoreResults boolean provided by the GraphQL API of the paginated data. */
+  willLoadMoreOptions?: ComputedRef<boolean | undefined>;
+  // Sets the value for the TextField aria-activedescendant attribute.
+  setActiveOptionId?(id: string): void;
+  // Callback to set a generated listbox ID.
+  setListboxId?(id: string): void;
+  // Callback fired when an option is selected.
+  onOptionSelected?(): void;
+  // Callback fired when keyboard user navigates to the last item. Use to lazy load when listbox option data is paginated.
+  onKeyToBottom?(): void;
+}

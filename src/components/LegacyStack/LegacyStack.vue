@@ -5,7 +5,7 @@ div(
   template(v-if="isChildContentWrappedByItem")
     slot
   template(
-    v-else-if="hasSlot(slots.default)",
+    v-if="hasSlot(slots.default)",
     v-for="item in slotsElms",
   )
     LegacyStackItem
@@ -60,8 +60,6 @@ const slots = defineSlots<{
 
 const { hasSlot } = useHasSlot();
 const { slotsElms } = useExtractFragment(slots.default);
-
-// console.log(slotsElms.value);
 
 const props = withDefaults(defineProps<LegacyStackProps>(), {
   wrap: true,
