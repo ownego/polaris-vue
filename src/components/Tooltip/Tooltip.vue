@@ -94,6 +94,7 @@ const props = withDefaults(defineProps<TooltipProps>(), {
   activatorWrapper: 'span',
   width: 'default',
   padding: 'default',
+  active: undefined,
 });
 
 const emits = defineEmits<{
