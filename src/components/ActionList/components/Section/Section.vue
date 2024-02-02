@@ -9,25 +9,13 @@ Box(
 )
   SectionMarkUp(
     v-bind="SectionMarkUpProps",
-    @action-any-item="$emit('action-any-item')",
+    @action-any-item="emits('action-any-item')",
   )
-    template(#title)
-      slot(name="title")
-    template(v-for="{prefixId} in section.items" #[`prefix-${prefixId}`])
-      slot(:name="`prefix-${prefixId}`")
-    template(v-for="{suffixId} in section.items" #[`suffix-${suffixId}`])
-      slot(:name="`suffix-${suffixId}`")
 template(v-else)
   SectionMarkUp(
     v-bind="SectionMarkUpProps",
-    @action-any-item="$emit('action-any-item')",
+    @action-any-item="emits('action-any-item')",
   )
-    template(#title)
-      slot(name="title")
-    template(v-for="{prefixId} in section.items" #[`prefix-${prefixId}`])
-      slot(:name="`prefix-${prefixId}`")
-    template(v-for="{suffixId} in section.items" #[`suffix-${suffixId}`])
-      slot(:name="`suffix-${suffixId}`")
 </template>
 
 <script setup lang="ts">
@@ -48,7 +36,7 @@ interface SectionProps {
 }
 
 const props = defineProps<SectionProps>();
-const emit = defineEmits<{
+const emits = defineEmits<{
   /** Callback when any item is clicked or keypressed */
   'action-any-item': [];
 }>();
