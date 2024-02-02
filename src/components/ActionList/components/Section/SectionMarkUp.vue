@@ -1,6 +1,6 @@
 <template lang="pug">
 //- TittleMarkup
-template(v-if="slots.title || section.title")
+template(v-if="section.title")
   Box(
     v-if="section.title",
     paddingBlockStart="300"
@@ -12,12 +12,6 @@ template(v-if="slots.title || section.title")
       as="p",
       variant="headingSm"
     ) {{ section.title }}
-  Box(
-    v-else,
-    padding="200",
-    paddingInlineEnd="150",
-  )
-    slot(name="title")
 //- End TittleMarkup
 Box(
   as="div",
@@ -44,14 +38,10 @@ Box(
           :role="actionRole",
           @action="handleAction(onAction)",
         )
-          template(v-if="item.prefixId", #prefix)
-            slot(:name="`prefix-${item.prefixId}`")
-          template(v-if="item.suffixId", #suffix)
-            slot(:name="`suffix-${item.suffixId}`")
 </template>
 
 <script setup lang="ts">
-import { computed, useSlots } from 'vue';
+import { computed } from 'vue';
 import {
   Box,
   Text,
@@ -75,8 +65,7 @@ interface Props {
 }
 
 const props = defineProps<Props>();
-const slots = useSlots();
-const emit = defineEmits<{
+const emits = defineEmits<{
   'action-any-item': [];
 }>();
 
@@ -86,7 +75,7 @@ const handleAction = (itemOnAction: ActionListItemDescriptor['onAction']) => {
       itemOnAction();
     }
 
-    emit('action-any-item');
+    emits('action-any-item');
   };
 };
 
