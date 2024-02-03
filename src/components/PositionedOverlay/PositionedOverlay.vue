@@ -1,5 +1,6 @@
 <template lang="pug">
 div(
+  ref="overlay",
   :class="className",
   :style="style",
 )
@@ -7,10 +8,14 @@ div(
     event="resize",
     :handler="handleMeasurement",
   )
+<<<<<<< Updated upstream
   // Some how we have to use a div here instead of a wrapper div above but it work just fine
   // It's just add a div wrap the content of slot so it's not a big deal (i think so)
   div(ref="overlay")
     slot
+=======
+  slot
+>>>>>>> Stashed changes
 </template>
 
 <script setup lang="ts">
@@ -154,7 +159,11 @@ const overlayDetails = computed<OverlayDetails>(() => {
     measuring: state.measuring,
     left: state.left,
     right: state.right,
+<<<<<<< Updated upstream
     desiredHeight: state.height, 
+=======
+    desiredHeight: state.height,
+>>>>>>> Stashed changes
     positioning: state.positioning,
     activatorRect: state.activatorRect,
     chevronOffset: state.chevronOffset,
@@ -280,7 +289,16 @@ function handleMeasurement() {
       topBarOffset = topBarElement.clientHeight;
     }
 
-    const overlayMargins = overlay.value.firstElementChild && overlay.value.firstChild instanceof HTMLElement
+    /**
+     * Original version of below code was overlay.value.firstElementChild && overlay.value.firstChild instanceof HTMLElement
+     * overlay.value.firstChild will be true if there is a text node inside overlay.value
+     * -> this case seem like will never happen
+     * -> remove overlay.value.firstChild instanceof HTMLElement and use overlay.value.firstElementChild only
+     * 
+     * Note:
+     * - With original version if overlay.value.firstElementChild is available and overlay.value.firstChild is not then there will be small padding below popover
+     */
+    const overlayMargins = overlay.value.firstElementChild
       ? getMarginsForNode(overlay.value.firstElementChild as HTMLElement)
       : { activator: 0, container: 0, horizontal: 0 };
 
