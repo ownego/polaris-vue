@@ -45,6 +45,9 @@ import {
 import type { PreferredPosition, PreferredAlignment } from './utilities/math';
 import type { VueNode } from '@/utilities/types';
 
+// The unknown gap unexpected when the overlay render has the white space at the bottom.
+const DESIRE_HEIGHT_GAP_UNEXPECTED = 21;
+
 type Positioning = 'above' | 'below';
 
 export interface OverlayDetails {
@@ -228,7 +231,7 @@ function handleMeasurement() {
   const { lockPosition, top } = state;
 
   observer.value.disconnect();
-  
+
   // Set state
   state.height = 0;
   state.positioning = 'below';
