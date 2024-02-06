@@ -752,13 +752,6 @@ watch(
 );
 
 watch(
-  () => selectAllSelectState.value,
-  () => {
-    console.log(1, selectAllSelectState.value, typeof selectAllSelectState.value);
-  }
-)
-
-watch(
   () => items.value.length,
   () => {
     computeTableDimensions();

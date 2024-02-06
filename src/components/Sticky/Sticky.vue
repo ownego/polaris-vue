@@ -29,7 +29,7 @@ const slots = defineSlots<{
 }>();
 
 
-const stickyManager = inject<StickyManager>('sticky-manager-context', {} as StickyManager);
+const stickyManager = inject<StickyManager>('sticky-manager', {} as StickyManager);
 
 const isSticky = ref(false);
 const style = ref({});
@@ -41,7 +41,7 @@ onMounted(() => {
     return;
   }
 
-  stickyManager?.registerStickyItem({
+  stickyManager.registerStickyItem({
     stickyNode: stickyNode.value,
     placeHolderNode: placeHolderNode.value,
     handlePositioning: handlePositioning,
@@ -55,6 +55,7 @@ onBeforeUnmount(() => {
   if (!stickyNode.value) {
     return;
   }
+
   stickyManager.unregisterStickyItem(stickyNode.value);
 });
 
