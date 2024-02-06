@@ -50,6 +50,7 @@ export * from './Select';
 export * from './ShadowBevel';
 export * from './SkeletonBodyText';
 export * from './SkeletonDisplayText';
+export * from './SkeletonPage';
 export * from './SkeletonTabs';
 export * from './SkeletonThumbnail';
 export * from './Spinner';
