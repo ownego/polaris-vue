@@ -1,13 +1,14 @@
 <template lang="pug">
-div(:class="className", @click="$emit('toggle-all')")
+div(:class="className", @click="emits('toggle-all')")
   div(:class="styles.Checkbox")
     Checkbox(
-      v-model="selectedValue",
+      v-model="isChecked",
       ref="checkBoxRef",
       labelHidden,
+      :checked="selected",
       :label="accessibilityLabel",
       :disabled="disabled",
-      @change="$emit('toggle-all')",
+      @change="emits('toggle-all')",
     )
   span(:class="styles.Label") {{ label }}
 </template>
@@ -39,11 +40,15 @@ const props = withDefaults(defineProps<CheckableButtonProps>(), {
 const emits = defineEmits<{
   'toggle-all': [];
 }>();
+const model = defineModel<boolean | string>();
 
 const checkBoxRef = ref<CheckboxHandles | null>(null);
 
 const className = computed(() => classNames(styles.CheckableButton));
-const selectedValue = computed(() => props.selected ?? false);
+
+const isIndeterminate = computed(() => props.selected === 'indeterminate');
+
+const isChecked = computed(() => Boolean(!isIndeterminate.value && model.value));
 
 function focus() {
   checkBoxRef.value?.focus();

@@ -1,12 +1,12 @@
 <template>
 <LegacyCard>
   <ResourceList
+    selectable
     :resourceName="{singular: 'blog post', plural: 'blog posts'}"
     :items="items"
     :selectedItems="selectedItems"
     @selection-change="onSelectionChange"
-    selectable
-  >
+    >
     <ResourceItem
       v-for="item in items"
       :id="`${item.id}`"

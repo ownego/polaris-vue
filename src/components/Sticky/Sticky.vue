@@ -41,7 +41,7 @@ onMounted(() => {
     return;
   }
 
-  stickyManager.registerStickyItem({
+  stickyManager?.registerStickyItem({
     stickyNode: stickyNode.value,
     placeHolderNode: placeHolderNode.value,
     handlePositioning: handlePositioning,

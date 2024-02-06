@@ -10,6 +10,7 @@ transition(
   div(:class="wrapperClassName")
     CheckableButton(
       v-bind="props",
+      v-model="selectedValue",
       :aria-live="ariaLive",
       :label=" hasTextAndAction ? paginatedSelectAllText : label",
       @toggle-all="emits('toggle-all')",
@@ -61,6 +62,11 @@ const emits = defineEmits<{
   /** Callback when the select all checkbox is clicked */
   'toggle-all': [];
 }>();
+const model = defineModel<boolean | string>();
+
+const isIndeterminate = computed(() => props.selected === 'indeterminate');
+
+const selectedValue = computed(() => Boolean(!isIndeterminate.value && model.value));
 
 const hasTextAndAction = computed(() => props.paginatedSelectAllText && props.paginatedSelectAllAction);
 const ariaLive = computed<AriaLive>(() => (hasTextAndAction.value ? 'polite' : undefined));

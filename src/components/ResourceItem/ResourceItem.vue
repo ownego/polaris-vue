@@ -55,11 +55,9 @@ li(:class="listItemClassName", :dataHref="dataHref")
                 @click="stopPropagation",
                 @change="handleLargerSelectionArea",
               )
-                p 1: {{ selected }}
                 Checkbox(
-                  :selected="selected",
+                  v-model="selected",
                   labelHidden,
-                  :id="String(checkboxId)",
                   :label="checkboxAccessibilityLabel",
                   :disabled="loading",
                 )
@@ -205,7 +203,6 @@ const focused = ref(false);
 const focusedInner = ref(false);
 const selected = ref(isSelected(props.id, selectedItems?.value));
 
-const checkboxId = useId();
 const overlayId = useId();
 const node = ref<HTMLDivElement | null>(null);
 const buttonOverlay = ref<HTMLButtonElement | null>(null);
@@ -250,7 +247,6 @@ const ariaLabel = computed(() => {
 watch(
   () => selectedItems?.value,
   (newVal, oldVal) => {
-    console.log(1, selectedItems);
     if (newVal !== oldVal) {
       selected.value = isSelected(props.id, newVal);
     }
@@ -310,7 +306,7 @@ const handleSelection = (value: boolean, shiftKey: boolean) => {
   focused.value = value;
   focusedInner.value = value;
 
-  onSelectionChange(value, id, sortOrder, shiftKey);
+  onSelectionChange(!value, id, sortOrder, shiftKey);
 };
 
 const handleClick = (event: MouseEvent) => {

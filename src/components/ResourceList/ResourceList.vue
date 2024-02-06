@@ -28,7 +28,9 @@ div(
               :accessibilityLabel="bulkActionsAccessibilityLabel",
               :label="headerTitle",
               :disabled="loading",
+              :selected="selectAllSelectState",
               @toggle-all="handleToggleAll",
+              ref="checkableButtonRef",
             )
           div(
             v-if="hasSlot(slots.alternateTool) && !showSortingSelect",
@@ -54,10 +56,11 @@ div(
             ) {{ i18n.translate('Polaris.ResourceList.selectButtonText') }}
         div(v-if="isSelectable", :class="styles.SelectAllActionsWrapper")
           SelectAllActions(
+            v-model="selectAllSelectState",
             ref="checkableButtonRef"
             :label="bulkActionsLabel",
-            :accessibilityLabel="bulkActionsAccessibilityLabel",
             :selected="selectAllSelectState",
+            :accessibilityLabel="bulkActionsAccessibilityLabel",
             :selectMode="selectMode",
             :paginatedSelectAllAction="paginatedSelectAllAction",
             :paginatedSelectAllText="paginatedSelectAllText",
@@ -177,6 +180,10 @@ function defaultIdForItem<TItemType extends ResourceListItemData>(
   item: TItemType,
   index: number,
 ): string {
+  if (item.props.id) {
+    return item.props.id;
+  }
+
   return Object.prototype.hasOwnProperty.call(item, 'id')
     ? item.id
     : index.toString();
@@ -303,7 +310,6 @@ const items = computed(() => {
 
   return tmpItems;
 });
-console.log('items', items.value);
 const sortValueSelect = computed(() => {
   return props.sortValue || '';
 });
@@ -363,7 +369,7 @@ const spinnerSize = computed(() => items.value.length < 2 ? 'small' : 'large');
 
 const resourceListWrapperClassName = computed(() => classNames(
   styles.ResourceListWrapper,
-  showBulkActions.value && selectMode.value
+  Boolean(showBulkActions.value) && selectMode.value
     && props.bulkActions && styles.ResourceListWrapperWithBulkActions,
 ));
 
@@ -466,7 +472,7 @@ const handleStickyChange = (value: boolean) => {
   isSticky.value = value;
 };
 
-const selectAllSelectState = (): boolean | 'indeterminate' => {
+const selectAllSelectState = computed<boolean | 'indeterminate'>(() => {
   const { selectedItems, items } = props;
   let selectState: boolean | 'indeterminate' = 'indeterminate';
   if (
@@ -482,7 +488,7 @@ const selectAllSelectState = (): boolean | 'indeterminate' => {
   }
 
   return selectState;
-};
+});
 
 const paginatedSelectAllText = computed(() => {
   if (!isSelectable.value || !props.hasMoreItems) {
@@ -634,7 +640,6 @@ const handleSelectionChange = (
 
   let newlySelectedItems =
     props.selectedItems === SELECT_ALL_ITEMS
-    || (Array.isArray(props.selectedItems) && props.selectedItems.length === items.value.length)
       ? getAllItemsOnPage(items.value, generateItemId)
       : [...(props.selectedItems as string[])];
 
@@ -689,8 +694,7 @@ const handleToggleAll = () => {
     newlySelectedItems = [];
   } else {
     newlySelectedItems = items.value.map((item, index) => {
-      const ids = generateItemId && generateItemId(item, index);
-      return ids;
+      return generateItemId(item, index);
     });
   }
 
@@ -748,14 +752,21 @@ watch(
 );
 
 watch(
+  () => selectAllSelectState.value,
+  () => {
+    console.log(1, selectAllSelectState.value, typeof selectAllSelectState.value);
+  }
+)
+
+watch(
   () => items.value.length,
   () => {
     computeTableDimensions();
   },
 );
 
-const selected = computed<ResourceListSelectedItems>(() => {
-  return Object.keys(props.selectedItems || {}).map(key => props.selectedItems?.key);
+const selected = computed(() => {
+  return props.selectedItems || [];
 });
 
 provide<ResourceListContextType>('resource-list-context', {
