@@ -204,6 +204,30 @@ export interface ComplexAction
     LoadableAction,
     PlainAction {}
 
+export interface LinkAction {
+  /** A unique identifier for the action */
+  id?: string;
+  /** Content the action displays */
+  content?: string;
+  /** Visually hidden text for screen readers */
+  accessibilityLabel?: string;
+  /** A destination to link to */
+  url: string;
+}
+
+export interface BaseCallbackAction {
+  /** A unique identifier for the action */
+  id?: string;
+  /** Content the action displays */
+  content?: string;
+  /** Visually hidden text for screen readers */
+  accessibilityLabel?: string;
+  /** Callback when an action takes place */
+  onAction(): void;
+}
+
+export interface CallbackAction extends BaseCallbackAction {}
+
 export interface ActionListItemDescriptor
   extends DisableableAction,
     DestructableAction {
