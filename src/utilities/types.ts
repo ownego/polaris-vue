@@ -204,6 +204,65 @@ export interface ComplexAction
     LoadableAction,
     PlainAction {}
 
+export interface ActionListItemDescriptor
+  extends DisableableAction,
+    DestructableAction {
+  /** Visually hidden text for screen readers */
+  accessibilityLabel?: string;
+  /** @deprecated Badge component */
+  badge?: {
+    tone: 'new';
+    content: string;
+  };
+  /** Prefix source */
+  prefix?: VueNode;
+  /** Suffix source */
+  suffix?: VueNode;
+  /** Additional hint text to display with item */
+  helpText?: string;
+  /** @deprecated Source of the icon */
+  icon?: IconSource;
+  /** @deprecated Image source */
+  image?: string;
+  /** @deprecated Add an ellipsis suffix to action content. ellipsis appends `...` without truncating. Use truncate instead. */
+  ellipsis?: boolean;
+  /** Truncate the action content either at the beginning or at the end */
+  truncate?: boolean;
+  /** Whether the action is active or not */
+  active?: boolean;
+  /** The item variations */
+  variant?: 'default' | 'menu' | 'indented';
+  /** Defines a role for the action */
+  role?: string;
+}
+
+export interface ActionListSection {
+  /** Section title */
+  title?: string;
+  /** Collection of action items for the list */
+  items: readonly ActionListItemDescriptor[];
+}
+export interface OptionDescriptor {
+  /** Value of the option */
+  value: string;
+  /** Whether the option is disabled or not */
+  disabled?: boolean;
+  /** Whether the option is active or not */
+  active?: boolean;
+  /** Unique identifier for the option */
+  id?: string;
+  /** Display label for the option */
+  label: string,
+}
+
+export interface SectionDescriptor {
+  /** Collection of options within the section */
+  options: OptionDescriptor[];
+  /** Section title */
+  title?: string;
+}
+
+export type Descriptor = SectionDescriptor | OptionDescriptor;
 export interface NavigableOption {
   domId: string;
   value: string;
