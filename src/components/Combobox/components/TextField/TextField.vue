@@ -17,7 +17,6 @@ PolarisTextField(
   template(v-if="hasSlot(slots.label) || label", #label)
     slot(v-if="hasSlot(slots.label)", name="label")
     template(v-else) {{ label }}
-    p {{ model }}
 
   template(v-if="hasSlot(slots.helpText) || helpText", #helpText)
     slot(v-if="hasSlot(slots.helpText)", name="helpText")
