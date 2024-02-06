@@ -240,7 +240,7 @@ export interface ActionListSection {
   /** Section title */
   title?: string;
   /** Collection of action items for the list */
-  items: readonly ActionListItemDescriptor[];
+  items: ActionListItemDescriptor[];
 }
 export interface OptionDescriptor {
   /** Value of the option */
@@ -284,13 +284,13 @@ export interface ComboboxListboxOptionType {
 
 export interface ComboboxListboxType {
   // Value of the Texfields ID for listbox aria-labelledby
-  textFieldLabelId?: Ref<string>;
+  textFieldLabelId?: Ref<string | undefined>;
   // Enables/disables keyboard control
   textFieldFocused?: Ref<boolean>;
   // Unique ID to set on the listbox. Used to set the Combobox aria-owns and TextField aria-controls attributes.
-  listboxId?: Ref<string>;
+  listboxId?: Ref<string | undefined>;
   // Whether or not more options are available to lazy load. Use the hasMoreResults boolean provided by the GraphQL API of the paginated data. */
-  willLoadMoreOptions?: ComputedRef<boolean | undefined>;
+  willLoadMoreOptions?: ComputedRef<boolean>;
   // Sets the value for the TextField aria-activedescendant attribute.
   setActiveOptionId?(id: string): void;
   // Callback to set a generated listbox ID.

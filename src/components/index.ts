@@ -14,6 +14,7 @@ export * from './ChoiceList';
 export * from './Collapsible';
 export * from './Collapsible';
 export * from './ColorPicker';
+export * from './Combobox';
 export * from './DatePicker';
 export * from './DescriptionList';
 export * from './Divider';

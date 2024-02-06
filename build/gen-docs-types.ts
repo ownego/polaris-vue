@@ -28,6 +28,9 @@ function getTypes(filePaths: string[]): void {
         const regex = /.*\/components\/(.*?)\/.*\.ts/;
         const componentName = s.fileName.match(regex)?.[1];
 
+        console.log(componentName);
+        console.log(s.fileName);
+
         if (ast && ast.name !== `${componentName}Props`) {
           fs.writeFileSync(
             path.join(typePath, `${ast.name}.json`),

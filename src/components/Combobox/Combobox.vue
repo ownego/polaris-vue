@@ -24,16 +24,20 @@ Popover(
 <script setup lang="ts">
 import { type VNode, ref, computed, provide } from 'vue';
 import { Popover, type PopoverProps } from '@/components';
-import type { VueNode } from '@/utilities/types';
+import type { VueNode, ComboboxListboxType } from '@/utilities/types';
+import type { ComboboxListboxOptionType } from '@/use/useListbox';
 import { useHasSlot } from '@/use/useHasSlot';
 
 import styles from '@polaris/components/Combobox/Combobox.module.scss';
-import type { ComboboxListboxOptionType, ComboboxListboxType, ComboboxTextFieldType } from './context';
+import type { ComboboxTextFieldType } from './context';
 
 export type ComboboxProps = {
   /** Allows more than one option to be selected */
   allowMultiple?: boolean;
-  /** The preferred direction to open the popover */
+  /**
+   * The preferred direction to open the popover
+   * @default 'below'
+  */
   preferredPosition?: PopoverProps['preferredPosition'];
   /** Whether or not more options are available to lazy load when the bottom of the listbox reached. Use the hasMoreResults boolean provided by the GraphQL API of the paginated data. */
   willLoadMoreOptions?: boolean;
@@ -71,6 +75,7 @@ const listboxId = ref<string>();
 const textFieldFocused = ref(false);
 
 const shouldOpen = computed(() => Boolean(!popoverActive.value && hasSlot(slots.default)));
+const isWillLoadMoreOptions = computed(() => Boolean(props.willLoadMoreOptions));
 
 const setTextFieldFocused = (focused: boolean) => {
   textFieldFocused.value = focused;
@@ -88,8 +93,6 @@ const setListboxId = (id: string) => {
   listboxId.value = id;
 };
 
-
-
 const handleClose = () => {
   popoverActive.value = false;
   emits('close');
@@ -105,7 +108,6 @@ const handleOpen = () => {
 const onOptionSelected = () => {
   if (!props.allowMultiple) {
     handleClose();
-    activeOptionId.value = undefined;
     return;
   }
 
@@ -134,7 +136,7 @@ const onScrolledToBottom = () => {
   emits('scrolled-to-bottom');
 };
 
-provide<ComboboxTextFieldType>('ComboboxTextFieldContext', {
+provide<ComboboxTextFieldType>('combobox-textfield', {
   activeOptionId,
   listboxId,
   expanded: popoverActive,
@@ -145,18 +147,18 @@ provide<ComboboxTextFieldType>('ComboboxTextFieldContext', {
   onTextFieldBlur: handleBlur,
 });
 
-provide<ComboboxListboxType>('ComboboxListboxContext', {
+provide<ComboboxListboxType>('combobox-listbox', {
   listboxId,
   textFieldLabelId,
   textFieldFocused,
-  willLoadMoreOptions: props.willLoadMoreOptions,
+  willLoadMoreOptions: isWillLoadMoreOptions,
   onOptionSelected,
   setActiveOptionId,
   setListboxId,
   onKeyToBottom: onScrolledToBottom,
 });
 
-provide<ComboboxListboxOptionType>('ComboboxListboxOptionContext', {
+provide<ComboboxListboxOptionType>('combobox-listbox-option', {
   allowMultiple: props.allowMultiple,
 });
 </script>

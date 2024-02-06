@@ -31,10 +31,10 @@
         autoSelection="FIRST_SELECTED"
         :customListId="listboxId"
         @select="handleSegmentSelect"
-        @on-active-option-change="handleActiveOptionChange"
+        @active-option-change="handleActiveOptionChange"
       >
         <template v-if="segmentOptions.length > 0">
-          <template v-for="{label, id, value} in segmentList" :key="id">
+          <template v-for="{ label, value } in segmentList" :key="value">
             <ListboxOption :value="value" :selected="segments[selectedSegmentIndex].value === value">
               <ListboxTextOption :selected="segments[selectedSegmentIndex].value === value">
                 {{ label }}
@@ -63,7 +63,7 @@
 </template>
 
 <script setup lang="ts">
-import { ref, computed } from 'vue';
+import { ref, computed, type CSSProperties } from 'vue';
 import SearchIcon from '@icons/SearchIcon.svg';
 
 const actionValue = '__ACTION__';
@@ -144,7 +144,7 @@ const cardStyle = {
   width: '100%',
   height: '100%',
   overflow: 'hidden',
-};
+} as CSSProperties;
 
 const scrollableStyle = {
   position: 'relative',
@@ -192,13 +192,13 @@ const handleFilterSegments = (query: string) => {
   filteredSegments.value = nextFilteredSegments;
 };
 
-const handleQueryChange = (e: Event, value: string) => {
+const handleQueryChange = (_e: Event, value: string) => {
   query.value = value;
 
   if (query.value.length >= 2) handleFilterSegments(query.value);
 };
 
-const handleQueryClear = (e) => {
+const handleQueryClear = (e: Event) => {
   handleQueryChange(e, '');
 };
 

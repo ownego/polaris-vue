@@ -1,7 +1,7 @@
 <template>
-  <Icon :source="CirclePlusIcon"></Icon>
+  <Icon :source="PlusCircleIcon"></Icon>
 </template>
 
 <script setup lang="ts">
-import CirclePlusIcon from '@icons/CirclePlusIcon.svg';
+import PlusCircleIcon from '@icons/PlusCircleIcon.svg';
 </script>
