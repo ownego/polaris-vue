@@ -34,7 +34,7 @@
         @on-active-option-change="handleActiveOptionChange"
       >
         <template v-if="segmentOptions.length > 0">
-          <template v-for="{label, value} in segmentList">
+          <template v-for="{label, value} in segmentList" :key="value">
             <ListboxOption :value="value" :selected="segments[selectedSegmentIndex].value === value">
               <ListboxTextOption :selected="segments[selectedSegmentIndex].value === value">
                 {{ label }}
@@ -63,7 +63,7 @@
 </template>
 
 <script setup lang="ts">
-import { ref, computed, StyleValue } from 'vue';
+import { ref, computed, CSSProperties } from 'vue';
 import SearchIcon from '@icons/SearchIcon.svg';
 
 const actionValue = '__ACTION__';
@@ -134,7 +134,7 @@ const segments = [
 
 const listboxId = 'SearchableListbox';
 
-const cardStyle: StyleValue = {
+const cardStyle: CSSProperties = {
   alignItems: 'stretch',
   borderTop: '1px solid #DFE3E8',
   display: 'flex',
