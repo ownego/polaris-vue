@@ -63,7 +63,7 @@
 </template>
 
 <script setup lang="ts">
-import { ref, computed, CSSProperties } from 'vue';
+import { ref, computed, type CSSProperties } from 'vue';
 import SearchIcon from '@icons/SearchIcon.svg';
 
 const actionValue = '__ACTION__';
