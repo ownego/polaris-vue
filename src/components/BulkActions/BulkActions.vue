@@ -2,9 +2,8 @@
 div(
   ref="containerNode",
 )
-  Transition(
-    v-if="selectMode",
-    name="group",
+  transition(
+    name="Group",
     ref="groupNode",
     @before-enter="onTransitionEnter",
     @enter="onTransitionEntered",
@@ -12,9 +11,10 @@ div(
     @leave="onTransitionExit",
   )
     div(
+      v-if="selectMode",
       :class="groupClassName",
       ref="groupNode",
-      :style="{width: width + 'px'}",
+      :style="{ width: width + 'px' }",
     )
       EventListener(
         event="resize",
@@ -82,6 +82,7 @@ import {
   ActionList,
   Popover,
   InlineStack,
+  EventListener,
 } from '@/components';
 import { BulkActionButton, BulkActionMenu } from './components';
 import type { BulkAction, BulkActionListSection, BulkActionsProps } from './utils';
@@ -103,7 +104,7 @@ const emits = defineEmits<{
 const popoverVisible = ref<boolean>(false);
 const containerWidth = ref<number>(0);
 const measuring = ref<boolean>(true);
-const statusTransitionGroup = ref<TransitionStatus>('entering');
+const statusTransitionGroup = ref<TransitionStatus>('entered');
 
 const containerNode = ref<HTMLElement | null>(null);
 const moreActionsNode = ref<HTMLElement | null>(null);
@@ -239,7 +240,7 @@ const groupClassName = computed(() => {
   return classNames(
     styles.Group,
     !props.isSticky && styles['Group-not-sticky'],
-    !(measuring.value) && props.isSticky && styles[`Group-${statusTransitionGroup.value}`],
+    statusTransitionGroup.value && styles[`Group-${statusTransitionGroup.value}`],
     measuring.value && styles['Group-measuring'],
   );
 });
@@ -248,18 +249,22 @@ const hasActionsPopover = computed(() => actionSections.value || rolledInPromote
 const hasPromotedActions = computed(() => props.promotedActions && numberOfPromotedActionsToRender.value > 0);
 
 const onTransitionEnter = () => {
+  console.log(1344);
   statusTransitionGroup.value = 'entering';
 };
 
 const onTransitionEntered = () => {
+  console.log('enter');
   statusTransitionGroup.value = 'entered';
 };
 
 const onTransitionExiting = () => {
+    console.log('exiting');
   statusTransitionGroup.value = 'exiting';
 };
 
 const onTransitionExit = () => {
+    console.log('exited');
   statusTransitionGroup.value = 'exited';
 };
 
@@ -276,6 +281,7 @@ const handleMeasurement = (width: number) => {
 const togglePopover = () => {
   emits('more-action-popover-toggle', popoverVisible.value);
   popoverVisible.value = !popoverVisible.value;
+  console.log('togglePopover', popoverVisible.value);
 };
 
 function instanceOfBulkActionListSectionArray(

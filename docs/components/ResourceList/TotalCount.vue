@@ -3,19 +3,21 @@
   <ResourceList
     :resourceName="resourceName"
     :items="items"
-    :selectedItems="selectedItems"
-    @selection-change="setSelectedItems"
-    selectable
+    :totalItemsCount="50"
   >
-    <template v-for="item, index in items" :key="index">
-      <ResourceItem :id="item.id" :url="item.url">
+    <template v-for="{id, url, name, location}, index in items" :key="index">
+      <ResourceItem
+        :id="id"
+        :url="url"
+        :accessibilityLabel="`View details for ${name}`"
+      >
         <template #media>
-          <Avatar customer size="md" :name="item.name" />
+          <Avatar customer size="md" :name="name" />
         </template>
         <Text variant="bodyMd" fontWeight="bold" as="h3">
-          {{ item.name }}
+          {{ name }}
         </Text>
-        <div>{{ item.location }}</div>
+        <div>{{location}}</div>
       </ResourceItem>
     </template>
   </ResourceList>
@@ -23,8 +25,6 @@
 </template>
 
 <script setup lang="ts">
-import { ref } from 'vue';
-
 const resourceName = {
   singular: 'customer',
   plural: 'customers',
@@ -32,22 +32,16 @@ const resourceName = {
 
 const items = [
   {
-    id: '101',
+    id: '103',
     url: '#',
     name: 'Mae Jemison',
     location: 'Decatur, USA',
   },
   {
-    id: '201',
+    id: '203',
     url: '#',
     name: 'Ellen Ochoa',
     location: 'Los Angeles, USA',
   },
 ];
-
-const selectedItems = ref<any>([]);
-
-const setSelectedItems = (selected: any) => {
-  selectedItems.value = selected;
-};
 </script>

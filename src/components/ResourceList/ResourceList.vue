@@ -19,8 +19,9 @@ div(
       @sticky-change="handleStickyChange",
     )
       div(:class="headerClassName")
-        EventListener(event="resize", :handler="handleResize")
+        //- Header wrapper overlay
         div(v-if="loading", :class="styles['HeaderWrapper-overlay']")
+        //- Header content wrapper
         div(:class="styles.HeaderContentWrapper")
           div(:class="styles.HeaderTitleWrapper") {{ headerTitle }}
           div(v-if="isSelectable", :class="styles.CheckableButtonWrapper")
@@ -54,6 +55,7 @@ div(
               :icon="CheckboxIcon",
               @click="() => handleSelectMode(true)",
             ) {{ i18n.translate('Polaris.ResourceList.selectButtonText') }}
+        //- SelectAllActions
         div(v-if="isSelectable", :class="styles.SelectAllActionsWrapper")
           SelectAllActions(
             v-model="selectAllSelectState",
@@ -125,6 +127,7 @@ div(ref="bulkActionsIntersectionRef")
 import { type VNode , type VNodeArrayChildren, ref, computed, onMounted, watch, provide } from 'vue';
 import { themeDefault, toPx } from '@shopify/polaris-tokens';
 import { debounce } from '@polaris/utilities/debounce';
+import { useEventListener } from '@/utilities/use-event-listener';
 import { classNames } from '@/utilities/css';
 import useI18n from '@/use/useI18n';
 import { useExtractFragment } from '@/use/useExtractFragment';
@@ -132,7 +135,6 @@ import { useHasSlot } from '@/use/useHasSlot';
 import type { CheckableButtons, CheckboxHandles, VueNode, ResourceListContextType } from '@/utilities/types';
 import {
   Button,
-  EventListener,
   Sticky,
   Spinner,
   Select,
@@ -391,7 +393,6 @@ const headerClassName = computed(() => {
 const bulkActionsClassName = computed(() => classNames(
   styles.BulkActionsWrapper,
   isBulkActionsSticky.value && styles.BulkActionsWrapperSticky,
-  props.loading && styles['BulkActionsWrapper-disabled'],
 ));
 
 const headerTitle = computed(() => {
@@ -726,6 +727,8 @@ onMounted(() => {
   if (props.loading) {
     setLoadingPosition();
   }
+
+  useEventListener('resize', handleResize);
 });
 
 watch(
