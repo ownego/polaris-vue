@@ -22,10 +22,10 @@ li(
         @change="handleClick"
       )
     div(
-      v-if="slots.media",
+      v-if="media",
       :class="styles.Media",
     )
-      slot(name="media")
+      component(:is="media")
     span(:id="`${id}-label`")
       slot(name="label")
   button(
@@ -41,10 +41,10 @@ li(
   )
     InlineStack(:wrap="false", :block-align="verticalAlignToBlockAlign(verticalAlign)")
       div(
-        v-if="slots.media",
+        v-if="media",
         :class="styles.Media",
       )
-        slot(name="media")
+        component(:is="media")
       span(:id="`${id}-label`")
         slot(name="label")
     span(:class="styles.Icon")
@@ -63,9 +63,6 @@ import {
   Checkbox as PolarisCheckbox,
 } from '@/components';
 import type { InlineStackProps } from '@/components/InlineStack/types';
-import type { IconProps } from '@/components/Icon/Icon.vue';
-import type { AvatarProps } from '@/components/Avatar/utils';
-import type { ThumbnailProps } from '@/components/Thumbnail/Thumbnail.vue';
 import CheckIcon from '@icons/CheckIcon.svg';
 import styles from '@polaris/components/OptionList/components/Option/Option.module.scss';
 
@@ -76,7 +73,7 @@ export interface OptionProps {
   value: string;
   section: number;
   index: number;
-  media?: IconProps | AvatarProps | ThumbnailProps;
+  media?: VueNode;
   disabled?: boolean;
   active?: boolean;
   select?: boolean;
@@ -96,7 +93,6 @@ const props = defineProps<OptionProps>();
 const emits = defineEmits<OptionEvents>();
 const slots = defineSlots<{
   label?: (_?: VueNode) => VNode[];
-  media?: (_?: VueNode) => VNode[];
 }>();
 
 const {
