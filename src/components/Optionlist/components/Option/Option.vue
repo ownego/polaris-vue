@@ -47,7 +47,10 @@ li(
         component(:is="media")
       span(:id="`${id}-label`")
         slot(name="label")
-    span(:class="styles.Icon")
+    span(
+      v-if="select || active",
+      :class="styles.Icon",
+    )
       Icon(:source="CheckIcon")
 </template>
 
