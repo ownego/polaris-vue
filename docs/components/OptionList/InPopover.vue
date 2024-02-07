@@ -24,7 +24,7 @@
 import { ref } from 'vue';
 
 const popoverActive = ref(true);
-const selected = ref([]);
+const selected = ref<string[]>([]);
 
 const options = [
   {
@@ -42,7 +42,7 @@ const options = [
   {value: 'downtown', label: 'Downtown'},
 ];
 
-const handleSelect = (value) => {
+const handleSelect = (value: string[]) => {
   selected.value = value;
 };
 
