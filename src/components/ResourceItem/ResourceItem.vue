@@ -50,7 +50,7 @@ li(:class="listItemClassName", :dataHref="dataHref")
               :block-align="hasSlot(slots.media) || isSelectable ? 'center' : getAlignment(verticalAlignment)",
             )
               div(
-                v-if="isSelectable",
+                v-if="selectable",
                 :class="styles.CheckboxWrapper"
                 @click="stopPropagation",
                 @change="handleLargerSelectionArea",
@@ -58,8 +58,14 @@ li(:class="listItemClassName", :dataHref="dataHref")
                 Checkbox(
                   v-model="selected",
                   labelHidden,
+                  fill,
                   :label="checkboxAccessibilityLabel",
                   :disabled="loading",
+                  :label-class-name="styles.CheckboxLabel",
+                  bleed-inline-start="300",
+                  bleed-inline-end="300",
+                  bleed-block-start="300",
+                  bleed-block-end="300",
                 )
               div(v-if="hasSlot(slots.media)")
                 slot(name="media")
