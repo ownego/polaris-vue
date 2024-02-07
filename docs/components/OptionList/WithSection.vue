@@ -29,9 +29,9 @@ const sections = [
   },
 ];
 
-const selected = ref([]);
+const selected = ref<string[]>([]);
 
-const handleSelect = (value) => {
+const handleSelect = (value: string[]) => {
   selected.value = value;
 }
 </script>
