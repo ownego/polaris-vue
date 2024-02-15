@@ -6,9 +6,10 @@ examples:
   - fileName: Default.vue
     title: Default
     description: A resource list with simple items and no bulk actions, sorting, or filtering.
-  # - fileName: resource-list-with-empty-state.tsx
-  #   title: With empty state
-  #   description: Use to explain the purpose of a list of resources when no resources exist yet. This allows a smooth transition from a list in a loading state to a list where zero, one, or many resources exist.
+  - fileName: WithEmptyState.vue
+    frameHeight: 700
+    title: With empty state
+    description: Use to explain the purpose of a list of resources when no resources exist yet. This allows a smooth transition from a list in a loading state to a list where zero, one, or many resources exist.
   - fileName: WithSectionsAndNoBulkActions.vue
     title: With selection and no bulk actions
     description: A resource list with simple items and selection.
@@ -43,9 +44,9 @@ examples:
     frameHeight: 700
     title: With multiselect
     description: Allows merchants to select or deselect multiple items at once.
-  # - fileName: resource-list-with-all-of-its-elements.tsx
-  #   title: With all of its elements
-  #   description: Use as a broad example that includes most props available to resource list.
+  - fileName: WithAllElements.vue
+    title: With all of its elements
+    description: Use as a broad example that includes most props available to resource list.
   - fileName: WithPagination.vue
     title: With pagination
     description: Use when the list contains many rows and they need paginating.

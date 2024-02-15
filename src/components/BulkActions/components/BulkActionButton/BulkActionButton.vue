@@ -22,7 +22,7 @@ div(:class="styles.BulkActionButton", ref="bulkActionButton")
     :accessibility-label="isActivatorForMoreActionsPopover ? content : accessibilityLabel",
     :disabled="disabled",
     :icon="isActivatorForMoreActionsPopover ? MenuHorizontalIcon : undefined",
-    @click="emits('action')",
+    @click="handleButtonClick",
   ) {{ buttonContent }}
   Indicator(v-if="indicator")
 </template>
@@ -58,6 +58,11 @@ const isActivatorForMoreActionsPopover = computed(() => {
   return props.disclosure && !props.showContentInButton;
 });
 const buttonContent = computed(() => isActivatorForMoreActionsPopover.value ? undefined : props.content);
+
+const handleButtonClick = () => {
+  console.log('BulkActionButton clicked');
+  emits('action');
+};
 
 onMounted(() => {
   if (bulkActionButton.value) {

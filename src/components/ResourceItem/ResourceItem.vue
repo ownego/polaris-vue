@@ -123,8 +123,7 @@ li(:class="listItemClassName", :dataHref="dataHref")
                       :icon="MenuHorizontalIcon",
                       @click="handleActionsClick",
                     )
-                  template(#content)
-                    ActionList(:items="shortcutActions")
+                  ActionList(:items="shortcutActions")
 </template>
 
 <script setup lang="ts">
@@ -353,6 +352,7 @@ const handleKeyUp = (event: KeyboardEvent) => {
 
 const handleActionsClick = () => {
   actionsMenuVisible.value = !actionsMenuVisible.value;
+  console.log(123, actionsMenuVisible.value);
 };
 
 const handleCloseRequest = () => {
