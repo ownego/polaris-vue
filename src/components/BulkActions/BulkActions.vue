@@ -33,8 +33,7 @@ div(
             InlineStack(gap="300")
               template(v-if="hasPromotedActions")
                 template(
-                  v-for="action, index in promotedActions?.slice(0, numberOfPromotedActionsToRender)",
-                  :key="index",
+                  v-for="action in promotedActions?.slice(0, numberOfPromotedActionsToRender)",
                 )
                   BulkActionMenu(
                     v-if="instanceOfMenuGroupDescriptor(action)",

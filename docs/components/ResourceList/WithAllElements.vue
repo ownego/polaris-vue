@@ -22,7 +22,7 @@
         </div>
     </LegacyFilters>
     </template>
-    <template v-for="item, index in items" :key="index">
+    <template v-for="item in items" :key="item.id">
       <ResourceItem
         persistActions
         :id="item.id"
@@ -81,7 +81,6 @@ const setQueryValue = (value: any) => {
   queryValue.value = value;
 };
 
-const handleTaggedWithChange = (value: any) => setTaggedWith(value);
 const handleTaggedWithRemove = () => setTaggedWith(undefined);
 const handleQueryValueRemove = () => setQueryValue(undefined);
 

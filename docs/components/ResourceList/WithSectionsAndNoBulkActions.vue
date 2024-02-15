@@ -7,7 +7,7 @@
     @selection-change="setSelectedItems"
     selectable
   >
-    <template v-for="item, index in items" :key="index">
+    <template v-for="item in items" :key="item.id">
       <ResourceItem :id="item.id" :url="item.url">
         <template #media>
           <Avatar customer size="md" :name="item.name" />

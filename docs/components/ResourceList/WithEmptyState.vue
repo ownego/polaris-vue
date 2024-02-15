@@ -71,22 +71,4 @@ const resourceName = {
   singular: 'file',
   plural: 'files',
 };
-
-
-function disambiguateLabel(key: string, value: string): string {
-  switch (key) {
-    case 'taggedWith1':
-      return `Tagged with ${value}`;
-    default:
-      return value;
-  }
-}
-
-function isEmpty(value: string): boolean {
-  if (Array.isArray(value)) {
-    return value.length === 0;
-  } else {
-    return value === '' || value == null;
-  }
-}
 </script>

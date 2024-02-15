@@ -7,7 +7,7 @@
     :sort-options="sortOptions"
     @sort-change="onSortChange"
   >
-      <template v-for="{id, url, name, location}, index in items" :key="index">
+      <template v-for="{id, url, name, location} in items" :key="id">
         <ResourceItem
           :id="id"
           :url="url"
