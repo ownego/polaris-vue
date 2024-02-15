@@ -34,7 +34,7 @@
         @on-active-option-change="handleActiveOptionChange"
       >
         <template v-if="segmentOptions.length > 0">
-          <template v-for="{label, id, value} in segmentList" :key="id">
+          <template v-for="{label, value} in segmentList" :key="value">
             <ListboxOption :value="value" :selected="segments[selectedSegmentIndex].value === value">
               <ListboxTextOption :selected="segments[selectedSegmentIndex].value === value">
                 {{ label }}
@@ -63,7 +63,7 @@
 </template>
 
 <script setup lang="ts">
-import { ref, computed } from 'vue';
+import { ref, computed, type CSSProperties } from 'vue';
 import SearchIcon from '@icons/SearchIcon.svg';
 
 const actionValue = '__ACTION__';
@@ -134,7 +134,7 @@ const segments = [
 
 const listboxId = 'SearchableListbox';
 
-const cardStyle = {
+const cardStyle: CSSProperties = {
   alignItems: 'stretch',
   borderTop: '1px solid #DFE3E8',
   display: 'flex',
@@ -192,14 +192,14 @@ const handleFilterSegments = (query: string) => {
   filteredSegments.value = nextFilteredSegments;
 };
 
-const handleQueryChange = (e: Event, value: string) => {
+const handleQueryChange = (value: string) => {
   query.value = value;
 
   if (query.value.length >= 2) handleFilterSegments(query.value);
 };
 
-const handleQueryClear = (e) => {
-  handleQueryChange(e, '');
+const handleQueryClear = () => {
+  handleQueryChange('');
 };
 
 const handleSegmentSelect = (segmentIndex: string) => {
