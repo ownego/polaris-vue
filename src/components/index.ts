@@ -22,6 +22,7 @@ export * from './DropZone';
 export * from './EmptyState';
 export * from './EventListener';
 export * from './ExceptionList';
+export * from './Focus';
 export * from './Form';
 export * from './FormLayout';
 export * from './Grid';
