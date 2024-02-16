@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { onMounted, onUnmounted } from 'vue';
+import { onMounted, onBeforeUnmount } from 'vue';
 import useScrollLockManager from '@/use/useScrollLockManager';
 
 const scrollLockManager = useScrollLockManager();
@@ -8,7 +8,7 @@ onMounted(() => {
   scrollLockManager.registerScrollLock();
 });
 
-onUnmounted(() => {
+onBeforeUnmount(() => {
   scrollLockManager.unregisterScrollLock();
 });
 </script>
