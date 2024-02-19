@@ -51,6 +51,7 @@ export * from './RadioButton';
 export * from './RangeSlider';
 export * from './Scrollable';
 export * from './ScrollLock';
+export * from './SearchField';
 export * from './Select';
 export * from './ShadowBevel';
 export * from './SkeletonBodyText';
