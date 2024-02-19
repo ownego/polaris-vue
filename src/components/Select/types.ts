@@ -73,7 +73,7 @@ export type SelectSlots = {
 
 export type SelectEvents = {
   /** Callback when selection is changed */
-  change: [selected: string, id: string];
+  change: [selected: string, id: string | undefined];
   /** Callback when select is focused */
   focus: [event: FocusEvent];
   /** Callback when focus is removed */
