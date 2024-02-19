@@ -1,26 +1,22 @@
 ---
 layout: doc
-title: LegacyFilter
-category: Deprecated
+title: Filters
+category: Selection and input
 examples:
-  # - fileName: legacy-filters-with-a-resource-list.tsx
-  #   title: With a resource list
-  # - fileName: legacy-filters-with-a-data-table.tsx
-  #   title: With a data table
-  # - fileName: legacy-filters-with-children-content.tsx
-  #   title: With children content
-  # - fileName: legacy-filters-disabled.tsx
-  #   title: Disabled
-  # - fileName: legacy-filters-some-disabled.tsx
-  #   title: Some disabled
-  # - fileName: legacy-filters-without-clear-button.tsx
-  #   title: Without clear button
-  # - fileName: legacy-filters-with-help-text.tsx
-  #   title: With help text
-  # - fileName: legacy-filters-with-query-field-hidden.tsx
-  #   title: With query field hidden
-  # - fileName: legacy-filters-with-query-field-disabled.tsx
-  #   title: With query field disabled
+  - fileName: WithResourceList.vue
+    title: With a resource list
+  - fileName: WithDataTable.vue
+    title: With a data table
+  - fileName: WithChildrenContent.vue
+    title: With children content
+  - fileName: Disabled.vue
+    title: Disabled
+  - fileName: SomeDisabled.vue
+    title: With some disabled
+  - fileName: WithQueryFieldHidden.vue
+    title: With query field hidden
+  - fileName: WithQueryFieldDisabled.vue
+    title: With query field disabled
 ---
 
 # {{ $frontmatter.title }}
@@ -41,7 +37,17 @@ examples:
 
 <PropsTable />
 
+## Slots
+
+<SlotsTable />
+
+## Events
+
+<EventsTable />
+
 <div style="font-size: 0.8125rem">
+
+## Best practices
 
 Merchants use filters to:
 
@@ -49,7 +55,7 @@ Merchants use filters to:
 - filter by typing into a text field
 - filter by selecting filters or promoted filters
 
-The way that merchants interact with filters depends on the components that you decide to incorporate. In its simplest form, filters includes a text field and a set of filters, which can be displayed in different ways. For example, you could show promoted filters and a More button that opens a [sheet](https://polaris.shopify.com/components/deprecated/sheet) containing more filters. What the filters are and how they’re exposed to merchants is flexible.
+The way that merchants interact with filters depends on the components that you decide to incorporate. In its simplest form, filters includes a text field and a set of filters, which can be displayed in different ways. What the filters are and how they’re exposed to merchants is flexible.
 
 ---
 
@@ -57,11 +63,9 @@ The way that merchants interact with filters depends on the components that you 
 
 The filters component relies on the accessibility features of multiple other components:
 
-- [Text field](https://polaris.shopify.com/components/selection-and-input/text-field)
-- [Button](https://polaris.shopify.com/components/actions/button)
-- [Popover](https://polaris.shopify.com/components/overlays/popover)
-- [Sheet](https://polaris.shopify.com/components/deprecated/sheet)
-- [Collapsible](https://polaris.shopify.com/components/collapsible)
+- [Text field](/components/TextField)
+- [Button](/components/Button)
+- [Popover](/components/Popover)
 
 ### Maintain accessibility with custom features
 
@@ -161,5 +165,6 @@ If all tag pills selected: truncate in the middle
 - All payment status filters selected, Paid, unpa…
 
 </DoDont>
+
 
 </div>
