@@ -318,6 +318,8 @@ export interface FilterInterface {
   key: string;
   /** The label for the filter */
   label: string;
+  /** The markup for the given filter */
+  filter: VueNode;
   /** Whether or not the filter should have a shortcut popover displayed */
   shortcut?: boolean;
   /** Whether or not the filter should be pinned, permanently displaying the filter */

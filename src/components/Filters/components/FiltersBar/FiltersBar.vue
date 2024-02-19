@@ -75,8 +75,8 @@ import {
   InlineStack,
   Box,
   Button,
-  FilterPill,
 } from '@/components';
+import FilterPill from '../FilterPill/FilterPill.vue';
 import { useOnValueChange } from '@/utilities/use-on-value-change';
 import { classNames } from '@/utilities/css';
 import { useBreakpoints } from '@/utilities/breakpoints';
@@ -86,7 +86,7 @@ import type {
   FilterInterface,
 } from '@/utilities/types';
 import useI18n from '@/use/useI18n';
-import styles from '@polaris/components/Filter/Filter.module.scss';
+import styles from '@polaris/components/Filters/Filters.module.scss';
 
 interface FiltersBarProps {
   /** Currently entered text in the query field */
