@@ -9,11 +9,11 @@ Labelled(
   :read-only="readOnly",
 )
   template(v-if="hasLabel", #label)
-    slot(v-if="slots.label", name="label")
+    slot(v-if="hasSlot(slots.label)", name="label")
     template(v-else) {{ label }}
 
   template(v-if="hasHelpText", #helpText)
-    slot(v-if="slots.helpText", name="helpText")
+    slot(v-if="hasSlot(slots.helpText)", name="helpText")
     template(v-else) {{ helpText }}
 
   Connected
@@ -34,7 +34,7 @@ Labelled(
         :id="`${id}-Prefix`",
         ref="prefixRef",
       )
-        slot(v-if="slots.prefix", name="prefix")
+        slot(v-if="hasSlot(slots.prefix)", name="prefix")
         template(v-else) {{ prefix }}
 
       div(
@@ -44,7 +44,7 @@ Labelled(
         ref="verticalContentRef",
         @click="handleClickChild",
       )
-        slot(v-if="slots.verticalContent", name="verticalContent")
+        slot(v-if="hasSlot(slots.verticalContent)", name="verticalContent")
         template(v-else) {{ verticalContent }}
         component(:is="input")
 
@@ -56,7 +56,7 @@ Labelled(
         :id="`${id}-Suffix`",
         ref="suffixRef",
       )
-        slot(v-if="slots.suffix", name="suffix")
+        slot(v-if="hasSlot(slots.suffix)", name="suffix")
         template(v-else) {{ suffix }}
 
       div(
