@@ -6,13 +6,13 @@ examples:
   - fileName: Default.vue
     title: Default
     description: Use for pagination of resources.
-  - fileName: Keyboard.vue
+  - fileName: PaginationWithKeyboardNavigation.vue
     title: With keyboard navigation
     description: Attach standard keyboard shortcuts to important pagination controls.
-  - fileName: WithLabel.vue
+  - fileName: PaginationWithLabel.vue
     title: With label
     description: Add a label between navigation buttons to provide more context of the content being viewed by the user.
-  - fileName: TableType.vue
+  - fileName: PaginationWithTableType.vue
     title: With table type
     description: Use for pagination at the bottom of tables or lists.
 ---
@@ -39,6 +39,10 @@ examples:
 
 <SlotsTable />
 
+## Events
+
+<EventsTable typeFile="PaginationEmits" />
+
 <div style="font-size: 0.8125rem">
 
 ## Best practices
@@ -56,16 +60,16 @@ Web pagination should:
 iOS and Android pagination should:
 
 - Start loading items when merchants are close to the bottom, roughly 5 items from the end
-- Show [a spinner](components/Spinner) below the list to indicate that items have been requested
+- Show [a spinner](/components/Spinner) below the list to indicate that items have been requested
 
 ---
 
 ## Related components
 
 - To see how pagination is used on a page, see the [page component](/components/Page)
-- To add primary and secondary calls to action at the bottom of a page, see the [page actions component](components/PageActions)
-- The [resource list component](components/ResourceList) is often combined with pagination to handle long lists of resources such as orders or customers
-- To create stand-alone navigational links or calls to action, use the [button component](components/Button)
-- To embed actions or pathways to more information within a sentence, use the [link component](components/Link)
+- To add primary and secondary calls to action at the bottom of a page, see the [page actions component](/components/PageActions)
+- The [resource list component](/components/ResourceList) is often combined with pagination to handle long lists of resources such as orders or customers
+- To create stand-alone navigational links or calls to action, use the [button component](/components/Button)
+- To embed actions or pathways to more information within a sentence, use the [link component](/components/Link)
 
 </div>

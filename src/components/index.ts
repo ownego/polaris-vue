@@ -5,6 +5,7 @@ export * from './Badge';
 export * from './Bleed';
 export * from './BlockStack';
 export * from './Box';
+export * from './Breadcrumbs';
 export * from './BulkActions';
 export * from './Button';
 export * from './ButtonGroup';

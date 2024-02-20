@@ -1,136 +1,51 @@
 <template lang="pug">
 nav(
-  v-if="type==='page'",
-  ref="paginationRef",
-  :aria-label="navLabel",
-  :class="styles.Pagination"
-)
-  template(v-if="prevKeyCondition")
-    KeypressListener(
-      v-for="(key) in previousKeys",
-      :key="key",
-      :key-code="key",
-      :handler="callbackPrevUrl",
-    )
-  template(v-if="nextKeyCondition")
-    KeypressListener(
-      v-for="(key) in nextKeys",
-      :key="key",
-      :key-code="key",
-      :handler="callbackNextUrl",
-    )
-
-  ButtonGroup(variant="segmented")
-    Tooltip(
-      v-if="previousTooltip && hasPrevious",
-      activator-wrapper="span",
-      :content="previousTooltip",
-    )
-      Button(
-        id="previousURL",
-        outline,
-        :icon="ChevronLeftIcon",
-        :accessibilityLabel="previousLabel",
-        :url="previousURL",
-        :disabled="!hasPrevious",
-        @click="emits('previous')",
-      )
-    Button(
-      v-else,
-      id="previousURL",
-      outline,
-      :icon="ChevronLeftIcon",
-      :accessibilityLabel="previousLabel",
-      :url="previousURL",
-      :disabled="!hasPrevious",
-      @click="emits('previous')",
-    )
-    Box(
-      v-if="hasSlot(slots.default)"
-      padding="300",
-      padding-block-start="0",
-      padding-block-end="0",
-    )
-      div(aria-live="polite")
-        span(v-if="hasNext && hasPrevious")
-          slot
-        Text(
-          v-else,
-          as="span",
-          tone="subdued",
-        )
-          slot
-    Tooltip(
-      v-if="nextTooltip && hasNext",
-      activator-wrapper="span",
-      :content="nextTooltip",
-    )
-      Button(
-        id="nextURL",
-        outline,
-        :icon="ChevronRightIcon",
-        :accessibilityLabel="nextLabel",
-        :url="nextURL",
-        @click="emits('next')",
-        :disabled="!hasNext",
-      )
-    Button(
-      v-else,
-      id="nextURL",
-      outline,
-      :icon="ChevronRightIcon",
-      :accessibilityLabel="nextLabel",
-      :url="nextURL",
-      @click="emits('next')",
-      :disabled="!hasNext",
-    )
-nav(
-  v-else-if="type==='table'",
-  ref="paginationRef",
+  ref="node",
+  v-if="type === 'table'",
   :aria-label="navLabel",
   :class="classNames(styles.Pagination, styles.table)",
 )
-  template(v-if="prevKeyCondition")
-    KeypressListener(
-      v-for="(key) in previousKeys",
-      :key="key",
-      :key-code="key",
-      :handler="callbackPrevUrl",
-    )
-  template(v-if="nextKeyCondition")
-    KeypressListener(
-      v-for="(key) in nextKeys",
-      :key="key",
-      :key-code="key",
-      :handler="callbackNextUrl",
-    )
+  KeypressListener(
+    v-if="preKeyCondition",
+    v-for="key in previousKeys",
+    :key="key",
+    :keyCode="key",
+    :handler="preKeypressHandler",
+  )
+  KeypressListener(
+    v-if="nextKeyCondition"
+    v-for="key in previousKeys",
+    :key="key",
+    :keyCode="key",
+    :handler="nextKeypressHandler",
+  )
   Box(
     background="bg-surface-secondary",
-    padding-block-start="150",
-    padding-block-end="150",
-    padding-inline-start="300",
-    padding-inline-end="200",
+    :paddingBlockStart="150",
+    :paddingBlockEnd="150",
+    :paddingInlineStart="300",
+    :paddingInlineEnd="200",
   )
     InlineStack(
-      block-align="center",
+      blockAlign="center",
       :align="hasSlot(slots.default) ? 'space-between' : 'end'",
     )
       Text(
         v-if="hasSlot(slots.default)",
         as="span",
         variant="bodySm",
-        font-weight="medium",
+        fontWeight="medium",
       )
         slot
       ButtonGroup(variant="segmented")
         Tooltip(
           v-if="previousTooltip && hasPrevious",
-          activator-wrapper="span",
+          activatorWrapper="span",
+          preferredPosition="below",
           :content="previousTooltip",
         )
           Button(
             id="previousURL",
-            outline,
             :icon="ChevronLeftIcon",
             :accessibilityLabel="previousLabel",
             :url="previousURL",
@@ -140,7 +55,6 @@ nav(
         Button(
           v-else,
           id="previousURL",
-          outline,
           :icon="ChevronLeftIcon",
           :accessibilityLabel="previousLabel",
           :url="previousURL",
@@ -149,129 +63,178 @@ nav(
         )
         Tooltip(
           v-if="nextTooltip && hasNext",
-          activator-wrapper="span",
+          activatorWrapper="span",
+          preferredPosition="below",
           :content="nextTooltip",
         )
           Button(
             id="nextURL",
-            outline,
             :icon="ChevronRightIcon",
             :accessibilityLabel="nextLabel",
             :url="nextURL",
-            @click="emits('next')",
             :disabled="!hasNext",
-          )
+            @click="emits('next')",
+          )    
         Button(
           v-else,
           id="nextURL",
-          outline,
           :icon="ChevronRightIcon",
           :accessibilityLabel="nextLabel",
           :url="nextURL",
-          @click="emits('next')",
           :disabled="!hasNext",
+          @click="emits('next')",
         )
+nav(
+  v-else,
+  ref="node",
+  :aria-label="navLabel",
+  :class="styles.Pagination",
+)
+  KeypressListener(
+    v-if="preKeyCondition",
+    v-for="key in previousKeys",
+    :key="key",
+    :keyCode="key",
+    :handler="preKeypressHandler",
+  )
+  KeypressListener(
+    v-if="nextKeyCondition"
+    v-for="key in previousKeys",
+    :key="key",
+    :keyCode="key",
+    :handler="nextKeypressHandler",
+  )
+  ButtonGroup(variant="segmented")
+    Tooltip(
+      v-if="previousTooltip && hasPrevious",
+      activatorWrapper="span",
+      preferredPosition="below",
+      :content="previousTooltip",
+    )
+      Button(
+        id="previousURL",
+        :icon="ChevronLeftIcon",
+        :accessibilityLabel="previousLabel",
+        :url="previousURL",
+        :disabled="!hasPrevious",
+        @click="emits('previous')",
+      )
+    Button(
+      v-else,
+      id="previousURL",
+      :icon="ChevronLeftIcon",
+      :accessibilityLabel="previousLabel",
+      :url="previousURL",
+      :disabled="!hasPrevious",
+      @click="emits('previous')",
+    )
+    Box(
+      v-if="hasSlot(slots.default)"
+      :padding="300",
+      :paddingBlockStart="0",
+      :paddingBlockEnd="0",
+    )
+      div(aria-live="polite")
+        span(v-if="hasNext && hasPrevious")
+          slot
+        Text(
+          v-else,
+          tone="subdued",
+          as="span",
+        )
+          slot
+    Tooltip(
+      v-if="nextTooltip && hasNext",
+      activatorWrapper="span",
+      preferredPosition="below",
+      :content="nextTooltip",
+    )
+      Button(
+        id="nextURL",
+        :icon="ChevronRightIcon",
+        :accessibilityLabel="nextLabel",
+        :url="nextURL",
+        :disabled="!hasNext",
+        @click="emits('next')",
+      )    
+    Button(
+      v-else,
+      id="nextURL",
+      :icon="ChevronRightIcon",
+      :accessibilityLabel="nextLabel",
+      :url="nextURL",
+      :disabled="!hasNext",
+      @click="emits('next')",
+    )
 </template>
 
 <script setup lang="ts">
-import { type VNode, computed, ref, getCurrentInstance } from 'vue';
+import { ref, computed, getCurrentInstance } from 'vue';
+import type { VueNode } from '@/utilities/types';
 import { classNames } from '@/utilities/css';
-import useI18n from '@/use/useI18n';
 import { useHasSlot } from '@/use/useHasSlot';
-import {
-  Button,
-  ButtonGroup,
-  Text,
-  Tooltip,
-  Box,
-  InlineStack,
-  KeypressListener,
-} from '@/components';
-import type { Key, VueNode } from '@/utilities/types';
-import { isInputFocused } from '@polaris/utilities/is-input-focused';
+import useI18n from '@/use/useI18n';
 import ChevronLeftIcon from '@icons/ChevronLeftIcon.svg';
 import ChevronRightIcon from '@icons/ChevronRightIcon.svg';
+import { isInputFocused } from '@polaris/utilities/is-input-focused';
 import styles from '@polaris/components/Pagination/Pagination.module.scss';
+import type { PaginationProps } from './types';
 
-
-type AccessibilityLabels = {
-  previous: string;
-  next: string;
+export type PaginationEmits = {
+  /** Callback when next button is clicked */
+  'next': [];
+  /** Callback when previous button is clicked */
+  'previous': [];
 }
 
-export interface PaginationProps {
-  /** Keyboard shortcuts for the next button */
-  nextKeys?: Key[];
-  /** Keyboard shortcuts for the previous button */
-  previousKeys?: Key[];
-  /** Tooltip for the next button */
-  nextTooltip?: string;
-  /** Tooltip for the previous button */
-  previousTooltip?: string;
-  /** The URL of the next page */
-  nextURL?: string;
-  /** The URL of the previous page */
-  previousURL?: string;
-  /** Whether there is a next page to show */
-  hasNext?: boolean;
-  /** Whether there is a previous page to show */
-  hasPrevious?: boolean;
-  /** Accessible label for the pagination */
-  accessibilityLabel?: string;
-  /** Accessible labels for the buttons and UnstyledLinks */
-  accessibilityLabels?: AccessibilityLabels;
-  /** Layout structure of the component */
-  type?: 'page' | 'table';
-}
+const slots = defineSlots<{
+  /** Text to provide more context in between the arrow buttons */
+  default: (_: VueNode) => any;
+}>();
 
 const props = withDefaults(defineProps<PaginationProps>(), {
   type: 'page',
 });
-const slots = defineSlots<{
-  /** Text to provide more context in between the arrow buttons */
-  default?: (_?: VueNode) => VNode[];
-}>();
-const emits = defineEmits<{
-  /** Callback when the next button is clicked */
-  'next': [];
-  /** Callback when the previous button is clicked */
-  'previous': [];
-}>();
+
+const emits = defineEmits<PaginationEmits>();
 
 const i18n = useI18n();
-const { hasSlot } = useHasSlot();
 const currentInstance = getCurrentInstance();
+const { hasSlot } = useHasSlot();
 
-const paginationRef = ref<HTMLElement | null>(null);
+const node = ref<HTMLDivElement | null>(null);
 
-const prevKeyCondition = computed(() => {
-  return props.previousKeys && (props.previousURL || currentInstance?.vnode.props?.onPrevious) && props.hasPrevious;
-});
+const navLabel = computed(() =>
+  props.accessibilityLabel || i18n.translate('Polaris.Pagination.pagination'),
+);
 
-const nextKeyCondition = computed(() => {
-  return props.nextKeys && (props.nextURL || currentInstance?.vnode.props?.onNext) && props.hasNext;
-});
-const navLabel = computed(() => props.accessibilityLabel || i18n.translate('Polaris.Pagination.pagination'));
-const previousLabel = computed(() => {
-  return props.accessibilityLabels?.previous
-    || i18n.translate('Polaris.Pagination.previous');
-});
-const nextLabel = computed(() => {
-  return props.accessibilityLabels?.next
-    || i18n.translate('Polaris.Pagination.next');
-});
+const previousLabel = computed(() =>
+  props.accessibilityLabels?.previous || i18n.translate('Polaris.Pagination.previous'),
+);
+
+const nextLabel = computed(() =>
+    props.accessibilityLabels?.next || i18n.translate('Polaris.Pagination.next'),
+);
+
+const preKeyCondition = computed(() =>
+  props.previousKeys && (props.previousURL || currentInstance?.vnode.props?.onPrevious) && props.hasPrevious,
+);
+
+const nextKeyCondition = computed(() => 
+  props.nextKeys && (props.nextURL || currentInstance?.vnode.props?.onNext) && props.hasNext
+);
 
 const clickPaginationLink = (id: string) => {
   return () => {
-    if (!paginationRef.value) {
+    if (node.value == null) {
       return;
     }
 
-    const link: HTMLAnchorElement | null = paginationRef.value.querySelector(`#${id}`);
+    const link: HTMLAnchorElement | null = node.value.querySelector(`#${id}`);
     if (link) {
       link.click();
     }
-  };
+  }
 };
 
 const handleCallback = (fn: () => void) => {
@@ -282,25 +245,23 @@ const handleCallback = (fn: () => void) => {
 
     fn();
   };
-};
+}
 
-const callbackPrevUrl = () => {
+const preKeypressHandler = () => {
   if (props.previousURL) {
     handleCallback(clickPaginationLink('previousURL'));
-    return;
+  } else {
+    const preEmit = currentInstance?.vnode.props?.onPrevious as any;
+    handleCallback(preEmit());
   }
+}
 
-  const prevEmit = currentInstance?.vnode.props?.onPrevious as any;
-  handleCallback(prevEmit());
-};
-
-const callbackNextUrl = () => {
+const nextKeypressHandler = () => {
   if (props.nextURL) {
     handleCallback(clickPaginationLink('nextURL'));
-    return;
+  } else {
+    const nextEmit = currentInstance?.vnode.props?.onNext as any;
+    handleCallback(nextEmit());
   }
-
-  const nextEmit = currentInstance?.vnode.props?.onNext as any;
-  handleCallback(nextEmit());
-};
+}
 </script>
