@@ -170,7 +170,7 @@ nav(
 
 <script setup lang="ts">
 import { ref, computed, getCurrentInstance } from 'vue';
-import type { VueNode, Key } from '@/utilities/types';
+import type { VueNode } from '@/utilities/types';
 import { classNames } from '@/utilities/css';
 import { useHasSlot } from '@/use/useHasSlot';
 import useI18n from '@/use/useI18n';
@@ -178,35 +178,7 @@ import ChevronLeftIcon from '@icons/ChevronLeftIcon.svg';
 import ChevronRightIcon from '@icons/ChevronRightIcon.svg';
 import { isInputFocused } from '@polaris/utilities/is-input-focused';
 import styles from '@polaris/components/Pagination/Pagination.module.scss';
-
-interface AccessibilityLabels {
-  previous: string;
-  next: string;
-}
-
-export interface PaginationProps {
-  /** Keyboard shortcuts for the next button */
-  nextKeys?: Key[];
-  /** Keyboard shortcuts for the previous button */
-  previousKeys?: Key[];
-  /** Tooltip for the next button */
-  nextTooltip?: string;
-  /** Tooltip for the previous button */
-  previousTooltip?: string;
-  /** The URL of the next page */
-  nextURL?: string;
-  /** The URL of the previous page */
-  previousURL?: string;
-  /** Whether there is a next page to show */
-  hasNext?: boolean;
-  /** Whether there is a previous page to show */
-  hasPrevious?: boolean;
-  /** Accessible label for the pagination */
-  accessibilityLabel?: string;
-  /** Accessible labels for the buttons and UnstyledLinks */
-  accessibilityLabels?: AccessibilityLabels;
-  type?: 'page' | 'table';
-}
+import type { PaginationProps } from './types';
 
 export type PaginationEmits = {
   /** Callback when next button is clicked */
