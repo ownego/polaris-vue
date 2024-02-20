@@ -62,7 +62,7 @@
                         :data-props-type="defineTypeFormat(s)",
                       ) {{ doubleQuoteToSingleQuote(s) }}
                 dd(v-if="m.description")
-                  p.dpt__description(v-html="p.description")
+                  p.dpt__description(v-html="m.description")
 
             .docs-props-table__row(v-else)
               dt
@@ -144,6 +144,8 @@ const expandType = async (t: string, propName: string) => {
     isExpanded: true,
     types,
   }
+
+  console.log(extraType.value[propName]);
 }
 
 function fetchType(type: string, isExtra?: boolean) {

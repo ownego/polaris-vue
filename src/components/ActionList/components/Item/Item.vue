@@ -11,7 +11,7 @@ UnstyledLink(
   :external="external",
   :role="role",
   :aria-label="accessibilityLabel",
-  @click="disabled ? null : emit('action')",
+  @click="disabled ? null : emits('action')",
 )
   Box(width="100%")
     InlineStack(
@@ -21,10 +21,10 @@ UnstyledLink(
     )
       //- PrefixMarkup
       span(
-        v-if="prefixId",
+        v-if="prefix",
         :className="styles.Prefix",
       )
-        slot(name="prefix")
+        component(:is="prefix")
 
       span(
         v-if="icon",
@@ -62,9 +62,9 @@ UnstyledLink(
       )
         Badge(:tone="badge.tone") {{ badge.content }}
       //- SuffixMarkup
-      Box(v-if="suffixId")
+      Box(v-if="suffix")
         span(:className="styles.Suffix")
-          slot(name="suffix")
+          component(:is="suffix")
 button(
   v-else,
   :id="id",
@@ -73,7 +73,7 @@ button(
   :disabled="disabled",
   :role="role",
   :aria-label="accessibilityLabel",
-  @click="emit('action')",
+  @click="emits('action')",
   @mouseup="handleMouseUpByBlurring",
   @mouseenter="onMouseEnter",
 )
@@ -85,10 +85,10 @@ button(
     )
       //- PrefixMarkup
       span(
-        v-if="prefixId",
+        v-if="prefix",
         :className="styles.Prefix",
       )
-        slot(name="prefix")
+        component(:is="prefix")
 
       span(
         v-if="icon",
@@ -126,9 +126,9 @@ button(
       )
         Badge(:tone="badge.tone") {{ badge.content }}
       //- SuffixMarkup
-      Box(v-if="suffixId")
+      Box(v-if="suffix")
         span(:className="styles.Suffix")
-          slot(name="suffix")
+          component(:is="suffix")
 </template>
 
 <script setup lang="ts">
@@ -153,7 +153,7 @@ type ItemProps = ActionListItemDescriptor;
 const props = withDefaults(defineProps<ItemProps>(), {
   variant: 'default',
 });
-const emit = defineEmits<{
+const emits = defineEmits<{
   /** Callback when any item is clicked or keypressed */
   'action': [];
 }>();
@@ -161,10 +161,6 @@ const slots = defineSlots<{
   default?: (_?: VueNode) => VNode[];
   /** Additional hint text to display with item */
   helpText?: (_?: VueNode) => VNode[];
-  /** Prefix source */
-  prefix?: (_?: VueNode) => VNode[];
-  /** Suffix source */
-  suffix?: (_?: VueNode) => VNode[];
 }>();
 
 const className = computed(() => classNames(

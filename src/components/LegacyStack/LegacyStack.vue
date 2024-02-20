@@ -61,8 +61,6 @@ const slots = defineSlots<{
 const { hasSlot } = useHasSlot();
 const { slotsElms } = useExtractFragment(slots.default);
 
-// console.log(slotsElms.value);
-
 const props = withDefaults(defineProps<LegacyStackProps>(), {
   wrap: true,
 });
