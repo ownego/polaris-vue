@@ -31,10 +31,10 @@
         autoSelection="FIRST_SELECTED"
         :customListId="listboxId"
         @select="handleSegmentSelect"
-        @on-active-option-change="handleActiveOptionChange"
+        @active-option-change="handleActiveOptionChange"
       >
         <template v-if="segmentOptions.length > 0">
-          <template v-for="{label, value} in segmentList" :key="value">
+          <template v-for="{ label, value } in segmentList" :key="value">
             <ListboxOption :value="value" :selected="segments[selectedSegmentIndex].value === value">
               <ListboxTextOption :selected="segments[selectedSegmentIndex].value === value">
                 {{ label }}
@@ -144,7 +144,7 @@ const cardStyle: CSSProperties = {
   width: '100%',
   height: '100%',
   overflow: 'hidden',
-};
+} as CSSProperties;
 
 const scrollableStyle = {
   position: 'relative',
@@ -198,7 +198,7 @@ const handleQueryChange = (value: string) => {
   if (query.value.length >= 2) handleFilterSegments(query.value);
 };
 
-const handleQueryClear = () => {
+const handleQueryClear = (_e: Event) => {
   handleQueryChange('');
 };
 
