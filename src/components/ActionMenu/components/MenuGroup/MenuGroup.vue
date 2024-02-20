@@ -14,17 +14,16 @@ Popover(
       @click="handleClick",
       @get-offset-width="handleOffsetWidth",
     ) {{ title }}
-  template(#content)
-    ActionList(
-      :items="actions",
-      :sections="sections",
-      @action-any-item="handleClose",
-    )
-    div(
-      v-if="slots.default",
-      :class="styles.Details",
-    )
-      slot
+  ActionList(
+    :items="actions",
+    :sections="sections",
+    @action-any-item="handleClose",
+  )
+  div(
+    v-if="slots.default",
+    :class="styles.Details",
+  )
+    slot
 </template>
 
 <script lang="ts">
@@ -35,12 +34,13 @@ export default {
 
 <script setup lang="ts">
 import { useSlots } from 'vue';
-import styles from '@polaris/components/ActionMenu/components/MenuGroup/MenuGroup.module.scss';
 import type {
   IconableAction,
   ActionListItemDescriptor,
   ActionListSection,
 } from '@/utilities/types';
+import styles from '@polaris/components/ActionMenu/components/MenuGroup/MenuGroup.module.scss';
+import { SecondaryAction } from '../SecondaryAction';
 
 interface MenuGroupProps {
   badge?: {
@@ -64,6 +64,7 @@ interface MenuGroupProps {
 }
 
 const props = defineProps<MenuGroupProps>();
+console.log('M group => ', props);
 
 const slots = useSlots();
 

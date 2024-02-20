@@ -1,10 +1,10 @@
 <template lang="pug">
 div(
   ref="secondaryActionsRef",
-  :class="classNames(styles.SecondaryAction, tone === 'critical' && styles.critical)",
+  :class="className",
 )
   Tooltip(
-    v-if="props.helpText || hasSlot(slots.helpText)",
+    v-if="helpText || hasSlot(slots.helpText)",
     preferredPosition="below"
     :content="helpText || ''",
   )
@@ -14,14 +14,14 @@ div(
     )
       slot(name="helpText")
     Button(
-      v-bine="props",
+      v-bind="props",
       @click="emits('click')",
       :tone="destructive ? 'critical' : undefined",
     )
       slot
   Button(
     v-else,
-    v-bine="props",
+    v-bind="props",
     :tone="destructive ? 'critical' : undefined",
     @click="emits('click')",
   )
@@ -29,7 +29,7 @@ div(
 </template>
 
 <script setup lang="ts">
-import { ref, onMounted } from 'vue';
+import { ref, computed, onMounted } from 'vue';
 import { classNames } from '@/utilities/css';
 import { useHasSlot } from '@/use/useHasSlot';
 import type { VueNode } from '@/utilities/types';
@@ -48,31 +48,30 @@ const slots = defineSlots<{
 
 const props = defineProps<SecondaryAction>();
 
-// const emits = defineEmits<{
-//   (e: 'click'): void;
-//   (e: 'get-offset-width', width: number): void;
-// }>();
-
 const emits = defineEmits<{
-  'click': [];
-  'get-offset-width': [width: number];
+  (e: 'click'): void;
+  (e: 'get-offset-width', width: number): void;
 }>();
 
 const { hasSlot } = useHasSlot();
 
 const secondaryActionsRef = ref<HTMLDivElement | null>(null);
 
+const className = computed(() =>
+  classNames(
+    styles.SecondaryAction,
+    props.tone === 'critical' && styles.critical,
+  )
+);
+
 onMounted(() => {
-  // onGetOffsetWidth(secondaryActionsRef.value?.offsetWidth || 0);
-  if (secondaryActionsRef.value) {
-    emits('get-offset-width', secondaryActionsRef.value?.offsetWidth || 0);
-  }
+  onGetOffsetWidth(secondaryActionsRef.value?.offsetWidth || 0);
 })
 
-// const onGetOffsetWidth = (width: number) => {
-//   if (secondaryActionsRef.value) {
-//     emits('get-offset-width', width);
-//   }
-// };
+const onGetOffsetWidth = (width: number) => {
+  if (secondaryActionsRef.value) {
+    emits('get-offset-width', width);
+  }
+};
 
 </script>

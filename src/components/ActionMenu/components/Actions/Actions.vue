@@ -26,8 +26,9 @@ div(
       ) {{ action.content }}
     MenuGroup(
       v-for="group in filteredGroups",
-      :key="group.title",
       v-bind="menuGroupProps(group)",
+      :key="group.title",
+      :title="group.title",
       :actions="getMenuGroupActions(group)",
       @open="handleMenuGroupToggle",
       @close="handleMenuGroupClose",
@@ -196,7 +197,7 @@ const getMenuGroupActions = (group: MenuGroupDescriptor): ActionListItemDescript
 }
 
 const updateActions = () => {
-  let actionsAndGroups: MenuActionDescriptor[] = [...(props.actions || []), ...(props.groups || [])];
+  let actionsAndGroups = [...(props.actions || []), ...(props.groups || [])];
 
   if (props.groups && props.groups.length > 0) {
     // We don't want to include actions from the last group
@@ -263,9 +264,9 @@ const measureActions = () => {
   actionsAndGroups.forEach((action, index) => {
     const canFitAction =
       actionWidths.value[index] +
-      menuGroupWidth.value +
-      ACTION_SPACING +
-      lastMenuGroupWidth.value <=
+        menuGroupWidth.value +
+        ACTION_SPACING +
+        lastMenuGroupWidth.value <=
       currentAvailableWidth;
 
     if (canFitAction) {
@@ -275,11 +276,13 @@ const measureActions = () => {
     } else {
       currentAvailableWidth = 0;
       // Find last group if it exists and always render it as a rolled up action below
-      if (action === lastMenuGroup.value) { return; }
+      if (action === lastMenuGroup) return;
       newRolledUpActions = [...newRolledUpActions, action];
     }
   });
 
+  // Note: Do not include last group actions since we are skipping `lastMenuGroup` above
+  // as it is always rendered with its own actions
   const isRollupActive = newShowableActions.length < actionsAndGroups.length - 1;
   if (rollupActiveRef.value !== isRollupActive) {
     emits('action-rollup', isRollupActive);
@@ -298,7 +301,8 @@ const measureActions = () => {
 const handleResize = () => {
   debounce(
     () => {
-      if (!actionsLayoutRef.value) { return; }
+      if (!actionsLayoutRef.value) return;
+
       availableWidth.value = actionsLayoutRef.value.offsetWidth;
       // Set timesMeasured to 0 to allow re-measuring
       timesMeasured.value = 0;

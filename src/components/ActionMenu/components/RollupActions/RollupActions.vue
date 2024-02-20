@@ -14,21 +14,19 @@ Popover(
         :accessibilityLabel="accessibilityLabel || i18n.translate('Polaris.ActionMenu.RollupActions.rollupButton')",
         @click="toggleRollupOpen",
       )
-  template(#content)
-    ActionList(
-      :items="items",
-      :sections="sections",
-      @action-any-item="toggleRollupOpen",
-    )
+  ActionList(
+    :items="items",
+    :sections="sections",
+    @action-any-item="toggleRollupOpen",
+  )
 </template>
 
 <script setup lang="ts">
 import { ref } from 'vue';
-import MenuHorizontalIcon from '@icons/MenuHorizontalIcon.svg';
-import styles from '@polaris/components/ActionMenu/components/RollupActions/RollupActions.module.scss';
-import { ActionList, Button, Popover } from '@/components';
-import useI18n from '@/use/useI18n';
 import type { ActionListItemDescriptor, ActionListSection } from '@/utilities/types';
+import MenuHorizontalIcon from '@icons/MenuHorizontalIcon.svg';
+import useI18n from '@/use/useI18n';
+import styles from '@polaris/components/ActionMenu/components/RollupActions/RollupActions.module.scss';
 
 interface RollupActionsProps {
   /** Accessibilty label */
