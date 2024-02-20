@@ -214,10 +214,10 @@ export interface ActionListItemDescriptor
     tone: 'new';
     content: string;
   };
-    /** Prefix source */
-  prefixId?: string;
+  /** Prefix source */
+  prefix?: VueNode;
   /** Suffix source */
-  suffixId?: string;
+  suffix?: VueNode;
   /** Additional hint text to display with item */
   helpText?: string;
   /** @deprecated Source of the icon */
@@ -242,7 +242,6 @@ export interface ActionListSection {
   /** Collection of action items for the list */
   items: readonly ActionListItemDescriptor[];
 }
-
 export interface OptionDescriptor {
   /** Value of the option */
   value: string;
@@ -254,6 +253,8 @@ export interface OptionDescriptor {
   id?: string;
   /** Display label for the option */
   label: string,
+  /** Media to display to the left of the option content */
+  media?: VueNode;
 }
 
 export interface SectionDescriptor {

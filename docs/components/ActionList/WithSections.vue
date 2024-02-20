@@ -20,10 +20,10 @@
 
 <script setup lang="ts">
 import { ref } from 'vue';
-import DeleteMinor from '@icons/DeleteMinor.svg';
-import EditMinor from '@icons/EditMinor.svg';
-import ExportMinor from '@icons/ExportMinor.svg';
-import ImportMinor from '@icons/ImportMinor.svg';
+import DeleteIcon from '@icons/DeleteIcon.svg';
+import EditIcon from '@icons/EditIcon.svg';
+import ExportIcon from '@icons/ExportIcon.svg';
+import ImportIcon from '@icons/ImportIcon.svg';
 
 const active = ref(false);
 
@@ -35,15 +35,15 @@ const sections = [
   {
     title: 'File options',
     items: [
-      { content: 'Import file', icon: ImportMinor },
-      { content: 'Export file', icon: ExportMinor },
+      { content: 'Import file', icon: ImportIcon },
+      { content: 'Export file', icon: ExportIcon },
     ],
   },
   {
     title: 'Bulk actions',
     items: [
-      { content: 'Edit', icon: EditMinor },
-      { content: 'Delete', icon: DeleteMinor },
+      { content: 'Edit', icon: EditIcon },
+      { content: 'Delete', icon: DeleteIcon },
     ],
   },
 ];
