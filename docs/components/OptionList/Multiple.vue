@@ -13,7 +13,7 @@
 <script setup lang="ts">
 import { ref } from 'vue';
 
-const selected = ref([]);
+const selected = ref<string[]>([]);
 
 const options = [
   {value: 'online_store', label: 'Online Store'},
@@ -23,7 +23,7 @@ const options = [
   {value: 'buzzfeed', label: 'BuzzFeed'},
 ];
 
-const handleSelect = (value) => {
+const handleSelect = (value: string[]) => {
   selected.value = value;
 };
 </script>

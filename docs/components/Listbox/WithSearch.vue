@@ -134,7 +134,7 @@ const segments = [
 
 const listboxId = 'SearchableListbox';
 
-const cardStyle = {
+const cardStyle: CSSProperties = {
   alignItems: 'stretch',
   borderTop: '1px solid #DFE3E8',
   display: 'flex',
@@ -192,14 +192,14 @@ const handleFilterSegments = (query: string) => {
   filteredSegments.value = nextFilteredSegments;
 };
 
-const handleQueryChange = (_e: Event, value: string) => {
+const handleQueryChange = (value: string) => {
   query.value = value;
 
   if (query.value.length >= 2) handleFilterSegments(query.value);
 };
 
-const handleQueryClear = (e: Event) => {
-  handleQueryChange(e, '');
+const handleQueryClear = (_e: Event) => {
+  handleQueryChange('');
 };
 
 const handleSegmentSelect = (segmentIndex: string) => {
