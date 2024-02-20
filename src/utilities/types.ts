@@ -253,6 +253,8 @@ export interface OptionDescriptor {
   id?: string;
   /** Display label for the option */
   label: string,
+  /** Media to display to the left of the option content */
+  media?: VueNode;
 }
 
 export interface SectionDescriptor {
