@@ -248,22 +248,18 @@ const hasActionsPopover = computed(() => actionSections.value || rolledInPromote
 const hasPromotedActions = computed(() => props.promotedActions && numberOfPromotedActionsToRender.value > 0);
 
 const onTransitionEnter = () => {
-  console.log(1344);
   statusTransitionGroup.value = 'entering';
 };
 
 const onTransitionEntered = () => {
-  console.log('enter');
   statusTransitionGroup.value = 'entered';
 };
 
 const onTransitionExiting = () => {
-    console.log('exiting');
   statusTransitionGroup.value = 'exiting';
 };
 
 const onTransitionExit = () => {
-    console.log('exited');
   statusTransitionGroup.value = 'exited';
 };
 
@@ -280,7 +276,6 @@ const handleMeasurement = (width: number) => {
 const togglePopover = () => {
   emits('more-action-popover-toggle', popoverVisible.value);
   popoverVisible.value = !popoverVisible.value;
-  console.log('togglePopover', popoverVisible.value);
 };
 
 function instanceOfBulkActionListSectionArray(

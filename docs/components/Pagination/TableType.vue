@@ -1,7 +1,5 @@
 <template>
-<div
-  :style="style"
->
+<div :style="style">
   <Pagination
     type="table"
     hasNext
