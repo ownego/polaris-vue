@@ -20,9 +20,9 @@
 
 <script setup lang="ts">
 import { ref } from 'vue';
-import DeleteMinor from '@icons/DeleteMinor.svg';
-import ExportMinor from '@icons/ExportMinor.svg';
-import ImportMinor from '@icons/ImportMinor.svg';
+import DeleteIcon from '@icons/DeleteIcon.svg';
+import ExportIcon from '@icons/ExportIcon.svg';
+import ImportIcon from '@icons/ImportIcon.svg';
 
 const active = ref(false);
 
@@ -37,13 +37,13 @@ const sections = [
       {
         active: true,
         content: 'Import file',
-        icon: ImportMinor,
+        icon: ImportIcon,
       },
-      { content: 'Export file', icon: ExportMinor },
+      { content: 'Export file', icon: ExportIcon },
       {
         destructive: true,
         content: 'Delete file',
-        icon: DeleteMinor,
+        icon: DeleteIcon,
       },
     ],
   },

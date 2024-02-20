@@ -20,8 +20,8 @@
 
 <script setup lang="ts">
 import { ref } from 'vue';
-import DuplicateIcon from '@icons/DuplicateMinor.svg';
-import ArchiveIcon from '@icons/ArchiveMinor.svg';
+import DuplicateIcon from '@icons/DuplicateIcon.svg';
+import ArchiveIcon from '@icons/ArchiveIcon.svg';
 
 const active = ref(false);
 
