@@ -22,6 +22,7 @@ import { classNames } from '@/utilities/css';
 import type { VueNode } from '@/utilities/types';
 import styles from '@polaris/components/Banner/Banner.module.scss';
 import type { BannerProps } from './types';
+import useWithinContentContext from './context';
 
 defineSlots<{
   /** The content to display inside the button */
@@ -43,7 +44,7 @@ defineExpose({
   },
 });
 
-const withinContentContainer = inject<boolean>('WithinContentContext', false);
+const withinContentContainer = useWithinContentContext();
 
 const wrapperRef = ref<HTMLInputElement | null>(null);
 const shouldShowFocus = ref<boolean>(false);
@@ -62,10 +63,10 @@ const listeners = computed(() => {
 });
 
 const handleKeyUp = (event: KeyboardEvent) => {
-    if (event.target === wrapperRef.value) {
-      shouldShowFocus.value = true;
-    }
-  };
+  if (event.target === wrapperRef.value) {
+    shouldShowFocus.value = true;
+  }
+};
 
 const handleBlur = () => shouldShowFocus.value = false;
 
@@ -75,11 +76,9 @@ const handleMouseUp = (event: MouseEvent) => {
   shouldShowFocus.value = false;
 };
 
-const className = computed(() =>
-  classNames(
-    styles.Banner,
-    shouldShowFocus.value && styles.keyFocused,
-    withinContentContainer ? styles.withinContentContainer : styles.withinPage,
-  ),
-);
+const className = computed(() => classNames(
+  styles.Banner,
+  shouldShowFocus.value && styles.keyFocused,
+  withinContentContainer ? styles.withinContentContainer : styles.withinPage,
+));
 </script>
