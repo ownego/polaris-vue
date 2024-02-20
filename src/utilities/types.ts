@@ -170,6 +170,13 @@ export interface DisableableAction extends Action {
   disabled?: boolean;
 }
 
+export interface BadgeAction {
+  badge?: {
+    status: 'new';
+    content: string;
+  };
+}
+
 export interface DestructableAction extends Action {
   /** Destructive action */
   destructive?: boolean;
@@ -242,6 +249,50 @@ export interface ActionListSection {
   /** Collection of action items for the list */
   items: ActionListItemDescriptor[];
 }
+
+export interface MenuActionDescriptor extends ComplexAction {
+  /** Zero-indexed numerical position. Overrides the action's order in the menu */
+  index?: number;
+}
+
+export interface MenuGroupDescriptor extends BadgeAction {
+  /** Menu group title */
+  title: string;
+  /** List of actions */
+  actions: ActionListItemDescriptor[];
+  /** Icon to display */
+  icon?: IconableAction['icon'];
+  /** Disables action button */
+  disabled?: boolean;
+  /** Zero-indexed numerical position. Overrides the group's order in the menu. */
+  index?: number;
+}
+
+export interface CheckboxHandles {
+  focus(): void;
+}
+
+export interface ResourceListContextType {
+  selectMode?: Ref<boolean>;
+  selectable?: ComputedRef<boolean>;
+  selectedItems?: ComputedRef<ResourceListSelectedItems>;
+  resourceName?: {
+    singular: string;
+    plural: string;
+  };
+  hasBulkActions?: boolean;
+  loading?: boolean;
+  onSelectionChange?(
+    selected: boolean,
+    id: string,
+    sortNumber: number | undefined,
+    shiftKey: boolean,
+  ): void;
+}
+
+export type ResourceListSelectedItems = string[] | 'All';
+export type CheckableButtonKey = 'plain' | 'bulkSm' | 'bulkLg';
+export type CheckableButtons = Map<CheckableButtonKey, CheckboxHandles>;
 export interface OptionDescriptor {
   /** Value of the option */
   value: string;
