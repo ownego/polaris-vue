@@ -4,6 +4,7 @@ title: Filters
 category: Selection and input
 examples:
   - fileName: WithResourceList.vue
+    frameHeight: 700
     title: With a resource list
   - fileName: WithDataTable.vue
     title: With a data table

@@ -70,13 +70,11 @@ const emits = defineEmits<{
 }>();
 
 const handleAction = (itemOnAction: ActionListItemDescriptor['onAction']) => {
-  return () => {
-    if (itemOnAction) {
-      itemOnAction();
-    }
+  if (itemOnAction) {
+    itemOnAction();
+  }
 
-    emits('action-any-item');
-  };
+  emits('action-any-item');
 };
 
 const sectionRole = computed(() => {

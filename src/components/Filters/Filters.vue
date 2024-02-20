@@ -16,7 +16,7 @@ div(:class="filtersClassName")
           :style="searchFieldStyle",
         )
           SearchField(
-            :value="queryValue",
+            v-model="modelValue",
             :placeholder="queryPlaceholder",
             :focused="focused",
             :loading="loading",
@@ -45,7 +45,7 @@ div(:class="filtersClassName")
 </template>
 
 <script setup lang="ts">
-import { type VNode, computed } from 'vue';
+import { type VNode, computed, watch } from 'vue';
 import { classNames } from '@/utilities/css';
 import type { AppliedFilterInterface, FilterInterface, VueNode } from '@/utilities/types';
 import {
@@ -157,6 +157,7 @@ const slots = defineSlots<{
   default?: (_?: VueNode) => VNode[];
 }>();
 
+const modelValue = computed(() => props.queryValue);
 const filtersClassName = computed(() => classNames(
   styles.Filters,
   props.hideQueryField && styles.hideQueryField,

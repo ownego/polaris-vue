@@ -15,6 +15,7 @@ div(
           :filter-key="filter.key",
           :disabled="filter.disabled || disableFilters",
           :close-on-child-overlay-click="closeOnChildOverlayClick",
+          :selected="appliedFilterKeys?.includes(filter.key)",
           @remove="handleFilterPillRemove(filter.key)",
         )
       //- Add Button
@@ -174,7 +175,9 @@ const onFilterClick = (filter: FilterInterface) => {
 const filterToActionItem = (filter: FilterInterface) => ({
   ...filter,
   content: filter.label,
-  onAction: () => { onFilterClick(filter) },
+  onAction: () => {
+    onFilterClick(filter)
+  },
 });
 
 

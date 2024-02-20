@@ -1,7 +1,7 @@
 <template lang="pug">
 TextField(
   :id="String(id)",
-  v-model="modelValue",
+  v-model="model",
   label-hidden,
   clear-button,
   size="slim",
@@ -11,7 +11,7 @@ TextField(
   :variant="borderlessQueryField ? 'borderless' : 'inherit'",
   :focused="focused",
   :label="placeholder",
-  @change="(eventValue) => handleChange(eventValue ?? value)",
+  @change="(eventValue) => handleChange(eventValue ?? model)",
   @clear-button-click="handleClear",
   @focus="emits('focus')",
   @blur="emits('blur')",
@@ -30,7 +30,6 @@ TextField(
 </template>
 
 <script setup lang="ts">
-import { computed } from 'vue';
 import {
   Spinner,
   Icon,
@@ -43,7 +42,6 @@ import XCircleIcon from '@icons/XCircleIcon.svg';
 
 interface SearchFieldProps {
   focused?: boolean;
-  value?: string;
   placeholder?: string;
   disabled?: boolean;
   borderlessQueryField?: boolean;
@@ -61,10 +59,11 @@ type SearchFieldEvents = {
 const props = defineProps<SearchFieldProps>();
 const emits = defineEmits<SearchFieldEvents>();
 
+const model = defineModel<string>();
+
 const id = useId();
 const breakpoints = useBreakpoints();
 
-const modelValue = computed(() => props.value ?? '');
 function handleChange(value:string) {
   emits('change', value);
 }

@@ -42,6 +42,7 @@ div(
             type="button",
             :className="clearButtonClassNames",
             :aria-label="i18n.translate('Polaris.FilterPill.clear')",
+            @click="handleClear",
           )
             div(:class="styles.IconWrapper")
               Icon(
@@ -55,7 +56,7 @@ div(
       PopoverSection
         BlockStack(gap="100")
           //-Filter
-          slot(name="filter")
+          component(:is="filter")
           //-ClearButtonMarkup
           div(
             v-if="!hideClearButton",
@@ -84,7 +85,6 @@ import {
 import { classNames } from '@/utilities/css';
 import type { FilterInterface, VueNode } from '@/utilities/types';
 import useI18n from '@/use/useI18n';
-import { useHasSlot } from '@/use/useHasSlot';
 import { useToggle } from '@/use/useToggle';
 import { useBreakpoints } from '@/utilities/breakpoints';
 import ChevronDownIcon from '@icons/ChevronDownIcon.svg';
@@ -125,7 +125,6 @@ const {
   setTrue: setFocusedTrue,
   setFalse: setFocusedFalse,
 } = useToggle(false);
-const { hasSlot } = useHasSlot();
 
 const popoverActive = ref(props.initialActive);
 const elementRef = ref<HTMLElement | null>(null);
@@ -150,7 +149,7 @@ const toggleButtonClassNames = computed(() => classNames(
 const labelVariant = computed(() => (breakpoints.value.mdDown ? 'bodyLg' : 'bodySm'));
 
 const togglePopoverActive = () => {
-  if (hasSlot(slots.filter)) {
+  if (props.filter) {
     popoverActive.value = !popoverActive.value;
   }
 
@@ -158,6 +157,7 @@ const togglePopoverActive = () => {
 };
 
 const handlePopoverClose = () => {
+  togglePopoverActive();
   if (!props.selected) {
     emits('remove', props.filterKey);
   }
