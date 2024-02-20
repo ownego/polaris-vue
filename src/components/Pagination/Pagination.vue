@@ -172,11 +172,11 @@ nav(
 import { ref, computed, getCurrentInstance } from 'vue';
 import type { VueNode, Key } from '@/utilities/types';
 import { classNames } from '@/utilities/css';
-import { isInputFocused } from '@/utilities/is-input-focused';
 import { useHasSlot } from '@/use/useHasSlot';
 import useI18n from '@/use/useI18n';
 import ChevronLeftIcon from '@icons/ChevronLeftIcon.svg';
 import ChevronRightIcon from '@icons/ChevronRightIcon.svg';
+import { isInputFocused } from '@polaris/utilities/is-input-focused';
 import styles from '@polaris/components/Pagination/Pagination.module.scss';
 
 interface AccessibilityLabels {
