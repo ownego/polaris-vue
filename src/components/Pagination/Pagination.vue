@@ -50,7 +50,7 @@ nav(
             :accessibilityLabel="previousLabel",
             :url="previousURL",
             :disabled="!hasPrevious",
-            @click="attrs['onPrevious']",
+            @click="emits('previous')",
           )
         Button(
           v-else,
@@ -59,7 +59,7 @@ nav(
           :accessibilityLabel="previousLabel",
           :url="previousURL",
           :disabled="!hasPrevious",
-          @click="attrs['onPrevious']",
+          @click="emits('previous')",
         )
         Tooltip(
           v-if="nextTooltip && hasNext",
@@ -73,7 +73,7 @@ nav(
             :accessibilityLabel="nextLabel",
             :url="nextURL",
             :disabled="!hasNext",
-            @click="attrs['onNext']",
+            @click="emits('next')",
           )    
         Button(
           v-else,
@@ -82,7 +82,7 @@ nav(
           :accessibilityLabel="nextLabel",
           :url="nextURL",
           :disabled="!hasNext",
-          @click="attrs['onNext']",
+          @click="emits('next')",
         )
 nav(
   v-else,
@@ -117,7 +117,7 @@ nav(
         :accessibilityLabel="previousLabel",
         :url="previousURL",
         :disabled="!hasPrevious",
-        @click="attrs['onPrevious']",
+        @click="emits('previous')",
       )
     Button(
       v-else,
@@ -126,7 +126,7 @@ nav(
       :accessibilityLabel="previousLabel",
       :url="previousURL",
       :disabled="!hasPrevious",
-      @click="attrs['onPrevious']",
+      @click="emits('previous')",
     )
     Box(
       v-if="hasSlot(slots.default)"
@@ -155,7 +155,7 @@ nav(
         :accessibilityLabel="nextLabel",
         :url="nextURL",
         :disabled="!hasNext",
-        @click="attrs['onNext']",
+        @click="emits('next')",
       )    
     Button(
       v-else,
@@ -164,12 +164,12 @@ nav(
       :accessibilityLabel="nextLabel",
       :url="nextURL",
       :disabled="!hasNext",
-      @click="attrs['onNext']",
+      @click="emits('next')",
     )
 </template>
 
 <script setup lang="ts">
-import { ref, computed, useAttrs } from 'vue';
+import { ref, computed, getCurrentInstance } from 'vue';
 import type { VueNode, Key } from '@/utilities/types';
 import { classNames } from '@/utilities/css';
 import { isInputFocused } from '@/utilities/is-input-focused';
@@ -210,9 +210,9 @@ export interface PaginationProps {
 
 export type PaginationEmits = {
   /** Callback when next button is clicked */
-  'next'?: [];
+  'next': [];
   /** Callback when previous button is clicked */
-  'previous'?: [];
+  'previous': [];
 }
 
 const slots = defineSlots<{
@@ -224,8 +224,10 @@ const props = withDefaults(defineProps<PaginationProps>(), {
   type: 'page',
 });
 
+const emits = defineEmits<PaginationEmits>();
+
 const i18n = useI18n();
-const attrs = useAttrs();
+const currentInstance = getCurrentInstance();
 const { hasSlot } = useHasSlot();
 
 const node = ref<HTMLDivElement | null>(null);
@@ -243,11 +245,11 @@ const nextLabel = computed(() =>
 );
 
 const preKeyCondition = computed(() =>
-  props.previousKeys && (props.previousURL || attrs['onPrevious']) && props.hasPrevious,
+  props.previousKeys && (props.previousURL || currentInstance?.vnode.props?.onPrevious) && props.hasPrevious,
 );
 
 const nextKeyCondition = computed(() => 
-  props.nextKeys && (props.nextURL || attrs['onNext']) && props.hasNext
+  props.nextKeys && (props.nextURL || currentInstance?.vnode.props?.onNext) && props.hasNext
 );
 
 const clickPaginationLink = (id: string) => {
@@ -277,7 +279,7 @@ const preKeypressHandler = () => {
   if (props.previousURL) {
     handleCallback(clickPaginationLink('previousURL'));
   } else {
-    const preEmit = attrs['onPrevious'] as any;
+    const preEmit = currentInstance?.vnode.props?.onPrevious as any;
     handleCallback(preEmit());
   }
 }
@@ -286,7 +288,7 @@ const nextKeypressHandler = () => {
   if (props.nextURL) {
     handleCallback(clickPaginationLink('nextURL'));
   } else {
-    const nextEmit = attrs['onNext'] as any;
+    const nextEmit = currentInstance?.vnode.props?.onNext as any;
     handleCallback(nextEmit());
   }
 }
