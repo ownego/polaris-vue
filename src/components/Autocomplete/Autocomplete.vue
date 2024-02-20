@@ -21,21 +21,24 @@ Combobox(
       v-if="isSection(conditionalOptions) && !noOptions",
       :class="styles.SectionWrapper",
     )
-      ListboxSection(
+      template(
         v-for="{ options, title } in conditionalOptions",
         :key="title",
-        :divider="false",
       )
-        template(#title)
-          ListboxHeader {{ title }}
-
-        MappedOption(
-          v-for="option in options",
-          :key="option.id || option.value",
-          v-bind="option",
-          :selected="selected.includes(option.value)",
-          :single-selection="!allowMultiple",
+        ListboxSection(
+          v-if="options.length > 0",
+          :divider="false",
         )
+          template(#title)
+            ListboxHeader {{ title }}
+
+          MappedOption(
+            v-for="option in options",
+            :key="option.id || option.value",
+            v-bind="option",
+            :selected="selected.includes(option.value)",
+            :single-selection="!allowMultiple",
+          )
 
     template(v-else-if="!isSection(conditionalOptions) && !noOptions")
       ListboxSection(

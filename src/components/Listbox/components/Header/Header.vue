@@ -1,6 +1,6 @@
 <template lang="pug">
 div(:id="sectionId", aria-hidden)
-  slot(v-if="isSlotContainHTMLTag")
+  slot(v-if="isSlotContainHtml(slots.default)")
   Box(
     v-else,
     padding-block-start="200",
@@ -13,32 +13,13 @@ div(:id="sectionId", aria-hidden)
 </template>
 
 <script setup lang="ts">
-import { computed, useSlots } from 'vue';
+import { useSlots } from 'vue';
 import { Box, Text } from '@/components';
 import { useSection } from '@/use/useListbox';
+import { useHasSlot } from '@/use/useHasSlot';
 
 const sectionId = useSection();
 const slots = useSlots();
 
-const isSlotContainHTMLTag = computed(() => {
-  if (!slots.default) {
-    return false;
-  }
-
-  // More than 2 elements => it's HTML tag
-  if (slots.default().length > 1) {
-    return true;
-  }
-
-  // The only element is not Text or null Symbol
-  if (slots.default()[0]
-    && slots.default()[0].type.toString() !== 'Symbol(Text)'
-    && slots.default()[0].type.toString() !== 'Symbol(v-txt)'
-    && slots.default()[0].type.toString() !== 'Symbol()'
-  ) {
-    return true;
-  }
-
-  return false;
-});
+const { isSlotContainHtml } = useHasSlot();
 </script>

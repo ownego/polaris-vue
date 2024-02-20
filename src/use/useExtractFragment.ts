@@ -30,7 +30,8 @@ export function useExtractFragment(slot?: any) {
   });
 
   const isFragment = (item: any) => {
-    return item.type?.toString() === 'Symbol(Fragment)' || item.type?.toString() === 'Symbol()'
+    return item.type?.toString() === 'Symbol(Fragment)'
+      || item.type?.toString() === 'Symbol()'
       || item.type?.toString() === 'Symbol(v-fgt)'; // this check is for Slots type in Vue 3
   }
 

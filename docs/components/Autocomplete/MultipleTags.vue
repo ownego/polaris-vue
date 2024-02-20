@@ -62,8 +62,6 @@ const updateText = (_e: Event, value: string) => {
 
 const updateSelection = (selected: string[]) => {
   selectedOptions.value = selected;
-
-  console.log(selectedOptions.value);
 };
 
 const removeTag = (tag: string) => {

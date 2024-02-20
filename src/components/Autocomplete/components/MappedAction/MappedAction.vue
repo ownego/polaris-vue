@@ -35,9 +35,10 @@ div(:class="styles.ActionContainer")
 </template>
 
 <script setup lang="ts">
-import { computed, provide } from 'vue';
+import { type ComputedRef, computed, provide } from 'vue';
 import type { ActionListItemDescriptor } from '@/utilities/types';
 import { classNames } from '@/utilities/css';
+import type { MappedActionContextType } from '@/utilities/auto-complete';
 import useI18n from '@/use/useI18n';
 import { Badge, ListboxAction, Icon, Text } from '@/components';
 
@@ -84,5 +85,5 @@ const onAction = () => {
   emits('action');
 };
 
-provide('mapped-action', context);
+provide<ComputedRef<MappedActionContextType>>('mapped-action', context);
 </script>
