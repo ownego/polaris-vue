@@ -40,7 +40,7 @@ import {
 import useId from '@/use/useId';
 import type { VueNode } from '@/utilities/types';
 
-interface PopoverProps {
+export type PopoverProps = {
    /** The preferred direction to open the popover */
   preferredPosition?: PopoverOverlayProps['preferredPosition'];
   /** The preferred alignment of the popover relative to its activator */

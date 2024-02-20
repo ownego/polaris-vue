@@ -44,6 +44,14 @@ export function useMeta(ignoreFetch = false) {
     if (typeof schema === 'string') { // string
       let tmpSchema = schema;
 
+      if (tmpSchema === 'false') {
+        tmpSchema = 'boolean';
+      }
+
+      if (tmpSchema === 'true') {
+        tmpSchema = '';
+      }
+
       if (tmpSchema.startsWith('ComponentOptions')) {
         tmpSchema = 'Component';
       }
@@ -74,6 +82,14 @@ export function useMeta(ignoreFetch = false) {
       // Number
       if (types[0] === 'number') {
         return ['number'];
+      }
+
+      if (types[0] === 'ResponsiveProp<boolean>') {
+        return ['ResponsiveProp'];
+      }
+
+      if (types[0] === 'AutoSelection') {
+        return ['AutoSelection'];
       }
     }
 

@@ -234,8 +234,8 @@ const clickPaginationLink = (id: string) => {
     if (link) {
       link.click();
     }
-  };
-}
+  }
+};
 
 const handleCallback = (fn: () => void) => {
   return () => {
