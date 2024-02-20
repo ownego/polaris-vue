@@ -54,8 +54,6 @@ Box(
                     :name="`option-label-${option.id}`"
                   )
                   template(v-else) {{ option.label }}
-                template(#media, v-if="slots[`option-media-${option.id}`]")
-                  slot(:name="`option-media-${option.id}`")
 </template>
 
 <script setup lang="ts">
@@ -84,7 +82,7 @@ interface OptionListProps {
   /** Collection of options to be listed */
   options?: OptionDescriptor[];
   /** Defines a specific role attribute for the list itself */
-  role?: 'listbox' | 'combobox' | BoxProps['role'] | string;
+  role?: 'listbox' | 'combobox' | BoxProps['role'];
   /** Defines a specific role attribute for each option in the list */
   optionRole?: string;
   /** Sections containing a header and related options */
