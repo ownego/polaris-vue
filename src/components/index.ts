@@ -1,4 +1,5 @@
 export * from './ActionList';
+export * from './ActionMenu';
 export * from './AppProvider';
 export * from './Avatar';
 export * from './Badge';
@@ -39,6 +40,7 @@ export * from './LegacyStack';
 export * from './Link';
 export * from './List';
 export * from './Listbox';
+export * from './Page';
 export * from './Pagination';
 export * from './Popover';
 export * from './Portal';
