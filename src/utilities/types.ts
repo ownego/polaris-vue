@@ -216,13 +216,6 @@ export interface ComplexAction
     LoadableAction,
     PlainAction {}
 
-export interface BadgeAction {
-  badge?: {
-    tone: 'new';
-    content: string;
-  };
-}
-
 export interface MenuActionDescriptor extends ComplexAction, TooltipAction {
   /** Zero-indexed numerical position. Overrides the action's order in the menu */
   index?: number;

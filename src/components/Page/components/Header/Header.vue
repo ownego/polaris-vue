@@ -82,7 +82,7 @@ import type {
 } from '@/utilities/types';
 import useI18n from '@/use/useI18n';
 import { useMediaQueryContext } from '@/use/useMediaQuery';
-import type { PaginationProps } from '@/components/Pagination/Pagination.vue';
+import type { PaginationProps } from '@/components/Pagination/types.ts';
 import type { BreadcrumbsProps } from '@/components/Breadcrumbs/Breadcrumbs.vue';
 import { useHasSlot } from '@/use/useHasSlot';
 import { classNames } from '@/utilities/css';

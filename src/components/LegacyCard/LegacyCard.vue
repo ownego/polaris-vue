@@ -73,7 +73,7 @@ import { classNames } from '@/utilities/css';
 import { Button } from '@/components';
 import { useHasSlot } from '@/use/useHasSlot';
 import styles from '@polaris/components/LegacyCard/LegacyCard.module.scss';
-import { Header, Section, Subsection } from './components';
+import { Header, Section } from './components';
 
 interface LegacyCardProps {
   /** Title content for the card */
