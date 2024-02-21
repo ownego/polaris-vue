@@ -72,6 +72,7 @@ const hasHeaderContent = computed(() =>
         ((props.secondaryActions && !hasSlot(slots.secondaryActions) && props.secondaryActions.length > 0)
         || (hasSlot(slots.secondaryActions) && !props.secondaryActions && !slots.secondaryActions.length))
       )
+    || (props.actionGroups && props.actionGroups.length > 0)
     || props.backAction,
 );
 
