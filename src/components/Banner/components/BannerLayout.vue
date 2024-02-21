@@ -29,7 +29,7 @@ template(v-else)
 </template>
 
 <script setup lang="ts">
-import { computed, h, useAttrs, inject } from 'vue';
+import { computed, h, getCurrentInstance, inject } from 'vue';
 import styles from '@polaris/components/Banner/Banner.module.scss';
 import useI18n from '@/use/useI18n';
 import type { VueNode } from '@/utilities/types';
@@ -48,7 +48,7 @@ const props = withDefaults(defineProps<BannerProps>(), {
 });
 
 const i18n = useI18n();
-const attrs = useAttrs();
+const currentInstance = getCurrentInstance();
 
 const withinContentContainer = inject<boolean>('WithinContentContext', false);
 
@@ -102,14 +102,10 @@ const actionButtons = computed(() =>
   ),
 )
 
-const dismissListener = computed(() => {
-  if (attrs['onDismiss']) {
-    return attrs['onDismiss'];
-  }
-});
+const hasDismiss = computed(() => Boolean(currentInstance?.vnode.props?.onDismiss));
 
 const dismissButton = computed(() => {
-  return dismissListener.value && h(
+  return hasDismiss.value && h(
     Button,
     {
       variant: 'tertiary',
@@ -118,7 +114,7 @@ const dismissButton = computed(() => {
         { class: styles[isInlineIconBanner.value ? 'icon-secondary' : bannerColors.value.icon] },
         [ h(Icon, { source: XIcon }) ],
       ),
-      onClick: () => { dismissListener.value },
+      onClick: currentInstance?.vnode.props?.onDismiss,
       accessibilityLabel: i18n.translate('Polaris.Banner.dismissButton'),
     }
   )

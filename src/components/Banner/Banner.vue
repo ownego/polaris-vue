@@ -17,7 +17,7 @@ div(
 </template>
 
 <script setup lang="ts">
-import { computed, ref, inject, useAttrs } from 'vue';
+import { computed, ref, provide, getCurrentInstance } from 'vue';
 import { classNames } from '@/utilities/css';
 import type { VueNode } from '@/utilities/types';
 import styles from '@polaris/components/Banner/Banner.module.scss';
@@ -33,7 +33,7 @@ const props = withDefaults(defineProps<BannerProps>(), {
   tone: 'info',
 });
 
-const attrs = useAttrs();
+const currentInstance = getCurrentInstance();
 
 defineExpose({
   focus: () => {
@@ -50,13 +50,10 @@ const wrapperRef = ref<HTMLInputElement | null>(null);
 const shouldShowFocus = ref<boolean>(false);
 
 const listeners = computed(() => {
-  const event = 'dismiss';
   const eventBindings: Record<string, unknown> = {};
 
-  const eventName = 'onDismiss';
-
-  if (attrs[eventName]) {
-    eventBindings[event] = attrs[eventName];
+  if (currentInstance?.vnode.props?.onDismiss) {
+    eventBindings['dismiss'] = currentInstance.vnode.props.onDismiss;
   }
 
   return eventBindings;
@@ -81,4 +78,6 @@ const className = computed(() => classNames(
   shouldShowFocus.value && styles.keyFocused,
   withinContentContainer ? styles.withinContentContainer : styles.withinPage,
 ));
+
+provide('banner-context', false);
 </script>
