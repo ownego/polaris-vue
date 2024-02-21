@@ -1,4 +1,5 @@
 import { type Ref, inject, ref } from 'vue';
+import type { ComboboxListboxType } from '@/utilities/types';
 
 export interface NavigableOption {
   domId: string;
@@ -38,8 +39,14 @@ export function useAction() {
   return context;
 }
 
+export function useComboboxListbox() {
+  const context = inject<ComboboxListboxType>('combobox-listbox', {});
+
+  return context;
+}
+
 export function useComboboxListboxOption() {
-  const context = inject('combobox-listbox-option', { allowMultiple: false }) as ComboboxListboxOptionType;
+  const context = inject<ComboboxListboxOptionType>('combobox-listbox-option', { allowMultiple: false });
 
   return context;
 }

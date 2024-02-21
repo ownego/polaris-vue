@@ -87,6 +87,8 @@ const metaChecker = createComponentMetaChecker(
   metaOptions,
 );
 
+const NESTED_COMPONENT_PATH_REGEX = /(.*)\/components\/(.*)\/components/;
+
 function getMeta(filePaths: string[]): void {
   for (const filePath of filePaths) {
     const componentName = path.parse(filePath).name;
@@ -101,8 +103,22 @@ function getMeta(filePaths: string[]): void {
       slots: meta.slots,
     };
 
+    const nestedComponentMatch = NESTED_COMPONENT_PATH_REGEX.exec(filePath);
+    let pathToWrite = metaPath;
+
+    if (nestedComponentMatch) {
+      // If the component is nested, we need to create a folder for it
+      const nestedComponentPath = path.join(metaPath, nestedComponentMatch[2]);
+
+      if (!fs.existsSync(nestedComponentPath)) {
+        fs.mkdirSync(nestedComponentPath, {recursive: true});
+      }
+
+      pathToWrite = nestedComponentPath;
+    }
+
     fs.writeFileSync(
-      path.join(metaPath, `${componentName}.json`),
+      path.join(pathToWrite, `${componentName}.json`),
       JSON.stringify(ast, undefined, 2),
     );
 

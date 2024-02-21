@@ -23,29 +23,25 @@ li(
     :url="url",
     :external="external",
   )
-    slot(
-      v-if="isSlotContainHTMLTag",
-    )
+    slot(v-if="isSlotContainHTMLTag")
     TextOption(
       v-else,
-      :selected="selected",
+      v-model="model",
       :disabled="disabled",
     )
       slot
   template(v-else)
     TextOption(
       v-if="!isSlotContainHTMLTag",
-      :selected="selected",
+      v-model="model",
       :disabled="disabled",
     )
       slot
-    slot(
-      v-else,
-    )
+    slot(v-else)
 </template>
 
 <script setup lang="ts">
-import { inject, ref, computed, type VNode } from 'vue';
+import { inject, ref, computed, type VNode, onMounted, watch } from 'vue';
 import { classNames } from '@/utilities/css';
 import useId from '@/use/useId';
 import { listboxWithinSectionDataSelector } from '@polaris/components/Listbox/components/Section/selectors';
@@ -74,6 +70,19 @@ const slots = defineSlots<{
   // Children. When a string, children are rendered in a styled TextOption
   default?: (_?: VueNode) => VNode[];
 }>();
+
+const model = defineModel<boolean>();
+
+onMounted(() => {
+  model.value = props.selected;
+});
+
+watch(
+  () => props.selected,
+  (newVal) => {
+    model.value = newVal;
+  }, { immediate: true },
+);
 
 //- Inject
 const mappedActionContext = inject<MappedActionContextType>('mapped-action-context', {});
@@ -115,6 +124,8 @@ const handleOptionSelect = (event: MouseEvent | KeyboardEvent) => {
 
   event.preventDefault();
   event.stopPropagation();
+
+  model.value = !model.value;
   onAction && onAction();
   if (listItemRef.value && !onAction) {
     onOptionSelect({
