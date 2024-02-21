@@ -29,7 +29,7 @@ template(v-else)
 </template>
 
 <script setup lang="ts">
-import { computed, h, getCurrentInstance, inject } from 'vue';
+import { computed, h, getCurrentInstance } from 'vue';
 import styles from '@polaris/components/Banner/Banner.module.scss';
 import useI18n from '@/use/useI18n';
 import type { VueNode } from '@/utilities/types';
@@ -37,6 +37,7 @@ import { Icon, ButtonGroup, Text, Button } from '@/components';
 import XIcon from '@icons/XIcon.svg';
 import type { BannerProps } from '../types';
 import { bannerAttributes } from '../types';
+import useWithinContentContext from '../context';
 
 defineSlots<{
   /** The content to display inside the button */
@@ -50,7 +51,7 @@ const props = withDefaults(defineProps<BannerProps>(), {
 const i18n = useI18n();
 const currentInstance = getCurrentInstance();
 
-const withinContentContainer = inject<boolean>('WithinContentContext', false);
+const withinContentContainer = useWithinContentContext();
 
 const isInlineIconBanner = computed(() => !props.title && !withinContentContainer);
 
