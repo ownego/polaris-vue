@@ -1,5 +1,6 @@
 <template>
 <div style="height: 568px">
+  <p>Account: {{ accountStatus }}</p>
   <LegacyCard>
     <ResourceList
       :resourceName="resourceName"
@@ -40,9 +41,9 @@
 import { ref, h, watch } from 'vue';
 import { ChoiceList, TextField, RangeSlider } from '@/components';
 
-const taggedWith = ref<string | undefined>(undefined);
-const accountStatus = ref<string[] | undefined>(undefined);
-const moneySpent = ref<[number, number] | undefined>(undefined);
+const taggedWith = ref<string | undefined>('');
+const accountStatus = ref<string[] | undefined>([]);
+const moneySpent = ref<[number, number] | undefined>([0, 500]);
 const queryValue = ref('');
 
 
@@ -55,7 +56,7 @@ const handleQueryValueRemove = () => {
 };
 
 const handleAccountStatusRemove = () => {
-  accountStatus.value = undefined;
+  accountStatus.value = [];
 };
 
 const handleMoneySpentRemove = () => {
@@ -69,6 +70,14 @@ const handleAccountStatusChange = (value: string[]) => {
 const handleFiltersQueryChange = (value: string) => {
   queryValue.value = value;
 }
+
+const handleMoneySpentChange = (value: any) => {
+  moneySpent.value = value;
+};
+
+const handleTaggedWithChange = (value: string) => {
+  taggedWith.value = value;
+};
 
 const handleFiltersClearAll = () => {
   handleAccountStatusRemove();
@@ -163,8 +172,8 @@ const filters = [
         {label: 'Declined', value: 'declined'},
       ],
       modelValue: accountStatus.value || [],
+      'onUpdate:modelValue': handleAccountStatusChange,
       allowMultiple: true,
-      onChange: handleAccountStatusChange,
     }),
     shortcut: true,
   },
@@ -176,9 +185,7 @@ const filters = [
       modelValue: taggedWith.value,
       autoComplete: "off",
       labelHidden: true,
-      'onUpdate:modelValue': (value: string) => {
-        taggedWith.value = value;
-      },
+      onChange: handleTaggedWithChange,
     }),
     shortcut: true,
   },
