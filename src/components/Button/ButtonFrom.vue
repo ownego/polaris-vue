@@ -24,7 +24,7 @@ const props = defineProps<Props>();
 
 const plainVariant = computed(() => props.action.plain ? 'plain' : undefined);
 const destructiveVariant = computed(() => props.action.destructive ? 'primary' : undefined);
-const tone = computed(() => !props.overrides && props.action.destructive ? 'critical' : props.overrides?.tone);
+const tone = computed(() => !props.overrides?.tone && props.action.destructive ? 'critical' : props.overrides?.tone);
 const bindProps = computed(() => {
   if (!props.action) {
     return {};

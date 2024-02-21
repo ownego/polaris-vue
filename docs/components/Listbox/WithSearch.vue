@@ -198,7 +198,7 @@ const handleQueryChange = (value: string) => {
   if (query.value.length >= 2) handleFilterSegments(query.value);
 };
 
-const handleQueryClear = () => {
+const handleQueryClear = (_e: Event) => {
   handleQueryChange('');
 };
 

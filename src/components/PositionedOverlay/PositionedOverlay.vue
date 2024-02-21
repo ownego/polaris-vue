@@ -45,9 +45,6 @@ import {
 import type { PreferredPosition, PreferredAlignment } from './utilities/math';
 import type { VueNode } from '@/utilities/types';
 
-// The unknown gap unexpected when the overlay render has the white space at the bottom.
-const DESIRE_HEIGHT_GAP_UNEXPECTED = 21;
-
 type Positioning = 'above' | 'below';
 
 export interface OverlayDetails {
@@ -286,7 +283,7 @@ function handleMeasurement() {
      * overlay.value.firstChild will be true if there is a text node inside overlay.value
      * -> this case seem like will never happen
      * -> remove overlay.value.firstChild instanceof HTMLElement and use overlay.value.firstElementChild only
-     * 
+     *
      * Note:
      * - With original version if overlay.value.firstElementChild is available and overlay.value.firstChild is not then there will be small padding below popover
      */

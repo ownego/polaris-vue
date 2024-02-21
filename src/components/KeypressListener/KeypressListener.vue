@@ -43,6 +43,7 @@ onMounted(() => {
     handleKeyEvent,
     props.useCapture || props.options,
   );
+  console.log('KeypressListener mounted', props.keyEvent, props.handler);
 });
 
 onBeforeUnmount(() => {
