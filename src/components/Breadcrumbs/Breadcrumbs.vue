@@ -2,15 +2,16 @@
 nav(role="navigation")
   Button(
     :key="backAction.content",
-    :url="'url' in backAction ? backAction.url : undefined",
+    :url="url",
     :icon="ArrowLeftIcon",
     :accessibilityLabel="backAction.accessibilityLabel ?? backAction.content",
-    @click="'onAction' in backAction ? backAction.onAction : undefined",
+    @click="callbackOnAction",
     @pointerdown="handleMouseUpByBlurring",
   )
 </template>
 
 <script setup lang="ts">
+import { computed } from 'vue';
 import ArrowLeftIcon from '@icons/ArrowLeftIcon.svg';
 import type { CallbackAction, LinkAction } from '@/utilities/types';
 import { handleMouseUpByBlurring } from '@/utilities/focus';
@@ -20,5 +21,13 @@ export interface BreadcrumbsProps {
   backAction: CallbackAction | LinkAction;
 }
 
-defineProps<BreadcrumbsProps>();
+const props = defineProps<BreadcrumbsProps>();
+
+const url = computed(() =>
+  'url' in props.backAction ? props.backAction.url : undefined
+);
+
+const callbackOnAction = computed(() =>
+  'onAction' in props.backAction ? props.backAction.onAction : undefined
+);
 </script>

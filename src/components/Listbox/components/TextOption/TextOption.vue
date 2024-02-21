@@ -8,7 +8,7 @@ div(
       :class="styles.Checkbox",
     )
       Checkbox(
-        :checked="selected",
+        v-model="model",
         :disabled="disabled",
       )
         template(#label)
@@ -47,6 +47,10 @@ interface TextOptionProps {
 }
 
 const props = defineProps<TextOptionProps>();
+
+const model = defineModel<boolean>();
+
+model.value = props.selected;
 
 const { allowMultiple } = useComboboxListboxOption();
 const isAction = useAction();
