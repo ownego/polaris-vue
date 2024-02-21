@@ -1,5 +1,5 @@
 <template>
-<!-- <Page title="Sales by product"> -->
+<Page title="Sales by product">
   <LegacyCard>
     <DataTable
       :columnContentTypes="columnContentTypes"
@@ -8,7 +8,7 @@
       :totals="totals"
     />
   </LegacyCard>
-<!-- </Page> -->
+</Page>
 </template>
 
 <script setup lang="ts">

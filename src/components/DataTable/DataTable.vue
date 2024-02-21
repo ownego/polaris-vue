@@ -760,7 +760,6 @@ const defaultRenderRow = ({
   inFixedNthColumn: boolean;
   rowHeights?: number[];
 }) => {
-  console.log(row);
   return () => h(
     'tr',
     {
@@ -769,12 +768,10 @@ const defaultRenderRow = ({
       onMouseenter: handleHover(index),
       onMouseleave: handleHover(),
     },
-    () => row.map((content, cellIndex) => {
+    row.map((content, cellIndex) => {
       const hovered = rowHovered.value === index;
       const id = `cell-${cellIndex}-row-${index}`;
       const colSpan = getColSpan(row.length, props.headings.length, props.columnContentTypes.length, cellIndex);
-
-      console.log(content);
 
       return h(Cell, {
         key: id,
