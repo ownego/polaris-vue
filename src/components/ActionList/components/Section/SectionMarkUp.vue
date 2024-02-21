@@ -49,7 +49,7 @@ import {
   BlockStack,
 } from '@/components';
 import Item from '../Item/Item.vue';
-import type { ActionListItemDescriptor, ActionListSection } from '../../../../utilities/types';
+import type { ActionListItemDescriptor, ActionListSection } from '@/utilities/types';
 
 interface Props {
     /** Section of action items */
