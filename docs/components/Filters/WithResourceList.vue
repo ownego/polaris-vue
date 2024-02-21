@@ -1,8 +1,8 @@
 <template>
 <div style="height: 568px">
-  <p>Account: {{ accountStatus }}</p>
   <LegacyCard>
     <ResourceList
+      flush-filters
       :resourceName="resourceName"
       :items="items"
     >
@@ -41,11 +41,10 @@
 import { ref, h, watch } from 'vue';
 import { ChoiceList, TextField, RangeSlider } from '@/components';
 
-const taggedWith = ref<string | undefined>('');
-const accountStatus = ref<string[] | undefined>([]);
+const taggedWith = ref<string>('');
+const accountStatus = ref<string[]>([]);
 const moneySpent = ref<[number, number] | undefined>([0, 500]);
 const queryValue = ref('');
-
 
 const handleTaggedWithRemove = () => {
   taggedWith.value = '';
@@ -171,8 +170,8 @@ const filters = [
         {label: 'Invited', value: 'invited'},
         {label: 'Declined', value: 'declined'},
       ],
-      modelValue: accountStatus.value || [],
-      'onUpdate:modelValue': handleAccountStatusChange,
+      modelValue: accountStatus.value,
+      onChange: handleAccountStatusChange,
       allowMultiple: true,
     }),
     shortcut: true,
@@ -185,7 +184,9 @@ const filters = [
       modelValue: taggedWith.value,
       autoComplete: "off",
       labelHidden: true,
-      onChange: handleTaggedWithChange,
+      'onUpdate:modelValue': (value: string) => {
+        taggedWith.value = value;
+      },
     }),
     shortcut: true,
   },

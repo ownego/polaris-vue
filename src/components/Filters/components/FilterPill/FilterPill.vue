@@ -71,7 +71,7 @@ div(
 </template>
 
 <script setup lang="ts">
-import { ref, computed, watch, onMounted, type VNode } from 'vue';
+import { ref, computed, watch, onMounted } from 'vue';
 import {
   Popover,
   PopoverSection,
@@ -83,7 +83,7 @@ import {
   UnstyledButton,
 } from '@/components';
 import { classNames } from '@/utilities/css';
-import type { FilterInterface, VueNode } from '@/utilities/types';
+import type { FilterInterface } from '@/utilities/types';
 import useI18n from '@/use/useI18n';
 import { useToggle } from '@/use/useToggle';
 import { useBreakpoints } from '@/utilities/breakpoints';
@@ -113,10 +113,7 @@ type FilterPillEvents = {
 
 const props = defineProps<FilterPillProps>();
 const emits = defineEmits<FilterPillEvents>();
-const slots = defineSlots<{
-  /** The markup for the given filter */
-  filter?: (_?: VueNode) => VNode[];
-}>();
+
 
 const i18n = useI18n();
 const breakpoints = useBreakpoints();

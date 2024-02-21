@@ -7,16 +7,22 @@ examples:
     frameHeight: 700
     title: With a resource list
   - fileName: WithDataTable.vue
+    frameHeight: 600
     title: With a data table
   - fileName: WithChildrenContent.vue
+    frameHeight: 600
     title: With children content
   - fileName: Disabled.vue
+    frameHeight: 600
     title: Disabled
   - fileName: SomeDisabled.vue
+    frameHeight: 600
     title: With some disabled
   - fileName: WithQueryFieldHidden.vue
+    frameHeight: 600
     title: With query field hidden
   - fileName: WithQueryFieldDisabled.vue
+    frameHeight: 600
     title: With query field disabled
 ---
 

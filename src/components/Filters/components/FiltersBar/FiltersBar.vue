@@ -34,9 +34,11 @@ div(
                 :class="styles.AddFilter",
                 :aria-label="i18n.translate('Polaris.Filters.addFilter')",
                 :disabled="disabled || (unsectionedFilters.length === 0 && sectionedFilters.length === 0) || disableFilters",
+                :aria-disabled="disabled || (unsectionedFilters.length === 0 && sectionedFilters.length === 0) || disableFilters",
                 @click="handleAddFilterClick",
               )
                 Text(:variant="labelVariant", as="span") {{ i18n.translate('Polaris.Filters.addFilter') }}{{' '}}
+                PlusIcon
           ActionList(
             action-role="menuitem",
             :items="unsectionedFilters",
@@ -87,6 +89,7 @@ import type {
   FilterInterface,
 } from '@/utilities/types';
 import useI18n from '@/use/useI18n';
+import PlusIcon from '@icons/PlusIcon.svg';
 import styles from '@polaris/components/Filters/Filters.module.scss';
 
 interface FiltersBarProps {
@@ -221,7 +224,7 @@ const labelVariant = computed(() => breakpoints.value.mdDown ? 'bodyLg' : 'bodyS
 
 const shouldShowAddButton = computed(() => props.filters.some((filter) => !filter.pinned));
 const filterWrapperClass = computed(() => classNames(
-  styles.FilterWrapper,
+  styles.FiltersWrapper,
   shouldShowAddButton.value &&
     hasOneOrMorePinnedFilters.value &&
     styles.FilterWrapperWithAddButton,
