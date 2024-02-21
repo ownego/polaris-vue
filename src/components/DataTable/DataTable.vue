@@ -23,13 +23,16 @@ div(
           thead
             tr(:class="styles.StickyTableHeadingsRow")
               //- Render headings
-              template(v-for="(heading, headingIndex) in headings", :key="headingIndex")
+              template(
+                v-for="(heading, headingIndex) in headings",
+                :key="headingIndex",
+              )
                 component(
-                  :is="renderHeading({heading, headingIndex, inFixedNthColumn: Boolean(headingIndex <= fixedFirstColumns - 1 && fixedFirstColumns), inStickyHeader: true})",
+                  :is="renderHeading({heading, headingIndex, inFixedNthColumn: Boolean(fixedFirstColumns && headingIndex <= fixedFirstColumns - 1), inStickyHeader: true})",
                 )
 
   //- navigationMarkup('header')
-  //- component(v-if="!hideScrollIndicator", :is="navigationMarkup('header')")
+  component(v-if="!hideScrollIndicator", :is="navigationMarkup('header')")
 
   div(:class="className")
     div(
@@ -108,6 +111,7 @@ div(
     //- paginationMarkup
     Pagination(
       v-if="pagination",
+      type="table",
       v-bind="pagination",
     )
 
@@ -116,7 +120,9 @@ div(
       v-if="footerContent",
       :class="styles.Footer",
     )
-      component(:is="footerContent")
+      template(v-if="(typeof footerContent === 'string') || (typeof footerContent === 'number')")
+        | {{ footerContent }}
+      component(v-else, :is="footerContent")
 </template>
 
 <script setup lang="ts">
@@ -160,6 +166,7 @@ const props = withDefaults(defineProps<DataTableProps>(), {
   stickyHeader: false,
   fixedFirstColumn: false,
   hoverable: true,
+  initialSortColumnIndex: 0,
 });
 const emits = defineEmits<DataTableEvents>();
 
@@ -609,8 +616,8 @@ const navigationMarkup = (location: 'sticky' | 'header') => h(
     columnVisibilityData: columnVisibilityData.value,
     isScrolledFarthestLeft: isScrolledFarthestLeft.value,
     isScrolledFarthestRight: isScrolledFarthestRight.value,
-    navigateTableLeft: navigateTable('left'),
-    navigateTableRight: navigateTable('right'),
+    onNavigateTableLeft: navigateTable('left'),
+    onNavigateTableRight: navigateTable('right'),
     fixedFirstColumns: fixedFirstColumns.value,
     setRef: (ref: HTMLDivElement) => {
       if (location === 'sticky') {
@@ -652,9 +659,8 @@ const renderHeading = ({
       sorted: isSorted,
       sortable: isSortable,
       sortDirection: direction,
-      fixedNthColumn: fixedFirstColumns.value,
       inFixedNthColumn: fixedFirstColumns.value,
-      // onSort: this.defaultOnSort(headingIndex),
+      onSort: defaultOnSort(headingIndex),
     };
   }
 
@@ -676,7 +682,6 @@ const renderHeading = ({
     fixedCellVisible,
     firstColumnMinWidth: props.firstColumnMinWidth,
     onFocus: handleFocus,
-    onSort: defaultOnSort(headingIndex),
   };
 
   if (inFixedNthColumn && inStickyHeader) {
@@ -686,7 +691,7 @@ const renderHeading = ({
     // focus on the right cell when switching from sticky to non-sticky headers
     return () => [
       h(Cell, {
-        key: `${id}`,
+        key: id,
         ...cellProps,
         setRef: (ref: HTMLTableCellElement | null) => {
           setCellRef({cellRef: ref, index: headingIndex, inStickyHeader});
@@ -701,13 +706,13 @@ const renderHeading = ({
         },
         inFixedNthColumn: Boolean(fixedFirstColumns.value),
         lastFixedFirstColumn: headingIndex === fixedFirstColumns.value - 1,
-        style: {left: columnVisibilityData.value[headingIndex]?.leftEdge},
+        style: { left: `${columnVisibilityData.value[headingIndex]?.leftEdge}px` },
       }, () => heading),
     ];
   }
 
   return () => h(Cell, {
-    key: `${id}`,
+    key: id,
     ...cellProps,
     setRef: (ref: HTMLTableCellElement | null) => {
       setCellRef({cellRef: ref, index: headingIndex, inStickyHeader});

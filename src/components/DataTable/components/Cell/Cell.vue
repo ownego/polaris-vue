@@ -20,7 +20,7 @@ th(
     slot
   slot(v-else)
 
-template(v-if="header || firstColumn || nthColumn")
+template(v-else-if="header || firstColumn || nthColumn")
   th(
     v-if="header",
     :ref="setRef",
@@ -126,7 +126,7 @@ const iconClassName = computed(() => classNames(props.sortable && styles.Icon));
 const direction = computed(() => props.sorted && props.sortDirection ? props.sortDirection : props.defaultSortDirection);
 
 const source = computed(() => direction.value === 'descending' ? SortDescendingIcon : SortAscendingIcon);
-const oppositeDirection = computed(() => props.sortDirection === 'descending' ? 'ascending' : 'descending');
+const oppositeDirection = computed(() => props.sortDirection === 'ascending' ? 'descending' : 'ascending');
 
 const sortAccessibilityLabel = computed(() => i18n.translate(
   'Polaris.DataTable.sortAccessibilityLabel',

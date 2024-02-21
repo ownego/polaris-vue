@@ -25,6 +25,7 @@ examples:
     title: With all of its elements
     description: Use as a broad example that includes most props available to data table.
   - fileName: WithFixedFirstColumns.vue
+    frameHeight: 560
     title: With fixed first columns
     description:
       Use when the table contains many columns and it would benefit the merchant to see a set number of columns when scrolling to the right. For example, the first column in the "Sales by Product" report table is fixed because the product names are important to reference while analyzing the sales data in other columns.
@@ -33,6 +34,7 @@ examples:
     title: With increased density and zebra striping
     description: Use as a broad example that includes most props available to data table.
   - fileName: StickyHeader.vue
+    frameHeight: 560
     title: With sticky header enabled
     description: Use as a broad example that includes most props available to data table.
   - fileName: WithPagination.vue

@@ -12,4 +12,6 @@ const PolarisVue = {
 
 export * from '@/components';
 
+export { useBreakpoints } from '@/utilities/breakpoints';
+
 export default PolarisVue;
