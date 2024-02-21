@@ -1,7 +1,5 @@
 <template lang="pug">
-div(
-  :class="className",
-)
+div(:class="className")
   div(:class="styles.Content")
     div(
       v-if="allowMultiple && !isAction",
@@ -27,7 +25,7 @@ div(
 </template>
 
 <script setup lang="ts">
-import { computed } from 'vue';
+import { computed, onMounted, watch } from 'vue';
 import CheckIcon from '@icons/CheckIcon.svg';
 import { classNames } from '@/utilities/css';
 import { useComboboxListboxOption, useAction } from '@/use/useListbox';
@@ -50,7 +48,16 @@ const props = defineProps<TextOptionProps>();
 
 const model = defineModel<boolean>();
 
-model.value = props.selected;
+onMounted(() => {
+  model.value = props.selected;
+});
+
+watch(
+  () => props.selected,
+  (newVal) => {
+    model.value = newVal;
+  }, { immediate: true },
+);
 
 const { allowMultiple } = useComboboxListboxOption();
 const isAction = useAction();

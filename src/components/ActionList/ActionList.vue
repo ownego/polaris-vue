@@ -63,7 +63,7 @@ import {
 import useFilterActions from '@/use/useFilterActions';
 import useI18n from '@/use/useI18n';
 import { Key } from '@/utilities/types';
-import type { ActionListItemDescriptor, ActionListSection } from '../../utilities/types';
+import type { ActionListItemDescriptor, ActionListSection } from '@/utilities/types';
 
 interface ActionListProps {
   /** Collection of actions for list */

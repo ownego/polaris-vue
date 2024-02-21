@@ -1,6 +1,6 @@
 <template lang="pug">
 div(:id="sectionId", aria-hidden)
-  slot(v-if="hasSlot(slots.default)")
+  slot(v-if="isSlotContainHtml(slots.default)")
   Box(
     v-else,
     padding-block-start="200",
@@ -8,17 +8,18 @@ div(:id="sectionId", aria-hidden)
     padding-block-end="200",
     padding-inline-end="400",
   )
-    Text(as="span", variant="headingSm", color="subdued")
+    Text(as="span", variant="headingSm", tone="subdued")
       slot
 </template>
 
 <script setup lang="ts">
 import { useSlots } from 'vue';
 import { Box, Text } from '@/components';
-import { useHasSlot } from '@/use/useHasSlot';
 import { useSection } from '@/use/useListbox';
+import { useHasSlot } from '@/use/useHasSlot';
 
 const sectionId = useSection();
 const slots = useSlots();
-const { hasSlot } = useHasSlot();
+
+const { isSlotContainHtml } = useHasSlot();
 </script>

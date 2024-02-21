@@ -93,6 +93,15 @@ export function useMeta(ignoreFetch = false) {
       }
     }
 
+    const combinedPattern = /(\w*)\s*\&\s*\{(.*)/;
+    if (combinedPattern.test(types[0])) {
+      const match = combinedPattern.exec(types[0]);
+
+      if (match) {
+        return [match[1], `& {${match[2]} }`].map((s) => serializeSchema(s)).flat();
+      }
+    }
+
     if (schema.kind === 'enum' && Array.isArray(schema.schema) && schema.schema.length < 8) {
       return schema.schema.map((s) => serializeSchema(s)).flat();
     }
@@ -109,6 +118,10 @@ export function useMeta(ignoreFetch = false) {
       || t === 'string'
     ) {
       return 'string';
+    }
+
+    if (/\{.*\}/.test(t)) {
+      return 'collection';
     }
 
     if (t === 'boolean') {

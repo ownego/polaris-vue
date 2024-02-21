@@ -7,17 +7,27 @@ export function isElementOfType(
   element: VueNode,
   component: Component,
 ): boolean {
-  if (element == null) {
+  if (!element) {
     return false;
   }
 
-  // First we need to check if the element is a Vue component
-  if (!element.type || !element.type.__name) {
-    return false; 
+  if (typeof element === 'string' || typeof element === 'number' || typeof element === 'boolean') {
+    return false;
   }
 
-  const elementType = element.type.__name;
-  const componentType = component.__name; 
+  const typeElement = (element as any).type;
 
-  return elementType === componentType;
+  // First we need to check if the element is a Vue component
+  if (!typeElement || !typeElement.__name) {
+    return false;
+  }
+
+
+  const elementName = typeElement.__name;
+  const componentName = (component as any).__name;
+
+  const elementId = typeElement.__hmrId;
+  const componentId = (component as any).__hmrId;
+
+  return elementId === componentId && elementName === componentName;
 }
