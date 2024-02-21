@@ -1,7 +1,7 @@
 <template lang="pug">
 TextField(
   :id="String(id)",
-  v-model="value",
+  v-model="modelValue",
   label-hidden,
   clear-button,
   size="slim",
@@ -30,6 +30,7 @@ TextField(
 </template>
 
 <script setup lang="ts">
+import { computed } from 'vue';
 import {
   Spinner,
   Icon,
@@ -37,7 +38,7 @@ import {
 } from '@/components';
 import { useBreakpoints } from '@/utilities/breakpoints';
 import useId from '@/use/useId';
-import styles from '@polaris/components/SearchField/SearchField.module.scss';
+import styles from '@polaris/components/Filters/components/SearchField/SearchField.module.scss';
 import XCircleIcon from '@icons/XCircleIcon.svg';
 
 interface SearchFieldProps {
@@ -57,12 +58,13 @@ type SearchFieldEvents = {
   'blur': [];
 };
 
-defineProps<SearchFieldProps>();
+const props = defineProps<SearchFieldProps>();
 const emits = defineEmits<SearchFieldEvents>();
 
 const id = useId();
 const breakpoints = useBreakpoints();
 
+const modelValue = computed(() => props.value ?? '');
 function handleChange(value:string) {
   emits('change', value);
 }
