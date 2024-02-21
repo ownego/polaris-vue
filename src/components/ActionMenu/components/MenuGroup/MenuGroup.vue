@@ -11,6 +11,7 @@ Popover(
       :disclosure="true",
       :icon="icon",
       :accessibilityLabel="accessibilityLabel",
+      :disabled="disabled",
       @click="handleClick",
       @get-offset-width="handleOffsetWidth",
     ) {{ title }}
@@ -59,12 +60,13 @@ interface MenuGroupProps {
   accessibilityLabel?: string;
   /** Whether or not the menu is open */
   active?: boolean;
+  /** Whether or not the menu is disable */
+  disabled?: boolean;
   /** Collection of sectioned action items */
   sections?: readonly ActionListSection[];
 }
 
 const props = defineProps<MenuGroupProps>();
-console.log('M group => ', props);
 
 const slots = useSlots();
 

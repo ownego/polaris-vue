@@ -1,14 +1,19 @@
 <template>
 <Page
-  :backAction="{ content: 'Settings', url: '#' }"
-  title="General"
+  fullWidth
+  title="Orders"
+  :primaryAction="{content: 'Create order', icon: PlusIcon}"
+  :secondaryActions="[{content: 'Export'}]"
+  :pagination="{
+    hasNext: true,
+  }"
 >
-  <template #primaryAction>
-    <Button variant="primary">Save</Button>
-  </template>
-
   <LegacyCard title="Credit card" sectioned>
     <Text as="p">Credit card information</Text>
   </LegacyCard>
 </Page>
 </template>
+
+<script setup lang="ts">
+import PlusIcon from '@icons/PlusIcon.svg';
+</script>

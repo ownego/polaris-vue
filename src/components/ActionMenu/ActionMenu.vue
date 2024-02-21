@@ -25,7 +25,7 @@ import type {
   MenuGroupDescriptor,
   ActionListSection,
 } from '@/utilities/types';
-import { Actions, RollupActions } from './components'; 
+import { Actions, RollupActions } from './components';
 import styles from '@polaris/components/ActionMenu/ActionMenu.module.scss';
 
 export interface ActionMenuProps {

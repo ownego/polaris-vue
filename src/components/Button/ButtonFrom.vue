@@ -5,7 +5,8 @@ Button(
   :variant="plainVariant || destructiveVariant",
   v-bind="bindProps",
   @click="handleClick",
-) {{ action.content }}
+)
+  template(v-if="action.content") {{ action.content }}
 </template>
 
 <script setup lang="ts">

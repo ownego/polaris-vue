@@ -96,11 +96,7 @@ interface LegacyCardProps {
   hideOnPrint?: boolean;
 }
 
-const props = withDefaults(defineProps<LegacyCardProps & {
-  Header: typeof Header;
-  Section: typeof Section;
-  Subsection: typeof Subsection;
-}>(), {
+const props = withDefaults(defineProps<LegacyCardProps>(), {
   footerActionAlignment: 'right',
 });
 

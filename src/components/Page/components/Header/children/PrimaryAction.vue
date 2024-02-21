@@ -8,7 +8,7 @@ div(:class="styles.PrimaryActionWrapper")
     )
       ButtonFrom(
         :action="iconOnly",
-        :overrides="{ primary }",
+        :overrides="{ variant: primary ? 'primary' : undefined }",
         @action="() => { onAction && onAction() }",
         @mouseenter="() => { onMouseEnter && onMouseEnter() }",
         @touchstart="() => { onTouchStart && onTouchStart() }",
@@ -16,7 +16,7 @@ div(:class="styles.PrimaryActionWrapper")
     ButtonFrom(
       v-else,
       :action="iconOnly",
-      :overrides="{ primary }",
+      :overrides="{ variant: primary ? 'primary' : undefined }",
       @action="() => { onAction && onAction() }",
       @mouseenter="() => { onMouseEnter && onMouseEnter() }",
       @touchstart="() => { onTouchStart && onTouchStart() }",
@@ -38,8 +38,7 @@ const { hasSlot } = useHasSlot();
 const { isNavigationCollapsed } = useMediaQueryContext();
 
 const primary = computed(() => {
-  const isPrimary = props.primary;
-  return isPrimary === undefined ? true : isPrimary;
+  return !props.primary ? true : props.primary;
 });
 
 const iconOnly = computed(() => {

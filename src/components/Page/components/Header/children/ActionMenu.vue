@@ -1,24 +1,25 @@
 <template lang="pug">
 slot(v-if="hasSlot(slots.default)")
 ActionMenu(
-  v-else-if="(secondaryActions && secondaryActions.length > 0) || hasGroupsWithActions(actionGroups)",
+  v-else-if="hasActionMenu",
   :actions="secondaryActions",
   :groups="actionGroups",
   :rollup="isNavigationCollapsed",
-  :rollupActionsLabel="title ? i18n.translate('Polaris.Page.Header.rollupActionsLabel', {title}) : undefined",
+  :rollupActionsLabel="rollupActionsLabel",
   @action-rollup="onActionRollup",
 )
 </template>
 
 <script setup lang="ts">
-import { useSlots } from 'vue';
+import { computed, useSlots } from 'vue';
+import { ActionMenu } from '@/components/ActionMenu';
 import type { ActionMenuProps } from '@/components/ActionMenu/ActionMenu.vue';
 import type { MenuGroupDescriptor, MenuActionDescriptor } from '@/utilities/types';
 import { useMediaQueryContext } from '@/use/useMediaQuery';
 import { useHasSlot } from '@/use/useHasSlot';
 import useI18n from '@/use/useI18n';
 
-defineProps<{
+const props = defineProps<{
   title?: string;
   secondaryActions?: MenuActionDescriptor[];
   actionGroups?: MenuGroupDescriptor[];
@@ -33,6 +34,15 @@ const slots = useSlots();
 const { hasSlot } = useHasSlot();
 const { isNavigationCollapsed } = useMediaQueryContext();
 const i18n = useI18n();
+
+const rollupActionsLabel = computed(() => 
+  props.title ? i18n.translate('Polaris.Page.Header.rollupActionsLabel', { title: props.title }) : undefined,
+);
+
+const hasActionMenu = computed(() =>
+  (props.secondaryActions && props.secondaryActions.length > 0)
+    || hasGroupsWithActions(props.actionGroups),
+);
 
 const onActionRollup = (hasRolledUp: boolean) => {
   emits('action-rollup', hasRolledUp);

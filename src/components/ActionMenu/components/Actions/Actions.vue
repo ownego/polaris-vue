@@ -163,7 +163,9 @@ const finalRolledUp = computed(() => {
   );
 });
 
-const finalRolledUpActions = computed(() => finalRolledUp.value[0] as ActionListItemDescriptor[]);
+const finalRolledUpActions = computed(() => {
+  return finalRolledUp.value[0] as ActionListItemDescriptor[]
+});
 const finalRolledUpSectionGroups = computed(() => finalRolledUp.value[1] as ActionListSection[]);
 
 const menuGroupProps = (group: MenuGroupDescriptor) => {

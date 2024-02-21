@@ -42,14 +42,14 @@ Box(
           ActionMenu(v-bind="actionMenuProps")
             slot(name="secondaryActions")
           PrimaryAction(
-            v-if="(slots.primaryAction || props.primaryAction) && !isNavigationCollapsed && !conditionDesktopCompact",
+            v-if="(slots.primaryAction || primaryAction) && !isNavigationCollapsed && !conditionDesktopCompact",
             v-bind="primaryActionProps",
           )
             slot(name="primaryAction")
           //- #slot4
           template(v-if="conditionSlot4")
             PrimaryAction(
-              v-if="(slots.primaryAction || props.primaryAction) && (isNavigationCollapsed || conditionDesktopCompact)",
+              v-if="(slots.primaryAction || primaryAction) && (isNavigationCollapsed || conditionDesktopCompact)",
               v-bind="primaryActionProps",
             )
               slot(name="primaryAction")
@@ -139,12 +139,7 @@ const SHORT_TITLE = 20;
 const REALLY_SHORT_TITLE = 8;
 const LONG_TITLE = 34;
 
-const props = withDefaults(defineProps<HeaderProps>(), {
-  titleHidden: false,
-  secondaryActions: [] as any,
-  actionGroups: [] as any,
-  compactTitle: false,
-});
+const props = defineProps<HeaderProps>();
 
 const emits = defineEmits<{
   /** Callback that returns true when secondary actions are rolled up into action groups, and false when not */
@@ -223,7 +218,7 @@ const conditionHasRightAlign = computed(() => {
       ((props.secondaryActions && !slots.secondaryActions && props.secondaryActions.length > 0)
         || (slots.secondaryActions && !props.secondaryActions && !slots.secondaryActions.length))
     )
-    || ((props.actionGroups && props.actionGroups.length > 0) || slots.actionGroups)
+    || ((props.actionGroups && props.actionGroups.length > 0) || slots.actionGroups);
 });
 
 const hasGroupsWithActions = (groups: ActionMenuProps['groups'] = []) => {
