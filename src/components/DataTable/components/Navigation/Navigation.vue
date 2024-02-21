@@ -31,7 +31,7 @@ import useI18n from '@/use/useI18n';
 import { Button } from '@/components';
 import type { ColumnVisibilityData } from '../../types';
 
-import styles from '@polaris/components/DataTable/DataTable.module.css';
+import styles from '@polaris/components/DataTable/DataTable.module.scss';
 import ChevronLeftIcon from '@icons/ChevronLeftIcon.svg';
 import ChevronRightIcon from '@icons/ChevronRightIcon.svg';
 

@@ -78,7 +78,6 @@ import SortDescendingIcon from '@icons/SortDescendingIcon.svg';
 import SortAscendingIcon from '@icons/SortAscendingIcon.svg';
 import styles from '@polaris/components/DataTable/DataTable.module.scss';
 
-
 const props = withDefaults(defineProps<CellProps>(), {
   verticalAlign: 'top',
   defaultSortDirection: 'ascending',
@@ -102,7 +101,7 @@ const className = computed(() => classNames(
   props.header && styles['Cell-header'],
   props.total && styles['Cell-total'],
   props.totalInFooter && styles['Cell-total-footer'],
-  numeric && styles['Cell-numeric'],
+  numeric.value && styles['Cell-numeric'],
   props.sortable && styles['Cell-sortable'],
   props.sorted && styles['Cell-sorted'],
   props.stickyHeadingCell && styles.StickyHeaderCell,

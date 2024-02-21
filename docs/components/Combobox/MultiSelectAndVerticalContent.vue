@@ -52,10 +52,7 @@
 </template>
 
 <script setup lang="ts">
-import { computed, h, ref } from 'vue';
-// @ts-ignore
-import { Text } from '@/components';
-// import { Text } from '@ownego/polaris-vue';
+import { computed, h, ref, resolveComponent } from 'vue';
 
 const selectedTags = ref<string[]>(['Rustic']);
 const inputValue = ref('');
@@ -95,7 +92,7 @@ const formatOptionText = (option: string) => {
 
   return h('p', [
     start,
-    h(Text, { fontWeight: 'bold', as: 'span' }, {
+    h(resolveComponent('Text'), { fontWeight: 'bold', as: 'span' }, {
       default: () => highlight,
     }),
     end,
