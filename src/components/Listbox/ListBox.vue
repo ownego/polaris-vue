@@ -25,7 +25,7 @@ ul(
   :aria-label="inCombobox ? undefined : accessibilityLabel",
   :aria-labelledby="textFieldLabelId || undefined",
   :aria-busy="Boolean(loading)",
-  :asia-activedescendant="activeDescendant",
+  :aria-activedescendant="activeDescendant",
   :id="listId",
   @focus="handleFocus",
   @blur="handleBlur",
