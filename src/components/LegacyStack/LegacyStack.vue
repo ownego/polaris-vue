@@ -1,14 +1,13 @@
 <template lang="pug">
-div(
-  :class="className",
-)
-  template(v-if="isChildContentWrappedByItem")
-    slot
+div(:class="className")
+  slot(v-if="noItemWrap")
   template(
-    v-else-if="hasSlot(slots.default)",
-    v-for="item in slotsElms",
+    v-else-if="slotsElms.length",
+    v-for="item, _index in slotsElms",
+    :key="_index",
   )
-    LegacyStackItem
+    component(v-if="isChildContentWrappedByItem && hasContent(item)", :is="item")
+    LegacyStackItem(v-else-if="hasContent(item)")
       component(:is="item")
 </template>
 
@@ -51,6 +50,8 @@ export interface LegacyStackProps {
   alignment?: Alignment;
   /** Adjust horizontal alignment of elements */
   distribution?: Distribution;
+  /** No wrap all stack elements with StackItem  */
+  noItemWrap?: boolean;
 }
 
 const slots = defineSlots<{
@@ -58,7 +59,7 @@ const slots = defineSlots<{
   default: (_?: VueNode) => any;
 }>()
 
-const { hasSlot } = useHasSlot();
+const { hasContent } = useHasSlot();
 const { slotsElms } = useExtractFragment(slots.default);
 
 const props = withDefaults(defineProps<LegacyStackProps>(), {
@@ -76,6 +77,7 @@ const className = computed(() => {
     );
   }
 );
+
 const isChildContentWrappedByItem = computed(() => {
   const childContents: any = slots.default?.() || [];
 
@@ -89,5 +91,4 @@ const isChildContentWrappedByItem = computed(() => {
 
   return isElementOfType(children, LegacyStackItem);
 });
-
 </script>

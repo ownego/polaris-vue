@@ -1,0 +1,18 @@
+{
+  "filePath": "src/utilities/dates.ts",
+  "name": "Range",
+  "description": "",
+  "value": "",
+  "members": [
+    {
+      "filePath": "src/utilities/dates.ts",
+      "name": "start",
+      "value": "Date"
+    },
+    {
+      "filePath": "src/utilities/dates.ts",
+      "name": "end",
+      "value": "Date"
+    }
+  ]
+}

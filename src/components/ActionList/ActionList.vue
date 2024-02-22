@@ -63,13 +63,13 @@ import {
 import useFilterActions from '@/use/useFilterActions';
 import useI18n from '@/use/useI18n';
 import { Key } from '@/utilities/types';
-import type { ActionListItemDescriptor, ActionListSection } from '../../utilities/types';
+import type { ActionListItemDescriptor, ActionListSection } from '@/utilities/types';
 
 interface ActionListProps {
   /** Collection of actions for list */
-  items?: readonly ActionListItemDescriptor[];
+  items?: ActionListItemDescriptor[];
   /** Collection of sectioned action items */
-  sections?: readonly ActionListSection[];
+  sections?: ActionListSection[];
   /** Defines a specific role attribute for each action in the list */
   actionRole?: 'menuitem' | string;
   /** Allow users to filter items in the list. Will only show if more than 8 items in the list. The item content of every items must be a string for this to work */

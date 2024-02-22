@@ -25,7 +25,7 @@ ul(
   :aria-label="inCombobox ? undefined : accessibilityLabel",
   :aria-labelledby="textFieldLabelId || undefined",
   :aria-busy="Boolean(loading)",
-  :asia-activedescendant="activeOption && activeOption.domId",
+  :aria-activedescendant="activeDescendant",
   :id="listId",
   @focus="handleFocus",
   @blur="handleBlur",
@@ -35,11 +35,12 @@ ul(
 </template>
 
 <script setup lang="ts">
-import { ref, computed, provide, inject, onMounted, type VNode, onUpdated } from 'vue';
+import { ref, computed, provide, onMounted, type VNode, watch, onUpdated } from 'vue';
 import { Text, KeypressListener } from '@/components';
 import useId from '@/use/useId';
+import { useComboboxListbox } from '@/use/useListbox';
 import { classNames } from '@/utilities/css';
-import { Key, type ComboboxListboxType, type NavigableOption, type VueNode } from '@/utilities/types';
+import { Key, type NavigableOption, type VueNode } from '@/utilities/types';
 import { AutoSelection } from './utils';
 import { scrollOptionIntoView } from '@polaris/utilities/listbox/utilities';
 import { debounce } from '@polaris/utilities/debounce';
@@ -55,7 +56,7 @@ const OPTION_FOCUS_ATTRIBUTE = 'data-focused';
 
 interface ListBoxProps {
   /** Indicates the default active option in the list. Patterns that support option creation should default the active option to the first option.
-   * @default AutoSelection.FirstSelected
+   * @default FIRST_SELECTED
    */
   autoSelection?: AutoSelection;
   /** Explicitly enable keyboard control */
@@ -66,21 +67,21 @@ interface ListBoxProps {
   customListId?: string;
 }
 
-type ListBoxEmits = {
+type ListBoxEvents = {
   'select': [value: string];
-  'on-active-option-change': [value: string];
+  'active-option-change': [value: string];
 }
 
 const props = withDefaults(defineProps<ListBoxProps>(), {
   autoSelection: AutoSelection.FirstSelected,
 });
-const emits = defineEmits<ListBoxEmits>();
+const emits = defineEmits<ListBoxEvents>();
 const slots = defineSlots<{
   /** Inner content of the listbox */
   default?: (_?: VueNode) => VNode[];
 }>();
 
-const comboboxListboxContext = inject<ComboboxListboxType>('combobox-listbox-context', {});
+const comboboxListboxContext = useComboboxListbox();
 
 const {
   listboxId,
@@ -106,7 +107,9 @@ const activeOption = ref<NavigableOption | undefined>();
 const uniqueId = String(useId());
 const listId = computed(() => props.customListId || uniqueId);
 const inCombobox = computed(() => Boolean(setActiveOptionId));
-const getNavigableOptions = computed<[] | HTMLElement[]>(() => {
+const activeDescendant = computed(() => activeOption.value?.domId);
+
+const getNavigableOptions = () => {
   if (!listboxRef.value) {
     return [];
   }
@@ -116,7 +119,7 @@ const getNavigableOptions = computed<[] | HTMLElement[]>(() => {
       listboxRef.value.querySelectorAll<HTMLElement>(OPTION_SELECTOR),
     ),
   ];
-});
+};
 
 const getFirstNavigableOption = (
   currentOpts: HTMLElement[],
@@ -172,16 +175,18 @@ const handleChangeActiveOption = (
 ): void | Record<string, any> => {
   if (!nextOption) {
     activeOption.value = undefined;
-  } else {
-    activeOption.value?.element.removeAttribute(OPTION_FOCUS_ATTRIBUTE);
-    nextOption?.element.setAttribute(OPTION_FOCUS_ATTRIBUTE, 'true');
-    handleScrollIntoViewDebounced(nextOption);
-    activeOption.value = nextOption;
-    setActiveOptionId?.(nextOption.domId);
-
-    emits('on-active-option-change', nextOption.value);
+    return;
   }
+
+  activeOption.value?.element.removeAttribute(OPTION_FOCUS_ATTRIBUTE);
+  nextOption?.element.setAttribute(OPTION_FOCUS_ATTRIBUTE, 'true');
+  handleScrollIntoViewDebounced(nextOption);
+  activeOption.value = nextOption;
+  setActiveOptionId?.(nextOption.domId);
+
+  emits('active-option-change', nextOption.value);
 };
+
 const getFormattedOption = (
   element: HTMLElement, index: number,
 ): Record<string, any> => {
@@ -197,7 +202,7 @@ const getFormattedOption = (
 
 const resetActiveOption = (): void => {
   let nextOption;
-  const nextOptions = getNavigableOptions.value;
+  const nextOptions = getNavigableOptions();
   const nextActiveOption = getFirstNavigableOption(nextOptions);
 
   if (nextOptions.length === 0 && currentOptions.value.length > 0) {
@@ -228,10 +233,10 @@ const resetActiveOption = (): void => {
   );
 
   const listIsUnchanged =
-      nextValues.length === currentValues.length &&
-      nextValues.every((value, index) => {
-        return currentValues[index] === value;
-      });
+    nextValues.length === currentValues.length &&
+    nextValues.every((value, index) => {
+      return currentValues[index] === value;
+    });
 
   if (listIsUnchanged) {
     if (optionIsAlreadyActive && actionContentHasUpdated) {
@@ -253,13 +258,13 @@ const resetActiveOption = (): void => {
     currentOptions.value = nextOptions;
     return;
   }
-
   currentOptions.value = nextOptions;
 
   if (lazyLoading.value) {
     lazyLoading.value = false;
     return;
   }
+
   handleChangeActiveOption(nextOption as NavigableOption);
 };
 
@@ -271,12 +276,12 @@ const getNextValidOption = async (key: ArrowKeys): Promise<Record<string, any>> 
   let totalOptions = -1;
 
   if (!activeOption.value && props.autoSelection === AutoSelection.None) {
-    const nextOptions = getNavigableOptions.value;
+    const nextOptions = getNavigableOptions();
     const nextActiveOption = getFirstNavigableOption(nextOptions);
     currentOptions.value = nextOptions;
 
     const {
-      tmpElement,
+      element: tmpElement,
       index,
     } = nextActiveOption as Record<string, any>;
 
@@ -405,8 +410,13 @@ const onOptionSelect = (option: NavigableOption): void => {
 };
 
 onUpdated(() => {
-  if (listboxRef.value) {
-    scrollableRef.value = listboxRef.value.closest(scrollable.selector);
+  if (
+    props.autoSelection !== AutoSelection.None
+    && !loading.value
+    && slots.default
+    && slots.default().length > 0
+  ) {
+    resetActiveOption();
   }
 });
 
@@ -429,7 +439,15 @@ onMounted(() => {
   }
 });
 
+watch(
+  () => listboxRef.value,
+  () => {
+    if (listboxRef.value) {
+      scrollableRef.value = listboxRef.value.closest(scrollable.selector);
+    }
+  },
+);
+
 provide('listbox', { onOptionSelect, setLoading });
 provide('within-listbox', true);
-
 </script>
