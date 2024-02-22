@@ -3,6 +3,7 @@ export * from './AppProvider';
 export * from './Autocomplete';
 export * from './Avatar';
 export * from './Badge';
+export * from './Banner';
 export * from './Bleed';
 export * from './BlockStack';
 export * from './Box';
