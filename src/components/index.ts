@@ -50,6 +50,7 @@ export * from './LegacyStack';
 export * from './Link';
 export * from './List';
 export * from './Listbox';
+export * from './MediaCard';
 export * from './Optionlist';
 export * from './Pagination';
 export * from './Popover';
