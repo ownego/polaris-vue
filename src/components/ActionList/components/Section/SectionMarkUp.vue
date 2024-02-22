@@ -49,7 +49,7 @@ import {
   BlockStack,
 } from '@/components';
 import Item from '../Item/Item.vue';
-import type { ActionListItemDescriptor, ActionListSection } from '../../../../utilities/types';
+import type { ActionListItemDescriptor, ActionListSection } from '@/utilities/types';
 
 interface Props {
     /** Section of action items */
@@ -70,13 +70,11 @@ const emits = defineEmits<{
 }>();
 
 const handleAction = (itemOnAction: ActionListItemDescriptor['onAction']) => {
-  return () => {
-    if (itemOnAction) {
-      itemOnAction();
-    }
+  if (itemOnAction) {
+    itemOnAction();
+  }
 
-    emits('action-any-item');
-  };
+  emits('action-any-item');
 };
 
 const sectionRole = computed(() => {

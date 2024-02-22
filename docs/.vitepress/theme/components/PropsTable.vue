@@ -17,7 +17,9 @@
               v-for="t, idx in serializeSchema(p.schema)",
               :key="t",
             )
-              span(v-if="idx") |
+              span(v-if="idx && !t.startsWith('&')") |
+              span(v-else-if="idx && t.startsWith('&')", class="dpt--no-space") &nbsp;
+
               span.dpt__type(
                 :data-props-type="defineTypeFormat(t)",
                 @click="expandType(t, p.name)",

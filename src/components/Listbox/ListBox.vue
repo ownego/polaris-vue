@@ -25,7 +25,7 @@ ul(
   :aria-label="inCombobox ? undefined : accessibilityLabel",
   :aria-labelledby="textFieldLabelId || undefined",
   :aria-busy="Boolean(loading)",
-  :asia-activedescendant="activeOption && activeOption.domId",
+  :aria-activedescendant="activeDescendant",
   :id="listId",
   @focus="handleFocus",
   @blur="handleBlur",
@@ -107,6 +107,8 @@ const activeOption = ref<NavigableOption | undefined>();
 const uniqueId = String(useId());
 const listId = computed(() => props.customListId || uniqueId);
 const inCombobox = computed(() => Boolean(setActiveOptionId));
+const activeDescendant = computed(() => activeOption.value?.domId);
+
 const getNavigableOptions = () => {
   if (!listboxRef.value) {
     return [];
@@ -173,15 +175,16 @@ const handleChangeActiveOption = (
 ): void | Record<string, any> => {
   if (!nextOption) {
     activeOption.value = undefined;
-  } else {
-    activeOption.value?.element.removeAttribute(OPTION_FOCUS_ATTRIBUTE);
-    nextOption?.element.setAttribute(OPTION_FOCUS_ATTRIBUTE, 'true');
-    handleScrollIntoViewDebounced(nextOption);
-    activeOption.value = nextOption;
-    setActiveOptionId?.(nextOption.domId);
-
-    emits('active-option-change', nextOption.value);
+    return;
   }
+
+  activeOption.value?.element.removeAttribute(OPTION_FOCUS_ATTRIBUTE);
+  nextOption?.element.setAttribute(OPTION_FOCUS_ATTRIBUTE, 'true');
+  handleScrollIntoViewDebounced(nextOption);
+  activeOption.value = nextOption;
+  setActiveOptionId?.(nextOption.domId);
+
+  emits('active-option-change', nextOption.value);
 };
 
 const getFormattedOption = (
@@ -261,6 +264,7 @@ const resetActiveOption = (): void => {
     lazyLoading.value = false;
     return;
   }
+
   handleChangeActiveOption(nextOption as NavigableOption);
 };
 
@@ -446,5 +450,4 @@ watch(
 
 provide('listbox', { onOptionSelect, setLoading });
 provide('within-listbox', true);
-
 </script>

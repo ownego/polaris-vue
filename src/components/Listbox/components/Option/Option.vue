@@ -1,7 +1,7 @@
 <template lang="pug">
 li(
   v-bind="sectionAttributes",
-  tabIndex="-1",
+  tabindex="-1",
   data-listbox-option,
   ref="listItemRef",
   :id="domId",
@@ -23,7 +23,7 @@ li(
     :url="url",
     :external="external",
   )
-    slot(v-if="isSlotContainHTMLTag")
+    slot(v-if="isSlotContainHtmlTags")
     TextOption(
       v-else,
       v-model="model",
@@ -31,24 +31,25 @@ li(
     )
       slot
   template(v-else)
+    slot(v-if="isSlotContainHtmlTags")
     TextOption(
-      v-if="!isSlotContainHTMLTag",
+      v-else,
       v-model="model",
       :disabled="disabled",
     )
       slot
-    slot(v-else)
 </template>
 
 <script setup lang="ts">
-import { inject, ref, computed, type VNode, onMounted, watch } from 'vue';
+import { inject, ref, computed, type VNode, onMounted, watch, type ComputedRef } from 'vue';
 import { classNames } from '@/utilities/css';
 import useId from '@/use/useId';
 import { listboxWithinSectionDataSelector } from '@polaris/components/Listbox/components/Section/selectors';
 import TextOption from '../TextOption/TextOption.vue';
 import { UnstyledLink } from '@/components';
 import styles from '@polaris/components/Listbox/components/Option/Option.module.scss';
-import { useListbox, useSection, useAction } from '@/use/useListbox';
+import { useAction, useListbox, useSection } from '@/use/useListbox';
+import { useHasSlot } from '@/use/useHasSlot';
 import type { VueNode } from '@/utilities/types';
 import type { MappedActionContextType } from '@/utilities/auto-complete';
 
@@ -85,13 +86,14 @@ watch(
 );
 
 //- Inject
-const mappedActionContext = inject<MappedActionContextType>('mapped-action-context', {});
+const mappedActionContext = inject<ComputedRef<MappedActionContextType>>('mapped-action', computed(() => ({})));
 const sectionId = useSection();
 const listboxContext = useListbox();
 
+const { isSlotContainHtml } = useHasSlot();
 const isAction = useAction();
 
-const { role, url, external, onAction, destructive } = mappedActionContext;
+const { role, url, external, onAction, destructive } = mappedActionContext.value;
 const { onOptionSelect } = listboxContext;
 
 const listItemRef = ref<HTMLElement | null>(null);
@@ -103,21 +105,14 @@ const className = computed(() => classNames(
   styles.Option,
   props.divider && styles.divider,
 ));
-const isSlotContainHTMLTag = computed(() => {
-  return Boolean(
-    slots.default
-      && (slots.default().length >= 2
-        || (slots.default()[0]
-          && (slots.default()[0].type.toString() !== 'Symbol(Text)'
-          && slots.default()[0].type.toString() !== 'Symbol()'
-          && slots.default()[0].type.toString() !== 'Symbol(v-txt)')
-        )),
-  );
-});
 
-const sectionAttributes = {
+const sectionAttributes = computed(() => ({
   [listboxWithinSectionDataSelector.attribute]: isWithinSection.value,
-};
+}));
+
+const isSlotContainHtmlTags = computed(() => {
+  return isSlotContainHtml(slots.default);
+});
 
 const handleOptionSelect = (event: MouseEvent | KeyboardEvent) => {
   if (props.disabled) return;
