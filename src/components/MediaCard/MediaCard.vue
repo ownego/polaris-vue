@@ -11,14 +11,14 @@ LegacyCard
             :wrap="false",
             :gap="200",
           )
+            slot(v-if="hasSlot(slots.title)", name="title")
             Text(
-              v-if="typeof title === 'string'",
+              v-else="typeof title === 'string'",
               variant="headingSm",
-              as="h2"
+              as="h2",
             ) {{ title }}
-            slot(v-else, name="title")
             Box(
-              v-if="popoverActions.length > 0 || attrs['onDismiss']",
+              v-if="popoverActions.length > 0 || hasDismiss",
               position="absolute",
               :insetInlineEnd="500",
               :zIndex="'var(--p-z-index-2)'",
@@ -28,8 +28,8 @@ LegacyCard
                   v-if="popoverActions.length > 0",
                   :active="popoverActive",
                   :onClose="togglePopoverActive",
-                  preferredAlignment="left"
-                  preferredPosition="below"
+                  preferredAlignment="left",
+                  preferredPosition="below",
                 )
                   template(#activator)
                     InlineStack(blockAlign="center")
@@ -45,12 +45,12 @@ LegacyCard
                     @action-any-item="togglePopoverActive",
                   )
                 Button(
-                  v-if="attrs['onDismiss']",
+                  v-if="hasDismiss",
                   size="slim",
                   variant="tertiary",
                   :icon="XIcon"
                   :accessibilityLabel="i18n.translate('Polaris.MediaCard.dismissButton')",
-                  @click="attrs['onDismiss']",
+                  @click="emits('dismiss')",
                 )
           p(:class="styles.Description") {{ description }}
           div(:class="actionClassName")
@@ -60,7 +60,7 @@ LegacyCard
 </template>
 
 <script setup lang="ts">
-import { computed, useAttrs } from 'vue';
+import { computed, getCurrentInstance } from 'vue';
 import styles from '@polaris/components/MediaCard/MediaCard.module.scss';
 import useI18n from '@/use/useI18n';
 import type {
@@ -70,6 +70,7 @@ import type {
 } from '@/utilities/types';
 import { useToggle } from '@/use/useToggle';
 import { classNames } from '@/utilities/css';
+import { useHasSlot } from '@/use/useHasSlot';
 import MenuHorizontalIcon from '@icons/MenuHorizontalIcon.svg';
 import XIcon from'@icons/XIcon.svg';
 import { ButtonFrom } from '../Button';
@@ -118,34 +119,33 @@ type MediaCardEmits = {
 const emits = defineEmits<MediaCardEmits>();
 
 const i18n = useI18n();
+const { hasSlot } = useHasSlot();
 const { value: popoverActive, toggle: togglePopoverActive } = useToggle(false);
-const attrs = useAttrs();
+const currentInstance = getCurrentInstance();
 
-const mediaCardClassName = computed(() =>
-  classNames(
-    styles.MediaCard,
-    props.portrait && styles.portrait,
-  ),
-);
+const mediaCardClassName = computed(() => classNames(
+  styles.MediaCard,
+  props.portrait && styles.portrait,
+));
 
-const mediaContainerClassName = computed(() =>
-  classNames(
-    styles.MediaContainer,
-    props.portrait && styles.portrait,
-    props.size === 'small' && styles.sizeSmall,
-  ),
-);
+const mediaContainerClassName = computed(() => classNames(
+  styles.MediaContainer,
+  props.portrait && styles.portrait,
+  props.size === 'small' && styles.sizeSmall,
+));
 
-const infoContainerClassName = computed(() =>
-  classNames(
-    styles.InfoContainer,
-    props.portrait && styles.portrait,
-    props.size === 'small' && styles.sizeSmall,
-  ),
-);
+const infoContainerClassName = computed(() => classNames(
+  styles.InfoContainer,
+  props.portrait && styles.portrait,
+  props.size === 'small' && styles.sizeSmall,
+));
 
-const actionClassName = classNames(
+const actionClassName = computed(() => classNames(
   styles.ActionContainer,
   props.portrait && styles.portrait,
+));
+
+const hasDismiss = computed(() =>
+  currentInstance?.vnode.props?.onDismiss,
 );
 </script>
