@@ -137,6 +137,7 @@ const slots = defineSlots<CheckboxSlots>();
 const emits = defineEmits<CheckboxEvents>();
 
 const model = defineModel<boolean | string>();
+model.value = props.checked;
 
 const isWithinListbox = useWithinListbox();
 const uniqId = useId();

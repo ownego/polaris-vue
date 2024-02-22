@@ -1,14 +1,12 @@
 <template lang="pug">
-div(
-  :class="className",
-)
+div(:class="className")
   div(:class="styles.Content")
     div(
       v-if="allowMultiple && !isAction",
       :class="styles.Checkbox",
     )
       Checkbox(
-        :checked="selected",
+        v-model="model",
         :disabled="disabled",
       )
         template(#label)
@@ -27,7 +25,7 @@ div(
 </template>
 
 <script setup lang="ts">
-import { computed } from 'vue';
+import { computed, onMounted, watch } from 'vue';
 import CheckIcon from '@icons/CheckIcon.svg';
 import { classNames } from '@/utilities/css';
 import { useComboboxListboxOption, useAction } from '@/use/useListbox';
@@ -47,6 +45,19 @@ interface TextOptionProps {
 }
 
 const props = defineProps<TextOptionProps>();
+
+const model = defineModel<boolean>();
+
+onMounted(() => {
+  model.value = props.selected;
+});
+
+watch(
+  () => props.selected,
+  (newVal) => {
+    model.value = newVal;
+  }, { immediate: true },
+);
 
 const { allowMultiple } = useComboboxListboxOption();
 const isAction = useAction();

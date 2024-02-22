@@ -170,6 +170,13 @@ export interface DisableableAction extends Action {
   disabled?: boolean;
 }
 
+export interface BadgeAction {
+  badge?: {
+    status: 'new';
+    content: string;
+  };
+}
+
 export interface DestructableAction extends Action {
   /** Destructive action */
   destructive?: boolean;
@@ -203,6 +210,30 @@ export interface ComplexAction
     OutlineableAction,
     LoadableAction,
     PlainAction {}
+
+export interface LinkAction {
+  /** A unique identifier for the action */
+  id?: string;
+  /** Content the action displays */
+  content?: string;
+  /** Visually hidden text for screen readers */
+  accessibilityLabel?: string;
+  /** A destination to link to */
+  url: string;
+}
+
+export interface BaseCallbackAction {
+  /** A unique identifier for the action */
+  id?: string;
+  /** Content the action displays */
+  content?: string;
+  /** Visually hidden text for screen readers */
+  accessibilityLabel?: string;
+  /** Callback when an action takes place */
+  onAction(): void;
+}
+
+export interface CallbackAction extends BaseCallbackAction {}
 
 export interface ActionListItemDescriptor
   extends DisableableAction,
@@ -240,8 +271,52 @@ export interface ActionListSection {
   /** Section title */
   title?: string;
   /** Collection of action items for the list */
-  items: readonly ActionListItemDescriptor[];
+  items: ActionListItemDescriptor[];
 }
+
+export interface MenuActionDescriptor extends ComplexAction {
+  /** Zero-indexed numerical position. Overrides the action's order in the menu */
+  index?: number;
+}
+
+export interface MenuGroupDescriptor extends BadgeAction {
+  /** Menu group title */
+  title: string;
+  /** List of actions */
+  actions: ActionListItemDescriptor[];
+  /** Icon to display */
+  icon?: IconableAction['icon'];
+  /** Disables action button */
+  disabled?: boolean;
+  /** Zero-indexed numerical position. Overrides the group's order in the menu. */
+  index?: number;
+}
+
+export interface CheckboxHandles {
+  focus(): void;
+}
+
+export interface ResourceListContextType {
+  selectMode?: Ref<boolean>;
+  selectable?: ComputedRef<boolean>;
+  selectedItems?: ComputedRef<ResourceListSelectedItems>;
+  resourceName?: {
+    singular: string;
+    plural: string;
+  };
+  hasBulkActions?: boolean;
+  loading?: boolean;
+  onSelectionChange?(
+    selected: boolean,
+    id: string,
+    sortNumber: number | undefined,
+    shiftKey: boolean,
+  ): void;
+}
+
+export type ResourceListSelectedItems = string[] | 'All';
+export type CheckableButtonKey = 'plain' | 'bulkSm' | 'bulkLg';
+export type CheckableButtons = Map<CheckableButtonKey, CheckboxHandles>;
 export interface OptionDescriptor {
   /** Value of the option */
   value: string;
@@ -286,13 +361,13 @@ export interface ComboboxListboxOptionType {
 
 export interface ComboboxListboxType {
   // Value of the Texfields ID for listbox aria-labelledby
-  textFieldLabelId?: Ref<string>;
+  textFieldLabelId?: Ref<string | undefined>;
   // Enables/disables keyboard control
   textFieldFocused?: Ref<boolean>;
   // Unique ID to set on the listbox. Used to set the Combobox aria-owns and TextField aria-controls attributes.
-  listboxId?: Ref<string>;
+  listboxId?: Ref<string | undefined>;
   // Whether or not more options are available to lazy load. Use the hasMoreResults boolean provided by the GraphQL API of the paginated data. */
-  willLoadMoreOptions?: ComputedRef<boolean | undefined>;
+  willLoadMoreOptions?: ComputedRef<boolean>;
   // Sets the value for the TextField aria-activedescendant attribute.
   setActiveOptionId?(id: string): void;
   // Callback to set a generated listbox ID.
@@ -301,4 +376,42 @@ export interface ComboboxListboxType {
   onOptionSelected?(): void;
   // Callback fired when keyboard user navigates to the last item. Use to lazy load when listbox option data is paginated.
   onKeyToBottom?(): void;
+}
+
+export interface AppliedFilterInterface {
+  /** A unique key used to identify the applied filter */
+  name: string;
+  /** A label for the applied filter */
+  label: string;
+  /** Callback when the remove button is pressed */
+  onRemove(key: string): void;
+}
+
+
+export interface FilterInterface {
+  /** A unique key used to identify the filter */
+  name: string;
+  /** The label for the filter */
+  label: string;
+  /** The markup for the given filter */
+  filter: VueNode;
+  /** Whether or not the filter should have a shortcut popover displayed */
+  shortcut?: boolean;
+  /** Whether or not the filter should be pinned, permanently displaying the filter */
+  pinned?: boolean;
+  /** Whether or not the filter is disabled */
+  disabled?: boolean;
+  /**
+   * @default false
+   * Whether or not the clear button is displayed
+   */
+  hideClearButton?: boolean;
+  /** Optional callback when filter is pressed */
+  onAction?: () => void;
+  /** Suffix source */
+  suffix?: VueNode;
+  /** Optional section heading that this filter will go under  */
+  section?: string;
+  /** Optional: hides the filter from the dropdown  */
+  hidden?: boolean;
 }
