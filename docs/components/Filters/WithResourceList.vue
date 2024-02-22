@@ -83,7 +83,6 @@ const handleTaggedWithRemove = () => {
 };
 
 const handleQueryValueRemove = () => {
-  console.log('aaah');
   queryValue.value = '';
 };
 

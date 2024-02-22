@@ -48,8 +48,7 @@
 </template>
 
 <script setup lang="ts">
-import { ref, h, computed } from 'vue';
-import { TextField } from '@/components';
+import { ref, h, computed, resolveComponent } from 'vue';
 
 const taggedWith = ref<string>('');
 const vendor = ref<string>('');
@@ -71,8 +70,12 @@ const handleFiltersQueryChange = (value: string) => {
   queryValue.value = value;
 }
 
-const handleTaggedWithChange = (value: string) => {
+const handleTaggedWithChange = (_e: Event, value: string) => {
   taggedWith.value = value;
+};
+
+const handleVendorChange = (_e: Event, value: string) => {
+  vendor.value = value;
 };
 
 const handleFiltersClearAll = () => {
@@ -85,7 +88,7 @@ const appliedFilters = computed(() => {
   return taggedWith.value && !isEmpty(taggedWith.value)
     ? [
         {
-          key: 'taggedWith',
+          name: 'taggedWith',
           label: disambiguateLabel('taggedWith', taggedWith.value),
           onRemove: handleTaggedWithRemove,
         },
@@ -95,30 +98,26 @@ const appliedFilters = computed(() => {
 
 const filters = [
   {
-    key: 'taggedWith',
+    name: 'taggedWith',
     label: 'Tagged with',
-    filter: h(TextField, {
+    filter: () => h(resolveComponent('TextField'), {
       label: "Tagged with",
       modelValue: taggedWith.value,
       autoComplete: "off",
       labelHidden: true,
-      'onUpdate:modelValue': (value: string) => {
-        taggedWith.value = value;
-      },
+      onInput: handleTaggedWithChange,
     }),
     shortcut: true,
   },
   {
-    key: 'vendor',
+    name: 'vendor',
     label: 'Vendor',
-    filter: h(TextField, {
+    filter: h(resolveComponent('TextField'), {
       label: 'Vendor',
       modelValue: vendor.value,
-      'onUpdate:modelValue': (value: string) => {
-        vendor.value = value;
-      },
       labelHidden: true,
       autoComplete: 'off',
+      onInput: handleVendorChange,
     }),
     shortcut: true,
     disabled: true,
@@ -145,8 +144,8 @@ const items = [
   },
 ];
 
-function disambiguateLabel(key: string, value: any) {
-  switch (key) {
+function disambiguateLabel(name: string, value: any) {
+  switch (name) {
     case 'moneySpent':
       return `Money spent is between $${value[0]} and $${value[1]}`;
     case 'taggedWith':

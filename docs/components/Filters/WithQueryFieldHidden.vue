@@ -47,14 +47,12 @@
 </template>
 
 <script setup lang="ts">
-import { ref, h, watch } from 'vue';
-import { ChoiceList, TextField, RangeSlider } from '@/components';
+import { ref, h, resolveComponent, computed } from 'vue';
 
 const taggedWith = ref<string>('');
-const accountStatus = ref<string[]>([]);
-const moneySpent = ref<[number, number] | undefined>([0, 500]);
+const accountStatus = ref<string[]>();
+const moneySpent = ref<[number, number] | undefined>();
 const queryValue = ref('');
-const test = ref(false);
 
 const handleTaggedWithRemove = () => {
   taggedWith.value = '';
@@ -80,11 +78,11 @@ const handleFiltersQueryChange = (value: string) => {
   queryValue.value = value;
 }
 
-const handleMoneySpentChange = (value: any) => {
+const handleMoneySpentChange = (value: [number, number]) => {
   moneySpent.value = value;
 };
 
-const handleTaggedWithChange = (value: string) => {
+const handleTaggedWithChange = (_e: Event, value: string) => {
   taggedWith.value = value;
 };
 
@@ -93,85 +91,46 @@ const handleFiltersClearAll = () => {
   handleMoneySpentRemove();
   handleTaggedWithRemove();
   handleQueryValueRemove();
-
-  appliedFilters.value = [];
 };
 
-const appliedFilters = ref<any>([]);
+const appliedFilters = computed(() => {
+  const tmpFilters = [];
 
-watch(
-  () => [accountStatus.value, moneySpent.value, taggedWith.value],
-  () => {
-    if (!isEmpty(accountStatus.value)) {
-      const key = 'accountStatus';
-      // Remove existing filter so we can add the updated one
-      appliedFilters.value.forEach((filter: any) => {
-        if (filter.key === key) {
-          appliedFilters.value.splice(appliedFilters.value.indexOf(filter), 1);
-        }
-      });
-      appliedFilters.value.push({
-        key,
-        label: disambiguateLabel(key, accountStatus.value),
-        onRemove: handleAccountStatusRemove,
-      });
-    } else {
-      appliedFilters.value.forEach((filter: any) => {
-        if (filter.key === 'accountStatus') {
-          appliedFilters.value.splice(appliedFilters.value.indexOf(filter), 1);
-        }
-      });
-    }
-
-    if (!isEmpty(moneySpent.value)) {
-      const key = 'moneySpent';
-      // Remove existing filter so we can add the updated one
-      appliedFilters.value.forEach((filter: any) => {
-        if (filter.key === key) {
-          appliedFilters.value.splice(appliedFilters.value.indexOf(filter), 1);
-        }
-      });
-      appliedFilters.value.push({
-        key,
-        label: disambiguateLabel(key, moneySpent.value),
-        onRemove: handleMoneySpentRemove,
-      });
-    } else {
-      appliedFilters.value.forEach((filter: any) => {
-        if (filter.key === 'moneySpent') {
-          appliedFilters.value.splice(appliedFilters.value.indexOf(filter), 1);
-        }
-      });
-    }
-
-    if (!isEmpty(taggedWith.value)) {
-      const key = 'taggedWith';
-       // Remove existing filter so we can add the updated one
-      appliedFilters.value.forEach((filter: any) => {
-        if (filter.key === key) {
-          appliedFilters.value.splice(appliedFilters.value.indexOf(filter), 1);
-        }
-      });
-      appliedFilters.value.push({
-        key,
-        label: disambiguateLabel(key, taggedWith.value),
-        onRemove: handleTaggedWithRemove,
-      });
-    } else {
-      appliedFilters.value.forEach((filter: any) => {
-        if (filter.key === 'taggedWith') {
-          appliedFilters.value.splice(appliedFilters.value.indexOf(filter), 1);
-        }
-      });
-    }
+  if (!isEmpty(accountStatus.value)) {
+    const name = 'accountStatus';
+    tmpFilters.push({
+      name,
+      label: disambiguateLabel(name, accountStatus.value),
+      onRemove: handleAccountStatusRemove,
+    });
   }
-);
+
+  if (!isEmpty(moneySpent.value)) {
+    const name = 'moneySpent';
+    tmpFilters.push({
+      name,
+      label: disambiguateLabel(name, moneySpent.value),
+      onRemove: handleMoneySpentRemove,
+    });
+  }
+
+  if (!isEmpty(taggedWith.value)) {
+    const name = 'taggedWith';
+    tmpFilters.push({
+      name,
+      label: disambiguateLabel(name, taggedWith.value),
+      onRemove: handleTaggedWithRemove,
+    });
+  }
+
+  return tmpFilters;
+});
 
 const filters = [
   {
-    key: 'accountStatus',
+    name: 'accountStatus',
     label: 'Account status',
-    filter: h(ChoiceList, {
+    filter: () => h(resolveComponent('ChoiceList'), {
       title: 'Account status',
       titleHidden: true,
       choices: [
@@ -181,30 +140,28 @@ const filters = [
         {label: 'Declined', value: 'declined'},
       ],
       modelValue: accountStatus.value,
-      onChange: handleAccountStatusChange,
       allowMultiple: true,
+      onChange: handleAccountStatusChange,
     }),
     shortcut: true,
   },
   {
-    key: 'taggedWith',
+    name: 'taggedWith',
     label: 'Tagged with',
-    filter: h(TextField, {
-      label: "Tagged with",
+    filter: () => h(resolveComponent('TextField'), {
+      label: 'Tagged with',
       modelValue: taggedWith.value,
       autoComplete: "off",
-      labelHidden: test.value,
-      'onUpdate:modelValue': (value: string) => {
-        taggedWith.value = value;
-      },
+      labelHidden: true,
+      onInput: handleTaggedWithChange,
     }),
     shortcut: true,
   },
   {
-    key: 'moneySpent',
+    name: 'moneySpent',
     label: 'Money spent',
-    filter: h(RangeSlider, {
-      label: "Money spent is between",
+    filter: () => h(resolveComponent('RangeSlider'), {
+      label: 'Money spent is between',
       labelHidden: true,
       modelValue: moneySpent.value || [0, 500],
       prefix: "$",
@@ -212,9 +169,7 @@ const filters = [
       min: 0,
       max: 2000,
       step: 1,
-      'onUpdate:modelValue': (value: [number, number]) => {
-        moneySpent.value = value;
-      },
+      onChange: handleMoneySpentChange,
     }),
   },
 ];
