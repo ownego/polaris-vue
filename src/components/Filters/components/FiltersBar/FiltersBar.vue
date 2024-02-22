@@ -10,13 +10,13 @@ div(
       template(v-for="filter in pinnedFilters", :key="filter.key")
         FilterPill(
           v-bind="filter",
-          :initial-active="hasMounted && !filter.pinned && !appliedFilter(filter.key)",
-          :label="appliedFilter(filter.key)?.label || filter.label",
-          :filter-key="filter.key",
+          :initial-active="hasMounted && !filter.pinned && !appliedFilter(filter.name)",
+          :label="appliedFilter(filter.name)?.label || filter.label",
+          :filter-key="filter.name",
           :disabled="filter.disabled || disableFilters",
           :close-on-child-overlay-click="closeOnChildOverlayClick",
-          :selected="appliedFilterKeys?.includes(filter.key)",
-          @remove="handleFilterPillRemove(filter.key)",
+          :selected="appliedFilterKeys?.includes(filter.name)",
+          @remove="handleFilterPillRemove(filter.name)",
         )
       //- Add Button
       div(
@@ -142,26 +142,26 @@ const handleAddFilterClick = () => {
 const activatorButtonDisabled = computed(() => {
   return props.disabled || (unsectionedFilters.value.length === 0 && sectionedFilters.value.length === 0) || props.disableFilters;
 });
-const appliedFilterKeys = computed(() => props.appliedFilters?.map((filter) => filter.key) || []);
+const appliedFilterKeys = computed(() => props.appliedFilters?.map((filter) => filter.name) || []);
 const pinnedFiltersFromPropsAndAppliedFilters = computed<FilterInterface[]>(() => {
   return props.filters.filter((filter) => {
-    const isPinnedOrApplied = Boolean(filter.pinned || appliedFilterKeys.value.includes(filter.key));
+    const isPinnedOrApplied = Boolean(filter.pinned || appliedFilterKeys.value.includes(filter.name));
 
     return isPinnedOrApplied;
   });
 });
 
 const localPinnedFilters = ref<string[]>(
-  pinnedFiltersFromPropsAndAppliedFilters.value.map((filter) => filter.key),
+  pinnedFiltersFromPropsAndAppliedFilters.value.map((filter) => filter.name),
 );
 
 useOnValueChange(props.filters.length, () => {
-  localPinnedFilters.value = pinnedFiltersFromPropsAndAppliedFilters.value.map((filter) => filter.key);
+  localPinnedFilters.value = pinnedFiltersFromPropsAndAppliedFilters.value.map((filter) => filter.name);
 });
 
 const pinnedFilters = computed(() => {
   return localPinnedFilters.value
-    .map((key) => props.filters.find((filter) => filter.key === key))
+    .map((key) => props.filters.find((filter) => filter.name === key))
     .reduce<FilterInterface[]>(
       (acc, filter) => (filter ? [...acc, filter] : acc),
       [],
@@ -171,7 +171,7 @@ const pinnedFilters = computed(() => {
 const onFilterClick = (filter: FilterInterface) => {
   setTimeout(() => {
     localPinnedFilters.value = [
-      ...new Set([...localPinnedFilters.value, filter.key]),
+      ...new Set([...localPinnedFilters.value, filter.name]),
     ];
     filter.onAction?.();
     togglePopoverActive();
@@ -196,7 +196,7 @@ const filterToActionItem = (filter: FilterInterface) => {
 
 
 const unpinnedFilters = computed(() => props.filters.filter(
-  (filter) => !pinnedFilters.value.some(({key}) => key === filter.key),
+  (filter) => !pinnedFilters.value.some(({name}) => name === filter.name),
 ));
 
 const unsectionedFilters = computed(() => unpinnedFilters.value
@@ -251,8 +251,8 @@ const clearAllClassName = computed(() => classNames(
     styles.MultiplePinnedFilterClearAll,
 ));
 
-const appliedFilter = (filterKey: string) => {
-  return props.appliedFilters?.find((filter) => filter.key === filterKey);
+const appliedFilter = (filterKey?: string) => {
+  return props.appliedFilters?.find((filter) => filter.name === filterKey);
 };
 
 const handleFilterPillRemove = (filterKey: string) => {
