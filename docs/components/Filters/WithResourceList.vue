@@ -49,28 +49,28 @@ const appliedFilters = computed(() => {
   const tmpFilters = [];
 
   if (!isEmpty(accountStatus.value)) {
-    const key = 'accountStatus';
+    const name = 'accountStatus';
     tmpFilters.push({
-      key,
-      label: disambiguateLabel(key, accountStatus.value),
+      name,
+      label: disambiguateLabel(name, accountStatus.value),
       onRemove: handleAccountStatusRemove,
     });
   }
 
   if (!isEmpty(moneySpent.value)) {
-    const key = 'moneySpent';
+    const name = 'moneySpent';
     tmpFilters.push({
-      key,
-      label: disambiguateLabel(key, moneySpent.value),
+      name,
+      label: disambiguateLabel(name, moneySpent.value),
       onRemove: handleMoneySpentRemove,
     });
   }
 
   if (!isEmpty(taggedWith.value)) {
-    const key = 'taggedWith';
+    const name = 'taggedWith';
     tmpFilters.push({
-      key,
-      label: disambiguateLabel(key, taggedWith.value),
+      name,
+      label: disambiguateLabel(name, taggedWith.value),
       onRemove: handleTaggedWithRemove,
     });
   }
@@ -119,7 +119,7 @@ const handleFiltersClearAll = () => {
 
 const filters = [
   {
-    key: 'accountStatus',
+    name: 'accountStatus',
     label: 'Account status',
     filter: () => h(resolveComponent('ChoiceList'), {
       title: 'Account status',
@@ -137,7 +137,7 @@ const filters = [
     shortcut: true,
   },
   {
-    key: 'taggedWith',
+    name: 'taggedWith',
     label: 'Tagged with',
     filter: () => h(resolveComponent('TextField'), {
       label: 'Tagged with',
@@ -149,7 +149,7 @@ const filters = [
     shortcut: true,
   },
   {
-    key: 'moneySpent',
+    name: 'moneySpent',
     label: 'Money spent',
     filter: () => h(resolveComponent('RangeSlider'), {
       label: 'Money spent is between',
@@ -185,8 +185,8 @@ const items = [
   },
 ];
 
-function disambiguateLabel(key: string, value: any) {
-  switch (key) {
+function disambiguateLabel(name: string, value: any) {
+  switch (name) {
     case 'moneySpent':
       return `Money spent is between $${value[0]} and $${value[1]}`;
     case 'taggedWith':
