@@ -136,7 +136,7 @@ interface FiltersProps {
 
 type FiltersEvents = {
   /** Callback when the query field is changed. */
-  'query-change': [string];
+  'query-change': [query: string];
   /** Callback when the clear button is triggered. */
   'query-clear': [];
   /** Callback when the reset all button is pressed. */
