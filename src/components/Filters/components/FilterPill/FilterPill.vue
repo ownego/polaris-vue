@@ -106,9 +106,9 @@ interface FilterPillProps extends FilterInterface {
 
 type FilterPillEvents = {
   /** Callback invoked when the filter is clicked */
-  'click': [key: string];
+  'click': [name: string];
   /** Callback invoked when the filter is removed */
-  'remove': [key: string];
+  'remove': [name: string];
 };
 
 const props = defineProps<FilterPillProps>();

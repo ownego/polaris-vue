@@ -45,7 +45,7 @@ div(:class="filtersClassName")
 </template>
 
 <script setup lang="ts">
-import { type VNode, computed, watch } from 'vue';
+import { type VNode, computed } from 'vue';
 import { classNames } from '@/utilities/css';
 import type { AppliedFilterInterface, FilterInterface, VueNode } from '@/utilities/types';
 import {
