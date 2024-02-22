@@ -50,9 +50,7 @@ div(
                 tone="base"
               )
     //- Content
-    div(
-      :class="styles.PopoverWrapper",
-    )
+    div(:class="styles.PopoverWrapper")
       PopoverSection
         BlockStack(gap="100")
           //-Filter
@@ -139,7 +137,7 @@ const clearButtonClassNames = computed(() => classNames(
 
 const toggleButtonClassNames = computed(() => classNames(
   styles.PlainButton,
-  styles.toggleButton,
+  styles.ToggleButton,
 ));
 
 const labelVariant = computed(() => (breakpoints.value.mdDown ? 'bodyLg' : 'bodySm'));

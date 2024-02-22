@@ -17,12 +17,14 @@ div(:class="filtersClassName")
         )
           SearchField(
             v-model="modelValue",
+            :value="queryValue",
             :placeholder="queryPlaceholder",
             :focused="focused",
             :loading="loading",
             :disabled="disabled || disableQueryField",
             :borderless-query-field="borderlessQueryField",
-            @change="emits('query-change', $event)",
+            @input="handleSearchInput",
+            @change="handleSearchChange",
             @clear="emits('query-clear')",
             @focus="emits('query-focus')",
             @blur="emits('query-blur')",
@@ -45,7 +47,7 @@ div(:class="filtersClassName")
 </template>
 
 <script setup lang="ts">
-import { type VNode, computed, watch } from 'vue';
+import { type VNode, computed } from 'vue';
 import { classNames } from '@/utilities/css';
 import type { AppliedFilterInterface, FilterInterface, VueNode } from '@/utilities/types';
 import {
@@ -157,7 +159,8 @@ const slots = defineSlots<{
   default?: (_?: VueNode) => VNode[];
 }>();
 
-const modelValue = computed(() => props.queryValue);
+const modelValue = defineModel<string>();
+
 const filtersClassName = computed(() => classNames(
   styles.Filters,
   props.hideQueryField && styles.hideQueryField,
@@ -179,4 +182,12 @@ const mountedStateStyles = computed(() => {
     : undefined;
 });
 const hideFilterBar = computed(() => props.hideFilters || props.filters.length === 0);
+
+const handleSearchInput = (_e: Event, value: string) => {
+  emits('query-change', value);
+};
+
+const handleSearchChange = (value: string) => {
+  emits('query-change', value);
+};
 </script>

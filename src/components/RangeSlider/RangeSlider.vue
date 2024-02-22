@@ -7,7 +7,7 @@ component(
   :step="step",
   v-bind="sharedProps",
   v-model="model",
-
+  @change="handleChange",
 )
   template(v-if="hasLabel", #label)
     slot(v-if="slots.label", name="label")
@@ -68,6 +68,10 @@ const sharedProps = computed(() => {
 const elm = isDualThumb(model.value)
   ? h(DualThumb)
   : h(SingleThumb);
+
+const handleChange = (value: RangeSliderValue) => {
+  emits('change', value, `${id}`);
+};
 
 function isDualThumb(value?: RangeSliderValue): value is DualValue {
   return Array.isArray(value);

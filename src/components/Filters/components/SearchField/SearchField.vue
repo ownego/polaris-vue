@@ -20,7 +20,7 @@ TextField(
     v-if="breakpoints.mdUp",
     #prefix
   )
-    Icon(:source="XCircleIcon")
+    Icon(:source="SearchIcon")
   template(
     v-if="loading",
     #suffix
@@ -38,7 +38,7 @@ import {
 import { useBreakpoints } from '@/utilities/breakpoints';
 import useId from '@/use/useId';
 import styles from '@polaris/components/Filters/components/SearchField/SearchField.module.scss';
-import XCircleIcon from '@icons/XCircleIcon.svg';
+import SearchIcon from '@icons/SearchIcon.svg';
 
 interface SearchFieldProps {
   focused?: boolean;
@@ -56,7 +56,7 @@ type SearchFieldEvents = {
   'blur': [];
 };
 
-const props = defineProps<SearchFieldProps>();
+defineProps<SearchFieldProps>();
 const emits = defineEmits<SearchFieldEvents>();
 
 const model = defineModel<string>();
