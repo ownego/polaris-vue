@@ -390,7 +390,7 @@ export interface AppliedFilterInterface {
 
 export interface FilterInterface {
   /** A unique key used to identify the filter */
-  key: string;
+  key?: string;
   /** The label for the filter */
   label: string;
   /** The markup for the given filter */

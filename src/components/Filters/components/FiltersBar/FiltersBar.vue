@@ -178,13 +178,21 @@ const onFilterClick = (filter: FilterInterface) => {
   }, 0);
 };
 
-const filterToActionItem = (filter: FilterInterface) => ({
-  ...filter,
-  content: filter.label,
-  onAction: () => {
-    onFilterClick(filter)
-  },
-});
+const filterToActionItem = (filter: FilterInterface) => {
+  const serialFilters = {
+    disabled: filter.disabled,
+    suffix: filter.suffix,
+  };
+
+  // Only return props that Action List Item needs
+  return {
+    ...serialFilters,
+    content: filter.label,
+    onAction: () => {
+      onFilterClick(filter);
+    },
+  };
+};
 
 
 const unpinnedFilters = computed(() => props.filters.filter(
