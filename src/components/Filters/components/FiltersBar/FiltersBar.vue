@@ -33,8 +33,8 @@ div(
                 type="button",
                 :class="styles.AddFilter",
                 :aria-label="i18n.translate('Polaris.Filters.addFilter')",
-                :disabled="disabled || (unsectionedFilters.length === 0 && sectionedFilters.length === 0) || disableFilters",
-                :aria-disabled="disabled || (unsectionedFilters.length === 0 && sectionedFilters.length === 0) || disableFilters",
+                :disabled="activatorButtonDisabled",
+                :aria-disabled="activatorButtonDisabled",
                 @click="handleAddFilterClick",
               )
                 Text(:variant="labelVariant", as="span") {{ i18n.translate('Polaris.Filters.addFilter') }}{{' '}}
@@ -92,7 +92,7 @@ import useI18n from '@/use/useI18n';
 import PlusIcon from '@icons/PlusIcon.svg';
 import styles from '@polaris/components/Filters/Filters.module.scss';
 
-interface FiltersBarProps {
+type FiltersBarProps = {
   /** Currently entered text in the query field */
   queryValue?: string;
   /** Placeholder text for the query field. */
@@ -112,7 +112,7 @@ interface FiltersBarProps {
   /** Whether the filter should close when clicking inside another Popover. */
   closeOnChildOverlayClick?: boolean;
   mountedStateStyles?: any;
-}
+};
 
 type FilterBarEvents = {
   /** Callback when the reset all button is pressed. */
@@ -139,6 +139,9 @@ const handleAddFilterClick = () => {
   togglePopoverActive();
 };
 
+const activatorButtonDisabled = computed(() => {
+  return props.disabled || (unsectionedFilters.value.length === 0 && sectionedFilters.value.length === 0) || props.disableFilters;
+});
 const appliedFilterKeys = computed(() => props.appliedFilters?.map((filter) => filter.key) || []);
 const pinnedFiltersFromPropsAndAppliedFilters = computed<FilterInterface[]>(() => {
   return props.filters.filter((filter) => {

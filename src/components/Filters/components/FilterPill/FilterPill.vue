@@ -114,7 +114,6 @@ type FilterPillEvents = {
 const props = defineProps<FilterPillProps>();
 const emits = defineEmits<FilterPillEvents>();
 
-
 const i18n = useI18n();
 const breakpoints = useBreakpoints();
 const {
