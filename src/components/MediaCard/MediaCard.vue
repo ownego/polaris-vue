@@ -13,7 +13,7 @@ LegacyCard
           )
             slot(v-if="hasSlot(slots.title)", name="title")
             Text(
-              v-else="typeof title === 'string'",
+              v-else,
               variant="headingSm",
               as="h2",
             ) {{ title }}
