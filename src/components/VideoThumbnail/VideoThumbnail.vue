@@ -44,7 +44,7 @@ import {
   secondsToTimeComponents,
   secondsToDurationTranslationKey,
   secondsToTimestamp,
-} from '@/utilities/duration';
+} from '@polaris/utilities/duration';
 import PlayIcon from '@icons/PlayIcon.svg';
 import useI18n from '@/use/useI18n';
 import styles from '@polaris/components/VideoThumbnail/VideoThumbnail.module.scss';
