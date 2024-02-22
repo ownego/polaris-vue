@@ -145,7 +145,5 @@ const actionClassName = computed(() => classNames(
   props.portrait && styles.portrait,
 ));
 
-const hasDismiss = computed(() =>
-  currentInstance?.vnode.props?.onDismiss,
-);
+const hasDismiss = computed(() => Boolean(currentInstance?.vnode.props?.onDismiss));
 </script>
