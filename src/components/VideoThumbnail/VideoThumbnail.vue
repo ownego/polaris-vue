@@ -13,7 +13,10 @@ div(:class="styles.ThumbnailContainer")
     @focus="emits('before-start-playing')",
     @touchstart="emits('before-start-playing')",
   )
-    div(v-if="videoLength" :class="styles.Timestamp")
+    div(
+      v-if="videoLength",
+      :class="styles.Timestamp",
+    )
       LegacyStack(alignment="center", spacing="extraTight")
         span(:class="styles.PlayIcon")
           Icon(:source="PlayIcon")
