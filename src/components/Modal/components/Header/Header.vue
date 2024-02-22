@@ -16,7 +16,7 @@ Box(
   :inset-block-start="headerPaddingBlock",
   border-block-end-width="025",
   border-color="border",
-  background="bg-surface-tertiary"
+  background="bg-surface-tertiary",
 )
   InlineGrid(
     gap="400",

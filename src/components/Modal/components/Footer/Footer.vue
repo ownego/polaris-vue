@@ -16,10 +16,25 @@ InlineStack(
     )
       Box
         slot
+
+      InlineStack(
+        v-if="primaryAction || secondaryActions",
+        gap="200",
+      )
+        template(v-if="secondaryActions")
+          ButtonFrom(
+            v-for="action, index in secondaryActions",
+            :key="String(index)",
+            :action="action",
+          ) 
+        template(v-if="primaryAction")
+          ButtonFrom(
+            :action="primaryAction",
+            :overrides="{ variant: 'primary' }",
+          )
 </template>
 
 <script setup lang="ts">
-import { ref } from 'vue';
 import {
   Box,
   InlineStack,
@@ -34,5 +49,5 @@ export interface FooterProps {
   secondaryActions?: ComplexAction[];
 }
 
-const props = defineProps<FooterProps>();
+defineProps<FooterProps>();
 </script>
