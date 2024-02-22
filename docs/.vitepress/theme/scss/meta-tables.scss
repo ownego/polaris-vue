@@ -82,6 +82,10 @@
       color: var(--code-number);
     }
 
+    &[data-props-type="collection"] {
+      color: var(--code-number);
+    }
+
     &[data-props-type="object"] {
       position: relative;
       cursor: pointer;
@@ -102,6 +106,10 @@
       margin: 0 0.5rem;
       font-weight: 500;
       font-size: 0.7rem;
+    }
+
+    span.dpt--no-space {
+      margin: 0;
     }
   }
 

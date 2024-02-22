@@ -1,14 +1,14 @@
 <template>
-  <Icon :source="CirclePlusIcon" tone="base"/>
-  <Icon :source="CirclePlusIcon" tone="subdued"/>
-  <Icon :source="CirclePlusIcon" tone="primary"/>
-  <Icon :source="CirclePlusIcon" tone="info" />
-  <Icon :source="CirclePlusIcon" tone="success"/>
-  <Icon :source="CirclePlusIcon" tone="caution"/>
-  <Icon :source="CirclePlusIcon" tone="warning"/>
-  <Icon :source="CirclePlusIcon" tone="critical"/>
+  <Icon :source="PlusCircleIcon" tone="base"/>
+  <Icon :source="PlusCircleIcon" tone="subdued"/>
+  <Icon :source="PlusCircleIcon" tone="primary"/>
+  <Icon :source="PlusCircleIcon" tone="info" />
+  <Icon :source="PlusCircleIcon" tone="success"/>
+  <Icon :source="PlusCircleIcon" tone="caution"/>
+  <Icon :source="PlusCircleIcon" tone="warning"/>
+  <Icon :source="PlusCircleIcon" tone="critical"/>
 </template>
 
 <script setup lang="ts">
-import CirclePlusIcon from '@icons/CirclePlusIcon.svg';
+import PlusCircleIcon from '@icons/PlusCircleIcon.svg';
 </script>
