@@ -20,7 +20,7 @@ Box(
   :tabIndex="!hasMultipleSections ? -1 : undefined",
 )
   BlockStack(
-    gap="150",
+    gap="050",
     as="ul",
     :role="sectionRole || undefined",
   )

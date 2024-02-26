@@ -5,7 +5,7 @@ div(:class="filtersClassName")
     v-if="!hideQueryField",
     :class="styles.Container",
   )
-    Box(:padding="hideFilterBar ? '300': '200'")
+    Box(padding="200")
       InlineStack(
         align="start",
         block-align="center",
@@ -22,6 +22,7 @@ div(:class="filtersClassName")
             :loading="loading",
             :disabled="disabled || disableQueryField",
             :borderless-query-field="borderlessQueryField",
+            :selected-view-name="selectedViewName",
             @clear="emits('query-clear')",
             @focus="emits('query-focus')",
             @blur="emits('query-blur')",
@@ -29,7 +30,7 @@ div(:class="filtersClassName")
         slot
   //- Filters
   FiltersBar(
-    v-if="!hideFilters",
+    v-if="!hideFilterBar",
     :applied-filters="appliedFilters",
     :filters="filters",
     :disabled="disabled",
@@ -132,6 +133,8 @@ interface FiltersProps {
   mountedState?: TransitionStatus;
   /** Whether the filter should close when clicking inside another Popover. */
   closeOnChildOverlayClick?: boolean;
+  /** @deprecated The name of the currently selected view */
+  selectedViewName?: string;
 }
 
 type FiltersEvents = {
