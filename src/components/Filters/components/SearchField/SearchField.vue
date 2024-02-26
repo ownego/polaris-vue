@@ -11,6 +11,8 @@ TextField(
   :variant="borderlessQueryField ? 'borderless' : 'inherit'",
   :focused="focused",
   :label="placeholder",
+  :auto-size="Boolean(showSuffix)",
+  :loading="loading",
   @change="(eventValue) => handleChange(eventValue ?? model)",
   @clear-button-click="handleClear",
   @focus="emits('focus')",
@@ -18,26 +20,30 @@ TextField(
 )
   template(
     v-if="breakpoints.mdUp",
-    #prefix
+    #prefix,
   )
     Icon(:source="SearchIcon")
   template(
-    v-if="loading",
-    #suffix
+    v-if="showSuffix",
+    #suffix,
   )
-    div(:class="styles.Spinner")
-      Spinner(size="small")
+    Text(
+      as="span",
+      variant="bodyMd",
+      tone="subdued",
+    ) {{ i18n.translate('Polaris.Filters.searchInView', { viewName: selectedViewName || '' }) }}
 </template>
 
 <script setup lang="ts">
+import { computed } from 'vue';
 import {
-  Spinner,
+  Text,
   Icon,
   TextField,
 } from '@/components';
 import { useBreakpoints } from '@/utilities/breakpoints';
 import useId from '@/use/useId';
-import styles from '@polaris/components/Filters/components/SearchField/SearchField.module.scss';
+import useI18n from '@/use/useI18n';
 import SearchIcon from '@icons/SearchIcon.svg';
 
 interface SearchFieldProps {
@@ -47,6 +53,8 @@ interface SearchFieldProps {
   borderlessQueryField?: boolean;
   /** Show a loading spinner to the right of the input */
   loading?: boolean;
+  /** @deprecated If present, will show as a suffix in the text field when entering a search term */
+  selectedViewName?: string;
 }
 
 type SearchFieldEvents = {
@@ -56,13 +64,18 @@ type SearchFieldEvents = {
   'blur': [];
 };
 
-defineProps<SearchFieldProps>();
+const props = defineProps<SearchFieldProps>();
 const emits = defineEmits<SearchFieldEvents>();
 
 const model = defineModel<string>();
 
+const i18n = useI18n();
 const id = useId();
 const breakpoints = useBreakpoints();
+
+const showSuffix = computed(() => {
+  return model.value && props.selectedViewName && breakpoints.value.mdUp;
+})
 
 function handleChange(value:string) {
   emits('change', value);

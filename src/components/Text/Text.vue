@@ -54,6 +54,11 @@ export type TextSlots = {
   default: (_: VueNode) => null;
 }
 
+const deprecatedVariants: {[V in Variant]?: Variant} = {
+  heading2xl: 'headingXl',
+  heading3xl: 'headingXl',
+};
+
 const props = withDefaults(defineProps<TextProps>(), {
   numeric: false,
   truncate: false,
@@ -61,6 +66,17 @@ const props = withDefaults(defineProps<TextProps>(), {
 });
 
 defineSlots<TextSlots>();
+
+if (
+  process.env.NODE_ENV === 'development' &&
+  props.variant &&
+  Object.prototype.hasOwnProperty.call(deprecatedVariants, props.variant)
+) {
+  // eslint-disable-next-line no-console
+  console.warn(
+    `Deprecation: <Text variant="${props.variant}" />. The value "${props.variant}" will be removed in a future major version of Polaris. Use "${deprecatedVariants[props.variant]}" instead.`,
+  );
+}
 
 const className = computed(() => classNames(
   styles.root,

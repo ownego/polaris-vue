@@ -1,4 +1,5 @@
 <template>
+<LegacyStack vertical>
   <Text variant="bodyLg" as="p" alignment="start">
     Manage your Shopify store on-the-go with real-time notifications, access
     to your dashboard, and order management, all from your smartphone.
@@ -15,4 +16,5 @@
     Manage your Shopify store on-the-go with real-time notifications, access
     to your dashboard, and order management, all from your smartphone.
   </Text>
+</LegacyStack>
 </template>

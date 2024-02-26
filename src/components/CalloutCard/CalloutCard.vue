@@ -16,15 +16,15 @@ LegacyCard
             Text(variant="headingMd", as="h2")
               slot(v-if="hasSlot(slots.title)", name="title")
               template(v-else) {{ title }}
-          TextContainer
+          BlockStack
             slot
           div(:class="styles.Buttons")
             ButtonGroup(v-if="secondaryAction")
               ButtonFrom(:action="primaryAction")
               ButtonFrom(
                 v-if="secondaryAction",
-                :action="secondaryAction", 
-                :overrides="{ variant: 'tertiary' }")
+                :action="secondaryAction",
+                :overrides="{ variant: secondaryAction.variant ?? 'tertiary' }")
             ButtonFrom(
               v-else,
               :action="primaryAction",
@@ -38,12 +38,12 @@ LegacyCard
 
 <script setup lang="ts">
 import { computed, useAttrs, useSlots } from 'vue';
-import type { Action, VueNode } from '@/utilities/types';
+import type { VueNode, IconableAction } from '@/utilities/types';
 import { classNames } from '@/utilities/css';
+import { useHasSlot } from '@/use/useHasSlot';
+import type { ButtonProps } from '@/components/Button/types';
 import XSmallIcon from '@icons/XSmallIcon.svg';
 import styles from '@polaris/components/CalloutCard/CalloutCard.module.scss';
-import { useHasSlot } from '@/use/useHasSlot';
-
 
 export interface CalloutCardProps {
   /** The title of the card */
@@ -51,9 +51,9 @@ export interface CalloutCardProps {
   /** URL to the card illustration */
   illustration: string;
   /** Primary action for the card */
-  primaryAction: Action;
+  primaryAction: IconableAction;
   /** Secondary action for the card */
-  secondaryAction?: Action;
+  secondaryAction?: IconableAction & Pick<ButtonProps, 'variant'>;
 }
 
 export type CalloutCardEmits = {

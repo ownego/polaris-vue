@@ -13,6 +13,7 @@ export type Element =
   | 'legend';
 
 export type Variant =
+  | 'headingXs'
   | 'headingSm'
   | 'headingMd'
   | 'headingLg'

@@ -15,7 +15,7 @@ examples:
     frameHeight: 300
     title: Clickable
     description: Use to allow merchants to add attributes to an object.
-  - fileName: Link.vue
+  - fileName: WithLink.vue
     frameHeight: 300
     title: With link
     description: Use to allow merchants to navigate to a resource. For example a customer segment or a smart collection
@@ -27,6 +27,9 @@ examples:
     frameHeight: 300
     title: Removable with link
     description: A removable attribute to an object that allows merchants to navigate to a resource.
+  - fileName: RemovableLarge.vue
+    title: Removable large
+    description: A larger, removable attribute to an object that allows merchants to navigate to a resource.
 ---
 
 # {{ $frontmatter.title }}

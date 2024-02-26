@@ -18,7 +18,7 @@ import {
 } from 'vue';
 import { scrollable } from '@polaris/components/shared';
 import { debounce } from '@polaris/utilities/debounce';
-import { classNames } from '@/utilities/css';
+import { classNames, variationName } from '@/utilities/css';
 import { StickyManager } from '@/utilities/sticky-manager';
 import useLazyRef from '@/use/useLazyRef';
 import type { VueNode } from '@/utilities/types';
@@ -46,6 +46,10 @@ export type ScrollableProps = {
   hint?: boolean;
   /** Adds a tabIndex to scrollable when children are not focusable */
   focusable?: boolean;
+  /** Browser determined scrollbar width */
+  scrollbarWidth?: 'thin' | 'none';
+  /** Adds space to one or both sides to prevent content shift when scrolling is necessary */
+  scrollbarGutter?: 'stable' | 'stable both-edges';
 }
 
 export type ScrollableEmits = {
@@ -88,6 +92,8 @@ const finalClassName = computed(() => classNames(
   props.horizontal && styles.horizontal,
   props.shadow && topShadow.value && styles.hasTopShadow,
   props.shadow && bottomShadow.value && styles.hasBottomShadow,
+  props.scrollbarWidth && styles[variationName('scrollbarWidth', props.scrollbarWidth)],
+  props.scrollbarGutter && styles[ variationName('scrollbarGutter', props.scrollbarGutter.replace(' ', ''))],
 ));
 
 const setTopShadow = (value: boolean) => {

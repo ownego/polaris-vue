@@ -10,6 +10,7 @@ button(
 span(
   v-else,
   :class="className",
+  :aria-disabled="disabled"
 )
   a(
     v-if="url && !disabled",
@@ -27,6 +28,9 @@ span(
     :class="styles.TagText",
   )
     slot
+
+  span(v-if="size === 'large'", :class="styles.overlay")
+
   button(
     v-if="hasEventRemove",
     type="button",
@@ -41,7 +45,7 @@ span(
 
 <script setup lang="ts">
 import { computed, getCurrentInstance } from 'vue';
-import { classNames } from '@/utilities/css';
+import { classNames, variationName } from '@/utilities/css';
 import type { VueNode } from '@/utilities/types';
 import { handleMouseUpByBlurring } from '@/utilities/focus';
 import XSmallIcon from '@icons/XSmallIcon.svg';
@@ -61,6 +65,8 @@ export type TagProps = {
   accessibilityLabel?: string;
   /** Url to navigate to when tag is clicked or keypressed. */
   url?: string;
+  /** The size of the tag */
+  size?: 'large';
 }
 
 const props = withDefaults(defineProps<TagProps>(), {
@@ -87,6 +93,7 @@ const className = computed(() => {
     hasEventRemove.value && styles.removable,
     props.url && !props.disabled && styles.linkable,
     segmented.value && styles.segmented,
+    props.size && styles[variationName('size', props.size)],
   );
 });
 
