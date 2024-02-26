@@ -17,7 +17,7 @@ UnstyledLink(
     InlineStack(
       block-align="center",
       gap="150",
-      :wrap="!truncate",
+      :wrap="false",
     )
       //- PrefixMarkup
       span(
@@ -145,7 +145,7 @@ import {
   Box,
 } from '@/components';
 import TruncateText from '../TruncateText.vue';
-import type { ActionListItemDescriptor, VueNode } from '../../../../utilities/types';
+import type { ActionListItemDescriptor, VueNode } from '@/utilities/types';
 import styles from '@polaris/components/ActionList/ActionList.module.scss';
 
 type ItemProps = ActionListItemDescriptor;

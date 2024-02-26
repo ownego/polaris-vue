@@ -1,14 +1,15 @@
 <template lang="pug">
 ShadowBevel(
   box-shadow="100",
+  :bevel="isSmUp",
   :border-radius="hasBorderRadius ? defaultBorderRadius : '0'",
   z-index="32",
 )
   Box(
     :background="background",
     :padding="padding",
-    overflow-x="hidden",
-    overflow-y="hidden",
+    overflow-x="clip",
+    overflow-y="clip",
     min-height="100%",
   )
     slot
@@ -38,6 +39,7 @@ const props = withDefaults(defineProps<CardProps>(), {
 
 const breakpoints = useBreakpoints();
 const defaultBorderRadius: BorderRadiusAliasOrScale = '300';
+const isSmUp = computed(() => Boolean(breakpoints.value.smUp));
 
 const hasBorderRadius = computed<boolean>(() => !!breakpoints.value[`${props.roundedAbove}Up`]);
 </script>

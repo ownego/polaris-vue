@@ -8,6 +8,9 @@ examples:
     title: Default
     description: >-
       Use when you need to make a region within the page independently scrollable. It’s often used in modals and other panes where it’s helpful to provide an extra visual cue that content exists below or above the fold.
+  - fileName: WithGutter.vue
+    title: Thin with scrollbar gutter
+    description: Use to prevent content shift when container becomes scrollable.
   - fileName: ToChild.vue
     title: To child component
     description: >-

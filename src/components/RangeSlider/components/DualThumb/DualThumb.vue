@@ -97,7 +97,7 @@ Labelled(
 </template>
 
 <script setup lang="ts">
-import { computed, onBeforeUnmount, onMounted, ref } from 'vue';
+import { computed, onBeforeUnmount, onMounted, ref, watch } from 'vue';
 import { debounce } from '@polaris/utilities/debounce';
 import { classNames } from '@/utilities/css';
 import type {
@@ -208,6 +208,10 @@ onMounted(() => {
   if (trackWrapper.value) {
     trackWrapper.value.addEventListener('touchstart', handleTouchStartTrack, { passive: false });
   }
+});
+
+watch(() => track.value, () => {
+  setTrackPosition();
 });
 
 onBeforeUnmount(() => {
@@ -368,15 +372,12 @@ const decrementValueUpper = () => {
   );
 };
 
-const dispatchValue = () => {
-  emits('change', model.value, props.id);
-};
-
 const setValue = (dirtyValue: DualValue, control: Control) => {
   const sanitizedValue = sanitizeValue(dirtyValue, props.min, props.max, props.step, control);
+
   if (isTupleEqual(sanitizedValue, model.value) === false) {
     model.value = sanitizedValue;
-    dispatchValue();
+    emits('change', sanitizedValue, props.id);
   }
 };
 
@@ -431,6 +432,7 @@ const handleTouchStartTrack = (event: TouchEvent) => {
 };
 
 const actualXPosition = (dirtyXPosition: number): number => {
+  console.log(dirtyXPosition, model.value[1], trackLeft.value);
   if (track.value) {
     const relativeX = dirtyXPosition - trackLeft.value;
     const percentageOfTrack = relativeX / trackWidth.value;
@@ -514,7 +516,7 @@ function sanitizeValue(
 }
 
 function isTupleEqual(a?: DualValue, b?: DualValue) {
-  if (a == null || b == null) {
+  if (!a || !b) {
     return false;
   }
 

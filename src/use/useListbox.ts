@@ -28,13 +28,13 @@ export function useListbox() {
 }
 
 export function useWithinListbox() {
-  const context = inject('within-listbox', ref(false)) as Ref<boolean>;
+  const context = inject<Ref<boolean>>('within-listbox', ref(false));
 
   return context;
 }
 
 export function useAction() {
-  const context = inject('action', false);
+  const context = inject<boolean>('action', false);
 
   return context;
 }
