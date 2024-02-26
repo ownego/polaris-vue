@@ -158,6 +158,12 @@ const isSingleRow = computed(() =>
   !props.actionGroups?.length,
 );
 
+const hasActionGroupsOrSecondaryActions = computed(() =>
+  (props.actionGroups && props.actionGroups.length > 0) ||
+  (props.secondaryActions && props.secondaryActions.length > 0) ||
+  hasSlot(slots.secondaryActions),
+);
+
 const headerClassNames = computed(() =>
   classNames(
     isSingleRow && styles.isSingleRow,
@@ -195,7 +201,12 @@ const primaryActionProps = computed(() => {
 });
 
 const pageTitleProps = computed(() => {
-  return { title: props.title, subtitle: props.subtitle, compactTitle: props.compactTitle };
+  return {
+    title: props.title,
+    subtitle: props.subtitle,
+    compactTitle: props.compactTitle,
+    hasSubtitleMaxWidth: hasActionGroupsOrSecondaryActions.value,
+  };
 });
 
 const actionMenuProps = computed(() => {

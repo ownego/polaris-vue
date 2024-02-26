@@ -1,6 +1,6 @@
 <template lang="pug">
 div
-  div(:class="styles.TitleWrapper")
+  div(:class="titleWrapperclassName")
     Text(
       v-if="title",
       as="h1",
@@ -29,15 +29,22 @@ export interface TitleProps {
   subtitle?: string;
   /** Removes spacing between title and subtitle */
   compactTitle?: boolean;
+  /** Whether or not to add a max-width to the subtitle. Gets calculated by
+   * the presence of either the secondaryActions or actionGroups props on the
+   * Header that consumes this component */
+  hasSubtitleMaxWidth?: boolean;
 }
 
 const props = defineProps<TitleProps>();
 
-const className = computed(() =>
-  classNames(
-    styles.Title,
-    props.subtitle && styles.TitleWithSubtitle,
-  ),
-);
+const className = computed(() => classNames(
+  styles.Title,
+  props.subtitle && styles.TitleWithSubtitle,
+  props.hasSubtitleMaxWidth && styles.SubtitleMaxWidth,
+));
 
+const titleWrapperclassName = computed(() => classNames(
+  styles.TitleWrapper,
+  !props.hasSubtitleMaxWidth && styles.TitleWrapperExpand,
+));
 </script>
