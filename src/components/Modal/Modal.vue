@@ -36,30 +36,33 @@ Portal(
       :style="{ height: `${iframeHeight}px` }",
       @load="handleIframeLoad",
     ) 
-    Box(
-      v-else-if="noScroll"
-      width="100%",
-      overflow-x="hidden",
-      overflow-y="hidden",
+    div(
+      v-else-if="noScroll",
+      :class="styles.noScrollBody",
     )
-      <!-- body -->
       Box(
-        v-if="loading",
-        padding="400",
+        width="100%",
+        overflow-x="hidden",
+        overflow-y="hidden",
       )
-        InlineStack(
-          gap="400",
-          align="center",
-          block-align="center",
+        <!-- body -->
+        Box(
+          v-if="loading",
+          padding="400",
         )
-          Spinner
-      template(v-else)
-        Section(
-          v-if="sectioned",
-          :title-hidden="titleHidden",
-        )
-          slot
-        slot(v-else)
+          InlineStack(
+            gap="400",
+            align="center",
+            block-align="center",
+          )
+            Spinner
+        template(v-else)
+          Section(
+            v-if="sectioned",
+            :title-hidden="titleHidden",
+          )
+            slot
+          slot(v-else)
     Scrollable(
       v-else,
       shadow,

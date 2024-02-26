@@ -4,6 +4,7 @@
   :open="active"
   :primary-action="primaryAction"
   :secondary-actions="secondaryActions"
+  @close="active = false"
 >
   <template #activator>
     <Button
