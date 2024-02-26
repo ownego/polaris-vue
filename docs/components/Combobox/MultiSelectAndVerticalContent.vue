@@ -69,7 +69,7 @@ const noResults = computed(() => {
 
 const options = computed(() => {
   let list;
-  const filterRegex = new RegExp(inputValue.value, 'i');
+  const filterRegex = new RegExp(escapeSpecialRegExCharacters(inputValue.value), 'i');
 
   if (inputValue.value) {
     list = allTags.value.filter((tag) => tag.match(filterRegex));
@@ -127,4 +127,8 @@ const updateSelection = (selected: string) => {
 const removeTag = (tag: string) => {
   updateSelection(tag);
 };
+
+function escapeSpecialRegExCharacters(value: string) {
+  return value.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+}
 </script>
