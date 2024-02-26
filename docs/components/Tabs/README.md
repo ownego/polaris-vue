@@ -6,12 +6,12 @@ examples:
   - fileName: Default.vue
     title: Default
     description: Use for most cases, especially when the number of tabs may be more than three.
-#   - fileName: TabsInsideCard.vue
-#     title: Inside of a Card
-#     description: Use to display tabs inside of a [Card](/components/Card).
-#   - fileName: TabsFitted.vue
-#     title: Fitted
-#     description: Use when tabs contain a few (2 or 3) items within a narrow column.
+  - fileName: TabsInsideCard.vue
+    title: Inside of a Card
+    description: Use to display tabs inside of a [Card](/components/Card).
+  - fileName: TabsFitted.vue
+    title: Fitted
+    description: Use when tabs contain a few (2 or 3) items within a narrow column.
 #   - fileName: TabsWithActions.vue
 #     title: With actions
 #     description: Use when actions need to be performed on a tab.

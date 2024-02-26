@@ -247,7 +247,7 @@ const disclosureActivatorVisible = computed(() =>
 const classname = computed(() => classNames(
   styles.Tabs,
   props.fitted && styles.fitted,
-  disclosureActivatorVisible && styles.fillSpace,
+  disclosureActivatorVisible.value && styles.fillSpace,
 ));
 
 const wrapperClassNames = computed(() => classNames(

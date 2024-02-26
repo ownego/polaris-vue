@@ -16,7 +16,7 @@
 
 <script setup lang="ts">
 import { ref, computed } from 'vue';
-import type { TabProps } from './components/Tabs/types';
+import type { TabProps } from '@/components/Tabs/types';
 
 const selected = ref(0);
 const itemStrings = ref([
