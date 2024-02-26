@@ -4,7 +4,7 @@ title: Filters
 category: Selection and input
 examples:
   - fileName: WithResourceList.vue
-    frameHeight: 700
+    frameHeight: 600
     title: With a resource list
   - fileName: WithDataTable.vue
     frameHeight: 600
@@ -24,6 +24,12 @@ examples:
   - fileName: WithQueryFieldDisabled.vue
     frameHeight: 600
     title: With query field disabled
+  - fileName: WithAdditionalFilterSections.vue
+    frameHeight: 600
+    title: With additional filter sections
+  - fileName: WithFilterBarHidden.vue
+    frameHeight: 600
+    title: With filter bar hidden
 ---
 
 # {{ $frontmatter.title }}

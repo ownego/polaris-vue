@@ -43,12 +43,12 @@
     "docs:assets": "cp -r docs/assets/** docs/dist/assets"
   },
   "dependencies": {
-    "@shopify/polaris-icons": "^8.0.0",
+    "@shopify/polaris-icons": "^8.5.0",
     "vite-svg-loader": "^5.1.0"
   },
   "devDependencies": {
     "@csstools/postcss-global-data": "^2.1.1",
-    "@shopify/polaris-tokens": "^8.5.0",
+    "@shopify/polaris-tokens": "^8.8.0",
     "@shopify/postcss-plugin": "^5.0.2",
     "@types/node": "^20.10.4",
     "@vitejs/plugin-vue": "^5.0.2",
