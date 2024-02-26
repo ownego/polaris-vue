@@ -21,6 +21,10 @@ examples:
     title: Align
     description: >-
       Control the horizontal alignment of children using the `align` prop.
+  - fileName: WithDirection.vue
+    title: Direction
+    description: >-
+      Control the horizontal direction of children using the `direction` prop. The `direction` prop supports responsive spacing with the [Breakpoints tokens](https://polaris.shopify.com/tokens/breakpoints).
 ---
 
 # {{ $frontmatter.title }}

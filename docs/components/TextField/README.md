@@ -83,6 +83,15 @@ examples:
     frameHeight: 250
     title: With inline suggestion
     description: Use to provide an autocomplete suggestion inline with the input value. See the combobox component's tag multi-select example for full implementation of the inline autocomplete pattern.
+  - fileName: AutoSize.vue
+    title: With auto size
+    description: Use to automatically resize the text field to fit its content.
+  - fileName: AutoSizeDynamicSuffix.vue
+    title: With auto size and dynamic suffix
+    description: Use to only show the suffix when the text field has a value.
+  - fileName: WithLoading.vue
+    title: With loading
+    description: Use to indicate that the text field is in a loading state.
 ---
 
 # {{ $frontmatter.title }}
