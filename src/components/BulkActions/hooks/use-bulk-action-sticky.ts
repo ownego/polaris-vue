@@ -1,12 +1,12 @@
 
-import { onMounted, onUnmounted, ref, watch } from 'vue';
+import { onMounted, onUnmounted, ref, watch, type Ref } from 'vue';
 import {debounce} from '@polaris/utilities/debounce';
 
 const DEBOUNCE_PERIOD = 250;
 
 const PADDING_IN_SELECT_MODE = 92;
 
-export function useIsBulkActionsSticky(selectMode: boolean) {
+export function useIsBulkActionsSticky(selectMode: Ref<boolean>) {
   const hasIOSupport = typeof window !== 'undefined' && Boolean(window.IntersectionObserver);
 
   const isBulkActionsSticky = ref(false);
@@ -40,7 +40,7 @@ export function useIsBulkActionsSticky(selectMode: boolean) {
       };
     }
     const box = node.getBoundingClientRect();
-    const paddingHeight = selectMode ? PADDING_IN_SELECT_MODE : 0;
+    const paddingHeight = selectMode.value ? PADDING_IN_SELECT_MODE : 0;
     const offsetHeight = box.height - paddingHeight;
     const maxWidth = box.width;
     const offsetLeft = box.left;
@@ -85,7 +85,7 @@ export function useIsBulkActionsSticky(selectMode: boolean) {
   });
 
   watch(
-    () => selectMode,
+    () => selectMode.value,
     () => computeTableDimensions
   );
 

@@ -5,9 +5,7 @@ div(
   :id="errorTextID(fieldId)",
 )
   div(:class="styles.Icon")
-    Icon(
-      :source="AlertCircleIcon",
-    )
+    Icon(:source="AlertCircleIcon")
   template(v-if="typeof message === 'string'")
     span {{ message }}
   component(v-else, :is="message")

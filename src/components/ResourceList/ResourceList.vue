@@ -144,7 +144,7 @@ import {
   Pagination,
   SelectAllActions,
 } from '@/components';
-import type { PaginationProps } from '@/components/Pagination/Pagination.vue';
+import type { PaginationProps } from '@/components/Pagination/types';
 import type { BulkActionsProps } from '@/components/BulkActions/utils';
 import type { SelectOption } from '@/components/Select/types';
 import { useIsBulkActionsSticky } from '../BulkActions/hooks/use-bulk-action-sticky';
@@ -284,7 +284,7 @@ const {
   bulkActionsMaxWidth,
   bulkActionsOffsetLeft,
   computeTableDimensions,
-} = useIsBulkActionsSticky(selectMode.value);
+} = useIsBulkActionsSticky(selectMode);
 
 
 const defaultResourceName = {

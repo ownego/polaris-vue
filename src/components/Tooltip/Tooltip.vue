@@ -39,7 +39,7 @@ import { useToggle } from '@/use/useToggle';
 import { Portal } from '../Portal';
 import { TooltipOverlay } from './components';
 import type { VueNode } from '@/utilities/types';
-import type { TooltipOverlayProps } from './components/TooltipOverlay/TooltipOverlay.vue';
+import type { TooltipOverlayProps } from './components/TooltipOverlay/utils';
 import type { Width, Padding, BorderRadius } from './types';
 import styles from '@polaris/components/Tooltip/Tooltip.module.scss';
 

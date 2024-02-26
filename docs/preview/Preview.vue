@@ -4,11 +4,10 @@
 </template>
 
 <script setup lang="ts">
-import { createApp, defineAsyncComponent, onMounted, h } from 'vue';
+import { createApp, defineAsyncComponent, onMounted, h, resolveComponent } from 'vue';
 import { createWebHistory, createRouter } from 'vue-router';
 import { useData } from 'vitepress';
 import PolarisVue from '../../src/polaris-vue';
-import { AppProvider } from '../../src/components';
 import lang from '../../polaris/polaris-react/locales/en.json';
 
 const { params } = useData();
@@ -21,7 +20,7 @@ const exampleComponent = defineAsyncComponent(() =>
 
 const wrappedComponent = () => {
   return h(
-    AppProvider,
+    resolveComponent('AppProvider'),
     { i18n: lang },
     {
       default: () => h(exampleComponent),

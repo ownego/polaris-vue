@@ -60,7 +60,6 @@ const isActivatorForMoreActionsPopover = computed(() => {
 const buttonContent = computed(() => isActivatorForMoreActionsPopover.value ? undefined : props.content);
 
 const handleButtonClick = () => {
-  console.log('BulkActionButton clicked');
   emits('action');
 };
 

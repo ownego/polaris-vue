@@ -37,16 +37,10 @@ import { layer } from '@polaris/components/shared';
 import useI18n from '@/use/useI18n';
 import { classNames } from '@/utilities/css';
 import { PositionedOverlay } from '@/components';
-import type { PositionedOverlayProps } from '@/components/PositionedOverlay/PositionedOverlay.vue';
 import TailDownPathsVue from './TailDownPaths.vue';
 import TailUpPaths from './TailUpPaths.vue';
-import type { TooltipOverlayBaseProps } from './utils';
+import type { TooltipOverlayProps } from './utils';
 import styles from '@polaris/components/Tooltip/components/TooltipOverlay/TooltipOverlay.module.scss';
-
-export type TooltipOverlayProps = TooltipOverlayBaseProps & {
-  preventInteraction?: PositionedOverlayProps['preventInteraction'];
-  preferredPosition?: PositionedOverlayProps['preferredPosition'];
-}
 
 const i18n = useI18n();
 
