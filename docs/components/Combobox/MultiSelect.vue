@@ -74,7 +74,7 @@ const updateText = (value: string) => {
     return;
   }
 
-  const filterRegex = new RegExp(value, 'i');
+  const filterRegex = new RegExp(escapeSpecialRegExCharacters(value), 'i');
   const resultOptions = deselectedOptions.filter((option) =>
     option.label.match(filterRegex),
   );
@@ -98,4 +98,8 @@ const removeTag = (tag: string) => {
 
   selectedOptions.value = options;
 };
+
+function escapeSpecialRegExCharacters(value: string) {
+  return value.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+}
 </script>

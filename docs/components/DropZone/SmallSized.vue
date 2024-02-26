@@ -1,5 +1,5 @@
 <template>
-<div :style="{width: '50px', height: '50px'}">
+<div :style="{width: '40px', height: '40px'}">
   <DropZone>
     <DropZoneFileUpload />
   </DropZone>

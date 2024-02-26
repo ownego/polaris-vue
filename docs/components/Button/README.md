@@ -67,6 +67,12 @@ examples:
     frameHeight: 250
     title: Loading state
     description: Use when a button has been pressed and the associated action is in progress.
+  - fileName: WithIcon.vue
+    title: With icon
+    description: Include an icon with any button variant and tone
+  - fileName: IconOnly.vue
+    title: Icon only
+    description: Use with an accessibility label to have an icon-only button.
 ---
 
 # {{ $frontmatter.title }}

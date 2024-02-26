@@ -1,4 +1,5 @@
 <template>
+<LegacyStack vertical>
   <Text as="p" tone="subdued">
     Use to de-emphasize a piece of text that is less important to merchants
     than other nearby text. May also be used to indicate when normal content
@@ -17,4 +18,5 @@
     Use in combination with a symbol showing a decreasing value to indicate
     a downward trend.
   </Text>
+</LegacyStack>
 </template>

@@ -67,7 +67,7 @@ const updateText = (_e: Event, value: string) => {
       return;
     }
 
-    const filterRegex = new RegExp(value, 'i');
+    const filterRegex = new RegExp(escapeSpecialRegExCharacters(value), 'i');
     const resultOptions = deselectedOptions.filter((option) =>
       option.label.match(filterRegex),
     );
@@ -85,4 +85,8 @@ const updateSelection = (selected: string) => {
   selectedOption.value = selected;
   inputValue.value = matchedOption ? matchedOption.label : '';
 };
+
+function escapeSpecialRegExCharacters(value: string) {
+  return value.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+}
 </script>

@@ -11,6 +11,7 @@ type Align =
 type BlockAlign = 'start' | 'center' | 'end' | 'baseline' | 'stretch';
 
 type Gap = ResponsiveProp<SpaceScale>;
+type Direction = ResponsiveProp<'row' | 'row-reverse'>;
 
 export type Element = 'div' | 'span' | 'li' | 'ol' | 'ul';
 
@@ -21,6 +22,8 @@ export interface InlineStackProps {
   as?: Element;
   /** Horizontal alignment of children */
   align?: Align;
+  /** Horizontal direction in which children are laid out */
+  direction?: Direction;
   /** Vertical alignment of children */
   blockAlign?: BlockAlign;
   /** The spacing between elements. Accepts a spacing token or an object of spacing tokens for different screen sizes.

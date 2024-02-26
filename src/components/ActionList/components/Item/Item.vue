@@ -17,7 +17,7 @@ UnstyledLink(
     InlineStack(
       block-align="center",
       gap="150",
-      :wrap="!truncate",
+      :wrap="false",
     )
       //- PrefixMarkup
       span(
