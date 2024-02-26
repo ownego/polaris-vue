@@ -21,7 +21,7 @@
 <script setup lang="ts">
 import { computed, h, resolveComponent } from 'vue';
 // import { useBreakpoints } from '@ownego/polaris-vue';
-import { useBreakpoints } from '@/utilities/breakpoints';
+import { useBreakpoints } from '@/polaris-vue';
 
 const breakpoints = useBreakpoints();
 const fixedFirstColumns = computed(() => breakpoints.value.lgDown ? 2 : 0);

@@ -37,7 +37,7 @@ Box(width="100%")
 <script setup lang="ts">
 import { computed } from 'vue';
 import type { VueNode } from '@/utilities/types';
-import { useBreakpoints } from '@/utilities/breakpoints';
+import { useBreakpoints } from '@/use/useBreakpoints';
 import type { BannerLayoutProps } from '../types';
 
 type DefaultBannerSlots = {

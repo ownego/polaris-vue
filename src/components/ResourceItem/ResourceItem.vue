@@ -144,7 +144,7 @@ import {
   InlineGrid,
   InlineStack,
 } from '@/components';
-import { useBreakpoints } from '@/utilities/breakpoints';
+import { useBreakpoints } from '@/use/useBreakpoints';
 import type { DisableableAction } from '@/utilities/types';
 import { SELECT_ALL_ITEMS } from '@polaris/utilities/resource-list';
 import type { ResourceListSelectedItems, ResourceListContextType } from '@/utilities/types';
