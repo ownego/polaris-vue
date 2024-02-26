@@ -46,11 +46,12 @@ div(
           )
       //- Clear All Markup
       div(
-        v-if="appliedFilters?.length || localPinnedFilters.length",
+        v-if="appliedFilters?.length",
         :class="clearAllClassName",
       )
         Button(
           size="micro",
+          remove-underline,
           variant="monochromePlain",
           @click="handleClearAllFilters",
         ) {{ i18n.translate('Polaris.Filters.clearFilters') }}
@@ -233,7 +234,7 @@ const hasOneOrMorePinnedFilters = computed(() => pinnedFilters.value.length >= 1
 
 const labelVariant = computed(() => breakpoints.value.mdDown ? 'bodyLg' : 'bodySm');
 
-const shouldShowAddButton = computed(() => props.filters.some((filter) => !filter.pinned));
+const shouldShowAddButton = computed(() => props.filters.some((filter) => !filter.pinned) || props.filters.length !== localPinnedFilters.value.length);
 const filterWrapperClass = computed(() => classNames(
   styles.FiltersWrapper,
   shouldShowAddButton.value &&
@@ -250,6 +251,9 @@ const clearAllClassName = computed(() => classNames(
     shouldShowAddButton.value &&
     styles.MultiplePinnedFilterClearAll,
 ));
+const pinnedFromPropsKeys = computed(() => props.filters
+  .filter(({pinned}) => pinned)
+  .map(({name}) => name));
 
 const appliedFilter = (filterKey?: string) => {
   return props.appliedFilters?.find((filter) => filter.name === filterKey);
@@ -257,7 +261,12 @@ const appliedFilter = (filterKey?: string) => {
 
 const handleFilterPillRemove = (filterKey: string) => {
   const appliedFiltered = appliedFilter(filterKey);
-  localPinnedFilters.value = localPinnedFilters.value.filter((key) => key !== filterKey);
+  localPinnedFilters.value = localPinnedFilters.value.filter((name) => name !== filterKey);
+   localPinnedFilters.value.filter((name) => {
+    const isMatchedFilters = name === filterKey;
+    const isPinnedFilterFromProps = pinnedFromPropsKeys.value.includes(name);
+    return !isMatchedFilters || isPinnedFilterFromProps;
+  }),
 
   appliedFiltered?.onRemove(filterKey);
 };
