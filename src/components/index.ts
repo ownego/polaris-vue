@@ -73,6 +73,7 @@ export * from './SkeletonTabs';
 export * from './SkeletonThumbnail';
 export * from './Spinner';
 export * from './Sticky';
+export * from './Tabs';
 export * from './Tag';
 export * from './Text';
 export * from './TextContainer';
