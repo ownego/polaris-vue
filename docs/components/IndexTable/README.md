@@ -18,7 +18,7 @@ examples:
   - fileName: SmallScreen.vue
     title: Small screen
     description: A small screen index table with simple items and no bulk actions, sorting, or filtering.
-  - fileName: Condensed.vue
+  - fileName: WithCondensed.vue
     title: Small screen with saved views, search, filtering, and sorting
     description: A small screen index table with saved views, search, filtering, sorting, and bulk actions.
   - fileName: WithEmptyState.vue
@@ -33,6 +33,9 @@ examples:
   - fileName: WithBulkActionsAndSelectionAcrossPages.vue
     title: With bulk actions and selection across pages
     description: Allows merchants to select items, perform an action on the selection and select resources across pages.
+  - fileName: WithSelectionNoBulkActions.vue
+    title: With selection and no bulk actions
+    description: For when a table is selectable, but doesn't have any bulk actions.
   - fileName: WithLoadingState.vue
     title: With loading state
     description: Notifies merchants that index table items are being processed.
@@ -57,6 +60,12 @@ examples:
   - fileName: WithNestedRows.vue
     title: With nested rows
     description: An index table with nested rows. Use to present hierarchical or related data in a structured manner.
+  - fileName: WithStickyScrollBar.vue
+    title: With sticky scroll bar
+    description: An index table with pagination and a horizontal scroll bar, to show how the scroll bar behaves with the sticky pagination.
+  - fileName: WithPaginationAndBulkActions.vue
+    title: With pagination and bulk actions
+    description: An index table with both pagination and bulk actions elements, to see how they integrate with one another.
 ---
 
 # {{ $frontmatter.title }}
