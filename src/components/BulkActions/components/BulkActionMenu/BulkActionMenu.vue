@@ -7,6 +7,7 @@ Popover(
   template(#activator)
     BulkActionButton(
       show-content-in-button,
+      :size="size",
       :disclosure="true",
       :content="title",
       :indicator="isNewBadgeInBadgeActions",
@@ -24,12 +25,13 @@ import {
 } from '@/components';
 import { BulkActionButton } from '../BulkActionButton';
 import type { ActionListItemDescriptor } from '@/utilities/types';
-
+import type { ButtonProps } from '@/components/Button/types';
 
 interface BulkActionsMenuProps {
   actions: ActionListItemDescriptor[];
   title: string;
   isNewBadgeInBadgeActions: boolean;
+  size?: Extract<ButtonProps['size'], 'micro' | 'medium'>;
 }
 
 defineProps<BulkActionsMenuProps>();

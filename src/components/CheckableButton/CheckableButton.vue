@@ -10,7 +10,11 @@ div(:class="className", @click="emits('toggle-all')")
       :disabled="disabled",
       @change="emits('toggle-all')",
     )
-  span(:class="styles.Label") {{ label }}
+  span(
+    v-if="label",
+    :class="styles.Label",
+    :aria-live="ariaLive",
+    ) {{ label }}
 </template>
 
 <script setup lang="ts">
@@ -27,11 +31,8 @@ interface CheckableButtonProps {
   accessibilityLabel?: string;
   label?: string;
   selected?: boolean | 'indeterminate';
-  selectMode?: boolean;
-  smallScreen?: boolean;
-  plain?: boolean;
-  measuring?: boolean;
   disabled?: boolean;
+  ariaLive?: 'off' | 'polite';
 }
 
 const props = withDefaults(defineProps<CheckableButtonProps>(), {
