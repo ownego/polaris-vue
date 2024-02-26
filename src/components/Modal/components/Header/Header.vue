@@ -2,7 +2,7 @@
 Box(
   v-if="titleHidden || !isDefaultSlotUsed",
   position="absolute",
-  :inset-inline-start="headerPaddingInline",
+  :inset-inline-end="headerPaddingInline",
   :inset-block-start="headerPaddingBlock",
   z-index="1",
 )
@@ -13,14 +13,14 @@ Box(
   padding-block-start="400",
   padding-block-end="400",
   :inset-inline-start="headerPaddingInline",
-  :inset-block-start="headerPaddingBlock",
+  :inset-inline-end="headerPaddingBlock",
   border-block-end-width="025",
   border-color="border",
   background="bg-surface-tertiary",
 )
   InlineGrid(
     gap="400",
-    :column="{ xs: '1fr auto' }",
+    :columns="{ xs: '1fr auto' }",
   )
     InlineStack(
       gap="400",
@@ -28,12 +28,15 @@ Box(
     )
       Text(
         break-word,
-        id="id",
         as="h2",
         variant="headingMd",
+        :id="id",
       )
         slot
-    CloseButton(@click="emits('close')")
+    CloseButton(
+      :pressed="closing",
+      @click="emits('close')",
+    )
 </template>
 
 <script setup lang="ts">

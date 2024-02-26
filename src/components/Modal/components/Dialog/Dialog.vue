@@ -1,27 +1,30 @@
 <template lang="pug">
 div(
-  :class="styles.Container",
+  ref="containerNode",
   data-polaris-layer,
   data-polaris-overlay,
-  ref="dialogNode",
+  :class="styles.Container",
 )
   TrapFocus
     div(
       role="dialog",
-      aria-modal,
-      :aria-labelledby="labelledBy",
       tabindex="-1",
+      aria-modal,
+      :aria-label="labelledBy",
+      :aria-labelledby="labelledBy",
       :class="styles.Dialog",
     )
       div(:class="classes")
         KeypressListener(
-          :key-code="Key.Escape",
           key-event="keydown",
+          :key-code="Key.Escape",
           :handler="handleKeyDown",
         )
-        KeypressListener(:keyCode="Key.Escape", :handler="handleKeyUp")
+        KeypressListener(
+          :key-code="Key.Escape",
+          :handler="handleKeyUp",
+        )
         slot
-
 </template>
 
 <script setup lang="ts">
@@ -31,7 +34,7 @@ import styles from '@polaris/components/Modal/components/Dialog/Dialog.module.sc
 import { focusFirstFocusableNode } from '@/utilities/focus';
 import { KeypressListener, TrapFocus } from '@/components';
 import { Key } from '@/utilities/types';
-import type { ModalSize } from '../utils';
+import type { ModalSize } from '../../utils';
  
 export interface DialogProps {
   labelledBy?: string;

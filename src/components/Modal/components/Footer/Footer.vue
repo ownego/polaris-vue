@@ -4,7 +4,7 @@ InlineStack(
   block-align="center",
 )
   Box(
-    border-color="border",
+    border-color="border", 
     border-block-start-width="025",
     padding="400",
     width="100%",
@@ -16,7 +16,7 @@ InlineStack(
     )
       Box
         slot
-
+      
       InlineStack(
         v-if="primaryAction || secondaryActions",
         gap="200",
@@ -26,12 +26,12 @@ InlineStack(
             v-for="action, index in secondaryActions",
             :key="String(index)",
             :action="action",
-          ) 
-        template(v-if="primaryAction")
-          ButtonFrom(
-            :action="primaryAction",
-            :overrides="{ variant: 'primary' }",
           )
+        ButtonFrom(
+          v-if="primaryAction",
+          :action="primaryAction",
+          :overrides="{ variant: 'primary' }",
+        )
 </template>
 
 <script setup lang="ts">

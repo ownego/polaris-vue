@@ -20,7 +20,11 @@ export interface SectionProps {
   titleHidden?: boolean;
 }
 
-const props = defineProps<SectionProps>();
+const props = withDefaults(defineProps<SectionProps>(), {
+  flush: false,
+  subdued: false,
+  titleHidden: false,
+});
 
 const className = computed(() => classNames(
   styles.Section,
