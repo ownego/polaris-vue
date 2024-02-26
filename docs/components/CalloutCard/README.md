@@ -12,6 +12,9 @@ examples:
   - fileName: CalloutCardDismissable.vue
     title: Dismissable
     description: Make all callout cards dismissible so merchants can get rid of cards about features they’re not interested in.
+  - fileName: WithIconableActions.vue
+    title: With iconable actions
+    description: Display the icons beside secondary and/or primary actions.
 ---
 
 # {{ $frontmatter.title }}

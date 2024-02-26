@@ -377,3 +377,41 @@ export interface ComboboxListboxType {
   // Callback fired when keyboard user navigates to the last item. Use to lazy load when listbox option data is paginated.
   onKeyToBottom?(): void;
 }
+
+export interface AppliedFilterInterface {
+  /** A unique key used to identify the applied filter */
+  name: string;
+  /** A label for the applied filter */
+  label: string;
+  /** Callback when the remove button is pressed */
+  onRemove(key: string): void;
+}
+
+
+export interface FilterInterface {
+  /** A unique key used to identify the filter */
+  name: string;
+  /** The label for the filter */
+  label: string;
+  /** The markup for the given filter */
+  filter: VueNode;
+  /** Whether or not the filter should have a shortcut popover displayed */
+  shortcut?: boolean;
+  /** Whether or not the filter should be pinned, permanently displaying the filter */
+  pinned?: boolean;
+  /** Whether or not the filter is disabled */
+  disabled?: boolean;
+  /**
+   * @default false
+   * Whether or not the clear button is displayed
+   */
+  hideClearButton?: boolean;
+  /** Optional callback when filter is pressed */
+  onAction?: () => void;
+  /** Suffix source */
+  suffix?: VueNode;
+  /** Optional section heading that this filter will go under  */
+  section?: string;
+  /** Optional: hides the filter from the dropdown  */
+  hidden?: boolean;
+}

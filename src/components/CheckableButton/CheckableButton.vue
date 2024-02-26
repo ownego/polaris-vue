@@ -10,7 +10,7 @@ div(:class="className", @click="emits('toggle-all')")
       :disabled="disabled",
       @change="emits('toggle-all')",
     )
-  span(:class="styles.Label") {{ label }}
+  span(v-if="label", :class="styles.Label") {{ label }}
 </template>
 
 <script setup lang="ts">

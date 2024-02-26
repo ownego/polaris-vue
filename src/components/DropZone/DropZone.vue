@@ -222,6 +222,7 @@ const labelHiddenValue = computed(() => props.label ? props.labelHidden : true);
 const classes = computed(() => classNames(
   styles.DropZone,
   props.outline && styles.hasOutline,
+  !props.outline && styles.noOutline,
   focused.value && styles.focused,
   (props.active || dragging.value) && styles.isDragging,
   props.disabled && styles.isDisabled,
