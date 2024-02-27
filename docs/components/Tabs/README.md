@@ -12,9 +12,9 @@ examples:
   - fileName: TabsFitted.vue
     title: Fitted
     description: Use when tabs contain a few (2 or 3) items within a narrow column.
-#   - fileName: TabsWithActions.vue
-#     title: With actions
-#     description: Use when actions need to be performed on a tab.
+  - fileName: TabsWithActions.vue
+    title: With actions
+    description: Use when actions need to be performed on a tab.
 #   - fileName: TabWithBadgeContent.vue
 #     title: With badge content
 #     description: Use to inform a piece of information about the tabs.

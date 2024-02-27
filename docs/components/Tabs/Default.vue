@@ -1,106 +1,44 @@
 <template>
-<LegacyCard>
-  <Tabs
-    :tabs="tabs"
-    :selected="selected"
-    :canCreateNewView="true"
-    @select="handleSelected"
-    @create-new-view="onCreateNewView"
-  >
-    <LegacyCardSection :title="tabs[selected].content">
-      <Text as="p"> {{ `Tab ${selected} selected` }}</Text>
-    </LegacyCardSection>
-  </Tabs>
-</LegacyCard>
+<Tabs
+  :tabs="tabs"
+  :selected="selected"
+  @select="handleTabChange"
+>
+  <LegacyCardSection :title="tabs[selected].content">
+    <Text as="p"> {{ `Tab ${selected} selected` }}</Text>
+  </LegacyCardSection>
+</Tabs>
 </template>
 
 <script setup lang="ts">
-import { ref, computed } from 'vue';
-import type { TabProps } from '@/components/Tabs/types';
+import { ref } from 'vue';
 
 const selected = ref(0);
-const itemStrings = ref([
-  'All',
-  'Unpaid',
-  'Open',
-  'Closed',
-  'Local delivery',
-  'Local pickup',
-]);
 
-const sleep = (ms: number) =>
-  new Promise((resolve) => setTimeout(resolve, ms));
+const tabs = [
+    {
+      id: 'all-customers-1',
+      content: 'All',
+      accessibilityLabel: 'All customers',
+      panelID: 'all-customers-content-1',
+    },
+    {
+      id: 'accepts-marketing-1',
+      content: 'Accepts marketing',
+      panelID: 'accepts-marketing-content-1',
+    },
+    {
+      id: 'repeat-customers-1',
+      content: 'Repeat customers',
+      panelID: 'repeat-customers-content-1',
+    },
+    {
+      id: 'prospects-1',
+      content: 'Prospects',
+      panelID: 'prospects-content-1',
+    },
+  ];
 
-const deleteView = (index: number) => {
-  const newItemStrings = [...itemStrings.value];
-  newItemStrings.splice(index, 1);
-  itemStrings.value = newItemStrings;
-  selected.value = 0;
-};
-
-const duplicateView = async (name: string) => {
-  itemStrings.value = [...itemStrings.value, name];
-  selected.value = itemStrings.value.length;
-  await sleep(1);
-  return true;
-};
-
-const tabs = computed(() =>
-  itemStrings.value.map((item, index) => ({
-    content: item,
-    index,
-    onAction: () => { console.log('hihi') },
-    id: `${item}-${index}`,
-    isLocked: index === 0,
-    actions:
-      index === 0
-        ? []
-        : [
-          {
-            type: 'rename',
-            onPrimaryAction: async (value: string) => {
-              const newItemsStrings = tabs.value.map((item, idx) => {
-                if (idx === index) {
-                  return value;
-                }
-                return item.content;
-              });
-
-              await sleep(1);
-              itemStrings.value = newItemsStrings;
-              return true;
-            },
-          },
-          {
-            type: 'duplicate',
-            onPrimaryAction: async (name: string) => {
-              await sleep(1);
-              duplicateView(name);
-              return true;
-            },
-          },
-          {
-            type: 'edit',
-          },
-          {
-            type: 'delete',
-            onPrimaryAction: async () => {
-              await sleep(1);
-              deleteView(index);
-              return true;
-            },
-          },
-        ],
-  })) as TabProps[],
-);
-
-const onCreateNewView = async (value: string) => {
-  await sleep(500);
-  itemStrings.value = [...itemStrings.value, value];
-  selected.value = itemStrings.value.length;
-  return true;
-};
-
-const handleSelected = (value: number) =>
+const handleTabChange = (value: number) =>
   selected.value = value;
 </script>

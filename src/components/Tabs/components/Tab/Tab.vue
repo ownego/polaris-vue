@@ -213,9 +213,7 @@ const actionContent = computed(() => ({
 const formattedActions = computed(() => props.actions?.map(
   ({ type, onAction, onPrimaryAction, ...additionalOptions }) => {
     const isModalActivator = !type.includes('edit');
-    console.log('type => ', type);
-    console.log('actionContent => ', actionContent.value);
-    console.log('content => ', actionContent.value[type].content);
+
     return {
       ...actionContent.value[type],
       ...additionalOptions,
@@ -242,7 +240,7 @@ const urlIfNotDisabledOrSelected = computed(() =>
 const tabClassName = computed(() => classNames(
   styles.Tab,
   hasSlot(slots.icon) && styles['Tab-iconOnly'],
-  popoverActive && styles['Tab-popoverActive'],
+  popoverActive.value && styles['Tab-popoverActive'],
   props.selected && styles['Tab-active'],
   props.selected && props.actions?.length && styles['Tab-hasActions'],
 ));
@@ -315,7 +313,7 @@ const activator = () => {
       : resolveComponent('UnstyledButton'),
     {
       id: props.id,
-      class: tabClassName.value,
+      className: tabClassName.value,
       tabIndex: tabIndex,
       'aria-selected': props.selected,
       'aria-controls': props.panelID,
@@ -328,7 +326,7 @@ const activator = () => {
       onClick: handleClick,
       onKeyDown: handleKeyDown,
     },
-    [
+    () => [
       h(
         resolveComponent('InlineStack'),
         {
@@ -337,7 +335,7 @@ const activator = () => {
           blockAlign: 'center',
           wrap: false,
         },
-        [
+        () => [
           h(
             resolveComponent('Text'),
             {
@@ -345,7 +343,9 @@ const activator = () => {
               variant: breakpoints.value.mdDown ? 'bodyLg' : 'bodySm',
               fontWeight: 'medium',
             },
-            hasSlot(slots.icon) ? h('template', slots.icon()) : props.content,
+            {
+              default: () =>  hasSlot(slots.icon) ? slots.icon() : props.content,
+            },
           ),
           props.badge ? h(
             resolveComponent('Text'),
@@ -357,7 +357,7 @@ const activator = () => {
       props.selected && props.actions?.length ? h(
         'div',
         { class: classNames(styles.IconWrap) },
-        [h(resolveComponent('Icon'), { source: ChevronDownIcon })],
+        h(resolveComponent('Icon'), { source: ChevronDownIcon }),
       ) : null,
     ],
   );

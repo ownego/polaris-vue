@@ -65,50 +65,49 @@ div(:class="styles.Outer")
         )
           CreateViewModal(
             :open="state.isNewViewModalActive",
+            :viewNames="viewNames",
             @close="handleCloseNewViewModal",
             @click-primary-action="handleSaveNewViewModal",
-            :viewNames="viewNames",
           )
-            template(#activator)
-              Tab(
-                v-if="disabled",
-                :id="CREATE_NEW_VIEW_ID",
-                :content="createViewA11yLabel",
-                :actions="[]",
-                :disabled="disabled",
-                :tabIndexOverride="0",
-                @toggle-popover="handleTogglePopover",
-                @toggle-modal="handleToggleModal",
-                @action="handleClickNewTab",
-                @focus="handleTabFocus",
-              )
-                template(#icon)
-                  Icon(
-                    :source="PlusIcon",
-                    :accessibilityLabel="createViewA11yLabel",
-                  )
-              div(v-else)
-                Tooltip(
-                  preferredPosition="above",
-                  :content="i18n.translate('Polaris.Tabs.newViewTooltip')",
-                  :hoverDelay="400",
+            Tab(
+              v-if="disabled",
+              :id="CREATE_NEW_VIEW_ID",
+              :content="createViewA11yLabel",
+              :actions="[]",
+              :disabled="disabled",
+              :tabIndexOverride="0",
+              @toggle-popover="handleTogglePopover",
+              @toggle-modal="handleToggleModal",
+              @action="handleClickNewTab",
+              @focus="handleTabFocus",
+            )
+              template(#icon)
+                Icon(
+                  :source="PlusIcon",
+                  :accessibilityLabel="createViewA11yLabel",
                 )
-                  Tab(
-                    :id="CREATE_NEW_VIEW_ID",
-                    :content="createViewA11yLabel",
-                    :actions="[]",
-                    :disabled="disabled",
-                    :tabIndexOverride="0",
-                    @toggle-popover="handleTogglePopover",
-                    @toggle-modal="handleToggleModal",
-                    @action="handleClickNewTab",
-                    @focus="handleTabFocus",
-                  )
-                    template(#icon)
-                      Icon(
-                        :source="PlusIcon",
-                        :accessibilityLabel="createViewA11yLabel",
-                      )
+            div(v-else)
+              Tooltip(
+                preferredPosition="above",
+                :content="i18n.translate('Polaris.Tabs.newViewTooltip')",
+                :hoverDelay="400",
+              )
+                Tab(
+                  :id="CREATE_NEW_VIEW_ID",
+                  :content="createViewA11yLabel",
+                  :actions="[]",
+                  :disabled="disabled",
+                  :tabIndexOverride="0",
+                  @toggle-popover="handleTogglePopover",
+                  @toggle-modal="handleToggleModal",
+                  @action="handleClickNewTab",
+                  @focus="handleTabFocus",
+                )
+                  template(#icon)
+                    Icon(
+                      :source="PlusIcon",
+                      :accessibilityLabel="createViewA11yLabel",
+                    )
   template(
     v-if="hasSlot(slots.default)",
     v-for="_tab, index in tabs",
@@ -231,8 +230,9 @@ const createViewA11yLabel = computed(() => props.newViewAccessibilityLabel
   || i18n.translate('Polaris.Tabs.newViewAccessibilityLabel'),
 );
 
-const tabsToShow = computed(() =>
-  breakpoints.value.mdDown ? [...state.visibleTabs, ...state.hiddenTabs] : state.visibleTabs,
+const tabsToShow = computed(() => breakpoints.value.mdDown
+  ? [...state.visibleTabs, ...state.hiddenTabs]
+  : state.visibleTabs,
 );
 
 const tabData = computed(() => tabsToShow.value
@@ -257,41 +257,14 @@ const wrapperClassNames = computed(() => classNames(
 
 const disclosureTabClassName = computed(() => classNames(
   styles.DisclosureTab,
-  disclosureActivatorVisible && styles['DisclosureTab-visible'],
+  disclosureActivatorVisible.value && styles['DisclosureTab-visible'],
 ));
 
-const disclosureButtonClassName = computed(() => classNames(styles.DisclosureActivator));
-
-const disclosureTabs = computed(() => state.hiddenTabs.map((tabIndex) => props.tabs[tabIndex]));
+const disclosureTabs = computed(() =>
+  state.hiddenTabs.map((tabIndex) => props.tabs[tabIndex]),
+);
 
 const viewNames = computed(() => props.tabs.map(({ content }) => content));
-
-onMounted(() => {
-  prevModalOpen.value = state.isTabModalOpen;
-  prevPopoverOpen.value = state.isTabPopoverOpen;
-});
-
-watch(
-  () => [
-    prevPopoverOpen,
-    state.isTabPopoverOpen,
-    prevModalOpen,
-    state.isTabModalOpen,
-    props.selected,
-    state.tabToFocus,
-  ],
-  () => {
-    const hasModalClosed = prevModalOpen && !state.isTabModalOpen;
-    const hasPopoverClosed = prevPopoverOpen && !state.isTabPopoverOpen;
-    if (hasModalClosed) {
-      state.isTabsFocused = true;
-      state.tabToFocus = props.selected;
-    } else if (hasPopoverClosed && !state.isTabModalOpen) {
-      state.isTabsFocused = true;
-      state.tabToFocus = props.selected;
-    }
-  },
-);
 
 const handleTogglePopover = (isOpen: boolean) => {
   state.isTabPopoverOpen = isOpen;
@@ -335,7 +308,6 @@ const handleFocus = (event: FocusEvent) => {
   const isItem = target.classList.contains(styles.Item);
   const isInNaturalDOMOrder =
     target.closest(`[data-tabs-focus-catchment]`) || isItem;
-
   const isDisclosureActivator = target.classList.contains(
     styles.DisclosureActivator,
   );
@@ -385,29 +357,6 @@ const handleKeyDown = (event: KeyboardEvent) => {
   }
 };
 
-watch(
-  () => [
-    state.containerWidth,
-    state.disclosureWidth,
-    props.tabs,
-    props.selected,
-    state.tabWidths,
-  ],
-  () => {
-    const { visibleTabs, hiddenTabs } = getVisibleAndHiddenTabIndices(
-      props.tabs,
-      props.selected,
-      state.disclosureWidth,
-      state.tabWidths,
-      state.containerWidth,
-    );
-
-    state.visibleTabs = visibleTabs;
-    state.hiddenTabs = hiddenTabs;
-  },
-  { immediate: true }
-);
-
 const moveToSelectedTab = () => {
   const activeButton = selectedTabRef.value?.querySelector(
     `.${styles['Tab-active']}`,
@@ -416,31 +365,6 @@ const moveToSelectedTab = () => {
     moveToActiveTab(activeButton.offsetLeft);
   }
 };
-
-watch(
-  () => [
-    moveToSelectedTab,
-    props.selected,
-    breakpoints.value.mdDown,
-  ],
-  () => {
-    if (breakpoints.value.mdDown) {
-      moveToSelectedTab();
-    }
-  },
-);
-
-watch(
-  () => [
-    state.isTabsFocused,
-    props.selected,
-    state.showDisclosure],
-  () => {
-    if (state.isTabsFocused && !state.showDisclosure) {
-      state.tabToFocus = props.selected;
-    }
-  },
-);
 
 const handleKeyPress = (event: KeyboardEvent) => {
   if (state.isTabModalOpen || state.isTabPopoverOpen || state.isNewViewModalActive) {
@@ -537,41 +461,115 @@ const handleTabAction = (tab: TabProps) => {
   tab.onAction?.();
 }
 
+onMounted(() => {
+  prevModalOpen.value = state.isTabModalOpen;
+  prevPopoverOpen.value = state.isTabPopoverOpen;
+});
+
+watch(
+  () => [
+    prevPopoverOpen.value,
+    state.isTabPopoverOpen,
+    prevModalOpen.value,
+    state.isTabModalOpen,
+    props.selected,
+    state.tabToFocus,
+  ],
+  () => {
+    const hasModalClosed = prevModalOpen.value && !state.isTabModalOpen;
+    const hasPopoverClosed = prevPopoverOpen.value && !state.isTabPopoverOpen;
+    if (hasModalClosed) {
+      state.isTabsFocused = true;
+      state.tabToFocus = props.selected;
+    } else if (hasPopoverClosed && !state.isTabModalOpen) {
+      state.isTabsFocused = true;
+      state.tabToFocus = props.selected;
+    }
+  },
+);
+
+watch(
+  () => [
+    state.containerWidth,
+    state.disclosureWidth,
+    props.tabs,
+    props.selected,
+    state.tabWidths,
+  ],
+  () => {
+    const { visibleTabs, hiddenTabs } = getVisibleAndHiddenTabIndices(
+      props.tabs,
+      props.selected,
+      state.disclosureWidth,
+      state.tabWidths,
+      state.containerWidth,
+    );
+
+    state.visibleTabs = visibleTabs;
+    state.hiddenTabs = hiddenTabs;
+  },
+  { immediate: true }
+);
+
+watch(
+  () => [
+    moveToSelectedTab,
+    props.selected,
+    breakpoints.value.mdDown,
+  ],
+  () => {
+    if (breakpoints.value.mdDown) {
+      moveToSelectedTab();
+    }
+  },
+);
+
+watch(
+  () => [
+    state.isTabsFocused,
+    props.selected,
+    state.showDisclosure,
+  ],
+  () => {
+    if (state.isTabsFocused && !state.showDisclosure) {
+      state.tabToFocus = props.selected;
+    }
+  },
+);
+
 const activator = () => h(
   resolveComponent('UnstyledButton'),
   {
     type: 'button',
-    class: disclosureButtonClassName.value,
-    onClick: handleDisclosureActivatorClick,
-    'aria-label': props.disclosureText ?? i18n.translate('Polaris.Tabs.toggleTabsLabel'),
+    class: classNames(styles.DisclosureActivator),
     disabled: props.disabled,
+    'aria-label': props.disclosureText ?? i18n.translate('Polaris.Tabs.toggleTabsLabel'),
+    onClick: handleDisclosureActivatorClick,
   },
-  [
+  () => [
     h(
       'template',
-      [
+      () => [
         h(
           resolveComponent('Text'),
           { as: 'span', variant: 'bodySm', fontWeight: 'medium' },
-          props.disclosureText ?? i18n.translate('Polaris.Tabs.toggleTabsLabel')
+          props.disclosureText ?? i18n.translate('Polaris.Tabs.toggleTabsLabel'),
         ),
         h(
           'div',
           {
             class: classNames(
               styles.IconWrap,
-              disclosureActivatorVisible && state.showDisclosure && styles['IconWrap-open'],
+              disclosureActivatorVisible.value && state.showDisclosure && styles['IconWrap-open'],
             ),
           },
-          [
-            h(
-              resolveComponent('Icon'),
-              { source: ChevronDownIcon, tone: 'subdued' }
-            )
-          ]
+          h(
+            resolveComponent('Icon'),
+            { source: ChevronDownIcon, tone: 'subdued' },
+          ),
         ),
       ],
     ),
-  ]
+  ],
 );
 </script>
