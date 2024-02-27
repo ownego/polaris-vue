@@ -14,42 +14,43 @@ template(v-if="hasSlot(slots.icon)")
           actionRole="menuitem",
           :items="formattedActions",
         )
-    //- RenameModal(
-    //-   v-if="renameAction",
-    //-   :name="content",
-    //-   :open="activeModalType === 'rename'",
-    //-   :isModalLoading="isModalLoading",
-    //-   :viewNames="viewNames",
-    //-   @close="handleModalClose",
-    //-   @click-primary-action="handleSaveRenameModal",
-    //- )
-    //- DuplicateModal(
-    //-   v-if="duplicateAction",
-    //-   :open="activeModalType === 'duplicate'",
-    //-   :name="i18n.translate('Polaris.Tabs.Tab.copy', {name: content})",
-    //-   :isModalLoading="isModalLoading",
-    //-   :viewNames="viewNames || []",
-    //-   @close="handleModalClose",
-    //-   @click-primary-action="handleSaveDuplicateModal",
-    //- )
-    //- Modal(
-    //-   v-if="deleteAction",
-    //-   instant,
-    //-   :open="activeModalType === 'delete'",
-    //-   :primaryAction=`{
-    //-     content: i18n.translate('Polaris.Tabs.Tab.deleteModal.delete'),
-    //-     onAction: handleConfirmDeleteView, destructive: true,
-    //-     disabled: isModalLoading
-    //-   }`,
-    //-   :secondaryActions=`[{
-    //-     content: i18n.translate('Polaris.Tabs.Tab.deleteModal.cancel'),
-    //-     onAction: handleModalClose,
-    //-   }]`,
-    //-   :title="i18n.translate('Polaris.Tabs.Tab.deleteModal.title')",
-    //-   @close="handleModalClose",
-    //- )
-    //-   ModalSection {{ i18n.translate('Polaris.Tabs.Tab.deleteModal.description',
-    //-     | { viewName: content }) }}
+    RenameModal(
+      v-if="renameAction",
+      :name="content",
+      :open="activeModalType === 'rename'",
+      :isModalLoading="isModalLoading",
+      :viewNames="viewNames",
+      @close="handleModalClose",
+      @click-primary-action="handleSaveRenameModal",
+    )
+    DuplicateModal(
+      v-if="duplicateAction",
+      :open="activeModalType === 'duplicate'",
+      :name="i18n.translate('Polaris.Tabs.Tab.copy', { name: content })",
+      :isModalLoading="isModalLoading",
+      :viewNames="viewNames || []",
+      @close="handleModalClose",
+      @click-primary-action="handleSaveDuplicateModal",
+    )
+    Modal(
+      v-if="deleteAction",
+      :instant="true",
+      :open="activeModalType === 'delete'",
+      :primaryAction=`{
+        content: i18n.translate('Polaris.Tabs.Tab.deleteModal.delete'),
+        destructive: true,
+        disabled: isModalLoading,
+        onAction: handleConfirmDeleteView,
+      }`,
+      :secondaryActions=`[{
+        content: i18n.translate('Polaris.Tabs.Tab.deleteModal.cancel'),
+        onAction: handleModalClose,
+      }]`,
+      :title="i18n.translate('Polaris.Tabs.Tab.deleteModal.title')",
+      @close="handleModalClose",
+    )
+      ModalSection {{ i18n.translate('Polaris.Tabs.Tab.deleteModal.description',
+        | { viewName: content }) }}
 li(
   v-else,
   ref="nodeRef",
@@ -70,54 +71,61 @@ li(
           actionRole="menuitem",
           :items="formattedActions",
         )
-    //- todo
-    //- RenameModal(
-    //-   v-if="renameAction",
-    //-   :name="content",
-    //-   :open="activeModalType === 'rename'",
-    //-   :isModalLoading="isModalLoading",
-    //-   :viewNames="viewNames",
-    //-   @close="handleModalClose",
-    //-   @click-primary-action="handleSaveRenameModal",
-    //- )
-    //- DuplicateModal(
-    //-   v-if="duplicateAction",
-    //-   :open="activeModalType === 'duplicate'",
-    //-   :name="i18n.translate('Polaris.Tabs.Tab.copy', {name: content})",
-    //-   :isModalLoading="isModalLoading",
-    //-   :viewNames="viewNames || []",
-    //-   @close="handleModalClose",
-    //-   @click-primary-action="handleSaveDuplicateModal",
-    //- )
-    //- Modal(
-    //-   v-if="deleteAction",
-    //-   instant,
-    //-   :open="activeModalType === 'delete'",
-    //-   :primaryAction=`{
-    //-     content: i18n.translate('Polaris.Tabs.Tab.deleteModal.delete'),
-    //-     onAction: handleConfirmDeleteView, destructive: true,
-    //-     disabled: isModalLoading
-    //-   }`,
-    //-   :secondaryActions=`[{
-    //-     content: i18n.translate('Polaris.Tabs.Tab.deleteModal.cancel'),
-    //-     onAction: handleModalClose,
-    //-   }]`,
-    //-   :title="i18n.translate('Polaris.Tabs.Tab.deleteModal.title')",
-    //-   @close="handleModalClose",
-    //- )
-    //-   ModalSection
-    //-     | {{ i18n.translate('Polaris.Tabs.Tab.deleteModal.description', { viewName: content }) }}
+    RenameModal(
+      v-if="renameAction",
+      :name="content",
+      :open="activeModalType === 'rename'",
+      :isModalLoading="isModalLoading",
+      :viewNames="viewNames",
+      @close="handleModalClose",
+      @click-primary-action="handleSaveRenameModal",
+    )
+    DuplicateModal(
+      v-if="duplicateAction",
+      :open="activeModalType === 'duplicate'",
+      :name="i18n.translate('Polaris.Tabs.Tab.copy', { name: content })",
+      :isModalLoading="isModalLoading",
+      :viewNames="viewNames || []",
+      @close="handleModalClose",
+      @click-primary-action="handleSaveDuplicateModal",
+    )
+    Modal(
+      v-if="deleteAction",
+      :instant="true",
+      :open="activeModalType === 'delete'",
+      :primaryAction=`{
+        content: i18n.translate('Polaris.Tabs.Tab.deleteModal.delete'),
+        destructive: true,
+        disabled: isModalLoading,
+        onAction: handleConfirmDeleteView,
+      }`,
+      :secondaryActions=`[{
+        content: i18n.translate('Polaris.Tabs.Tab.deleteModal.cancel'),
+        onAction: handleModalClose,
+      }]`,
+      :title="i18n.translate('Polaris.Tabs.Tab.deleteModal.title')",
+      @close="handleModalClose",
+    )
+      ModalSection
+        | {{ i18n.translate('Polaris.Tabs.Tab.deleteModal.description', { viewName: content }) }}
 </template>
 
 <script setup lang="ts">
-import { computed, ref, getCurrentInstance, watch, h, resolveComponent } from 'vue';
+import {
+  computed,
+  ref,
+  getCurrentInstance,
+  watch,
+  h,
+  resolveComponent,
+} from 'vue';
 import type { VueNode } from '@/utilities/types';
 import useI18n from '@/use/useI18n';
 import { useBreakpoints } from '@/utilities/breakpoints';
 import { focusFirstFocusableNode, handleMouseUpByBlurring } from '@/utilities/focus';
 import { classNames } from '@/utilities/css';
 import { useHasSlot } from '@/use/useHasSlot';
-import { Popover, ActionList } from '@/components';
+import { Popover, ActionList, Modal, ModalSection } from '@/components';
 import styles from '@polaris/components/Tabs/Tabs.module.scss';
 import InfoIcon from '@icons/InfoIcon.svg';
 import DuplicateIcon from '@icons/DuplicateIcon.svg';
@@ -125,6 +133,7 @@ import EditIcon from '@icons/EditIcon.svg';
 import LayoutColumns3Icon from '@icons/LayoutColumns3Icon.svg';
 import DeleteIcon from '@icons/DeleteIcon.svg';
 import ChevronDownIcon from '@icons/ChevronDownIcon.svg';
+import { DuplicateModal, RenameModal } from './components';
 import type { TabAction, TabProps } from '../../types';
 
 const slots = defineSlots<{
@@ -174,17 +183,17 @@ const tabIndex = computed(() => {
   return -1;
 });
 
-// const renameAction = computed(() =>
-//   props.actions?.find((action) => action.type === 'rename')
-// );
+const renameAction = computed(() =>
+  props.actions?.find((action) => action.type === 'rename')
+);
 
-// const duplicateAction = computed(() => props.actions?.find(
-//   (action) => action.type === 'duplicate'),
-// );
+const duplicateAction = computed(() => props.actions?.find(
+  (action) => action.type === 'duplicate'),
+);
 
-// const deleteAction = computed(() => props.actions?.find(
-//   (action) => action.type === 'delete'),
-// );
+const deleteAction = computed(() => props.actions?.find(
+  (action) => action.type === 'delete'),
+);
 
 const actionContent = computed(() => ({
   rename: {
@@ -211,7 +220,7 @@ const actionContent = computed(() => ({
 }));
 
 const formattedActions = computed(() => props.actions?.map(
-  ({ type, onAction, onPrimaryAction, ...additionalOptions }) => {
+  ({ type, onAction, ...additionalOptions }) => {
     const isModalActivator = !type.includes('edit');
 
     return {
@@ -276,28 +285,28 @@ const handleModalOpen = (type: TabAction) => {
   activeModalType.value = type;
 };
 
-// const handleModalClose = () => {
-//   activeModalType.value = null;
-// };
+const handleModalClose = () => {
+  activeModalType.value = null;
+};
 
-// const handleSaveRenameModal = async (value: string) => {
-//   await renameAction.value?.onPrimaryAction?.(value);
+const handleSaveRenameModal = async (value: string) => {
+  await renameAction.value?.onPrimaryAction?.(value);
 
-//   setTimeout(() => {
-//     if (nodeRef.value) {
-//       focusFirstFocusableNode(nodeRef.value);
-//     }
-//   }, 250);
-// };
+  setTimeout(() => {
+    if (nodeRef.value) {
+      focusFirstFocusableNode(nodeRef.value);
+    }
+  }, 250);
+};
 
-// const handleConfirmDeleteView = async () => {
-//   await deleteAction.value?.onPrimaryAction?.(props.content);
-//   handleModalClose();
-// }
+const handleConfirmDeleteView = async () => {
+  await deleteAction.value?.onPrimaryAction?.(props.content);
+  handleModalClose();
+}
 
-// const handleSaveDuplicateModal = async (duplicateName: string) => {
-//   await duplicateAction.value?.onPrimaryAction?.(duplicateName);
-// };
+const handleSaveDuplicateModal = async (duplicateName: string) => {
+  await duplicateAction.value?.onPrimaryAction?.(duplicateName);
+};
 
 const handleKeyDown = (event: KeyboardEvent) => {
   if (event.key === ' ') {
@@ -344,11 +353,11 @@ const activator = () => {
               fontWeight: 'medium',
             },
             {
-              default: () =>  hasSlot(slots.icon) ? slots.icon() : props.content,
+              default: () => hasSlot(slots.icon) ? slots.icon() : props.content,
             },
           ),
           props.badge ? h(
-            resolveComponent('Text'),
+            resolveComponent('Badge'),
             { tone: props.selected ? undefined : 'new' },
             props.badge,
           ) : null,
@@ -362,7 +371,6 @@ const activator = () => {
     ],
   );
 }
-
 
 watch(
   () => [popoverActive.value, hasTogglePopover.value],

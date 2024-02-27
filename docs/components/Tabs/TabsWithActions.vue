@@ -40,7 +40,7 @@ const deleteView = (index: number) => {
 
 const duplicateView = async (name: string) => {
   itemStrings.value = [...itemStrings.value, name];
-  selected.value = itemStrings.value.length;
+  selected.value = itemStrings.value.length - 1;
   await sleep(1);
   return true;
 };
@@ -49,7 +49,7 @@ const tabs = computed(() =>
   itemStrings.value.map((item, index) => ({
     content: item,
     index,
-    onAction: () => { console.log('hihi') },
+    onAction: () => { },
     id: `${item}-${index}`,
     isLocked: index === 0,
     actions:

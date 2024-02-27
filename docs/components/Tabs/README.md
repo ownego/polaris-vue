@@ -15,12 +15,12 @@ examples:
   - fileName: TabsWithActions.vue
     title: With actions
     description: Use when actions need to be performed on a tab.
-#   - fileName: TabWithBadgeContent.vue
-#     title: With badge content
-#     description: Use to inform a piece of information about the tabs.
-#   - fileName: TabWithCustomDisclosure.vue
-#     title: With custom disclosure
-#     description: Use to provide information about the popover contents.
+  - fileName: TabWithBadgeContent.vue
+    title: With badge content
+    description: Use to inform a piece of information about the tabs.
+  - fileName: TabWithCustomDisclosure.vue
+    title: With custom disclosure
+    description: Use to provide information about the popover contents.
 ---
 
 # {{ $frontmatter.title }}

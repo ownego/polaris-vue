@@ -24,6 +24,7 @@ div(:class="styles.Outer")
             v-for="_tab, index in tabData",
             v-bind="tabs[index]",
             ref=`${index === selected ? selectedTabRef : null}`,
+            :actions="tabs[index].actions",
             :key="`${index}-${tabs[index].id}`",
             :id="tabs[index].id"
             :panelID="hasSlot(slots.default) ? tabs[index].panelID || `${tabs[index].id}-panel` : undefined",
