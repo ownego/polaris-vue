@@ -13,8 +13,7 @@ Popover(
       :indicator="isNewBadgeInBadgeActions",
       @action="toggleMenuVisibility",
     )
-  template(#content)
-    ActionList(:items="actions", @action-any-item="toggleMenuVisibility")
+  ActionList(:items="actions", @action-any-item="toggleMenuVisibility")
 </template>
 
 <script setup lang="ts">

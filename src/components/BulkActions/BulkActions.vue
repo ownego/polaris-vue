@@ -44,14 +44,14 @@ div(
                       v-if="instanceOfMenuGroupDescriptor(action)",
                       v-bind="bulkActionPropsGenerate(action)",
                       :isNewBadgeInBadgeActions="isNewBadgeInBadgeActions",
-                      :button-size="buttonSize",
+                      :size="buttonSize",
                     )
                     BulkActionButton(
                       v-else,
                       :disabled="disabled",
                       v-bind="action",
                       :handleMeasurement="handleMeasurement",
-                      :button-size="buttonSize",
+                      :size="buttonSize",
                     )
                 div(
                   v-if="hasActionsPopover",
@@ -65,17 +65,17 @@ div(
                     template(#activator)
                       BulkActionButton(
                         disclosure,
+                        :size="buttonSize",
                         :content="activatorLabel",
                         :disabled="disabled",
                         :indicator="isNewBadgeInBadgeActions",
                         :show-content-in-button="!hasPromotedActions"
                         @action="togglePopover",
                       )
-                    template(#content)
-                      ActionList(
-                        :sections="combinedActions",
-                        @action-any-item="togglePopover",
-                      )
+                    ActionList(
+                      :sections="combinedActions",
+                      @action-any-item="togglePopover",
+                    )
 </template>
 
 <script setup lang="ts">

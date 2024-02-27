@@ -9,21 +9,23 @@ div(:class="styles.BulkActionButton", ref="bulkActionButton")
         :size="size",
         :external="external",
         :url="url",
+        :disclosure="disclosure && showContentInButton",
         :accessibility-label="isActivatorForMoreActionsPopover ? content : accessibilityLabel",
         :disabled="disabled",
         :icon="isActivatorForMoreActionsPopover ? MenuHorizontalIcon : undefined",
         @click="emits('action')",
-      ) {{ buttonContent }}
+      )
   Button(
     v-else,
     :size="size",
     :external="external",
     :url="url",
+    :disclosure="disclosure && showContentInButton",
     :accessibility-label="isActivatorForMoreActionsPopover ? content : accessibilityLabel",
     :disabled="disabled",
     :icon="isActivatorForMoreActionsPopover ? MenuHorizontalIcon : undefined",
     @click="handleButtonClick",
-  ) {{ buttonContent }}
+  ) {{ isActivatorForMoreActionsPopover ? null : content }}
   Indicator(v-if="indicator")
 </template>
 
@@ -59,7 +61,6 @@ const bulkActionButton = ref<HTMLButtonElement | null>(null);
 const isActivatorForMoreActionsPopover = computed(() => {
   return props.disclosure && !props.showContentInButton;
 });
-const buttonContent = computed(() => isActivatorForMoreActionsPopover.value ? undefined : props.content);
 
 const handleButtonClick = () => {
   console.log('BulkActionButton clicked');
