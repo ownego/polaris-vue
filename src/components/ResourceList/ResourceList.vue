@@ -58,7 +58,7 @@ div(
         //- BulkAction
         div(
           v-if="showBulkActions",
-          :class="bulkActionsClassName",
+          :class="bulkActionClassNames",
         )
           BulkActions(
             ref="CheckableButtonRef",
@@ -399,7 +399,7 @@ const headerClassName = computed(() => {
   );
 });
 
-const bulkActionsClassName = computed(() => classNames(
+const bulkActionClassNames = computed(() => classNames(
   styles.BulkActionsWrapper,
   selectMode.value && styles.BulkActionsWrapperVisible,
 ));

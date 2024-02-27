@@ -1,4 +1,4 @@
-import { computed, onMounted, onUnmounted, ref, watch, type Ref } from 'vue';
+import { computed, onMounted, ref, watch, type Ref, onBeforeUnmount } from 'vue';
 import { debounce } from '@polaris/utilities/debounce';
 
 const DEBOUNCE_PERIOD = 250;
@@ -84,8 +84,8 @@ export function useIsSelectAllActionsSticky({
 
   const tableObserverRef = ref<IntersectionObserver | null>(hasIOSupport ? new IntersectionObserver(handleTableIntersect, tableOptions.value) : null);
 
-  const getClosestScrollContainer = (node: HTMLElement) => {
-    let container: HTMLElement | null = node;
+  const getClosestScrollContainer = () => {
+    let container = tableMeasurerRef.value;
 
     while (container && container !== document.body) {
       const style = window.getComputedStyle(container);
@@ -98,16 +98,16 @@ export function useIsSelectAllActionsSticky({
         style.overflowY === 'scroll';
 
       if (isScrollContainer) return container;
-      container = container.parentElement;
+      container = container.parentElement as HTMLDivElement;
     }
 
     return null;
   };
 
+  const box = computed(() => tableMeasurerRef.value?.getBoundingClientRect());
 
   const computeTableDimensions = () => {
-    const node = tableMeasurerRef.value;
-    if (!node) {
+    if (!tableMeasurerRef.value) {
       return {
         maxWidth: 0,
         offsetHeight: 0,
@@ -115,20 +115,22 @@ export function useIsSelectAllActionsSticky({
         offsetBottom: 0,
       };
     }
-    const scrollContainer = getClosestScrollContainer(node)?.getBoundingClientRect();
+    const scrollContainer = getClosestScrollContainer()?.getBoundingClientRect();
 
-    const box = node.getBoundingClientRect();
-    console.log('box', box, node);
-    const paddingHeight = computed(() => selectMode.value ? SELECT_ALL_ACTIONS_HEIGHT : 0);
-    const offsetHeight = computed(() => box.height - paddingHeight.value);
-    const maxWidth = computed(() => box.width - widthOffset.value);
-    const offsetLeft = box.left;
+    if (!box.value) {
+      return;
+    }
+
+    const paddingHeight = selectMode.value ? SELECT_ALL_ACTIONS_HEIGHT : 0;
+    const offsetHeight = box.value.height - paddingHeight;
+    const maxWidth = box.value.width - widthOffset.value;
+    const offsetLeft = box.value.left;
     const offsetBottom = scrollContainer
       ? Math.round(scrollContainer.y + SCROLL_BAR_HEIGHT)
       : 0;
 
-    selectAllActionsAbsoluteOffset.value = offsetHeight.value;
-    selectAllActionsMaxWidth.value = maxWidth.value;
+    selectAllActionsAbsoluteOffset.value = offsetHeight;
+    selectAllActionsMaxWidth.value = maxWidth;
     selectAllActionsOffsetLeft.value = offsetLeft;
     selectAllActionsOffsetBottom.value = offsetBottom;
   };
@@ -137,7 +139,7 @@ export function useIsSelectAllActionsSticky({
     selectAllActionsAbsoluteOffset.value = initialPostOffset;
   }
 
-  let debouncedComputeTableHeight = debounce(
+  const debouncedComputeTableHeight = debounce(
     computeTableDimensions,
     DEBOUNCE_PERIOD,
     {
@@ -146,63 +148,45 @@ export function useIsSelectAllActionsSticky({
   );
 
   onMounted(() => {
-    if (isScrolledPastTop.value) {
-      computeDimensionsPastScroll();
-    } else {
-      computeTableDimensions();
+    window.addEventListener('resize', debouncedComputeTableHeight);
+
+    // Observer
+    if (!observerRef.value || !tableObserverRef.value) {
+      return;
     }
 
-    window.addEventListener('resize', debouncedComputeTableHeight);
+    if (selectAllActionsIntersectionRef.value) {
+      observerRef.value.observe(selectAllActionsIntersectionRef.value);
+    }
+
+    if (tableMeasurerRef.value) {
+      tableObserverRef.value.observe(tableMeasurerRef.value);
+    }
   });
 
-  onUnmounted(() => {
+  onBeforeUnmount(() => {
     window.removeEventListener('resize', debouncedComputeTableHeight);
+
+    observerRef.value?.disconnect();
+    tableObserverRef.value?.disconnect();
   });
 
-  watch(computeTableDimensions, () => {
-      // Cleanup
-      window.removeEventListener('resize', debouncedComputeTableHeight);
-
-      // Recreate the debounced function
-      debouncedComputeTableHeight = debounce(
-        computeTableDimensions,
-        DEBOUNCE_PERIOD,
-        {
-          trailing: true,
-        },
-      );
-
-      window.addEventListener('resize', debouncedComputeTableHeight);
-  });
 
   watch(
-    () => [selectMode.value, widthOffset.value],
+    () => tableMeasurerRef.value,
     () => {
-      console.log('selectMode.value watch', selectMode.value);
-      computeTableDimensions();
+      if (isScrolledPastTop.value) {
+        computeDimensionsPastScroll();
+      } else {
+        computeTableDimensions();
+      }
     }
   );
 
   watch(
-    () => selectAllActionsIntersectionRef.value,
+    () => selectMode.value,
     () => {
-      const observer = observerRef.value;
-      const tableObserver = tableObserverRef.value;
-      if (!observer || !tableObserver) {
-        return;
-      }
-
-      const node = selectAllActionsIntersectionRef.value;
-
-      const tableNode = tableMeasurerRef.value;
-
-      if (node) {
-        observer.observe(node);
-      }
-
-      if (tableNode) {
-        tableObserver.observe(tableNode);
-      }
+      computeTableDimensions();
     }
   );
 
