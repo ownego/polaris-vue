@@ -38,27 +38,59 @@ Labelled(
         template(v-else) {{ prefix }}
 
       div(
-        v-if="hasVerticalContent",
-        :class="styles.VerticalContent",
-        :id="`${id}-VerticalContent`",
-        ref="verticalContentRef",
-        @click="handleClickChild",
+        v-if="autoSize",
+        :class="styles.InputAndSuffixWrapper",
       )
-        slot(v-if="hasSlot(slots.verticalContent)", name="verticalContent")
-        template(v-else) {{ verticalContent }}
-        component(:is="input")
+        div(
+          :class="autoSizeClassName",
+          :data-auto-size-value="model || placeholder",
+        )
+          div(
+            v-if="hasVerticalContent",
+            :class="styles.VerticalContent",
+            :id="`${id}-VerticalContent`",
+            ref="verticalContentRef",
+            @click="handleClickChild",
+          )
+            slot(v-if="hasSlot(slots.verticalContent)", name="verticalContent")
+            template(v-else) {{ verticalContent }}
+            component(:is="input")
 
-      component(v-else, :is="input")
+          component(v-else, :is="input")
 
-      div(
-        v-if="hasSuffix",
-        :class="styles.Suffix",
-        :id="`${id}-Suffix`",
-        ref="suffixRef",
-      )
-        slot(v-if="hasSlot(slots.suffix)", name="suffix")
-        template(v-else) {{ suffix }}
+        div(
+          v-if="hasSuffix",
+          :class="styles.Suffix",
+          :id="`${id}-Suffix`",
+          ref="suffixRef",
+        )
+          slot(v-if="hasSlot(slots.suffix)", name="suffix")
+          template(v-else) {{ suffix }}
 
+      template(v-else)
+        div(
+          v-if="hasVerticalContent",
+          :class="styles.VerticalContent",
+          :id="`${id}-VerticalContent`",
+          ref="verticalContentRef",
+          @click="handleClickChild",
+        )
+          slot(v-if="hasSlot(slots.verticalContent)", name="verticalContent")
+          template(v-else) {{ verticalContent }}
+          component(:is="input")
+
+        component(v-else, :is="input")
+
+        div(
+          v-if="hasSuffix",
+          :class="styles.Suffix",
+          :id="`${id}-Suffix`",
+          ref="suffixRef",
+        )
+          slot(v-if="hasSlot(slots.suffix)", name="suffix")
+          template(v-else) {{ suffix }}
+
+      //- characterCountMarkup
       div(
         v-if="props.showCharacterCount",
         :class="characterCountClassName",
@@ -68,6 +100,16 @@ Labelled(
         @click="handleClickChild",
       ) {{ characterCountText }}
 
+      //- loadingMarkup
+      div(
+        v-if="loading",
+        :class="styles.Loading",
+        :id="`${id}-Loading`",
+        ref="loadingRef",
+      )
+        LoadingSpinner(size="small")
+
+      //- clearButtonMarkup
       button(
         v-if="clearButton && clearButtonVisible",
         type="button",
@@ -110,10 +152,8 @@ import { Key } from '@/utilities/types';
 import { useEventListener } from '@/utilities/use-event-listener';
 import { helpTextID } from '../Labelled/utils';
 import { labelId } from '../Label/utils';
-import { Labelled } from '../Labelled';
+import { Labelled, Icon, Text, Spinner as LoadingSpinner } from '@/components';
 import { Connected } from '../Connected';
-import { Icon } from '../Icon';
-import { Text } from '../Text';
 import XCircleIcon from '@icons/XCircleIcon.svg';
 import styles from '@polaris/components/TextField/TextField.module.scss';
 
@@ -147,6 +187,7 @@ const inputRef = ref<HTMLInputElement | null>(null);
 const textAreaRef = ref<HTMLTextAreaElement | null>(null);
 const prefixRef = ref<HTMLDivElement | null>(null);
 const suffixRef = ref<HTMLDivElement | null>(null);
+const loadingRef = ref<HTMLDivElement | null>(null);
 const verticalContentRef = ref<HTMLDivElement | null>(null);
 const spinnerRef = ref<InstanceType<typeof Spinner> | null>(null);
 
@@ -242,7 +283,7 @@ const describedBy = computed<string[]>(() => {
     output.push(`${id}Error`);
   }
 
-  if (slots.helpText || props.helpText) {
+  if (hasHelpText.value) {
     output.push(helpTextID(`${id}`));
   }
 
@@ -256,15 +297,15 @@ const describedBy = computed<string[]>(() => {
 const labelledBy = computed<string[]>(() => {
   const output = [];
 
-  if (props.prefix) {
+  if (hasPrefix.value) {
     output.push(`${id}-Prefix`);
   }
 
-  if (props.suffix) {
+  if (hasSuffix.value) {
     output.push(`${id}-Suffix`);
   }
 
-  if (props.verticalContent) {
+  if (hasVerticalContent.value) {
     output.push(`${id}-VerticalContent`);
   }
 
@@ -276,10 +317,16 @@ const labelledBy = computed<string[]>(() => {
 const inputClassName = computed(() => classNames(
   styles.Input,
   props.align && styles[variationName('Input-align', props.align)],
-  props.suffix && styles['Input-suffixed'],
+  hasSuffix.value && styles['Input-suffixed'],
   props.clearButton && styles['Input-hasClearButton'],
   props.monospaced && styles.monospaced,
   props.suggestion && styles.suggestion,
+  props.autoSize && styles['Input-autoSize'],
+));
+
+const autoSizeClassName = computed(() => classNames(
+  styles.AutoSizeWrapper,
+  hasSuffix.value && styles.AutoSizeWrapperWithSuffix,
 ));
 
 const characterCount = computed(() => normalizedValue.value?.length);
@@ -416,6 +463,7 @@ const input = () => h(props.multiline ? 'textarea' : 'input', {
   inputMode: props.inputMode,
   type: inputType.value,
   rows: getRows(props.multiline),
+  size: props.autoSize ? 1 : undefined,
   'aria-describedby': describedBy.value.join(' '),
   'aria-labelledby': labelledBy.value.join(' '),
   'aria-invalid': Boolean(props.error),
@@ -469,6 +517,7 @@ function handleClick(e: MouseEvent) {
     || isVerticalContent(target)
     || isInput(target)
     || isSpinner(target)
+    || isLoadingSpinner(target)
     || focus.value
   ) {
     return;
@@ -488,6 +537,7 @@ function handleClickChild(event: Event) {
     isPrefixOrSuffix(event.target) ||
     isVerticalContent(event.target) ||
     isInput(event.target) ||
+    isLoadingSpinner(event.target) ||
     focus.value
   ) {
     return;
@@ -596,6 +646,14 @@ function isSpinner(target: Element | EventTarget) {
     target instanceof Element &&
     spinnerWrapperRef &&
     spinnerWrapperRef.contains(target)
+  );
+}
+
+function isLoadingSpinner(target: Element | EventTarget) {
+  return (
+    target instanceof Element &&
+    loadingRef.value &&
+    loadingRef.value.contains(target)
   );
 }
 

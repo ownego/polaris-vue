@@ -12,7 +12,7 @@ import type {ResponsiveProp} from '@/utilities/css';
 type Element = 'div' | 'span' | 'section' | 'legend' | 'ul' | 'li';
 
 type LineStyles = 'solid' | 'dashed';
-type Overflow = 'hidden' | 'scroll';
+type Overflow = 'hidden' | 'scroll' | 'clip';
 type Position = 'relative' | 'absolute' | 'fixed' | 'sticky';
 
 type Spacing = ResponsiveProp<SpaceScale>;

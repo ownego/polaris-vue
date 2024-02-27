@@ -137,6 +137,10 @@ interface NonMutuallyExclusiveProps {
   variant?: 'inherit' | 'borderless';
   /** Indicates the tone of the text field */
   tone?: 'magic';
+  /** Whether the TextField will grow as the text within the input changes */
+  autoSize?: boolean;
+  /** Indicates the loading state */
+  loading?: boolean;
 }
 
 export type TextFieldSlots = {
