@@ -1,7 +1,7 @@
 <template lang="pug">
 Popover(
   ref="popoverRef",
-  :active="popoverActive",
+  :active="popoverActiveWithChildren",
   autofocus-target="none",
   prevent-focus-on-close,
   full-width,
@@ -74,7 +74,9 @@ const textFieldLabelId = ref<string>();
 const listboxId = ref<string>();
 const textFieldFocused = ref(false);
 
-const shouldOpen = computed(() => Boolean(!popoverActive.value && hasSlot(slots.default)));
+const shouldOpen = computed(() => !popoverActive.value);
+
+const popoverActiveWithChildren = computed(() => popoverActive.value && hasSlot(slots.default));
 const isWillLoadMoreOptions = computed(() => Boolean(props.willLoadMoreOptions));
 
 const setTextFieldFocused = (focused: boolean) => {
