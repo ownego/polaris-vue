@@ -53,6 +53,7 @@ export * from './Listbox';
 export * from './MediaCard';
 export * from './Modal';
 export * from './Optionlist';
+export * from './Page';
 export * from './Pagination';
 export * from './Popover';
 export * from './Portal';
