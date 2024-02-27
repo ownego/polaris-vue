@@ -154,7 +154,7 @@ import {
   Pagination,
   SelectAllActions,
 } from '@/components';
-import type { PaginationProps } from '@/components/Pagination/types';
+import type { PaginationProps } from '@/components/Pagination/types.ts';
 import type { BulkActionsProps } from '@/components/BulkActions/utils';
 import type { SelectOption } from '@/components/Select/types';
 import { useIsSelectAllActionsSticky } from '@/use/useIsSelectAllActionsSticky';
