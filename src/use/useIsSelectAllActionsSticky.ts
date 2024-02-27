@@ -1,4 +1,4 @@
-import { computed, onMounted, onUnmounted, ref, watch } from 'vue';
+import { computed, onMounted, onUnmounted, ref, watch, type Ref } from 'vue';
 import { debounce } from '@polaris/utilities/debounce';
 
 const DEBOUNCE_PERIOD = 250;
@@ -13,7 +13,7 @@ const RESOURCE_LIST_INITIAL_OFFSET = 48;
 type TableType = 'index-table' | 'resource-list';
 
 export interface UseIsSelectAllActionsStickyProps {
-  selectMode: boolean;
+  selectMode: Ref<boolean>;
   hasPagination?: boolean;
   tableType: TableType;
 }
@@ -35,14 +35,12 @@ export function useIsSelectAllActionsSticky({
   const tableMeasurerRef = ref<HTMLDivElement | null>(null);
 
   const widthOffset = computed(() => hasPagination ? PAGINATION_WIDTH_OFFSET : 0);
-  const initialPostOffset = computed(() => {
-    return tableType === 'index-table'
-      ? INDEX_TABLE_INITIAL_OFFSET + SCROLL_BAR_CONTAINER_HEIGHT
-      : RESOURCE_LIST_INITIAL_OFFSET;
-  });
-  const postScrollOffset = computed(() => {
-    return initialPostOffset.value + SELECT_ALL_ACTIONS_HEIGHT;
-  });
+
+  const initialPostOffset = tableType === 'index-table'
+    ? INDEX_TABLE_INITIAL_OFFSET + SCROLL_BAR_CONTAINER_HEIGHT
+    : RESOURCE_LIST_INITIAL_OFFSET;
+
+  const postScrollOffset = initialPostOffset + SELECT_ALL_ACTIONS_HEIGHT;
 
   const handleIntersect = (entries: IntersectionObserverEntry[]) => {
     entries.forEach((entry: IntersectionObserverEntry) => {
@@ -79,7 +77,7 @@ export function useIsSelectAllActionsSticky({
   const tableOptions = computed(() => {
     return {
       root: null,
-      rootMargin: `0px 0px -${postScrollOffset.value}px 0px`,
+      rootMargin: `0px 0px -${postScrollOffset}px 0px`,
       threshold: 0,
     }
   });
@@ -120,22 +118,22 @@ export function useIsSelectAllActionsSticky({
     const scrollContainer = getClosestScrollContainer(node)?.getBoundingClientRect();
 
     const box = node.getBoundingClientRect();
-    const paddingHeight = selectMode ? SELECT_ALL_ACTIONS_HEIGHT : 0;
-    const offsetHeight = box.height - paddingHeight;
-    const maxWidth = box.width - widthOffset.value;
+    const paddingHeight = computed(() => selectMode.value ? SELECT_ALL_ACTIONS_HEIGHT : 0);
+    const offsetHeight = computed(() => box.height - paddingHeight.value);
+    const maxWidth = computed(() => box.width - widthOffset.value);
     const offsetLeft = box.left;
     const offsetBottom = scrollContainer
       ? Math.round(scrollContainer.y + SCROLL_BAR_HEIGHT)
       : 0;
 
-    selectAllActionsAbsoluteOffset.value = offsetHeight;
-    selectAllActionsMaxWidth.value = maxWidth;
+    selectAllActionsAbsoluteOffset.value = offsetHeight.value;
+    selectAllActionsMaxWidth.value = maxWidth.value;
     selectAllActionsOffsetLeft.value = offsetLeft;
     selectAllActionsOffsetBottom.value = offsetBottom;
   };
 
   const computeDimensionsPastScroll = () => {
-    selectAllActionsAbsoluteOffset.value = initialPostOffset.value;
+    selectAllActionsAbsoluteOffset.value = initialPostOffset;
   }
 
   let debouncedComputeTableHeight = debounce(
@@ -177,8 +175,11 @@ export function useIsSelectAllActionsSticky({
   });
 
   watch(
-    () => [selectMode, widthOffset.value],
-    () => computeTableDimensions
+    () => [selectMode.value, widthOffset.value],
+    () => {
+      console.log('selectMode.value watch', selectMode.value);
+      computeTableDimensions
+    }
   );
 
   watch(
@@ -215,6 +216,7 @@ export function useIsSelectAllActionsSticky({
     computeTableDimensions,
     isScrolledPastTop,
     selectAllActionsPastTopOffset: initialPostOffset,
-    scrollbarPastTopOffset: initialPostOffset.value - SCROLL_BAR_CONTAINER_HEIGHT,
+    scrollbarPastTopOffset: initialPostOffset - SCROLL_BAR_CONTAINER_HEIGHT,
   };
 }
+
