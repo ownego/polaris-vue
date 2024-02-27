@@ -6,7 +6,7 @@ div(
   RollupActions(
     v-if="rollup",
     :accessibilityLabel="rollupActionsLabel",
-    :items="actions",
+    :items="actionListItems",
     :sections="rollupSections",
   )
   Actions(
@@ -24,6 +24,7 @@ import type {
   MenuActionDescriptor,
   MenuGroupDescriptor,
   ActionListSection,
+  ActionListItemDescriptor,
 } from '@/utilities/types';
 import { Actions, RollupActions } from './components';
 import styles from '@polaris/components/ActionMenu/ActionMenu.module.scss';
@@ -56,6 +57,8 @@ const actionMenuClassNames = computed(() =>
 const rollupSections = computed(() =>
   props.groups?.map((group) => convertGroupToSection(group)),
 );
+
+const actionListItems = computed(() => props.actions as ActionListItemDescriptor[]);
 
 const convertGroupToSection = ({
   title,
