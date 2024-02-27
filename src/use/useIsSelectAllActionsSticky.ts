@@ -150,6 +150,12 @@ export function useIsSelectAllActionsSticky({
   onMounted(() => {
     window.addEventListener('resize', debouncedComputeTableHeight);
 
+    if (isScrolledPastTop.value) {
+      computeDimensionsPastScroll();
+    } else {
+      computeTableDimensions();
+    }
+
     // Observer
     if (!observerRef.value || !tableObserverRef.value) {
       return;
@@ -170,18 +176,6 @@ export function useIsSelectAllActionsSticky({
     observerRef.value?.disconnect();
     tableObserverRef.value?.disconnect();
   });
-
-
-  watch(
-    () => tableMeasurerRef.value,
-    () => {
-      if (isScrolledPastTop.value) {
-        computeDimensionsPastScroll();
-      } else {
-        computeTableDimensions();
-      }
-    }
-  );
 
   watch(
     () => selectMode.value,
