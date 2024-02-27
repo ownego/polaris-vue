@@ -38,7 +38,6 @@ import type { ModalSize } from '../../utils';
  
 export interface DialogProps {
   labelledBy?: string;
-  instant?: boolean;
   limitHeight?: boolean;
   size?: ModalSize;
   in?: boolean;
@@ -64,6 +63,12 @@ const classes = computed(() => {
     props.limitHeight && styles.limitHeight,
   );
 });
+
+console.log(props.size);
+
+console.log(styles[variationName('size', String(props.size))]);
+
+console.log(classes.value);
 
 onMounted(() => {
   if (dialogNode.value && dialogNode.value.contains(document.activeElement)) {
