@@ -12,9 +12,9 @@ div(
   )
     div(
       v-if="selectMode",
-      :class="groupClassName",
       ref="groupNode",
-      :style="{ width: width + 'px' }",
+      :class="groupClassName",
+      :style=" width ? {  width: width + 'px' } : undefined",
     )
       EventListener(
         event="resize",
@@ -30,41 +30,48 @@ div(
           template(
             v-if="hasPromotedActions || hasActionsPopover",
           )
-            InlineStack(gap="300")
-              template(v-if="hasPromotedActions")
-                template(
-                  v-for="action in promotedActions?.slice(0, numberOfPromotedActionsToRender)",
-                )
-                  BulkActionMenu(
-                    v-if="instanceOfMenuGroupDescriptor(action)",
-                    v-bind="bulkActionPropsGenerate(action)",
-                    :isNewBadgeInBadgeActions="isNewBadgeInBadgeActions",
-                  )
-                  BulkActionButton(
-                    v-else,
-                    :disabled="disabled",
-                    v-bind="action",
-                    :handleMeasurement="handleMeasurement",
-                  )
-              div(
-                v-if="hasActionsPopover",
-                :class="styles.Popover",
-                ref="moreActionsNode",
+            InlineStack(gap="300", block-align="center")
+              CheckableButton(
+                v-bind="CheckableButtonProps",
+                @toggle-all="emits('toggle-all')",
               )
-                Popover(
-                  :active="popoverVisible",
-                  @close="togglePopover",
-                )
-                  template(#activator)
-                    BulkActionButton(
-                      disclosure,
-                      :content="activatorLabel",
-                      :disabled="disabled",
-                      :indicator="isNewBadgeInBadgeActions",
-                      :show-content-in-button="!hasPromotedActions"
-                      @action="togglePopover",
+              InlineStack(gap="100", block-align="center")
+                template(v-if="hasPromotedActions")
+                  template(
+                    v-for="action in promotedActions?.slice(0, numberOfPromotedActionsToRender)",
+                  )
+                    BulkActionMenu(
+                      v-if="instanceOfMenuGroupDescriptor(action)",
+                      v-bind="bulkActionPropsGenerate(action)",
+                      :isNewBadgeInBadgeActions="isNewBadgeInBadgeActions",
+                      :size="buttonSize",
                     )
-                  template(#content)
+                    BulkActionButton(
+                      v-else,
+                      :disabled="disabled",
+                      v-bind="action",
+                      :handleMeasurement="handleMeasurement",
+                      :size="buttonSize",
+                    )
+                div(
+                  v-if="hasActionsPopover",
+                  :class="styles.Popover",
+                  ref="moreActionsNode",
+                )
+                  Popover(
+                    :active="popoverVisible",
+                    @close="togglePopover",
+                  )
+                    template(#activator)
+                      BulkActionButton(
+                        disclosure,
+                        :size="buttonSize",
+                        :content="activatorLabel",
+                        :disabled="disabled",
+                        :indicator="isNewBadgeInBadgeActions",
+                        :show-content-in-button="!hasPromotedActions"
+                        @action="togglePopover",
+                      )
                     ActionList(
                       :sections="combinedActions",
                       @action-any-item="togglePopover",
@@ -82,6 +89,7 @@ import {
   Popover,
   InlineStack,
   EventListener,
+  CheckableButton,
 } from '@/components';
 import { BulkActionButton, BulkActionMenu } from './components';
 import type { BulkAction, BulkActionListSection, BulkActionsProps } from './utils';
@@ -89,15 +97,20 @@ import type { MenuGroupDescriptor, ActionListSection } from '@/utilities/types';
 import styles from '@polaris/components/BulkActions/BulkActions.module.scss';
 
 type TransitionStatus = 'entering' | 'entered' | 'exiting' | 'exited';
+type AriaLive = 'off' | 'polite' | undefined;
 
 const i18n = useI18n();
 
-const props = defineProps<BulkActionsProps>();
+const props = withDefaults(defineProps<BulkActionsProps>(), {
+  buttonSize: 'micro',
+});
 const emits = defineEmits<{
   /** Callback when selectable state of list is changed */
   'select-mode-toggle': [selectMode: boolean];
   /** Callback when more actions button is toggled */
   'more-action-popover-toggle': [isOpen: boolean];
+  /** Callback when the select all checkbox is clicked */
+  'toggle-all': [];
 }>();
 
 const popoverVisible = ref<boolean>(false);
@@ -246,6 +259,19 @@ const groupClassName = computed(() => {
 
 const hasActionsPopover = computed(() => actionSections.value || rolledInPromotedActions.value.length > 0 || measuring.value);
 const hasPromotedActions = computed(() => props.promotedActions && numberOfPromotedActionsToRender.value > 0);
+const hasTextAndAction = computed(() => props.paginatedSelectAllAction && props.paginatedSelectAllText);
+const ariaLive = computed<AriaLive>(() => {
+  return hasTextAndAction.value ? 'polite' : undefined;
+});
+const CheckableButtonProps = computed(() => {
+  return {
+    accessibilityLabel: props.accessibilityLabel,
+    selected: props.selected,
+    disabled: props.disabled,
+    ariaLive: ariaLive.value,
+    ref: props.innerRef,
+  };
+});
 
 const onTransitionEnter = () => {
   statusTransitionGroup.value = 'entering';

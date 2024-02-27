@@ -2,7 +2,7 @@
 div(:class="className", @click="emits('toggle-all')")
   div(:class="styles.Checkbox")
     Checkbox(
-      v-model="isChecked",
+      v-model="model",
       ref="checkBoxRef",
       labelHidden,
       :checked="selected",
@@ -10,7 +10,11 @@ div(:class="className", @click="emits('toggle-all')")
       :disabled="disabled",
       @change="emits('toggle-all')",
     )
-  span(v-if="label", :class="styles.Label") {{ label }}
+  span(
+    v-if="label",
+    :class="styles.Label",
+    :aria-live="ariaLive",
+    ) {{ label }}
 </template>
 
 <script setup lang="ts">
@@ -27,14 +31,11 @@ interface CheckableButtonProps {
   accessibilityLabel?: string;
   label?: string;
   selected?: boolean | 'indeterminate';
-  selectMode?: boolean;
-  smallScreen?: boolean;
-  plain?: boolean;
-  measuring?: boolean;
   disabled?: boolean;
+  ariaLive?: 'off' | 'polite';
 }
 
-const props = withDefaults(defineProps<CheckableButtonProps>(), {
+withDefaults(defineProps<CheckableButtonProps>(), {
   label: '',
 });
 const emits = defineEmits<{
@@ -45,10 +46,6 @@ const model = defineModel<boolean | string>();
 const checkBoxRef = ref<CheckboxHandles | null>(null);
 
 const className = computed(() => classNames(styles.CheckableButton));
-
-const isIndeterminate = computed(() => props.selected === 'indeterminate');
-
-const isChecked = computed(() => Boolean(!isIndeterminate.value && model.value));
 
 function focus() {
   checkBoxRef.value?.focus();
