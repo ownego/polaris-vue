@@ -46,20 +46,27 @@ div(:class="styles.IndexTable")
         :description="i18n.translate('Polaris.IndexTable.emptySearchDescription')",
       )
 
-  div(ref="bulkActionsIntersectionRef")
+    //- scrollBarMarkup
+    div(
+      v-if="itemCount > 0",
+      ref="scrollContainerElement",
+      :class="scrollBarWrapperClassNames",
+      :style="{'--pc-index-table-scroll-bar-top-offset': `${scrollbarPastTopOffset}px`}",
+    )
+      div(
+        ref="scrollBarElement",
+        :class="styles.ScrollBar",
+        @scroll="handleScrollBarScroll",
+      )
+        div(:class="scrollBarClassNames")
 
-//- scrollBarMarkup
-div(
-  v-if="itemCount > 0",
-  ref="scrollContainerElement",
-  :class="scrollBarWrapperClassNames",
-)
-  div(
-    ref="scrollBarElement",
-    :class="styles.ScrollBar",
-    @scroll="handleScrollBarScroll",
-  )
-    div(:class="scrollBarClassNames")
+    div(
+      :class="paginationWrapperClassNames",
+      :style="{'--pc-index-table-pagination-top-offset': `${selectAllActionsPastTopOffset}px`}",
+    )
+      Pagination(type="table", v-bind="pagination")
+
+  div(ref="selectAllActionsIntersectionRef")
 </template>
 
 <script setup lang="ts">
@@ -71,7 +78,6 @@ import { useToggle } from '@/use/useToggle';
 import useI18n from '@/use/useI18n';
 import useTheme from '@/use/useTheme';
 import { useHasSlot } from '@/use/useHasSlot';
-import { useIsBulkActionsSticky } from '@/components/BulkActions/hooks/use-bulk-action-sticky';
 import {
   Badge,
   Checkbox as PolarisCheckbox,
@@ -85,6 +91,7 @@ import {
   Tooltip,
   UnstyledButton,
   BulkActions,
+  Pagination,
 } from '@/components';
 import {
   useIndexContext,
@@ -147,14 +154,22 @@ const {
 } = useToggle(false);
 
 const {
-  bulkActionsIntersectionRef,
+  selectAllActionsIntersectionRef,
   tableMeasurerRef,
-  isBulkActionsSticky,
-  bulkActionsAbsoluteOffset,
-  bulkActionsMaxWidth,
-  bulkActionsOffsetLeft,
+  isSelectAllActionsSticky,
+  selectAllActionsAbsoluteOffset,
+  selectAllActionsMaxWidth,
+  selectAllActionsOffsetLeft,
+  selectAllActionsOffsetBottom,
   computeTableDimensions,
-} = useIsBulkActionsSticky(selectMode);
+  isScrolledPastTop,
+  selectAllActionsPastTopOffset,
+  scrollbarPastTopOffset,
+} = useIsSelectAllActionsSticky({
+  selectMode,
+  hasPagination: Boolean(props.pagination),
+  tableType: 'index-table',
+});
 
 const tablePosition = ref({ top: 0, left: 0 });
 const tableHeadingRects = ref<TableHeadingRect[]>([]);
@@ -162,6 +177,7 @@ const tableHeadingRects = ref<TableHeadingRect[]>([]);
 const scrollableContainerElement = ref<HTMLDivElement | null>(null);
 const scrollableContainerElementRef = ref<InstanceType<typeof ScrollContainer> | null>(null);
 const tableElement = ref<HTMLTableElement | null>(null);
+const tableBodyElement = ref<Element | null>(null);
 const condensedListElement = ref<HTMLUListElement | null>(null);
 const loadingElement = ref<HTMLDivElement | null>(null);
 
@@ -195,11 +211,17 @@ const bulkActionsSelectable = computed(() => Boolean(
   props.promotedBulkActions.length > 0 || props.bulkActions.length > 0,
 ));
 
-const selectedItemsCountLabel = computed(() =>
-  selectedItemsCount.value === SELECT_ALL_ITEMS
-    ? `${itemCount.value}+`
-    : selectedItemsCount.value,
-);
+const selectedItemsCountValue = computed(() => {
+  if (selectedItemsCount.value === SELECT_ALL_ITEMS || selectedItemsCount.value > 0) {
+    return selectedItemsCount.value === SELECT_ALL_ITEMS
+      ? `${itemCount.value}+`
+      : selectedItemsCount.value;
+  }
+});
+
+const selectAllActionsLabel = computed(() => i18n.translate('Polaris.IndexTable.selected', {
+  selectedItemsCount: `${selectedItemsCountValue.value}`,
+}));
 
 const stickyColumnHeaderStyle = computed(() => (
   tableHeadingRects.value && tableHeadingRects.value.length > 0
@@ -237,19 +259,34 @@ const stickyTableClassNames = computed(() => classNames(
 
 const scrollBarWrapperClassNames = computed(() => classNames(
   styles.ScrollBarContainer,
+  props.pagination && styles.ScrollBarContainerWithPagination,
+  shouldShowBulkActions.value && styles.ScrollBarContainerWithSelectAllActions,
+  selectMode.value &&
+    isSelectAllActionsSticky.value &&
+    styles.ScrollBarContainerSelectAllActionsSticky,
   condensed?.value && styles.scrollBarContainerCondensed,
   hideScrollContainer.value && styles.scrollBarContainerHidden,
+  isScrolledPastTop.value &&
+    (props.pagination || shouldShowBulkActions.value) &&
+    styles.ScrollBarContainerScrolledPastTop,
 ));
 
 const scrollBarClassNames = computed(() => classNames(
   tableElement.value && tableInitialized.value && styles.ScrollBarContent,
 ));
 
-const shouldShowBulkActions = computed(() => bulkActionsSelectable.value && selectedItemsCount.value);
+const shouldShowBulkActions = computed(() => bulkActionsSelectable.value);
 
-const bulkActionClassNames = computed(() => classNames(
-  styles.BulkActionsWrapper,
-  isBulkActionsSticky.value && styles.BulkActionsWrapperSticky,
+const selectAllActionsClassNames = computed(() => classNames(
+  styles.SelectAllActionsWrapper,
+  isSelectAllActionsSticky.value && styles.SelectAllActionsWrapperSticky,
+  !isSelectAllActionsSticky.value &&
+    !props.pagination &&
+    styles.SelectAllActionsWrapperAtEnd,
+  selectMode &&
+    !isSelectAllActionsSticky.value &&
+    !props.pagination &&
+    styles.SelectAllActionsWrapperAtEndAppear,
 ));
 
 const shouldShowActions = computed(() =>
@@ -273,10 +310,17 @@ const calculateFirstHeaderOffset = computed(() => {
         tableHeadingRects.value[1].offsetWidth;
 });
 
-const bulkActionStyles = computed(() => ({
-  insetBlockStart: !isBulkActionsSticky.value && `${bulkActionsAbsoluteOffset.value}px`,
-  width: `${bulkActionsMaxWidth.value}px`,
-  insetInlineStart: isBulkActionsSticky.value && `${bulkActionsOffsetLeft.value}px`,
+const selectAllActionsStyles = computed(() => ({
+  insetBlockEnd: isSelectAllActionsSticky.value
+    ? `${selectAllActionsOffsetBottom.value}px`
+    : undefined,
+  insetBlockStart: isSelectAllActionsSticky.value
+    ? undefined
+    : `${selectAllActionsAbsoluteOffset.value}px`,
+  width: `${selectAllActionsMaxWidth.value}px`,
+  insetInlineStart: isSelectAllActionsSticky.value
+    ? `${selectAllActionsOffsetLeft.value}px`
+    : undefined,
 }));
 
 const headerWrapperClassNames = computed(() => classNames(
@@ -297,15 +341,21 @@ const stickyHeaderClassNames = computed(() => classNames(
 
 const tableWrapperClassNames = computed(() => classNames(
   styles.IndexTableWrapper,
-  hideScrollContainer.value && styles['IndexTableWrapper-scrollBarHidden'],
-  Boolean(bulkActionsMarkup.value) &&
+  Boolean(selectAllActionsMarkup.value) &&
     selectMode.value &&
-    styles.IndexTableWrapperWithBulkActions,
+    !props.pagination &&
+    styles.IndexTableWrapperWithSelectAllActions,
 ));
 
 const condensedClassNames = computed(() => classNames(
   styles.CondensedList,
   props.hasZebraStriping && styles.ZebraStriping,
+));
+
+const paginationWrapperClassNames = computed(() => classNames(
+  styles.PaginationWrapper,
+  shouldShowBulkActions.value && styles.PaginationWrapperWithSelectAllActions,
+  isScrolledPastTop.value && styles.PaginationWrapperScrolledPastTop,
 ));
 
 const isSortable = computed(() => props.sortable?.some((v) => v));
@@ -314,7 +364,6 @@ const tableClassNames = computed(() => classNames(
   styles.Table,
   hasMoreLeftColumns.value && styles['Table-scrolling'],
   selectMode.value && styles.disableTextSelection,
-  selectMode.value && shouldShowBulkActions.value && styles.selectMode,
   !selectable.value && styles['Table-unselectable'],
   canFitStickyColumn.value && styles['Table-sticky'],
   isSortable.value && styles['Table-sortable'],
@@ -326,8 +375,9 @@ const tableClassNames = computed(() => classNames(
   props.hasZebraStriping && styles.ZebraStriping,
 ));
 
-const selectAllActionsClassName = computed(() => classNames(
-  styles.SelectAllActionsWrapper,
+const bulkActionsClassName = computed(() => classNames(
+  styles.BulkActionsWrapper,
+  selectMode.value && styles.BulkActionsWrapperVisible,
   condensed?.value && styles['StickyTableHeader-condensed'],
   isSticky.value && styles['StickyTableHeader-isSticky'],
 ));
@@ -399,9 +449,29 @@ onMounted(() => {
     scrollableContainerElement.value = scrollableContainerRef;
   }
 
+  const callback = (mutationList: MutationRecord[]) => {
+    const hasChildList = mutationList.some(
+      (mutation) => mutation.type === 'childList',
+    );
+    if (hasChildList) {
+      computeTableDimensions();
+    }
+  };
+  const mutationObserver = new MutationObserver(callback);
+
+  if (tableBodyElement.value) {
+    mutationObserver.observe(tableBodyElement.value, {
+      childList: true,
+    });
+
+    return () => {
+      mutationObserver.disconnect();
+    };
+  }
+
   triggerResizeTableHeadings();
   triggerResizeTableScrollBar();
-  computeTableDimensions();
+  // computeTableDimensions();
 });
 
 watch(
@@ -432,6 +502,8 @@ const tableBodyRef = (node: any) => {
   if (node !== null && !tableInitialized.value) {
     tableInitialized.value = true;
   }
+
+  tableBodyElement.value = node;
 };
 
 const handleSelectAllItemsInStore = () => {
@@ -693,24 +765,24 @@ const loadingMarkup = computed(() => {
   );
 });
 
-// bulkActionsMarkup
-const bulkActionsMarkup = computed(() => (
-  (shouldShowBulkActions.value && !condensed?.value)
+// selectAllActionsMarkup
+const selectAllActionsMarkup = computed(() => (
+  (shouldShowActions.value && !condensed?.value)
   ? h(
     'div',
     {
-      class: bulkActionClassNames.value,
-      style: bulkActionStyles.value,
+      class: selectAllActionsClassNames.value,
+      style: selectAllActionsStyles.value,
     },
     h(
-      BulkActions,
+      SelectAllActions,
       {
+        label: selectAllActionsLabel.value,
         selectMode: selectMode.value,
-        promotedActions: promotedActions.value,
-        actions: actions.value,
-        isSticky: isBulkActionsSticky.value,
-        width: bulkActionsMaxWidth.value,
-        onSelectModeToggle: condensed?.value ? handleSelectModeToggle : undefined,
+        paginatedSelectAllText: paginatedSelectAllText.value,
+        paginatedSelectAllAction: paginatedSelectAllAction.value,
+        isSticky: isSelectAllActionsSticky.value,
+        hasPagination: Boolean(props.pagination),
       },
     ))
   : null
@@ -718,24 +790,24 @@ const bulkActionsMarkup = computed(() => (
 
 const stickyHeadingsMarkup = computed(() => props.headings.map(renderStickyHeading));
 
-const selectAllActionsMarkup = computed(() => (
+const bulkActionsMarkup = computed(() => (
   shouldShowBulkActions.value && !condensed?.value
   ? h(
     'div',
-    { class: selectAllActionsClassName.value },
+    { class: bulkActionsClassName.value },
     [
       h(
-        SelectAllActions,
+        BulkActions,
         {
-          label: i18n.translate('Polaris.IndexTable.selected', {
-            selectedItemsCount: selectedItemsCountLabel.value,
-          }),
-          accessibilityLabel: bulkActionsAccessibilityLabel?.value,
-          selected: bulkSelectState?.value,
           selectMode: selectMode.value,
           paginatedSelectAllText: paginatedSelectAllText?.value,
           paginatedSelectAllAction: paginatedSelectAllAction.value,
+          accessibilityLabel: bulkActionsAccessibilityLabel?.value,
+          selected: bulkSelectState?.value,
+          promotedActions: promotedActions.value,
+          actions: actions.value,
           onToggleAll: handleTogglePage,
+          onSelectModeToggle: condensed?.value && handleSelectModeToggle,
         },
       ),
       loadingMarkup.value,
@@ -774,13 +846,6 @@ const headerMarkup = () => {
 
 // stickyHeaderMarkup
 const stickyHeaderMarkup = () => {
-  console.log(1, shouldShowBulkActions.value);
-  console.log(2, bulkActionsSelectable.value, selectedItemsCount.value);
-  console.log(3, props.promotedBulkActions, props.bulkActions);
-
-  console.log(headerMarkup());
-  console.log(selectAllActionsMarkup.value ?? headerMarkup());
-
   return h(
     'div',
     {
@@ -794,9 +859,12 @@ const stickyHeaderMarkup = () => {
           boundingElement: stickyWrapper.value,
           onStickyChange,
         },
-        () => selectAllActionsMarkup.value ?? headerMarkup(),
+        () => [
+          headerMarkup(),
+          bulkActionsMarkup.value,
+        ],
       ),
-      bulkActionsMarkup.value,
+      selectAllActionsMarkup.value,
     ],
   )
 };

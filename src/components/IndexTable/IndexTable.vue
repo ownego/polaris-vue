@@ -18,20 +18,11 @@ IndexProvider(
       slot(name="emptyState")
     template(v-if="hasSlot(slots.sort)", #sort)
       slot(name="sort")
-
-Pagination(
-  v-if="pagination",
-  type="table",
-  v-bind="pagination",
-)
 </template>
 
 <script setup lang="ts">
 import { computed } from 'vue';
-import {
-  IndexProvider,
-  Pagination,
-} from '@/components';
+import { IndexProvider } from '@/components';
 import { SelectionType, type Range } from '@/components/IndexProvider/types';
 import type {
   IndexTableSlots,
@@ -64,7 +55,6 @@ const indexTableBaseProps = computed<IndexTableBaseProps>(() => {
     hasMoreItems,
     condensed,
     onSelectionChange,
-    pagination,
     ...rest
   } = props;
 
