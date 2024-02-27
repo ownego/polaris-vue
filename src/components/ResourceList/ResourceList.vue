@@ -26,12 +26,12 @@ div(
           div(:class="styles.HeaderTitleWrapper") {{ headerTitle }}
           div(v-if="isSelectable", :class="styles.CheckableButtonWrapper")
             CheckableButton(
+              v-model="selectAllSelectState",
               :accessibilityLabel="bulkActionsAccessibilityLabel",
               :label="headerTitle",
               :disabled="loading",
               :selected="selectAllSelectState",
               @toggle-all="handleToggleAll",
-              ref="checkableButtonRef",
             )
           div(
             v-if="hasSlot(slots.alternateTool) && !showSortingSelect",
