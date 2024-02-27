@@ -52,7 +52,7 @@ export default defineConfig({
         collapsed: false,
         items: [
           { text: 'Installation', link: '/documentation' },
-          { text: 'Icons', link: '/icons' },
+          { text: 'Utilities', link: '/utilities' },
           { text: 'Tokens', link: 'https://polaris.shopify.com/tokens/color' },
           { text: 'Patterns', link: '/patterns' },
           { text: 'Contributing', link: '/contributing' },
