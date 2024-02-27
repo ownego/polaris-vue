@@ -79,15 +79,13 @@ div(
       :style="selectAllActionsStyles",
     )
       SelectAllActions(
-        ref="checkableButtonRef"
         :label="selectAllActionsLabel",
-        :selected="selectAllSelectState",
-        :accessibilityLabel="bulkActionsAccessibilityLabel",
         :selectMode="selectMode",
         :paginatedSelectAllAction="paginatedSelectAllAction",
         :paginatedSelectAllText="paginatedSelectAllText",
         :disabled="loading",
-        @toggle-all="handleToggleAll",
+        :isSticky="isSelectAllActionsSticky",
+        :hasPagination="Boolean(pagination)",
       )
   //-List
   ul(
