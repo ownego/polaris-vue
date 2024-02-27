@@ -40,7 +40,7 @@ div(
             slot(name="alternateTool")
           div(v-if="showSortingSelect && sortOptions", :className="styles.SortWrapper")
             Select(
-              v-model="sortValueSelect",
+              :value="sortValueSelect",
               :labelInline="!smallScreen",
               :labelHidden="smallScreen",
               :options="sortOptions",
@@ -79,7 +79,6 @@ div(
       :style="selectAllActionsStyles",
     )
       SelectAllActions(
-        v-model="selectAllSelectState",
         ref="checkableButtonRef"
         :label="selectAllActionsLabel",
         :selected="selectAllSelectState",

@@ -2,7 +2,7 @@
 div(:class="className", @click="emits('toggle-all')")
   div(:class="styles.Checkbox")
     Checkbox(
-      v-model="isChecked",
+      v-model="model",
       ref="checkBoxRef",
       labelHidden,
       :checked="selected",
@@ -35,7 +35,7 @@ interface CheckableButtonProps {
   ariaLive?: 'off' | 'polite';
 }
 
-const props = withDefaults(defineProps<CheckableButtonProps>(), {
+withDefaults(defineProps<CheckableButtonProps>(), {
   label: '',
 });
 const emits = defineEmits<{
@@ -46,10 +46,6 @@ const model = defineModel<boolean | string>();
 const checkBoxRef = ref<CheckboxHandles | null>(null);
 
 const className = computed(() => classNames(styles.CheckableButton));
-
-const isIndeterminate = computed(() => props.selected === 'indeterminate');
-
-const isChecked = computed(() => Boolean(!isIndeterminate.value && model.value));
 
 function focus() {
   checkBoxRef.value?.focus();

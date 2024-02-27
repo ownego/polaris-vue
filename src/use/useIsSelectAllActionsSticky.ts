@@ -118,6 +118,7 @@ export function useIsSelectAllActionsSticky({
     const scrollContainer = getClosestScrollContainer(node)?.getBoundingClientRect();
 
     const box = node.getBoundingClientRect();
+    console.log('box', box, node);
     const paddingHeight = computed(() => selectMode.value ? SELECT_ALL_ACTIONS_HEIGHT : 0);
     const offsetHeight = computed(() => box.height - paddingHeight.value);
     const maxWidth = computed(() => box.width - widthOffset.value);
@@ -178,7 +179,7 @@ export function useIsSelectAllActionsSticky({
     () => [selectMode.value, widthOffset.value],
     () => {
       console.log('selectMode.value watch', selectMode.value);
-      computeTableDimensions
+      computeTableDimensions();
     }
   );
 

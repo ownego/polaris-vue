@@ -22,7 +22,7 @@ transition(
         CheckableButton(
           v-if="accessibilityLabel && currentInstance?.vnode.props?.onToggleAll",
           v-bind="props",
-          v-model="selectedValue",
+          v-model="model",
           :aria-live="ariaLive",
           :label=" hasTextAndAction ? paginatedSelectAllText : label",
           @toggle-all="emits('toggle-all')",
@@ -94,10 +94,6 @@ const model = defineModel<boolean | string>();
 const currentInstance = getCurrentInstance();
 
 const nodeRef = ref<HTMLElement | null>(null);
-
-const isIndeterminate = computed(() => props.selected === 'indeterminate');
-
-const selectedValue = computed(() => Boolean(!isIndeterminate.value && model.value));
 
 const hasTextAndAction = computed(() => props.paginatedSelectAllText && props.paginatedSelectAllAction);
 const ariaLive = computed<AriaLive>(() => (hasTextAndAction.value ? 'polite' : undefined));
