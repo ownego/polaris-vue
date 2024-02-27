@@ -13,21 +13,6 @@
             | {{ p.name }}
             span.dpt__optional(v-if="!p.required") ?
           component(:is="typeMarkup(p)")
-          //- span.dpt__types
-            //- template(
-            //-   v-for="t, idx in serializeSchema(p.schema)",
-            //-   :key="t",
-            //- )
-            //-   span.dpt__separator(v-if="idx && !t.startsWith('&')") |
-            //-   span(
-            //-     v-if="t === '&'",
-            //-     :data-props-type="defineTypeFormat(t)",
-            //-   ) {{ t }}
-            //-   span.dpt__type(
-            //-     v-else,
-            //-     :data-props-type="defineTypeFormat(t)",
-            //-     @click="expandType(t, p.name)",
-            //-   ) {{ doubleQuoteToSingleQuote(t) }}
 
         dd(v-if="p.description || p.tags.length > 0")
           p.dpt__description(v-html="p.description")
