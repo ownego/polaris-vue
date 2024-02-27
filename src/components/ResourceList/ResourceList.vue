@@ -237,8 +237,6 @@ export interface ResourceListProps<
   sortValue?: string;
   /** Collection of sort options to choose from */
   sortOptions?: SelectOption[];
-  /** ReactNode to display instead of the sort control */
-  alternateTool?: React.ReactNode;
   /** Custom header text displayed above the list instead of the resource count. */
   headerContent?: string;
   /** Function to customize the unique ID for each item */
