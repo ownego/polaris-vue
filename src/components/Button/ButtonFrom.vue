@@ -1,6 +1,5 @@
 <template lang="pug">
 Button(
-  :key="key",
   :tone="tone",
   :variant="plainVariant || destructiveVariant",
   v-bind="bindProps",
@@ -18,7 +17,6 @@ import type { ComplexAction, ButtonProps } from './types';
 interface Props {
   action: ComplexAction;
   overrides?: Partial<ButtonProps>,
-  key?: string;
 }
 
 const props = defineProps<Props>();
