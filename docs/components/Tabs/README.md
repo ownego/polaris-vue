@@ -47,7 +47,7 @@ examples:
 
 ## Events
 
-<EventsTable />
+<EventsTable typeFile="TabsEvents" />
 
 <div style="font-size: 0.8125rem">
 

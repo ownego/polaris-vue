@@ -23,6 +23,8 @@ div(:class="styles.Outer")
           Tab(
             v-for="_tab, index in tabData",
             v-bind="tabs[index]",
+            :data-abc="tabs[index].onAction",
+            :data-def="tabs[index].id",
             ref=`${index === selected ? selectedTabRef : null}`,
             :actions="tabs[index].actions",
             :key="`${index}-${tabs[index].id}`",
@@ -36,7 +38,7 @@ div(:class="styles.Outer")
             :url="tabs[index].url",
             :content="tabs[index].content",
             :viewNames="viewNames",
-            @action="() => handleTabAction(tabs[index])",
+            @action="() => { handleTabAction(tabs[index]) }",
             @toggle-modal="handleToggleModal",
             @toggle-popover="handleTogglePopover",
           )
@@ -146,7 +148,7 @@ import type { VueNode } from '@/utilities/types';
 import { useHasSlot } from '@/use/useHasSlot';
 import { Icon, Tooltip, Popover } from '@/components';
 import { Tab, TabMeasurer, CreateViewModal, Panel, List } from './components';
-import type { TabMeasurements, TabProps } from './types';
+import type { TabMeasurements, TabProps, TabsEvents } from './types';
 import { getVisibleAndHiddenTabIndices } from './utilities';
 import styles from '@polaris/components/Tabs/Tabs.module.scss';
 import ChevronDownIcon from '@icons/ChevronDownIcon.svg';
@@ -193,12 +195,7 @@ const slots = defineSlots<{
   default?: (_?: VueNode) => any[];
 }>();
 
-const emits = defineEmits<{
-  /** Optional callback invoked when a Tab becomes selected. */
-  (e: 'select', selectedTabIndex: number): void;
-  /** Optional callback invoked when a merchant saves a new view from the Modal */
-  (e: 'create-new-view', value: string): Promise<boolean>;
-}>();
+const emits = defineEmits<TabsEvents>();
 
 const i18n = useI18n();
 const breakpoints = useBreakpoints();
@@ -279,16 +276,15 @@ const handleCloseNewViewModal = () => {
   state.isNewViewModalActive = false;
 };
 
-const handleSaveNewViewModal = async (value: string) => {
+const handleSaveNewViewModal = (value: string) => {
   if (!currentInstance?.vnode.props?.onCreateNewView) {
     return false;
   }
 
-  const hasExecuted = await emits('create-new-view', value);
-  if (hasExecuted) {
-    state.modalSubmitted = true;
-  }
-  return hasExecuted;
+  emits('create-new-view', value);
+  state.modalSubmitted = true;
+
+  return value;
 };
 
 const handleClickNewTab = () => {

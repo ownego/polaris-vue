@@ -119,7 +119,6 @@ import {
   h,
   resolveComponent,
 } from 'vue';
-import type { VueNode } from '@/utilities/types';
 import useI18n from '@/use/useI18n';
 import { useBreakpoints } from '@/utilities/breakpoints';
 import { focusFirstFocusableNode, handleMouseUpByBlurring } from '@/utilities/focus';
@@ -134,26 +133,11 @@ import LayoutColumns3Icon from '@icons/LayoutColumns3Icon.svg';
 import DeleteIcon from '@icons/DeleteIcon.svg';
 import ChevronDownIcon from '@icons/ChevronDownIcon.svg';
 import { DuplicateModal, RenameModal } from './components';
-import type { TabAction, TabProps } from '../../types';
-
-const slots = defineSlots<{
-  /** Elements to display inside the tag*/
-  default: (_?: VueNode) => any;
-  /** An icon to render in place of a view name. Please pass the full Icon component, rather
-   * than a reference to the particular icon source. */
-  icon: (_?: VueNode) => any;
-}>();
-
-const emits = defineEmits<{
-  'action': [];
-  'focus': [];
-  /** Callback to let the Tabs know that a Popover is open inside of a Tab. Used to control focus. */
-  'toggle-popover': [value: boolean];
-  /** Callback to let the Tabs know that a Modal is open inside of a Tab. Used to control focus. */
-  'toggle-modal': [value: boolean];
-}>();
+import type { TabAction, TabEvents, TabProps, TabSlots } from '../../types';
 
 const props = defineProps<TabProps>();
+const slots = defineSlots<TabSlots>();
+const emits = defineEmits<TabEvents>();
 
 const i18n = useI18n();
 const breakpoints = useBreakpoints();

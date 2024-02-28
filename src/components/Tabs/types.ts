@@ -1,4 +1,5 @@
-import type { ActionListItemDescriptor } from '@/utilities/types';
+import type { VNode } from 'vue';
+import type { ActionListItemDescriptor, VueNode } from '@/utilities/types';
 
 export type TabAction =
   | 'rename'
@@ -13,6 +14,13 @@ interface TabActionDescriptor
     onAction?: (name: string) => void;
     onPrimaryAction?: (name: string) => Promise<boolean> | void;
   }
+
+export type TabsEvents = {
+  /** Optional callback invoked when a Tab becomes selected. */
+  'select': [selectedTabIndex: number];
+  /** Optional callback invoked when a merchant saves a new view from the Modal */
+  'create-new-view': [value: string];
+}
 
 export interface TabProps {
   /** The unique identifier for the Tab */
@@ -48,15 +56,25 @@ export interface TabProps {
   /** Overrides the tabIndex calculated by the Tabs component */
   tabIndexOverride?: 0 | -1;
   /** Optional callback invoked when a merchant clicks on a Tab when it is not active */
-  onAction?:() => void;
+  onAction?: () => void;
 }
 
-// export interface TabPropsWithAddedMethods extends TabProps {
-//   /** Callback to let the Tabs know that a Popover is open inside of a Tab. Used to control focus. */
-//   onTogglePopover: (value: boolean) => void;
-//   /** Callback to let the Tabs know that a Modal is open inside of a Tab. Used to control focus. */
-//   onToggleModal: (value: boolean) => void;
-// }
+export type TabEvents = {
+  'action': [];
+  'focus': [];
+  /** Callback to let the Tabs know that a Popover is open inside of a Tab. Used to control focus. */
+  'toggle-popover': [value: boolean];
+  /** Callback to let the Tabs know that a Modal is open inside of a Tab. Used to control focus. */
+  'toggle-modal': [value: boolean];
+}
+
+export type TabSlots = {
+  /** Elements to display inside the tag*/
+  default: (_?: VueNode) => VNode[];
+  /** An icon to render in place of a view name. Please pass the full Icon component, rather
+   * than a reference to the particular icon source. */
+  icon: (_?: VueNode) => VNode[];
+}
 
 export interface TabMeasurements {
   containerWidth: number;
