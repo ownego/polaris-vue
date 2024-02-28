@@ -46,9 +46,9 @@ template(v-if="hasSlot(slots.icon)")
         content: i18n.translate('Polaris.Tabs.Tab.deleteModal.cancel'),
         onAction: handleModalClose,
       }]`,
-      :title="i18n.translate('Polaris.Tabs.Tab.deleteModal.title')",
       @close="handleModalClose",
     )
+      template(#title) {{ i18n.translate('Polaris.Tabs.Tab.deleteModal.title') }}
       ModalSection {{ i18n.translate('Polaris.Tabs.Tab.deleteModal.description',
         | { viewName: content }) }}
 li(
@@ -103,9 +103,9 @@ li(
         content: i18n.translate('Polaris.Tabs.Tab.deleteModal.cancel'),
         onAction: handleModalClose,
       }]`,
-      :title="i18n.translate('Polaris.Tabs.Tab.deleteModal.title')",
       @close="handleModalClose",
     )
+      template(#title) {{ i18n.translate('Polaris.Tabs.Tab.deleteModal.title') }}
       ModalSection
         | {{ i18n.translate('Polaris.Tabs.Tab.deleteModal.description', { viewName: content }) }}
 </template>
@@ -220,7 +220,7 @@ const actionContent = computed(() => ({
 }));
 
 const formattedActions = computed(() => props.actions?.map(
-  ({ type, onAction, ...additionalOptions }) => {
+  ({ type, onAction, onPrimaryAction, ...additionalOptions }) => {
     const isModalActivator = !type.includes('edit');
 
     return {
@@ -359,7 +359,7 @@ const activator = () => {
           props.badge ? h(
             resolveComponent('Badge'),
             { tone: props.selected ? undefined : 'new' },
-            props.badge,
+            { default: () => props.badge },
           ) : null,
         ],
       ),

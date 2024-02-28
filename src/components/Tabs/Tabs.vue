@@ -144,8 +144,8 @@ import { useBreakpoints } from '@/utilities/breakpoints';
 import useI18n from '@/use/useI18n';
 import type { VueNode } from '@/utilities/types';
 import { useHasSlot } from '@/use/useHasSlot';
-import { Icon, List, Tooltip, Popover } from '@/components';
-import { Tab, TabMeasurer, CreateViewModal, Panel } from './components';
+import { Icon, Tooltip, Popover } from '@/components';
+import { Tab, TabMeasurer, CreateViewModal, Panel, List } from './components';
 import type { TabMeasurements, TabProps } from './types';
 import { getVisibleAndHiddenTabIndices } from './utilities';
 import styles from '@polaris/components/Tabs/Tabs.module.scss';
@@ -298,7 +298,7 @@ const handleClickNewTab = () => {
 const handleTabClick = (id: string) => {
   const tab = props.tabs.find((aTab) => aTab.id === id);
   if (tab == null) {
-    return null;
+    return;
   }
   const selectedIndex = props.tabs.indexOf(tab);
   currentInstance?.vnode.props?.onSelect && emits('select', selectedIndex);
@@ -325,9 +325,7 @@ const handleBlur = (event: FocusEvent) => {
   const relatedTarget = event.relatedTarget as HTMLInputElement;
   const isInNaturalDOMOrder = relatedTarget?.closest?.(`.${styles.Tabs}`);
   const targetIsATab = target?.classList?.contains?.(styles.Tab);
-  const focusReceiverIsAnItem = relatedTarget?.classList.contains(
-    styles.Item,
-  );
+  const focusReceiverIsAnItem = relatedTarget?.classList.contains(styles.Item);
 
   if (
     (!relatedTarget &&
@@ -514,7 +512,6 @@ watch(
 
 watch(
   () => [
-    moveToSelectedTab,
     props.selected,
     breakpoints.value.mdDown,
   ],

@@ -2,11 +2,11 @@
 Modal(
   :instant="true",
   :open="open",
-  :title="i18n.translate('Polaris.Tabs.RenameModal.title')",
   :primaryAction="primaryAction",
   :secondaryActions="secondaryActions",
   @close="emits('close')",
 )
+  template(#title) {{ i18n.translate('Polaris.Tabs.RenameModal.title') }}
   ModalSection
     Form(@submit="handlePrimaryAction")
       FormLayout
