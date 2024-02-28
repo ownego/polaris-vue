@@ -20,6 +20,10 @@ export default ({ mode }) => {
             from: '%POLARIS_VERSION%',
             to: packageJson.polaris_version,
           },
+          {
+            from: '%MIGRATE_DATE%',
+            to: packageJson.migrate_date,
+          },
         ],
       }),
     ],
