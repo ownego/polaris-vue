@@ -1,15 +1,42 @@
 <template lang="pug">
 div(:class="styles.IndexTable")
-  div(:class="tableWrapperClassNames", ref="tableMeasurerRef")
+  div(:class="styles.IndexTableWrapper")
     //- loadingMarkup
     component(
-      v-if="!shouldShowBulkActions && !condensed && loading",
+      v-if="!condensed && loading",
       :is="loadingMarkup",
     )
     //- tableContentMarkup
     template(v-if="itemCount > 0")
       EventListener(event="resize", :handler="handleResize")
-      component(v-if="isMounted", :is="stickyHeaderMarkup")
+      div(
+        v-if="isMounted",
+        :class="stickyTableClassNames",
+        role="presentation",
+      )
+        Sticky(:boundingElement="stickyWrapper", @sticky-change="onStickyChange")
+          div(
+            v-if="condensed",
+            :class="headerWrapperClassNames",
+          )
+            component(:is="loadingMarkup")
+            slot(name="sort")
+
+          div(
+            v-else,
+            :class="stickyHeaderClassNames",
+            ref="stickyHeaderWrapperElement",
+          )
+            component(:is="loadingMarkup")
+            div(:class="styles.StickyTableColumnHeader")
+              component(:is="stickyColumnHeader")
+            div(:class="styles.StickyTableHeadings", ref="stickyHeaderElement")
+              component(:is="stickyHeadingsMarkup")
+
+          component(
+            v-if="!condensed",
+            :is="bulkActionsMarkup",
+          )
 
       //- bodyMarkup
       ul(
@@ -51,7 +78,6 @@ div(:class="styles.IndexTable")
       v-if="itemCount > 0",
       ref="scrollContainerElement",
       :class="scrollBarWrapperClassNames",
-      :style="{'--pc-index-table-scroll-bar-top-offset': `${scrollbarPastTopOffset}px`}",
     )
       div(
         ref="scrollBarElement",
@@ -60,13 +86,8 @@ div(:class="styles.IndexTable")
       )
         div(:class="scrollBarClassNames")
 
-    div(
-      :class="paginationWrapperClassNames",
-      :style="{'--pc-index-table-pagination-top-offset': `${selectAllActionsPastTopOffset}px`}",
-    )
+    div(v-if="pagination", :class="styles.PaginationWrapper")
       Pagination(type="table", v-bind="pagination")
-
-  div(ref="selectAllActionsIntersectionRef")
 </template>
 
 <script setup lang="ts">
@@ -83,7 +104,6 @@ import {
   Checkbox as PolarisCheckbox,
   EmptySearchResult,
   EventListener,
-  SelectAllActions,
   LegacyStack,
   Sticky,
   Spinner,
@@ -153,24 +173,6 @@ const {
   toggle: toggleHasMoreLeftColumns,
 } = useToggle(false);
 
-const {
-  selectAllActionsIntersectionRef,
-  tableMeasurerRef,
-  isSelectAllActionsSticky,
-  selectAllActionsAbsoluteOffset,
-  selectAllActionsMaxWidth,
-  selectAllActionsOffsetLeft,
-  selectAllActionsOffsetBottom,
-  computeTableDimensions,
-  isScrolledPastTop,
-  selectAllActionsPastTopOffset,
-  scrollbarPastTopOffset,
-} = useIsSelectAllActionsSticky({
-  selectMode,
-  hasPagination: Boolean(props.pagination),
-  tableType: 'index-table',
-});
-
 const tablePosition = ref({ top: 0, left: 0 });
 const tableHeadingRects = ref<TableHeadingRect[]>([]);
 
@@ -205,10 +207,6 @@ const hasSelected = ref(false);
 const hasBulkActions = computed(() => Boolean(
   (props.promotedBulkActions && props.promotedBulkActions.length > 0) ||
     (props.bulkActions && props.bulkActions.length > 0),
-));
-
-const bulkActionsSelectable = computed(() => Boolean(
-  props.promotedBulkActions.length > 0 || props.bulkActions.length > 0,
 ));
 
 const selectedItemsCountValue = computed(() => {
@@ -260,33 +258,12 @@ const stickyTableClassNames = computed(() => classNames(
 const scrollBarWrapperClassNames = computed(() => classNames(
   styles.ScrollBarContainer,
   props.pagination && styles.ScrollBarContainerWithPagination,
-  shouldShowBulkActions.value && styles.ScrollBarContainerWithSelectAllActions,
-  selectMode.value &&
-    isSelectAllActionsSticky.value &&
-    styles.ScrollBarContainerSelectAllActionsSticky,
   condensed?.value && styles.scrollBarContainerCondensed,
   hideScrollContainer.value && styles.scrollBarContainerHidden,
-  isScrolledPastTop.value &&
-    (props.pagination || shouldShowBulkActions.value) &&
-    styles.ScrollBarContainerScrolledPastTop,
 ));
 
 const scrollBarClassNames = computed(() => classNames(
   tableElement.value && tableInitialized.value && styles.ScrollBarContent,
-));
-
-const shouldShowBulkActions = computed(() => bulkActionsSelectable.value);
-
-const selectAllActionsClassNames = computed(() => classNames(
-  styles.SelectAllActionsWrapper,
-  isSelectAllActionsSticky.value && styles.SelectAllActionsWrapperSticky,
-  !isSelectAllActionsSticky.value &&
-    !props.pagination &&
-    styles.SelectAllActionsWrapperAtEnd,
-  selectMode &&
-    !isSelectAllActionsSticky.value &&
-    !props.pagination &&
-    styles.SelectAllActionsWrapperAtEndAppear,
 ));
 
 const shouldShowActions = computed(() =>
@@ -310,19 +287,6 @@ const calculateFirstHeaderOffset = computed(() => {
         tableHeadingRects.value[1].offsetWidth;
 });
 
-const selectAllActionsStyles = computed(() => ({
-  insetBlockEnd: isSelectAllActionsSticky.value
-    ? `${selectAllActionsOffsetBottom.value}px`
-    : undefined,
-  insetBlockStart: isSelectAllActionsSticky.value
-    ? undefined
-    : `${selectAllActionsAbsoluteOffset.value}px`,
-  width: `${selectAllActionsMaxWidth.value}px`,
-  insetInlineStart: isSelectAllActionsSticky.value
-    ? `${selectAllActionsOffsetLeft.value}px`
-    : undefined,
-}));
-
 const headerWrapperClassNames = computed(() => classNames(
   styles.HeaderWrapper,
   (!selectable.value || condensed?.value) && styles.unselectable,
@@ -339,23 +303,9 @@ const stickyHeaderClassNames = computed(() => classNames(
   isSticky.value && styles['StickyTableHeader-isSticky'],
 ));
 
-const tableWrapperClassNames = computed(() => classNames(
-  styles.IndexTableWrapper,
-  Boolean(selectAllActionsMarkup.value) &&
-    selectMode.value &&
-    !props.pagination &&
-    styles.IndexTableWrapperWithSelectAllActions,
-));
-
 const condensedClassNames = computed(() => classNames(
   styles.CondensedList,
   props.hasZebraStriping && styles.ZebraStriping,
-));
-
-const paginationWrapperClassNames = computed(() => classNames(
-  styles.PaginationWrapper,
-  shouldShowBulkActions.value && styles.PaginationWrapperWithSelectAllActions,
-  isScrolledPastTop.value && styles.PaginationWrapperScrolledPastTop,
 ));
 
 const isSortable = computed(() => props.sortable?.some((v) => v));
@@ -449,29 +399,8 @@ onMounted(() => {
     scrollableContainerElement.value = scrollableContainerRef;
   }
 
-  const callback = (mutationList: MutationRecord[]) => {
-    const hasChildList = mutationList.some(
-      (mutation) => mutation.type === 'childList',
-    );
-    if (hasChildList) {
-      computeTableDimensions();
-    }
-  };
-  const mutationObserver = new MutationObserver(callback);
-
-  if (tableBodyElement.value) {
-    mutationObserver.observe(tableBodyElement.value, {
-      childList: true,
-    });
-
-    return () => {
-      mutationObserver.disconnect();
-    };
-  }
-
   triggerResizeTableHeadings();
   triggerResizeTableScrollBar();
-  // computeTableDimensions();
 });
 
 watch(
@@ -482,11 +411,6 @@ watch(
 watch(
   () => [tableInitialized.value, condensed?.value],
   triggerResizeTableScrollBar,
-);
-
-watch(
-  () => itemCount.value,
-  computeTableDimensions,
 );
 
 watch(
@@ -765,33 +689,10 @@ const loadingMarkup = computed(() => {
   );
 });
 
-// selectAllActionsMarkup
-const selectAllActionsMarkup = computed(() => (
-  (shouldShowActions.value && !condensed?.value)
-  ? h(
-    'div',
-    {
-      class: selectAllActionsClassNames.value,
-      style: selectAllActionsStyles.value,
-    },
-    h(
-      SelectAllActions,
-      {
-        label: selectAllActionsLabel.value,
-        selectMode: selectMode.value,
-        paginatedSelectAllText: paginatedSelectAllText.value,
-        paginatedSelectAllAction: paginatedSelectAllAction.value,
-        isSticky: isSelectAllActionsSticky.value,
-        hasPagination: Boolean(props.pagination),
-      },
-    ))
-  : null
-));
-
 const stickyHeadingsMarkup = computed(() => props.headings.map(renderStickyHeading));
 
 const bulkActionsMarkup = computed(() => (
-  shouldShowBulkActions.value && !condensed?.value
+  shouldShowActions.value && !condensed?.value
   ? h(
     'div',
     { class: bulkActionsClassName.value },
@@ -806,6 +707,8 @@ const bulkActionsMarkup = computed(() => (
           selected: bulkSelectState?.value,
           promotedActions: promotedActions.value,
           actions: actions.value,
+          label: selectAllActionsLabel.value,
+          buttonSize: 'micro',
           onToggleAll: handleTogglePage,
           onSelectModeToggle: condensed?.value && handleSelectModeToggle,
         },
@@ -815,59 +718,6 @@ const bulkActionsMarkup = computed(() => (
   )
   : null
 ));
-
-const headerMarkup = () => {
-  return condensed?.value
-  ? h(
-    'div',
-    { class: headerWrapperClassNames.value },
-    [
-      loadingMarkup.value,
-      slots.sort({}),
-    ],
-  )
-  : h(
-    'div',
-    {
-      class: stickyHeaderClassNames.value,
-      ref: stickyHeaderWrapperElement,
-    },
-    [
-      loadingMarkup.value,
-      h('div', { class: styles.StickyTableColumnHeader }, stickyColumnHeader()),
-      h(
-        'div',
-        { class: styles.StickyTableHeadings, ref: stickyHeaderElement },
-        stickyHeadingsMarkup.value,
-      ),
-    ],
-  )
-};
-
-// stickyHeaderMarkup
-const stickyHeaderMarkup = () => {
-  return h(
-    'div',
-    {
-      class: stickyTableClassNames.value,
-      role: 'presentation',
-    },
-    [
-      h(
-        Sticky,
-        {
-          boundingElement: stickyWrapper.value,
-          onStickyChange,
-        },
-        () => [
-          headerMarkup(),
-          bulkActionsMarkup.value,
-        ],
-      ),
-      selectAllActionsMarkup.value,
-    ],
-  )
-};
 
 // renderHeading
 const renderHeading = (heading: IndexTableHeading, index: number) => {

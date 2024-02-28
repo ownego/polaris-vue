@@ -91,7 +91,7 @@ export type IndexTableBaseEvents = {
 export type IndexTableSlots = {
   default: (_: VueNode) => VNode[];
   emptyState: (_: VueNode) => VNode[];
-  sort: (_: VueNode) => VNode[];
+  sort: (_?: VueNode) => VNode[];
 }
 
 export type IndexTableEvents = {
