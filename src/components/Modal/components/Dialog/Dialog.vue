@@ -38,7 +38,6 @@ import type { ModalSize } from '../../utils';
  
 export interface DialogProps {
   labelledBy?: string;
-  instant?: boolean;
   limitHeight?: boolean;
   size?: ModalSize;
   in?: boolean;
