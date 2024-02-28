@@ -23,8 +23,6 @@ div(:class="styles.Outer")
           Tab(
             v-for="_tab, index in tabData",
             v-bind="tabs[index]",
-            :data-abc="tabs[index].onAction",
-            :data-def="tabs[index].id",
             ref=`${index === selected ? selectedTabRef : null}`,
             :actions="tabs[index].actions",
             :key="`${index}-${tabs[index].id}`",
@@ -38,7 +36,7 @@ div(:class="styles.Outer")
             :url="tabs[index].url",
             :content="tabs[index].content",
             :viewNames="viewNames",
-            @action="() => { handleTabAction(tabs[index]) }",
+            @tab-action="() => { handleTabClick(tabs[index].id) }",
             @toggle-modal="handleToggleModal",
             @toggle-popover="handleTogglePopover",
           )
@@ -81,7 +79,7 @@ div(:class="styles.Outer")
               :tabIndexOverride="0",
               @toggle-popover="handleTogglePopover",
               @toggle-modal="handleToggleModal",
-              @action="handleClickNewTab",
+              @tab-action="handleClickNewTab",
               @focus="handleTabFocus",
             )
               template(#icon)
@@ -103,7 +101,7 @@ div(:class="styles.Outer")
                   :tabIndexOverride="0",
                   @toggle-popover="handleTogglePopover",
                   @toggle-modal="handleToggleModal",
-                  @action="handleClickNewTab",
+                  @tab-action="handleClickNewTab",
                   @focus="handleTabFocus",
                 )
                   template(#icon)
@@ -450,11 +448,6 @@ const handleTabFocus = () => {
     state.modalSubmitted = false;
   }
 };
-
-const handleTabAction = (tab: TabProps) => {
-  handleTabClick(tab.id);
-  tab.onAction?.();
-}
 
 onMounted(() => {
   prevModalOpen.value = state.isTabModalOpen;

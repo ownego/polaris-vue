@@ -49,7 +49,7 @@ const tabs = computed(() =>
   itemStrings.value.map((item, index) => ({
     content: item,
     index,
-    onAction: () => {},
+    onTabAction: () => {},
     id: `${item}-${index}`,
     isLocked: index === 0,
     actions:
@@ -93,8 +93,6 @@ const tabs = computed(() =>
         ],
   })) as TabProps[],
 );
-
-console.log(1, tabs.value);
 
 const onCreateNewView = async (value: string) => {
   await sleep(500);

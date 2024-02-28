@@ -55,12 +55,10 @@ export interface TabProps {
   measuring?: boolean;
   /** Overrides the tabIndex calculated by the Tabs component */
   tabIndexOverride?: 0 | -1;
-  /** Optional callback invoked when a merchant clicks on a Tab when it is not active */
-  onAction?: () => void;
 }
 
 export type TabEvents = {
-  'action': [];
+  'tab-action': [];
   'focus': [];
   /** Callback to let the Tabs know that a Popover is open inside of a Tab. Used to control focus. */
   'toggle-popover': [value: boolean];

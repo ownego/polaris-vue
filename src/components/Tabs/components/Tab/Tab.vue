@@ -137,7 +137,9 @@ import type { TabAction, TabEvents, TabProps, TabSlots } from '../../types';
 
 const props = defineProps<TabProps>();
 const slots = defineSlots<TabSlots>();
-const emits = defineEmits<TabEvents>();
+const emits = defineEmits<TabEvents & {
+  'tab-action': [],
+}>();
 
 const i18n = useI18n();
 const breakpoints = useBreakpoints();
@@ -261,7 +263,7 @@ const handleClick = () => {
   if (props.selected) {
     togglePopoverActive();
   } else {
-    emits('action');
+    emits('tab-action');
   }
 };
 
