@@ -7,39 +7,58 @@ transition(
   @before-leave="onTransitionExiting"
   @leave="onTransitionExit",
 )
-  div(:class="wrapperClassName")
-    CheckableButton(
-      v-bind="props",
-      v-model="selectedValue",
-      :aria-live="ariaLive",
-      :label=" hasTextAndAction ? paginatedSelectAllText : label",
-      @toggle-all="emits('toggle-all')",
+  div(:class="wrapperClassName" ref="nodeRef")
+    Box(
+      background="bg-surface-secondary",
+      borderBlockStartWidth="025",
+      borderColor="border",
+      width="100%",
+      paddingBlockStart="300",
+      paddingBlockEnd="300",
+      paddingInlineStart="300",
+      paddingInlineEnd="400",
     )
-    div(v-if="paginatedSelectAllAction", :class="styles.PaginatedSelectAll")
-      UnstyledButton(
-        :class="styles.AllAction",
-        size="slim",
-        :disabled="disabled",
-        @click="handleClick",
-    )
+      InlineStack(gap="200", align="start", block-align="center")
+        CheckableButton(
+          v-if="accessibilityLabel && currentInstance?.vnode.props?.onToggleAll",
+          v-bind="props",
+          v-model="model",
+          :aria-live="ariaLive",
+          :label=" hasTextAndAction ? paginatedSelectAllText : label",
+          @toggle-all="emits('toggle-all')",
+        )
+        Text(
+          as="span",
+          variant="bodySm",
+          font-weight="medium",
+        ) {{ hasTextAndAction ? paginatedSelectAllText : label}}
+        div(v-if="paginatedSelectAllAction", :class="styles.PaginatedSelectAll")
+          UnstyledButton(
+            :class="styles.AllAction",
+            size="slim",
+            :disabled="disabled",
+            @click="handleClick",
+        )
 </template>
 
 <script setup lang="ts">
-import { computed } from 'vue';
+import { computed, ref, getCurrentInstance } from 'vue';
 import { classNames } from '@/utilities/css';
-import { UnstyledButton, CheckableButton } from '@/components';
+import {
+  UnstyledButton,
+  CheckableButton,
+  Box,
+  Text,
+  InlineStack,
+} from '@/components';
 import type { Action } from '@/utilities/types';
 import styles from '@polaris/components/SelectAllActions/SelectAllActions.module.scss';
 
 type AriaLive = 'off' | 'polite' | undefined;
 
 export interface SelectAllActionsProps {
-  /** Visually hidden text for screen readers */
-  accessibilityLabel?: string;
   /** Label for the bulk actions */
   label?: string;
-  /** State of the bulk actions checkbox */
-  selected?: boolean | 'indeterminate';
   /** List is in a selectable state */
   selectMode?: boolean;
   /** Text to select all across pages */
@@ -48,6 +67,14 @@ export interface SelectAllActionsProps {
   paginatedSelectAllAction?: Action;
   /** Disables bulk actions */
   disabled?: boolean;
+  /** If the BulkActions is currently sticky in view */
+  isSticky?: boolean;
+  /** Whether there is a Pagination element on the associated table. Disables the vertical appear animation if so */
+  hasPagination?: boolean;
+  /** @deprecated Visually hidden text for screen readers */
+  accessibilityLabel?: string;
+  /** @deprecated State of the bulk actions checkbox */
+  selected?: boolean | 'indeterminate';
 }
 
 const wrapperStatus = {
@@ -59,14 +86,14 @@ const wrapperStatus = {
 
 const props = defineProps<SelectAllActionsProps>();
 const emits = defineEmits<{
-  /** Callback when the select all checkbox is clicked */
+   /** @deprecated Callback when the select all checkbox is clicked */
   'toggle-all': [];
 }>();
 const model = defineModel<boolean | string>();
 
-const isIndeterminate = computed(() => props.selected === 'indeterminate');
+const currentInstance = getCurrentInstance();
 
-const selectedValue = computed(() => Boolean(!isIndeterminate.value && model.value));
+const nodeRef = ref<HTMLElement | null>(null);
 
 const hasTextAndAction = computed(() => props.paginatedSelectAllText && props.paginatedSelectAllAction);
 const ariaLive = computed<AriaLive>(() => (hasTextAndAction.value ? 'polite' : undefined));

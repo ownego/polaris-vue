@@ -1,13 +1,12 @@
 <template lang="pug">
-nav(role="navigation")
-  Button(
-    :key="backAction.content",
-    :url="url",
-    :icon="ArrowLeftIcon",
-    :accessibilityLabel="backAction.accessibilityLabel ?? backAction.content",
-    @click="callbackOnAction",
-    @pointerdown="handleMouseUpByBlurring",
-  )
+Button(
+  :key="backAction.content",
+  :url="url",
+  :icon="ArrowLeftIcon",
+  :accessibilityLabel="backAction.accessibilityLabel ?? backAction.content",
+  @click="callbackOnAction",
+  @pointerdown="handleMouseUpByBlurring",
+)
 </template>
 
 <script setup lang="ts">

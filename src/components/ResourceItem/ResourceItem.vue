@@ -4,33 +4,34 @@ li(:class="listItemClassName", :dataHref="dataHref")
     div(
       ref="node",
       :class="className",
-      @click="handleClick",
+      @click="disabled ? () => {} : handleClick",
       @focus="handleFocus",
       @blur="handleBlur",
       @keyup="handleKeyUp",
       @mouseout="handleMouseOut",
       :data-href="url",
     )
-      UnstyledLink(
-        v-if="url",
-        :aria-describedby="id",
-        :aria-label="ariaLabel",
-        :class="styles.Link",
-        :url="url",
-        :external="external",
-        :tabIndex="tabIndex",
-        :id="overlayId",
-      )
-      button(
-        v-else,
-        :class="styles.Button",
-        :aria-label="ariaLabel",
-        :aria-controls="ariaControls",
-        :aria-expanded="ariaExpanded",
-        @click="handleClick",
-        :tabIndex="tabIndex",
-        ref="buttonOverlay",
-      )
+      template(v-if="!disabled")
+        UnstyledLink(
+          v-if="url",
+          :aria-describedby="id",
+          :aria-label="ariaLabel",
+          :class="styles.Link",
+          :url="url",
+          :external="external",
+          :tabIndex="tabIndex",
+          :id="overlayId",
+        )
+        button(
+          v-else,
+          :class="styles.Button",
+          :aria-label="ariaLabel",
+          :aria-controls="ariaControls",
+          :aria-expanded="ariaExpanded",
+          @click="handleClick",
+          :tabIndex="tabIndex",
+          ref="buttonOverlay",
+        )
       Box(
         :id="id",
         position="relative",
@@ -60,7 +61,7 @@ li(:class="listItemClassName", :dataHref="dataHref")
                   labelHidden,
                   fill,
                   :label="checkboxAccessibilityLabel",
-                  :disabled="loading",
+                  :disabled="loading || disabled",
                   :label-class-name="styles.CheckboxLabel",
                   bleed-inline-start="300",
                   bleed-inline-end="300",
@@ -155,6 +156,8 @@ import MenuHorizontalIcon from '@icons/MenuHorizontalIcon.svg';
 type Alignment = 'leading' | 'trailing' | 'center' | 'fill' | 'baseline';
 
 interface ResourceItemProps {
+  /** Whether or not interaction is disabled */
+  disabled?: boolean;
   /** Visually hidden text for screen readers used for item link*/
   accessibilityLabel?: string;
   /** Individual item name used by various text labels */
@@ -345,7 +348,7 @@ const handleClick = (event: MouseEvent) => {
 const handleKeyUp = (event: KeyboardEvent) => {
   const { key } = event;
 
-  if (key === 'Enter' && props.url && !selectMode) {
+  if (key === 'Enter' && props.url && !selectMode && !props.disabled) {
     emits('click', props.id);
   }
 };
