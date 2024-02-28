@@ -4,7 +4,7 @@ import {
   type PropertyMeta,
 } from 'vue-component-meta';
 
-type ComponentPropsMeta =
+export type ComponentPropsMeta =
   Pick<PropertyMeta,
     | 'name'
     | 'type'
