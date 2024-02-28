@@ -152,8 +152,6 @@ if (typeof model.value === 'string') {
       blue: parseInt(colorRgbArr[2], 10),
       alpha: parseFloat(colorRgbArr[3]) ? parseFloat(colorRgbArr[3]) : 1,
     };
-
-    console.log(colorRgb);
   }
 
   Object.assign(colorHsb, { ...rgbToHsb(colorRgb), alpha: colorRgb.alpha });

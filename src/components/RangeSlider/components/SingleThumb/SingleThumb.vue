@@ -131,7 +131,6 @@ const handleUpdate = (event: Event) => {
 
 const handleChange = (event: Event) => {
   const target = event.target as HTMLInputElement;
-  console.log(target);
 
   model.value = parseFloat(target.value);
   emits('change', model.value, props.id);

@@ -68,7 +68,7 @@ Choice(
 </template>
 
 <script setup lang="ts">
-import { computed, ref } from 'vue';
+import { computed, ref, watch } from 'vue';
 import { classNames, variationName, type ResponsiveProp } from '@/utilities/css';
 import type { Error, VueNode } from '@/utilities/types';
 import { useWithinListbox } from '@/use/useListbox';
@@ -138,6 +138,14 @@ const emits = defineEmits<CheckboxEvents>();
 
 const model = defineModel<boolean | string>();
 model.value = props.checked;
+
+watch(
+  () => props.checked,
+  (value, oldVal) => {
+    if (value === oldVal) return;
+    model.value = value;
+  }
+);
 
 const isWithinListbox = useWithinListbox();
 const uniqId = useId();

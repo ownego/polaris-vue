@@ -36,6 +36,8 @@ export * from './FormLayout';
 export * from './Grid';
 export * from './Icon';
 export * from './Image';
+export * from './IndexProvider';
+export * from './IndexTable';
 export * from './Indicator';
 export * from './InlineError';
 export * from './InlineGrid';

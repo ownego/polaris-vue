@@ -63,7 +63,6 @@ const isActivatorForMoreActionsPopover = computed(() => {
 });
 
 const handleButtonClick = () => {
-  console.log('BulkActionButton clicked');
   emits('action');
 };
 

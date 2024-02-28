@@ -355,7 +355,6 @@ const handleKeyUp = (event: KeyboardEvent) => {
 
 const handleActionsClick = () => {
   actionsMenuVisible.value = !actionsMenuVisible.value;
-  console.log(123, actionsMenuVisible.value);
 };
 
 const handleCloseRequest = () => {
