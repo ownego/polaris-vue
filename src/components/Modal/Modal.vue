@@ -9,7 +9,6 @@ Portal(
   id-prefix="modal",
 )
   Dialog(
-    :instant="instant",
     :labelled-by="headerId",
     :size="size",
     :limit-height="limitHeight",
@@ -146,30 +145,20 @@ interface ModalProps {
    * @default false
    */
   titleHidden?: boolean;
-  /** Disable animations and open modal instantly */
-  instant?: boolean;
   /** Automatically adds sections to modal */
   sectioned?: boolean;
   /** The size of the modal */
   size?: ModalSize;
-  /** Increases the modal width */
-  large?: boolean;
-  /** Decreases the modal width */
-  small?: boolean;
   /** Limits modal height on large screens with scrolling */
   limitHeight?: boolean;
   /** Replaces modal content with a spinner while a background action is being performed */
   loading?: boolean;
   /** Removes Scrollable container from the modal content */
   noScroll?: boolean;
-  /** Sets modal to the height of the viewport on small screens */
-  fullScreen?: boolean;
   /** Primary action */
   primaryAction?: ComplexAction;
   /** Collection of secondary actions */
   secondaryActions?: ComplexAction[];
-  /** Click or tap the area outside to close the modal */
-  clickOutsideToClose?: boolean;
 }
 
 export type ModalSlots = {
