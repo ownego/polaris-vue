@@ -12,18 +12,7 @@
           span.dpt__name
             | {{ p.name }}
             span.dpt__optional(v-if="!p.required") ?
-          span.dpt__types
-            template(
-              v-for="t, idx in serializeSchema(p.schema)",
-              :key="t",
-            )
-              span(v-if="idx && !t.startsWith('&')") |
-              span(v-else-if="idx && t.startsWith('&')", class="dpt--no-space") &nbsp;
-
-              span.dpt__type(
-                :data-props-type="defineTypeFormat(t)",
-                @click="expandType(t, p.name)",
-              ) {{ doubleQuoteToSingleQuote(t) }}
+          component(:is="typeMarkup(p)")
 
         dd(v-if="p.description || p.tags.length > 0")
           p.dpt__description(v-html="p.description")
@@ -86,9 +75,10 @@
 </template>
 
 <script setup lang="ts">
-import { computed, ref } from 'vue';
+import { computed, h, ref } from 'vue';
 import MarkdownIt from 'markdown-it';
 import { useMeta } from '../use/useMeta';
+import type { ComponentPropsMeta } from '../types';
 
 const {
   cProps,
@@ -182,6 +172,69 @@ const syntaxKindToDeveloperFriendlyString = (
   }
   return `interface`;
 }
+
+const typeMarkup = (p: ComponentPropsMeta) => {
+  const types = serializeSchema(p.schema);
+
+  const typeEls = [];
+  let isInGroup = false;
+
+  types.map((t, idx) => {
+    if (t === '&') {
+      typeEls.push(
+        h(
+          'span',
+          { 'data-props-type': defineTypeFormat(t) },
+          t,
+        ),
+      );
+
+      return t;
+    }
+
+    const hasSeparator = idx
+      && !t.startsWith('&')
+      && types[idx - 1] !== '&'
+      && !t.startsWith(')')
+      && !types[idx - 1].endsWith('(');
+
+    if (hasSeparator) {
+      typeEls.push(
+        h(
+          'span',
+          { class: `dpt__separator${isInGroup ? ' dpt__separator--sm' : ''}` },
+          '|',
+        ),
+      );
+    }
+
+    typeEls.push(
+      h(
+        'span',
+        {
+          class: 'dpt__type',
+          'data-props-type': defineTypeFormat(t),
+          onClick: () => expandType(t, p.name),
+        },
+        doubleQuoteToSingleQuote(t),
+      ),
+    );
+
+    if (t.startsWith('(')) {
+      isInGroup = true;
+    } else if(t.includes(')')) {
+      isInGroup = false;
+    }
+
+    return t;
+  });
+
+  return h(
+    'span',
+    { class: 'dpt__types' },
+    typeEls,
+  );
+};
 </script>
 
 <style lang="scss">
