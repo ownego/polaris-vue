@@ -108,9 +108,9 @@ const lastMenuGroup = computed(() => {
 
 const lastMenuGroupWidth = computed(() => [...actionWidths.value].pop() || 0);
 
-const getSecondaryActionProps = (index: number) =>
-  props.actions?.[index] as SecondaryActionProps;
-;
+const getSecondaryActionProps = (index: number) => (
+  props.actions?.[index] as SecondaryActionProps
+);
 
 const handleActionsOffsetWidth = (width: number) => {
   actionWidths.value = [...actionWidths.value, width];
