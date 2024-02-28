@@ -5,6 +5,7 @@ InlineStack(
   gap="100",
 )
   Button(
+    v-if="cancelAction",
     size="micro",
     variant="tertiary",
     :disabled="disabled",
@@ -73,7 +74,7 @@ interface UpdateIndexFiltersPrimaryAction
 
 export interface UpdateButtonsProps {
   primaryAction?: UpdateIndexFiltersPrimaryAction;
-  cancelAction: IndexFiltersCancelAction;
+  cancelAction?: IndexFiltersCancelAction;
   viewNames: string[];
   disabled?: boolean;
 }

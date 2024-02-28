@@ -1,10 +1,125 @@
 <template lang="pug">
+div(
+  :class="styles.IndexFiltersWrapper",
+  :style="{height: `${indexFilteringHeight}px`}",
+)
+  div(ref="intersectionRef")
+  div(
+    ref="measurerRef",
+    :class="indexFiltersClassName",
+  )
+    div(ref="defaultRef")
+      Container(v-if="mode !== IndexFiltersMode.Filtering")
+        InlineStack(
+          align="start",
+          block-align="center",
+          :gap="{ xs: '0', md: '200'}",
+          :wrap="false",
+        )
+          div(:class="tabsWrapperClassName")
+            div(
+              :class="styles.TabsInner",
+              :style="{...defaultStyle, ...transitionStyles[isSticky ? 'exited' : 'entered']}",
+            )
+              Tabs(
+                :tabs="tabs",
+                :selected="selected",
+                :disabled="Boolean(mode !== IndexFiltersMode.Default || disabled)",
+                :can-create-new-view="canCreateNewView",
+                @select="emits('select', $event)",
+                @create-new-view="emits('create-new-view', $event)",
+              )
+            div(
+              v-if="isLoading && breakpoints.mdDown",
+              :class="styles.TabsLoading",
+            )
+              Spinner(size="small")
+          div(:class="styles.ActionWrap")
+            div(
+              v-if="isLoading && !breakpoints.mdDown",
+              :class="styles.DesktopLoading",
+            )
+              Spinner(size="small")
+            template(v-if="mode === IndexFiltersMode.Default")
+              SearchFilterButton(
+                v-if="!(hideFilters && hideQueryField)",
+                :label="searchFilterAriaLabel",
+                :tooltip-content="searchFilterTooltip",
+                :disabled="disabled",
+                :hide-query-field="hideQueryField",
+                :hide-filters="hideFilters",
+                :style="{...defaultStyle, ...transitionStyles[isSticky ? 'exited' : 'entered']}",
+              )
+              EditColumnsButton(
+                v-if="showEditColumnsButton",
+                :disabled="disabled",
+                @click="handleClickEditColumnsButton",
+              )
+              SortButton(
+                v-if="sortOptions && sortOptions.length",
+                :choices="sortOptions",
+                :selected="sortSelected",
+                :disabled="disabled",
+                @change="emits('sort', $event)",
+                @change-key="emits('sort-key-change', $event)",
+                @change-direction="emits('sort-direction-change', $event)",
+              )
+            template(v-if="mode === IndexFiltersMode.EditingColumns")
+              UpdateButtons(
+                v-if="enhancedCancelAction || enhancedPrimaryAction",
+                :primaryAction="enhancedPrimaryAction",
+                :cancelAction="enhancedCancelAction",
+                :disabled="disabled",
+                :view-names="viewNames",
+              )
+    div(ref="filteringRef")
+      Filters(
+        v-if="mode === IndexFiltersMode.Filtering",
+        border-less-query-field,
+        :close-on-child-overlay-click="closeOnChildOverlayClick",
+        :query-value="queryValue",
+        :query-placeholder="queryPlaceholder",
+        :filters="filters",
+        :applied-filters="appliedFilters",
+        :hide-filters="hideFilters",
+        :hide-query-field="hideQueryField",
+        :disable-query-field="disableQueryField",
+        :focused="filtersFocused",
+        :loading="loading || isActionLoading",
+        :mounted-state="breakpoints.mdDown ? undefined : 'entered'",
+        @query-change="handleChangeSearch",
+        @query-clear="handleClearSearch",
+        @query-blur="handleQueryBlur",
+        @query-focus="handleQueryFocus",
+        @add-filter-click="emits('filter-click')",
+        @clear-all="emits('clear-all')",
+      )
+        div(:class="styles.ButtonWrap")
+          InlineStack(gap="200", align="start", block-align="center")
+            div(:style="{...defaultStyle, ...transitionStyles[isSticky ? 'exited' : 'entered']}")
+              UpdateButtons(
+                v-if="enhancedCancelAction || enhancedPrimaryAction",
+                :primaryAction="enhancedPrimaryAction",
+                :cancelAction="enhancedCancelAction",
+                :disabled="disabled",
+                :view-names="viewNames",
+              )
+            SortButton(
+              v-if="sortOptions && sortOptions.length",
+              :choices="sortOptions",
+              :selected="sortSelected",
+              :disabled="disabled",
+              @change="emits('sort', $event)",
+              @change-key="emits('sort-key-change', $event)",
+              @change-direction="emits('sort-direction-change', $event)",
+            )
 </template>
 
 <script setup lang="ts">
 import { ref, computed } from 'vue';
 import useI18n from '@/use/useI18n';
 import { useToggle } from '@/use/useToggle';
+import { useIsSticky } from '@/use/useIsSticky';
 import { classNames } from '@/utilities/css';
 import { useEventListener } from '@/utilities/use-event-listener';
 import { useOnValueChange } from '@/utilities/use-on-value-change';
@@ -22,6 +137,7 @@ import {
   UpdateButtons,
   EditColumnsButton,
 } from './components';
+import type { FiltersProps } from '@/components/Filters/Filters.vue';
 import {
   type IndexFiltersCancelAction,
   type IndexFiltersPrimaryAction,
@@ -30,10 +146,9 @@ import {
 } from './types';
 import styles from '@polaris/components/IndexFilters/IndexFilters.module.scss';
 
+const TRANSITION_DURATION = 150;
 
 const DEFAULT_IGNORED_TAGS = ['INPUT', 'SELECT', 'TEXTAREA'];
-
-const TRANSITION_DURATION = 150;
 
 const defaultStyle = {
   transition: `opacity ${TRANSITION_DURATION}ms var(--p-motion-ease)`,
@@ -68,7 +183,7 @@ interface IndexFiltersProps
   /** The primary action to display  */
   primaryAction?: IndexFiltersPrimaryAction;
   /** The cancel action to display */
-  cancelAction: IndexFiltersCancelAction;
+  cancelAction?: IndexFiltersCancelAction;
   /** The current mode of the IndexFilters component. Used to determine which view to show */
   mode: IndexFiltersMode;
   /** Will disable all the elements within the IndexFilters component */
@@ -91,6 +206,8 @@ interface IndexFiltersProps
   disableKeyboardShortcuts?: boolean;
   /** Whether to display the edit columns button with the other default mode filter actions */
   showEditColumnsButton?: boolean;
+  /** Whether or not to auto-focus the search field when it renders */
+  autoFocusSearchField?: boolean;
 }
 
 type IndexFiltersEvents = {
@@ -125,6 +242,7 @@ type IndexFiltersEvents = {
 }
 
 const props = withDefaults(defineProps<IndexFiltersProps>(), {
+  sortSelected: [],
   queryValue: '',
   isFlushWhenSticky: false,
   canCreateNewView: true,
@@ -137,7 +255,9 @@ const {
   value: filtersFocused,
   setFalse: setFiltersUnFocused,
   setTrue: setFiltersFocused,
-} = useToggle(props.mode === IndexFiltersMode.Filtering);
+} = useToggle(props.mode === IndexFiltersMode.Filtering && props.autoFocusSearchField);
+const {intersectionRef, measurerRef, indexFilteringHeight, isSticky} =
+  useIsSticky(props.mode, Boolean(props.disableStickyMode), props.isFlushWhenSticky);
 
 const defaultRef = ref<HTMLElement | null>(null);
 const filteringRef = ref<HTMLElement | null>(null);
@@ -155,9 +275,52 @@ const searchFilterAriaLabel = computed(() => {
   return props.filteringAccessibilityLabel || i18n.translate('Polaris.IndexFilters.searchFilterAccessibilityLabel');
 });
 const isLoading = computed(() => isActionLoading.value || props.loading);
+const enhancedPrimaryAction = computed(() => {
+  if (!props.primaryAction) return undefined;
+  return {
+    ...props.primaryAction,
+    onAction: onExecutedPrimaryAction,
+  };
+});
+const enhancedCancelAction = computed(() => {
+  if (!props.cancelAction) return undefined;
+  return {
+    ...props.cancelAction,
+    onAction: onExecutedCancelAction,
+  };
+});
+const viewNames = computed(() => props.tabs.map(({content}: any) => content));
+const tabsWrapperClassName = computed(() => classNames(
+  styles.TabsWrapper,
+  breakpoints.value.mdDown && styles.SmallScreenTabsWrapper,
+  isLoading.value && styles.TabsWrapperLoading,
+));
+const indexFiltersClassName = computed(() => classNames(
+  styles.IndexFilters,
+  isSticky && styles.IndexFiltersSticky,
+  isSticky && props.isFlushWhenSticky && styles.IndexFiltersStickyFlush,
+));
+
+const useExecutedCallback = (action?: ExecutedCallback, afterEffect?: () => void) => {
+  return async (name: string) => {
+    if (!action) return;
+    const executed = await action?.(name);
+    if (executed) {
+      emits('set-mode', IndexFiltersMode.Default);
+      afterEffect?.();
+    }
+  };
+};
+
+const onExecutedPrimaryAction = useExecutedCallback(props.primaryAction?.onAction);
+
+const onExecutedCancelAction = () => {
+  props.cancelAction?.onAction();
+  emits('set-mode', IndexFiltersMode.Default);
+};
 
 const handleModeChange = (newMode: IndexFiltersMode) => {
-  if (newMode === IndexFiltersMode.Filtering) {
+  if (newMode === IndexFiltersMode.Filtering && props.autoFocusSearchField) {
     setFiltersFocused();
   } else {
     setFiltersUnFocused();
@@ -189,9 +352,17 @@ const beginEdit = (mode: ActionableIndexFiltersMode) => {
   emits('edit-start', mode);
 };
 
+function handleClickEditColumnsButton() {
+  beginEdit(IndexFiltersMode.EditingColumns);
+}
+
 function onPressEscape() {
   props.cancelAction?.onAction();
   emits('set-mode', IndexFiltersMode.Default);
+}
+
+function handleChangeSearch(value: string) {
+  emits('query-change', value);
 }
 
 function handleClearSearch() {
