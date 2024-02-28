@@ -93,7 +93,6 @@ export function useMeta(ignoreFetch = false) {
       }
     }
 
-    console.log(types);
     const combinedPattern = /(\w*)\s*\&\s*\{?(.*)/;
     if (combinedPattern.test(types[0])) {
       const match = combinedPattern.exec(types[0]);
