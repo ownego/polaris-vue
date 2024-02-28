@@ -1,3 +1,4 @@
+export * from './AccountConnection';
 export * from './ActionList';
 export * from './AppProvider';
 export * from './Autocomplete';
@@ -66,6 +67,7 @@ export * from './Scrollable';
 export * from './ScrollLock';
 export * from './Select';
 export * from './SelectAllActions';
+export * from './SettingAction';
 export * from './ShadowBevel';
 export * from './SkeletonBodyText';
 export * from './SkeletonDisplayText';
