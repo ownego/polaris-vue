@@ -58,7 +58,7 @@ div(
               SortButton(
                 v-if="sortOptions && sortOptions.length",
                 :choices="sortOptions",
-                :selected="sortSelected",
+                :selected="sortSelected || ['']",
                 :disabled="disabled",
                 @change="emits('sort', $event)",
                 @change-key="emits('sort-key-change', $event)",
@@ -107,7 +107,7 @@ div(
             SortButton(
               v-if="sortOptions && sortOptions.length",
               :choices="sortOptions",
-              :selected="sortSelected",
+              :selected="sortSelected || ['']",
               :disabled="disabled",
               @change="emits('sort', $event)",
               @change-key="emits('sort-key-change', $event)",
@@ -130,6 +130,7 @@ import {
   Filters,
   Tabs,
 } from '@/components';
+import { type TabsProps } from '@/components/Tabs/Tabs.vue';
 import {
   Container,
   SortButton,
@@ -242,7 +243,6 @@ type IndexFiltersEvents = {
 }
 
 const props = withDefaults(defineProps<IndexFiltersProps>(), {
-  sortSelected: [],
   queryValue: '',
   isFlushWhenSticky: false,
   canCreateNewView: true,
