@@ -1,11 +1,12 @@
-import { Key } from "@/utilities/types";
+import type { VNode } from 'vue';
+import { Key, type VueNode } from '@/utilities/types';
 
 interface AccessibilityLabels {
   previous: string;
   next: string;
 }
 
-export interface PaginationProps {
+export type PaginationProps = {
   /** Keyboard shortcuts for the next button */
   nextKeys?: Key[];
   /** Keyboard shortcuts for the previous button */
@@ -26,5 +27,18 @@ export interface PaginationProps {
   accessibilityLabel?: string;
   /** Accessible labels for the buttons and UnstyledLinks */
   accessibilityLabels?: AccessibilityLabels;
+  /** Layout structure of the component */
   type?: "page" | "table";
+}
+
+export type PaginationSlots = {
+  /** Text to provide more context in between the arrow buttons */
+  default: (_: VueNode) => VNode[];
+}
+
+export type PaginationEvents = {
+  /** Callback when next button is clicked */
+  'next': [];
+  /** Callback when previous button is clicked */
+  'previous': [];
 }
