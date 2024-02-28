@@ -49,6 +49,7 @@ div(
                 :hide-query-field="hideQueryField",
                 :hide-filters="hideFilters",
                 :style="{...defaultStyle, ...transitionStyles[isSticky ? 'exited' : 'entered']}",
+                @click="handleClickFilterButton",
               )
               EditColumnsButton(
                 v-if="showEditColumnsButton",
@@ -213,19 +214,19 @@ interface IndexFiltersProps
 
 type IndexFiltersEvents = {
   /** Optional callback invoked when a merchant changes the sort order. Required if using sorting */
-  'sort'?: [value: string[]];
+  'sort': [value: string[]];
   /** Optional callback when using saved views and changing the sort key */
-  'sort-key-change'?: [value: string];
+  'sort-key-change': [value: string];
   /** Optional callback when using saved views and changing the sort direction */
-  'sort-direction-change'?: [value: string];
+  'sort-direction-change': [value: string];
   /** Callback when the add filter button is clicked, to be passed to AlphaFilters. */
-  'filter-click'?: [];
+  'filter-click': [];
   /** Callback to set the mode of the IndexFilters component */
   'set-mode': [mode: IndexFiltersMode];
   /** Callback invoked when a merchant creates a new view */
-  'create-new-view'?: [name: string];
+  'create-new-view': [name: string];
   /** Optional callback invoked when a merchant begins to edit a view */
-  'edit-start'?: [mode: ActionableIndexFiltersMode];
+  'edit-start': [mode: ActionableIndexFiltersMode];
    /** Callback when the query field is changed. */
   'query-change': [string];
   /** Callback when the clear button is triggered. */
@@ -354,6 +355,10 @@ const beginEdit = (mode: ActionableIndexFiltersMode) => {
 
 function handleClickEditColumnsButton() {
   beginEdit(IndexFiltersMode.EditingColumns);
+}
+
+function handleClickFilterButton() {
+  beginEdit(IndexFiltersMode.Filtering);
 }
 
 function onPressEscape() {

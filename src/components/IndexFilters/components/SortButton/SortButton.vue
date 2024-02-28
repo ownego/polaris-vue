@@ -29,7 +29,7 @@ Popover(
     border-color="border-secondary",
   )
     ChoiceList(
-      v-model="selected",
+      v-model="model",
       :title="i18n.translate('Polaris.IndexFilters.SortButton.title')",
       :choices="choiceListChoices",
       @change="handleChangeChoiceList",
@@ -55,15 +55,8 @@ Popover(
 
 </template>
 
-<script>
-export enum SortButtonDirection {
-  ASC = 'asc',
-  DESC = 'desc',
-}
-</script>
-
 <script setup lang="ts">
-import { ref, getCurrentInstance, computed } from 'vue';
+import { ref, getCurrentInstance, computed, watch, onMounted } from 'vue';
 import useI18n from '@/use/useI18n';
 import {
   Popover,
@@ -83,6 +76,10 @@ interface SortButtonProps {
   disabled?: boolean;
 }
 
+enum SortButtonDirection {
+  ASC = 'asc',
+  DESC = 'desc',
+}
 type SortButtonEvents = {
   'change': [selected: string[]],
   'change-key': [key: string],
@@ -91,6 +88,18 @@ type SortButtonEvents = {
 
 const props = defineProps<SortButtonProps>();
 const emits = defineEmits<SortButtonEvents>();
+const model = defineModel<string[]>();
+
+onMounted(() => {
+  model.value = props.selected;
+});
+
+watch(
+  () => props.selected,
+  (newVal) => {
+    model.value = newVal;
+  }, { immediate: true },
+);
 
 const i18n = useI18n();
 const currentInstance = getCurrentInstance();

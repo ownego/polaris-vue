@@ -22,7 +22,7 @@ InlineStack(
         InlineStack
           Button(
             size="micro",
-            :disabled="primaryModalAction.disabled || disabled",
+            :disabled="primaryAction?.disabled || disabled",
             @click="handleClickSaveButton",
           ) {{ buttonText }}
       ModalSection
@@ -42,7 +42,7 @@ InlineStack(
   Button(
     v-else,
     size="micro",
-    :disabled="primaryAction?.loading || disabled",
+    :disabled="primaryAction?.disabled || disabled",
     @click="handleClickSaveButton",
   ) {{ buttonText }}
 
