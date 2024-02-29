@@ -61,7 +61,7 @@ div(
                 :choices="sortOptions",
                 :selected="sortSelected || ['']",
                 :disabled="disabled",
-                @change="emits('sort', $event)",
+                v-bind="sortButtonEvents",
               )
             template(v-if="mode === IndexFiltersMode.EditingColumns")
               UpdateButtons(
@@ -108,12 +108,12 @@ div(
               :choices="sortOptions",
               :selected="sortSelected || ['']",
               :disabled="disabled",
-              @change="emits('sort', $event)",
+              v-bind="sortButtonEvents",
             )
 </template>
 
 <script setup lang="ts">
-import { ref, computed } from 'vue';
+import { ref, computed, getCurrentInstance } from 'vue';
 import useI18n from '@/use/useI18n';
 import { useToggle } from '@/use/useToggle';
 import { useIsSticky } from '@/use/useIsSticky';
@@ -246,6 +246,8 @@ const props = withDefaults(defineProps<IndexFiltersProps>(), {
 });
 const emits: any = defineEmits<IndexFiltersEvents>();
 
+const currentInstance = getCurrentInstance();
+
 const i18n = useI18n();
 const breakpoints = useBreakpoints();
 const {
@@ -297,6 +299,27 @@ const indexFiltersClassName = computed(() => classNames(
   isSticky && styles.IndexFiltersSticky,
   isSticky && props.isFlushWhenSticky && styles.IndexFiltersStickyFlush,
 ));
+const sortButtonEvents = computed(() => {
+  let events: any = {
+    onChange: (value: string[]) => emits('sort', value),
+  };
+
+  if (currentInstance?.vnode.props?.onSortKeyChange) {
+    events = {
+      ...events,
+      onChangeKey: (key: string) => emits('sort-key-change', key),
+    }
+  }
+
+  if (currentInstance?.vnode.props?.onSortDirectionChange) {
+    events = {
+      ...events,
+      onChangeDirection: (direction: string) => emits('sort-direction-change', direction),
+    }
+  }
+
+  return events;
+})
 
 const useExecutedCallback = (action?: ExecutedCallback, afterEffect?: () => void) => {
   return async (name: string) => {
