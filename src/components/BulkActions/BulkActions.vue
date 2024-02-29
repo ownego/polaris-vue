@@ -1,93 +1,39 @@
 <template lang="pug">
 div(
-  ref="containerNode",
+  :class="styles.BulkActions",
+  :style="{ width: width ? `${width}px` : undefined }",
 )
-  transition(
-    name="Group",
-    ref="groupNode",
-    @before-enter="onTransitionEnter",
-    @enter="onTransitionEntered",
-    @before-leave="onTransitionExiting"
-    @leave="onTransitionExit",
-  )
-    div(
-      v-if="selectMode",
-      ref="groupNode",
-      :class="groupClassName",
-      :style=" width ? {  width: width + 'px' } : undefined",
-    )
-      EventListener(
-        event="resize",
-        :handler="handleResize",
+  InlineStack(gap="400", blockAlign="center")
+    div(:class="styles.BulkActionsSelectAllWrapper")
+      CheckableButton(
+        v-bind="checkableButtonProps",
+        ref="checkableButtonRef",
+        @toggle-all="emits('toggle-all')",
       )
-      div(
-        :class="styles.ButtonGroupWrapper",
-        ref="buttonsNode",
-      )
-        div(
-          :class="styles.ButtonGroupInner"
-        )
-          template(
-            v-if="hasPromotedActions || hasActionsPopover",
-          )
-            InlineStack(gap="300", block-align="center")
-              CheckableButton(
-                v-bind="CheckableButtonProps",
-                @toggle-all="emits('toggle-all')",
-              )
-              InlineStack(gap="100", block-align="center")
-                template(v-if="hasPromotedActions")
-                  template(
-                    v-for="action in promotedActions?.slice(0, numberOfPromotedActionsToRender)",
-                  )
-                    BulkActionMenu(
-                      v-if="instanceOfMenuGroupDescriptor(action)",
-                      v-bind="bulkActionPropsGenerate(action)",
-                      :isNewBadgeInBadgeActions="isNewBadgeInBadgeActions",
-                      :size="buttonSize",
-                    )
-                    BulkActionButton(
-                      v-else,
-                      :disabled="disabled",
-                      v-bind="action",
-                      :handleMeasurement="handleMeasurement",
-                      :size="buttonSize",
-                    )
-                div(
-                  v-if="hasActionsPopover",
-                  :class="styles.Popover",
-                  ref="moreActionsNode",
-                )
-                  Popover(
-                    :active="popoverVisible",
-                    @close="togglePopover",
-                  )
-                    template(#activator)
-                      BulkActionButton(
-                        disclosure,
-                        :size="buttonSize",
-                        :content="activatorLabel",
-                        :disabled="disabled",
-                        :indicator="isNewBadgeInBadgeActions",
-                        :show-content-in-button="!hasPromotedActions"
-                        @action="togglePopover",
-                      )
-                    ActionList(
-                      :sections="combinedActions",
-                      @action-any-item="togglePopover",
-                    )
+      //- paginatedSelectAllMarkup
+
+    div(:class="styles.BulkActionsPromotedActionsWrapper")
+      InlineStack(gap="100", blockAlign="center")
+        div(:class="styles.BulkActionsOuterLayout")
+          //- measurerMarkup
+          div(:class="bulkActionLayoutClassName")
+            //- promotedActionsMarkup
+
+        //- actionsMarkup
 </template>
 
 <script setup lang="ts">
 import { computed, onMounted, ref } from 'vue';
 import { classNames } from '@/utilities/css';
 import useI18n from '@/use/useI18n';
+import type { MenuGroupDescriptor } from '@/utilities/types';
 import {
   ActionList,
   Popover,
   InlineStack,
   CheckableButton,
   UnstyledButton,
+  CheckableButtonProps,
 } from '@/components';
 import {
   BulkActionButton,
@@ -123,6 +69,7 @@ const actionsWidths = ref<number[]>([]);
 const visiblePromotedActions = ref<number[]>([]);
 const hiddenPromotedActions = ref<number[]>([]);
 const hasMeasured = ref<boolean>(false);
+const checkableButtonRef = ref<InstanceType<typeof CheckableButton> | null>(null);
 
 const setPromotedActions = () => {
   if (
@@ -158,13 +105,66 @@ const hasTextAndAction = computed(() => props.paginatedSelectAllText && props.pa
 
 const ariaLive = computed(() => hasTextAndAction.value ? 'polite' : undefined);
 
-const checkableButtonProps = computed(() => ({
+const checkableButtonProps = computed<CheckableButtonProps>(() => ({
   accessibilityLabel: props.accessibilityLabel,
   label: hasTextAndAction.value ? props.paginatedSelectAllText : props.label,
   selected: props.selected,
   disabled: props.disabled,
   ariaLive: ariaLive.value,
 }));
+
+const bulkActionLayoutClassName = computed(() => (
+  classNames(
+    styles.BulkActionsLayout,
+    !hasMeasured.value && styles['BulkActionsLayout--measuring'],
+  )
+));
+
+const actionSections = computed(() => getActionSections(props.actions));
+
+const promotedActionsFiltered = computed(() => (
+  props.promotedActions?.filter((_, index) => visiblePromotedActions.value.includes(index)) || []
+));
+
+const hiddenPromotedActionObjects = computed(() => (
+  hiddenPromotedActions.value.map((index) => props.promotedActions?.[index])
+));
+
+const mergedHiddenPromotedActions = computed(() => (
+  hiddenPromotedActionObjects.value.reduce(
+    (memo, action) => {
+      if (!action) return memo;
+      if (instanceOfMenuGroupDescriptor(action)) {
+        return memo.concat(action.actions);
+      }
+      return memo.concat(action);
+    },
+    [] as (BulkAction | MenuGroupDescriptor)[],
+  )
+));
+
+const hiddenPromotedSection = computed(() => ({
+  items: mergedHiddenPromotedActions.value,
+}));
+
+const allHiddenActions = computed(() => (
+  props.actions
+  ? props.actions
+      .filter((action) => action)
+      .map(
+        (
+          action: BulkAction | MenuGroupDescriptor | BulkActionListSection,
+        ) => {
+          if (instanceOfBulkActionListSection(action)) {
+            return {items: [...action.items]};
+          } else if (instanceOfMenuGroupDescriptor(action)) {
+            return {items: [...action.actions]};
+          }
+          return {items: [action]};
+        },
+      )
+  : []
+));
 
 const togglePopover = () => {
   emits('more-action-popover-toggle', popoverActive.value);
@@ -199,4 +199,8 @@ const handleMeasurement = (measurements: ActionsMeasurements) => {
   actionsWidths.value = tmpActionsWidths;
   hasMeasured.value = true;
 };
+
+defineExpose({
+  checkableButtonRef,
+});
 </script>
