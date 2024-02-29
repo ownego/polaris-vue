@@ -46,9 +46,9 @@ template(v-if="hasSlot(slots.icon)")
         content: i18n.translate('Polaris.Tabs.Tab.deleteModal.cancel'),
         onAction: handleModalClose,
       }]`,
-      :title="i18n.translate('Polaris.Tabs.Tab.deleteModal.title')",
       @close="handleModalClose",
     )
+      template(#title) {{ i18n.translate('Polaris.Tabs.Tab.deleteModal.title') }}
       ModalSection {{ i18n.translate('Polaris.Tabs.Tab.deleteModal.description',
         | { viewName: content }) }}
 li(
@@ -103,9 +103,9 @@ li(
         content: i18n.translate('Polaris.Tabs.Tab.deleteModal.cancel'),
         onAction: handleModalClose,
       }]`,
-      :title="i18n.translate('Polaris.Tabs.Tab.deleteModal.title')",
       @close="handleModalClose",
     )
+      template(#title) {{ i18n.translate('Polaris.Tabs.Tab.deleteModal.title') }}
       ModalSection
         | {{ i18n.translate('Polaris.Tabs.Tab.deleteModal.description', { viewName: content }) }}
 </template>
@@ -119,7 +119,6 @@ import {
   h,
   resolveComponent,
 } from 'vue';
-import type { VueNode } from '@/utilities/types';
 import useI18n from '@/use/useI18n';
 import { useBreakpoints } from '@/utilities/breakpoints';
 import { focusFirstFocusableNode, handleMouseUpByBlurring } from '@/utilities/focus';
@@ -134,26 +133,13 @@ import LayoutColumns3Icon from '@icons/LayoutColumns3Icon.svg';
 import DeleteIcon from '@icons/DeleteIcon.svg';
 import ChevronDownIcon from '@icons/ChevronDownIcon.svg';
 import { DuplicateModal, RenameModal } from './components';
-import type { TabAction, TabProps } from '../../types';
-
-const slots = defineSlots<{
-  /** Elements to display inside the tag*/
-  default: (_?: VueNode) => any;
-  /** An icon to render in place of a view name. Please pass the full Icon component, rather
-   * than a reference to the particular icon source. */
-  icon: (_?: VueNode) => any;
-}>();
-
-const emits = defineEmits<{
-  'action': [];
-  'focus': [];
-  /** Callback to let the Tabs know that a Popover is open inside of a Tab. Used to control focus. */
-  'toggle-popover': [value: boolean];
-  /** Callback to let the Tabs know that a Modal is open inside of a Tab. Used to control focus. */
-  'toggle-modal': [value: boolean];
-}>();
+import type { TabAction, TabEvents, TabProps, TabSlots } from '../../types';
 
 const props = defineProps<TabProps>();
+const slots = defineSlots<TabSlots>();
+const emits = defineEmits<TabEvents & {
+  'tab-action': [],
+}>();
 
 const i18n = useI18n();
 const breakpoints = useBreakpoints();
@@ -220,7 +206,7 @@ const actionContent = computed(() => ({
 }));
 
 const formattedActions = computed(() => props.actions?.map(
-  ({ type, onAction, ...additionalOptions }) => {
+  ({ type, onAction, onPrimaryAction, ...additionalOptions }) => {
     const isModalActivator = !type.includes('edit');
 
     return {
@@ -277,7 +263,7 @@ const handleClick = () => {
   if (props.selected) {
     togglePopoverActive();
   } else {
-    emits('action');
+    emits('tab-action');
   }
 };
 
@@ -359,7 +345,7 @@ const activator = () => {
           props.badge ? h(
             resolveComponent('Badge'),
             { tone: props.selected ? undefined : 'new' },
-            props.badge,
+            { default: () => props.badge },
           ) : null,
         ],
       ),

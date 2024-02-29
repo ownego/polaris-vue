@@ -2,11 +2,11 @@
 Modal(
   :instant="true",
   :open="open",
-  :title="i18n.translate('Polaris.Tabs.RenameModal.title')",
   :primaryAction="primaryAction",
   :secondaryActions="secondaryActions",
   @close="emits('close')",
 )
+  template(#title) {{ i18n.translate('Polaris.Tabs.RenameModal.title') }}
   ModalSection
     Form(@submit="handlePrimaryAction")
       FormLayout
@@ -16,6 +16,7 @@ Modal(
             autoComplete="off",
             :label="i18n.translate('Polaris.Tabs.RenameModal.label')",
             :helpText="helpText",
+            :maxLength="MAX_VIEW_NAME_LENGTH",
             :showCharacterCount="true",
             :error="errorMessage",
             @change="handleChange",
@@ -35,6 +36,8 @@ export interface RenameModalProps {
   helpText?: string;
   viewNames?: string[];
 }
+
+const MAX_VIEW_NAME_LENGTH = 40;
 
 const props = defineProps<RenameModalProps>();
 
@@ -59,7 +62,11 @@ const hasSameNameError = computed(() => props.viewNames
 );
 
 const isPrimaryActionDisabled = computed(() =>
-  props.isModalLoading || hasSameNameError.value || model.value === props.name || !model.value,
+  props.isModalLoading||
+  hasSameNameError.value ||
+  model.value === props.name ||
+  !model.value ||
+  model.value.length > MAX_VIEW_NAME_LENGTH,
 );
 
 const primaryAction = computed(() => ({

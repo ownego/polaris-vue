@@ -1,7 +1,7 @@
 ---
 title: Modal
 shortDescription: Used to interrupt merchants with urgent information, details, or actions.
-category: Overlays
+category: Deprecated
 examples:
   - fileName: Default.vue
     title: Default

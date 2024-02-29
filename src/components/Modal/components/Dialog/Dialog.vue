@@ -64,12 +64,6 @@ const classes = computed(() => {
   );
 });
 
-console.log(props.size);
-
-console.log(styles[variationName('size', String(props.size))]);
-
-console.log(classes.value);
-
 onMounted(() => {
   if (dialogNode.value && dialogNode.value.contains(document.activeElement)) {
     focusFirstFocusableNode(dialogNode.value);

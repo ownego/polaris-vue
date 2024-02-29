@@ -49,7 +49,7 @@ const tabs = computed(() =>
   itemStrings.value.map((item, index) => ({
     content: item,
     index,
-    onAction: () => { },
+    onTabAction: () => {},
     id: `${item}-${index}`,
     isLocked: index === 0,
     actions:
@@ -101,6 +101,5 @@ const onCreateNewView = async (value: string) => {
   return true;
 };
 
-const handleSelected = (value: number) =>
-  selected.value = value;
+const handleSelected = (value: number) => selected.value = value;
 </script>

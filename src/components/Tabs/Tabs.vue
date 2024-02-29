@@ -36,7 +36,7 @@ div(:class="styles.Outer")
             :url="tabs[index].url",
             :content="tabs[index].content",
             :viewNames="viewNames",
-            @action="() => handleTabAction(tabs[index])",
+            @tab-action="() => { handleTabClick(tabs[index].id) }",
             @toggle-modal="handleToggleModal",
             @toggle-popover="handleTogglePopover",
           )
@@ -79,7 +79,7 @@ div(:class="styles.Outer")
               :tabIndexOverride="0",
               @toggle-popover="handleTogglePopover",
               @toggle-modal="handleToggleModal",
-              @action="handleClickNewTab",
+              @tab-action="handleClickNewTab",
               @focus="handleTabFocus",
             )
               template(#icon)
@@ -101,7 +101,7 @@ div(:class="styles.Outer")
                   :tabIndexOverride="0",
                   @toggle-popover="handleTogglePopover",
                   @toggle-modal="handleToggleModal",
-                  @action="handleClickNewTab",
+                  @tab-action="handleClickNewTab",
                   @focus="handleTabFocus",
                 )
                   template(#icon)
@@ -144,9 +144,9 @@ import { useBreakpoints } from '@/utilities/breakpoints';
 import useI18n from '@/use/useI18n';
 import type { VueNode } from '@/utilities/types';
 import { useHasSlot } from '@/use/useHasSlot';
-import { Icon, List, Tooltip, Popover } from '@/components';
-import { Tab, TabMeasurer, CreateViewModal, Panel } from './components';
-import type { TabMeasurements, TabProps } from './types';
+import { Icon, Tooltip, Popover } from '@/components';
+import { Tab, TabMeasurer, CreateViewModal, Panel, List } from './components';
+import type { TabMeasurements, TabProps, TabsEvents } from './types';
 import { getVisibleAndHiddenTabIndices } from './utilities';
 import styles from '@polaris/components/Tabs/Tabs.module.scss';
 import ChevronDownIcon from '@icons/ChevronDownIcon.svg';
@@ -193,12 +193,7 @@ const slots = defineSlots<{
   default?: (_?: VueNode) => any[];
 }>();
 
-const emits = defineEmits<{
-  /** Optional callback invoked when a Tab becomes selected. */
-  (e: 'select', selectedTabIndex: number): void;
-  /** Optional callback invoked when a merchant saves a new view from the Modal */
-  (e: 'create-new-view', value: string): Promise<boolean>;
-}>();
+const emits = defineEmits<TabsEvents>();
 
 const i18n = useI18n();
 const breakpoints = useBreakpoints();
@@ -279,16 +274,15 @@ const handleCloseNewViewModal = () => {
   state.isNewViewModalActive = false;
 };
 
-const handleSaveNewViewModal = async (value: string) => {
+const handleSaveNewViewModal = (value: string) => {
   if (!currentInstance?.vnode.props?.onCreateNewView) {
     return false;
   }
 
-  const hasExecuted = await emits('create-new-view', value);
-  if (hasExecuted) {
-    state.modalSubmitted = true;
-  }
-  return hasExecuted;
+  emits('create-new-view', value);
+  state.modalSubmitted = true;
+
+  return value;
 };
 
 const handleClickNewTab = () => {
@@ -298,7 +292,7 @@ const handleClickNewTab = () => {
 const handleTabClick = (id: string) => {
   const tab = props.tabs.find((aTab) => aTab.id === id);
   if (tab == null) {
-    return null;
+    return;
   }
   const selectedIndex = props.tabs.indexOf(tab);
   currentInstance?.vnode.props?.onSelect && emits('select', selectedIndex);
@@ -325,9 +319,7 @@ const handleBlur = (event: FocusEvent) => {
   const relatedTarget = event.relatedTarget as HTMLInputElement;
   const isInNaturalDOMOrder = relatedTarget?.closest?.(`.${styles.Tabs}`);
   const targetIsATab = target?.classList?.contains?.(styles.Tab);
-  const focusReceiverIsAnItem = relatedTarget?.classList.contains(
-    styles.Item,
-  );
+  const focusReceiverIsAnItem = relatedTarget?.classList.contains(styles.Item);
 
   if (
     (!relatedTarget &&
@@ -457,11 +449,6 @@ const handleTabFocus = () => {
   }
 };
 
-const handleTabAction = (tab: TabProps) => {
-  handleTabClick(tab.id);
-  tab.onAction?.();
-}
-
 onMounted(() => {
   prevModalOpen.value = state.isTabModalOpen;
   prevPopoverOpen.value = state.isTabPopoverOpen;
@@ -514,7 +501,6 @@ watch(
 
 watch(
   () => [
-    moveToSelectedTab,
     props.selected,
     breakpoints.value.mdDown,
   ],
