@@ -7,7 +7,7 @@ outline: deep
 
 Polaris Vue by [Ownego](https://ownego.com?utm_source=polaris-vue&utm_medium=referral&utm_campaign=website) is a component library for [Vue 3](https://vuejs.org) based on [Shopify Polaris style guide](https://polaris.shopify.com). We try to keep the package light-weight and easy to use (mostly similar with original Polaris Library).
 
-**Following Shopify Polaris React version:** %POLARIS_VERSION% - Migration date: *%MIGRATE_DATE%*.
+**Following Shopify Polaris React version:** %POLARIS_VERSION%.
 
 ### Prerequisites
 
