@@ -319,7 +319,7 @@ const sortButtonEvents = computed(() => {
   }
 
   return events;
-})
+});
 
 const useExecutedCallback = (action?: ExecutedCallback, afterEffect?: () => void) => {
   return async (name: string) => {
