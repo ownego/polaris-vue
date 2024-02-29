@@ -164,13 +164,6 @@ const sortOptions = [
   {label: 'Total', value: 'total desc', directionLabel: 'Descending'},
 ];
 
-const filterChoices = [
-  {label: 'Enabled', value: 'enabled'},
-  {label: 'Not invited', value: 'not invited'},
-  {label: 'Invited', value: 'invited'},
-  {label: 'Declined', value: 'declined'},
-];
-
 const filters = [
   {
     name: 'accountStatus',

@@ -44,7 +44,6 @@ BlockStack(
         )
           Box(:padding-block-start="{xs: '400', md: '0'}")
             component(:is="choice.renderChildren")
-
   Box(
     v-if="error"
     :padding-block-start="{xs: '0', md: '100'}"
