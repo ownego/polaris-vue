@@ -98,7 +98,8 @@ watch(
   () => props.selected,
   (newVal) => {
     model.value = newVal;
-  }, { immediate: true },
+  },
+  { immediate: true },
 );
 
 const i18n = useI18n();
@@ -146,17 +147,18 @@ function handleClose() {
   active.value = false;
 }
 
-function handleChangeChoiceList($el: string[]) {
-  if (currentInstance?.attrs.onChangeKey) {
-    const [key] = $el[0].split(' ');
+function handleChangeChoiceList(value: string[], _name: string) {
+  console.log('value', value);
+  if (!currentInstance?.vnode.props?.onChangeKey) {
+    const [key] = value[0].split(' ');
     emits('change-key', key);
   } else {
-    emits('change', $el);
-  }
+    emits('change', value);
+  }3
 }
 
 function handleChangeDirection($el: string[]) {
-  if (currentInstance?.attrs.onChangeDirection) {
+  if (currentInstance?.vnode.props?.onChangeDirection) {
     const [, direction] = $el[0].split(' ');
     emits('change-direction', direction);
   } else {

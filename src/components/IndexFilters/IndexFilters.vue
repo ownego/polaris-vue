@@ -59,11 +59,11 @@ div(
               SortButton(
                 v-if="sortOptions && sortOptions.length",
                 :choices="sortOptions",
-                :selected="sortSelected || ['']",
+                :selected="sortSelected",
                 :disabled="disabled",
                 @change="emits('sort', $event)",
-                @change-key="emits('sort-key-change', $event)",
-                @change-direction="emits('sort-direction-change', $event)",
+                @change-key="emits('sort-key-change')",
+                @change-direction="emits('sort-direction-change')",
               )
             template(v-if="mode === IndexFiltersMode.EditingColumns")
               UpdateButtons(
@@ -108,7 +108,7 @@ div(
             SortButton(
               v-if="sortOptions && sortOptions.length",
               :choices="sortOptions",
-              :selected="sortSelected || ['']",
+              :selected="sortSelected",
               :disabled="disabled",
               @change="emits('sort', $event)",
               @change-key="emits('sort-key-change', $event)",
