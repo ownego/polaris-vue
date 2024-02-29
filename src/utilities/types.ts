@@ -187,6 +187,11 @@ export interface IconableAction extends Action {
   icon?: IconSource;
 }
 
+export interface TooltipAction {
+  /** Text content to render in a tooltip */
+  helpText?: VueNode;
+}
+
 export interface LoadableAction extends Action {
   /** Should a spinner be displayed */
   loading?: boolean;
@@ -210,6 +215,30 @@ export interface ComplexAction
     OutlineableAction,
     LoadableAction,
     PlainAction {}
+
+export interface MenuActionDescriptor extends ComplexAction, TooltipAction {
+  /** Zero-indexed numerical position. Overrides the action's order in the menu */
+  index?: number;
+}
+
+export interface MenuGroupDescriptor extends BadgeAction {
+  /** Menu group title */
+  title: string;
+  /** List of actions */
+  actions: ActionListItemDescriptor[];
+  /** Icon to display */
+  icon?: IconableAction['icon'];
+  /** Action details */
+  details?: VueNode;
+  /** Disables action button */
+  disabled?: boolean;
+  /** Zero-indexed numerical position. Overrides the group's order in the menu. */
+  index?: number;
+  /** Callback when any action takes place */
+  onActionAnyItem?: ActionListItemDescriptor['onAction'];
+  /** Callback when the menu is clicked */
+  onClick?(openActions: () => void): void;
+}
 
 export interface LinkAction {
   /** A unique identifier for the action */

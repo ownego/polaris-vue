@@ -1,11 +1,11 @@
 <template lang="pug">
 Button(
-  :key="key",
   :tone="tone",
   :variant="plainVariant || destructiveVariant",
   v-bind="bindProps",
   @click="handleClick",
-) {{ action.content }}
+)
+  template(v-if="action.content") {{ action.content }}
 </template>
 
 <script setup lang="ts">
@@ -17,7 +17,6 @@ import type { ComplexAction, ButtonProps } from './types';
 interface Props {
   action: ComplexAction;
   overrides?: Partial<ButtonProps>,
-  key?: string;
 }
 
 const props = defineProps<Props>();

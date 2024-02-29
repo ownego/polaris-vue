@@ -23,40 +23,29 @@
       staff.
     </TextContainer>
   </LegacyCardSection>
-  <!-- TODO -->
-  <!-- <LegacyCardSection title="Total Sales Breakdown">
+  <LegacyCardSection title="Total Sales Breakdown">
     <ResourceList
-      resourceName={{singular: 'sale', plural: 'sales'}}
-      items={[
-        {
-          sales: 'Orders',
-          amount: 'USD$0.00',
-          url: '#',
-        },
-        {
-          sales: 'Returns',
-          amount: '-USD$250.00',
-          url: '#',
-        },
-      ]}
-      renderItem={(item) => {
-        const {sales, amount, url} = item;
-        return (
-          <ResourceList.Item
-            id={sales.toLocaleLowerCase()}
-            url={url}
-            accessibilityLabel={`View Sales for ${sales}`}
-            onClick={() => console.log('clicked item', item)}
-          >
-            <LegacyStack>
-              <LegacyStack.Item fill>{sales}</LegacyStack.Item>
-              <LegacyStack.Item>{amount}</LegacyStack.Item>
-            </LegacyStack>
-          </ResourceList.Item>
-        );
-      }}
-    />
-  </LegacyCardSection> -->
+      :resourceName="{ singular: 'sale', plural: 'sales' }"
+      :items="items"
+    >
+      <template
+        v-for="{sales, amount, url} in items"
+        :key="sales"
+      >
+        <ResourceItem
+          :id="sales.toLocaleLowerCase()"
+          :url="url"
+          accessibilityLabel="View Sales for ${sales}"
+          @click="() => console.log('clicked item', sales)"
+        >
+          <LegacyStack>
+            <LegacyStackItem fill>{{ sales }} </LegacyStackItem>
+            <LegacyStackItem>{{ amount }}</LegacyStackItem>
+          </LegacyStack>
+        </ResourceItem>
+      </template>
+    </ResourceList>
+  </LegacyCardSection>
   <LegacyCardSection title="Deactivated reports" subdued>
     <List>
       <ListItem>Payouts</ListItem>
@@ -71,3 +60,18 @@
   </LegacyCardSection>
 </LegacyCard>
 </template>
+
+<script setup lang="ts">
+const items = [
+  {
+    sales: 'Orders',
+    amount: 'USD$0.00',
+    url: '#',
+  },
+  {
+    sales: 'Returns',
+    amount: '-USD$250.00',
+    url: '#',
+  },
+];
+</script>

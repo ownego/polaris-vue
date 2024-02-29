@@ -1,6 +1,7 @@
 ---
 title: Patterns
 outline: deep
+prev: false
 next:
   text: 'Contributing'
   link: '/contributing'

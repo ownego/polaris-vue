@@ -16,11 +16,16 @@ Follow [Github Project](https://github.com/orgs/ownego/projects/2) to see what w
 
 ## Dev locally
 
-1. Clone the repository
-2. Install dependencies with `yarn install`
-3. Fetch the Shopify Polaris submodule with `git submodule update --init --recursive`
-4. Create `Demo.vue` file in `src/` folder and test your component there.
-5. Run the development server with `yarn dev`
+Clone/Fork the repository then install dependencies with `yarn install`
+
+#### Install Shopify Polaris submodule
+- Fetch the Shopify Polaris submodule with `git submodule update --init --recursive`
+- Go to `/polaris` folder and install dependencies with `yarn install`
+- Build tokens & neccessary resources with `yarn build`
+
+#### Run
+- Create `Demo.vue` file in `src/` folder and test your component there.
+- Run the development server with `yarn dev`
 
 ## Pull Requests
 
