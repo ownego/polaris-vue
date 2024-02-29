@@ -1,6 +1,6 @@
 <template lang="pug">
 UnstyledButton(
-  :class="classes",
+  :class-name="classes",
   @click="handleClick",
 )
   Icon(
@@ -41,7 +41,7 @@ const slots = defineSlots<{
 
 const classes = computed(() => classNames(
   styles.DirectionButton,
-  props.active && styles['DirectionButton-active'],
+  !!props.active && styles['DirectionButton-active'],
 ));
 const iconSource = computed(() => props.direction === 'asc' ? ArrowUpIcon : ArrowDownIcon);
 

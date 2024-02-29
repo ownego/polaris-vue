@@ -19,6 +19,9 @@ Popover(
       :accessibility-label="i18n.translate('Polaris.IndexFilters.SortButton.ariaLabel')",
       @click="handleClick",
     )
+  p model: {{ model }}
+  p selected: {{ selected[0] }}
+  p choices: {{ selectedValueKey }}
   Box(
     min-width="148px",
     padding-inline-start="300",
@@ -106,14 +109,17 @@ const i18n = useI18n();
 const currentInstance = getCurrentInstance();
 
 const active = ref(false);
-const [selectedValueKey, selectedDirection] = props.selected[0].split(' ');
+const selectedValue = computed(() => props.selected[0].split(' '));
+
+const selectedValueKey = computed(() => selectedValue.value[0]);
+const selectedDirection = computed(() => selectedValue.value[1]);
 
  const choiceListChoices = computed(() => {
     const choiceCategories = props.choices.reduce(
       (acc: ChoiceListProps['choices'], curr) => {
         const alreadyExists = acc.some((option) => option.label === curr.label);
         const [, currentValueDirection] = curr.value.split(' ');
-        const isSameDirection = currentValueDirection === selectedDirection;
+        const isSameDirection = currentValueDirection === selectedDirection.value;
         if (!alreadyExists) {
           return [...acc, curr];
         }
@@ -135,7 +141,7 @@ const [selectedValueKey, selectedDirection] = props.selected[0].split(' ');
 const selectedChoices = computed(() => {
   return props.choices.filter((choice) => {
     const [currentKey] = choice.value.split(' ');
-    return currentKey === selectedValueKey;
+    return currentKey === selectedValueKey.value;
   });
 });
 
@@ -148,8 +154,7 @@ function handleClose() {
 }
 
 function handleChangeChoiceList(value: string[], _name: string) {
-  console.log('value', value);
-  if (!currentInstance?.vnode.props?.onChangeKey) {
+  if (currentInstance?.vnode.props?.onChangeKey) {
     const [key] = value[0].split(' ');
     emits('change-key', key);
   } else {
@@ -165,5 +170,4 @@ function handleChangeDirection($el: string[]) {
     emits('change', $el);
   }
 }
-
 </script>
