@@ -14,7 +14,7 @@ div(:class="className", @click="emits('toggle-all')")
     v-if="label",
     :class="styles.Label",
     :aria-live="ariaLive",
-    ) {{ label }}
+    ) {{ label }} {{ selected }}
 </template>
 
 <script setup lang="ts">
@@ -27,7 +27,7 @@ export interface CheckboxHandles {
   focus(): void;
 }
 
-interface CheckableButtonProps {
+export type CheckableButtonProps = {
   accessibilityLabel?: string;
   label?: string;
   selected?: boolean | 'indeterminate';
@@ -35,13 +35,23 @@ interface CheckableButtonProps {
   ariaLive?: 'off' | 'polite';
 }
 
-withDefaults(defineProps<CheckableButtonProps>(), {
+const props = withDefaults(defineProps<CheckableButtonProps>(), {
   label: '',
 });
+
 const emits = defineEmits<{
   'toggle-all': [];
+  'update:modelValue': [value: boolean | 'indeterminate' | undefined];
 }>();
-const model = defineModel<boolean | string>();
+
+const model = computed({
+  get() {
+    return props.selected;
+  },
+  set(value: boolean | 'indeterminate' | undefined) {
+    emits('update:modelValue', value);
+  },
+});
 
 const checkBoxRef = ref<CheckboxHandles | null>(null);
 

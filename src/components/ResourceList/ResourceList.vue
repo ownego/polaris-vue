@@ -26,7 +26,6 @@ div(
           div(:class="styles.HeaderTitleWrapper") {{ headerTitle }}
           div(v-if="isSelectable", :class="styles.CheckableButtonWrapper")
             CheckableButton(
-              v-model="selectAllSelectState",
               :accessibilityLabel="bulkActionsAccessibilityLabel",
               :label="headerTitle",
               :disabled="loading",
@@ -153,7 +152,7 @@ import {
   SelectAllActions,
 } from '@/components';
 import type { PaginationProps } from '@/components/Pagination/types.ts';
-import type { BulkActionsProps } from '@/components/BulkActions/utils';
+import type { BulkActionsProps } from '@/components/BulkActions/types';
 import type { SelectOption } from '@/components/Select/types';
 import { useIsSelectAllActionsSticky } from '@/use/useIsSelectAllActionsSticky';
 import styles from '@polaris/components/ResourceList/ResourceList.module.scss';
