@@ -41,10 +41,6 @@ examples:
 
 <PropsTable />
 
-## Slots
-
-<SlotsTable />
-
 ## Events
 
 <EventsTable />
