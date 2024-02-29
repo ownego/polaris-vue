@@ -79,8 +79,10 @@ const name = computed(() => String(props.name ?? uniqId));
 const finalName = computed(() => props.allowMultiple ? `${name.value}[]` : name.value);
 
 const handleChange = (checked: boolean, value: string): void => {
-  model.value = updateSelectedChoices(value, checked);
-  emits('change', model.value, value);
+  const newValue = updateSelectedChoices(value, checked);
+
+  model.value = newValue;
+  emits('change', newValue, finalName.value);
 }
 
 const choiceIsSelected = ({value}: Choice) => {
