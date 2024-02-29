@@ -19,9 +19,6 @@ Popover(
       :accessibility-label="i18n.translate('Polaris.IndexFilters.SortButton.ariaLabel')",
       @click="handleClick",
     )
-  p model: {{ model }}
-  p selected: {{ selected[0] }}
-  p choices: {{ selectedValueKey }}
   Box(
     min-width="148px",
     padding-inline-start="300",
