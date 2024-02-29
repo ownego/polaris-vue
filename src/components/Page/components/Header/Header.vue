@@ -87,12 +87,12 @@ import type { BreadcrumbsProps } from '@/components/Breadcrumbs/Breadcrumbs.vue'
 import { useHasSlot } from '@/use/useHasSlot';
 import { classNames } from '@/utilities/css';
 import type { TitleProps } from './components/Title/Title.vue';
-import { Title as PageTitle } from './components';
 import type { ActionMenuProps } from '../../../ActionMenu/ActionMenu.vue';
 import {
   ActionMenu,
   PrimaryAction,
   Pagination,
+  PageTitle,
 } from './children';
 import styles from '@polaris/components/Page/components/Header/Header.module.scss';
 
