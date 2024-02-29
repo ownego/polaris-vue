@@ -43,7 +43,7 @@ import type {
 import styles from '@polaris/components/ActionMenu/components/MenuGroup/MenuGroup.module.scss';
 import { SecondaryAction } from '../SecondaryAction';
 
-interface MenuGroupProps {
+export interface MenuGroupProps {
   badge?: {
     status: 'new';
     content: string;
