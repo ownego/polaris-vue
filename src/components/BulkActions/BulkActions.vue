@@ -11,19 +11,74 @@ div(
         @toggle-all="emits('toggle-all')",
       )
       //- paginatedSelectAllMarkup
+      div(
+        v-if="paginatedSelectAllAction",
+        :class="styles.PaginatedSelectAll",
+      )
+        UnstyledButton(
+          :class="styles.AllAction",
+          size="slim",
+          :disabled="disabled",
+          @click="paginatedSelectAllAction.onAction",
+        ) {{ paginatedSelectAllAction.content }}
 
     div(:class="styles.BulkActionsPromotedActionsWrapper")
       InlineStack(gap="100", blockAlign="center")
         div(:class="styles.BulkActionsOuterLayout")
           //- measurerMarkup
+          BulkActionMeasurer(
+            :promotedActions="promotedActions",
+            :disabled="disabled",
+            :buttonSize="buttonSize",
+            :handleMeasurement="handleMeasurement",
+          )
+
           div(:class="bulkActionLayoutClassName")
             //- promotedActionsMarkup
+            template(
+              v-if="promotedActions",
+              v-for="action, _index in promotedActionsFiltered",
+              :key="_index",
+            )
+              BulkActionMenu(
+                v-if="instanceOfMenuGroupDescriptor(action)",
+                v-bind="action",
+                :isNewBadgeInBadgeActions="isNewBadgeInBadgeActions(actionSections)",
+                :size="buttonSize",
+              )
+              BulkActionButton(
+                v-else,
+                :disabled="disabled",
+                v-bind="action",
+                :size="buttonSize",
+              )
 
         //- actionsMarkup
+        Popover(
+          v-if="allHiddenActions.length > 0",
+          :active="popoverActive",
+          preferredAlignment="right",
+          @close="togglePopover",
+        )
+          template(#activator)
+            BulkActionButton(
+              disclosure,
+              :showContentInButton="!promotedActions",
+              :disabled="disabled",
+              :content="activatorLabel",
+              :size="buttonSize",
+              :indicator="isNewBadgeInBadgeActions(actionSections)",
+              @action="togglePopover",
+            )
+
+          ActionList(
+            :sections="[hiddenPromotedSection, ...allHiddenActions]",
+            @action-any-item="togglePopover",
+          )
 </template>
 
 <script setup lang="ts">
-import { computed, onMounted, ref } from 'vue';
+import { computed, ref, watch } from 'vue';
 import { classNames } from '@/utilities/css';
 import useI18n from '@/use/useI18n';
 import type { MenuGroupDescriptor } from '@/utilities/types';
@@ -33,8 +88,8 @@ import {
   InlineStack,
   CheckableButton,
   UnstyledButton,
-  CheckableButtonProps,
 } from '@/components';
+import type { CheckableButtonProps } from '@/components/CheckableButton';
 import {
   BulkActionButton,
   BulkActionMenu,
@@ -46,7 +101,6 @@ import type {
   BulkActionsEvents,
   BulkAction,
   BulkActionListSection,
-  AriaLive,
 } from './types';
 import {
   getVisibleAndHiddenActionsIndices,
@@ -165,6 +219,13 @@ const allHiddenActions = computed(() => (
       )
   : []
 ));
+
+watch(
+  () => props.promotedActions,
+  () => {
+    setPromotedActions();
+  },
+);
 
 const togglePopover = () => {
   emits('more-action-popover-toggle', popoverActive.value);

@@ -25,7 +25,6 @@ div(
         div(:class="styles.HeaderContentWrapper")
           div(:class="styles.HeaderTitleWrapper") {{ headerTitle }}
           div(v-if="isSelectable", :class="styles.CheckableButtonWrapper")
-            p {{ selectAllSelectState }}
             CheckableButton(
               :accessibilityLabel="bulkActionsAccessibilityLabel",
               :label="headerTitle",

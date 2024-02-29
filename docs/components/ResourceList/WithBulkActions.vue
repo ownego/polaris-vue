@@ -75,7 +75,6 @@ const bulkActions = [
 const selectedItems = ref<any>([]);
 
 const setSelectedItems = (selected: any) => {
-  console.log(selected);
   selectedItems.value = selected;
 };
 </script>
