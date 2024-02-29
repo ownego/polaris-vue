@@ -26,6 +26,7 @@ import {
 import styles from '@polaris/components/PositionedOverlay/PositionedOverlay.module.scss';
 import { classNames } from '@/utilities/css';
 import { getRectForNode, Rect } from '@/utilities/geometry';
+import { forNode } from '@/utilities/scrollable/for-node';
 import { EventListener } from '@/components';
 import { dataPolarisTopBar } from '@polaris/components/shared';
 
@@ -186,44 +187,18 @@ onBeforeUnmount(() => {
   }
 });
 
-const isScrollContainer = (node: HTMLElement) => {
-  const yOverflow = node.scrollHeight > node.clientHeight;
-  const xOverflow = node.scrollWidth > node.clientWidth;
-
-  if (!yOverflow && !xOverflow) {
-    return false;
-  }
-
-  const styles = window.getComputedStyle(node);
-  const yScroll =
-    styles.overflowY === 'auto' || styles.overflowY === 'scroll';
-  const xScroll =
-    styles.overflowX === 'auto' || styles.overflowX === 'scroll';
-
-  if ((yOverflow && yScroll) || (xOverflow && xScroll)) {
-    return true;
-  }
-
-  return false;
-};
-
 const setScrollableContainers = () => {
-  const containers: (HTMLElement | Document)[] = [];
-  let currentNode: HTMLElement | ParentNode | null = props.activator;
+  const containers: Array<HTMLElement | Document> = [];
+  let tmpScrollableContainers = forNode(props.activator);
 
-  while (currentNode !== null) {
-    if (
-      currentNode instanceof HTMLElement &&
-      isScrollContainer(currentNode)
-    ) {
-      containers.push(currentNode);
+  if (tmpScrollableContainers) {
+    containers.push(tmpScrollableContainers);
+
+    while (tmpScrollableContainers?.parentElement) {
+      tmpScrollableContainers = forNode(tmpScrollableContainers.parentElement);
+
+      containers.push(tmpScrollableContainers);
     }
-
-    currentNode = currentNode.parentNode;
-  }
-
-  if (!containers.length) {
-    containers.push(document);
   }
 
   scrollableContainers.value = containers;
