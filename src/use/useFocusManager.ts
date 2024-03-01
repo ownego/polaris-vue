@@ -1,11 +1,54 @@
-import { inject, ref } from 'vue';
+import useId from './useId';
+import {
+  type Ref,
+  inject,
+  ref,
+  computed,
+  watchEffect,
+  onUnmounted,
+} from 'vue';
 
-export default function useFocusManager() {
-  const context = inject('focus-manager');
-  return context;
+interface Options {
+  trapping: boolean;
+}
+interface FocusManagerContextType {
+  trapFocusList: Ref<string[]>;
+  add: (id: string) => void;
+  remove: (id: string) => boolean;
 }
 
-export function useFocusManagerContext() {
+export function useFocusManager({ trapping }: Options) {
+  const context = inject<FocusManagerContextType>('focus-manager');
+  const id = useId();
+
+  if (!context) {
+    throw new Error('No FocusManager was provided.');
+  }
+
+  const {
+    trapFocusList,
+    add: addFocusItem,
+    remove: removeFocusItem,
+  } = context; 
+
+  const canSafelyFocus = computed(() => trapFocusList.value[0] === String(id));
+
+  watchEffect(() => {
+    if (!trapping) {
+      return;
+    }
+
+    addFocusItem(String(id));
+  });
+
+  onUnmounted(() => {
+    removeFocusItem(String(id));
+  });
+
+  return { canSafelyFocus };
+}
+
+export function useFocusManagerContext(): FocusManagerContextType {
   const trapFocusList = ref<string[]>([]);
 
   const add = (id: string) => {

@@ -54,7 +54,7 @@ import {
   Icon,
   KeypressListener,
 } from '@/components';
-import { Section } from './components';
+import { ActionListSection as Section } from './components';
 import SearchIcon from '@icons/SearchIcon.svg';
 import {
   wrapFocusNextFocusableMenuItem,
