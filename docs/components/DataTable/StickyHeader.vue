@@ -1,24 +1,22 @@
 <template>
-<div :style="{margin: '40px 0'}">
-  <Page title="Sales by product">
-    <LegacyCard>
-      <DataTable
-        :columnContentTypes="['text', 'numeric', 'numeric', 'numeric', 'numeric', 'numeric', 'numeric']"
-        :headings="['Product', 'Price', 'SKU Number', 'Net quantity', 'Net sales', 'Gross sales', 'Discounts']"
-        :rows="rows"
-        :totals="['', '', '', 255, '$155,830.00', '', '']"
-        :sortable="[false, true, false, false, true]"
-        defaultSortDirection="descending"
-        :initialSortColumnIndex="4"
-        hasZebraStripingOnData
-        increasedTableDensity
-        stickyHeader
-        :fixedFirstColumns="fixedFirstColumns"
-        :footerContent="`Showing ${rows.length} of ${rows.length} results`"
-      />
-    </LegacyCard>
-  </Page>
-</div>
+<Page title="Sales by product">
+  <LegacyCard>
+    <DataTable
+      :columnContentTypes="['text', 'numeric', 'numeric', 'numeric', 'numeric', 'numeric', 'numeric']"
+      :headings="['Product', 'Price', 'SKU Number', 'Net quantity', 'Net sales', 'Gross sales', 'Discounts']"
+      :rows="rows"
+      :totals="['', '', '', 255, '$155,830.00', '', '']"
+      :sortable="[false, true, false, false, true]"
+      defaultSortDirection="descending"
+      :initialSortColumnIndex="4"
+      hasZebraStripingOnData
+      increasedTableDensity
+      stickyHeader
+      :fixedFirstColumns="fixedFirstColumns"
+      :footerContent="`Showing ${rows.length} of ${rows.length} results`"
+    />
+  </LegacyCard>
+</Page>
 </template>
 
 <script setup lang="ts">
