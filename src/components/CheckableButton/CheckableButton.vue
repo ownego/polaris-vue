@@ -14,7 +14,7 @@ div(:class="className", @click="emits('toggle-all')")
     v-if="label",
     :class="styles.Label",
     :aria-live="ariaLive",
-    ) {{ label }} {{ selected }}
+    ) {{ label }}
 </template>
 
 <script setup lang="ts">
