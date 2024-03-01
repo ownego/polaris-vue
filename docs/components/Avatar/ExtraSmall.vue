@@ -1,5 +1,5 @@
 <template>
-<div style="height: 250px">
+<div style="{ height: '250px' }">
   <Popover :active="active" @close="toggleActive">
     <template #activator>
         <Button @click="toggleActive" disclosure>

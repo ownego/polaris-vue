@@ -1,19 +1,23 @@
 <template>
-<Page title="Sales by product">
-  <LegacyCard>
-    <DataTable
-      :columnContentTypes="['text', 'numeric', 'numeric', 'numeric', 'numeric', 'numeric', 'numeric']"
-      :headings="['Product', 'Price', 'SKU Number', 'Net quantity', 'Net sales', 'Gross sales', 'Discounts']"
-      :rows="rows"
-      :totals="['', '', '', 255, '$155,830.00', '', '']"
-      :sortable="[false, true, false, false, true]"
-      defaultSortDirection="descending"
-      :initialSortColumnIndex="4"
-      stickyHeader
-      :fixedFirstColumns="fixedFirstColumns"
-    />
-  </LegacyCard>
-</Page>
+<div :style="{ marginBottom: '40px' }">
+  <Page title="Sales by product">
+    <LegacyCard>
+      <div :style="{ width: '1000px' }">
+        <DataTable
+          :columnContentTypes="['text', 'numeric', 'numeric', 'numeric', 'numeric', 'numeric', 'numeric']"
+          :headings="['Product', 'Price', 'SKU Number', 'Net quantity', 'Net sales', 'Gross sales', 'Discounts']"
+          :rows="rows"
+          :totals="['', '', '', 255, '$155,830.00', '', '']"
+          :sortable="[false, true, false, false, true]"
+          defaultSortDirection="descending"
+          :initialSortColumnIndex="4"
+          stickyHeader
+          :fixedFirstColumns="fixedFirstColumns"
+        />
+      </div>
+    </LegacyCard>
+  </Page>
+</div>
 </template>
 
 <script setup lang="ts">
