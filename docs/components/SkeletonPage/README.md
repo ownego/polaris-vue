@@ -4,9 +4,11 @@ title: Skeleton page
 category: Feedback indicators
 examples:
   - fileName: Default.vue
+    frameHeight: 500
     title: With dynamic content
     description: Use this component to compose a loading version of a page where the page title and header content are dynamic, meaning, the content changes.
   - fileName: SkeletonPageWithStaticContent.vue
+    frameHeight: 500
     title: With static content
     description: Use this component to compose a loading version of a page where the page title and header content are known and stay the same.
 ---

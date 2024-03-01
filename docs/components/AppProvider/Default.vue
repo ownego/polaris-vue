@@ -3,7 +3,7 @@
   <Page>
     <LegacyCard>
       <ResourceList show-header>
-        <ResourceListItem
+        <ResourceItem
           v-for="item in items"
           :key="item.id"
           :id="item.id"
@@ -15,7 +15,7 @@
           <template #media>
             <Avatar customer size="md" :name="item.name" />
           </template>
-        </ResourceListItem>
+        </ResourceItem>
       </ResourceList>
     </LegacyCard>
   </Page>

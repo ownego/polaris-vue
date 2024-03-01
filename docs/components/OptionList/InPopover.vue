@@ -17,7 +17,6 @@
     />
   </Popover>
 </div>
-<p>{{ selected }}</p>
 </template>
 
 <script setup lang="ts">
@@ -43,6 +42,7 @@ const options = [
 ];
 
 const handleSelect = (value: string[]) => {
+  console.log(value);
   selected.value = value;
 };
 

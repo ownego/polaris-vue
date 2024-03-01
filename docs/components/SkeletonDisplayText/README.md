@@ -4,12 +4,15 @@ title: Skeleton display text
 category: Feedback indicators
 examples:
   - fileName: Default.vue
+    frameHeight: 200
     title: Medium and large
     description: Use this component to represent medium and large display text such as large metrics on the reports list page, or for page titles.
   - fileName: SkeletonDisplayTextExtraLarge.vue
+    frameHeight: 200
     title: Extra large
     description: Use this component to represent extra large display text.
   - fileName: SkeletonDisplayTextSmall.vue
+    frameHeight: 200
     title: Small
     description: Use this component to represent small display text such as content headings.
 ---

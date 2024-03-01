@@ -4,12 +4,15 @@ title: Avatar
 category: Images and icons
 examples:
   - fileName: Default.vue
+    frameHeight: 250
     title: Default
     description: Use to present an avatar for a merchant, customer, or business.
   - fileName: Initial.vue
+    frameHeight: 250
     title: Initials
     description: Use to present an avatar with initials for a merchant, customer, or business.
   - fileName: ExtraSmall.vue
+    frameHeight: 250
     title: Extra small
     description: Use to present an avatar in a condensed layout, such as a data table cell or an action list item.
 ---

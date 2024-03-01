@@ -41,7 +41,7 @@ Box(
                 :id="option.id || `${uniqueId}-${sectionIndex}-${optionIndex}`",
                 :section="sectionIndex",
                 :index="optionIndex",
-                :select="model?.includes(option.value)",
+                :select="selected.includes(option.value)",
                 :allow-multiple="allowMultiple",
                 :vertical-align="verticalAlign",
                 @click="handleClick",
@@ -87,6 +87,8 @@ interface OptionListProps {
   optionRole?: string;
   /** Sections containing a header and related options */
   sections?: SectionDescriptor[];
+  /** The selected options */
+  selected: string[];
   /** Allow more than one option to be selected */
   allowMultiple?: boolean;
   /** Vertically align child content to the center, top, or bottom.  */
@@ -104,7 +106,6 @@ type OptionListEvents = {
 
 const props = defineProps<OptionListProps>();
 const emits = defineEmits<OptionListEvents>();
-const model = defineModel<string[]>();
 const slots = defineSlots<{
   [key: string]: (_?: VueNode) => VNode[];
 }>();
@@ -119,18 +120,19 @@ const optionsExist = computed(() => normalizedOptions.value.length > 0);
 const handleClick = (sectionIndex: number, optionIndex: number) => {
   const selectedValue =
     normalizedOptions.value[sectionIndex].options[optionIndex].value;
-  const foundIndex = model.value?.indexOf(selectedValue);
+  const foundIndex = props.selected?.indexOf(selectedValue);
   if (props.allowMultiple) {
     const newSelection =
       foundIndex === -1
-        ? [selectedValue, ...(model.value || [])]
+        ? [selectedValue, ...(props.selected || [])]
         : [
-            ...(model.value?.slice(0, foundIndex) || []),
-            ...model.value?.slice((foundIndex || 0) + 1, model.value?.length) || [],
+            ...(props.selected?.slice(0, foundIndex) || []),
+            ...props.selected?.slice((foundIndex || 0) + 1, props.selected?.length) || [],
           ];
     emits('change', newSelection);
     return;
   }
+
   emits('change', [selectedValue]);
 };
 

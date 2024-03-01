@@ -1,0 +1,408 @@
+{
+  "Polaris": {
+    "Avatar": {
+      "label": "Avatar",
+      "labelWithInitials": "Avatar avec les initiales {initials}"
+    },
+    "Autocomplete": {
+      "spinnerAccessibilityLabel": "Chargement en cours",
+      "ellipsis": "{content}…"
+    },
+    "Badge": {
+      "PROGRESS_LABELS": {
+        "incomplete": "Incomplet",
+        "partiallyComplete": "Partiellement terminé",
+        "complete": "Terminé"
+      },
+      "TONE_LABELS": {
+        "info": "Informations",
+        "success": "Réussite",
+        "warning": "Avertissement",
+        "attention": "Attention",
+        "new": "Nouveau",
+        "critical": "Critique",
+        "readOnly": "Lecture seule",
+        "enabled": "Activé"
+      },
+      "progressAndTone": "{toneLabel} {progressLabel}"
+    },
+    "Banner": {
+      "dismissButton": "Rejeter la notification"
+    },
+    "Button": {
+      "spinnerAccessibilityLabel": "Chargement en cours"
+    },
+    "Common": {
+      "checkbox": "case à cocher",
+      "undo": "Annuler",
+      "cancel": "Annuler",
+      "clear": "Effacer",
+      "close": "Fermer",
+      "submit": "Soumettre",
+      "more": "Plus"
+    },
+    "ContextualSaveBar": {
+      "save": "Enregistrer",
+      "discard": "Supprimer"
+    },
+    "DataTable": {
+      "sortAccessibilityLabel": "trier {direction} par",
+      "navAccessibilityLabel": "Faire défiler le tableau {direction} d’une colonne",
+      "totalsRowHeading": "Totaux",
+      "totalRowHeading": "Total"
+    },
+    "DatePicker": {
+      "previousMonth": "Afficher le mois précédent, {previousMonthName} {showPreviousYear}",
+      "nextMonth": "Afficher le mois suivant, {nextMonth} {nextYear}",
+      "today": "Aujourd’hui ",
+      "months": {
+        "january": "Janvier",
+        "february": "Février",
+        "march": "Mars",
+        "april": "Avril",
+        "may": "Mai",
+        "june": "Juin",
+        "july": "Juillet",
+        "august": "Août",
+        "september": "Septembre",
+        "october": "Octobre",
+        "november": "Novembre",
+        "december": "Décembre"
+      },
+      "daysAbbreviated": {
+        "monday": "Lun",
+        "tuesday": "Mar",
+        "wednesday": "Mer",
+        "thursday": "Jeu",
+        "friday": "Ven",
+        "saturday": "Sam",
+        "sunday": "Dim"
+      },
+      "days": {
+        "monday": "Lundi",
+        "tuesday": "Mardi",
+        "wednesday": "Mercredi",
+        "thursday": "Jeudi",
+        "friday": "Vendredi",
+        "saturday": "Samedi",
+        "sunday": "Dimanche"
+      },
+      "start": "Début de la période",
+      "end": "Fin de la période"
+    },
+    "DiscardConfirmationModal": {
+      "title": "Annuler toutes les modifications non enregistrées",
+      "message": "Si vous annulez les modifications, vous supprimerez toutes les corrections effectuées depuis votre dernière sauvegarde.",
+      "primaryAction": "Annuler les modifications",
+      "secondaryAction": "Poursuivre les modifications"
+    },
+    "DropZone": {
+      "errorOverlayTextFile": "Le type de fichier n’est pas valide",
+      "errorOverlayTextImage": "Le type d’image n’est pas valide",
+      "single": {
+        "overlayTextFile": "Déposer le fichier à importer",
+        "overlayTextImage": "Déposer l’image à importer",
+        "actionTitleFile": "Ajouter un fichier",
+        "actionTitleImage": "Ajouter une image",
+        "actionHintFile": "ou déposer le fichier à importer",
+        "actionHintImage": "ou déposer l’image à importer",
+        "labelFile": "Importer un fichier",
+        "labelImage": "Importer une image",
+        "overlayTextVideo": "Déposer la vidéo à mettre en ligne",
+        "actionTitleVideo": "Ajouter la vidéo",
+        "actionHintVideo": "ou déposer la vidéo à mettre en ligne",
+        "labelVideo": "Mettre en ligne la vidéo"
+      },
+      "allowMultiple": {
+        "overlayTextFile": "Déposer les fichiers à importer",
+        "overlayTextImage": "Déposer les images à importer",
+        "actionTitleFile": "Ajouter des fichiers",
+        "actionTitleImage": "Ajouter des images",
+        "actionHintFile": "ou déposer les fichiers à importer",
+        "actionHintImage": "ou déposer les images à importer",
+        "labelFile": "Importer des fichiers",
+        "labelImage": "Importer des images",
+        "overlayTextVideo": "Déposer les vidéos à mettre en ligne",
+        "actionTitleVideo": "Ajouter des vidéos",
+        "actionHintVideo": "ou déposer les vidéos à mettre en ligne",
+        "labelVideo": "Mettre en ligne les vidéos"
+      },
+      "errorOverlayTextVideo": "Le type de vidéo n’est pas valide"
+    },
+    "EmptySearchResult": {
+      "altText": "Résultats de recherche vides"
+    },
+    "Frame": {
+      "skipToContent": "Ignorer et passer au contenu",
+      "Navigation": {
+        "closeMobileNavigationLabel": "Fermer la navigation"
+      },
+      "navigationLabel": "Navigation"
+    },
+    "ActionMenu": {
+      "RollupActions": {
+        "rollupButton": "Afficher les actions"
+      },
+      "Actions": {
+        "moreActions": "Autres actions"
+      }
+    },
+    "Filters": {
+      "moreFilters": "Plus de filtres",
+      "filter": "Filtrer {resourceName}",
+      "noFiltersApplied": "Aucun filtre appliqué",
+      "cancel": "Annuler",
+      "done": "Terminé",
+      "clearAllFilters": "Effacer tous les filtres",
+      "clear": "Effacer",
+      "clearLabel": "Effacer {filterName}",
+      "moreFiltersWithCount": "Plus de filtres ({count})",
+      "addFilter": "Ajouter un filtre",
+      "clearFilters": "Tout effacer",
+      "searchInView": "dans : {viewName}"
+    },
+    "Modal": {
+      "iFrameTitle": "balisage du corps",
+      "modalWarning": "Ces propriétés obligatoires manquent dans la fenêtre modale : {missingProps}"
+    },
+    "Pagination": {
+      "previous": "Précédent",
+      "next": "Suivant",
+      "pagination": "Pagination"
+    },
+    "ProgressBar": {
+      "negativeWarningMessage": "Les valeurs transmises à l‘accessoire de progression ne doivent pas être négatives. Réinitialisation de {progress} à 0.",
+      "exceedWarningMessage": "Les valeurs transmises à l‘accessoire de progression ne doivent pas dépasser 100. Réglage de {progress} à 100."
+    },
+    "ResourceList": {
+      "sortingLabel": "Trier par",
+      "defaultItemSingular": "article",
+      "defaultItemPlural": "articles",
+      "showing": "{itemsCount} {resource} sont affichés",
+      "loading": "Chargement de {resource} en cours",
+      "selected": "{selectedItemsCount} sélectionné(s)",
+      "allItemsSelected": "La totalité des {itemsLength}+ {resourceNamePlural} de votre boutique est sélectionnée",
+      "selectAllItems": "Sélectionner la totalité des {itemsLength}+ {resourceNamePlural} de votre boutique",
+      "emptySearchResultTitle": "{resourceNamePlural} introuvables",
+      "emptySearchResultDescription": "Essayez de changer les filtres ou le terme de recherche",
+      "selectButtonText": "Sélectionner",
+      "a11yCheckboxDeselectAllSingle": "Désélectionner {resourceNameSingular}",
+      "a11yCheckboxSelectAllSingle": "Sélectionner {resourceNameSingular}",
+      "a11yCheckboxDeselectAllMultiple": "Désélectionner la totalité des {itemsLength} {resourceNamePlural}",
+      "a11yCheckboxSelectAllMultiple": "Sélectionner la totalité des {itemsLength} {resourceNamePlural}",
+      "Item": {
+        "actionsDropdownLabel": "Actions pour {accessibilityLabel}",
+        "actionsDropdown": "Actions de la liste déroulante",
+        "viewItem": "Afficher les détails de {itemName}"
+      },
+      "BulkActions": {
+        "actionsActivatorLabel": "Actions",
+        "moreActionsActivatorLabel": "Autres actions"
+      },
+      "showingTotalCount": "{itemsCount} sur {totalItemsCount} {resource} sont affichés",
+      "allFilteredItemsSelected": "La totalité des {itemsLength}+ {resourceNamePlural} de ce filtre est sélectionnée",
+      "selectAllFilteredItems": "Sélectionner la totalité des éléments {resourceNamePlural}+ {itemsLength} de ce filtre"
+    },
+    "SkeletonPage": {
+      "loadingLabel": "Chargement de la page"
+    },
+    "Tabs": {
+      "toggleTabsLabel": "Plus de vues",
+      "newViewAccessibilityLabel": "Créer une nouvelle vue",
+      "newViewTooltip": "Créer une vue",
+      "Tab": {
+        "rename": "Renommer la vue",
+        "duplicate": "Dupliquer la vue",
+        "edit": "Modifier la vue",
+        "editColumns": "Modifier les colonnes",
+        "delete": "Supprimer la vue",
+        "copy": "Copie de {name}",
+        "deleteModal": {
+          "title": "Supprimer la vue ?",
+          "description": "Cette opération est irréversible. La vue {viewName} ne sera plus disponible dans votre interface administrateur Shopify.",
+          "cancel": "Annuler",
+          "delete": "Supprimer la vue"
+        }
+      },
+      "RenameModal": {
+        "title": "Renommer la vue",
+        "label": "Nom",
+        "cancel": "Annuler",
+        "create": "Enregistrer",
+        "errors": {
+          "sameName": "Une vue portant ce nom existe déjà. Veuillez choisir un nom différent."
+        }
+      },
+      "DuplicateModal": {
+        "title": "Dupliquer la vue",
+        "label": "Nom",
+        "cancel": "Annuler",
+        "create": "Créer une vue",
+        "errors": {
+          "sameName": "Une vue portant ce nom existe déjà. Veuillez choisir un nom différent."
+        }
+      },
+      "CreateViewModal": {
+        "title": "Créer une nouvelle vue",
+        "label": "Nom",
+        "cancel": "Annuler",
+        "create": "Créer une vue",
+        "errors": {
+          "sameName": "Une vue portant ce nom existe déjà. Veuillez choisir un nom différent."
+        }
+      }
+    },
+    "Tag": {
+      "ariaLabel": "Supprimer {children}"
+    },
+    "TextField": {
+      "characterCount": "{count} caractères",
+      "characterCountWithMaxLength": "{count} sur {limit} caractères utilisés"
+    },
+    "TopBar": {
+      "toggleMenuLabel": "Activer le menu",
+      "SearchField": {
+        "clearButtonLabel": "Effacer",
+        "search": "Rechercher"
+      }
+    },
+    "MediaCard": {
+      "popoverButton": "Actions",
+      "dismissButton": "Rejeter"
+    },
+    "VideoThumbnail": {
+      "playButtonA11yLabel": {
+        "default": "Lire la vidéo",
+        "defaultWithDuration": "Lire une vidéo d’une durée de {duration}",
+        "duration": {
+          "hours": {
+            "other": {
+              "only": "{hourCount} heures",
+              "andMinutes": "{hourCount} heures et {minuteCount} minutes",
+              "andMinute": "{hourCount} heures et {minuteCount} minute",
+              "minutesAndSeconds": "{hourCount} heures, {minuteCount} minutes et {secondCount} secondes",
+              "minutesAndSecond": "{hourCount} heures, {minuteCount} minutes et {secondCount} seconde",
+              "minuteAndSeconds": "{hourCount} heures, {minuteCount} minute et {secondCount} secondes",
+              "minuteAndSecond": "{hourCount} heures, {minuteCount} minute et {secondCount} seconde",
+              "andSeconds": "{hourCount} heures et {secondCount} secondes",
+              "andSecond": "{hourCount} heures et {secondCount} seconde"
+            },
+            "one": {
+              "only": "{hourCount} heure",
+              "andMinutes": "{hourCount} heure et {minuteCount} minutes",
+              "andMinute": "{hourCount} heure et {minuteCount} minute",
+              "minutesAndSeconds": "{hourCount} heure, {minuteCount} minutes et {secondCount} secondes",
+              "minutesAndSecond": "{hourCount} heure, {minuteCount} minutes et {secondCount} seconde",
+              "minuteAndSeconds": "{hourCount} heure, {minuteCount} minute et {secondCount} secondes",
+              "minuteAndSecond": "{hourCount} heure, {minuteCount} minute et {secondCount} seconde",
+              "andSeconds": "{hourCount} heure et {secondCount} secondes",
+              "andSecond": "{hourCount} heure et {secondCount} seconde"
+            }
+          },
+          "minutes": {
+            "other": {
+              "only": "{minuteCount} minutes",
+              "andSeconds": "{minuteCount} minutes et {secondCount} secondes",
+              "andSecond": "{minuteCount} minutes et {secondCount} seconde"
+            },
+            "one": {
+              "only": "{minuteCount} minute",
+              "andSeconds": "{minuteCount} minute et {secondCount} secondes",
+              "andSecond": "{minuteCount} minute et {secondCount} seconde"
+            }
+          },
+          "seconds": {
+            "other": "{secondCount} secondes",
+            "one": "{secondCount} seconde",
+            "many": "{secondCount} secondes"
+          }
+        }
+      }
+    },
+    "Loading": {
+      "label": "Barre de chargement de la page"
+    },
+    "TooltipOverlay": {
+      "accessibilityLabel": "Infobulle : {label}"
+    },
+    "IndexProvider": {
+      "defaultItemSingular": "Article",
+      "defaultItemPlural": "Articles",
+      "allItemsSelected": "La totalité des {itemsLength}+ {resourceNamePlural} est sélectionnée",
+      "selected": "{selectedItemsCount} sélectionné(s)",
+      "a11yCheckboxDeselectAllSingle": "Désélectionner {resourceNameSingular}",
+      "a11yCheckboxSelectAllSingle": "Sélectionner {resourceNameSingular}",
+      "a11yCheckboxDeselectAllMultiple": "Désélectionner la totalité des {itemsLength} {resourceNamePlural}",
+      "a11yCheckboxSelectAllMultiple": "Sélectionner la totalité des {itemsLength} {resourceNamePlural}"
+    },
+    "IndexTable": {
+      "emptySearchTitle": "{resourceNamePlural} introuvables",
+      "emptySearchDescription": "Essayez de changer les filtres ou le terme de recherche",
+      "onboardingBadgeText": "Nouveau",
+      "resourceLoadingAccessibilityLabel": "Chargement de {resourceNamePlural} en cours…",
+      "selectAllLabel": "Sélectionner la totalité des {resourceNamePlural}",
+      "selected": "{selectedItemsCount} sélectionné(s)",
+      "undo": "Annuler",
+      "selectAllItems": "Sélectionner la totalité des {itemsLength}+ {resourceNamePlural}",
+      "selectItem": "Sélectionner {resourceName}",
+      "selectButtonText": "Sélectionner",
+      "sortAccessibilityLabel": "trier {direction} par"
+    },
+    "Page": {
+      "Header": {
+        "rollupActionsLabel": "Afficher les actions pour {title}",
+        "pageReadyAccessibilityLabel": "{title}. Cette page est prête"
+      }
+    },
+    "FullscreenBar": {
+      "back": "Retour",
+      "accessibilityLabel": "Quitter le mode plein écran"
+    },
+    "FilterPill": {
+      "clear": "Effacer"
+    },
+    "IndexFilters": {
+      "searchFilterTooltip": "Rechercher et filtrer",
+      "searchFilterTooltipWithShortcut": "Rechercher et filtrer (F)",
+      "searchFilterAccessibilityLabel": "Rechercher et filtrer les résultats",
+      "sort": "Trier vos résultats",
+      "addView": "Ajouter une nouvelle vue",
+      "newView": "Recherche personnalisée",
+      "SortButton": {
+        "ariaLabel": "Trier les résultats",
+        "tooltip": "Trier",
+        "title": "Trier par",
+        "sorting": {
+          "asc": "Ordre croissant",
+          "desc": "Ordre décroissant",
+          "az": "A-Z",
+          "za": "Z-A"
+        }
+      },
+      "UpdateButtons": {
+        "cancel": "Annuler",
+        "update": "Actualiser",
+        "save": "Enregistrer",
+        "saveAs": "Enregistrer sous",
+        "modal": {
+          "title": "Enregistrer la vue sous",
+          "label": "Nom",
+          "sameName": "Une vue portant ce nom existe déjà. Veuillez choisir un nom différent.",
+          "save": "Enregistrer",
+          "cancel": "Annuler"
+        }
+      },
+      "EditColumnsButton": {
+        "tooltip": "Modifier les colonnes",
+        "accessibilityLabel": "Personnaliser l’ordre et la visibilité des colonnes du tableau"
+      }
+    },
+    "ActionList": {
+      "SearchField": {
+        "clearButtonLabel": "Effacer",
+        "search": "Recherche",
+        "placeholder": "Rechercher des actions"
+      }
+    }
+  }
+}

@@ -4,15 +4,19 @@ title: Resource item
 category: Lists
 examples:
   - fileName: Default.vue
+    frameHeight: 250
     title: Default
     description: A basic resource item with its details filled in at the point of use.
   - fileName: WithMedia.vue
+    frameHeight: 250
     title: With media
     description: The media element can hold an [avatar](/components/Avatar), [thumbnail](/components/Thumbnail), or other small-format graphic.
   - fileName: WithShortcutActions.vue
+    frameHeight: 250
     title: With shortcut actions
     description: Shortcut actions present popular actions from the resource’s details page for easy access. A shortcut action should be available on every item in the list.
   - fileName: VerticalAlign.vue
+    frameHeight: 250
     title: With vertical alignment
     description: Use to adjust the vertical alignment of item content.
 ---
