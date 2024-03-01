@@ -1,14 +1,12 @@
 <template>
-<div style="{ height: '250px' }">
+<div :style="{ height: '150px' }">
   <Popover :active="active" @close="toggleActive">
     <template #activator>
         <Button @click="toggleActive" disclosure>
           Manage staff
         </Button>
     </template>
-    <ActionList
-      :items="actionItems"
-    />
+    <ActionList :items="actionItems" />
   </Popover>
 </div>
 </template>
@@ -29,7 +27,7 @@ const actionItems = [
   },
 ];
 
-const active = ref<boolean>(false);
+const active = ref<boolean>(true);
 
 const toggleActive = () => {
   active.value = !active.value;
