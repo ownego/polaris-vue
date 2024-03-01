@@ -17,7 +17,7 @@
         autoComplete="off"
       ></TextField>
       <Button size="slim">Add filter</Button>
-    </FormLayout> 
+    </FormLayout>
   </Popover>
 </div>
 </template>
@@ -25,7 +25,7 @@
 <script setup lang="ts">
 import { ref } from 'vue';
 
-const popoverActive = ref(false);
+const popoverActive = ref(true);
 
 const selectOptions = ['Tagged with'];
 
