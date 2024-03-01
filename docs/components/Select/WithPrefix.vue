@@ -7,8 +7,7 @@
 </template>
 
 <script setup lang="ts">
-import { h, ref } from 'vue';
-import { Icon } from '@/components';
+import { h, ref, resolveComponent } from 'vue';
 import CaretDownIcon from '@icons/CaretDownIcon.svg';
 import CaretUpIcon from '@icons/CaretUpIcon.svg';
 /**
@@ -21,8 +20,8 @@ import CaretUpIcon from '@icons/CaretUpIcon.svg';
 
 const selected = ref('enabled');
 
-const caretUp = h(Icon, { source: CaretUpIcon });
-const caretDown = h(Icon, { source: CaretDownIcon });
+const caretUp = h(resolveComponent('Icon'), { source: CaretUpIcon });
+const caretDown = h(resolveComponent('Icon'), { source: CaretDownIcon });
 
 const options = [
   {

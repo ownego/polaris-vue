@@ -1,38 +1,40 @@
 <template>
-<LegacyStack vertical>
-  <LegacyStack
-    v-if="hasSelectedOptions"
-    spacing="extraTight"
-  >
-    <Tag
-      v-for="option in selectedOptions"
-      :key="`option${option}`"
-      @remove="removeTag(option)"
+<div :style="{height: '250px'}">
+  <LegacyStack vertical>
+    <LegacyStack
+      v-if="hasSelectedOptions"
+      spacing="extraTight"
     >
-      {{ titleCase(option) }}
-    </Tag>
+      <Tag
+        v-for="option in selectedOptions"
+        :key="`option${option}`"
+        @remove="removeTag(option)"
+      >
+        {{ titleCase(option) }}
+      </Tag>
+    </LegacyStack>
+    <Autocomplete
+      allowMultiple
+      :options="optionList"
+      :selected="selectedOptions"
+      listTitle="Suggested Tags"
+      :loading="isLoading"
+      :willLoadMoreResults="willLoadMoreResults"
+      @select="handleSelection"
+      @load-more-results="handleLoadMoreResults"
+    >
+      <template #textField>
+        <AutocompleteTextField
+          label="Tags"
+          v-model="inputValue"
+          placeholder="Vintage, cotton, summer"
+          autoComplete="off"
+          @input="updateText"
+        />
+      </template>
+    </Autocomplete>
   </LegacyStack>
-  <Autocomplete
-    allowMultiple
-    :options="optionList"
-    :selected="selectedOptions"
-    listTitle="Suggested Tags"
-    :loading="isLoading"
-    :willLoadMoreResults="willLoadMoreResults"
-    @select="handleSelection"
-    @load-more-results="handleLoadMoreResults"
-  >
-    <template #textField>
-      <AutocompleteTextField
-        label="Tags"
-        v-model="inputValue"
-        placeholder="Vintage, cotton, summer"
-        autoComplete="off"
-        @input="updateText"
-      />
-    </template>
-  </Autocomplete>
-</LegacyStack>
+</div>
 </template>
 
 <script setup lang="ts">

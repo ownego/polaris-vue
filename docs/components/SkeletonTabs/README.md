@@ -4,10 +4,13 @@ title: Skeleton tabs
 category: Feedback indicators
 examples:
   - fileName: Default.vue
+    frameHeight: 200
     title: Default
   - fileName: SkeletonTabsWithCustomCount.vue
+    frameHeight: 200
     title: With custom count
   - fileName: SkeletonTabsFitted.vue
+    frameHeight: 200
     title: Fitted
     description: Use when tabs contain a few (2 or 3) items within a narrow column.
 ---

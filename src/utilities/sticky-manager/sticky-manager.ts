@@ -2,7 +2,7 @@ import { themeDefault } from '@shopify/polaris-tokens';
 
 import { debounce } from '@polaris/utilities/debounce';
 import { dataPolarisTopBar, scrollable } from '@polaris/components/shared';
-import { stackedContent } from '../breakpoints';
+import { stackedContent } from '@/use/useBreakpoints';
 import type { Rect } from '../geometry';
 import { getRectForNode } from '../geometry';
 

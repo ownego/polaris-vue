@@ -20,19 +20,18 @@
             </EmptyState>
           </template>
           <template #filterControl>
-            <LegacyFilters
-              v-model="queryValue"
+            <Filters
+              disabled
+              queryPlaceholder="Filter files"
+              :query-value="queryValue"
               :filters="filters"
               :appliedFilters="appliedFilters"
-              :disabled="!items.length"
               @query-change="setQueryValue"
               @query-clear="handleQueryValueRemove"
               @clear-all="handleClearAll"
             >
-              <div style="paddingLeft: 8px">
-                <Button @click="() => console.log('New filter saved')">Save</Button>
-              </div>
-          </LegacyFilters>
+
+          </Filters>
           </template>
         </ResourceList>
       </LegacyCard>

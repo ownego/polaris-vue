@@ -83,7 +83,7 @@ import {
 import FilterPill from '../FilterPill/FilterPill.vue';
 import { useOnValueChange } from '@/utilities/use-on-value-change';
 import { classNames } from '@/utilities/css';
-import { useBreakpoints } from '@/utilities/breakpoints';
+import { useBreakpoints } from '@/use/useBreakpoints';
 import type {
   ActionListItemDescriptor,
   AppliedFilterInterface,

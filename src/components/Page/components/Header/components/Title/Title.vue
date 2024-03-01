@@ -1,20 +1,19 @@
 <template lang="pug">
-div
-  div(:class="titleWrapperclassName")
-    Text(
-      v-if="title",
-      as="h1",
-      :class="className",
-    ) {{ title }}
-    Bleed(
-      :marginBlock="100",
-    )
-      slot
-  div(
-    v-if="subtitle",
-    :class="classNames(styles.SubTitle, compactTitle && styles.SubtitleCompact)",
+div(:class="styles.TitleWrapper")
+  Text(
+    v-if="title",
+    as="h1",
+    :class="className",
+  ) {{ title }}
+  Bleed(
+    :marginBlock="100",
   )
-    Text(as="p", variant="bodySm") {{ subtitle }}
+    slot
+div(
+  v-if="subtitle",
+  :class="classNames(styles.SubTitle, compactTitle && styles.SubtitleCompact)",
+)
+  Text(as="p", variant="bodySm") {{ subtitle }}
 </template>
 
 <script setup lang="ts">
@@ -41,10 +40,5 @@ const className = computed(() => classNames(
   styles.Title,
   props.subtitle && styles.TitleWithSubtitle,
   props.hasSubtitleMaxWidth && styles.SubtitleMaxWidth,
-));
-
-const titleWrapperclassName = computed(() => classNames(
-  styles.TitleWrapper,
-  !props.hasSubtitleMaxWidth && styles.TitleWrapperExpand,
 ));
 </script>

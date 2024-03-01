@@ -3,7 +3,7 @@
   <OptionList
     title="Inventory Location"
     :options="options"
-    v-model="selected"
+    :selected="selected"
     @change="handleSelect"
   />
 </LegacyCard>
