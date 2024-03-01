@@ -121,7 +121,7 @@ import {
 import {
   Dialog,
   Header,
-  Section,
+  ModalSection as Section,
   Footer,
 } from './components';
 import {
