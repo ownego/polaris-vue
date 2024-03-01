@@ -89,3 +89,4 @@ export * from './UnstyledButton';
 export * from './UnstyledLink';
 export * from './VideoThumbnail';
 export * from './Optionlist';
+export * from './FullscreenBar';
