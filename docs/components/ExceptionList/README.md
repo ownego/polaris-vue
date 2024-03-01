@@ -4,6 +4,7 @@ title: Exception list
 category: Feedback indicators
 examples:
   - fileName: Default.vue
+    frameHeight: 200
     title: Default
     description: Use icons to add clarity or assist in visualizing the meaning
 ---

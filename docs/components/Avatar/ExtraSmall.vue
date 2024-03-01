@@ -1,40 +1,33 @@
 <template>
-<div style="height: 250px">
+<div :style="{ height: '150px' }">
   <Popover :active="active" @close="toggleActive">
     <template #activator>
         <Button @click="toggleActive" disclosure>
           Manage staff
         </Button>
     </template>
-    <ActionList
-      :items="actionItems"
-    >
-      <template #prefix-chet>
-        <Avatar customer size="xs" name="Chet Baker" />
-      </template>
-      <template #prefix-farrah>
-        <Avatar customer size="xs" name="Farrah Fawcett" />
-      </template>
-    </ActionList>
+    <ActionList :items="actionItems" />
   </Popover>
 </div>
 </template>
 
 <script setup lang="ts">
-import { ref } from 'vue';
+import { ref, h, resolveComponent } from 'vue';
 
 const actionItems = [
   {
+    customer: true,
     content: 'Chet Baker',
-    prefixId: 'chet',
+    prefix: h(resolveComponent('Avatar'), { customer: true, size: 'xs', name: 'Chet Baker' }),
   },
   {
+    customer: true,
     content: 'Farrah Fawcett',
-    prefixId: 'farrah',
+    prefix: h(resolveComponent('Avatar'), { customer: true, size: 'xs', name: 'Chet Baker' }),
   },
 ];
 
-const active = ref<boolean>(false);
+const active = ref<boolean>(true);
 
 const toggleActive = () => {
   active.value = !active.value;

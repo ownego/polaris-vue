@@ -4,12 +4,15 @@ title: Empty state
 category: Layout and structure
 examples:
   - fileName: Default.vue
+    frameHeight: 600
     title: Default
     description: Use to explain a single feature before merchants have used it.
   - fileName: WithSubduedFooterContent.vue
+    frameHeight: 600
     title: With subdued footer context
     description: Use to provide additional but non-critical context for a new product or feature. Can also be used to include a subdued call to action for secondary or tertiary actions.
   - fileName: FullWidthLayout.vue
+    frameHeight: 600
     title: With full width layout
 ---
 

@@ -174,7 +174,7 @@ export interface DisableableAction extends Action {
 
 export interface BadgeAction {
   badge?: {
-    status: 'new';
+    tone: 'new';
     content: string;
   };
 }

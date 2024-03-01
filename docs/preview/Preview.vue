@@ -22,11 +22,9 @@ const wrappedComponent = () => {
   return h(
     resolveComponent('AppProvider'),
     { i18n: lang },
-    {
-      default: () => h(exampleComponent),
-    }
-  )
-}
+    () => h(exampleComponent),
+  );
+};
 
 const router = createRouter({
   history: createWebHistory(),
@@ -67,11 +65,12 @@ html.example-preview {
   display: flex;
   align-items: center;
   justify-content: center;
-  height: 100vh;
+  // height: 100vh;
   width: 100%;
   padding-left: 32px;
   padding-right: 32px;
   background-color: #f1f1f1;
+  min-height: 100vh;
 }
 #preview {
   width: 100%;

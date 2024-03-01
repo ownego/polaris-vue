@@ -84,7 +84,7 @@ import { classNames } from '@/utilities/css';
 import type { FilterInterface } from '@/utilities/types';
 import useI18n from '@/use/useI18n';
 import { useToggle } from '@/use/useToggle';
-import { useBreakpoints } from '@/utilities/breakpoints';
+import { useBreakpoints } from '@/use/useBreakpoints';
 import ChevronDownIcon from '@icons/ChevronDownIcon.svg';
 import XSmallIcon from '@icons/XSmallIcon.svg';
 import styles from '@polaris/components/Filters/components/FilterPill/FilterPill.module.scss';

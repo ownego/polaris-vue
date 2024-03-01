@@ -4,15 +4,19 @@ title: Tooltip
 category: Overlays
 examples:
   - fileName: Default.vue
+    frameHeight: 250
     title: Default
     description: Use only when necessary to provide an explanation for an interface element.
   - fileName: ChildInteract.vue
+    frameHeight: 250
     title: Visible only with child interaction
     description: Use when the tooltip overlays interactive elements when active, for example a form input. The `dismissOnMouseOut` prop prevents the tooltip from remaining active when mouse hover or focus leaves its `children` and enters the tooltip's content.
   - fileName: PersistentOnClick.vue
+    frameHeight: 250
     title: With persistence on click
     description: Use to present a tooltip that remains open if activated by click or keypress.
   - fileName: Suffix.vue
+    frameHeight: 250
     title: With suffix
     description: Use when merchants benefit from information supplemental to the tooltip content. For example, to present a keyboard shortcut beside the content of a tooltip that describes an icon button.
 ---

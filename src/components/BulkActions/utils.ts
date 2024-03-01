@@ -1,42 +1,111 @@
-import {
-  DisableableAction,
-  ActionListSection,
-  BadgeAction,
-  MenuGroupDescriptor,
-  Action,
-} from '@/utilities/types';
-import type { ButtonProps } from '@/components/Button/types';
+import type { BulkAction, BulkActionListSection, BulkActionsProps } from './types';
+import type { MenuGroupDescriptor } from '@/utilities/types';
 
-export type BulkAction = DisableableAction & BadgeAction;
+export function getVisibleAndHiddenActionsIndices(
+  promotedActions: any[] = [],
+  disclosureWidth: number,
+  actionsWidths: number[],
+  containerWidth: number,
+) {
+  const sumTabWidths = actionsWidths.reduce((sum, width) => sum + width, 0);
+  const arrayOfPromotedActionsIndices = promotedActions.map((_, index) => {
+    return index;
+  });
 
-export type BulkActionListSection = ActionListSection;
+  const visiblePromotedActions: number[] = [];
+  const hiddenPromotedActions: number[] = [];
 
-export interface BulkActionsProps {
-  /** List is in a selectable state */
-  selectMode?: boolean;
-    /** Visually hidden text for screen readers */
-  accessibilityLabel?: string;
-  /** State of the bulk actions checkbox */
-  selected?: boolean | 'indeterminate';
-  /** Text to select all across pages */
-  paginatedSelectAllText?: string;
-  /** Action for selecting all across pages */
-  paginatedSelectAllAction?: Action;
-  /** Callback when the select all checkbox is clicked */
-  onToggleAll?(): void;
-  /** Actions that will be given more prominence */
-  promotedActions?: (BulkAction | MenuGroupDescriptor)[];
-  /** List of actions */
-  actions?: (BulkAction | BulkActionListSection)[];
-  /** Disables bulk actions */
-  disabled?: boolean;
-  /** If the BulkActions is currently sticky in view */
-  /** Used for forwarding the ref */
-  innerRef?: any;
-  /** The size of the buttons to render */
-  buttonSize?: Extract<ButtonProps['size'], 'micro' | 'medium'>;
-  /** @deprecated If the BulkActions is currently sticky in view */
-  isSticky?: boolean;
-  /** @deprecated The width of the BulkActions */
-  width?: number;
+  if (containerWidth > sumTabWidths) {
+    visiblePromotedActions.push(...arrayOfPromotedActionsIndices);
+  } else {
+    let accumulatedWidth = 0;
+    let hasReturned = false;
+
+    arrayOfPromotedActionsIndices.forEach((currentPromotedActionsIndex) => {
+      const currentActionsWidth = actionsWidths[currentPromotedActionsIndex];
+      const notEnoughSpace =
+        accumulatedWidth + currentActionsWidth >=
+        containerWidth - disclosureWidth;
+
+      if (notEnoughSpace || hasReturned) {
+        hiddenPromotedActions.push(currentPromotedActionsIndex);
+        hasReturned = true;
+        return;
+      }
+
+      visiblePromotedActions.push(currentPromotedActionsIndex);
+      accumulatedWidth += currentActionsWidth;
+    });
+  }
+
+  return {
+    visiblePromotedActions,
+    hiddenPromotedActions,
+  };
+}
+
+export function instanceOfBulkActionListSectionArray(
+  actions: (BulkAction | BulkActionListSection)[],
+): actions is BulkActionListSection[] {
+  const validList = actions.filter((action: any) => {
+    return action.items;
+  });
+
+  return actions.length === validList.length;
+}
+
+export function instanceOfBulkActionArray(
+  actions: (BulkAction | BulkActionListSection)[],
+): actions is BulkAction[] {
+  const validList = actions.filter((action: any) => {
+    return !action.items;
+  });
+
+  return actions.length === validList.length;
+}
+
+export function instanceOfMenuGroupDescriptor(
+  action: MenuGroupDescriptor | BulkAction,
+): action is MenuGroupDescriptor {
+  return 'title' in action && 'actions' in action;
+}
+
+export function instanceOfBulkActionListSection(
+  action: BulkAction | BulkActionListSection,
+): action is BulkActionListSection {
+  return 'items' in action;
+}
+
+export function getActionSections(
+  actions: BulkActionsProps['actions'],
+): BulkActionListSection[] | undefined {
+  if (!actions || actions.length === 0) {
+    return;
+  }
+
+  if (instanceOfBulkActionListSectionArray(actions)) {
+    return actions;
+  }
+
+  if (instanceOfBulkActionArray(actions)) {
+    return [
+      {
+        items: actions,
+      },
+    ];
+  }
+}
+
+export function isNewBadgeInBadgeActions(
+  actionSections?: BulkActionListSection[],
+) {
+  if (!actionSections) return false;
+
+  for (const action of actionSections) {
+    for (const item of action.items) {
+      if (item.badge?.tone === 'new') return true;
+    }
+  }
+
+  return false;
 }

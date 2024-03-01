@@ -6,7 +6,6 @@ div(
 )
   slot(name="filterControl")
 div(
-  ref="tableMeasurerRef",
   :class="resourceListWrapperClassName",
 )
   //-HeaderMarkup
@@ -26,7 +25,6 @@ div(
           div(:class="styles.HeaderTitleWrapper") {{ headerTitle }}
           div(v-if="isSelectable", :class="styles.CheckableButtonWrapper")
             CheckableButton(
-              v-model="selectAllSelectState",
               :accessibilityLabel="bulkActionsAccessibilityLabel",
               :label="headerTitle",
               :disabled="loading",
@@ -57,36 +55,24 @@ div(
             ) {{ i18n.translate('Polaris.ResourceList.selectButtonText') }}
         //- BulkAction
         div(
-          v-if="showBulkActions",
+          v-if="isSelectable",
           :class="bulkActionClassNames",
         )
           BulkActions(
             ref="CheckableButtonRef",
             button-size="medium",
+            :paginated-select-all-action="paginatedSelectAllAction",
+            :paginated-select-all-text="paginatedSelectAllText",
             :accessibility-label="bulkActionsAccessibilityLabel",
             :selected="selectAllSelectState",
             :promotedActions="promotedBulkActions",
             :actions="bulkActions",
             :disabled="loading",
             :select-mode="selectMode",
+            :label="selectAllActionsLabel",
             @toggle-all="handleToggleAll",
             @select-mode-toggle="handleSelectMode",
           )
-    //- SelectAllActions
-    div(
-      v-if="isSelectable",
-      :class="selectAllActionsClassNames",
-      :style="selectAllActionsStyles",
-    )
-      SelectAllActions(
-        :label="selectAllActionsLabel",
-        :selectMode="selectMode",
-        :paginatedSelectAllAction="paginatedSelectAllAction",
-        :paginatedSelectAllText="paginatedSelectAllText",
-        :disabled="loading",
-        :isSticky="isSelectAllActionsSticky",
-        :hasPagination="Boolean(pagination)",
-      )
   //-List
   ul(
     v-if="itemsExist",
@@ -124,15 +110,13 @@ div(
   //- Pagination
   div(
     v-if="pagination",
-    :class="paginationWrapperClassNames",
-    :style="paginationStyles",
+    :class="styles.PaginationWrapper",
   )
     Pagination(type="table", v-bind="pagination")
-div(ref="selectAllActionsIntersectionRef")
 </template>
 
 <script setup lang="ts">
-import { type VNode , type VNodeArrayChildren, ref, computed, onMounted, watch, provide, type CSSProperties } from 'vue';
+import { type VNode , type VNodeArrayChildren, ref, computed, onMounted, watch, provide } from 'vue';
 import { themeDefault, toPx } from '@shopify/polaris-tokens';
 import { debounce } from '@polaris/utilities/debounce';
 import { useEventListener } from '@/utilities/use-event-listener';
@@ -150,12 +134,10 @@ import {
   BulkActions,
   CheckableButton,
   Pagination,
-  SelectAllActions,
 } from '@/components';
 import type { PaginationProps } from '@/components/Pagination/types';
-import type { BulkActionsProps } from '@/components/BulkActions/utils';
+import type { BulkActionsProps } from '@/components/BulkActions/types';
 import type { SelectOption } from '@/components/Select/types';
-import { useIsSelectAllActionsSticky } from '@/use/useIsSelectAllActionsSticky';
 import styles from '@polaris/components/ResourceList/ResourceList.module.scss';
 import CheckboxIcon from '@icons/CheckboxIcon.svg';
 
@@ -282,22 +264,6 @@ const lastSelected = ref<number | undefined>();
 const smallScreen = ref(isBreakpointsXS());
 const checkableButtons = ref<CheckableButtons>(new Map());
 const isSticky = ref(false);
-const {
-  selectAllActionsIntersectionRef,
-  tableMeasurerRef,
-  isSelectAllActionsSticky,
-  selectAllActionsAbsoluteOffset,
-  selectAllActionsMaxWidth,
-  selectAllActionsOffsetLeft,
-  selectAllActionsOffsetBottom,
-  computeTableDimensions,
-  isScrolledPastTop,
-  selectAllActionsPastTopOffset,
-} = useIsSelectAllActionsSticky({
-  selectMode: selectMode,
-  hasPagination: Boolean(props.pagination),
-  tableType: 'resource-list',
-});
 
 const defaultResourceName = {
   singular: i18n.translate('Polaris.ResourceList.defaultItemSingular'),
@@ -359,11 +325,6 @@ const showEmptySearchState = computed(() => !showEmptyState.value && hasSlot(slo
 
 const showSortingSelect = computed(() => props.sortOptions && props.sortOptions.length > 0 && !hasSlot(slots.alternateTool));
 
-const showBulkActions = computed(() => {
-  return Boolean(isSelectable.value
-    && (props.bulkActions || props.promotedBulkActions));
-});
-
 const showHeaderMarkup = computed(() => {
   return !showEmptyState.value
     && props.showHeader
@@ -392,7 +353,7 @@ const headerClassName = computed(() => {
     hasSlot(slots.alternateTool) && styles['HeaderWrapper-hasAlternateTool'],
     isSelectable.value && styles['HeaderWrapper-hasSelect'],
     props.loading && styles['HeaderWrapper-disabled'],
-    isSelectable.value && selectMode.value && showBulkActions.value && styles['HeaderWrapper-inSelectMode'],
+    isSelectable.value && selectMode.value && styles['HeaderWrapper-inSelectMode'],
     isSticky.value && styles['HeaderWrapper-isSticky'],
   );
 });
@@ -488,47 +449,6 @@ const selectAllSelectState = computed<boolean | 'indeterminate'>(() => {
   }
 
   return selectState;
-});
-
-const selectAllActionsClassNames = computed(() => classNames(
-  styles.SelectAllActionsWrapper,
-  isSelectAllActionsSticky.value && styles.SelectAllActionsWrapperSticky,
-  !isSelectAllActionsSticky.value &&
-    !props.pagination &&
-    styles.SelectAllActionsWrapperAtEnd,
-  selectMode.value &&
-    !isSelectAllActionsSticky.value &&
-    !props.pagination &&
-    styles.SelectAllActionsWrapperAtEndAppear,
-));
-
-const selectAllActionsStyles = computed<CSSProperties>(() => {
-  return {
-    top: isSelectAllActionsSticky.value
-      ? undefined
-      : `${selectAllActionsAbsoluteOffset.value}px`,
-    width: `${selectAllActionsMaxWidth.value}px`,
-    bottom: isSelectAllActionsSticky.value
-      ? `${selectAllActionsOffsetBottom.value}px`
-      : undefined,
-    left: isSelectAllActionsSticky.value
-      ? `${selectAllActionsOffsetLeft.value}px`
-      : undefined,
-  }
-});
-
-const paginationWrapperClassNames = computed(() => classNames(
-  styles.PaginationWrapper,
-  props.selectedItems &&
-    props.selectedItems.length &&
-    styles.PaginationWrapperWithSelectAllActions,
-  isScrolledPastTop.value && styles.PaginationWrapperScrolledPastTop,
-));
-
-const paginationStyles = computed<CSSProperties>(() => {
-  return {
-    top: `${selectAllActionsPastTopOffset}px`,
-  };
 });
 
 const paginatedSelectAllText = computed(() => {
@@ -791,13 +711,6 @@ watch(
         selectMode.value = false;
       }
     }
-  },
-);
-
-watch(
-  () => items.value.length,
-  () => {
-    computeTableDimensions();
   },
 );
 

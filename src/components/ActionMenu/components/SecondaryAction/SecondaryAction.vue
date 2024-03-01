@@ -36,7 +36,7 @@ import type { VueNode } from '@/utilities/types';
 import type { ButtonProps } from '@/components/Button/types';
 import styles from '@polaris/components/ActionMenu/components/SecondaryAction/SecondaryAction.module.scss';
 
-interface SecondaryAction extends ButtonProps {
+export interface SecondaryActionProps extends ButtonProps {
   helpText?: string;
   destructive?: boolean;
 }
@@ -46,7 +46,7 @@ const slots = defineSlots<{
   helpText?: (_?: VueNode) => any;
 }>();
 
-const props = defineProps<SecondaryAction>();
+const props = defineProps<SecondaryActionProps>();
 
 const emits = defineEmits<{
   (e: 'click'): void;
