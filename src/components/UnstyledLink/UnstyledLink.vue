@@ -33,7 +33,7 @@ const attrs = useAttrs();
 
 const LinkComponent = useLink();
 
-const props = defineProps<UnstyledLinkProps>()
+const props = defineProps<UnstyledLinkProps>();
 
 const linkProps = computed(() => {
   const {
