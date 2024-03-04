@@ -31,7 +31,7 @@
       </Text>
     </BlockStack>
     <div>
-      <ResourceList :resourceName="{singular: 'sale', plural: 'sales'}">
+      <ResourceList :resourceName="{singular: 'sale', plural: 'sales'}" :items="resourceItems" :show-header="false">
         <ResourceItem
           v-for="item in resourceItems"
           :key="item.sales"

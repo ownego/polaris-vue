@@ -25,7 +25,7 @@ import EditIcon from '@icons/EditIcon.svg';
 import ExportIcon from '@icons/ExportIcon.svg';
 import ImportIcon from '@icons/ImportIcon.svg';
 
-const active = ref(false);
+const active = ref(true);
 
 const toggleActive = () => {
   active.value = !active.value;
