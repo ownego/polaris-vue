@@ -14,15 +14,6 @@
 <script setup lang="ts">
 import { ref } from 'vue';
 
-const style = {
-  display: 'flex',
-  flexGrow: 1,
-  justifyContent: 'space-between',
-  alignItems: 'center',
-  paddingLeft: '1rem',
-  paddingRight: '1rem',
-}
-
 const isFullscreen = ref(true);
 
 const setFullscreen = (value: boolean) => {

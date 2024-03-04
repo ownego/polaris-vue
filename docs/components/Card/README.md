@@ -77,6 +77,7 @@ examples:
     description: >-
       Use when a card action will delete merchant data or be otherwise difficult to recover from.
   - fileName: AllElement.vue
+    frameHeight: 600
     title: With all elements
     description: >-
       Use as a broad example that includes using other layout components to build out the card.
