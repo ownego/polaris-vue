@@ -38,6 +38,7 @@ export * from './FormLayout';
 export * from './Grid';
 export * from './Icon';
 export * from './Image';
+export * from './IndexFilters';
 export * from './IndexProvider';
 export * from './IndexTable';
 export * from './Indicator';

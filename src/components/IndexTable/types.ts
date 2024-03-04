@@ -3,7 +3,7 @@ import { type SpaceScale } from '@shopify/polaris-tokens';
 import type { PaginationProps } from '@/components/Pagination/types';
 import type { Width } from '@/components/Tooltip/types';
 import type { VueNode } from '@/utilities/types';
-import type { BulkActionsProps } from '@/components/BulkActions/utils';
+import type { BulkActionsProps } from '@/components/BulkActions/types';
 import { type IndexProviderProps, type SelectionType, type Range } from '@/components/IndexProvider/types';
 
 interface IndexTableHeadingTitleString extends IndexTableHeadingBase {
