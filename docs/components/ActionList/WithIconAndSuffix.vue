@@ -24,7 +24,7 @@ import ImportIcon from '@icons/ImportIcon.svg';
 import ExportIcon from '@icons/ExportIcon.svg';
 import CheckSmallIcon from '@icons/CheckSmallIcon.svg';
 
-const active = ref(false);
+const active = ref(true);
 
 const toggleActive = () => {
   active.value = !active.value;
