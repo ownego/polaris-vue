@@ -4,15 +4,19 @@ title: Skeleton thumbnail
 category: Feedback indicators
 examples:
   - fileName: Default.vue
+    frameHeight: 200
     title: Medium
     description: Use this component to represent medium thumbnails.
   - fileName: SkeletonThumbnailLarge.vue
+    frameHeight: 200
     title: Large
     description: Use this component to represent large thumbnails.
   - fileName: SkeletonThumbnailSmall.vue
+    frameHeight: 200
     title: Small
     description: Use this component to represent small thumbnails.
   - fileName: SkeletonThumbnailExtraSmall.vue
+    frameHeight: 200
     title: Extra small
     description: Use this component to represent extra small thumbnails.
 ---

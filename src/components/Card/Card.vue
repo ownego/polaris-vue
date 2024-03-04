@@ -18,7 +18,7 @@ ShadowBevel(
 <script setup lang="ts">
 import { computed } from 'vue';
 import type { BorderRadiusAliasOrScale } from '@shopify/polaris-tokens';
-import { useBreakpoints } from '@/utilities/breakpoints';
+import { useBreakpoints } from '@/use/useBreakpoints';
 import type { VueNode } from '@/utilities/types';
 import Box from '../Box/Box.vue';
 import ShadowBevel from '../ShadowBevel/ShadowBevel.vue';

@@ -4,10 +4,10 @@ Card
     template(#action)
       ButtonFrom(
         v-if="action",
-        :action="action", 
+        :action="action",
         :overrides="{ variant: connected ? undefined : 'primary' }",
-      ) 
-    
+      )
+
     InlineStack(gap="400")
       span(v-if="connected")
         Avatar(
@@ -17,7 +17,7 @@ Card
           :source="avatarUrl",
         )
 
-      BlockStack(gap="100") 
+      BlockStack(gap="100")
         Text(
           as="h2",
           variant="headingSm",
@@ -27,14 +27,14 @@ Card
             name="title",
           )
           span(v-else) {{ accountName }}
-        
+
         Text(
           v-if="hasSlot(slots.details)",
           as="span",
           tone="subdued",
         )
           slot(name="details")
-  
+
   Box(
     v-if="hasSlot(slots['term-of-service'])"
     :padding-block-start="breakpoints.mdUp ? '400' : '500'",
@@ -44,7 +44,7 @@ Card
 
 <script setup lang="ts">
 import { computed, useSlots } from 'vue';
-import { useBreakpoints } from '@/utilities/breakpoints';
+import { useBreakpoints } from '@/use/useBreakpoints';
 import { useHasSlot } from '@/use/useHasSlot';
 import {
   Avatar,
@@ -76,7 +76,7 @@ export type AccountConnectionSlots = {
   details: (_: VueNode) => any;
   /** Content to display as terms of service */
   'term-of-service': (_: VueNode) => any;
-}; 
+};
 
 const breakpoints = useBreakpoints();
 const { hasSlot } = useHasSlot();

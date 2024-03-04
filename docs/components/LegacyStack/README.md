@@ -4,24 +4,31 @@ title: Legacy Stack
 category: Deprecated
 examples:
   - fileName: Default.vue
+    frameHeight: 250
     title: Default
     description: Use to quickly lay out a horizontal row of components and maintain their relative sizes. On small screens, children rows wrap down to additional rows as needed.
   - fileName: NonWrap.vue
+    frameHeight: 250
     title: Non-wrapping
     description: Use to create a stack where the children will not wrap to new rows on small screens. As noted above, the wrap option defaults to true. This means you must explicitly set it to false to turn it off.
   - fileName: Spacing.vue
+    frameHeight: 250
     title: Spacing
     description: Use to control spacing of items in a stack in standard increments. Use tight for less spacing, loose for more spacing, or none to remove normal spacing altogether.
   - fileName: VerticalCenter.vue
+    frameHeight: 250
     title: Vertical centering
     description: Use to vertically center a set of items that have different heights.
   - fileName: FillSpace.vue
+    frameHeight: 250
     title: Fill available space proportionally
     description: Use to have the stack’s items fill the horizontal space in the container but maintain their relative proportions.
   - fileName: FillEven.vue
+    frameHeight: 250
     title: Where items fill space evenly
     description: Use to have the stack’s items fill the horizontal space in the container and be equal widths, regardless of their content.
   - fileName: SingleItemFill.vue
+    frameHeight: 250
     title: Where a single item fills the remaining space
     description: Use for aligning buttons or secondary content to the right edge of another element, allowing it to wrap below on small screens.
 ---

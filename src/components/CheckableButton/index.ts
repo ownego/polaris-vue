@@ -1,1 +1,1 @@
-export { default as CheckableButton } from './CheckableButton.vue';
+export { default as CheckableButton, type CheckableButtonProps } from './CheckableButton.vue';

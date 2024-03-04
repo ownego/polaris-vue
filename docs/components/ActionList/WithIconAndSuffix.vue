@@ -19,8 +19,7 @@
 </template>
 
 <script setup lang="ts">
-import { h, ref } from 'vue';
-import { Icon } from '@/components';
+import { h, ref, resolveComponent } from 'vue';
 import ImportIcon from '@icons/ImportIcon.svg';
 import ExportIcon from '@icons/ExportIcon.svg';
 import CheckSmallIcon from '@icons/CheckSmallIcon.svg';
@@ -31,7 +30,7 @@ const toggleActive = () => {
   active.value = !active.value;
 };
 
-const suffixImport = h(Icon, { source: CheckSmallIcon });
+const suffixImport = h(resolveComponent('Icon'), { source: CheckSmallIcon });
 
 const actionItems = [
   {

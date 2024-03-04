@@ -9,14 +9,12 @@
 </template>
 
 <script setup lang="ts">
-import { computed, h, ref } from 'vue';
-// import { TextField } from '@ownego/polaris-vue';
-import { TextField } from '@/components';
+import { computed, h, ref, resolveComponent } from 'vue';
 
 const selected = ref(['none']);
 const textFieldValue = ref('');
 
-const children = h(TextField, {
+const children = h(resolveComponent('TextField'), {
   label: 'Minimum Quantity',
   labelHidden: true,
   modelValue: textFieldValue.value,

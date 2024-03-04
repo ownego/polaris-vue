@@ -4,6 +4,7 @@ shortDescription: Used for connecting or disconnecting a store to various accoun
 category: Actions
 examples:
   - fileName: Default.vue
+    frameHeight: 300
     title: Default
     description: Use to let merchants connect or disconnect their store to their third-party accounts, like Facebook.
 ---

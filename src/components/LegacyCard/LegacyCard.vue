@@ -125,5 +125,5 @@ const footerMarkupStyle = computed(() =>
   ),
 );
 
-provide('WithinContentContext', true);
+provide('within-content-context', true);
 </script>

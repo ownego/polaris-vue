@@ -4,30 +4,39 @@ title: Banner
 category: Feedback indicators
 examples:
   - fileName: Default.vue
+    frameHeight: 350
     title: Default
     description: Use to convey general information or actions that aren’t critical. For example, you might show a banner that asks for merchant feedback. Default banners contain lower priority information and should always be dismissible.
   - fileName: BannerDismissible.vue
+    frameHeight: 350
     title: Dismissible
     description: Make all banners dismissible, unless they contain critical information or an important action that merchants are required to take.
   - fileName: BannerWithFooterCallToAction.vue
+    frameHeight: 350
     title: With footer call-to-action
     description: Use when you want merchants to take an action after reading the banner.
   - fileName: BannerInformational.vue
+    frameHeight: 350
     title: Informational
     description: Use to update merchants about a change or give them advice.
   - fileName: BannerSuccess.vue
+    frameHeight: 350
     title: Success
     description: Default to using toasts for success messages, unless the feedback is delayed, persistent, or has a call to action. Include next steps if applicable.
   - fileName: BannerWarning.vue
+    frameHeight: 350
     title: Warning
     description: Use to display information that needs attention or that merchants need to take action on. Seeing these banners can be stressful for merchants so be cautious about using them.
   - fileName: BannerCritical.vue
+    frameHeight: 350
     title: Critical
     description: Use to communicate problems that have to be resolved immediately for merchants to complete a task. For example, you will show this banner for orders with high fraud risk. Seeing these banners can be stressful for merchants so be cautious about using them.
   - fileName: BannerWithFocus.vue
+    frameHeight: 350
     title: With focus
     description: Banner can programmatically receive focus. Use this functionality to draw the merchant’s attention to the banner.
   - fileName: BannerInCard.vue
+    frameHeight: 350
     title: In a card
     description: Banners inside of cards render with less spacing and a pared-back design to fit within a content context.
 ---
