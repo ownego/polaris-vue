@@ -23,7 +23,7 @@ import { ref } from 'vue';
 import DuplicateIcon from '@icons/DuplicateIcon.svg';
 import ArchiveIcon from '@icons/ArchiveIcon.svg';
 
-const active = ref(false);
+const active = ref(true);
 
 const toggleActive = () => {
   active.value = !active.value;
