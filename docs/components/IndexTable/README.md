@@ -18,7 +18,7 @@ examples:
   - fileName: SmallScreen.vue
     title: Small screen
     description: A small screen index table with simple items and no bulk actions, sorting, or filtering.
-  - fileName: WithCondensed.vue
+  - fileName: SmallScreenWithElements.vue
     title: Small screen with saved views, search, filtering, and sorting
     description: A small screen index table with saved views, search, filtering, sorting, and bulk actions.
   - fileName: WithEmptyState.vue

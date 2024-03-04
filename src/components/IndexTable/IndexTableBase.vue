@@ -31,7 +31,11 @@ div(:class="styles.IndexTable")
             div(:class="styles.StickyTableColumnHeader")
               component(:is="stickyColumnHeader")
             div(:class="styles.StickyTableHeadings", ref="stickyHeaderElement")
-              component(:is="stickyHeadingsMarkup")
+              component(
+                v-for="heading, index in headings",
+                :key="getHeadingKey(heading)",
+                :is="renderStickyHeading(heading, index)",
+              )
 
           component(
             v-if="!condensed",
@@ -689,8 +693,6 @@ const loadingMarkup = computed(() => {
   );
 });
 
-const stickyHeadingsMarkup = computed(() => props.headings.map(renderStickyHeading));
-
 const bulkActionsMarkup = computed(() => (
   shouldShowActions.value && !condensed?.value
   ? h(
@@ -1034,7 +1036,6 @@ function renderStickyHeading(heading: IndexTableHeading, index: number) {
     'div',
     {
       class: stickyHeadingClassName,
-      key: getHeadingKey(heading),
       style: headingStyle,
       'data-index-table-sticky-heading': true,
     },
