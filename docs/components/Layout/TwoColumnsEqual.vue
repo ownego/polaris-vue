@@ -9,7 +9,7 @@
           </Text>
         </LegacyCardSection>
         <LegacyCardSection title="Items">
-          <ResourceList :resourceName="{singular: 'product', plural: 'products'}">
+          <ResourceList :resourceName="{singular: 'product', plural: 'products'}" :items="resourceItems">
             <ResourceItem
               v-for="item in resourceItems"
               :key="item.id"
@@ -42,7 +42,7 @@
           </Text>
         </LegacyCardSection>
         <LegacyCardSection title="Items">
-          <ResourceList :resourceName="{singular: 'product', plural: 'products'}">
+          <ResourceList :resourceName="{singular: 'product', plural: 'products'}" :items="resourceItems">
             <ResourceItem
               v-for="item in resourceItemsSecond"
               :key="item.id"
