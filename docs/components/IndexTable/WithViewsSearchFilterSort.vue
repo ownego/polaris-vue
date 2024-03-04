@@ -17,7 +17,7 @@
     :filters="filters"
     :appliedFilters="appliedFilters"
     :mode="mode"
-    :setMode="setMode"
+    @setMode="setMode"
     @query-change="handleFiltersQueryChange"
     @query-clear="handleQueryValueRemove"
     @sort="handleFiltersSort"
@@ -68,8 +68,8 @@
 
 <script setup lang="ts">
 import { computed, h, ref, resolveComponent } from 'vue';
-// import { useIndexResourceState, useBreakpoints } from '@ownego/polaris-vue';
-import { useIndexResourceState } from '@/polaris-vue';
+// import { useIndexResourceState, useSetIndexFiltersMode } from '@ownego/polaris-vue';
+import { useIndexResourceState, useSetIndexFiltersMode } from '@/polaris-vue';
 
 const sleep = (ms: number) =>
   new Promise((resolve) => setTimeout(resolve, ms));
@@ -84,17 +84,12 @@ const itemStrings = ref([
 ]);
 
 const selected = ref(0);
-const sortSelected = ref('order asc');
+const sortSelected = ref(['order asc']);
 const accountStatus = ref<string[]>();
 const moneySpent = ref<[number, number]>();
 const taggedWith = ref('');
 const queryValue = ref('');
-const mode = ref('DEFAULT');
-// const { mode, setMode } = useSetIndexFiltersMode();
-
-const setMode = (newMode: string) => {
-  mode.value = newMode;
-};
+const { mode, setMode } = useSetIndexFiltersMode();
 
 const onHandleCancel = () => {};
 
@@ -173,7 +168,7 @@ const filterChoices = [
 
 const filters = [
   {
-    key: 'accountStatus',
+    name: 'accountStatus',
     label: 'Account status',
     filter: () => h(
       resolveComponent('ChoiceList'),
@@ -181,7 +176,7 @@ const filters = [
         title: 'Account status',
         titleHidden: true,
         choices: filterChoices,
-        selected: accountStatus || [],
+        selected: accountStatus.value || [],
         onChange: handleAccountStatusChange,
         allowMultiple: true,
       },
@@ -189,7 +184,7 @@ const filters = [
     shortcut: true,
   },
   {
-    key: 'taggedWith',
+    name: 'taggedWith',
     label: 'Tagged with',
     filter: () => h(
       resolveComponent('TextField'),
@@ -204,7 +199,7 @@ const filters = [
     shortcut: true,
   },
   {
-    key: 'moneySpent',
+    name: 'moneySpent',
     label: 'Money spent',
     filter: () => h(
       resolveComponent('RangeSlider'),
@@ -333,8 +328,8 @@ const onCreateNewView = async (value: string) => {
 };
 
 // Filter actions
-const handleFiltersSort = (index: number) => {
-  sortSelected.value = sortOptions[index].value;
+const handleFiltersSort = (value: string[]) => {
+  sortSelected.value = value;
 };
 
 const handleFiltersSelect = (index: number) => {

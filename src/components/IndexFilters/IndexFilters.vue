@@ -117,10 +117,10 @@ import { ref, computed, getCurrentInstance } from 'vue';
 import useI18n from '@/use/useI18n';
 import { useToggle } from '@/use/useToggle';
 import { useIsSticky } from '@/use/useIsSticky';
+import { useBreakpoints } from '@/use/useBreakpoints';
 import { classNames } from '@/utilities/css';
 import { useEventListener } from '@/utilities/use-event-listener';
 import { useOnValueChange } from '@/utilities/use-on-value-change';
-import { useBreakpoints } from '@/utilities/breakpoints';
 import {
   InlineStack,
   Spinner,

@@ -140,7 +140,7 @@ import {
   h,
   resolveComponent,
 } from 'vue';
-import { useBreakpoints } from '@/utilities/breakpoints';
+import { useBreakpoints } from '@/use/useBreakpoints';
 import useI18n from '@/use/useI18n';
 import type { VueNode } from '@/utilities/types';
 import { useHasSlot } from '@/use/useHasSlot';

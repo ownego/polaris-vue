@@ -120,7 +120,7 @@ import {
   resolveComponent,
 } from 'vue';
 import useI18n from '@/use/useI18n';
-import { useBreakpoints } from '@/utilities/breakpoints';
+import { useBreakpoints } from '@/use/useBreakpoints';
 import { focusFirstFocusableNode, handleMouseUpByBlurring } from '@/utilities/focus';
 import { classNames } from '@/utilities/css';
 import { useHasSlot } from '@/use/useHasSlot';
