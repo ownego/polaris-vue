@@ -3,7 +3,7 @@ a(v-if="url && disabled", v-bind="commonProps")
   slot
 UnstyledLink(
   v-else-if="url && !disabled",
-  v-bind="{ ...interactiveProps, ...attrs }",
+  v-bind="{ ...attrs, ...interactiveProps }",
   :url="url",
   :external="external",
   :download="download",
@@ -14,7 +14,7 @@ UnstyledLink(
   slot
 button(
   v-else,
-  v-bind="{ ...interactiveProps, ...attrs }",
+  v-bind="{ ...attrs, ...interactiveProps, }",
   :aria-disabled="disabled",
   :disabled="disabled",
   :type="submit ? 'submit' : 'button'",
