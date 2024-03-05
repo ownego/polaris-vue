@@ -3,7 +3,7 @@ div(:class="classname", ref="containerNode")
   Tab(
     v-for="tab, index in tabs",
     :measuring="true",
-    :key="`$${tab.id}Hidden`",
+    :key="`${tab.id}Hidden`",
     :id="`${tab.id}`",
     :siblingTabHasFocus="siblingTabHasFocus",
     :focused="index === tabToFocus",
@@ -15,7 +15,7 @@ div(:class="classname", ref="containerNode")
 </template>
 
 <script setup lang="ts">
-import { computed, ref, watch } from 'vue';
+import { computed, onMounted, ref } from 'vue';
 import type { VueNode } from '@/utilities/types';
 import { classNames } from '@/utilities/css';
 import { useEventListener } from '@/utilities/use-event-listener';
@@ -30,7 +30,7 @@ export interface TabMeasurerProps {
   tabs: Omit<TabProps, 'onToggleModal' | 'onTogglePopover'>[];
 }
 
-const props = defineProps<TabMeasurerProps>();
+defineProps<TabMeasurerProps>();
 
 const slots = defineSlots<{
   /** activator elements to display inside the tag*/
@@ -73,12 +73,9 @@ const handleMeasurement = () => {
   });
 };
 
-watch(
-  () => [props.tabs],
-  () => {
-    handleMeasurement();
-  },
-);
+onMounted(() => {
+  handleMeasurement();
+});
 
 useEventListener('resize', handleMeasurement);
 </script>

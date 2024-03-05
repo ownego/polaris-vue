@@ -23,6 +23,7 @@ template(v-if="hasSlot(slots.icon)")
       @close="handleModalClose",
       @click-primary-action="handleSaveRenameModal",
     )
+    div {{ i18n.translate('Polaris.Tabs.Tab.copy', { name: content }) }}
     DuplicateModal(
       v-if="duplicateAction",
       :open="activeModalType === 'duplicate'",
@@ -34,7 +35,6 @@ template(v-if="hasSlot(slots.icon)")
     )
     Modal(
       v-if="deleteAction",
-      :instant="true",
       :open="activeModalType === 'delete'",
       :primaryAction=`{
         content: i18n.translate('Polaris.Tabs.Tab.deleteModal.delete'),
@@ -91,7 +91,6 @@ li(
     )
     Modal(
       v-if="deleteAction",
-      :instant="true",
       :open="activeModalType === 'delete'",
       :primaryAction=`{
         content: i18n.translate('Polaris.Tabs.Tab.deleteModal.delete'),
@@ -120,7 +119,7 @@ import {
   resolveComponent,
 } from 'vue';
 import useI18n from '@/use/useI18n';
-import { useBreakpoints } from '@/utilities/breakpoints';
+import { useBreakpoints } from '@/use/useBreakpoints';
 import { focusFirstFocusableNode, handleMouseUpByBlurring } from '@/utilities/focus';
 import { classNames } from '@/utilities/css';
 import { useHasSlot } from '@/use/useHasSlot';
@@ -429,5 +428,6 @@ watch(
 
     wasSelected.value = props.selected;
   },
+  { immediate: true },
 );
 </script>

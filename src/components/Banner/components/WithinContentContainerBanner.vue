@@ -1,9 +1,9 @@
 <template lang="pug">
 Box(
   width="100%",
+  borderRadius="200",
   :background="backgroundColor",
   :padding="200",
-  :borderRadius="200",
   :color="textColor",
 )
   InlineStack(

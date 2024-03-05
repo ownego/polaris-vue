@@ -1,8 +1,8 @@
 <template lang="pug">
 Box(
   width="100%",
+  borderRadius="300",
   :padding="300",
-  :borderRadius="300",
 )
   InlineStack(
     align="space-between",
@@ -17,8 +17,8 @@ Box(
       )
         div(v-if="bannerIcon", ref="iconNode")
           Box(
+            borderRadius="200",
             :background="backgroundColor",
-            :borderRadius="200",
             :padding="100",
           )
             component(:is="bannerIcon")

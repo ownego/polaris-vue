@@ -1,6 +1,5 @@
 <template lang="pug">
 Modal(
-  :instant="true",
   :open="open",
   :primaryAction="primaryAction",
   :secondaryActions="secondaryActions",
@@ -19,7 +18,6 @@ Modal(
             :maxLength="MAX_VIEW_NAME_LENGTH",
             :showCharacterCount="true",
             :error="errorMessage",
-            @change="handleChange",
           )
 </template>
 
@@ -43,26 +41,35 @@ const props = defineProps<DuplicateModalProps>();
 
 const emits = defineEmits<{
   (e: 'close'): void;
-  (e: 'click-primary-action', value: string): Promise<boolean>;
+  (e: 'click-primary-action', value: string): Promise<void>;
   (e: 'click-secondary-action'): void;
+  (e: 'update:modelValue', value: string): void;
 }>();
 
 const i18n = useI18n();
-const model = defineModel<string>({
-  default: '',
-});
 const container = ref<HTMLDivElement | null>(null);
+const modalValue = ref<string>('');
+
+const model = computed({
+  get() {
+    return props.open ? props.name.slice(0, MAX_VIEW_NAME_LENGTH) : '';
+  },
+  set(value: string) {
+    modalValue.value = value;
+    emits('update:modelValue', value);
+  },
+});
 
 const hasSameNameError = computed(() => props.viewNames?.some(
-  (viewName) => viewName.trim().toLowerCase() === model.value.trim().toLowerCase(),
+  (viewName) => viewName.trim().toLowerCase() === modalValue.value.trim().toLowerCase(),
 ));
 
-const isPrimaryActionDisabled = computed(() =>
-  props.isModalLoading ||
-  hasSameNameError.value ||
-  !model.value ||
-  model.value.length > MAX_VIEW_NAME_LENGTH,
-);
+const isPrimaryActionDisabled = computed(() => {
+  return props.isModalLoading ||
+    hasSameNameError.value ||
+    !modalValue.value ||
+    modalValue.value.length > MAX_VIEW_NAME_LENGTH;
+});
 
 const primaryAction = computed(() => ({
   content: i18n.translate('Polaris.Tabs.DuplicateModal.create'),
@@ -81,7 +88,7 @@ const errorMessage = computed(() =>
   hasSameNameError.value
     ? i18n.translate(
       'Polaris.Tabs.DuplicateModal.errors.sameName',
-      { name: model.value },
+      { name: modalValue.value },
     )
     : undefined,
 );
@@ -96,27 +103,17 @@ watch(
       focusFirstFocusableNode(container.value);
     }
   },
-);
-
-watch(
-  () => [props.name, props.open],
-  () => {
-    if (props.open) {
-      model.value = props.name.slice(0, MAX_VIEW_NAME_LENGTH);
-    }
+  {
+    flush: 'post',
   },
 );
-
-const handleChange = (newValue: string) => {
-  model.value = newValue;
-};
 
 const handlePrimaryAction = async () => {
   if (isPrimaryActionDisabled.value) {
     return;
   }
 
-  await emits('click-primary-action', model.value);
+  await emits('click-primary-action', modalValue.value);
   model.value = '';
   emits('close');
 }
