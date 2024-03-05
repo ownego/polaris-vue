@@ -38,7 +38,7 @@
     "gen:init": "npm install -g ts-node && chmod +x build/gen-meta.ts build/gen-docs-content.ts build/gen-docs-types.ts",
     "gen:docs": "yarn gen:meta && yarn gen:docs-content && yarn gen:docs-types",
     "docs:dev": "vitepress dev docs",
-    "docs:build": "yarn gen:docs && vitepress build docs && yarn docs:assets && mv docs/dist documentations",
+    "docs:build": "yarn gen:docs && vitepress build docs && yarn docs:assets",
     "docs:preview": "yarn gen:docs && vitepress preview docs && yarn docs:assets",
     "docs:assets": "cp -r docs/assets/** docs/dist/assets"
   },
