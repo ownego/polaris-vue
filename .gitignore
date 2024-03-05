@@ -32,7 +32,6 @@ Demo.vue
 docs/.vitepress/.temp
 docs/.vitepress/dist
 docs/.vitepress/cache
-docs/dist
 docs/assets/components-meta
 docs/assets/components-content
 docs/assets/components-types
