@@ -105,7 +105,7 @@ const transitionFilterStyles = {
 
 type TransitionStatus = "entering" | "entered" | "exiting" | "exited" | "unmounted";
 
-interface FiltersProps {
+export type FiltersProps = {
   /** Currently entered text in the query field */
   queryValue?: string;
   /** Placeholder text for the query field. */
@@ -135,7 +135,7 @@ interface FiltersProps {
   closeOnChildOverlayClick?: boolean;
   /** @deprecated The name of the currently selected view */
   selectedViewName?: string;
-}
+};
 
 type FiltersEvents = {
   /** Callback when the query field is changed. */

@@ -1,4 +1,5 @@
 import type { Width, Padding, BorderRadius } from '../../types';
+import type { PositionedOverlayProps } from '@/components/PositionedOverlay/PositionedOverlay.vue';
 
 export type TooltipOverlayBaseProps = {
   id: string;
@@ -12,3 +13,8 @@ export type TooltipOverlayBaseProps = {
   onClose?(): void;
   instant?: boolean;
 };
+
+export type TooltipOverlayProps = TooltipOverlayBaseProps & {
+  preventInteraction?: PositionedOverlayProps['preventInteraction'];
+  preferredPosition?: PositionedOverlayProps['preferredPosition'];
+}
