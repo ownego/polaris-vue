@@ -182,9 +182,9 @@ const groupedProducts = groupRowsByGroupKey(
   (color) => `color--${color.toLowerCase()}`,
 );
 
-const isSelected = (order) => {
+const isSelected = (order: ProductGroup) => {
   const { products } = order;
-  let selected: IndexTableRowProps['selected'] = false;
+  let selected: boolean | 'indeterminate' = false;
 
   const someProductsSelected = products.some(({id}) =>
     selectedResources.value.includes(id),
@@ -203,11 +203,11 @@ const isSelected = (order) => {
   return selected;
 };
 
-const rowRange = (groupedProduct) => {
+const rowRange = (groupedProduct: ProductGroup) => {
   const { products } = groupedProduct;
 
   const selectableRows = rows.filter(({disabled}) => !disabled);
-  const results: IndexTableRowProps['selectionRange'] = [
+  const results = [
     selectableRows.findIndex((row) => row.id === products[0].id),
     selectableRows.findIndex(
       (row) => row.id === products[products.length - 1].id,

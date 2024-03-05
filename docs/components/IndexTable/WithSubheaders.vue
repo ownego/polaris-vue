@@ -9,28 +9,28 @@
     @selection-change="handleSelectionChange"
   >
     <template
-      v-for="orderDate, index in Object.keys(orders)"
+      v-for="orderDate, index in Object.keys(orderRows)"
       :key="index"
     >
       <IndexTableRow
         rowType="subheader"
-        :selectionRange="childRowRange(orders[orderDate])"
-        :id="orders[orderDate].id"
-        :position="orders[orderDate].position"
-        :selected="isSelected(orders[orderDate])"
+        :selectionRange="childRowRange(orderRows[orderDate])"
+        :id="orderRows[orderDate].id"
+        :position="orderRows[orderDate].position"
+        :selected="isSelected(orderRows[orderDate])"
         :disabled="index === 1"
       >
         <IndexTableCell
           :colSpan="4"
           scope="colgroup"
           as="th"
-          :id="orders[orderDate].id"
+          :id="orderRows[orderDate].id"
         >
           {{`Last order placed: ${orderDate}`}}
         </IndexTableCell>
       </IndexTableRow>
       <IndexTableRow
-        v-for="{id, name, location, orders, amountSpent, position, disabled}, rowIndex in orders[orderDate].customers"
+        v-for="{id, name, location, orders, amountSpent, position, disabled}, rowIndex in orderRows[orderDate].customers"
         :key="rowIndex"
         :id="id"
         :position="position"
@@ -187,11 +187,11 @@ const resourceName = {
 const {selectedResources, allResourcesSelected, handleSelectionChange} =
   useIndexResourceState(rows, {resourceFilter: ({disabled}) => !disabled});
 
-const orders = groupRowsByLastOrderDate();
+const orderRows = groupRowsByLastOrderDate();
 
-const isSelected = (order) => {
+const isSelected = (order: CustomerGroup) => {
   const { customers } = order;
-  let selected = false;
+  let selected: boolean | 'indeterminate' = false;
 
   const someCustomersSelected = customers.some(({id}) =>
     selectedResources.value.includes(id),
@@ -210,11 +210,11 @@ const isSelected = (order) => {
   return selected;
 };
 
-const childRowRange = (order) => {
+const childRowRange = (order: CustomerGroup) => {
   const { customers } = order;
 
   const selectableRows = rows.filter(({disabled}) => !disabled);
-  const results: IndexTableRowProps['selectionRange'] = [
+  const results = [
     selectableRows.findIndex((row) => row.id === customers[0].id),
     selectableRows.findIndex(
       (row) => row.id === customers[customers.length - 1].id,

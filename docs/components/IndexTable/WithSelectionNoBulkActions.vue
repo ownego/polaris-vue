@@ -44,7 +44,6 @@
 </template>
 
 <script setup lang="ts">
-import { ref } from 'vue';
 // import { useIndexResourceState, useBreakpoints } from '@ownego/polaris-vue';
 import { useIndexResourceState, useBreakpoints } from '@/polaris-vue';
 
