@@ -28,22 +28,6 @@
       "schema": "string"
     },
     {
-      "name": "tone",
-      "type": "\"magic\" | undefined",
-      "required": false,
-      "description": "Indicates the tone of the choice",
-      "tags": [],
-      "declarations": [],
-      "schema": {
-        "kind": "enum",
-        "type": "\"magic\" | undefined",
-        "schema": [
-          "undefined",
-          "\"magic\""
-        ]
-      }
-    },
-    {
       "name": "error",
       "type": "boolean | Error | undefined",
       "required": false,
@@ -73,6 +57,22 @@
               }
             ]
           }
+        ]
+      }
+    },
+    {
+      "name": "tone",
+      "type": "\"magic\" | undefined",
+      "required": false,
+      "description": "Indicates the tone of the choice",
+      "tags": [],
+      "declarations": [],
+      "schema": {
+        "kind": "enum",
+        "type": "\"magic\" | undefined",
+        "schema": [
+          "undefined",
+          "\"magic\""
         ]
       }
     },

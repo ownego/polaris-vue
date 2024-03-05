@@ -133,6 +133,22 @@
       }
     },
     {
+      "name": "accessibilityLabel",
+      "type": "string | undefined",
+      "required": false,
+      "description": "Visually hidden text for screen readers",
+      "tags": [],
+      "declarations": [],
+      "schema": {
+        "kind": "enum",
+        "type": "string | undefined",
+        "schema": [
+          "undefined",
+          "string"
+        ]
+      }
+    },
+    {
       "name": "tone",
       "type": "\"success\" | \"critical\" | undefined",
       "required": false,
@@ -146,22 +162,6 @@
           "undefined",
           "\"success\"",
           "\"critical\""
-        ]
-      }
-    },
-    {
-      "name": "accessibilityLabel",
-      "type": "string | undefined",
-      "required": false,
-      "description": "Visually hidden text for screen readers",
-      "tags": [],
-      "declarations": [],
-      "schema": {
-        "kind": "enum",
-        "type": "string | undefined",
-        "schema": [
-          "undefined",
-          "string"
         ]
       }
     },

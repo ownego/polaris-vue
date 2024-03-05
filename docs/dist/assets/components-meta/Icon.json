@@ -1,40 +1,6 @@
 {
   "props": [
     {
-      "name": "tone",
-      "type": "Tone | undefined",
-      "required": false,
-      "description": "Set the color for the SVG fill",
-      "tags": [],
-      "declarations": [],
-      "schema": {
-        "kind": "enum",
-        "type": "Tone | undefined",
-        "schema": [
-          "undefined",
-          "\"info\"",
-          "\"success\"",
-          "\"warning\"",
-          "\"critical\"",
-          "\"primary\"",
-          "\"magic\"",
-          "\"base\"",
-          "\"interactive\"",
-          "\"inherit\"",
-          "\"subdued\"",
-          "\"caution\"",
-          "\"emphasis\"",
-          "\"textCaution\"",
-          "\"textWarning\"",
-          "\"textCritical\"",
-          "\"textInfo\"",
-          "\"textSuccess\"",
-          "\"textPrimary\"",
-          "\"textMagic\""
-        ]
-      }
-    },
-    {
       "name": "source",
       "type": "IconSource",
       "required": true,
@@ -81,6 +47,40 @@
         "schema": [
           "undefined",
           "string"
+        ]
+      }
+    },
+    {
+      "name": "tone",
+      "type": "Tone | undefined",
+      "required": false,
+      "description": "Set the color for the SVG fill",
+      "tags": [],
+      "declarations": [],
+      "schema": {
+        "kind": "enum",
+        "type": "Tone | undefined",
+        "schema": [
+          "undefined",
+          "\"info\"",
+          "\"success\"",
+          "\"warning\"",
+          "\"critical\"",
+          "\"primary\"",
+          "\"magic\"",
+          "\"base\"",
+          "\"interactive\"",
+          "\"inherit\"",
+          "\"subdued\"",
+          "\"caution\"",
+          "\"emphasis\"",
+          "\"textCaution\"",
+          "\"textWarning\"",
+          "\"textCritical\"",
+          "\"textInfo\"",
+          "\"textSuccess\"",
+          "\"textPrimary\"",
+          "\"textMagic\""
         ]
       }
     }

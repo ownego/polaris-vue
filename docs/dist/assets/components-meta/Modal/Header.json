@@ -1,15 +1,6 @@
 {
   "props": [
     {
-      "name": "id",
-      "type": "string",
-      "required": true,
-      "description": "",
-      "tags": [],
-      "declarations": [],
-      "schema": "string"
-    },
-    {
       "name": "closing",
       "type": "boolean",
       "required": true,
@@ -24,6 +15,15 @@
           "true"
         ]
       }
+    },
+    {
+      "name": "id",
+      "type": "string",
+      "required": true,
+      "description": "",
+      "tags": [],
+      "declarations": [],
+      "schema": "string"
     },
     {
       "name": "titleHidden",

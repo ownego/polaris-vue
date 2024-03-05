@@ -44,6 +44,15 @@
       }
     },
     {
+      "name": "section",
+      "type": "number",
+      "required": true,
+      "description": "",
+      "tags": [],
+      "declarations": [],
+      "schema": "number"
+    },
+    {
       "name": "disabled",
       "type": "boolean | undefined",
       "required": false,
@@ -59,15 +68,6 @@
           "true"
         ]
       }
-    },
-    {
-      "name": "section",
-      "type": "number",
-      "required": true,
-      "description": "",
-      "tags": [],
-      "declarations": [],
-      "schema": "number"
     },
     {
       "name": "value",

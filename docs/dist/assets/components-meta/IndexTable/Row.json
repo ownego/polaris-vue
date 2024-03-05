@@ -51,25 +51,6 @@
       }
     },
     {
-      "name": "tone",
-      "type": "RowStatus | undefined",
-      "required": false,
-      "description": "Whether the row should visually indicate its status with a background color",
-      "tags": [],
-      "declarations": [],
-      "schema": {
-        "kind": "enum",
-        "type": "RowStatus | undefined",
-        "schema": [
-          "undefined",
-          "\"success\"",
-          "\"warning\"",
-          "\"critical\"",
-          "\"subdued\""
-        ]
-      }
-    },
-    {
       "name": "accessibilityLabel",
       "type": "string | undefined",
       "required": false,
@@ -91,6 +72,34 @@
       }
     },
     {
+      "name": "tone",
+      "type": "RowStatus | undefined",
+      "required": false,
+      "description": "Whether the row should visually indicate its status with a background color",
+      "tags": [],
+      "declarations": [],
+      "schema": {
+        "kind": "enum",
+        "type": "RowStatus | undefined",
+        "schema": [
+          "undefined",
+          "\"success\"",
+          "\"warning\"",
+          "\"critical\"",
+          "\"subdued\""
+        ]
+      }
+    },
+    {
+      "name": "position",
+      "type": "number",
+      "required": true,
+      "description": "The zero-indexed position of the row. Used for Shift key multi-selection",
+      "tags": [],
+      "declarations": [],
+      "schema": "number"
+    },
+    {
       "name": "disabled",
       "type": "boolean | undefined",
       "required": false,
@@ -106,15 +115,6 @@
           "true"
         ]
       }
-    },
-    {
-      "name": "position",
-      "type": "number",
-      "required": true,
-      "description": "The zero-indexed position of the row. Used for Shift key multi-selection",
-      "tags": [],
-      "declarations": [],
-      "schema": "number"
     },
     {
       "name": "selectionRange",

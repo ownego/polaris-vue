@@ -14,8 +14,8 @@
           "undefined",
           "\"number\"",
           "\"search\"",
-          "\"url\"",
           "\"text\"",
+          "\"url\"",
           "\"month\"",
           "\"time\"",
           "\"email\"",
@@ -123,22 +123,6 @@
       }
     },
     {
-      "name": "tone",
-      "type": "\"magic\" | undefined",
-      "required": false,
-      "description": "Indicates the tone of the text field",
-      "tags": [],
-      "declarations": [],
-      "schema": {
-        "kind": "enum",
-        "type": "\"magic\" | undefined",
-        "schema": [
-          "undefined",
-          "\"magic\""
-        ]
-      }
-    },
-    {
       "name": "error",
       "type": "boolean | Error | undefined",
       "required": false,
@@ -168,6 +152,22 @@
               }
             ]
           }
+        ]
+      }
+    },
+    {
+      "name": "tone",
+      "type": "\"magic\" | undefined",
+      "required": false,
+      "description": "Indicates the tone of the text field",
+      "tags": [],
+      "declarations": [],
+      "schema": {
+        "kind": "enum",
+        "type": "\"magic\" | undefined",
+        "schema": [
+          "undefined",
+          "\"magic\""
         ]
       }
     },
@@ -855,8 +855,8 @@
         "schema": [
           "undefined",
           "\"search\"",
-          "\"url\"",
           "\"text\"",
+          "\"url\"",
           "\"none\"",
           "\"numeric\"",
           "\"email\"",
