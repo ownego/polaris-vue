@@ -79,6 +79,7 @@ import { computed, h, ref } from 'vue';
 import MarkdownIt from 'markdown-it';
 import { useMeta } from '../use/useMeta';
 import type { ComponentPropsMeta } from '../types';
+import { withBase } from 'vitepress';
 
 const {
   cProps,
@@ -142,8 +143,8 @@ const expandType = async (t: string, propName: string) => {
 
 function fetchType(type: string, isExtra?: boolean) {
   const url = isExtra
-    ? `/assets/extra-types/${type}.json`
-    : `/assets/components-types/${type}.json`;
+    ? withBase(`/assets/extra-types/${type}.json`)
+    : withBase(`/assets/components-types/${type}.json`);
 
   return new Promise((resolve, reject) => {
     fetch(url, {

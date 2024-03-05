@@ -12,6 +12,7 @@ import { exampleParser } from '../script/parser';
 
 // https://vitepress.dev/reference/site-config
 export default defineConfig({
+  base: '/polaris-vue/',
   outDir: 'dist',
   cleanUrls: true,
 

@@ -34,6 +34,7 @@
 
 <script setup lang="ts">
 import { computed, onMounted, ref } from 'vue';
+import { withBase } from 'vitepress';
 import MarkdownIt from 'markdown-it';
 import { useMeta } from '../use/useMeta';
 
@@ -96,7 +97,7 @@ const serializeParams = (params: Record<string, any>) => {
 };
 
 function fetchTypes(file: string): Promise<Record<string, any> | undefined> {
-  const url = `/assets/components-types/${file}.json`;
+  const url = withBase(`/assets/components-types/${file}.json`);
 
   return new Promise((resolve, reject) => {
     fetch(url, {

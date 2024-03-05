@@ -5,7 +5,7 @@
 
 <script setup lang="ts">
 import { computed, onMounted, ref } from 'vue';
-import { useData } from 'vitepress';
+import { useData, withBase } from 'vitepress';
 import MarkdownIt from 'markdown-it';
 
 const { page } = useData();
@@ -32,7 +32,7 @@ onMounted(async () => {
 });
 
 function fetchContent(): Promise<Record<string, any> | undefined> {
-  const url = `/assets/components-content/${component.value}.json`;
+  const url = withBase(`/assets/components-content/${component.value}.json`);
 
   return new Promise((resolve, reject) => {
     fetch(url, {

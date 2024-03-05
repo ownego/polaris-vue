@@ -2,7 +2,7 @@ import fs from 'fs';
 import { categoryList } from '../category/types';
 
 function generateSideBarCategory() {
-  const sidebar = [];
+  const sidebar: Record<string, any>[] = [];
 
   categoryList.forEach(category => {
     const categoryName = category.replace(/\s/g, '-').toLowerCase();
@@ -33,6 +33,8 @@ export function generateSideBar() {
 
     const regex = /^(?<!\n)-{3}[\s\S]*?title:\s*(.*)[\s\S]*?category:\s*(.*)[\s\S]*?-{3}/;
     const matches = content.match(regex);
+
+    if (!matches || !matches.length) return;
 
     const title = matches[1] || component;
     const category = matches[2] || 'General';
