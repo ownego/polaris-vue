@@ -1,8 +1,8 @@
 {
-  "filePath": "src/components/ButtonGroup/types.ts",
+  "filePath": "src/components/InlineStack/types.ts",
   "kind": "TypeAliasDeclaration",
   "name": "Gap",
-  "value": "'extraTight' | 'tight' | 'loose'",
+  "value": "ResponsiveProp<SpaceScale>",
   "description": "",
   "members": []
 }

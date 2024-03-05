@@ -91,15 +91,6 @@
       }
     },
     {
-      "name": "position",
-      "type": "number",
-      "required": true,
-      "description": "The zero-indexed position of the row. Used for Shift key multi-selection",
-      "tags": [],
-      "declarations": [],
-      "schema": "number"
-    },
-    {
       "name": "disabled",
       "type": "boolean | undefined",
       "required": false,
@@ -115,6 +106,15 @@
           "true"
         ]
       }
+    },
+    {
+      "name": "position",
+      "type": "number",
+      "required": true,
+      "description": "The zero-indexed position of the row. Used for Shift key multi-selection",
+      "tags": [],
+      "declarations": [],
+      "schema": "number"
     },
     {
       "name": "selectionRange",

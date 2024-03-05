@@ -17,6 +17,139 @@
       }
     },
     {
+      "name": "sections",
+      "type": "SectionDescriptor[] | undefined",
+      "required": false,
+      "description": "Sections containing a header and related options",
+      "tags": [],
+      "declarations": [],
+      "schema": {
+        "kind": "enum",
+        "type": "SectionDescriptor[] | undefined",
+        "schema": [
+          "undefined",
+          {
+            "kind": "array",
+            "type": "SectionDescriptor[]",
+            "schema": [
+              {
+                "kind": "object",
+                "type": "SectionDescriptor",
+                "schema": {
+                  "options": {
+                    "name": "options",
+                    "global": false,
+                    "description": "Collection of options within the section",
+                    "tags": [],
+                    "required": true,
+                    "type": "OptionDescriptor[]",
+                    "declarations": [],
+                    "schema": {
+                      "kind": "array",
+                      "type": "OptionDescriptor[]",
+                      "schema": [
+                        {
+                          "kind": "object",
+                          "type": "OptionDescriptor",
+                          "schema": {
+                            "value": {
+                              "name": "value",
+                              "global": false,
+                              "description": "Value of the option",
+                              "tags": [],
+                              "required": true,
+                              "type": "string",
+                              "declarations": [],
+                              "schema": "string"
+                            },
+                            "disabled": {
+                              "name": "disabled",
+                              "global": false,
+                              "description": "Whether the option is disabled or not",
+                              "tags": [],
+                              "required": false,
+                              "type": "boolean | undefined",
+                              "declarations": [],
+                              "schema": {
+                                "kind": "enum",
+                                "type": "boolean | undefined",
+                                "schema": [
+                                  "undefined",
+                                  "false",
+                                  "true"
+                                ]
+                              }
+                            },
+                            "active": {
+                              "name": "active",
+                              "global": false,
+                              "description": "Whether the option is active or not",
+                              "tags": [],
+                              "required": false,
+                              "type": "boolean | undefined",
+                              "declarations": [],
+                              "schema": "boolean | undefined"
+                            },
+                            "id": {
+                              "name": "id",
+                              "global": false,
+                              "description": "Unique identifier for the option",
+                              "tags": [],
+                              "required": false,
+                              "type": "string | undefined",
+                              "declarations": [],
+                              "schema": {
+                                "kind": "enum",
+                                "type": "string | undefined",
+                                "schema": [
+                                  "undefined",
+                                  "string"
+                                ]
+                              }
+                            },
+                            "label": {
+                              "name": "label",
+                              "global": false,
+                              "description": "Display label for the option",
+                              "tags": [],
+                              "required": true,
+                              "type": "string",
+                              "declarations": [],
+                              "schema": "string"
+                            },
+                            "media": {
+                              "name": "media",
+                              "global": false,
+                              "description": "Media to display to the left of the option content",
+                              "tags": [],
+                              "required": false,
+                              "type": "VueNode",
+                              "declarations": [],
+                              "schema": "VueNode"
+                            }
+                          }
+                        }
+                      ]
+                    }
+                  },
+                  "title": {
+                    "name": "title",
+                    "global": false,
+                    "description": "Section title",
+                    "tags": [],
+                    "required": false,
+                    "type": "string | undefined",
+                    "declarations": [],
+                    "schema": "string | undefined"
+                  }
+                }
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
       "name": "id",
       "type": "string | undefined",
       "required": false,
@@ -163,139 +296,6 @@
           "undefined",
           "false",
           "true"
-        ]
-      }
-    },
-    {
-      "name": "sections",
-      "type": "SectionDescriptor[] | undefined",
-      "required": false,
-      "description": "Sections containing a header and related options",
-      "tags": [],
-      "declarations": [],
-      "schema": {
-        "kind": "enum",
-        "type": "SectionDescriptor[] | undefined",
-        "schema": [
-          "undefined",
-          {
-            "kind": "array",
-            "type": "SectionDescriptor[]",
-            "schema": [
-              {
-                "kind": "object",
-                "type": "SectionDescriptor",
-                "schema": {
-                  "options": {
-                    "name": "options",
-                    "global": false,
-                    "description": "Collection of options within the section",
-                    "tags": [],
-                    "required": true,
-                    "type": "OptionDescriptor[]",
-                    "declarations": [],
-                    "schema": {
-                      "kind": "array",
-                      "type": "OptionDescriptor[]",
-                      "schema": [
-                        {
-                          "kind": "object",
-                          "type": "OptionDescriptor",
-                          "schema": {
-                            "value": {
-                              "name": "value",
-                              "global": false,
-                              "description": "Value of the option",
-                              "tags": [],
-                              "required": true,
-                              "type": "string",
-                              "declarations": [],
-                              "schema": "string"
-                            },
-                            "disabled": {
-                              "name": "disabled",
-                              "global": false,
-                              "description": "Whether the option is disabled or not",
-                              "tags": [],
-                              "required": false,
-                              "type": "boolean | undefined",
-                              "declarations": [],
-                              "schema": {
-                                "kind": "enum",
-                                "type": "boolean | undefined",
-                                "schema": [
-                                  "undefined",
-                                  "false",
-                                  "true"
-                                ]
-                              }
-                            },
-                            "active": {
-                              "name": "active",
-                              "global": false,
-                              "description": "Whether the option is active or not",
-                              "tags": [],
-                              "required": false,
-                              "type": "boolean | undefined",
-                              "declarations": [],
-                              "schema": "boolean | undefined"
-                            },
-                            "id": {
-                              "name": "id",
-                              "global": false,
-                              "description": "Unique identifier for the option",
-                              "tags": [],
-                              "required": false,
-                              "type": "string | undefined",
-                              "declarations": [],
-                              "schema": {
-                                "kind": "enum",
-                                "type": "string | undefined",
-                                "schema": [
-                                  "undefined",
-                                  "string"
-                                ]
-                              }
-                            },
-                            "label": {
-                              "name": "label",
-                              "global": false,
-                              "description": "Display label for the option",
-                              "tags": [],
-                              "required": true,
-                              "type": "string",
-                              "declarations": [],
-                              "schema": "string"
-                            },
-                            "media": {
-                              "name": "media",
-                              "global": false,
-                              "description": "Media to display to the left of the option content",
-                              "tags": [],
-                              "required": false,
-                              "type": "VueNode",
-                              "declarations": [],
-                              "schema": "VueNode"
-                            }
-                          }
-                        }
-                      ]
-                    }
-                  },
-                  "title": {
-                    "name": "title",
-                    "global": false,
-                    "description": "Section title",
-                    "tags": [],
-                    "required": false,
-                    "type": "string | undefined",
-                    "declarations": [],
-                    "schema": "string | undefined"
-                  }
-                }
-              }
-            ]
-          }
         ]
       }
     },

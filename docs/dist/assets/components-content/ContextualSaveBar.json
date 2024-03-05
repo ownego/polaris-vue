@@ -1,7 +1,7 @@
 {
   "name": "ContextualSaveBar",
   "description": "The contextual save bar tells merchants their options once they have made changes to a form on the page. This component is also shown while creating a new object like a product or customer. Merchants can use this component to save or discard their work.",
-  "bestPractices": "The contextual save bar component should:\n\n- Become visible when a form on the page has unsaved changes\n- Be used to save or discard in-progress changes\n- Provide brief and helpful context on the nature of in-progress changes\n- Save all changes on the page. Avoid scenarios where multiple forms on a single page can be edited at the same time. If specific sections of a page need to be independently editable, use an Edit button to launch a [modal dialog](https://polaris.shopify.com/components/internal-only/modal) for each section where changes can be made and saved.",
+  "bestPractices": "The contextual save bar component should:\n\n- Become visible when a form on the page has unsaved changes\n- Be used to save or discard in-progress changes\n- Provide brief and helpful context on the nature of in-progress changes\n- Save all changes on the page. Avoid scenarios where multiple forms on a single page can be edited at the same time. If specific sections of a page need to be independently editable, use an Edit button to launch a [modal dialog](https://polaris.shopify.com/components/deprecated/modal) for each section where changes can be made and saved.",
   "keywords": [
     " form\n  ",
     " forms\n  ",

@@ -44,15 +44,6 @@
       }
     },
     {
-      "name": "section",
-      "type": "number",
-      "required": true,
-      "description": "",
-      "tags": [],
-      "declarations": [],
-      "schema": "number"
-    },
-    {
       "name": "disabled",
       "type": "boolean | undefined",
       "required": false,
@@ -68,6 +59,15 @@
           "true"
         ]
       }
+    },
+    {
+      "name": "section",
+      "type": "number",
+      "required": true,
+      "description": "",
+      "tags": [],
+      "declarations": [],
+      "schema": "number"
     },
     {
       "name": "value",
@@ -114,6 +114,15 @@
       }
     },
     {
+      "name": "index",
+      "type": "number",
+      "required": true,
+      "description": "",
+      "tags": [],
+      "declarations": [],
+      "schema": "number"
+    },
+    {
       "name": "media",
       "type": "string | number | boolean | Element | Component | null | undefined",
       "required": false,
@@ -136,15 +145,6 @@
           "ComponentPublicInstanceConstructor<any, any, any, any, ComputedOptions, MethodOptions>"
         ]
       }
-    },
-    {
-      "name": "index",
-      "type": "number",
-      "required": true,
-      "description": "",
-      "tags": [],
-      "declarations": [],
-      "schema": "number"
     }
   ],
   "events": [

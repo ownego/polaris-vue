@@ -24,28 +24,6 @@
       }
     },
     {
-      "name": "padding",
-      "type": "Padding | undefined",
-      "required": false,
-      "description": "Padding of content",
-      "tags": [
-        {
-          "name": "default",
-          "text": "'default'"
-        }
-      ],
-      "declarations": [],
-      "schema": {
-        "kind": "enum",
-        "type": "Padding | undefined",
-        "schema": [
-          "undefined",
-          "\"default\"",
-          "\"400\""
-        ]
-      }
-    },
-    {
       "name": "width",
       "type": "Width | undefined",
       "required": false,
@@ -64,6 +42,28 @@
           "undefined",
           "\"default\"",
           "\"wide\""
+        ]
+      }
+    },
+    {
+      "name": "padding",
+      "type": "Padding | undefined",
+      "required": false,
+      "description": "Padding of content",
+      "tags": [
+        {
+          "name": "default",
+          "text": "'default'"
+        }
+      ],
+      "declarations": [],
+      "schema": {
+        "kind": "enum",
+        "type": "Padding | undefined",
+        "schema": [
+          "undefined",
+          "\"default\"",
+          "\"400\""
         ]
       }
     },

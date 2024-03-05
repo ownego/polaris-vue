@@ -41,23 +41,6 @@
       }
     },
     {
-      "name": "loading",
-      "type": "boolean | undefined",
-      "required": false,
-      "description": "Overlays item list with a spinner while a background action is being performed",
-      "tags": [],
-      "declarations": [],
-      "schema": {
-        "kind": "enum",
-        "type": "boolean | undefined",
-        "schema": [
-          "undefined",
-          "false",
-          "true"
-        ]
-      }
-    },
-    {
       "name": "items",
       "type": "ResourceListItemData[]",
       "required": true,
@@ -73,6 +56,23 @@
             "type": "ResourceListItemData",
             "schema": {}
           }
+        ]
+      }
+    },
+    {
+      "name": "loading",
+      "type": "boolean | undefined",
+      "required": false,
+      "description": "Overlays item list with a spinner while a background action is being performed",
+      "tags": [],
+      "declarations": [],
+      "schema": {
+        "kind": "enum",
+        "type": "boolean | undefined",
+        "schema": [
+          "undefined",
+          "false",
+          "true"
         ]
       }
     },

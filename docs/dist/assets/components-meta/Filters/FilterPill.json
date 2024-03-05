@@ -36,6 +36,32 @@
       }
     },
     {
+      "name": "disabled",
+      "type": "boolean | undefined",
+      "required": false,
+      "description": "Whether filtering is disabled",
+      "tags": [],
+      "declarations": [],
+      "schema": {
+        "kind": "enum",
+        "type": "boolean | undefined",
+        "schema": [
+          "undefined",
+          "false",
+          "true"
+        ]
+      }
+    },
+    {
+      "name": "label",
+      "type": "string",
+      "required": true,
+      "description": "The label for the filter",
+      "tags": [],
+      "declarations": [],
+      "schema": "string"
+    },
+    {
       "name": "section",
       "type": "string | undefined",
       "required": false,
@@ -67,32 +93,6 @@
           "true"
         ]
       }
-    },
-    {
-      "name": "disabled",
-      "type": "boolean | undefined",
-      "required": false,
-      "description": "Whether filtering is disabled",
-      "tags": [],
-      "declarations": [],
-      "schema": {
-        "kind": "enum",
-        "type": "boolean | undefined",
-        "schema": [
-          "undefined",
-          "false",
-          "true"
-        ]
-      }
-    },
-    {
-      "name": "label",
-      "type": "string",
-      "required": true,
-      "description": "The label for the filter",
-      "tags": [],
-      "declarations": [],
-      "schema": "string"
     },
     {
       "name": "closeOnChildOverlayClick",

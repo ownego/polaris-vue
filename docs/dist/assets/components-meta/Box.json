@@ -48,6 +48,22 @@
       }
     },
     {
+      "name": "width",
+      "type": "string | undefined",
+      "required": false,
+      "description": "Width of container",
+      "tags": [],
+      "declarations": [],
+      "schema": {
+        "kind": "enum",
+        "type": "string | undefined",
+        "schema": [
+          "undefined",
+          "string"
+        ]
+      }
+    },
+    {
       "name": "background",
       "type": "ColorBackgroundAlias | undefined",
       "required": false,
@@ -55,6 +71,45 @@
       "tags": [],
       "declarations": [],
       "schema": "ColorBackgroundAlias | undefined"
+    },
+    {
+      "name": "padding",
+      "type": "Spacing | undefined",
+      "required": false,
+      "description": "Spacing around children. Accepts a spacing token or an object of spacing tokens for different screen sizes.",
+      "tags": [
+        {
+          "name": "example",
+          "text": "padding='400'\npadding={{xs: '200', sm: '300', md: '400', lg: '500', xl: '600'}}"
+        }
+      ],
+      "declarations": [],
+      "schema": {
+        "kind": "enum",
+        "type": "Spacing | undefined",
+        "schema": [
+          "undefined",
+          "\"0\"",
+          "\"025\"",
+          "\"050\"",
+          "\"100\"",
+          "\"150\"",
+          "\"200\"",
+          "\"300\"",
+          "\"400\"",
+          "\"500\"",
+          "\"600\"",
+          "\"800\"",
+          "\"1000\"",
+          "\"1200\"",
+          "\"1600\"",
+          "\"2000\"",
+          "\"2400\"",
+          "\"2800\"",
+          "\"3200\"",
+          "ResponsivePropConfig<SpaceScale>"
+        ]
+      }
     },
     {
       "name": "borderColor",
@@ -433,45 +488,6 @@
       }
     },
     {
-      "name": "padding",
-      "type": "Spacing | undefined",
-      "required": false,
-      "description": "Spacing around children. Accepts a spacing token or an object of spacing tokens for different screen sizes.",
-      "tags": [
-        {
-          "name": "example",
-          "text": "padding='400'\npadding={{xs: '200', sm: '300', md: '400', lg: '500', xl: '600'}}"
-        }
-      ],
-      "declarations": [],
-      "schema": {
-        "kind": "enum",
-        "type": "Spacing | undefined",
-        "schema": [
-          "undefined",
-          "\"0\"",
-          "\"025\"",
-          "\"050\"",
-          "\"100\"",
-          "\"150\"",
-          "\"200\"",
-          "\"300\"",
-          "\"400\"",
-          "\"500\"",
-          "\"600\"",
-          "\"800\"",
-          "\"1000\"",
-          "\"1200\"",
-          "\"1600\"",
-          "\"2000\"",
-          "\"2400\"",
-          "\"2800\"",
-          "\"3200\"",
-          "ResponsivePropConfig<SpaceScale>"
-        ]
-      }
-    },
-    {
       "name": "paddingBlock",
       "type": "Spacing | undefined",
       "required": false,
@@ -737,22 +753,6 @@
           "\"button-primary-success-hover\"",
           "\"button-primary-success-inset\"",
           "\"border-inset\""
-        ]
-      }
-    },
-    {
-      "name": "width",
-      "type": "string | undefined",
-      "required": false,
-      "description": "Width of container",
-      "tags": [],
-      "declarations": [],
-      "schema": {
-        "kind": "enum",
-        "type": "string | undefined",
-        "schema": [
-          "undefined",
-          "string"
         ]
       }
     },
