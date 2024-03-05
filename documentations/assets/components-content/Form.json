@@ -1,0 +1,17 @@
+{
+  "name": "Form",
+  "description": "A wrapper component that handles the submission of forms.",
+  "bestPractices": "The form component should be used to:\n\n- Wrap around all form input elements\n- Emulate the native HTML `form` element behavior with a custom `onSubmit` callback",
+  "keywords": [
+    " form\n  ",
+    " forms\n  ",
+    " input\n  ",
+    " checkbox\n  ",
+    " check box\n  ",
+    " textfield\n  ",
+    " text field\n  ",
+    " post\n  ",
+    " get"
+  ],
+  "previewImg": "form.png"
+}

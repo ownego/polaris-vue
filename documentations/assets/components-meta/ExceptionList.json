@@ -1,0 +1,155 @@
+{
+  "props": [
+    {
+      "name": "items",
+      "type": "Item[]",
+      "required": true,
+      "description": "Collection of items for list",
+      "tags": [],
+      "declarations": [],
+      "schema": {
+        "kind": "array",
+        "type": "Item[]",
+        "schema": [
+          {
+            "kind": "object",
+            "type": "Item",
+            "schema": {
+              "status": {
+                "name": "status",
+                "global": false,
+                "description": "Set the color of the icon and title for the given item.",
+                "tags": [],
+                "required": false,
+                "type": "\"warning\" | \"critical\" | undefined",
+                "declarations": [],
+                "schema": {
+                  "kind": "enum",
+                  "type": "\"warning\" | \"critical\" | undefined",
+                  "schema": [
+                    "undefined",
+                    "\"warning\"",
+                    "\"critical\""
+                  ]
+                }
+              },
+              "icon": {
+                "name": "icon",
+                "global": false,
+                "description": "Icon displayed by the list item",
+                "tags": [],
+                "required": false,
+                "type": "IconSource | undefined",
+                "declarations": [],
+                "schema": {
+                  "kind": "enum",
+                  "type": "IconSource | undefined",
+                  "schema": [
+                    "undefined",
+                    "string",
+                    "ComponentOptions<any, any, any, ComputedOptions, MethodOptions, any, any, any, any>",
+                    "FunctionalComponent<any, {}, any, {}>",
+                    "ComponentPublicInstanceConstructor<any, any, any, any, ComputedOptions, MethodOptions>",
+                    {
+                      "kind": "array",
+                      "type": "(string | Component)[]",
+                      "schema": [
+                        {
+                          "kind": "enum",
+                          "type": "string | Component",
+                          "schema": [
+                            "string",
+                            "ComponentOptions<any, any, any, ComputedOptions, MethodOptions, any, any, any, any>",
+                            "FunctionalComponent<any, {}, any, {}>",
+                            "ComponentPublicInstanceConstructor<any, any, any, any, ComputedOptions, MethodOptions>"
+                          ]
+                        }
+                      ]
+                    }
+                  ]
+                }
+              },
+              "title": {
+                "name": "title",
+                "global": false,
+                "description": "Text displayed beside the icon",
+                "tags": [],
+                "required": false,
+                "type": "string | undefined",
+                "declarations": [],
+                "schema": {
+                  "kind": "enum",
+                  "type": "string | undefined",
+                  "schema": [
+                    "undefined",
+                    "string"
+                  ]
+                }
+              },
+              "description": {
+                "name": "description",
+                "global": false,
+                "description": "Text displayed for the item",
+                "tags": [],
+                "required": false,
+                "type": "Description",
+                "declarations": [],
+                "schema": {
+                  "kind": "enum",
+                  "type": "Description",
+                  "schema": [
+                    "undefined",
+                    "null",
+                    "string",
+                    "number",
+                    "false",
+                    "true",
+                    "Element",
+                    "ComponentOptions<any, any, any, ComputedOptions, MethodOptions, any, any, any, any>",
+                    "FunctionalComponent<any, {}, any, {}>",
+                    "ComponentPublicInstanceConstructor<any, any, any, any, ComputedOptions, MethodOptions>",
+                    {
+                      "kind": "array",
+                      "type": "VueNode[]",
+                      "schema": [
+                        "VueNode"
+                      ]
+                    }
+                  ]
+                }
+              },
+              "truncate": {
+                "name": "truncate",
+                "global": false,
+                "description": "Should the description be truncated at end of line",
+                "tags": [],
+                "required": false,
+                "type": "boolean | undefined",
+                "declarations": [],
+                "schema": {
+                  "kind": "enum",
+                  "type": "boolean | undefined",
+                  "schema": [
+                    "undefined",
+                    "false",
+                    "true"
+                  ]
+                }
+              }
+            }
+          }
+        ]
+      }
+    }
+  ],
+  "events": [],
+  "slots": [
+    {
+      "name": "default",
+      "type": "VueNode",
+      "description": "The content to display inside the link",
+      "declarations": [],
+      "schema": "VueNode"
+    }
+  ]
+}

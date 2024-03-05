@@ -1,0 +1,17 @@
+{
+  "name": "OptionList",
+  "description": "The option list component lets you create a list of grouped items that merchants can pick from. This can include single selection or multiple selection of options. Option list usually appears in a popover, and sometimes in a modal or a sidebar. Option lists are styled differently than [choice lists](https://polaris.shopify.com/components/choice-list) and should not be used within a form, but as a standalone menu.",
+  "bestPractices": "The option list component should:\n\n- Be placed on its own inside a container. Usually the container behaves like a menu, as it does with [popover](https://polaris.shopify.com/components/overlays/popover). Don’t place other components within the same container.\n- Not be used when a [select component](https://polaris.shopify.com/components/select) will do.",
+  "keywords": [
+    " option list\n  ",
+    " choices\n  ",
+    " decision\n  ",
+    " list\n  ",
+    " list of tags\n  ",
+    " list of collections\n  ",
+    " collections lists\n  ",
+    " collection lists\n  ",
+    " list selection"
+  ],
+  "previewImg": "option-list.png"
+}

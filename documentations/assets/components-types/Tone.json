@@ -1,0 +1,8 @@
+{
+  "filePath": "src/components/Text/types.ts",
+  "kind": "TypeAliasDeclaration",
+  "name": "Tone",
+  "value": "'success' | 'critical' | 'caution' | 'subdued' | 'text-inverse' | 'magic' | 'magic-subdued'",
+  "description": "",
+  "members": []
+}

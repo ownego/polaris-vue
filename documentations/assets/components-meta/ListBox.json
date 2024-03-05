@@ -1,0 +1,101 @@
+{
+  "props": [
+    {
+      "name": "autoSelection",
+      "type": "AutoSelection | undefined",
+      "required": false,
+      "description": "Indicates the default active option in the list. Patterns that support option creation should default the active option to the first option.",
+      "tags": [
+        {
+          "name": "default",
+          "text": "FIRST_SELECTED"
+        }
+      ],
+      "declarations": [],
+      "schema": {
+        "kind": "enum",
+        "type": "AutoSelection | undefined",
+        "schema": [
+          "undefined",
+          "AutoSelection.FirstSelected",
+          "AutoSelection.First",
+          "AutoSelection.None"
+        ]
+      }
+    },
+    {
+      "name": "accessibilityLabel",
+      "type": "string | undefined",
+      "required": false,
+      "description": "Visually hidden text for screen readers",
+      "tags": [],
+      "declarations": [],
+      "schema": {
+        "kind": "enum",
+        "type": "string | undefined",
+        "schema": [
+          "undefined",
+          "string"
+        ]
+      }
+    },
+    {
+      "name": "enableKeyboardControl",
+      "type": "boolean | undefined",
+      "required": false,
+      "description": "Explicitly enable keyboard control",
+      "tags": [],
+      "declarations": [],
+      "schema": {
+        "kind": "enum",
+        "type": "boolean | undefined",
+        "schema": [
+          "undefined",
+          "false",
+          "true"
+        ]
+      }
+    },
+    {
+      "name": "customListId",
+      "type": "string | undefined",
+      "required": false,
+      "description": "Provide a custom ID for the list element",
+      "tags": [],
+      "declarations": [],
+      "schema": {
+        "kind": "enum",
+        "type": "string | undefined",
+        "schema": [
+          "undefined",
+          "string"
+        ]
+      }
+    }
+  ],
+  "events": [
+    {
+      "name": "select",
+      "description": "",
+      "params": {
+        "value": "string"
+      }
+    },
+    {
+      "name": "active-option-change",
+      "description": "",
+      "params": {
+        "value": "string"
+      }
+    }
+  ],
+  "slots": [
+    {
+      "name": "default",
+      "type": "VueNode",
+      "description": "Inner content of the listbox",
+      "declarations": [],
+      "schema": "VueNode"
+    }
+  ]
+}

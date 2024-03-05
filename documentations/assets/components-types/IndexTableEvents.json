@@ -1,0 +1,21 @@
+{
+  "filePath": "src/components/IndexTable/types.ts",
+  "kind": "TypeAliasDeclaration",
+  "name": "IndexTableEvents",
+  "value": "{\n  /** Callback fired on click or keypress of a sortable column heading. */\n  'sort': [headingIndex: number, direction: IndexTableSortDirection];\n  /** Callback fired on selection is changed */\n  'selection-change': [selectionType: SelectionType, toggleType: boolean, selection?: string | Range, position?: number];\n}",
+  "description": "",
+  "members": [
+    {
+      "filePath": "src/components/IndexTable/types.ts",
+      "name": "'sort'",
+      "value": "[headingIndex: number, direction: IndexTableSortDirection]",
+      "description": "Callback fired on click or keypress of a sortable column heading."
+    },
+    {
+      "filePath": "src/components/IndexTable/types.ts",
+      "name": "'selection-change'",
+      "value": "[selectionType: SelectionType, toggleType: boolean, selection?: string | Range, position?: number]",
+      "description": "Callback fired on selection is changed"
+    }
+  ]
+}

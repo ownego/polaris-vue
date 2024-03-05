@@ -1,0 +1,23 @@
+{
+  "filePath": "src/components/Badge/types.ts",
+  "syntaxKind": "EnumDeclaration",
+  "name": "ProgressValue",
+  "value": "export enum ProgressValue {\n  Incomplete = 'incomplete',\n  PartiallyComplete = 'partiallyComplete',\n  Complete = 'complete',\n}",
+  "members": [
+    {
+      "filePath": "src/components/Badge/types.ts",
+      "name": "Incomplete",
+      "value": "incomplete"
+    },
+    {
+      "filePath": "src/components/Badge/types.ts",
+      "name": "PartiallyComplete",
+      "value": "partiallyComplete"
+    },
+    {
+      "filePath": "src/components/Badge/types.ts",
+      "name": "Complete",
+      "value": "complete"
+    }
+  ]
+}

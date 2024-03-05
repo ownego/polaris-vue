@@ -1,0 +1,371 @@
+{
+  "props": [
+    {
+      "name": "title",
+      "type": "string | undefined",
+      "required": false,
+      "description": "",
+      "tags": [],
+      "declarations": [],
+      "schema": {
+        "kind": "enum",
+        "type": "string | undefined",
+        "schema": [
+          "undefined",
+          "string"
+        ]
+      }
+    },
+    {
+      "name": "actions",
+      "type": "ComplexAction[] | undefined",
+      "required": false,
+      "description": "",
+      "tags": [],
+      "declarations": [],
+      "schema": {
+        "kind": "enum",
+        "type": "ComplexAction[] | undefined",
+        "schema": [
+          "undefined",
+          {
+            "kind": "array",
+            "type": "ComplexAction[]",
+            "schema": [
+              {
+                "kind": "object",
+                "type": "ComplexAction",
+                "schema": {
+                  "id": {
+                    "name": "id",
+                    "global": false,
+                    "description": "A unique identifier for the action",
+                    "tags": [],
+                    "required": false,
+                    "type": "string | undefined",
+                    "declarations": [],
+                    "schema": {
+                      "kind": "enum",
+                      "type": "string | undefined",
+                      "schema": [
+                        "undefined",
+                        "string"
+                      ]
+                    }
+                  },
+                  "content": {
+                    "name": "content",
+                    "global": false,
+                    "description": "Content the action displays",
+                    "tags": [],
+                    "required": false,
+                    "type": "string | undefined",
+                    "declarations": [],
+                    "schema": "string | undefined"
+                  },
+                  "accessibilityLabel": {
+                    "name": "accessibilityLabel",
+                    "global": false,
+                    "description": "Visually hidden text for screen readers",
+                    "tags": [],
+                    "required": false,
+                    "type": "string | undefined",
+                    "declarations": [],
+                    "schema": "string | undefined"
+                  },
+                  "url": {
+                    "name": "url",
+                    "global": false,
+                    "description": "A destination to link to, rendered in the action",
+                    "tags": [],
+                    "required": false,
+                    "type": "string | undefined",
+                    "declarations": [],
+                    "schema": "string | undefined"
+                  },
+                  "external": {
+                    "name": "external",
+                    "global": false,
+                    "description": "Forces url to open in a new tab",
+                    "tags": [],
+                    "required": false,
+                    "type": "boolean | undefined",
+                    "declarations": [],
+                    "schema": {
+                      "kind": "enum",
+                      "type": "boolean | undefined",
+                      "schema": [
+                        "undefined",
+                        "false",
+                        "true"
+                      ]
+                    }
+                  },
+                  "target": {
+                    "name": "target",
+                    "global": false,
+                    "description": "Where to display the url",
+                    "tags": [],
+                    "required": false,
+                    "type": "Target | undefined",
+                    "declarations": [],
+                    "schema": {
+                      "kind": "enum",
+                      "type": "Target | undefined",
+                      "schema": [
+                        "undefined",
+                        "\"_blank\"",
+                        "\"_self\"",
+                        "\"_parent\"",
+                        "\"_top\""
+                      ]
+                    }
+                  },
+                  "onAction": {
+                    "name": "onAction",
+                    "global": false,
+                    "description": "Callback when an action takes place",
+                    "tags": [],
+                    "required": false,
+                    "type": "(() => void) | undefined",
+                    "declarations": [],
+                    "schema": {
+                      "kind": "enum",
+                      "type": "(() => void) | undefined",
+                      "schema": [
+                        "undefined",
+                        {
+                          "kind": "event",
+                          "type": "(): void"
+                        }
+                      ]
+                    }
+                  },
+                  "onMouseEnter": {
+                    "name": "onMouseEnter",
+                    "global": false,
+                    "description": "Callback when mouse enter",
+                    "tags": [],
+                    "required": false,
+                    "type": "(() => void) | undefined",
+                    "declarations": [],
+                    "schema": {
+                      "kind": "enum",
+                      "type": "(() => void) | undefined",
+                      "schema": [
+                        "undefined",
+                        {
+                          "kind": "event",
+                          "type": "(): void"
+                        }
+                      ]
+                    }
+                  },
+                  "onTouchStart": {
+                    "name": "onTouchStart",
+                    "global": false,
+                    "description": "Callback when element is touched",
+                    "tags": [],
+                    "required": false,
+                    "type": "(() => void) | undefined",
+                    "declarations": [],
+                    "schema": {
+                      "kind": "enum",
+                      "type": "(() => void) | undefined",
+                      "schema": [
+                        "undefined",
+                        {
+                          "kind": "event",
+                          "type": "(): void"
+                        }
+                      ]
+                    }
+                  },
+                  "disabled": {
+                    "name": "disabled",
+                    "global": false,
+                    "description": "Whether or not the action is disabled",
+                    "tags": [],
+                    "required": false,
+                    "type": "boolean | undefined",
+                    "declarations": [],
+                    "schema": "boolean | undefined"
+                  },
+                  "destructive": {
+                    "name": "destructive",
+                    "global": false,
+                    "description": "Destructive action",
+                    "tags": [],
+                    "required": false,
+                    "type": "boolean | undefined",
+                    "declarations": [],
+                    "schema": "boolean | undefined"
+                  },
+                  "icon": {
+                    "name": "icon",
+                    "global": false,
+                    "description": "Source of the icon",
+                    "tags": [],
+                    "required": false,
+                    "type": "IconSource | undefined",
+                    "declarations": [],
+                    "schema": {
+                      "kind": "enum",
+                      "type": "IconSource | undefined",
+                      "schema": [
+                        "undefined",
+                        "string",
+                        "ComponentOptions<any, any, any, ComputedOptions, MethodOptions, any, any, any, any>",
+                        "FunctionalComponent<any, {}, any, {}>",
+                        "ComponentPublicInstanceConstructor<any, any, any, any, ComputedOptions, MethodOptions>",
+                        {
+                          "kind": "array",
+                          "type": "(string | Component)[]",
+                          "schema": [
+                            {
+                              "kind": "enum",
+                              "type": "string | Component",
+                              "schema": [
+                                "string",
+                                "ComponentOptions<any, any, any, ComputedOptions, MethodOptions, any, any, any, any>",
+                                "FunctionalComponent<any, {}, any, {}>",
+                                "ComponentPublicInstanceConstructor<any, any, any, any, ComputedOptions, MethodOptions>"
+                              ]
+                            }
+                          ]
+                        }
+                      ]
+                    }
+                  },
+                  "outline": {
+                    "name": "outline",
+                    "global": false,
+                    "description": "Should action be displayed as an outlined button",
+                    "tags": [],
+                    "required": false,
+                    "type": "boolean | undefined",
+                    "declarations": [],
+                    "schema": "boolean | undefined"
+                  },
+                  "loading": {
+                    "name": "loading",
+                    "global": false,
+                    "description": "Should a spinner be displayed",
+                    "tags": [],
+                    "required": false,
+                    "type": "boolean | undefined",
+                    "declarations": [],
+                    "schema": "boolean | undefined"
+                  },
+                  "plain": {
+                    "name": "plain",
+                    "global": false,
+                    "description": "Should action be displayed as a plain link",
+                    "tags": [],
+                    "required": false,
+                    "type": "boolean | undefined",
+                    "declarations": [],
+                    "schema": "boolean | undefined"
+                  }
+                }
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "name": "fullWidth",
+      "type": "boolean | undefined",
+      "required": false,
+      "description": "",
+      "tags": [],
+      "declarations": [],
+      "schema": {
+        "kind": "enum",
+        "type": "boolean | undefined",
+        "schema": [
+          "undefined",
+          "false",
+          "true"
+        ]
+      }
+    },
+    {
+      "name": "subdued",
+      "type": "boolean | undefined",
+      "required": false,
+      "description": "",
+      "tags": [],
+      "declarations": [],
+      "schema": {
+        "kind": "enum",
+        "type": "boolean | undefined",
+        "schema": [
+          "undefined",
+          "false",
+          "true"
+        ]
+      }
+    },
+    {
+      "name": "hideOnPrint",
+      "type": "boolean | undefined",
+      "required": false,
+      "description": "Allow the card to be hidden when printing",
+      "tags": [],
+      "declarations": [],
+      "schema": {
+        "kind": "enum",
+        "type": "boolean | undefined",
+        "schema": [
+          "undefined",
+          "false",
+          "true"
+        ]
+      }
+    },
+    {
+      "name": "flush",
+      "type": "boolean | undefined",
+      "required": false,
+      "description": "",
+      "tags": [],
+      "declarations": [],
+      "schema": {
+        "kind": "enum",
+        "type": "boolean | undefined",
+        "schema": [
+          "undefined",
+          "false",
+          "true"
+        ]
+      }
+    }
+  ],
+  "events": [],
+  "slots": [
+    {
+      "name": "title",
+      "type": "{}",
+      "description": "",
+      "declarations": [],
+      "schema": {
+        "kind": "object",
+        "type": "{}",
+        "schema": {}
+      }
+    },
+    {
+      "name": "default",
+      "type": "{}",
+      "description": "",
+      "declarations": [],
+      "schema": {
+        "kind": "object",
+        "type": "{}",
+        "schema": {}
+      }
+    }
+  ]
+}

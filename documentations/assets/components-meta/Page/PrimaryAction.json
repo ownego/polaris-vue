@@ -1,0 +1,245 @@
+{
+  "props": [
+    {
+      "name": "icon",
+      "type": "IconSource | undefined",
+      "required": false,
+      "description": "Source of the icon",
+      "tags": [],
+      "declarations": [],
+      "schema": {
+        "kind": "enum",
+        "type": "IconSource | undefined",
+        "schema": [
+          "undefined",
+          "string",
+          "ComponentOptions<any, any, any, ComputedOptions, MethodOptions, any, any, any, any>",
+          "FunctionalComponent<any, {}, any, {}>",
+          "ComponentPublicInstanceConstructor<any, any, any, any, ComputedOptions, MethodOptions>",
+          {
+            "kind": "array",
+            "type": "(string | Component)[]",
+            "schema": [
+              {
+                "kind": "enum",
+                "type": "string | Component",
+                "schema": [
+                  "string",
+                  "ComponentOptions<any, any, any, ComputedOptions, MethodOptions, any, any, any, any>",
+                  "FunctionalComponent<any, {}, any, {}>",
+                  "ComponentPublicInstanceConstructor<any, any, any, any, ComputedOptions, MethodOptions>"
+                ]
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "name": "id",
+      "type": "string | undefined",
+      "required": false,
+      "description": "A unique identifier for the action",
+      "tags": [],
+      "declarations": [],
+      "schema": {
+        "kind": "enum",
+        "type": "string | undefined",
+        "schema": [
+          "undefined",
+          "string"
+        ]
+      }
+    },
+    {
+      "name": "loading",
+      "type": "boolean | undefined",
+      "required": false,
+      "description": "Should a spinner be displayed",
+      "tags": [],
+      "declarations": [],
+      "schema": {
+        "kind": "enum",
+        "type": "boolean | undefined",
+        "schema": [
+          "undefined",
+          "false",
+          "true"
+        ]
+      }
+    },
+    {
+      "name": "accessibilityLabel",
+      "type": "string | undefined",
+      "required": false,
+      "description": "Visually hidden text for screen readers",
+      "tags": [],
+      "declarations": [],
+      "schema": {
+        "kind": "enum",
+        "type": "string | undefined",
+        "schema": [
+          "undefined",
+          "string"
+        ]
+      }
+    },
+    {
+      "name": "disabled",
+      "type": "boolean | undefined",
+      "required": false,
+      "description": "Whether or not the action is disabled",
+      "tags": [],
+      "declarations": [],
+      "schema": {
+        "kind": "enum",
+        "type": "boolean | undefined",
+        "schema": [
+          "undefined",
+          "false",
+          "true"
+        ]
+      }
+    },
+    {
+      "name": "url",
+      "type": "string | undefined",
+      "required": false,
+      "description": "A destination to link to, rendered in the action",
+      "tags": [],
+      "declarations": [],
+      "schema": {
+        "kind": "enum",
+        "type": "string | undefined",
+        "schema": [
+          "undefined",
+          "string"
+        ]
+      }
+    },
+    {
+      "name": "external",
+      "type": "boolean | undefined",
+      "required": false,
+      "description": "Forces url to open in a new tab",
+      "tags": [],
+      "declarations": [],
+      "schema": {
+        "kind": "enum",
+        "type": "boolean | undefined",
+        "schema": [
+          "undefined",
+          "false",
+          "true"
+        ]
+      }
+    },
+    {
+      "name": "target",
+      "type": "Target | undefined",
+      "required": false,
+      "description": "Where to display the url",
+      "tags": [],
+      "declarations": [],
+      "schema": {
+        "kind": "enum",
+        "type": "Target | undefined",
+        "schema": [
+          "undefined",
+          "\"_blank\"",
+          "\"_self\"",
+          "\"_parent\"",
+          "\"_top\""
+        ]
+      }
+    },
+    {
+      "name": "primary",
+      "type": "boolean | undefined",
+      "required": false,
+      "description": "Provides extra visual weight and identifies the primary action in a set of buttons",
+      "tags": [],
+      "declarations": [],
+      "schema": {
+        "kind": "enum",
+        "type": "boolean | undefined",
+        "schema": [
+          "undefined",
+          "false",
+          "true"
+        ]
+      }
+    },
+    {
+      "name": "helpText",
+      "type": "string | number | boolean | Element | Component | null | undefined",
+      "required": false,
+      "description": "Text content to render in a tooltip",
+      "tags": [],
+      "declarations": [],
+      "schema": {
+        "kind": "enum",
+        "type": "string | number | boolean | Element | Component | null | undefined",
+        "schema": [
+          "undefined",
+          "null",
+          "string",
+          "number",
+          "false",
+          "true",
+          "Element",
+          "ComponentOptions<any, any, any, ComputedOptions, MethodOptions, any, any, any, any>",
+          "FunctionalComponent<any, {}, any, {}>",
+          "ComponentPublicInstanceConstructor<any, any, any, any, ComputedOptions, MethodOptions>"
+        ]
+      }
+    },
+    {
+      "name": "content",
+      "type": "string | undefined",
+      "required": false,
+      "description": "Content the action displays",
+      "tags": [],
+      "declarations": [],
+      "schema": {
+        "kind": "enum",
+        "type": "string | undefined",
+        "schema": [
+          "undefined",
+          "string"
+        ]
+      }
+    },
+    {
+      "name": "destructive",
+      "type": "boolean | undefined",
+      "required": false,
+      "description": "Destructive action",
+      "tags": [],
+      "declarations": [],
+      "schema": {
+        "kind": "enum",
+        "type": "boolean | undefined",
+        "schema": [
+          "undefined",
+          "false",
+          "true"
+        ]
+      }
+    }
+  ],
+  "events": [],
+  "slots": [
+    {
+      "name": "default",
+      "type": "{}",
+      "description": "",
+      "declarations": [],
+      "schema": {
+        "kind": "object",
+        "type": "{}",
+        "schema": {}
+      }
+    }
+  ]
+}

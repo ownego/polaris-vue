@@ -1,0 +1,12 @@
+{
+  "name": "SkeletonPage",
+  "description": "Skeleton page is used with other skeleton loading components to provide a low fidelity representation of the user interface (UI) before content appears on the page. It improves load times perceived by merchants.",
+  "bestPractices": "Skeleton page component should:\n\n- Be used for pages where all content loads at the same time.\n- Give merchants an indication of what the page layout will be once loaded. Do this by mimicking its layout similarly to the state that will be loaded.",
+  "keywords": [
+    " SkeletonPage\n  ",
+    " skeleton\n  ",
+    " loading\n  ",
+    " page"
+  ],
+  "previewImg": "skeleton-page.png"
+}

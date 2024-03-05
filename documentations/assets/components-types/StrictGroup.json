@@ -1,0 +1,22 @@
+{
+  "filePath": "src/components/Select/types.ts",
+  "name": "StrictGroup",
+  "description": "",
+  "value": "export interface StrictGroup {\n  /** Title for the group */\n  title: string;\n  /** List of options */\n  options: StrictOption[];\n}",
+  "members": [
+    {
+      "filePath": "src/components/Select/types.ts",
+      "syntaxKind": "PropertySignature",
+      "name": "title",
+      "value": "string",
+      "description": "Title for the group"
+    },
+    {
+      "filePath": "src/components/Select/types.ts",
+      "syntaxKind": "PropertySignature",
+      "name": "options",
+      "value": "StrictOption[]",
+      "description": "List of options"
+    }
+  ]
+}

@@ -1,0 +1,424 @@
+{
+  "props": [
+    {
+      "name": "wrapOverflow",
+      "type": "boolean | undefined",
+      "required": false,
+      "description": "",
+      "tags": [],
+      "declarations": [],
+      "schema": {
+        "kind": "enum",
+        "type": "boolean | undefined",
+        "schema": [
+          "undefined",
+          "false",
+          "true"
+        ]
+      }
+    },
+    {
+      "name": "icon",
+      "type": "IconSource | undefined",
+      "required": false,
+      "description": "",
+      "tags": [
+        {
+          "name": "deprecated",
+          "text": "Source of the icon"
+        }
+      ],
+      "declarations": [],
+      "schema": {
+        "kind": "enum",
+        "type": "IconSource | undefined",
+        "schema": [
+          "undefined",
+          "string",
+          "ComponentOptions<any, any, any, ComputedOptions, MethodOptions, any, any, any, any>",
+          "FunctionalComponent<any, {}, any, {}>",
+          "ComponentPublicInstanceConstructor<any, any, any, any, ComputedOptions, MethodOptions>",
+          {
+            "kind": "array",
+            "type": "(string | Component)[]",
+            "schema": [
+              {
+                "kind": "enum",
+                "type": "string | Component",
+                "schema": [
+                  "string",
+                  "ComponentOptions<any, any, any, ComputedOptions, MethodOptions, any, any, any, any>",
+                  "FunctionalComponent<any, {}, any, {}>",
+                  "ComponentPublicInstanceConstructor<any, any, any, any, ComputedOptions, MethodOptions>"
+                ]
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "name": "id",
+      "type": "string | undefined",
+      "required": false,
+      "description": "A unique identifier for the action",
+      "tags": [],
+      "declarations": [],
+      "schema": {
+        "kind": "enum",
+        "type": "string | undefined",
+        "schema": [
+          "undefined",
+          "string"
+        ]
+      }
+    },
+    {
+      "name": "accessibilityLabel",
+      "type": "string | undefined",
+      "required": false,
+      "description": "Visually hidden text for screen readers",
+      "tags": [],
+      "declarations": [],
+      "schema": {
+        "kind": "enum",
+        "type": "string | undefined",
+        "schema": [
+          "undefined",
+          "string"
+        ]
+      }
+    },
+    {
+      "name": "role",
+      "type": "string | undefined",
+      "required": false,
+      "description": "Defines a role for the action",
+      "tags": [],
+      "declarations": [],
+      "schema": {
+        "kind": "enum",
+        "type": "string | undefined",
+        "schema": [
+          "undefined",
+          "string"
+        ]
+      }
+    },
+    {
+      "name": "disabled",
+      "type": "boolean | undefined",
+      "required": false,
+      "description": "Whether or not the action is disabled",
+      "tags": [],
+      "declarations": [],
+      "schema": {
+        "kind": "enum",
+        "type": "boolean | undefined",
+        "schema": [
+          "undefined",
+          "false",
+          "true"
+        ]
+      }
+    },
+    {
+      "name": "variant",
+      "type": "\"default\" | \"menu\" | \"indented\" | undefined",
+      "required": false,
+      "description": "The item variations",
+      "tags": [],
+      "declarations": [],
+      "schema": {
+        "kind": "enum",
+        "type": "\"default\" | \"menu\" | \"indented\" | undefined",
+        "schema": [
+          "undefined",
+          "\"default\"",
+          "\"menu\"",
+          "\"indented\""
+        ]
+      }
+    },
+    {
+      "name": "url",
+      "type": "string | undefined",
+      "required": false,
+      "description": "A destination to link to, rendered in the action",
+      "tags": [],
+      "declarations": [],
+      "schema": {
+        "kind": "enum",
+        "type": "string | undefined",
+        "schema": [
+          "undefined",
+          "string"
+        ]
+      }
+    },
+    {
+      "name": "external",
+      "type": "boolean | undefined",
+      "required": false,
+      "description": "Forces url to open in a new tab",
+      "tags": [],
+      "declarations": [],
+      "schema": {
+        "kind": "enum",
+        "type": "boolean | undefined",
+        "schema": [
+          "undefined",
+          "false",
+          "true"
+        ]
+      }
+    },
+    {
+      "name": "target",
+      "type": "Target | undefined",
+      "required": false,
+      "description": "Where to display the url",
+      "tags": [],
+      "declarations": [],
+      "schema": {
+        "kind": "enum",
+        "type": "Target | undefined",
+        "schema": [
+          "undefined",
+          "\"_blank\"",
+          "\"_self\"",
+          "\"_parent\"",
+          "\"_top\""
+        ]
+      }
+    },
+    {
+      "name": "helpText",
+      "type": "string | undefined",
+      "required": false,
+      "description": "Additional hint text to display with item",
+      "tags": [],
+      "declarations": [],
+      "schema": {
+        "kind": "enum",
+        "type": "string | undefined",
+        "schema": [
+          "undefined",
+          "string"
+        ]
+      }
+    },
+    {
+      "name": "truncate",
+      "type": "boolean | undefined",
+      "required": false,
+      "description": "Truncate the action content either at the beginning or at the end",
+      "tags": [],
+      "declarations": [],
+      "schema": {
+        "kind": "enum",
+        "type": "boolean | undefined",
+        "schema": [
+          "undefined",
+          "false",
+          "true"
+        ]
+      }
+    },
+    {
+      "name": "active",
+      "type": "boolean | undefined",
+      "required": false,
+      "description": "Whether the action is active or not",
+      "tags": [],
+      "declarations": [],
+      "schema": {
+        "kind": "enum",
+        "type": "boolean | undefined",
+        "schema": [
+          "undefined",
+          "false",
+          "true"
+        ]
+      }
+    },
+    {
+      "name": "image",
+      "type": "string | undefined",
+      "required": false,
+      "description": "",
+      "tags": [
+        {
+          "name": "deprecated",
+          "text": "Image source"
+        }
+      ],
+      "declarations": [],
+      "schema": {
+        "kind": "enum",
+        "type": "string | undefined",
+        "schema": [
+          "undefined",
+          "string"
+        ]
+      }
+    },
+    {
+      "name": "badge",
+      "type": "{ tone: \"new\"; content: string; } | undefined",
+      "required": false,
+      "description": "",
+      "tags": [
+        {
+          "name": "deprecated",
+          "text": "Badge component"
+        }
+      ],
+      "declarations": [],
+      "schema": {
+        "kind": "enum",
+        "type": "{ tone: \"new\"; content: string; } | undefined",
+        "schema": [
+          "undefined",
+          {
+            "kind": "object",
+            "type": "{ tone: \"new\"; content: string; }",
+            "schema": {
+              "tone": {
+                "name": "tone",
+                "global": false,
+                "description": "",
+                "tags": [],
+                "required": true,
+                "type": "\"new\"",
+                "declarations": [],
+                "schema": "\"new\""
+              },
+              "content": {
+                "name": "content",
+                "global": false,
+                "description": "",
+                "tags": [],
+                "required": true,
+                "type": "string",
+                "declarations": [],
+                "schema": "string"
+              }
+            }
+          }
+        ]
+      }
+    },
+    {
+      "name": "prefix",
+      "type": "string | number | boolean | Element | Component | null | undefined",
+      "required": false,
+      "description": "Prefix source",
+      "tags": [],
+      "declarations": [],
+      "schema": {
+        "kind": "enum",
+        "type": "string | number | boolean | Element | Component | null | undefined",
+        "schema": [
+          "undefined",
+          "null",
+          "string",
+          "number",
+          "false",
+          "true",
+          "Element",
+          "ComponentOptions<any, any, any, ComputedOptions, MethodOptions, any, any, any, any>",
+          "FunctionalComponent<any, {}, any, {}>",
+          "ComponentPublicInstanceConstructor<any, any, any, any, ComputedOptions, MethodOptions>"
+        ]
+      }
+    },
+    {
+      "name": "suffix",
+      "type": "string | number | boolean | Element | Component | null | undefined",
+      "required": false,
+      "description": "Suffix source",
+      "tags": [],
+      "declarations": [],
+      "schema": {
+        "kind": "enum",
+        "type": "string | number | boolean | Element | Component | null | undefined",
+        "schema": [
+          "undefined",
+          "null",
+          "string",
+          "number",
+          "false",
+          "true",
+          "Element",
+          "ComponentOptions<any, any, any, ComputedOptions, MethodOptions, any, any, any, any>",
+          "FunctionalComponent<any, {}, any, {}>",
+          "ComponentPublicInstanceConstructor<any, any, any, any, ComputedOptions, MethodOptions>"
+        ]
+      }
+    },
+    {
+      "name": "ellipsis",
+      "type": "boolean | undefined",
+      "required": false,
+      "description": "",
+      "tags": [
+        {
+          "name": "deprecated",
+          "text": "Add an ellipsis suffix to action content. ellipsis appends `...` without truncating. Use truncate instead."
+        }
+      ],
+      "declarations": [],
+      "schema": {
+        "kind": "enum",
+        "type": "boolean | undefined",
+        "schema": [
+          "undefined",
+          "false",
+          "true"
+        ]
+      }
+    },
+    {
+      "name": "content",
+      "type": "string | undefined",
+      "required": false,
+      "description": "Content the action displays",
+      "tags": [],
+      "declarations": [],
+      "schema": {
+        "kind": "enum",
+        "type": "string | undefined",
+        "schema": [
+          "undefined",
+          "string"
+        ]
+      }
+    },
+    {
+      "name": "destructive",
+      "type": "boolean | undefined",
+      "required": false,
+      "description": "Destructive action",
+      "tags": [],
+      "declarations": [],
+      "schema": {
+        "kind": "enum",
+        "type": "boolean | undefined",
+        "schema": [
+          "undefined",
+          "false",
+          "true"
+        ]
+      }
+    }
+  ],
+  "events": [
+    {
+      "name": "action",
+      "description": "",
+      "params": {}
+    }
+  ],
+  "slots": []
+}

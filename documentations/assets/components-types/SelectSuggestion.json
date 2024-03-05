@@ -1,0 +1,16 @@
+{
+  "filePath": "src/components/TextField/types.ts",
+  "name": "SelectSuggestion",
+  "description": "",
+  "value": "interface SelectSuggestion {\n  suggestion?: string;\n}",
+  "members": [
+    {
+      "filePath": "src/components/TextField/types.ts",
+      "syntaxKind": "PropertySignature",
+      "name": "suggestion",
+      "value": "string",
+      "description": "",
+      "isOptional": true
+    }
+  ]
+}

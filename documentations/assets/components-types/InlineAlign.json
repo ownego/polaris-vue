@@ -1,0 +1,8 @@
+{
+  "filePath": "src/components/BlockStack/types.ts",
+  "kind": "TypeAliasDeclaration",
+  "name": "InlineAlign",
+  "value": "'start' | 'center' | 'end' | 'baseline' | 'stretch'",
+  "description": "",
+  "members": []
+}

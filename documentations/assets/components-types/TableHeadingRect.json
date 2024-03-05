@@ -1,0 +1,22 @@
+{
+  "filePath": "src/components/IndexTable/types.ts",
+  "name": "TableHeadingRect",
+  "description": "",
+  "value": "export interface TableHeadingRect {\n  offsetWidth: number;\n  offsetLeft: number;\n}",
+  "members": [
+    {
+      "filePath": "src/components/IndexTable/types.ts",
+      "syntaxKind": "PropertySignature",
+      "name": "offsetWidth",
+      "value": "number",
+      "description": ""
+    },
+    {
+      "filePath": "src/components/IndexTable/types.ts",
+      "syntaxKind": "PropertySignature",
+      "name": "offsetLeft",
+      "value": "number",
+      "description": ""
+    }
+  ]
+}

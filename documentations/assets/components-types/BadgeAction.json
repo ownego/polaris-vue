@@ -1,0 +1,16 @@
+{
+  "filePath": "Users/ser/scatola/jobs/opensources/polaris-vue/src/utilities/types.ts",
+  "name": "BadgeAction",
+  "description": "",
+  "value": "export interface BadgeAction {\n  badge?: {\n    tone: 'new';\n    content: string;\n  };\n}",
+  "members": [
+    {
+      "filePath": "Users/ser/scatola/jobs/opensources/polaris-vue/src/utilities/types.ts",
+      "syntaxKind": "PropertySignature",
+      "name": "badge",
+      "value": "{ tone: \"new\"; content: string; }",
+      "description": "",
+      "isOptional": true
+    }
+  ]
+}

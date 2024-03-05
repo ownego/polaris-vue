@@ -1,0 +1,8 @@
+{
+  "filePath": "Users/ser/scatola/jobs/opensources/polaris-vue/src/utilities/types.ts",
+  "kind": "TypeAliasDeclaration",
+  "name": "Error",
+  "value": "string | Element | (string | Element)[]",
+  "description": "",
+  "members": []
+}

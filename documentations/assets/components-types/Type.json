@@ -1,0 +1,8 @@
+{
+  "filePath": "src/components/TextField/types.ts",
+  "kind": "TypeAliasDeclaration",
+  "name": "Type",
+  "value": "'text' | 'email' | 'number' | 'integer' | 'password' | 'search' | 'tel' | 'url' | 'date' | 'datetime-local' | 'month' | 'time' | 'week' | 'currency'",
+  "description": "",
+  "members": []
+}

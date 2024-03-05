@@ -1,0 +1,8 @@
+{
+  "filePath": "src/components/Text/types.ts",
+  "kind": "TypeAliasDeclaration",
+  "name": "Variant",
+  "value": "'headingXs' | 'headingSm' | 'headingMd' | 'headingLg' | 'headingXl' | 'heading2xl' | 'heading3xl' | 'bodyXs' | 'bodySm' | 'bodyMd' | 'bodyLg'",
+  "description": "",
+  "members": []
+}

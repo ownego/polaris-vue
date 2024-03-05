@@ -1,0 +1,8 @@
+{
+  "filePath": "Users/ser/scatola/jobs/opensources/polaris-vue/src/components/IndexProvider/types.ts",
+  "kind": "TypeAliasDeclaration",
+  "name": "HandleSelectionChange",
+  "value": "(\n  selectionType: SelectionType,\n  toggleType: boolean,\n  selection?: string | Range,\n  sortOrder?: number,\n) => void",
+  "description": "",
+  "members": []
+}

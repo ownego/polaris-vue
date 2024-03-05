@@ -1,0 +1,397 @@
+{
+  "props": [
+    {
+      "name": "verticalAlign",
+      "type": "VerticalAlign | undefined",
+      "required": false,
+      "description": "",
+      "tags": [],
+      "declarations": [],
+      "schema": {
+        "kind": "enum",
+        "type": "VerticalAlign | undefined",
+        "schema": [
+          "undefined",
+          "\"baseline\"",
+          "\"top\"",
+          "\"bottom\"",
+          "\"middle\""
+        ]
+      }
+    },
+    {
+      "name": "defaultSortDirection",
+      "type": "SortDirection | undefined",
+      "required": false,
+      "description": "",
+      "tags": [],
+      "declarations": [],
+      "schema": {
+        "kind": "enum",
+        "type": "SortDirection | undefined",
+        "schema": [
+          "undefined",
+          "\"ascending\"",
+          "\"descending\"",
+          "\"none\""
+        ]
+      }
+    },
+    {
+      "name": "stickyHeadingCell",
+      "type": "boolean | undefined",
+      "required": false,
+      "description": "",
+      "tags": [],
+      "declarations": [],
+      "schema": {
+        "kind": "enum",
+        "type": "boolean | undefined",
+        "schema": [
+          "undefined",
+          "false",
+          "true"
+        ]
+      }
+    },
+    {
+      "name": "hovered",
+      "type": "boolean | undefined",
+      "required": false,
+      "description": "",
+      "tags": [],
+      "declarations": [],
+      "schema": {
+        "kind": "enum",
+        "type": "boolean | undefined",
+        "schema": [
+          "undefined",
+          "false",
+          "true"
+        ]
+      }
+    },
+    {
+      "name": "hasFixedNthColumn",
+      "type": "boolean | undefined",
+      "required": false,
+      "description": "",
+      "tags": [],
+      "declarations": [],
+      "schema": {
+        "kind": "enum",
+        "type": "boolean | undefined",
+        "schema": [
+          "undefined",
+          "false",
+          "true"
+        ]
+      }
+    },
+    {
+      "name": "fixedCellVisible",
+      "type": "boolean | undefined",
+      "required": false,
+      "description": "",
+      "tags": [],
+      "declarations": [],
+      "schema": {
+        "kind": "enum",
+        "type": "boolean | undefined",
+        "schema": [
+          "undefined",
+          "false",
+          "true"
+        ]
+      }
+    },
+    {
+      "name": "truncate",
+      "type": "boolean | undefined",
+      "required": false,
+      "description": "",
+      "tags": [],
+      "declarations": [],
+      "schema": {
+        "kind": "enum",
+        "type": "boolean | undefined",
+        "schema": [
+          "undefined",
+          "false",
+          "true"
+        ]
+      }
+    },
+    {
+      "name": "sortable",
+      "type": "boolean | undefined",
+      "required": false,
+      "description": "",
+      "tags": [],
+      "declarations": [],
+      "schema": {
+        "kind": "enum",
+        "type": "boolean | undefined",
+        "schema": [
+          "undefined",
+          "false",
+          "true"
+        ]
+      }
+    },
+    {
+      "name": "firstColumnMinWidth",
+      "type": "string | undefined",
+      "required": false,
+      "description": "",
+      "tags": [],
+      "declarations": [],
+      "schema": {
+        "kind": "enum",
+        "type": "string | undefined",
+        "schema": [
+          "undefined",
+          "string"
+        ]
+      }
+    },
+    {
+      "name": "header",
+      "type": "boolean | undefined",
+      "required": false,
+      "description": "",
+      "tags": [],
+      "declarations": [],
+      "schema": {
+        "kind": "enum",
+        "type": "boolean | undefined",
+        "schema": [
+          "undefined",
+          "false",
+          "true"
+        ]
+      }
+    },
+    {
+      "name": "sortDirection",
+      "type": "SortDirection | undefined",
+      "required": false,
+      "description": "",
+      "tags": [],
+      "declarations": [],
+      "schema": {
+        "kind": "enum",
+        "type": "SortDirection | undefined",
+        "schema": [
+          "undefined",
+          "\"ascending\"",
+          "\"descending\"",
+          "\"none\""
+        ]
+      }
+    },
+    {
+      "name": "contentType",
+      "type": "string | undefined",
+      "required": false,
+      "description": "",
+      "tags": [],
+      "declarations": [],
+      "schema": {
+        "kind": "enum",
+        "type": "string | undefined",
+        "schema": [
+          "undefined",
+          "string"
+        ]
+      }
+    },
+    {
+      "name": "nthColumn",
+      "type": "boolean | undefined",
+      "required": false,
+      "description": "",
+      "tags": [],
+      "declarations": [],
+      "schema": {
+        "kind": "enum",
+        "type": "boolean | undefined",
+        "schema": [
+          "undefined",
+          "false",
+          "true"
+        ]
+      }
+    },
+    {
+      "name": "firstColumn",
+      "type": "boolean | undefined",
+      "required": false,
+      "description": "",
+      "tags": [],
+      "declarations": [],
+      "schema": {
+        "kind": "enum",
+        "type": "boolean | undefined",
+        "schema": [
+          "undefined",
+          "false",
+          "true"
+        ]
+      }
+    },
+    {
+      "name": "total",
+      "type": "boolean | undefined",
+      "required": false,
+      "description": "",
+      "tags": [],
+      "declarations": [],
+      "schema": {
+        "kind": "enum",
+        "type": "boolean | undefined",
+        "schema": [
+          "undefined",
+          "false",
+          "true"
+        ]
+      }
+    },
+    {
+      "name": "totalInFooter",
+      "type": "boolean | undefined",
+      "required": false,
+      "description": "",
+      "tags": [],
+      "declarations": [],
+      "schema": {
+        "kind": "enum",
+        "type": "boolean | undefined",
+        "schema": [
+          "undefined",
+          "false",
+          "true"
+        ]
+      }
+    },
+    {
+      "name": "sorted",
+      "type": "boolean | undefined",
+      "required": false,
+      "description": "",
+      "tags": [],
+      "declarations": [],
+      "schema": {
+        "kind": "enum",
+        "type": "boolean | undefined",
+        "schema": [
+          "undefined",
+          "false",
+          "true"
+        ]
+      }
+    },
+    {
+      "name": "colSpan",
+      "type": "number | undefined",
+      "required": false,
+      "description": "",
+      "tags": [],
+      "declarations": [],
+      "schema": {
+        "kind": "enum",
+        "type": "number | undefined",
+        "schema": [
+          "undefined",
+          "number"
+        ]
+      }
+    },
+    {
+      "name": "setRef",
+      "type": "((ref: any) => void) | undefined",
+      "required": false,
+      "description": "",
+      "tags": [],
+      "declarations": [],
+      "schema": {
+        "kind": "enum",
+        "type": "((ref: any) => void) | undefined",
+        "schema": [
+          "undefined",
+          {
+            "kind": "event",
+            "type": "(ref: any): void",
+            "schema": []
+          }
+        ]
+      }
+    },
+    {
+      "name": "stickyCellWidth",
+      "type": "number | undefined",
+      "required": false,
+      "description": "",
+      "tags": [],
+      "declarations": [],
+      "schema": {
+        "kind": "enum",
+        "type": "number | undefined",
+        "schema": [
+          "undefined",
+          "number"
+        ]
+      }
+    },
+    {
+      "name": "inFixedNthColumn",
+      "type": "boolean | undefined",
+      "required": false,
+      "description": "",
+      "tags": [],
+      "declarations": [],
+      "schema": {
+        "kind": "enum",
+        "type": "boolean | undefined",
+        "schema": [
+          "undefined",
+          "false",
+          "true"
+        ]
+      }
+    },
+    {
+      "name": "lastFixedFirstColumn",
+      "type": "boolean | undefined",
+      "required": false,
+      "description": "",
+      "tags": [],
+      "declarations": [],
+      "schema": {
+        "kind": "enum",
+        "type": "boolean | undefined",
+        "schema": [
+          "undefined",
+          "false",
+          "true"
+        ]
+      }
+    }
+  ],
+  "events": [
+    {
+      "name": "",
+      "description": "",
+      "params": {}
+    }
+  ],
+  "slots": [
+    {
+      "name": "default",
+      "type": "VueNode",
+      "description": "",
+      "declarations": [],
+      "schema": "VueNode"
+    }
+  ]
+}

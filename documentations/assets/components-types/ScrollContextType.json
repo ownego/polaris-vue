@@ -1,0 +1,29 @@
+{
+  "filePath": "src/components/IndexTable/context.ts",
+  "name": "ScrollContextType",
+  "description": "",
+  "value": "export interface ScrollContextType {\n  scrollableContainer: HTMLDivElement | null;\n  canScrollLeft: boolean;\n  canScrollRight: boolean;\n}",
+  "members": [
+    {
+      "filePath": "src/components/IndexTable/context.ts",
+      "syntaxKind": "PropertySignature",
+      "name": "scrollableContainer",
+      "value": "HTMLDivElement",
+      "description": ""
+    },
+    {
+      "filePath": "src/components/IndexTable/context.ts",
+      "syntaxKind": "PropertySignature",
+      "name": "canScrollLeft",
+      "value": "boolean",
+      "description": ""
+    },
+    {
+      "filePath": "src/components/IndexTable/context.ts",
+      "syntaxKind": "PropertySignature",
+      "name": "canScrollRight",
+      "value": "boolean",
+      "description": ""
+    }
+  ]
+}

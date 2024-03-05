@@ -1,0 +1,8 @@
+{
+  "filePath": "src/components/Modal/utils.ts",
+  "kind": "TypeAliasDeclaration",
+  "name": "ModalSize",
+  "value": "'small' | 'large' | 'fullScreen'",
+  "description": "",
+  "members": []
+}

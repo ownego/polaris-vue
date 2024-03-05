@@ -1,0 +1,15 @@
+{
+  "filePath": "src/components/DataTable/types.ts",
+  "kind": "TypeAliasDeclaration",
+  "name": "DataTableEvents",
+  "value": "{\n  /** Callback fired on click or keypress of a sortable column heading. */\n  'sort': [headingIndex: number, direction: SortDirection];\n}",
+  "description": "",
+  "members": [
+    {
+      "filePath": "src/components/DataTable/types.ts",
+      "name": "'sort'",
+      "value": "[headingIndex: number, direction: SortDirection]",
+      "description": "Callback fired on click or keypress of a sortable column heading."
+    }
+  ]
+}

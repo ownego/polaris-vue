@@ -1,0 +1,8 @@
+{
+  "filePath": "src/utilities/color-transformers.ts",
+  "kind": "TypeAliasDeclaration",
+  "name": "ColorType",
+  "value": "'hex' | 'rgb' | 'rgba' | 'hsl' | 'hsla' | 'default'",
+  "description": "",
+  "members": []
+}

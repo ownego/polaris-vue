@@ -1,0 +1,8 @@
+{
+  "filePath": "Users/ser/scatola/jobs/opensources/polaris-vue/src/components/DropZone/utils.ts",
+  "kind": "TypeAliasDeclaration",
+  "name": "DropZoneEvent",
+  "value": "DragEvent | InputEvent",
+  "description": "",
+  "members": []
+}

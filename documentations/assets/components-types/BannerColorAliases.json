@@ -1,0 +1,29 @@
+{
+  "filePath": "src/components/Banner/types.ts",
+  "name": "BannerColorAliases",
+  "description": "",
+  "value": "interface BannerColorAliases {\n  background: ColorBackgroundAlias;\n  text: ColorTextAlias;\n  icon: ColorIconAlias | ColorTextAlias;\n}",
+  "members": [
+    {
+      "filePath": "src/components/Banner/types.ts",
+      "syntaxKind": "PropertySignature",
+      "name": "background",
+      "value": "ColorBackgroundAlias",
+      "description": ""
+    },
+    {
+      "filePath": "src/components/Banner/types.ts",
+      "syntaxKind": "PropertySignature",
+      "name": "text",
+      "value": "ColorTextAlias",
+      "description": ""
+    },
+    {
+      "filePath": "src/components/Banner/types.ts",
+      "syntaxKind": "PropertySignature",
+      "name": "icon",
+      "value": "ColorTextAlias | ColorIconAlias",
+      "description": ""
+    }
+  ]
+}

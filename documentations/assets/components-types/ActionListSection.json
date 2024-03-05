@@ -1,0 +1,23 @@
+{
+  "filePath": "Users/ser/scatola/jobs/opensources/polaris-vue/src/utilities/types.ts",
+  "name": "ActionListSection",
+  "description": "",
+  "value": "export interface ActionListSection {\n  /** Section title */\n  title?: string;\n  /** Collection of action items for the list */\n  items: ActionListItemDescriptor[];\n}",
+  "members": [
+    {
+      "filePath": "Users/ser/scatola/jobs/opensources/polaris-vue/src/utilities/types.ts",
+      "syntaxKind": "PropertySignature",
+      "name": "title",
+      "value": "string",
+      "description": "Section title",
+      "isOptional": true
+    },
+    {
+      "filePath": "Users/ser/scatola/jobs/opensources/polaris-vue/src/utilities/types.ts",
+      "syntaxKind": "PropertySignature",
+      "name": "items",
+      "value": "ActionListItemDescriptor[]",
+      "description": "Collection of action items for the list"
+    }
+  ]
+}

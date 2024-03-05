@@ -1,0 +1,224 @@
+{
+  "props": [
+    {
+      "name": "size",
+      "type": "\"medium\" | \"micro\" | undefined",
+      "required": false,
+      "description": "",
+      "tags": [],
+      "declarations": [],
+      "schema": {
+        "kind": "enum",
+        "type": "\"medium\" | \"micro\" | undefined",
+        "schema": [
+          "undefined",
+          "\"medium\"",
+          "\"micro\""
+        ]
+      }
+    },
+    {
+      "name": "id",
+      "type": "string | undefined",
+      "required": false,
+      "description": "A unique identifier for the action",
+      "tags": [],
+      "declarations": [],
+      "schema": {
+        "kind": "enum",
+        "type": "string | undefined",
+        "schema": [
+          "undefined",
+          "string"
+        ]
+      }
+    },
+    {
+      "name": "accessibilityLabel",
+      "type": "string | undefined",
+      "required": false,
+      "description": "Visually hidden text for screen readers",
+      "tags": [],
+      "declarations": [],
+      "schema": {
+        "kind": "enum",
+        "type": "string | undefined",
+        "schema": [
+          "undefined",
+          "string"
+        ]
+      }
+    },
+    {
+      "name": "disabled",
+      "type": "boolean | undefined",
+      "required": false,
+      "description": "Whether or not the action is disabled",
+      "tags": [],
+      "declarations": [],
+      "schema": {
+        "kind": "enum",
+        "type": "boolean | undefined",
+        "schema": [
+          "undefined",
+          "false",
+          "true"
+        ]
+      }
+    },
+    {
+      "name": "disclosure",
+      "type": "boolean | undefined",
+      "required": false,
+      "description": "",
+      "tags": [],
+      "declarations": [],
+      "schema": {
+        "kind": "enum",
+        "type": "boolean | undefined",
+        "schema": [
+          "undefined",
+          "false",
+          "true"
+        ]
+      }
+    },
+    {
+      "name": "url",
+      "type": "string | undefined",
+      "required": false,
+      "description": "A destination to link to, rendered in the action",
+      "tags": [],
+      "declarations": [],
+      "schema": {
+        "kind": "enum",
+        "type": "string | undefined",
+        "schema": [
+          "undefined",
+          "string"
+        ]
+      }
+    },
+    {
+      "name": "external",
+      "type": "boolean | undefined",
+      "required": false,
+      "description": "Forces url to open in a new tab",
+      "tags": [],
+      "declarations": [],
+      "schema": {
+        "kind": "enum",
+        "type": "boolean | undefined",
+        "schema": [
+          "undefined",
+          "false",
+          "true"
+        ]
+      }
+    },
+    {
+      "name": "target",
+      "type": "Target | undefined",
+      "required": false,
+      "description": "Where to display the url",
+      "tags": [],
+      "declarations": [],
+      "schema": {
+        "kind": "enum",
+        "type": "Target | undefined",
+        "schema": [
+          "undefined",
+          "\"_blank\"",
+          "\"_self\"",
+          "\"_parent\"",
+          "\"_top\""
+        ]
+      }
+    },
+    {
+      "name": "content",
+      "type": "string | undefined",
+      "required": false,
+      "description": "Content the action displays",
+      "tags": [],
+      "declarations": [],
+      "schema": {
+        "kind": "enum",
+        "type": "string | undefined",
+        "schema": [
+          "undefined",
+          "string"
+        ]
+      }
+    },
+    {
+      "name": "indicator",
+      "type": "boolean | undefined",
+      "required": false,
+      "description": "",
+      "tags": [],
+      "declarations": [],
+      "schema": {
+        "kind": "enum",
+        "type": "boolean | undefined",
+        "schema": [
+          "undefined",
+          "false",
+          "true"
+        ]
+      }
+    },
+    {
+      "name": "handleMeasurement",
+      "type": "((width: number) => void) | undefined",
+      "required": false,
+      "description": "",
+      "tags": [],
+      "declarations": [],
+      "schema": {
+        "kind": "enum",
+        "type": "((width: number) => void) | undefined",
+        "schema": [
+          "undefined",
+          {
+            "kind": "event",
+            "type": "(width: number): void",
+            "schema": []
+          }
+        ]
+      }
+    },
+    {
+      "name": "showContentInButton",
+      "type": "boolean | undefined",
+      "required": false,
+      "description": "",
+      "tags": [],
+      "declarations": [],
+      "schema": {
+        "kind": "enum",
+        "type": "boolean | undefined",
+        "schema": [
+          "undefined",
+          "false",
+          "true"
+        ]
+      }
+    }
+  ],
+  "events": [
+    {
+      "name": "handle-measurement",
+      "description": "",
+      "params": {
+        "width": "number"
+      }
+    },
+    {
+      "name": "action",
+      "description": "",
+      "params": {}
+    }
+  ],
+  "slots": []
+}

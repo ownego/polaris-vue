@@ -1,0 +1,16 @@
+{
+  "filePath": "Users/ser/scatola/jobs/opensources/polaris-vue/src/utilities/types.ts",
+  "name": "TooltipAction",
+  "description": "",
+  "value": "export interface TooltipAction {\n  /** Text content to render in a tooltip */\n  helpText?: VueNode;\n}",
+  "members": [
+    {
+      "filePath": "Users/ser/scatola/jobs/opensources/polaris-vue/src/utilities/types.ts",
+      "syntaxKind": "PropertySignature",
+      "name": "helpText",
+      "value": "VueNode",
+      "description": "Text content to render in a tooltip",
+      "isOptional": true
+    }
+  ]
+}

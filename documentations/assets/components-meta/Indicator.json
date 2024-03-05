@@ -1,0 +1,23 @@
+{
+  "props": [
+    {
+      "name": "pulse",
+      "type": "boolean | undefined",
+      "required": false,
+      "description": "",
+      "tags": [],
+      "declarations": [],
+      "schema": {
+        "kind": "enum",
+        "type": "boolean | undefined",
+        "schema": [
+          "undefined",
+          "false",
+          "true"
+        ]
+      }
+    }
+  ],
+  "events": [],
+  "slots": []
+}

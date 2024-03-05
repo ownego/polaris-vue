@@ -1,0 +1,31 @@
+{
+  "props": [
+    {
+      "name": "fill",
+      "type": "boolean | undefined",
+      "required": false,
+      "description": "Fill the remaining horizontal space in the stack with the item",
+      "tags": [],
+      "declarations": [],
+      "schema": {
+        "kind": "enum",
+        "type": "boolean | undefined",
+        "schema": [
+          "undefined",
+          "false",
+          "true"
+        ]
+      }
+    }
+  ],
+  "events": [],
+  "slots": [
+    {
+      "name": "default",
+      "type": "VueNode",
+      "description": "The content to display inside the layout.",
+      "declarations": [],
+      "schema": "VueNode"
+    }
+  ]
+}

@@ -1,0 +1,8 @@
+{
+  "filePath": "src/components/DataTable/types.ts",
+  "kind": "TypeAliasDeclaration",
+  "name": "TableData",
+  "value": "string | number | VueNode",
+  "description": "",
+  "members": []
+}

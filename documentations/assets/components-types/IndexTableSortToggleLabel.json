@@ -1,0 +1,8 @@
+{
+  "filePath": "src/components/IndexTable/types.ts",
+  "kind": "TypeAliasDeclaration",
+  "name": "IndexTableSortToggleLabel",
+  "value": "{\n  [key in IndexTableSortDirection]: string;\n}",
+  "description": "",
+  "members": []
+}

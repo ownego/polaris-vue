@@ -1,0 +1,40 @@
+{
+  "filePath": "src/utilities/geometry.ts",
+  "name": "RectConfig",
+  "description": "",
+  "value": "interface RectConfig {\n  top?: number;\n  left?: number;\n  width?: number;\n  height?: number;\n}",
+  "members": [
+    {
+      "filePath": "src/utilities/geometry.ts",
+      "syntaxKind": "PropertySignature",
+      "name": "top",
+      "value": "number",
+      "description": "",
+      "isOptional": true
+    },
+    {
+      "filePath": "src/utilities/geometry.ts",
+      "syntaxKind": "PropertySignature",
+      "name": "left",
+      "value": "number",
+      "description": "",
+      "isOptional": true
+    },
+    {
+      "filePath": "src/utilities/geometry.ts",
+      "syntaxKind": "PropertySignature",
+      "name": "width",
+      "value": "number",
+      "description": "",
+      "isOptional": true
+    },
+    {
+      "filePath": "src/utilities/geometry.ts",
+      "syntaxKind": "PropertySignature",
+      "name": "height",
+      "value": "number",
+      "description": "",
+      "isOptional": true
+    }
+  ]
+}

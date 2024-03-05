@@ -1,0 +1,8 @@
+{
+  "filePath": "src/components/TextField/types.ts",
+  "kind": "TypeAliasDeclaration",
+  "name": "InputMode",
+  "value": "'none' | 'text' | 'decimal' | 'numeric' | 'tel' | 'search' | 'email' | 'url'",
+  "description": "",
+  "members": []
+}

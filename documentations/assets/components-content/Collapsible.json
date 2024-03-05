@@ -1,0 +1,24 @@
+{
+  "name": "Collapsible",
+  "description": "The collapsible component is used to put long sections of information under a block that merchants can expand or collapse.",
+  "bestPractices": "The collapsible component should:\n\n- Be used for information that is lower priority or that merchants don’t need to see all the time\n- Not be used to hide error messages or other critical information that requires an immediate action",
+  "keywords": [
+    " hide\n  ",
+    " show\n  ",
+    " low priority\n  ",
+    " less important\n  ",
+    " disclosure\n  ",
+    " accordion\n  ",
+    " accordian\n  ",
+    " expand content\n  ",
+    " toggle\n  ",
+    " toggleable\n  ",
+    " reveal\n  ",
+    " show more\n  ",
+    " show all button\n  ",
+    " show hide\n  ",
+    " expanding view\n  ",
+    " collapse"
+  ],
+  "previewImg": "collapsible.png"
+}

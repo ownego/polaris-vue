@@ -1,0 +1,28 @@
+{
+  "name": "ResourceItem",
+  "description": "Resource items represent specific objects within a collection, such as products or orders. They provide contextual information on the resource type and link to the object’s detail page.",
+  "bestPractices": "Resource items should:\n\n- Be tailored to the specific type of context being displayed.\n- Perform an action when clicked. The action should navigate to the resource’s details page or provide more detail about the item.\n\nResource items can optionally:\n\n- Provide [shortcut actions](https://polaris.shopify.com/components/resource-list#study-custom-item-shortcut-actions) for quick access to frequent actions from the resource’s details page.",
+  "keywords": [
+    " ResourceItem\n  ",
+    " resource item\n  ",
+    " collections\n  ",
+    " items\n  ",
+    " objects\n  ",
+    " list of products\n  ",
+    " list of orders\n  ",
+    " product lists\n  ",
+    " order lists\n  ",
+    " collections lists\n  ",
+    " collection lists\n  ",
+    " list of collections\n  ",
+    " product listings list\n  ",
+    " channel lists\n  ",
+    " resource list attributes\n  ",
+    " list attributes\n  ",
+    " exceptions list\n  ",
+    " list secondary actions\n  ",
+    " secondary actions in a list\n  ",
+    " list of resources"
+  ],
+  "previewImg": "resource-item.png"
+}

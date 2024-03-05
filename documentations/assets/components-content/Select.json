@@ -1,0 +1,26 @@
+{
+  "name": "Select",
+  "description": "Select lets merchants choose one option from an options menu. Consider select when you have 4 or more options, to avoid cluttering the interface.",
+  "bestPractices": "The select component should:\n\n- Be used for selecting between 4 or more pre-defined options\n- Have a default option selected whenever possible\n- Use “Select” as a placeholder option only if there’s no logical default option",
+  "keywords": [
+    " on off\n  ",
+    " switch\n  ",
+    " adjuster\n  ",
+    " dropdown menu\n  ",
+    " drop",
+    "down menu\n  ",
+    " menu\n  ",
+    " form\n  ",
+    " combobox\n  ",
+    " combo box\n  ",
+    " choice list\n  ",
+    " choicelist\n  ",
+    " list\n  ",
+    " disabled select\n  ",
+    " field label\n  ",
+    " long list of options\n  ",
+    " long option list\n  ",
+    " separate error message"
+  ],
+  "previewImg": "select.png"
+}

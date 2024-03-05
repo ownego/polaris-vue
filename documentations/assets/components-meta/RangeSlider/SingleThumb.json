@@ -1,0 +1,398 @@
+{
+  "props": [
+    {
+      "name": "id",
+      "type": "string",
+      "required": true,
+      "description": "ID for range input",
+      "tags": [],
+      "declarations": [],
+      "schema": "string"
+    },
+    {
+      "name": "error",
+      "type": "Error | undefined",
+      "required": false,
+      "description": "Display an error message",
+      "tags": [],
+      "declarations": [],
+      "schema": {
+        "kind": "enum",
+        "type": "Error | undefined",
+        "schema": [
+          "undefined",
+          "string",
+          "Element",
+          {
+            "kind": "array",
+            "type": "(string | Element)[]",
+            "schema": [
+              {
+                "kind": "enum",
+                "type": "string | Element",
+                "schema": [
+                  "string",
+                  "Element"
+                ]
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "name": "disabled",
+      "type": "boolean | undefined",
+      "required": false,
+      "description": "Disable input",
+      "tags": [],
+      "declarations": [],
+      "schema": {
+        "kind": "enum",
+        "type": "boolean | undefined",
+        "schema": [
+          "undefined",
+          "false",
+          "true"
+        ]
+      }
+    },
+    {
+      "name": "label",
+      "type": "string | undefined",
+      "required": false,
+      "description": "Label for the range input",
+      "tags": [],
+      "declarations": [],
+      "schema": {
+        "kind": "enum",
+        "type": "string | undefined",
+        "schema": [
+          "undefined",
+          "string"
+        ]
+      }
+    },
+    {
+      "name": "labelHidden",
+      "type": "boolean | undefined",
+      "required": false,
+      "description": "Visually hide the label",
+      "tags": [],
+      "declarations": [],
+      "schema": {
+        "kind": "enum",
+        "type": "boolean | undefined",
+        "schema": [
+          "undefined",
+          "false",
+          "true"
+        ]
+      }
+    },
+    {
+      "name": "helpText",
+      "type": "string | undefined",
+      "required": false,
+      "description": "Additional text to aid in use",
+      "tags": [],
+      "declarations": [],
+      "schema": {
+        "kind": "enum",
+        "type": "string | undefined",
+        "schema": [
+          "undefined",
+          "string"
+        ]
+      }
+    },
+    {
+      "name": "modelValue",
+      "type": "number",
+      "required": true,
+      "description": "",
+      "tags": [],
+      "declarations": [],
+      "schema": "number"
+    },
+    {
+      "name": "output",
+      "type": "boolean | undefined",
+      "required": false,
+      "description": "Provide a tooltip while sliding, indicating the current value",
+      "tags": [],
+      "declarations": [],
+      "schema": {
+        "kind": "enum",
+        "type": "boolean | undefined",
+        "schema": [
+          "undefined",
+          "false",
+          "true"
+        ]
+      }
+    },
+    {
+      "name": "labelAction",
+      "type": "Action | undefined",
+      "required": false,
+      "description": "Adds an action to the label",
+      "tags": [],
+      "declarations": [],
+      "schema": {
+        "kind": "enum",
+        "type": "Action | undefined",
+        "schema": [
+          "undefined",
+          {
+            "kind": "object",
+            "type": "Action",
+            "schema": {
+              "id": {
+                "name": "id",
+                "global": false,
+                "description": "A unique identifier for the action",
+                "tags": [],
+                "required": false,
+                "type": "string | undefined",
+                "declarations": [],
+                "schema": {
+                  "kind": "enum",
+                  "type": "string | undefined",
+                  "schema": [
+                    "undefined",
+                    "string"
+                  ]
+                }
+              },
+              "content": {
+                "name": "content",
+                "global": false,
+                "description": "Content the action displays",
+                "tags": [],
+                "required": false,
+                "type": "string | undefined",
+                "declarations": [],
+                "schema": "string | undefined"
+              },
+              "accessibilityLabel": {
+                "name": "accessibilityLabel",
+                "global": false,
+                "description": "Visually hidden text for screen readers",
+                "tags": [],
+                "required": false,
+                "type": "string | undefined",
+                "declarations": [],
+                "schema": "string | undefined"
+              },
+              "url": {
+                "name": "url",
+                "global": false,
+                "description": "A destination to link to, rendered in the action",
+                "tags": [],
+                "required": false,
+                "type": "string | undefined",
+                "declarations": [],
+                "schema": "string | undefined"
+              },
+              "external": {
+                "name": "external",
+                "global": false,
+                "description": "Forces url to open in a new tab",
+                "tags": [],
+                "required": false,
+                "type": "boolean | undefined",
+                "declarations": [],
+                "schema": {
+                  "kind": "enum",
+                  "type": "boolean | undefined",
+                  "schema": [
+                    "undefined",
+                    "false",
+                    "true"
+                  ]
+                }
+              },
+              "target": {
+                "name": "target",
+                "global": false,
+                "description": "Where to display the url",
+                "tags": [],
+                "required": false,
+                "type": "Target | undefined",
+                "declarations": [],
+                "schema": {
+                  "kind": "enum",
+                  "type": "Target | undefined",
+                  "schema": [
+                    "undefined",
+                    "\"_blank\"",
+                    "\"_self\"",
+                    "\"_parent\"",
+                    "\"_top\""
+                  ]
+                }
+              },
+              "onAction": {
+                "name": "onAction",
+                "global": false,
+                "description": "Callback when an action takes place",
+                "tags": [],
+                "required": false,
+                "type": "(() => void) | undefined",
+                "declarations": [],
+                "schema": {
+                  "kind": "enum",
+                  "type": "(() => void) | undefined",
+                  "schema": [
+                    "undefined",
+                    {
+                      "kind": "event",
+                      "type": "(): void"
+                    }
+                  ]
+                }
+              },
+              "onMouseEnter": {
+                "name": "onMouseEnter",
+                "global": false,
+                "description": "Callback when mouse enter",
+                "tags": [],
+                "required": false,
+                "type": "(() => void) | undefined",
+                "declarations": [],
+                "schema": {
+                  "kind": "enum",
+                  "type": "(() => void) | undefined",
+                  "schema": [
+                    "undefined",
+                    {
+                      "kind": "event",
+                      "type": "(): void"
+                    }
+                  ]
+                }
+              },
+              "onTouchStart": {
+                "name": "onTouchStart",
+                "global": false,
+                "description": "Callback when element is touched",
+                "tags": [],
+                "required": false,
+                "type": "(() => void) | undefined",
+                "declarations": [],
+                "schema": {
+                  "kind": "enum",
+                  "type": "(() => void) | undefined",
+                  "schema": [
+                    "undefined",
+                    {
+                      "kind": "event",
+                      "type": "(): void"
+                    }
+                  ]
+                }
+              }
+            }
+          }
+        ]
+      }
+    },
+    {
+      "name": "max",
+      "type": "number",
+      "required": true,
+      "description": "Maximum possible value for range input",
+      "tags": [],
+      "declarations": [],
+      "schema": "number"
+    },
+    {
+      "name": "min",
+      "type": "number",
+      "required": true,
+      "description": "Minimum possible value for range input",
+      "tags": [],
+      "declarations": [],
+      "schema": "number"
+    },
+    {
+      "name": "prefix",
+      "type": "string | undefined",
+      "required": false,
+      "description": "Element to display before the input",
+      "tags": [],
+      "declarations": [],
+      "schema": {
+        "kind": "enum",
+        "type": "string | undefined",
+        "schema": [
+          "undefined",
+          "string"
+        ]
+      }
+    },
+    {
+      "name": "suffix",
+      "type": "string | undefined",
+      "required": false,
+      "description": "Element to display after the input",
+      "tags": [],
+      "declarations": [],
+      "schema": {
+        "kind": "enum",
+        "type": "string | undefined",
+        "schema": [
+          "undefined",
+          "string"
+        ]
+      }
+    },
+    {
+      "name": "step",
+      "type": "number",
+      "required": true,
+      "description": "Increment value for range input changes",
+      "tags": [],
+      "declarations": [],
+      "schema": "number"
+    }
+  ],
+  "events": [
+    {
+      "name": "",
+      "description": "",
+      "params": {}
+    }
+  ],
+  "slots": [
+    {
+      "name": "label",
+      "type": "VueNode",
+      "description": "Label for the range input",
+      "declarations": [],
+      "schema": "VueNode"
+    },
+    {
+      "name": "helpText",
+      "type": "VueNode",
+      "description": "Additional text to aid in use",
+      "declarations": [],
+      "schema": "VueNode"
+    },
+    {
+      "name": "prefix",
+      "type": "VueNode",
+      "description": "Element to display before the input",
+      "declarations": [],
+      "schema": "VueNode"
+    },
+    {
+      "name": "suffix",
+      "type": "VueNode",
+      "description": "Element to display after the input",
+      "declarations": [],
+      "schema": "VueNode"
+    }
+  ]
+}

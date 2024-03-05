@@ -1,0 +1,24 @@
+{
+  "filePath": "src/components/Collapsible/types.ts",
+  "name": "Transition",
+  "description": "",
+  "value": "export interface Transition {\n  /** Assign a transition duration to the collapsible animation. */\n  duration?: string;\n  /** Assign a transition timing function to the collapsible animation */\n  timingFunction?: string;\n}",
+  "members": [
+    {
+      "filePath": "src/components/Collapsible/types.ts",
+      "syntaxKind": "PropertySignature",
+      "name": "duration",
+      "value": "string",
+      "description": "Assign a transition duration to the collapsible animation.",
+      "isOptional": true
+    },
+    {
+      "filePath": "src/components/Collapsible/types.ts",
+      "syntaxKind": "PropertySignature",
+      "name": "timingFunction",
+      "value": "string",
+      "description": "Assign a transition timing function to the collapsible animation",
+      "isOptional": true
+    }
+  ]
+}

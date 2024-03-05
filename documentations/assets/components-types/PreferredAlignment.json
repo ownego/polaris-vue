@@ -1,0 +1,8 @@
+{
+  "filePath": "src/utilities/math.ts",
+  "kind": "TypeAliasDeclaration",
+  "name": "PreferredAlignment",
+  "value": "'left' | 'center' | 'right'",
+  "description": "",
+  "members": []
+}

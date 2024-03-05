@@ -1,0 +1,73 @@
+{
+  "filePath": "src/components/Badge/types.ts",
+  "syntaxKind": "EnumDeclaration",
+  "name": "ToneValue",
+  "value": "export enum ToneValue {\n  Info = 'info',\n  Success = 'success',\n  Warning = 'warning',\n  Critical = 'critical',\n  Attention = 'attention',\n  New = 'new',\n  InfoStrong = 'info-strong',\n  SuccessStrong = 'success-strong',\n  WarningStrong = 'warning-strong',\n  CriticalStrong = 'critical-strong',\n  AttentionStrong = 'attention-strong',\n  ReadOnly = 'read-only',\n  Enabled = 'enabled',\n}",
+  "members": [
+    {
+      "filePath": "src/components/Badge/types.ts",
+      "name": "Info",
+      "value": "info"
+    },
+    {
+      "filePath": "src/components/Badge/types.ts",
+      "name": "Success",
+      "value": "success"
+    },
+    {
+      "filePath": "src/components/Badge/types.ts",
+      "name": "Warning",
+      "value": "warning"
+    },
+    {
+      "filePath": "src/components/Badge/types.ts",
+      "name": "Critical",
+      "value": "critical"
+    },
+    {
+      "filePath": "src/components/Badge/types.ts",
+      "name": "Attention",
+      "value": "attention"
+    },
+    {
+      "filePath": "src/components/Badge/types.ts",
+      "name": "New",
+      "value": "new"
+    },
+    {
+      "filePath": "src/components/Badge/types.ts",
+      "name": "InfoStrong",
+      "value": "info-strong"
+    },
+    {
+      "filePath": "src/components/Badge/types.ts",
+      "name": "SuccessStrong",
+      "value": "success-strong"
+    },
+    {
+      "filePath": "src/components/Badge/types.ts",
+      "name": "WarningStrong",
+      "value": "warning-strong"
+    },
+    {
+      "filePath": "src/components/Badge/types.ts",
+      "name": "CriticalStrong",
+      "value": "critical-strong"
+    },
+    {
+      "filePath": "src/components/Badge/types.ts",
+      "name": "AttentionStrong",
+      "value": "attention-strong"
+    },
+    {
+      "filePath": "src/components/Badge/types.ts",
+      "name": "ReadOnly",
+      "value": "read-only"
+    },
+    {
+      "filePath": "src/components/Badge/types.ts",
+      "name": "Enabled",
+      "value": "enabled"
+    }
+  ]
+}

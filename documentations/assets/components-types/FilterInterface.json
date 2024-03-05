@@ -1,0 +1,94 @@
+{
+  "filePath": "Users/ser/scatola/jobs/opensources/polaris-vue/src/utilities/types.ts",
+  "name": "FilterInterface",
+  "description": "",
+  "value": "export interface FilterInterface {\n  /** A unique key used to identify the filter */\n  name: string;\n  /** The label for the filter */\n  label: string;\n  /** The markup for the given filter */\n  filter: VueNode;\n  /** Whether or not the filter should have a shortcut popover displayed */\n  shortcut?: boolean;\n  /** Whether or not the filter should be pinned, permanently displaying the filter */\n  pinned?: boolean;\n  /** Whether or not the filter is disabled */\n  disabled?: boolean;\n  /**\n   * @default false\n   * Whether or not the clear button is displayed\n   */\n  hideClearButton?: boolean;\n  /** Optional callback when filter is pressed */\n  onAction?: () => void;\n  /** Suffix source */\n  suffix?: VueNode;\n  /** Optional section heading that this filter will go under  */\n  section?: string;\n  /** Optional: hides the filter from the dropdown  */\n  hidden?: boolean;\n}",
+  "members": [
+    {
+      "filePath": "Users/ser/scatola/jobs/opensources/polaris-vue/src/utilities/types.ts",
+      "syntaxKind": "PropertySignature",
+      "name": "name",
+      "value": "string",
+      "description": "A unique key used to identify the filter"
+    },
+    {
+      "filePath": "Users/ser/scatola/jobs/opensources/polaris-vue/src/utilities/types.ts",
+      "syntaxKind": "PropertySignature",
+      "name": "label",
+      "value": "string",
+      "description": "The label for the filter"
+    },
+    {
+      "filePath": "Users/ser/scatola/jobs/opensources/polaris-vue/src/utilities/types.ts",
+      "syntaxKind": "PropertySignature",
+      "name": "filter",
+      "value": "VueNode",
+      "description": "The markup for the given filter"
+    },
+    {
+      "filePath": "Users/ser/scatola/jobs/opensources/polaris-vue/src/utilities/types.ts",
+      "syntaxKind": "PropertySignature",
+      "name": "shortcut",
+      "value": "boolean",
+      "description": "Whether or not the filter should have a shortcut popover displayed",
+      "isOptional": true
+    },
+    {
+      "filePath": "Users/ser/scatola/jobs/opensources/polaris-vue/src/utilities/types.ts",
+      "syntaxKind": "PropertySignature",
+      "name": "pinned",
+      "value": "boolean",
+      "description": "Whether or not the filter should be pinned, permanently displaying the filter",
+      "isOptional": true
+    },
+    {
+      "filePath": "Users/ser/scatola/jobs/opensources/polaris-vue/src/utilities/types.ts",
+      "syntaxKind": "PropertySignature",
+      "name": "disabled",
+      "value": "boolean",
+      "description": "Whether or not the filter is disabled",
+      "isOptional": true
+    },
+    {
+      "filePath": "Users/ser/scatola/jobs/opensources/polaris-vue/src/utilities/types.ts",
+      "syntaxKind": "PropertySignature",
+      "name": "hideClearButton",
+      "value": "boolean",
+      "description": "",
+      "isOptional": true,
+      "defaultValue": "false\nWhether or not the clear button is displayed"
+    },
+    {
+      "filePath": "Users/ser/scatola/jobs/opensources/polaris-vue/src/utilities/types.ts",
+      "syntaxKind": "PropertySignature",
+      "name": "onAction",
+      "value": "() => void",
+      "description": "Optional callback when filter is pressed",
+      "isOptional": true
+    },
+    {
+      "filePath": "Users/ser/scatola/jobs/opensources/polaris-vue/src/utilities/types.ts",
+      "syntaxKind": "PropertySignature",
+      "name": "suffix",
+      "value": "VueNode",
+      "description": "Suffix source",
+      "isOptional": true
+    },
+    {
+      "filePath": "Users/ser/scatola/jobs/opensources/polaris-vue/src/utilities/types.ts",
+      "syntaxKind": "PropertySignature",
+      "name": "section",
+      "value": "string",
+      "description": "Optional section heading that this filter will go under",
+      "isOptional": true
+    },
+    {
+      "filePath": "Users/ser/scatola/jobs/opensources/polaris-vue/src/utilities/types.ts",
+      "syntaxKind": "PropertySignature",
+      "name": "hidden",
+      "value": "boolean",
+      "description": "Optional: hides the filter from the dropdown",
+      "isOptional": true
+    }
+  ]
+}

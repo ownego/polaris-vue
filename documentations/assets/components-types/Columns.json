@@ -1,0 +1,8 @@
+{
+  "filePath": "src/components/InlineGrid/types.ts",
+  "kind": "TypeAliasDeclaration",
+  "name": "Columns",
+  "value": "ResponsiveProp<ColumnsType>",
+  "description": "",
+  "members": []
+}

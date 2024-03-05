@@ -1,0 +1,20 @@
+{
+  "name": "Checkbox",
+  "description": "Checkboxes are most commonly used to give merchants a way to make a range of selections (zero, one, or multiple). They may also be used as a way to have merchants indicate they agree to specific terms and services.",
+  "bestPractices": "Checkboxes should:\n\n- Work independently from each other. Selecting one checkbox shouldn’t change the selection status of another checkbox in the list. The exception is when a checkbox is used to make a bulk selection of multiple items.\n- Be framed positively. For example, say “Publish store” instead of “Hide store”.\n- Always have a label when used to activate or deactivate a setting.\n- Be listed according to a logical order, whether it’s alphabetical, numerical, time-based, or some other clear system.\n- Link to more information or include a subtitle as required to provide more explanation. Don’t rely on tooltips to explain a checkbox.",
+  "keywords": [
+    " accept\n  ",
+    " decline\n  ",
+    " terms\n  ",
+    " input\n  ",
+    " multiple choice lists\n  ",
+    " terms and services\n  ",
+    " checkboxes\n  ",
+    " check boxes\n  ",
+    " multiple selections\n  ",
+    " form selections\n  ",
+    " multi",
+    "choice lists"
+  ],
+  "previewImg": "checkbox.png"
+}

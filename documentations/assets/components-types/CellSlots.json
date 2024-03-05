@@ -1,0 +1,14 @@
+{
+  "filePath": "src/components/DataTable/types.ts",
+  "kind": "TypeAliasDeclaration",
+  "name": "CellSlots",
+  "value": "{\n  default: (_?: VueNode) => VNode[];\n}",
+  "description": "",
+  "members": [
+    {
+      "filePath": "src/components/DataTable/types.ts",
+      "name": "default",
+      "value": "(_?: VueNode) => VNode[]"
+    }
+  ]
+}

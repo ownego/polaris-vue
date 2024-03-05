@@ -1,0 +1,27 @@
+{
+  "props": [],
+  "events": [],
+  "slots": [
+    {
+      "name": "left",
+      "type": "VueNode",
+      "description": "",
+      "declarations": [],
+      "schema": "VueNode"
+    },
+    {
+      "name": "right",
+      "type": "VueNode",
+      "description": "",
+      "declarations": [],
+      "schema": "VueNode"
+    },
+    {
+      "name": "default",
+      "type": "VueNode",
+      "description": "",
+      "declarations": [],
+      "schema": "VueNode"
+    }
+  ]
+}

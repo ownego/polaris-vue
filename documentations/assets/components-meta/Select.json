@@ -1,0 +1,560 @@
+{
+  "props": [
+    {
+      "name": "name",
+      "type": "string | undefined",
+      "required": false,
+      "description": "Name for form input",
+      "tags": [],
+      "declarations": [],
+      "schema": {
+        "kind": "enum",
+        "type": "string | undefined",
+        "schema": [
+          "undefined",
+          "string"
+        ]
+      }
+    },
+    {
+      "name": "id",
+      "type": "string | undefined",
+      "required": false,
+      "description": "ID for form input",
+      "tags": [],
+      "declarations": [],
+      "schema": {
+        "kind": "enum",
+        "type": "string | undefined",
+        "schema": [
+          "undefined",
+          "string"
+        ]
+      }
+    },
+    {
+      "name": "options",
+      "type": "(string | StrictOption | SelectGroup)[] | undefined",
+      "required": false,
+      "description": "List of options or option groups to choose from",
+      "tags": [],
+      "declarations": [],
+      "schema": {
+        "kind": "enum",
+        "type": "(string | StrictOption | SelectGroup)[] | undefined",
+        "schema": [
+          "undefined",
+          {
+            "kind": "array",
+            "type": "(string | StrictOption | SelectGroup)[]",
+            "schema": [
+              {
+                "kind": "enum",
+                "type": "string | StrictOption | SelectGroup",
+                "schema": [
+                  "string",
+                  {
+                    "kind": "object",
+                    "type": "StrictOption",
+                    "schema": {
+                      "value": {
+                        "name": "value",
+                        "global": false,
+                        "description": "Machine value of the option; this is the value passed to `onChange`",
+                        "tags": [],
+                        "required": true,
+                        "type": "string",
+                        "declarations": [],
+                        "schema": "string"
+                      },
+                      "label": {
+                        "name": "label",
+                        "global": false,
+                        "description": "Human-readable text for the option",
+                        "tags": [],
+                        "required": true,
+                        "type": "string",
+                        "declarations": [],
+                        "schema": "string"
+                      },
+                      "disabled": {
+                        "name": "disabled",
+                        "global": false,
+                        "description": "Option will be visible, but not selectable",
+                        "tags": [],
+                        "required": false,
+                        "type": "boolean | undefined",
+                        "declarations": [],
+                        "schema": {
+                          "kind": "enum",
+                          "type": "boolean | undefined",
+                          "schema": [
+                            "undefined",
+                            "false",
+                            "true"
+                          ]
+                        }
+                      },
+                      "prefix": {
+                        "name": "prefix",
+                        "global": false,
+                        "description": "Element to display to the left of the option label. Does not show in the dropdown.",
+                        "tags": [],
+                        "required": false,
+                        "type": "VueNode",
+                        "declarations": [],
+                        "schema": "VueNode"
+                      },
+                      "key": {
+                        "name": "key",
+                        "global": false,
+                        "description": "Unique key applied to the option element. Defaults to option value prop when undefined.",
+                        "tags": [],
+                        "required": false,
+                        "type": "string | undefined",
+                        "declarations": [],
+                        "schema": {
+                          "kind": "enum",
+                          "type": "string | undefined",
+                          "schema": [
+                            "undefined",
+                            "string"
+                          ]
+                        }
+                      }
+                    }
+                  },
+                  {
+                    "kind": "object",
+                    "type": "SelectGroup",
+                    "schema": {
+                      "title": {
+                        "name": "title",
+                        "global": false,
+                        "description": "",
+                        "tags": [],
+                        "required": true,
+                        "type": "string",
+                        "declarations": [],
+                        "schema": "string"
+                      },
+                      "options": {
+                        "name": "options",
+                        "global": false,
+                        "description": "",
+                        "tags": [],
+                        "required": true,
+                        "type": "SelectOption[]",
+                        "declarations": [],
+                        "schema": {
+                          "kind": "array",
+                          "type": "SelectOption[]",
+                          "schema": [
+                            {
+                              "kind": "enum",
+                              "type": "SelectOption",
+                              "schema": [
+                                "string",
+                                "StrictOption"
+                              ]
+                            }
+                          ]
+                        }
+                      }
+                    }
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "name": "error",
+      "type": "boolean | Error | undefined",
+      "required": false,
+      "description": "Display an error state",
+      "tags": [],
+      "declarations": [],
+      "schema": {
+        "kind": "enum",
+        "type": "boolean | Error | undefined",
+        "schema": [
+          "undefined",
+          "string",
+          "false",
+          "true",
+          "Element",
+          {
+            "kind": "array",
+            "type": "(string | Element)[]",
+            "schema": [
+              {
+                "kind": "enum",
+                "type": "string | Element",
+                "schema": [
+                  "string",
+                  "Element"
+                ]
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "name": "tone",
+      "type": "\"magic\" | undefined",
+      "required": false,
+      "description": "Indicates the tone of the select",
+      "tags": [],
+      "declarations": [],
+      "schema": {
+        "kind": "enum",
+        "type": "\"magic\" | undefined",
+        "schema": [
+          "undefined",
+          "\"magic\""
+        ]
+      }
+    },
+    {
+      "name": "disabled",
+      "type": "boolean | undefined",
+      "required": false,
+      "description": "Disable input",
+      "tags": [],
+      "declarations": [],
+      "schema": {
+        "kind": "enum",
+        "type": "boolean | undefined",
+        "schema": [
+          "undefined",
+          "false",
+          "true"
+        ]
+      }
+    },
+    {
+      "name": "label",
+      "type": "string | undefined",
+      "required": false,
+      "description": "Label for the select",
+      "tags": [],
+      "declarations": [],
+      "schema": {
+        "kind": "enum",
+        "type": "string | undefined",
+        "schema": [
+          "undefined",
+          "string"
+        ]
+      }
+    },
+    {
+      "name": "labelHidden",
+      "type": "boolean | undefined",
+      "required": false,
+      "description": "Visually hide the label",
+      "tags": [],
+      "declarations": [],
+      "schema": {
+        "kind": "enum",
+        "type": "boolean | undefined",
+        "schema": [
+          "undefined",
+          "false",
+          "true"
+        ]
+      }
+    },
+    {
+      "name": "value",
+      "type": "string | undefined",
+      "required": false,
+      "description": "Value for form input",
+      "tags": [],
+      "declarations": [],
+      "schema": {
+        "kind": "enum",
+        "type": "string | undefined",
+        "schema": [
+          "undefined",
+          "string"
+        ]
+      }
+    },
+    {
+      "name": "helpText",
+      "type": "string | undefined",
+      "required": false,
+      "description": "Additional text to aide in use",
+      "tags": [],
+      "declarations": [],
+      "schema": {
+        "kind": "enum",
+        "type": "string | undefined",
+        "schema": [
+          "undefined",
+          "string"
+        ]
+      }
+    },
+    {
+      "name": "modelValue",
+      "type": "string | undefined",
+      "required": false,
+      "description": "",
+      "tags": [],
+      "declarations": [],
+      "schema": {
+        "kind": "enum",
+        "type": "string | undefined",
+        "schema": [
+          "undefined",
+          "string"
+        ]
+      }
+    },
+    {
+      "name": "labelAction",
+      "type": "Action | undefined",
+      "required": false,
+      "description": "Adds an action to the label",
+      "tags": [],
+      "declarations": [],
+      "schema": {
+        "kind": "enum",
+        "type": "Action | undefined",
+        "schema": [
+          "undefined",
+          {
+            "kind": "object",
+            "type": "Action",
+            "schema": {
+              "id": {
+                "name": "id",
+                "global": false,
+                "description": "A unique identifier for the action",
+                "tags": [],
+                "required": false,
+                "type": "string | undefined",
+                "declarations": [],
+                "schema": {
+                  "kind": "enum",
+                  "type": "string | undefined",
+                  "schema": [
+                    "undefined",
+                    "string"
+                  ]
+                }
+              },
+              "content": {
+                "name": "content",
+                "global": false,
+                "description": "Content the action displays",
+                "tags": [],
+                "required": false,
+                "type": "string | undefined",
+                "declarations": [],
+                "schema": "string | undefined"
+              },
+              "accessibilityLabel": {
+                "name": "accessibilityLabel",
+                "global": false,
+                "description": "Visually hidden text for screen readers",
+                "tags": [],
+                "required": false,
+                "type": "string | undefined",
+                "declarations": [],
+                "schema": "string | undefined"
+              },
+              "url": {
+                "name": "url",
+                "global": false,
+                "description": "A destination to link to, rendered in the action",
+                "tags": [],
+                "required": false,
+                "type": "string | undefined",
+                "declarations": [],
+                "schema": "string | undefined"
+              },
+              "external": {
+                "name": "external",
+                "global": false,
+                "description": "Forces url to open in a new tab",
+                "tags": [],
+                "required": false,
+                "type": "boolean | undefined",
+                "declarations": [],
+                "schema": {
+                  "kind": "enum",
+                  "type": "boolean | undefined",
+                  "schema": [
+                    "undefined",
+                    "false",
+                    "true"
+                  ]
+                }
+              },
+              "target": {
+                "name": "target",
+                "global": false,
+                "description": "Where to display the url",
+                "tags": [],
+                "required": false,
+                "type": "Target | undefined",
+                "declarations": [],
+                "schema": {
+                  "kind": "enum",
+                  "type": "Target | undefined",
+                  "schema": [
+                    "undefined",
+                    "\"_blank\"",
+                    "\"_self\"",
+                    "\"_parent\"",
+                    "\"_top\""
+                  ]
+                }
+              },
+              "onAction": {
+                "name": "onAction",
+                "global": false,
+                "description": "Callback when an action takes place",
+                "tags": [],
+                "required": false,
+                "type": "(() => void) | undefined",
+                "declarations": [],
+                "schema": {
+                  "kind": "enum",
+                  "type": "(() => void) | undefined",
+                  "schema": [
+                    "undefined",
+                    {
+                      "kind": "event",
+                      "type": "(): void"
+                    }
+                  ]
+                }
+              },
+              "onMouseEnter": {
+                "name": "onMouseEnter",
+                "global": false,
+                "description": "Callback when mouse enter",
+                "tags": [],
+                "required": false,
+                "type": "(() => void) | undefined",
+                "declarations": [],
+                "schema": {
+                  "kind": "enum",
+                  "type": "(() => void) | undefined",
+                  "schema": [
+                    "undefined",
+                    {
+                      "kind": "event",
+                      "type": "(): void"
+                    }
+                  ]
+                }
+              },
+              "onTouchStart": {
+                "name": "onTouchStart",
+                "global": false,
+                "description": "Callback when element is touched",
+                "tags": [],
+                "required": false,
+                "type": "(() => void) | undefined",
+                "declarations": [],
+                "schema": {
+                  "kind": "enum",
+                  "type": "(() => void) | undefined",
+                  "schema": [
+                    "undefined",
+                    {
+                      "kind": "event",
+                      "type": "(): void"
+                    }
+                  ]
+                }
+              }
+            }
+          }
+        ]
+      }
+    },
+    {
+      "name": "requiredIndicator",
+      "type": "boolean | undefined",
+      "required": false,
+      "description": "Visual required indicator, add an asterisk to label",
+      "tags": [],
+      "declarations": [],
+      "schema": {
+        "kind": "enum",
+        "type": "boolean | undefined",
+        "schema": [
+          "undefined",
+          "false",
+          "true"
+        ]
+      }
+    },
+    {
+      "name": "labelInline",
+      "type": "boolean | undefined",
+      "required": false,
+      "description": "Show the label to the left of the value, inside the control",
+      "tags": [],
+      "declarations": [],
+      "schema": {
+        "kind": "enum",
+        "type": "boolean | undefined",
+        "schema": [
+          "undefined",
+          "false",
+          "true"
+        ]
+      }
+    },
+    {
+      "name": "placeholder",
+      "type": "string | undefined",
+      "required": false,
+      "description": "Example text to display as placeholder",
+      "tags": [],
+      "declarations": [],
+      "schema": {
+        "kind": "enum",
+        "type": "string | undefined",
+        "schema": [
+          "undefined",
+          "string"
+        ]
+      }
+    }
+  ],
+  "events": [
+    {
+      "name": "",
+      "description": "",
+      "params": {}
+    }
+  ],
+  "slots": [
+    {
+      "name": "label",
+      "type": "VueNode",
+      "description": "Label for the select",
+      "declarations": [],
+      "schema": "VueNode"
+    },
+    {
+      "name": "helpText",
+      "type": "VueNode",
+      "description": "Additional text to aide in use",
+      "declarations": [],
+      "schema": "VueNode"
+    }
+  ]
+}

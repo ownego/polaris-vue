@@ -1,0 +1,8 @@
+{
+  "filePath": "src/components/Collapsible/types.ts",
+  "kind": "TypeAliasDeclaration",
+  "name": "AnimationState",
+  "value": "'idle' | 'measuring' | 'animating'",
+  "description": "",
+  "members": []
+}

@@ -1,0 +1,8 @@
+{
+  "filePath": "src/components/Tooltip/types.ts",
+  "kind": "TypeAliasDeclaration",
+  "name": "Padding",
+  "value": "'default' | Extract<SpaceScale, '400'>",
+  "description": "",
+  "members": []
+}

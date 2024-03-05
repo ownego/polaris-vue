@@ -1,0 +1,35 @@
+{
+  "props": [
+    {
+      "name": "gap",
+      "type": "\"tight\" | \"loose\" | undefined",
+      "required": false,
+      "description": "Determines the spacing between list items",
+      "tags": [],
+      "declarations": [],
+      "schema": {
+        "kind": "enum",
+        "type": "\"tight\" | \"loose\" | undefined",
+        "schema": [
+          "undefined",
+          "\"tight\"",
+          "\"loose\""
+        ]
+      }
+    }
+  ],
+  "events": [],
+  "slots": [
+    {
+      "name": "default",
+      "type": "{}",
+      "description": "",
+      "declarations": [],
+      "schema": {
+        "kind": "object",
+        "type": "{}",
+        "schema": {}
+      }
+    }
+  ]
+}

@@ -1,0 +1,81 @@
+{
+  "props": [
+    {
+      "name": "disabled",
+      "type": "boolean | undefined",
+      "required": false,
+      "description": "",
+      "tags": [],
+      "declarations": [],
+      "schema": {
+        "kind": "enum",
+        "type": "boolean | undefined",
+        "schema": [
+          "undefined",
+          "false",
+          "true"
+        ]
+      }
+    },
+    {
+      "name": "label",
+      "type": "string",
+      "required": true,
+      "description": "",
+      "tags": [],
+      "declarations": [],
+      "schema": "string"
+    },
+    {
+      "name": "hideFilters",
+      "type": "boolean | undefined",
+      "required": false,
+      "description": "",
+      "tags": [],
+      "declarations": [],
+      "schema": {
+        "kind": "enum",
+        "type": "boolean | undefined",
+        "schema": [
+          "undefined",
+          "false",
+          "true"
+        ]
+      }
+    },
+    {
+      "name": "hideQueryField",
+      "type": "boolean | undefined",
+      "required": false,
+      "description": "",
+      "tags": [],
+      "declarations": [],
+      "schema": {
+        "kind": "enum",
+        "type": "boolean | undefined",
+        "schema": [
+          "undefined",
+          "false",
+          "true"
+        ]
+      }
+    },
+    {
+      "name": "tooltipContent",
+      "type": "string",
+      "required": true,
+      "description": "",
+      "tags": [],
+      "declarations": [],
+      "schema": "string"
+    }
+  ],
+  "events": [
+    {
+      "name": "click",
+      "description": "",
+      "params": {}
+    }
+  ],
+  "slots": []
+}

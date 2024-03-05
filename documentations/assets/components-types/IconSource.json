@@ -1,0 +1,8 @@
+{
+  "filePath": "Users/ser/scatola/jobs/opensources/polaris-vue/src/utilities/types.ts",
+  "kind": "TypeAliasDeclaration",
+  "name": "IconSource",
+  "value": "Component | string | (string | Component)[]",
+  "description": "",
+  "members": []
+}

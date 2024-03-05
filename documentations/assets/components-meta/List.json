@@ -1,0 +1,58 @@
+{
+  "props": [
+    {
+      "name": "type",
+      "type": "Type | undefined",
+      "required": false,
+      "description": "Type of list to display",
+      "tags": [
+        {
+          "name": "default",
+          "text": "'bullet'"
+        }
+      ],
+      "declarations": [],
+      "schema": {
+        "kind": "enum",
+        "type": "Type | undefined",
+        "schema": [
+          "undefined",
+          "\"number\"",
+          "\"bullet\""
+        ]
+      }
+    },
+    {
+      "name": "gap",
+      "type": "Spacing | undefined",
+      "required": false,
+      "description": "Determines the space between list items",
+      "tags": [
+        {
+          "name": "default",
+          "text": "'loose'"
+        }
+      ],
+      "declarations": [],
+      "schema": {
+        "kind": "enum",
+        "type": "Spacing | undefined",
+        "schema": [
+          "undefined",
+          "\"extraTight\"",
+          "\"loose\""
+        ]
+      }
+    }
+  ],
+  "events": [],
+  "slots": [
+    {
+      "name": "default",
+      "type": "VueNode",
+      "description": "List item elements",
+      "declarations": [],
+      "schema": "VueNode"
+    }
+  ]
+}

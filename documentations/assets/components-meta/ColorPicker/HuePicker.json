@@ -1,0 +1,23 @@
+{
+  "props": [
+    {
+      "name": "hue",
+      "type": "number",
+      "required": true,
+      "description": "",
+      "tags": [],
+      "declarations": [],
+      "schema": "number"
+    }
+  ],
+  "events": [
+    {
+      "name": "change",
+      "description": "",
+      "params": {
+        "hue": "number"
+      }
+    }
+  ],
+  "slots": []
+}

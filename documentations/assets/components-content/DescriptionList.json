@@ -1,0 +1,17 @@
+{
+  "name": "DescriptionList",
+  "description": "Description lists are a way to organize and explain related information. They’re particularly useful when you need to list and define terms such as in a glossary.",
+  "bestPractices": "Description lists should:\n\n- Contain terms and associated explanations, or descriptions for each term.\n- Provide information that isn’t action-oriented.\n- Not be an excuse for using unnecessarily complicated or jargon-filled language. Generally, if merchants need a description list to understand the language in Shopify, we should look for opportunities to simplify the language.\n- Not be used to upsell merchants on a feature or service.",
+  "keywords": [
+    " DescriptionList\n  ",
+    " glossary\n  ",
+    " description\n  ",
+    " list terms\n  ",
+    " list and define terms\n  ",
+    " item lists\n  ",
+    " text lists\n  ",
+    " list of terms\n  ",
+    " term explaination"
+  ],
+  "previewImg": "description-list.png"
+}

@@ -1,0 +1,39 @@
+{
+  "filePath": "Users/ser/scatola/jobs/opensources/polaris-vue/src/utilities/types.ts",
+  "name": "LinkAction",
+  "description": "",
+  "value": "export interface LinkAction {\n  /** A unique identifier for the action */\n  id?: string;\n  /** Content the action displays */\n  content?: string;\n  /** Visually hidden text for screen readers */\n  accessibilityLabel?: string;\n  /** A destination to link to */\n  url: string;\n}",
+  "members": [
+    {
+      "filePath": "Users/ser/scatola/jobs/opensources/polaris-vue/src/utilities/types.ts",
+      "syntaxKind": "PropertySignature",
+      "name": "id",
+      "value": "string",
+      "description": "A unique identifier for the action",
+      "isOptional": true
+    },
+    {
+      "filePath": "Users/ser/scatola/jobs/opensources/polaris-vue/src/utilities/types.ts",
+      "syntaxKind": "PropertySignature",
+      "name": "content",
+      "value": "string",
+      "description": "Content the action displays",
+      "isOptional": true
+    },
+    {
+      "filePath": "Users/ser/scatola/jobs/opensources/polaris-vue/src/utilities/types.ts",
+      "syntaxKind": "PropertySignature",
+      "name": "accessibilityLabel",
+      "value": "string",
+      "description": "Visually hidden text for screen readers",
+      "isOptional": true
+    },
+    {
+      "filePath": "Users/ser/scatola/jobs/opensources/polaris-vue/src/utilities/types.ts",
+      "syntaxKind": "PropertySignature",
+      "name": "url",
+      "value": "string",
+      "description": "A destination to link to"
+    }
+  ]
+}

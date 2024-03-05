@@ -1,0 +1,253 @@
+{
+  "filePath": "src/components/Link/types.ts",
+  "name": "HistoryStateArray",
+  "description": "",
+  "value": "interface HistoryStateArray extends Array<HistoryStateValue> {\n}",
+  "members": [
+    {
+      "filePath": "src/components/Link/types.ts",
+      "syntaxKind": "PropertySignature",
+      "name": "length",
+      "value": "number",
+      "description": "Gets or sets the length of the array. This is a number one higher than the highest index in the array."
+    },
+    {
+      "filePath": "src/components/Link/types.ts",
+      "syntaxKind": "MethodSignature",
+      "name": "toString",
+      "value": "() => string",
+      "description": "Returns a string representation of an array."
+    },
+    {
+      "filePath": "src/components/Link/types.ts",
+      "syntaxKind": "MethodSignature",
+      "name": "toLocaleString",
+      "value": "() => string",
+      "description": "Returns a string representation of an array. The elements are converted to string using their toLocaleString methods."
+    },
+    {
+      "filePath": "src/components/Link/types.ts",
+      "syntaxKind": "MethodSignature",
+      "name": "pop",
+      "value": "() => HistoryStateValue",
+      "description": "Removes the last element from an array and returns it.\nIf the array is empty, undefined is returned and the array is not modified."
+    },
+    {
+      "filePath": "src/components/Link/types.ts",
+      "syntaxKind": "MethodSignature",
+      "name": "push",
+      "value": "(...items: HistoryStateValue[]) => number",
+      "description": "Appends new elements to the end of an array, and returns the new length of the array."
+    },
+    {
+      "filePath": "src/components/Link/types.ts",
+      "syntaxKind": "MethodSignature",
+      "name": "concat",
+      "value": "{ (...items: ConcatArray<HistoryStateValue>[]): HistoryStateValue[]; (...items: (HistoryStateValue | ConcatArray<HistoryStateValue>)[]): HistoryStateValue[]; }",
+      "description": "Combines two or more arrays.\nThis method returns a new array without modifying any existing arrays."
+    },
+    {
+      "filePath": "src/components/Link/types.ts",
+      "syntaxKind": "MethodSignature",
+      "name": "join",
+      "value": "(separator?: string) => string",
+      "description": "Adds all the elements of an array into a string, separated by the specified separator string."
+    },
+    {
+      "filePath": "src/components/Link/types.ts",
+      "syntaxKind": "MethodSignature",
+      "name": "reverse",
+      "value": "() => HistoryStateValue[]",
+      "description": "Reverses the elements in an array in place.\nThis method mutates the array and returns a reference to the same array."
+    },
+    {
+      "filePath": "src/components/Link/types.ts",
+      "syntaxKind": "MethodSignature",
+      "name": "shift",
+      "value": "() => HistoryStateValue",
+      "description": "Removes the first element from an array and returns it.\nIf the array is empty, undefined is returned and the array is not modified."
+    },
+    {
+      "filePath": "src/components/Link/types.ts",
+      "syntaxKind": "MethodSignature",
+      "name": "slice",
+      "value": "(start?: number, end?: number) => HistoryStateValue[]",
+      "description": "Returns a copy of a section of an array.\nFor both start and end, a negative index can be used to indicate an offset from the end of the array.\nFor example, -2 refers to the second to last element of the array."
+    },
+    {
+      "filePath": "src/components/Link/types.ts",
+      "syntaxKind": "MethodSignature",
+      "name": "sort",
+      "value": "(compareFn?: (a: HistoryStateValue, b: HistoryStateValue) => number) => HistoryStateArray",
+      "description": "Sorts an array in place.\nThis method mutates the array and returns a reference to the same array."
+    },
+    {
+      "filePath": "src/components/Link/types.ts",
+      "syntaxKind": "MethodSignature",
+      "name": "splice",
+      "value": "{ (start: number, deleteCount?: number): HistoryStateValue[]; (start: number, deleteCount: number, ...items: HistoryStateValue[]): HistoryStateValue[]; }",
+      "description": "Removes elements from an array and, if necessary, inserts new elements in their place, returning the deleted elements."
+    },
+    {
+      "filePath": "src/components/Link/types.ts",
+      "syntaxKind": "MethodSignature",
+      "name": "unshift",
+      "value": "(...items: HistoryStateValue[]) => number",
+      "description": "Inserts new elements at the start of an array, and returns the new length of the array."
+    },
+    {
+      "filePath": "src/components/Link/types.ts",
+      "syntaxKind": "MethodSignature",
+      "name": "indexOf",
+      "value": "(searchElement: HistoryStateValue, fromIndex?: number) => number",
+      "description": "Returns the index of the first occurrence of a value in an array, or -1 if it is not present."
+    },
+    {
+      "filePath": "src/components/Link/types.ts",
+      "syntaxKind": "MethodSignature",
+      "name": "lastIndexOf",
+      "value": "(searchElement: HistoryStateValue, fromIndex?: number) => number",
+      "description": "Returns the index of the last occurrence of a specified value in an array, or -1 if it is not present."
+    },
+    {
+      "filePath": "src/components/Link/types.ts",
+      "syntaxKind": "MethodSignature",
+      "name": "every",
+      "value": "{ <S extends HistoryStateValue>(predicate: (value: HistoryStateValue, index: number, array: HistoryStateValue[]) => value is S, thisArg?: any): this is S[]; (predicate: (value: HistoryStateValue, index: number, array: HistoryStateValue[]) => unknown, thisArg?: any): boolean; }",
+      "description": "Determines whether all the members of an array satisfy the specified test."
+    },
+    {
+      "filePath": "src/components/Link/types.ts",
+      "syntaxKind": "MethodSignature",
+      "name": "some",
+      "value": "(predicate: (value: HistoryStateValue, index: number, array: HistoryStateValue[]) => unknown, thisArg?: any) => boolean",
+      "description": "Determines whether the specified callback function returns true for any element of an array."
+    },
+    {
+      "filePath": "src/components/Link/types.ts",
+      "syntaxKind": "MethodSignature",
+      "name": "forEach",
+      "value": "(callbackfn: (value: HistoryStateValue, index: number, array: HistoryStateValue[]) => void, thisArg?: any) => void",
+      "description": "Performs the specified action for each element in an array."
+    },
+    {
+      "filePath": "src/components/Link/types.ts",
+      "syntaxKind": "MethodSignature",
+      "name": "map",
+      "value": "<U>(callbackfn: (value: HistoryStateValue, index: number, array: HistoryStateValue[]) => U, thisArg?: any) => U[]",
+      "description": "Calls a defined callback function on each element of an array, and returns an array that contains the results."
+    },
+    {
+      "filePath": "src/components/Link/types.ts",
+      "syntaxKind": "MethodSignature",
+      "name": "filter",
+      "value": "{ <S extends HistoryStateValue>(predicate: (value: HistoryStateValue, index: number, array: HistoryStateValue[]) => value is S, thisArg?: any): S[]; (predicate: (value: HistoryStateValue, index: number, array: HistoryStateValue[]) => unknown, thisArg?: any): HistoryStateValue[]; }",
+      "description": "Returns the elements of an array that meet the condition specified in a callback function."
+    },
+    {
+      "filePath": "src/components/Link/types.ts",
+      "syntaxKind": "MethodSignature",
+      "name": "reduce",
+      "value": "{ (callbackfn: (previousValue: HistoryStateValue, currentValue: HistoryStateValue, currentIndex: number, array: HistoryStateValue[]) => HistoryStateValue): HistoryStateValue; (callbackfn: (previousValue: HistoryStateValue, currentValue: HistoryStateValue, currentIndex: number, array: HistoryStateValue[]) => HistoryS...",
+      "description": "Calls the specified callback function for all the elements in an array. The return value of the callback function is the accumulated result, and is provided as an argument in the next call to the callback function."
+    },
+    {
+      "filePath": "src/components/Link/types.ts",
+      "syntaxKind": "MethodSignature",
+      "name": "reduceRight",
+      "value": "{ (callbackfn: (previousValue: HistoryStateValue, currentValue: HistoryStateValue, currentIndex: number, array: HistoryStateValue[]) => HistoryStateValue): HistoryStateValue; (callbackfn: (previousValue: HistoryStateValue, currentValue: HistoryStateValue, currentIndex: number, array: HistoryStateValue[]) => HistoryS...",
+      "description": "Calls the specified callback function for all the elements in an array, in descending order. The return value of the callback function is the accumulated result, and is provided as an argument in the next call to the callback function."
+    },
+    {
+      "filePath": "src/components/Link/types.ts",
+      "syntaxKind": "MethodSignature",
+      "name": "find",
+      "value": "{ <S extends HistoryStateValue>(predicate: (value: HistoryStateValue, index: number, obj: HistoryStateValue[]) => value is S, thisArg?: any): S; (predicate: (value: HistoryStateValue, index: number, obj: HistoryStateValue[]) => unknown, thisArg?: any): HistoryStateValue; }",
+      "description": "Returns the value of the first element in the array where predicate is true, and undefined\notherwise."
+    },
+    {
+      "filePath": "src/components/Link/types.ts",
+      "syntaxKind": "MethodSignature",
+      "name": "findIndex",
+      "value": "(predicate: (value: HistoryStateValue, index: number, obj: HistoryStateValue[]) => unknown, thisArg?: any) => number",
+      "description": "Returns the index of the first element in the array where predicate is true, and -1\notherwise."
+    },
+    {
+      "filePath": "src/components/Link/types.ts",
+      "syntaxKind": "MethodSignature",
+      "name": "fill",
+      "value": "(value: HistoryStateValue, start?: number, end?: number) => HistoryStateArray",
+      "description": "Changes all array elements from `start` to `end` index to a static `value` and returns the modified array"
+    },
+    {
+      "filePath": "src/components/Link/types.ts",
+      "syntaxKind": "MethodSignature",
+      "name": "copyWithin",
+      "value": "(target: number, start: number, end?: number) => HistoryStateArray",
+      "description": "Returns the this object after copying a section of the array identified by start and end\nto the same array starting at position target"
+    },
+    {
+      "filePath": "src/components/Link/types.ts",
+      "syntaxKind": "MethodSignature",
+      "name": "entries",
+      "value": "() => IterableIterator<[number, HistoryStateValue]>",
+      "description": "Returns an iterable of key, value pairs for every entry in the array"
+    },
+    {
+      "filePath": "src/components/Link/types.ts",
+      "syntaxKind": "MethodSignature",
+      "name": "keys",
+      "value": "() => IterableIterator<number>",
+      "description": "Returns an iterable of keys in the array"
+    },
+    {
+      "filePath": "src/components/Link/types.ts",
+      "syntaxKind": "MethodSignature",
+      "name": "values",
+      "value": "() => IterableIterator<HistoryStateValue>",
+      "description": "Returns an iterable of values in the array"
+    },
+    {
+      "filePath": "src/components/Link/types.ts",
+      "syntaxKind": "MethodSignature",
+      "name": "includes",
+      "value": "(searchElement: HistoryStateValue, fromIndex?: number) => boolean",
+      "description": "Determines whether an array includes a certain element, returning true or false as appropriate."
+    },
+    {
+      "filePath": "src/components/Link/types.ts",
+      "syntaxKind": "MethodSignature",
+      "name": "flatMap",
+      "value": "<U, This = undefined>(callback: (this: This, value: HistoryStateValue, index: number, array: HistoryStateValue[]) => U | readonly U[], thisArg?: This) => U[]",
+      "description": "Calls a defined callback function on each element of an array. Then, flattens the result into\na new array.\nThis is identical to a map followed by flat with depth 1."
+    },
+    {
+      "filePath": "src/components/Link/types.ts",
+      "syntaxKind": "MethodSignature",
+      "name": "flat",
+      "value": "<A, D extends number = 1>(this: A, depth?: D) => FlatArray<A, D>[]",
+      "description": "Returns a new array with all sub-array elements concatenated into it recursively up to the\nspecified depth."
+    },
+    {
+      "filePath": "src/components/Link/types.ts",
+      "syntaxKind": "MethodSignature",
+      "name": "__@iterator@1645",
+      "value": "() => IterableIterator<HistoryStateValue>",
+      "description": "Iterator"
+    },
+    {
+      "filePath": "src/components/Link/types.ts",
+      "syntaxKind": "PropertySignature",
+      "name": "__@unscopables@1647",
+      "value": "{ [x: number]: boolean; length?: boolean; toString?: boolean; toLocaleString?: boolean; pop?: boolean; push?: boolean; concat?: boolean; join?: boolean; reverse?: boolean; shift?: boolean; slice?: boolean; sort?: boolean; ... 23 more ...; at?: boolean; }",
+      "description": "Is an object whose properties have the value 'true'\nwhen they will be absent when used in a 'with' statement."
+    },
+    {
+      "filePath": "src/components/Link/types.ts",
+      "syntaxKind": "MethodSignature",
+      "name": "at",
+      "value": "(index: number) => HistoryStateValue",
+      "description": "Takes an integer value and returns the item at that index,\nallowing for positive and negative integers.\nNegative integers count back from the last item in the array."
+    }
+  ]
+}

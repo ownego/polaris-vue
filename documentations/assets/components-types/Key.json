@@ -1,0 +1,503 @@
+{
+  "filePath": "Users/ser/scatola/jobs/opensources/polaris-vue/src/utilities/types.ts",
+  "syntaxKind": "EnumDeclaration",
+  "name": "Key",
+  "value": "export enum Key {\n  Backspace = 8,\n  Tab = 9,\n  Enter = 13,\n  Shift = 16,\n  Ctrl = 17,\n  Alt = 18,\n  Pause = 19,\n  CapsLock = 20,\n  Escape = 27,\n  Space = 32,\n  PageUp = 33,\n  PageDown = 34,\n  End = 35,\n  Home = 36,\n  LeftArrow = 37,\n  UpArrow = 38,\n  RightArrow = 39,\n  DownArrow = 40,\n  Insert = 45,\n  Delete = 46,\n  Key0 = 48,\n  Key1 = 49,\n  Key2 = 50,\n  Key3 = 51,\n  Key4 = 52,\n  Key5 = 53,\n  Key6 = 54,\n  Key7 = 55,\n  Key8 = 56,\n  Key9 = 57,\n  KeyA = 65,\n  KeyB = 66,\n  KeyC = 67,\n  KeyD = 68,\n  KeyE = 69,\n  KeyF = 70,\n  KeyG = 71,\n  KeyH = 72,\n  KeyI = 73,\n  KeyJ = 74,\n  KeyK = 75,\n  KeyL = 76,\n  KeyM = 77,\n  KeyN = 78,\n  KeyO = 79,\n  KeyP = 80,\n  KeyQ = 81,\n  KeyR = 82,\n  KeyS = 83,\n  KeyT = 84,\n  KeyU = 85,\n  KeyV = 86,\n  KeyW = 87,\n  KeyX = 88,\n  KeyY = 89,\n  KeyZ = 90,\n  LeftMeta = 91,\n  RightMeta = 92,\n  Select = 93,\n  Numpad0 = 96,\n  Numpad1 = 97,\n  Numpad2 = 98,\n  Numpad3 = 99,\n  Numpad4 = 100,\n  Numpad5 = 101,\n  Numpad6 = 102,\n  Numpad7 = 103,\n  Numpad8 = 104,\n  Numpad9 = 105,\n  Multiply = 106,\n  Add = 107,\n  Subtract = 109,\n  Decimal = 110,\n  Divide = 111,\n  F1 = 112,\n  F2 = 113,\n  F3 = 114,\n  F4 = 115,\n  F5 = 116,\n  F6 = 117,\n  F7 = 118,\n  F8 = 119,\n  F9 = 120,\n  F10 = 121,\n  F11 = 122,\n  F12 = 123,\n  NumLock = 144,\n  ScrollLock = 145,\n  Semicolon = 186,\n  Equals = 187,\n  Comma = 188,\n  Dash = 189,\n  Period = 190,\n  ForwardSlash = 191,\n  GraveAccent = 192,\n  OpenBracket = 219,\n  BackSlash = 220,\n  CloseBracket = 221,\n  SingleQuote = 222,\n}",
+  "members": [
+    {
+      "filePath": "Users/ser/scatola/jobs/opensources/polaris-vue/src/utilities/types.ts",
+      "name": "Backspace",
+      "value": 8
+    },
+    {
+      "filePath": "Users/ser/scatola/jobs/opensources/polaris-vue/src/utilities/types.ts",
+      "name": "Tab",
+      "value": 9
+    },
+    {
+      "filePath": "Users/ser/scatola/jobs/opensources/polaris-vue/src/utilities/types.ts",
+      "name": "Enter",
+      "value": 13
+    },
+    {
+      "filePath": "Users/ser/scatola/jobs/opensources/polaris-vue/src/utilities/types.ts",
+      "name": "Shift",
+      "value": 16
+    },
+    {
+      "filePath": "Users/ser/scatola/jobs/opensources/polaris-vue/src/utilities/types.ts",
+      "name": "Ctrl",
+      "value": 17
+    },
+    {
+      "filePath": "Users/ser/scatola/jobs/opensources/polaris-vue/src/utilities/types.ts",
+      "name": "Alt",
+      "value": 18
+    },
+    {
+      "filePath": "Users/ser/scatola/jobs/opensources/polaris-vue/src/utilities/types.ts",
+      "name": "Pause",
+      "value": 19
+    },
+    {
+      "filePath": "Users/ser/scatola/jobs/opensources/polaris-vue/src/utilities/types.ts",
+      "name": "CapsLock",
+      "value": 20
+    },
+    {
+      "filePath": "Users/ser/scatola/jobs/opensources/polaris-vue/src/utilities/types.ts",
+      "name": "Escape",
+      "value": 27
+    },
+    {
+      "filePath": "Users/ser/scatola/jobs/opensources/polaris-vue/src/utilities/types.ts",
+      "name": "Space",
+      "value": 32
+    },
+    {
+      "filePath": "Users/ser/scatola/jobs/opensources/polaris-vue/src/utilities/types.ts",
+      "name": "PageUp",
+      "value": 33
+    },
+    {
+      "filePath": "Users/ser/scatola/jobs/opensources/polaris-vue/src/utilities/types.ts",
+      "name": "PageDown",
+      "value": 34
+    },
+    {
+      "filePath": "Users/ser/scatola/jobs/opensources/polaris-vue/src/utilities/types.ts",
+      "name": "End",
+      "value": 35
+    },
+    {
+      "filePath": "Users/ser/scatola/jobs/opensources/polaris-vue/src/utilities/types.ts",
+      "name": "Home",
+      "value": 36
+    },
+    {
+      "filePath": "Users/ser/scatola/jobs/opensources/polaris-vue/src/utilities/types.ts",
+      "name": "LeftArrow",
+      "value": 37
+    },
+    {
+      "filePath": "Users/ser/scatola/jobs/opensources/polaris-vue/src/utilities/types.ts",
+      "name": "UpArrow",
+      "value": 38
+    },
+    {
+      "filePath": "Users/ser/scatola/jobs/opensources/polaris-vue/src/utilities/types.ts",
+      "name": "RightArrow",
+      "value": 39
+    },
+    {
+      "filePath": "Users/ser/scatola/jobs/opensources/polaris-vue/src/utilities/types.ts",
+      "name": "DownArrow",
+      "value": 40
+    },
+    {
+      "filePath": "Users/ser/scatola/jobs/opensources/polaris-vue/src/utilities/types.ts",
+      "name": "Insert",
+      "value": 45
+    },
+    {
+      "filePath": "Users/ser/scatola/jobs/opensources/polaris-vue/src/utilities/types.ts",
+      "name": "Delete",
+      "value": 46
+    },
+    {
+      "filePath": "Users/ser/scatola/jobs/opensources/polaris-vue/src/utilities/types.ts",
+      "name": "Key0",
+      "value": 48
+    },
+    {
+      "filePath": "Users/ser/scatola/jobs/opensources/polaris-vue/src/utilities/types.ts",
+      "name": "Key1",
+      "value": 49
+    },
+    {
+      "filePath": "Users/ser/scatola/jobs/opensources/polaris-vue/src/utilities/types.ts",
+      "name": "Key2",
+      "value": 50
+    },
+    {
+      "filePath": "Users/ser/scatola/jobs/opensources/polaris-vue/src/utilities/types.ts",
+      "name": "Key3",
+      "value": 51
+    },
+    {
+      "filePath": "Users/ser/scatola/jobs/opensources/polaris-vue/src/utilities/types.ts",
+      "name": "Key4",
+      "value": 52
+    },
+    {
+      "filePath": "Users/ser/scatola/jobs/opensources/polaris-vue/src/utilities/types.ts",
+      "name": "Key5",
+      "value": 53
+    },
+    {
+      "filePath": "Users/ser/scatola/jobs/opensources/polaris-vue/src/utilities/types.ts",
+      "name": "Key6",
+      "value": 54
+    },
+    {
+      "filePath": "Users/ser/scatola/jobs/opensources/polaris-vue/src/utilities/types.ts",
+      "name": "Key7",
+      "value": 55
+    },
+    {
+      "filePath": "Users/ser/scatola/jobs/opensources/polaris-vue/src/utilities/types.ts",
+      "name": "Key8",
+      "value": 56
+    },
+    {
+      "filePath": "Users/ser/scatola/jobs/opensources/polaris-vue/src/utilities/types.ts",
+      "name": "Key9",
+      "value": 57
+    },
+    {
+      "filePath": "Users/ser/scatola/jobs/opensources/polaris-vue/src/utilities/types.ts",
+      "name": "KeyA",
+      "value": 65
+    },
+    {
+      "filePath": "Users/ser/scatola/jobs/opensources/polaris-vue/src/utilities/types.ts",
+      "name": "KeyB",
+      "value": 66
+    },
+    {
+      "filePath": "Users/ser/scatola/jobs/opensources/polaris-vue/src/utilities/types.ts",
+      "name": "KeyC",
+      "value": 67
+    },
+    {
+      "filePath": "Users/ser/scatola/jobs/opensources/polaris-vue/src/utilities/types.ts",
+      "name": "KeyD",
+      "value": 68
+    },
+    {
+      "filePath": "Users/ser/scatola/jobs/opensources/polaris-vue/src/utilities/types.ts",
+      "name": "KeyE",
+      "value": 69
+    },
+    {
+      "filePath": "Users/ser/scatola/jobs/opensources/polaris-vue/src/utilities/types.ts",
+      "name": "KeyF",
+      "value": 70
+    },
+    {
+      "filePath": "Users/ser/scatola/jobs/opensources/polaris-vue/src/utilities/types.ts",
+      "name": "KeyG",
+      "value": 71
+    },
+    {
+      "filePath": "Users/ser/scatola/jobs/opensources/polaris-vue/src/utilities/types.ts",
+      "name": "KeyH",
+      "value": 72
+    },
+    {
+      "filePath": "Users/ser/scatola/jobs/opensources/polaris-vue/src/utilities/types.ts",
+      "name": "KeyI",
+      "value": 73
+    },
+    {
+      "filePath": "Users/ser/scatola/jobs/opensources/polaris-vue/src/utilities/types.ts",
+      "name": "KeyJ",
+      "value": 74
+    },
+    {
+      "filePath": "Users/ser/scatola/jobs/opensources/polaris-vue/src/utilities/types.ts",
+      "name": "KeyK",
+      "value": 75
+    },
+    {
+      "filePath": "Users/ser/scatola/jobs/opensources/polaris-vue/src/utilities/types.ts",
+      "name": "KeyL",
+      "value": 76
+    },
+    {
+      "filePath": "Users/ser/scatola/jobs/opensources/polaris-vue/src/utilities/types.ts",
+      "name": "KeyM",
+      "value": 77
+    },
+    {
+      "filePath": "Users/ser/scatola/jobs/opensources/polaris-vue/src/utilities/types.ts",
+      "name": "KeyN",
+      "value": 78
+    },
+    {
+      "filePath": "Users/ser/scatola/jobs/opensources/polaris-vue/src/utilities/types.ts",
+      "name": "KeyO",
+      "value": 79
+    },
+    {
+      "filePath": "Users/ser/scatola/jobs/opensources/polaris-vue/src/utilities/types.ts",
+      "name": "KeyP",
+      "value": 80
+    },
+    {
+      "filePath": "Users/ser/scatola/jobs/opensources/polaris-vue/src/utilities/types.ts",
+      "name": "KeyQ",
+      "value": 81
+    },
+    {
+      "filePath": "Users/ser/scatola/jobs/opensources/polaris-vue/src/utilities/types.ts",
+      "name": "KeyR",
+      "value": 82
+    },
+    {
+      "filePath": "Users/ser/scatola/jobs/opensources/polaris-vue/src/utilities/types.ts",
+      "name": "KeyS",
+      "value": 83
+    },
+    {
+      "filePath": "Users/ser/scatola/jobs/opensources/polaris-vue/src/utilities/types.ts",
+      "name": "KeyT",
+      "value": 84
+    },
+    {
+      "filePath": "Users/ser/scatola/jobs/opensources/polaris-vue/src/utilities/types.ts",
+      "name": "KeyU",
+      "value": 85
+    },
+    {
+      "filePath": "Users/ser/scatola/jobs/opensources/polaris-vue/src/utilities/types.ts",
+      "name": "KeyV",
+      "value": 86
+    },
+    {
+      "filePath": "Users/ser/scatola/jobs/opensources/polaris-vue/src/utilities/types.ts",
+      "name": "KeyW",
+      "value": 87
+    },
+    {
+      "filePath": "Users/ser/scatola/jobs/opensources/polaris-vue/src/utilities/types.ts",
+      "name": "KeyX",
+      "value": 88
+    },
+    {
+      "filePath": "Users/ser/scatola/jobs/opensources/polaris-vue/src/utilities/types.ts",
+      "name": "KeyY",
+      "value": 89
+    },
+    {
+      "filePath": "Users/ser/scatola/jobs/opensources/polaris-vue/src/utilities/types.ts",
+      "name": "KeyZ",
+      "value": 90
+    },
+    {
+      "filePath": "Users/ser/scatola/jobs/opensources/polaris-vue/src/utilities/types.ts",
+      "name": "LeftMeta",
+      "value": 91
+    },
+    {
+      "filePath": "Users/ser/scatola/jobs/opensources/polaris-vue/src/utilities/types.ts",
+      "name": "RightMeta",
+      "value": 92
+    },
+    {
+      "filePath": "Users/ser/scatola/jobs/opensources/polaris-vue/src/utilities/types.ts",
+      "name": "Select",
+      "value": 93
+    },
+    {
+      "filePath": "Users/ser/scatola/jobs/opensources/polaris-vue/src/utilities/types.ts",
+      "name": "Numpad0",
+      "value": 96
+    },
+    {
+      "filePath": "Users/ser/scatola/jobs/opensources/polaris-vue/src/utilities/types.ts",
+      "name": "Numpad1",
+      "value": 97
+    },
+    {
+      "filePath": "Users/ser/scatola/jobs/opensources/polaris-vue/src/utilities/types.ts",
+      "name": "Numpad2",
+      "value": 98
+    },
+    {
+      "filePath": "Users/ser/scatola/jobs/opensources/polaris-vue/src/utilities/types.ts",
+      "name": "Numpad3",
+      "value": 99
+    },
+    {
+      "filePath": "Users/ser/scatola/jobs/opensources/polaris-vue/src/utilities/types.ts",
+      "name": "Numpad4",
+      "value": 100
+    },
+    {
+      "filePath": "Users/ser/scatola/jobs/opensources/polaris-vue/src/utilities/types.ts",
+      "name": "Numpad5",
+      "value": 101
+    },
+    {
+      "filePath": "Users/ser/scatola/jobs/opensources/polaris-vue/src/utilities/types.ts",
+      "name": "Numpad6",
+      "value": 102
+    },
+    {
+      "filePath": "Users/ser/scatola/jobs/opensources/polaris-vue/src/utilities/types.ts",
+      "name": "Numpad7",
+      "value": 103
+    },
+    {
+      "filePath": "Users/ser/scatola/jobs/opensources/polaris-vue/src/utilities/types.ts",
+      "name": "Numpad8",
+      "value": 104
+    },
+    {
+      "filePath": "Users/ser/scatola/jobs/opensources/polaris-vue/src/utilities/types.ts",
+      "name": "Numpad9",
+      "value": 105
+    },
+    {
+      "filePath": "Users/ser/scatola/jobs/opensources/polaris-vue/src/utilities/types.ts",
+      "name": "Multiply",
+      "value": 106
+    },
+    {
+      "filePath": "Users/ser/scatola/jobs/opensources/polaris-vue/src/utilities/types.ts",
+      "name": "Add",
+      "value": 107
+    },
+    {
+      "filePath": "Users/ser/scatola/jobs/opensources/polaris-vue/src/utilities/types.ts",
+      "name": "Subtract",
+      "value": 109
+    },
+    {
+      "filePath": "Users/ser/scatola/jobs/opensources/polaris-vue/src/utilities/types.ts",
+      "name": "Decimal",
+      "value": 110
+    },
+    {
+      "filePath": "Users/ser/scatola/jobs/opensources/polaris-vue/src/utilities/types.ts",
+      "name": "Divide",
+      "value": 111
+    },
+    {
+      "filePath": "Users/ser/scatola/jobs/opensources/polaris-vue/src/utilities/types.ts",
+      "name": "F1",
+      "value": 112
+    },
+    {
+      "filePath": "Users/ser/scatola/jobs/opensources/polaris-vue/src/utilities/types.ts",
+      "name": "F2",
+      "value": 113
+    },
+    {
+      "filePath": "Users/ser/scatola/jobs/opensources/polaris-vue/src/utilities/types.ts",
+      "name": "F3",
+      "value": 114
+    },
+    {
+      "filePath": "Users/ser/scatola/jobs/opensources/polaris-vue/src/utilities/types.ts",
+      "name": "F4",
+      "value": 115
+    },
+    {
+      "filePath": "Users/ser/scatola/jobs/opensources/polaris-vue/src/utilities/types.ts",
+      "name": "F5",
+      "value": 116
+    },
+    {
+      "filePath": "Users/ser/scatola/jobs/opensources/polaris-vue/src/utilities/types.ts",
+      "name": "F6",
+      "value": 117
+    },
+    {
+      "filePath": "Users/ser/scatola/jobs/opensources/polaris-vue/src/utilities/types.ts",
+      "name": "F7",
+      "value": 118
+    },
+    {
+      "filePath": "Users/ser/scatola/jobs/opensources/polaris-vue/src/utilities/types.ts",
+      "name": "F8",
+      "value": 119
+    },
+    {
+      "filePath": "Users/ser/scatola/jobs/opensources/polaris-vue/src/utilities/types.ts",
+      "name": "F9",
+      "value": 120
+    },
+    {
+      "filePath": "Users/ser/scatola/jobs/opensources/polaris-vue/src/utilities/types.ts",
+      "name": "F10",
+      "value": 121
+    },
+    {
+      "filePath": "Users/ser/scatola/jobs/opensources/polaris-vue/src/utilities/types.ts",
+      "name": "F11",
+      "value": 122
+    },
+    {
+      "filePath": "Users/ser/scatola/jobs/opensources/polaris-vue/src/utilities/types.ts",
+      "name": "F12",
+      "value": 123
+    },
+    {
+      "filePath": "Users/ser/scatola/jobs/opensources/polaris-vue/src/utilities/types.ts",
+      "name": "NumLock",
+      "value": 144
+    },
+    {
+      "filePath": "Users/ser/scatola/jobs/opensources/polaris-vue/src/utilities/types.ts",
+      "name": "ScrollLock",
+      "value": 145
+    },
+    {
+      "filePath": "Users/ser/scatola/jobs/opensources/polaris-vue/src/utilities/types.ts",
+      "name": "Semicolon",
+      "value": 186
+    },
+    {
+      "filePath": "Users/ser/scatola/jobs/opensources/polaris-vue/src/utilities/types.ts",
+      "name": "Equals",
+      "value": 187
+    },
+    {
+      "filePath": "Users/ser/scatola/jobs/opensources/polaris-vue/src/utilities/types.ts",
+      "name": "Comma",
+      "value": 188
+    },
+    {
+      "filePath": "Users/ser/scatola/jobs/opensources/polaris-vue/src/utilities/types.ts",
+      "name": "Dash",
+      "value": 189
+    },
+    {
+      "filePath": "Users/ser/scatola/jobs/opensources/polaris-vue/src/utilities/types.ts",
+      "name": "Period",
+      "value": 190
+    },
+    {
+      "filePath": "Users/ser/scatola/jobs/opensources/polaris-vue/src/utilities/types.ts",
+      "name": "ForwardSlash",
+      "value": 191
+    },
+    {
+      "filePath": "Users/ser/scatola/jobs/opensources/polaris-vue/src/utilities/types.ts",
+      "name": "GraveAccent",
+      "value": 192
+    },
+    {
+      "filePath": "Users/ser/scatola/jobs/opensources/polaris-vue/src/utilities/types.ts",
+      "name": "OpenBracket",
+      "value": 219
+    },
+    {
+      "filePath": "Users/ser/scatola/jobs/opensources/polaris-vue/src/utilities/types.ts",
+      "name": "BackSlash",
+      "value": 220
+    },
+    {
+      "filePath": "Users/ser/scatola/jobs/opensources/polaris-vue/src/utilities/types.ts",
+      "name": "CloseBracket",
+      "value": 221
+    },
+    {
+      "filePath": "Users/ser/scatola/jobs/opensources/polaris-vue/src/utilities/types.ts",
+      "name": "SingleQuote",
+      "value": 222
+    }
+  ]
+}

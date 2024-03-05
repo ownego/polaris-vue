@@ -1,0 +1,36 @@
+{
+  "filePath": "src/utilities/link/types.ts",
+  "kind": "TypeAliasDeclaration",
+  "name": "LinkLikeComponentProps",
+  "value": "{\n  /** The url to link to */\n  url: string;\n  /** Makes the link open in a new tab */\n  external?: boolean;\n  /** Where to display the url */\n  target?: Target;\n  /** Makes the browser download the url instead of opening it. Provides a hint for the downloaded filename if it is a string value. */\n  download?: string | boolean;\n  [key: string]: any;\n}",
+  "description": "In React version this interface extends React.HTMLProps<HTMLAnchorElement>\nbut in Vue version we don't need to extend any interface because we can use\nuseAttrs method",
+  "members": [
+    {
+      "filePath": "src/utilities/link/types.ts",
+      "name": "url",
+      "value": "string",
+      "description": "The url to link to"
+    },
+    {
+      "filePath": "src/utilities/link/types.ts",
+      "name": "external",
+      "value": "boolean",
+      "isOptional": true,
+      "description": "Makes the link open in a new tab"
+    },
+    {
+      "filePath": "src/utilities/link/types.ts",
+      "name": "target",
+      "value": "Target",
+      "isOptional": true,
+      "description": "Where to display the url"
+    },
+    {
+      "filePath": "src/utilities/link/types.ts",
+      "name": "download",
+      "value": "string | boolean",
+      "isOptional": true,
+      "description": "Makes the browser download the url instead of opening it. Provides a hint for the downloaded filename if it is a string value."
+    }
+  ]
+}

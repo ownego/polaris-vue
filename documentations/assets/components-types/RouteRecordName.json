@@ -1,0 +1,8 @@
+{
+  "filePath": "src/components/Link/types.ts",
+  "kind": "TypeAliasDeclaration",
+  "name": "RouteRecordName",
+  "value": "string | symbol",
+  "description": "",
+  "members": []
+}

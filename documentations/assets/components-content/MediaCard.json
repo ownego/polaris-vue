@@ -1,0 +1,17 @@
+{
+  "name": "MediaCard",
+  "description": "Media cards provide a consistent layout to present visual information to merchants. Visual media is used to provide additional context to the written information it's paired with.",
+  "bestPractices": "Media cards should:\n\n- Provide merchants with a clear call to action.\n- Always pair text with a visual component, for example, body text paired with an image, video, etc.\n- Use media to enhance the written content. The written content should be able to stand alone without an explanation from the paired media.\n- Show targeted content toward specific audiences to maximize relevance.\n- Be dismissable.",
+  "keywords": [
+    " MediaCard\n  ",
+    " actionable\n  ",
+    " updates\n  ",
+    " new features\n  ",
+    " Media card\n  ",
+    " image card\n  ",
+    " feature card\n  ",
+    " card with thumbnail\n  ",
+    " thumbnail card"
+  ],
+  "previewImg": "media-card.png"
+}

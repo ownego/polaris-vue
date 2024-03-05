@@ -1,0 +1,105 @@
+{
+  "props": [
+    {
+      "name": "preferredPosition",
+      "type": "PreferredPosition | undefined",
+      "required": false,
+      "description": "The preferred direction to open the popover",
+      "tags": [
+        {
+          "name": "default",
+          "text": "'below'"
+        }
+      ],
+      "declarations": [],
+      "schema": {
+        "kind": "enum",
+        "type": "PreferredPosition | undefined",
+        "schema": [
+          "undefined",
+          "\"above\"",
+          "\"below\"",
+          "\"mostSpace\""
+        ]
+      }
+    },
+    {
+      "name": "allowMultiple",
+      "type": "boolean | undefined",
+      "required": false,
+      "description": "Allows more than one option to be selected",
+      "tags": [],
+      "declarations": [],
+      "schema": {
+        "kind": "enum",
+        "type": "boolean | undefined",
+        "schema": [
+          "undefined",
+          "false",
+          "true"
+        ]
+      }
+    },
+    {
+      "name": "willLoadMoreOptions",
+      "type": "boolean | undefined",
+      "required": false,
+      "description": "Whether or not more options are available to lazy load when the bottom of the listbox reached. Use the hasMoreResults boolean provided by the GraphQL API of the paginated data.",
+      "tags": [],
+      "declarations": [],
+      "schema": {
+        "kind": "enum",
+        "type": "boolean | undefined",
+        "schema": [
+          "undefined",
+          "false",
+          "true"
+        ]
+      }
+    },
+    {
+      "name": "height",
+      "type": "string | undefined",
+      "required": false,
+      "description": "Height to set on the Popover Pane.",
+      "tags": [],
+      "declarations": [],
+      "schema": {
+        "kind": "enum",
+        "type": "string | undefined",
+        "schema": [
+          "undefined",
+          "string"
+        ]
+      }
+    }
+  ],
+  "events": [
+    {
+      "name": "scrolled-to-bottom",
+      "description": "Callback fired when the bottom of the lisbox is reached. Use to lazy load when listbox option data is paginated.",
+      "params": {}
+    },
+    {
+      "name": "close",
+      "description": "Callback fired when the popover closes",
+      "params": {}
+    }
+  ],
+  "slots": [
+    {
+      "name": "default",
+      "type": "VueNode",
+      "description": "The content to display inside the popover",
+      "declarations": [],
+      "schema": "VueNode"
+    },
+    {
+      "name": "activator",
+      "type": "VueNode",
+      "description": "The text field component to activate the Popover",
+      "declarations": [],
+      "schema": "VueNode"
+    }
+  ]
+}

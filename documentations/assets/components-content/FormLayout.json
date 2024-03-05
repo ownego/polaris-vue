@@ -1,0 +1,32 @@
+{
+  "name": "FormLayout",
+  "description": "Use form layout to arrange fields within a form using standard spacing. By default it stacks fields vertically but also supports horizontal groups of fields.",
+  "bestPractices": "Forms should:\n\n- Be considerate of merchants’ time and privacy by only asking for information that’s required\n- Group related tasks under section titles to provide more context and make the interface easier to scan\n- Follow a logical, predictable order—for example, always ask for first name first, and last name second on forms",
+  "keywords": [
+    " FormLayout\n  ",
+    " Group\n  ",
+    " responsive\n  ",
+    " no grid\n  ",
+    " stack fields\n  ",
+    " vertical\n  ",
+    " vertically\n  ",
+    " arrange fields\n  ",
+    " form spacing\n  ",
+    " field layouts\n  ",
+    " form field layouts\n  ",
+    " field stacking\n  ",
+    " stack fields\n  ",
+    " vertical form stacking\n  ",
+    " stack form fields vertically\n  ",
+    " form layout group\n  ",
+    " field group\n  ",
+    " multiple fields in a row\n  ",
+    " condensed field groups\n  ",
+    " short inputs\n  ",
+    " short input fields\n  ",
+    " short text fields\n  ",
+    " layout forms\n  ",
+    " layout input fields"
+  ],
+  "previewImg": "form-layout.png"
+}

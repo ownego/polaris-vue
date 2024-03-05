@@ -1,0 +1,37 @@
+{
+  "filePath": "src/components/RangeSlider/types.ts",
+  "kind": "TypeAliasDeclaration",
+  "name": "RangeSliderSlots",
+  "value": "{\n  /** Label for the range input */\n  label?: (_?: VueNode) => VNode[];\n  /** Additional text to aid in use */\n  helpText?: (_?: VueNode) => VNode[];\n  /** Element to display before the input */\n  prefix?: (_?: VueNode) => VNode[];\n  /** Element to display after the input */\n  suffix?: (_?: VueNode) => VNode[];\n}",
+  "description": "",
+  "members": [
+    {
+      "filePath": "src/components/RangeSlider/types.ts",
+      "name": "label",
+      "value": "(_?: VueNode) => VNode[]",
+      "isOptional": true,
+      "description": "Label for the range input"
+    },
+    {
+      "filePath": "src/components/RangeSlider/types.ts",
+      "name": "helpText",
+      "value": "(_?: VueNode) => VNode[]",
+      "isOptional": true,
+      "description": "Additional text to aid in use"
+    },
+    {
+      "filePath": "src/components/RangeSlider/types.ts",
+      "name": "prefix",
+      "value": "(_?: VueNode) => VNode[]",
+      "isOptional": true,
+      "description": "Element to display before the input"
+    },
+    {
+      "filePath": "src/components/RangeSlider/types.ts",
+      "name": "suffix",
+      "value": "(_?: VueNode) => VNode[]",
+      "isOptional": true,
+      "description": "Element to display after the input"
+    }
+  ]
+}

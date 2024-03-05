@@ -1,0 +1,95 @@
+{
+  "filePath": "src/components/IndexTable/types.ts",
+  "name": "IndexTableHeadingTitleNode",
+  "description": "",
+  "value": "interface IndexTableHeadingTitleNode extends IndexTableHeadingBase {\n  title: VueNode;\n  id: string;\n}",
+  "members": [
+    {
+      "filePath": "src/components/IndexTable/types.ts",
+      "syntaxKind": "PropertySignature",
+      "name": "title",
+      "value": "VueNode",
+      "description": ""
+    },
+    {
+      "filePath": "src/components/IndexTable/types.ts",
+      "syntaxKind": "PropertySignature",
+      "name": "id",
+      "value": "string",
+      "description": ""
+    },
+    {
+      "filePath": "src/components/IndexTable/types.ts",
+      "syntaxKind": "PropertySignature",
+      "name": "alignment",
+      "value": "\"start\" | \"center\" | \"end\"",
+      "description": "Adjust horizontal alignment of header content.",
+      "isOptional": true,
+      "defaultValue": "'start'"
+    },
+    {
+      "filePath": "src/components/IndexTable/types.ts",
+      "syntaxKind": "PropertySignature",
+      "name": "flush",
+      "value": "boolean",
+      "description": "",
+      "isOptional": true
+    },
+    {
+      "filePath": "src/components/IndexTable/types.ts",
+      "syntaxKind": "PropertySignature",
+      "name": "new",
+      "value": "boolean",
+      "description": "",
+      "isOptional": true
+    },
+    {
+      "filePath": "src/components/IndexTable/types.ts",
+      "syntaxKind": "PropertySignature",
+      "name": "hidden",
+      "value": "boolean",
+      "description": "",
+      "isOptional": true
+    },
+    {
+      "filePath": "src/components/IndexTable/types.ts",
+      "syntaxKind": "PropertySignature",
+      "name": "tooltipContent",
+      "value": "VueNode",
+      "description": "",
+      "isOptional": true
+    },
+    {
+      "filePath": "src/components/IndexTable/types.ts",
+      "syntaxKind": "PropertySignature",
+      "name": "tooltipWidth",
+      "value": "Width",
+      "description": "",
+      "isOptional": true
+    },
+    {
+      "filePath": "src/components/IndexTable/types.ts",
+      "syntaxKind": "PropertySignature",
+      "name": "tooltipPersistsOnClick",
+      "value": "boolean",
+      "description": "",
+      "isOptional": true
+    },
+    {
+      "filePath": "src/components/IndexTable/types.ts",
+      "syntaxKind": "PropertySignature",
+      "name": "defaultSortDirection",
+      "value": "IndexTableSortDirection",
+      "description": "The direction to sort the table rows on first click or keypress of this column heading.\nWhen not specified, the value from IndexTable.defaultSortDirection will be used.",
+      "isOptional": true
+    },
+    {
+      "filePath": "src/components/IndexTable/types.ts",
+      "syntaxKind": "PropertySignature",
+      "name": "paddingBlockEnd",
+      "value": "SpaceScale",
+      "description": "Horizontal end spacing around title. Accepts a spacing token.",
+      "isOptional": true
+    }
+  ]
+}

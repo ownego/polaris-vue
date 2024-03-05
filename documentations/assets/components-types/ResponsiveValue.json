@@ -1,0 +1,8 @@
+{
+  "filePath": "src/utilities/css.ts",
+  "kind": "TypeAliasDeclaration",
+  "name": "ResponsiveValue",
+  "value": "undefined | ResponsiveProp<T>",
+  "description": "",
+  "members": []
+}

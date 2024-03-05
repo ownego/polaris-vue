@@ -1,0 +1,1037 @@
+{
+  "props": [
+    {
+      "name": "as",
+      "type": "Element | undefined",
+      "required": false,
+      "description": "HTML Element type",
+      "tags": [
+        {
+          "name": "default",
+          "text": "'div'"
+        }
+      ],
+      "declarations": [],
+      "schema": {
+        "kind": "enum",
+        "type": "Element | undefined",
+        "schema": [
+          "undefined",
+          "\"div\"",
+          "\"span\"",
+          "\"ul\"",
+          "\"li\"",
+          "\"section\"",
+          "\"legend\""
+        ]
+      }
+    },
+    {
+      "name": "role",
+      "type": "\"menu\" | \"status\" | \"presentation\" | \"listbox\" | \"combobox\" | \"group\" | undefined",
+      "required": false,
+      "description": "Aria role",
+      "tags": [],
+      "declarations": [],
+      "schema": {
+        "kind": "enum",
+        "type": "\"menu\" | \"status\" | \"presentation\" | \"listbox\" | \"combobox\" | \"group\" | undefined",
+        "schema": [
+          "undefined",
+          "\"menu\"",
+          "\"status\"",
+          "\"presentation\"",
+          "\"listbox\"",
+          "\"combobox\"",
+          "\"group\""
+        ]
+      }
+    },
+    {
+      "name": "background",
+      "type": "ColorBackgroundAlias | undefined",
+      "required": false,
+      "description": "Background color",
+      "tags": [],
+      "declarations": [],
+      "schema": "ColorBackgroundAlias | undefined"
+    },
+    {
+      "name": "borderColor",
+      "type": "\"transparent\" | ColorBorderAlias | undefined",
+      "required": false,
+      "description": "Border color",
+      "tags": [],
+      "declarations": [],
+      "schema": {
+        "kind": "enum",
+        "type": "\"transparent\" | ColorBorderAlias | undefined",
+        "schema": [
+          "undefined",
+          "\"transparent\"",
+          "\"border-brand\"",
+          "\"border-caution\"",
+          "\"border-critical-secondary\"",
+          "\"border-critical\"",
+          "\"border-disabled\"",
+          "\"border-emphasis-active\"",
+          "\"border-emphasis-hover\"",
+          "\"border-emphasis\"",
+          "\"border-focus\"",
+          "\"border-hover\"",
+          "\"border-info\"",
+          "\"border-inverse-active\"",
+          "\"border-inverse-hover\"",
+          "\"border-inverse\"",
+          "\"border-magic-secondary\"",
+          "\"border-magic-secondary-hover\"",
+          "\"border-magic\"",
+          "\"border-secondary\"",
+          "\"border-success\"",
+          "\"border-tertiary\"",
+          "\"border-warning\"",
+          "\"border\"",
+          "\"input-border-active\"",
+          "\"input-border-hover\"",
+          "\"input-border\""
+        ]
+      }
+    },
+    {
+      "name": "borderStyle",
+      "type": "LineStyles | undefined",
+      "required": false,
+      "description": "Border style",
+      "tags": [],
+      "declarations": [],
+      "schema": {
+        "kind": "enum",
+        "type": "LineStyles | undefined",
+        "schema": [
+          "undefined",
+          "\"solid\"",
+          "\"dashed\""
+        ]
+      }
+    },
+    {
+      "name": "borderRadius",
+      "type": "BorderRadiusAliasOrScale | undefined",
+      "required": false,
+      "description": "Border radius",
+      "tags": [],
+      "declarations": [],
+      "schema": {
+        "kind": "enum",
+        "type": "BorderRadiusAliasOrScale | undefined",
+        "schema": [
+          "undefined",
+          "\"0\"",
+          "\"050\"",
+          "\"100\"",
+          "\"150\"",
+          "\"200\"",
+          "\"300\"",
+          "\"400\"",
+          "\"500\"",
+          "\"full\"",
+          "\"750\""
+        ]
+      }
+    },
+    {
+      "name": "borderEndStartRadius",
+      "type": "BorderRadiusAliasOrScale | undefined",
+      "required": false,
+      "description": "Vertical end horizontal start border radius",
+      "tags": [],
+      "declarations": [],
+      "schema": {
+        "kind": "enum",
+        "type": "BorderRadiusAliasOrScale | undefined",
+        "schema": [
+          "undefined",
+          "\"0\"",
+          "\"050\"",
+          "\"100\"",
+          "\"150\"",
+          "\"200\"",
+          "\"300\"",
+          "\"400\"",
+          "\"500\"",
+          "\"full\"",
+          "\"750\""
+        ]
+      }
+    },
+    {
+      "name": "borderEndEndRadius",
+      "type": "BorderRadiusAliasOrScale | undefined",
+      "required": false,
+      "description": "Vertical end horizontal end border radius",
+      "tags": [],
+      "declarations": [],
+      "schema": {
+        "kind": "enum",
+        "type": "BorderRadiusAliasOrScale | undefined",
+        "schema": [
+          "undefined",
+          "\"0\"",
+          "\"050\"",
+          "\"100\"",
+          "\"150\"",
+          "\"200\"",
+          "\"300\"",
+          "\"400\"",
+          "\"500\"",
+          "\"full\"",
+          "\"750\""
+        ]
+      }
+    },
+    {
+      "name": "borderStartStartRadius",
+      "type": "BorderRadiusAliasOrScale | undefined",
+      "required": false,
+      "description": "Vertical start horizontal start border radius",
+      "tags": [],
+      "declarations": [],
+      "schema": {
+        "kind": "enum",
+        "type": "BorderRadiusAliasOrScale | undefined",
+        "schema": [
+          "undefined",
+          "\"0\"",
+          "\"050\"",
+          "\"100\"",
+          "\"150\"",
+          "\"200\"",
+          "\"300\"",
+          "\"400\"",
+          "\"500\"",
+          "\"full\"",
+          "\"750\""
+        ]
+      }
+    },
+    {
+      "name": "borderStartEndRadius",
+      "type": "BorderRadiusAliasOrScale | undefined",
+      "required": false,
+      "description": "Vertical start horizontal end border radius",
+      "tags": [],
+      "declarations": [],
+      "schema": {
+        "kind": "enum",
+        "type": "BorderRadiusAliasOrScale | undefined",
+        "schema": [
+          "undefined",
+          "\"0\"",
+          "\"050\"",
+          "\"100\"",
+          "\"150\"",
+          "\"200\"",
+          "\"300\"",
+          "\"400\"",
+          "\"500\"",
+          "\"full\"",
+          "\"750\""
+        ]
+      }
+    },
+    {
+      "name": "borderWidth",
+      "type": "BorderWidthScale | undefined",
+      "required": false,
+      "description": "Border width",
+      "tags": [],
+      "declarations": [],
+      "schema": {
+        "kind": "enum",
+        "type": "BorderWidthScale | undefined",
+        "schema": [
+          "undefined",
+          "\"0\"",
+          "\"025\"",
+          "\"050\"",
+          "\"100\"",
+          "\"0165\""
+        ]
+      }
+    },
+    {
+      "name": "borderBlockStartWidth",
+      "type": "BorderWidthScale | undefined",
+      "required": false,
+      "description": "Vertical start border width",
+      "tags": [],
+      "declarations": [],
+      "schema": {
+        "kind": "enum",
+        "type": "BorderWidthScale | undefined",
+        "schema": [
+          "undefined",
+          "\"0\"",
+          "\"025\"",
+          "\"050\"",
+          "\"100\"",
+          "\"0165\""
+        ]
+      }
+    },
+    {
+      "name": "borderBlockEndWidth",
+      "type": "BorderWidthScale | undefined",
+      "required": false,
+      "description": "Vertical end border width",
+      "tags": [],
+      "declarations": [],
+      "schema": {
+        "kind": "enum",
+        "type": "BorderWidthScale | undefined",
+        "schema": [
+          "undefined",
+          "\"0\"",
+          "\"025\"",
+          "\"050\"",
+          "\"100\"",
+          "\"0165\""
+        ]
+      }
+    },
+    {
+      "name": "borderInlineStartWidth",
+      "type": "BorderWidthScale | undefined",
+      "required": false,
+      "description": "Horizontal start border width",
+      "tags": [],
+      "declarations": [],
+      "schema": {
+        "kind": "enum",
+        "type": "BorderWidthScale | undefined",
+        "schema": [
+          "undefined",
+          "\"0\"",
+          "\"025\"",
+          "\"050\"",
+          "\"100\"",
+          "\"0165\""
+        ]
+      }
+    },
+    {
+      "name": "borderInlineEndWidth",
+      "type": "BorderWidthScale | undefined",
+      "required": false,
+      "description": "Horizontal end border width",
+      "tags": [],
+      "declarations": [],
+      "schema": {
+        "kind": "enum",
+        "type": "BorderWidthScale | undefined",
+        "schema": [
+          "undefined",
+          "\"0\"",
+          "\"025\"",
+          "\"050\"",
+          "\"100\"",
+          "\"0165\""
+        ]
+      }
+    },
+    {
+      "name": "color",
+      "type": "ColorTextAlias | undefined",
+      "required": false,
+      "description": "Color of children",
+      "tags": [],
+      "declarations": [],
+      "schema": "ColorTextAlias | undefined"
+    },
+    {
+      "name": "minHeight",
+      "type": "string | undefined",
+      "required": false,
+      "description": "Minimum height of container",
+      "tags": [],
+      "declarations": [],
+      "schema": {
+        "kind": "enum",
+        "type": "string | undefined",
+        "schema": [
+          "undefined",
+          "string"
+        ]
+      }
+    },
+    {
+      "name": "minWidth",
+      "type": "string | undefined",
+      "required": false,
+      "description": "Minimum width of container",
+      "tags": [],
+      "declarations": [],
+      "schema": {
+        "kind": "enum",
+        "type": "string | undefined",
+        "schema": [
+          "undefined",
+          "string"
+        ]
+      }
+    },
+    {
+      "name": "maxWidth",
+      "type": "string | undefined",
+      "required": false,
+      "description": "Maximum width of container",
+      "tags": [],
+      "declarations": [],
+      "schema": {
+        "kind": "enum",
+        "type": "string | undefined",
+        "schema": [
+          "undefined",
+          "string"
+        ]
+      }
+    },
+    {
+      "name": "overflowX",
+      "type": "Overflow | undefined",
+      "required": false,
+      "description": "Clip horizontal content of children",
+      "tags": [],
+      "declarations": [],
+      "schema": {
+        "kind": "enum",
+        "type": "Overflow | undefined",
+        "schema": [
+          "undefined",
+          "\"hidden\"",
+          "\"scroll\"",
+          "\"clip\""
+        ]
+      }
+    },
+    {
+      "name": "overflowY",
+      "type": "Overflow | undefined",
+      "required": false,
+      "description": "Clip vertical content of children",
+      "tags": [],
+      "declarations": [],
+      "schema": {
+        "kind": "enum",
+        "type": "Overflow | undefined",
+        "schema": [
+          "undefined",
+          "\"hidden\"",
+          "\"scroll\"",
+          "\"clip\""
+        ]
+      }
+    },
+    {
+      "name": "padding",
+      "type": "Spacing | undefined",
+      "required": false,
+      "description": "Spacing around children. Accepts a spacing token or an object of spacing tokens for different screen sizes.",
+      "tags": [
+        {
+          "name": "example",
+          "text": "padding='400'\npadding={{xs: '200', sm: '300', md: '400', lg: '500', xl: '600'}}"
+        }
+      ],
+      "declarations": [],
+      "schema": {
+        "kind": "enum",
+        "type": "Spacing | undefined",
+        "schema": [
+          "undefined",
+          "\"0\"",
+          "\"025\"",
+          "\"050\"",
+          "\"100\"",
+          "\"150\"",
+          "\"200\"",
+          "\"300\"",
+          "\"400\"",
+          "\"500\"",
+          "\"600\"",
+          "\"800\"",
+          "\"1000\"",
+          "\"1200\"",
+          "\"1600\"",
+          "\"2000\"",
+          "\"2400\"",
+          "\"2800\"",
+          "\"3200\"",
+          "ResponsivePropConfig<SpaceScale>"
+        ]
+      }
+    },
+    {
+      "name": "paddingBlock",
+      "type": "Spacing | undefined",
+      "required": false,
+      "description": "Vertical start and end spacing around children. Accepts a spacing token or an object of spacing tokens for different screen sizes.",
+      "tags": [
+        {
+          "name": "example",
+          "text": "paddingBlock='400'\npaddingBlock={{xs: '200', sm: '300', md: '400', lg: '500', xl: '600'}}"
+        }
+      ],
+      "declarations": [],
+      "schema": {
+        "kind": "enum",
+        "type": "Spacing | undefined",
+        "schema": [
+          "undefined",
+          "\"0\"",
+          "\"025\"",
+          "\"050\"",
+          "\"100\"",
+          "\"150\"",
+          "\"200\"",
+          "\"300\"",
+          "\"400\"",
+          "\"500\"",
+          "\"600\"",
+          "\"800\"",
+          "\"1000\"",
+          "\"1200\"",
+          "\"1600\"",
+          "\"2000\"",
+          "\"2400\"",
+          "\"2800\"",
+          "\"3200\"",
+          "ResponsivePropConfig<SpaceScale>"
+        ]
+      }
+    },
+    {
+      "name": "paddingBlockStart",
+      "type": "Spacing | undefined",
+      "required": false,
+      "description": "Vertical start spacing around children. Accepts a spacing token or an object of spacing tokens for different screen sizes.",
+      "tags": [
+        {
+          "name": "example",
+          "text": "paddingBlockStart='400'\npaddingBlockStart={{xs: '200', sm: '300', md: '400', lg: '500', xl: '600'}}"
+        }
+      ],
+      "declarations": [],
+      "schema": {
+        "kind": "enum",
+        "type": "Spacing | undefined",
+        "schema": [
+          "undefined",
+          "\"0\"",
+          "\"025\"",
+          "\"050\"",
+          "\"100\"",
+          "\"150\"",
+          "\"200\"",
+          "\"300\"",
+          "\"400\"",
+          "\"500\"",
+          "\"600\"",
+          "\"800\"",
+          "\"1000\"",
+          "\"1200\"",
+          "\"1600\"",
+          "\"2000\"",
+          "\"2400\"",
+          "\"2800\"",
+          "\"3200\"",
+          "ResponsivePropConfig<SpaceScale>"
+        ]
+      }
+    },
+    {
+      "name": "paddingBlockEnd",
+      "type": "Spacing | undefined",
+      "required": false,
+      "description": "Vertical end spacing around children. Accepts a spacing token or an object of spacing tokens for different screen sizes.",
+      "tags": [
+        {
+          "name": "example",
+          "text": "paddingBlockEnd='400'\npaddingBlockEnd={{xs: '200', sm: '300', md: '400', lg: '500', xl: '600'}}"
+        }
+      ],
+      "declarations": [],
+      "schema": {
+        "kind": "enum",
+        "type": "Spacing | undefined",
+        "schema": [
+          "undefined",
+          "\"0\"",
+          "\"025\"",
+          "\"050\"",
+          "\"100\"",
+          "\"150\"",
+          "\"200\"",
+          "\"300\"",
+          "\"400\"",
+          "\"500\"",
+          "\"600\"",
+          "\"800\"",
+          "\"1000\"",
+          "\"1200\"",
+          "\"1600\"",
+          "\"2000\"",
+          "\"2400\"",
+          "\"2800\"",
+          "\"3200\"",
+          "ResponsivePropConfig<SpaceScale>"
+        ]
+      }
+    },
+    {
+      "name": "paddingInline",
+      "type": "Spacing | undefined",
+      "required": false,
+      "description": "Horizontal start and end spacing around children. Accepts a spacing token or an object of spacing tokens for different screen sizes.",
+      "tags": [
+        {
+          "name": "example",
+          "text": "paddingInline='400'\npaddingInline={{xs: '200', sm: '300', md: '400', lg: '500', xl: '600'}}"
+        }
+      ],
+      "declarations": [],
+      "schema": {
+        "kind": "enum",
+        "type": "Spacing | undefined",
+        "schema": [
+          "undefined",
+          "\"0\"",
+          "\"025\"",
+          "\"050\"",
+          "\"100\"",
+          "\"150\"",
+          "\"200\"",
+          "\"300\"",
+          "\"400\"",
+          "\"500\"",
+          "\"600\"",
+          "\"800\"",
+          "\"1000\"",
+          "\"1200\"",
+          "\"1600\"",
+          "\"2000\"",
+          "\"2400\"",
+          "\"2800\"",
+          "\"3200\"",
+          "ResponsivePropConfig<SpaceScale>"
+        ]
+      }
+    },
+    {
+      "name": "paddingInlineStart",
+      "type": "Spacing | undefined",
+      "required": false,
+      "description": "Horizontal start spacing around children. Accepts a spacing token or an object of spacing tokens for different screen sizes.",
+      "tags": [
+        {
+          "name": "example",
+          "text": "paddingInlineStart='400'\npaddingInlineStart={{xs: '200', sm: '300', md: '400', lg: '500', xl: '600'}}"
+        }
+      ],
+      "declarations": [],
+      "schema": {
+        "kind": "enum",
+        "type": "Spacing | undefined",
+        "schema": [
+          "undefined",
+          "\"0\"",
+          "\"025\"",
+          "\"050\"",
+          "\"100\"",
+          "\"150\"",
+          "\"200\"",
+          "\"300\"",
+          "\"400\"",
+          "\"500\"",
+          "\"600\"",
+          "\"800\"",
+          "\"1000\"",
+          "\"1200\"",
+          "\"1600\"",
+          "\"2000\"",
+          "\"2400\"",
+          "\"2800\"",
+          "\"3200\"",
+          "ResponsivePropConfig<SpaceScale>"
+        ]
+      }
+    },
+    {
+      "name": "paddingInlineEnd",
+      "type": "Spacing | undefined",
+      "required": false,
+      "description": "Horizontal end spacing around children. Accepts a spacing token or an object of spacing tokens for different screen sizes.",
+      "tags": [
+        {
+          "name": "example",
+          "text": "paddingInlineEnd='400'\npaddingInlineEnd={{xs: '200', sm: '300', md: '400', lg: '500', xl: '600'}}"
+        }
+      ],
+      "declarations": [],
+      "schema": {
+        "kind": "enum",
+        "type": "Spacing | undefined",
+        "schema": [
+          "undefined",
+          "\"0\"",
+          "\"025\"",
+          "\"050\"",
+          "\"100\"",
+          "\"150\"",
+          "\"200\"",
+          "\"300\"",
+          "\"400\"",
+          "\"500\"",
+          "\"600\"",
+          "\"800\"",
+          "\"1000\"",
+          "\"1200\"",
+          "\"1600\"",
+          "\"2000\"",
+          "\"2400\"",
+          "\"2800\"",
+          "\"3200\"",
+          "ResponsivePropConfig<SpaceScale>"
+        ]
+      }
+    },
+    {
+      "name": "shadow",
+      "type": "ShadowAliasOrScale | undefined",
+      "required": false,
+      "description": "Shadow on box",
+      "tags": [],
+      "declarations": [],
+      "schema": {
+        "kind": "enum",
+        "type": "ShadowAliasOrScale | undefined",
+        "schema": [
+          "undefined",
+          "\"0\"",
+          "\"100\"",
+          "\"200\"",
+          "\"300\"",
+          "\"400\"",
+          "\"500\"",
+          "\"600\"",
+          "\"button\"",
+          "\"button-hover\"",
+          "\"button-inset\"",
+          "\"button-primary\"",
+          "\"button-primary-hover\"",
+          "\"button-primary-inset\"",
+          "\"button-primary-critical\"",
+          "\"button-primary-critical-hover\"",
+          "\"button-primary-critical-inset\"",
+          "\"button-primary-success\"",
+          "\"button-primary-success-hover\"",
+          "\"button-primary-success-inset\"",
+          "\"border-inset\""
+        ]
+      }
+    },
+    {
+      "name": "width",
+      "type": "string | undefined",
+      "required": false,
+      "description": "Width of container",
+      "tags": [],
+      "declarations": [],
+      "schema": {
+        "kind": "enum",
+        "type": "string | undefined",
+        "schema": [
+          "undefined",
+          "string"
+        ]
+      }
+    },
+    {
+      "name": "position",
+      "type": "Position | undefined",
+      "required": false,
+      "description": "Position of box",
+      "tags": [],
+      "declarations": [],
+      "schema": {
+        "kind": "enum",
+        "type": "Position | undefined",
+        "schema": [
+          "undefined",
+          "\"fixed\"",
+          "\"relative\"",
+          "\"absolute\"",
+          "\"sticky\""
+        ]
+      }
+    },
+    {
+      "name": "insetBlockStart",
+      "type": "Spacing | undefined",
+      "required": false,
+      "description": "Top position of box",
+      "tags": [],
+      "declarations": [],
+      "schema": {
+        "kind": "enum",
+        "type": "Spacing | undefined",
+        "schema": [
+          "undefined",
+          "\"0\"",
+          "\"025\"",
+          "\"050\"",
+          "\"100\"",
+          "\"150\"",
+          "\"200\"",
+          "\"300\"",
+          "\"400\"",
+          "\"500\"",
+          "\"600\"",
+          "\"800\"",
+          "\"1000\"",
+          "\"1200\"",
+          "\"1600\"",
+          "\"2000\"",
+          "\"2400\"",
+          "\"2800\"",
+          "\"3200\"",
+          "ResponsivePropConfig<SpaceScale>"
+        ]
+      }
+    },
+    {
+      "name": "insetBlockEnd",
+      "type": "Spacing | undefined",
+      "required": false,
+      "description": "Bottom position of box",
+      "tags": [],
+      "declarations": [],
+      "schema": {
+        "kind": "enum",
+        "type": "Spacing | undefined",
+        "schema": [
+          "undefined",
+          "\"0\"",
+          "\"025\"",
+          "\"050\"",
+          "\"100\"",
+          "\"150\"",
+          "\"200\"",
+          "\"300\"",
+          "\"400\"",
+          "\"500\"",
+          "\"600\"",
+          "\"800\"",
+          "\"1000\"",
+          "\"1200\"",
+          "\"1600\"",
+          "\"2000\"",
+          "\"2400\"",
+          "\"2800\"",
+          "\"3200\"",
+          "ResponsivePropConfig<SpaceScale>"
+        ]
+      }
+    },
+    {
+      "name": "insetInlineStart",
+      "type": "Spacing | undefined",
+      "required": false,
+      "description": "Left position of box",
+      "tags": [],
+      "declarations": [],
+      "schema": {
+        "kind": "enum",
+        "type": "Spacing | undefined",
+        "schema": [
+          "undefined",
+          "\"0\"",
+          "\"025\"",
+          "\"050\"",
+          "\"100\"",
+          "\"150\"",
+          "\"200\"",
+          "\"300\"",
+          "\"400\"",
+          "\"500\"",
+          "\"600\"",
+          "\"800\"",
+          "\"1000\"",
+          "\"1200\"",
+          "\"1600\"",
+          "\"2000\"",
+          "\"2400\"",
+          "\"2800\"",
+          "\"3200\"",
+          "ResponsivePropConfig<SpaceScale>"
+        ]
+      }
+    },
+    {
+      "name": "insetInlineEnd",
+      "type": "Spacing | undefined",
+      "required": false,
+      "description": "Right position of box",
+      "tags": [],
+      "declarations": [],
+      "schema": {
+        "kind": "enum",
+        "type": "Spacing | undefined",
+        "schema": [
+          "undefined",
+          "\"0\"",
+          "\"025\"",
+          "\"050\"",
+          "\"100\"",
+          "\"150\"",
+          "\"200\"",
+          "\"300\"",
+          "\"400\"",
+          "\"500\"",
+          "\"600\"",
+          "\"800\"",
+          "\"1000\"",
+          "\"1200\"",
+          "\"1600\"",
+          "\"2000\"",
+          "\"2400\"",
+          "\"2800\"",
+          "\"3200\"",
+          "ResponsivePropConfig<SpaceScale>"
+        ]
+      }
+    },
+    {
+      "name": "opacity",
+      "type": "string | undefined",
+      "required": false,
+      "description": "Opacity of box",
+      "tags": [],
+      "declarations": [],
+      "schema": {
+        "kind": "enum",
+        "type": "string | undefined",
+        "schema": [
+          "undefined",
+          "string"
+        ]
+      }
+    },
+    {
+      "name": "outlineColor",
+      "type": "ColorBorderAlias | undefined",
+      "required": false,
+      "description": "Outline color",
+      "tags": [],
+      "declarations": [],
+      "schema": "ColorBorderAlias | undefined"
+    },
+    {
+      "name": "outlineStyle",
+      "type": "LineStyles | undefined",
+      "required": false,
+      "description": "Outline style",
+      "tags": [],
+      "declarations": [],
+      "schema": {
+        "kind": "enum",
+        "type": "LineStyles | undefined",
+        "schema": [
+          "undefined",
+          "\"solid\"",
+          "\"dashed\""
+        ]
+      }
+    },
+    {
+      "name": "outlineWidth",
+      "type": "BorderWidthScale | undefined",
+      "required": false,
+      "description": "Outline width",
+      "tags": [],
+      "declarations": [],
+      "schema": {
+        "kind": "enum",
+        "type": "BorderWidthScale | undefined",
+        "schema": [
+          "undefined",
+          "\"0\"",
+          "\"025\"",
+          "\"050\"",
+          "\"100\"",
+          "\"0165\""
+        ]
+      }
+    },
+    {
+      "name": "printHidden",
+      "type": "boolean | undefined",
+      "required": false,
+      "description": "Visually hide the contents during print",
+      "tags": [],
+      "declarations": [],
+      "schema": {
+        "kind": "enum",
+        "type": "boolean | undefined",
+        "schema": [
+          "undefined",
+          "false",
+          "true"
+        ]
+      }
+    },
+    {
+      "name": "visuallyHidden",
+      "type": "boolean | undefined",
+      "required": false,
+      "description": "Visually hide the contents (still announced by screenreader)",
+      "tags": [],
+      "declarations": [],
+      "schema": {
+        "kind": "enum",
+        "type": "boolean | undefined",
+        "schema": [
+          "undefined",
+          "false",
+          "true"
+        ]
+      }
+    },
+    {
+      "name": "zIndex",
+      "type": "string | undefined",
+      "required": false,
+      "description": "z-index of box",
+      "tags": [],
+      "declarations": [],
+      "schema": {
+        "kind": "enum",
+        "type": "string | undefined",
+        "schema": [
+          "undefined",
+          "string"
+        ]
+      }
+    }
+  ],
+  "events": [],
+  "slots": [
+    {
+      "name": "default",
+      "type": "VueNode",
+      "description": "Inner content of the box",
+      "declarations": [],
+      "schema": "VueNode"
+    }
+  ]
+}

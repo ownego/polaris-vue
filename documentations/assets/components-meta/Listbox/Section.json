@@ -1,0 +1,38 @@
+{
+  "props": [
+    {
+      "name": "divider",
+      "type": "boolean | undefined",
+      "required": false,
+      "description": "",
+      "tags": [],
+      "declarations": [],
+      "schema": {
+        "kind": "enum",
+        "type": "boolean | undefined",
+        "schema": [
+          "undefined",
+          "false",
+          "true"
+        ]
+      }
+    }
+  ],
+  "events": [],
+  "slots": [
+    {
+      "name": "default",
+      "type": "VueNode",
+      "description": "",
+      "declarations": [],
+      "schema": "VueNode"
+    },
+    {
+      "name": "title",
+      "type": "VueNode",
+      "description": "",
+      "declarations": [],
+      "schema": "VueNode"
+    }
+  ]
+}

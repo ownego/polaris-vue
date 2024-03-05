@@ -1,0 +1,12 @@
+{
+  "name": "SkeletonThumbnail",
+  "description": "Skeleton thumbnail is used to provide a low fidelity representation of an image before it appears on the page, and improves load times perceived by merchants. Use for thumbnails in or outside of a card.",
+  "bestPractices": "Skeleton thumbnail component should:\n\n- Try to match the size of the thumbnail to the content being loaded so it gives an accurate representation.",
+  "keywords": [
+    " SkeletonThumbnail\n  ",
+    " skeleton\n  ",
+    " loading\n  ",
+    " page"
+  ],
+  "previewImg": "skeleton-thumbnail.png"
+}

@@ -1,0 +1,130 @@
+{
+  "props": [
+    {
+      "name": "id",
+      "type": "string | undefined",
+      "required": false,
+      "description": "Unique identifier for the option",
+      "tags": [],
+      "declarations": [],
+      "schema": {
+        "kind": "enum",
+        "type": "string | undefined",
+        "schema": [
+          "undefined",
+          "string"
+        ]
+      }
+    },
+    {
+      "name": "selected",
+      "type": "boolean",
+      "required": true,
+      "description": "",
+      "tags": [],
+      "declarations": [],
+      "schema": {
+        "kind": "enum",
+        "type": "boolean",
+        "schema": [
+          "false",
+          "true"
+        ]
+      }
+    },
+    {
+      "name": "disabled",
+      "type": "boolean | undefined",
+      "required": false,
+      "description": "Whether the option is disabled or not",
+      "tags": [],
+      "declarations": [],
+      "schema": {
+        "kind": "enum",
+        "type": "boolean | undefined",
+        "schema": [
+          "undefined",
+          "false",
+          "true"
+        ]
+      }
+    },
+    {
+      "name": "label",
+      "type": "string",
+      "required": true,
+      "description": "Display label for the option",
+      "tags": [],
+      "declarations": [],
+      "schema": "string"
+    },
+    {
+      "name": "value",
+      "type": "string",
+      "required": true,
+      "description": "Value of the option",
+      "tags": [],
+      "declarations": [],
+      "schema": "string"
+    },
+    {
+      "name": "active",
+      "type": "boolean | undefined",
+      "required": false,
+      "description": "Whether the option is active or not",
+      "tags": [],
+      "declarations": [],
+      "schema": {
+        "kind": "enum",
+        "type": "boolean | undefined",
+        "schema": [
+          "undefined",
+          "false",
+          "true"
+        ]
+      }
+    },
+    {
+      "name": "media",
+      "type": "string | number | boolean | Element | Component | null | undefined",
+      "required": false,
+      "description": "Media to display to the left of the option content",
+      "tags": [],
+      "declarations": [],
+      "schema": {
+        "kind": "enum",
+        "type": "string | number | boolean | Element | Component | null | undefined",
+        "schema": [
+          "undefined",
+          "null",
+          "string",
+          "number",
+          "false",
+          "true",
+          "Element",
+          "ComponentOptions<any, any, any, ComputedOptions, MethodOptions, any, any, any, any>",
+          "FunctionalComponent<any, {}, any, {}>",
+          "ComponentPublicInstanceConstructor<any, any, any, any, ComputedOptions, MethodOptions>"
+        ]
+      }
+    },
+    {
+      "name": "singleSelection",
+      "type": "boolean",
+      "required": true,
+      "description": "",
+      "tags": [],
+      "declarations": [],
+      "schema": {
+        "kind": "enum",
+        "type": "boolean",
+        "schema": [
+          "false",
+          "true"
+        ]
+      }
+    }
+  ],
+  "events": [],
+  "slots": []
+}

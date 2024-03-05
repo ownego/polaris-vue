@@ -1,0 +1,172 @@
+{
+  "props": [
+    {
+      "name": "area",
+      "type": "string | undefined",
+      "required": false,
+      "description": "Set grid-template-areas",
+      "tags": [
+        {
+          "name": "deprecated",
+          "text": "To avoid a11y issues, nest layout components in individual grid\ncells instead. See:\nhttps://polaris.shopify.com/components/layout-and-structure"
+        }
+      ],
+      "declarations": [],
+      "schema": {
+        "kind": "enum",
+        "type": "string | undefined",
+        "schema": [
+          "undefined",
+          "string"
+        ]
+      }
+    },
+    {
+      "name": "row",
+      "type": "Cell | undefined",
+      "required": false,
+      "description": "",
+      "tags": [],
+      "declarations": [],
+      "schema": {
+        "kind": "enum",
+        "type": "Cell | undefined",
+        "schema": [
+          "undefined",
+          "Cell"
+        ]
+      }
+    },
+    {
+      "name": "column",
+      "type": "Cell | undefined",
+      "required": false,
+      "description": "",
+      "tags": [],
+      "declarations": [],
+      "schema": {
+        "kind": "enum",
+        "type": "Cell | undefined",
+        "schema": [
+          "undefined",
+          "Cell"
+        ]
+      }
+    },
+    {
+      "name": "columnSpan",
+      "type": "Columns | undefined",
+      "required": false,
+      "description": "",
+      "tags": [],
+      "declarations": [],
+      "schema": {
+        "kind": "enum",
+        "type": "Columns | undefined",
+        "schema": [
+          "undefined",
+          {
+            "kind": "object",
+            "type": "Columns",
+            "schema": {
+              "xs": {
+                "name": "xs",
+                "global": false,
+                "description": "Number of columns the section should span on extra small screens",
+                "tags": [],
+                "required": false,
+                "type": "1 | 2 | 3 | 4 | 5 | 6 | undefined",
+                "declarations": [],
+                "schema": {
+                  "kind": "enum",
+                  "type": "1 | 2 | 3 | 4 | 5 | 6 | undefined",
+                  "schema": [
+                    "undefined",
+                    "1",
+                    "2",
+                    "3",
+                    "4",
+                    "5",
+                    "6"
+                  ]
+                }
+              },
+              "sm": {
+                "name": "sm",
+                "global": false,
+                "description": "Number of columns the section should span on small screens",
+                "tags": [],
+                "required": false,
+                "type": "1 | 2 | 3 | 4 | 5 | 6 | undefined",
+                "declarations": [],
+                "schema": "1 | 2 | 3 | 4 | 5 | 6 | undefined"
+              },
+              "md": {
+                "name": "md",
+                "global": false,
+                "description": "Number of columns the section should span on medium screens",
+                "tags": [],
+                "required": false,
+                "type": "1 | 2 | 3 | 4 | 5 | 6 | undefined",
+                "declarations": [],
+                "schema": "1 | 2 | 3 | 4 | 5 | 6 | undefined"
+              },
+              "lg": {
+                "name": "lg",
+                "global": false,
+                "description": "Number of columns the section should span on large screens",
+                "tags": [],
+                "required": false,
+                "type": "1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9 | 10 | 11 | 12 | undefined",
+                "declarations": [],
+                "schema": {
+                  "kind": "enum",
+                  "type": "1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9 | 10 | 11 | 12 | undefined",
+                  "schema": [
+                    "undefined",
+                    "1",
+                    "2",
+                    "3",
+                    "4",
+                    "5",
+                    "6",
+                    "7",
+                    "8",
+                    "9",
+                    "10",
+                    "11",
+                    "12"
+                  ]
+                }
+              },
+              "xl": {
+                "name": "xl",
+                "global": false,
+                "description": "Number of columns the section should span on extra large screens",
+                "tags": [],
+                "required": false,
+                "type": "1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9 | 10 | 11 | 12 | undefined",
+                "declarations": [],
+                "schema": "1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9 | 10 | 11 | 12 | undefined"
+              }
+            }
+          }
+        ]
+      }
+    }
+  ],
+  "events": [],
+  "slots": [
+    {
+      "name": "default",
+      "type": "{}",
+      "description": "",
+      "declarations": [],
+      "schema": {
+        "kind": "object",
+        "type": "{}",
+        "schema": {}
+      }
+    }
+  ]
+}

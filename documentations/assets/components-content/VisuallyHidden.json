@@ -1,0 +1,22 @@
+{
+  "name": "VisuallyHidden",
+  "description": "Use when an element needs to be available to assistive technology (for example, a screen reader) but otherwise hidden.",
+  "bestPractices": "",
+  "keywords": [
+    " VisuallyHidden\n  ",
+    " screen readers\n  ",
+    " hidden but available for screen readers\n  ",
+    " visually hidden headings\n  ",
+    " hide\n  ",
+    " hidden headings\n  ",
+    " hidden text\n  ",
+    " visually hidden table headers\n  ",
+    " visually hidden headers\n  ",
+    " hidden table headers\n  ",
+    " hidden table headings\n  ",
+    " accessibility\n  ",
+    " a11y\n  ",
+    " assistive technology"
+  ],
+  "previewImg": "visually-hidden.png"
+}

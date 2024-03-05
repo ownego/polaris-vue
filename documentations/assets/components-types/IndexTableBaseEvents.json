@@ -1,0 +1,15 @@
+{
+  "filePath": "src/components/IndexTable/types.ts",
+  "kind": "TypeAliasDeclaration",
+  "name": "IndexTableBaseEvents",
+  "value": "{\n  /** Callback fired on click or keypress of a sortable column heading. */\n  'sort': [headingIndex: number, direction: IndexTableSortDirection];\n}",
+  "description": "",
+  "members": [
+    {
+      "filePath": "src/components/IndexTable/types.ts",
+      "name": "'sort'",
+      "value": "[headingIndex: number, direction: IndexTableSortDirection]",
+      "description": "Callback fired on click or keypress of a sortable column heading."
+    }
+  ]
+}

@@ -1,0 +1,16 @@
+{
+  "name": "LegacyTabs",
+  "description": "Use to alternate among related views within the same context.",
+  "bestPractices": "Tabs should:\n\n- Represent the same kind of content, such as a list-view with different filters applied. Don’t use tabs to group content that is dissimilar.\n- Only be active one at a time.\n- Not force merchants to jump back and forth to do a single task. Merchants should be able to complete their work and find what they need under each tab.\n- Not be used for primary navigation.",
+  "keywords": [
+    " layout\n  ",
+    " navigate\n  ",
+    " organize\n  ",
+    " list views\n  ",
+    " list filters\n  ",
+    " fitted tabs\n  ",
+    " segmented controls\n  ",
+    " scrollable"
+  ],
+  "previewImg": "legacy-tabs.png"
+}

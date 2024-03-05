@@ -1,0 +1,19 @@
+{
+  "name": "Toast",
+  "description": "The toast component is a non-disruptive message that appears at the bottom of the interface to provide quick, at-a-glance feedback on the outcome of an action.",
+  "bestPractices": "Toast should:\n\n- Be used for short messages to confirm an action\n- Not go over 3 words\n- Rarely be used for error messages\n\nWhen to use:\n\n- For success messages\n- Only for non-critical errors that are relevant in the moment and can be explained in 3 words. For example, if there’s an internet connection issue, the toast would say, Internet disconnected.\n\nWhen not to use:\n\n- Avoid using toast for error messages. Always try to use a banner to prominently inform merchants about persistent errors.",
+  "keywords": [
+    " toast\n  ",
+    " flash message\n  ",
+    " snackbar\n  ",
+    " notification bar\n  ",
+    " temporary feedback\n  ",
+    " timed feedback\n  ",
+    " message\n  ",
+    " overlay\n  ",
+    " popup\n  ",
+    " iframe\n  ",
+    " duration"
+  ],
+  "previewImg": "toast.png"
+}

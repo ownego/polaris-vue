@@ -1,0 +1,13 @@
+{
+  "name": "DataTable",
+  "description": "Data tables are used to organize and display all information from a data set. While a data visualization represents part of data set, a data table lets merchants view details from the entire set. This helps merchants compare and analyze the data.",
+  "bestPractices": "Data tables should:\n\n- Show values across multiple categories and measures.\n- Allow for filtering and ordering when comparison is not a priority.\n- Help merchants visualize and scan many values from an entire data set.\n- Help merchants find other values in the data hierarchy through use of links.\n- Minimize clutter by only including values that supports the data’s purpose.\n- Include a summary row to surface the column totals.\n- Not include calculations within the summary row.\n- Wrap instead of truncate content. This is because if row titles start with the same word, they’ll all appear the same when truncated.\n- Not to be used for an actionable list of items that link to details pages. For this functionality, use the [resource list component](https://polaris.shopify.com/components/resource-list).\n\n### Alignment\n\nColumn content types are built into the component props so the following alignment rules are followed:\n\n- Numerical = Right aligned\n- Textual data = Left aligned\n- Align headers with their related data\n- Don’t center align",
+  "keywords": [
+    " DataTable\n  ",
+    " data\n  ",
+    " table\n  ",
+    " tabular\n  ",
+    " index"
+  ],
+  "previewImg": "data-table.png"
+}

@@ -1,0 +1,8 @@
+{
+  "filePath": "src/utilities/link/types.ts",
+  "kind": "TypeAliasDeclaration",
+  "name": "LinkLikeComponent",
+  "value": "Component<LinkLikeComponentProps>",
+  "description": "",
+  "members": []
+}

@@ -1,0 +1,112 @@
+{
+  "props": [
+    {
+      "name": "backgroundColor",
+      "type": "ColorBackgroundAlias | undefined",
+      "required": true,
+      "description": "",
+      "tags": [],
+      "declarations": [],
+      "schema": "ColorBackgroundAlias | undefined"
+    },
+    {
+      "name": "textColor",
+      "type": "ColorTextAlias",
+      "required": true,
+      "description": "",
+      "tags": [],
+      "declarations": [],
+      "schema": "ColorTextAlias"
+    },
+    {
+      "name": "bannerIcon",
+      "type": "((_: VueNode) => any) | undefined",
+      "required": false,
+      "description": "",
+      "tags": [],
+      "declarations": [],
+      "schema": {
+        "kind": "enum",
+        "type": "((_: VueNode) => any) | undefined",
+        "schema": [
+          "undefined",
+          {
+            "kind": "event",
+            "type": "(_: VueNode): any",
+            "schema": []
+          }
+        ]
+      }
+    },
+    {
+      "name": "bannerTitle",
+      "type": "((_: VueNode) => any) | undefined",
+      "required": false,
+      "description": "",
+      "tags": [],
+      "declarations": [],
+      "schema": {
+        "kind": "enum",
+        "type": "((_: VueNode) => any) | undefined",
+        "schema": [
+          "undefined",
+          {
+            "kind": "event",
+            "type": "(_: VueNode): any",
+            "schema": []
+          }
+        ]
+      }
+    },
+    {
+      "name": "actionButtons",
+      "type": "((_: VueNode) => any) | undefined",
+      "required": false,
+      "description": "",
+      "tags": [],
+      "declarations": [],
+      "schema": {
+        "kind": "enum",
+        "type": "((_: VueNode) => any) | undefined",
+        "schema": [
+          "undefined",
+          {
+            "kind": "event",
+            "type": "(_: VueNode): any",
+            "schema": []
+          }
+        ]
+      }
+    },
+    {
+      "name": "dismissButton",
+      "type": "((_: VueNode) => any) | undefined",
+      "required": false,
+      "description": "",
+      "tags": [],
+      "declarations": [],
+      "schema": {
+        "kind": "enum",
+        "type": "((_: VueNode) => any) | undefined",
+        "schema": [
+          "undefined",
+          {
+            "kind": "event",
+            "type": "(_: VueNode): any",
+            "schema": []
+          }
+        ]
+      }
+    }
+  ],
+  "events": [],
+  "slots": [
+    {
+      "name": "default",
+      "type": "VueNode",
+      "description": "",
+      "declarations": [],
+      "schema": "VueNode"
+    }
+  ]
+}
