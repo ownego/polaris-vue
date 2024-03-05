@@ -116,7 +116,7 @@ const items = [
 
 function disambiguateLabel(key: string, value: string): string {
   switch (key) {
-    case 'taggedWith1':
+    case 'taggedWith':
       return `Tagged with ${value}`;
     default:
       return value;
