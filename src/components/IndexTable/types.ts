@@ -30,8 +30,6 @@ interface IndexTableSortToggleLabels {
   [key: number]: IndexTableSortToggleLabel;
 }
 
-export type IndexTablePaginationProps = Omit<PaginationProps, 'type'>;
-
 export type IndexTableHeadingBase = {
   id?: string;
   /**
@@ -80,7 +78,7 @@ export type IndexTableBaseProps = {
   /** Add zebra striping to table rows */
   hasZebraStriping?: boolean;
   /** Properties to enable pagination at the bottom of the table. */
-  pagination?: IndexTablePaginationProps;
+  pagination?: Omit<PaginationProps, 'type'>;
 }
 
 export type IndexTableBaseEvents = {

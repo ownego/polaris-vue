@@ -54,18 +54,24 @@ const customers: {
   location: string;
   orders: number;
   amountSpent: string;
-}[] = [];
+}[] = [{
+  id: '1',
+  name: 'Mae Jemison',
+  location: 'Decatur, USA',
+  orders: 20,
+  amountSpent: '$2,400',
+}];
 
 const headings = [
   {title: 'Name'},
   {title: 'Location'},
   {
     id: 'order-count',
-    title: h(resolveComponent('Text'), {as: 'span', alignment: 'end'}, 'Order count'),
+    title: h(resolveComponent('Text'), {as: 'span', alignment: 'end'}, () => 'Order count'),
   },
   {
     id: 'amount-spent',
-    title: h(resolveComponent('Text'), {as: 'span', alignment: 'end'}, 'Amount spent'),
+    title: h(resolveComponent('Text'), {as: 'span', alignment: 'end'}, () => 'Amount spent'),
   },
 ];
 </script>
