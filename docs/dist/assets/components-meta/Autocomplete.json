@@ -1,0 +1,683 @@
+{
+  "props": [
+    {
+      "name": "id",
+      "type": "string | undefined",
+      "required": false,
+      "description": "A unique identifier for the Autocomplete",
+      "tags": [],
+      "declarations": [],
+      "schema": {
+        "kind": "enum",
+        "type": "string | undefined",
+        "schema": [
+          "undefined",
+          "string"
+        ]
+      }
+    },
+    {
+      "name": "options",
+      "type": "SectionDescriptor[] | OptionDescriptor[]",
+      "required": true,
+      "description": "Collection of options to be listed",
+      "tags": [],
+      "declarations": [],
+      "schema": {
+        "kind": "enum",
+        "type": "SectionDescriptor[] | OptionDescriptor[]",
+        "schema": [
+          {
+            "kind": "array",
+            "type": "SectionDescriptor[]",
+            "schema": [
+              {
+                "kind": "object",
+                "type": "SectionDescriptor",
+                "schema": {
+                  "options": {
+                    "name": "options",
+                    "global": false,
+                    "description": "Collection of options within the section",
+                    "tags": [],
+                    "required": true,
+                    "type": "OptionDescriptor[]",
+                    "declarations": [],
+                    "schema": "OptionDescriptor[]"
+                  },
+                  "title": {
+                    "name": "title",
+                    "global": false,
+                    "description": "Section title",
+                    "tags": [],
+                    "required": false,
+                    "type": "string | undefined",
+                    "declarations": [],
+                    "schema": {
+                      "kind": "enum",
+                      "type": "string | undefined",
+                      "schema": [
+                        "undefined",
+                        "string"
+                      ]
+                    }
+                  }
+                }
+              }
+            ]
+          },
+          {
+            "kind": "array",
+            "type": "OptionDescriptor[]",
+            "schema": [
+              {
+                "kind": "object",
+                "type": "OptionDescriptor",
+                "schema": {
+                  "value": {
+                    "name": "value",
+                    "global": false,
+                    "description": "Value of the option",
+                    "tags": [],
+                    "required": true,
+                    "type": "string",
+                    "declarations": [],
+                    "schema": "string"
+                  },
+                  "disabled": {
+                    "name": "disabled",
+                    "global": false,
+                    "description": "Whether the option is disabled or not",
+                    "tags": [],
+                    "required": false,
+                    "type": "boolean | undefined",
+                    "declarations": [],
+                    "schema": {
+                      "kind": "enum",
+                      "type": "boolean | undefined",
+                      "schema": [
+                        "undefined",
+                        "false",
+                        "true"
+                      ]
+                    }
+                  },
+                  "active": {
+                    "name": "active",
+                    "global": false,
+                    "description": "Whether the option is active or not",
+                    "tags": [],
+                    "required": false,
+                    "type": "boolean | undefined",
+                    "declarations": [],
+                    "schema": "boolean | undefined"
+                  },
+                  "id": {
+                    "name": "id",
+                    "global": false,
+                    "description": "Unique identifier for the option",
+                    "tags": [],
+                    "required": false,
+                    "type": "string | undefined",
+                    "declarations": [],
+                    "schema": "string | undefined"
+                  },
+                  "label": {
+                    "name": "label",
+                    "global": false,
+                    "description": "Display label for the option",
+                    "tags": [],
+                    "required": true,
+                    "type": "string",
+                    "declarations": [],
+                    "schema": "string"
+                  },
+                  "media": {
+                    "name": "media",
+                    "global": false,
+                    "description": "Media to display to the left of the option content",
+                    "tags": [],
+                    "required": false,
+                    "type": "VueNode",
+                    "declarations": [],
+                    "schema": "VueNode"
+                  }
+                }
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "name": "selected",
+      "type": "string[]",
+      "required": true,
+      "description": "The selected options",
+      "tags": [],
+      "declarations": [],
+      "schema": {
+        "kind": "array",
+        "type": "string[]",
+        "schema": [
+          "string"
+        ]
+      }
+    },
+    {
+      "name": "preferredPosition",
+      "type": "PreferredPosition | undefined",
+      "required": false,
+      "description": "The preferred direction to open the popover",
+      "tags": [],
+      "declarations": [],
+      "schema": {
+        "kind": "enum",
+        "type": "PreferredPosition | undefined",
+        "schema": [
+          "undefined",
+          "\"above\"",
+          "\"below\"",
+          "\"mostSpace\""
+        ]
+      }
+    },
+    {
+      "name": "listTitle",
+      "type": "string | undefined",
+      "required": false,
+      "description": "Title of the list of options",
+      "tags": [],
+      "declarations": [],
+      "schema": {
+        "kind": "enum",
+        "type": "string | undefined",
+        "schema": [
+          "undefined",
+          "string"
+        ]
+      }
+    },
+    {
+      "name": "allowMultiple",
+      "type": "boolean | undefined",
+      "required": false,
+      "description": "Allow more than one option to be selected",
+      "tags": [],
+      "declarations": [],
+      "schema": {
+        "kind": "enum",
+        "type": "boolean | undefined",
+        "schema": [
+          "undefined",
+          "false",
+          "true"
+        ]
+      }
+    },
+    {
+      "name": "actionBefore",
+      "type": "(ActionListItemDescriptor & { wrapOverflow?: boolean | undefined; }) | undefined",
+      "required": false,
+      "description": "An action to render above the list of options",
+      "tags": [],
+      "declarations": [],
+      "schema": {
+        "kind": "enum",
+        "type": "(ActionListItemDescriptor & { wrapOverflow?: boolean | undefined; }) | undefined",
+        "schema": [
+          "undefined",
+          {
+            "kind": "object",
+            "type": "ActionListItemDescriptor & { wrapOverflow?: boolean | undefined; }",
+            "schema": {
+              "accessibilityLabel": {
+                "name": "accessibilityLabel",
+                "global": false,
+                "description": "Visually hidden text for screen readers",
+                "tags": [],
+                "required": false,
+                "type": "string | undefined",
+                "declarations": [],
+                "schema": {
+                  "kind": "enum",
+                  "type": "string | undefined",
+                  "schema": [
+                    "undefined",
+                    "string"
+                  ]
+                }
+              },
+              "badge": {
+                "name": "badge",
+                "global": false,
+                "description": "",
+                "tags": [
+                  {
+                    "name": "deprecated",
+                    "text": "Badge component"
+                  }
+                ],
+                "required": false,
+                "type": "{ tone: \"new\"; content: string; } | undefined",
+                "declarations": [],
+                "schema": {
+                  "kind": "enum",
+                  "type": "{ tone: \"new\"; content: string; } | undefined",
+                  "schema": [
+                    "undefined",
+                    {
+                      "kind": "object",
+                      "type": "{ tone: \"new\"; content: string; }",
+                      "schema": {
+                        "tone": {
+                          "name": "tone",
+                          "global": false,
+                          "description": "",
+                          "tags": [],
+                          "required": true,
+                          "type": "\"new\"",
+                          "declarations": [],
+                          "schema": "\"new\""
+                        },
+                        "content": {
+                          "name": "content",
+                          "global": false,
+                          "description": "",
+                          "tags": [],
+                          "required": true,
+                          "type": "string",
+                          "declarations": [],
+                          "schema": "string"
+                        }
+                      }
+                    }
+                  ]
+                }
+              },
+              "prefix": {
+                "name": "prefix",
+                "global": false,
+                "description": "Prefix source",
+                "tags": [],
+                "required": false,
+                "type": "VueNode",
+                "declarations": [],
+                "schema": "VueNode"
+              },
+              "suffix": {
+                "name": "suffix",
+                "global": false,
+                "description": "Suffix source",
+                "tags": [],
+                "required": false,
+                "type": "VueNode",
+                "declarations": [],
+                "schema": "VueNode"
+              },
+              "helpText": {
+                "name": "helpText",
+                "global": false,
+                "description": "Additional hint text to display with item",
+                "tags": [],
+                "required": false,
+                "type": "string | undefined",
+                "declarations": [],
+                "schema": "string | undefined"
+              },
+              "icon": {
+                "name": "icon",
+                "global": false,
+                "description": "",
+                "tags": [
+                  {
+                    "name": "deprecated",
+                    "text": "Source of the icon"
+                  }
+                ],
+                "required": false,
+                "type": "IconSource | undefined",
+                "declarations": [],
+                "schema": {
+                  "kind": "enum",
+                  "type": "IconSource | undefined",
+                  "schema": [
+                    "undefined",
+                    "string",
+                    "ComponentOptions<any, any, any, ComputedOptions, MethodOptions, any, any, any, any>",
+                    "FunctionalComponent<any, {}, any, {}>",
+                    "ComponentPublicInstanceConstructor<any, any, any, any, ComputedOptions, MethodOptions>",
+                    {
+                      "kind": "array",
+                      "type": "(string | Component)[]",
+                      "schema": [
+                        {
+                          "kind": "enum",
+                          "type": "string | Component",
+                          "schema": [
+                            "string",
+                            "ComponentOptions<any, any, any, ComputedOptions, MethodOptions, any, any, any, any>",
+                            "FunctionalComponent<any, {}, any, {}>",
+                            "ComponentPublicInstanceConstructor<any, any, any, any, ComputedOptions, MethodOptions>"
+                          ]
+                        }
+                      ]
+                    }
+                  ]
+                }
+              },
+              "image": {
+                "name": "image",
+                "global": false,
+                "description": "",
+                "tags": [
+                  {
+                    "name": "deprecated",
+                    "text": "Image source"
+                  }
+                ],
+                "required": false,
+                "type": "string | undefined",
+                "declarations": [],
+                "schema": "string | undefined"
+              },
+              "ellipsis": {
+                "name": "ellipsis",
+                "global": false,
+                "description": "",
+                "tags": [
+                  {
+                    "name": "deprecated",
+                    "text": "Add an ellipsis suffix to action content. ellipsis appends `...` without truncating. Use truncate instead."
+                  }
+                ],
+                "required": false,
+                "type": "boolean | undefined",
+                "declarations": [],
+                "schema": {
+                  "kind": "enum",
+                  "type": "boolean | undefined",
+                  "schema": [
+                    "undefined",
+                    "false",
+                    "true"
+                  ]
+                }
+              },
+              "truncate": {
+                "name": "truncate",
+                "global": false,
+                "description": "Truncate the action content either at the beginning or at the end",
+                "tags": [],
+                "required": false,
+                "type": "boolean | undefined",
+                "declarations": [],
+                "schema": "boolean | undefined"
+              },
+              "active": {
+                "name": "active",
+                "global": false,
+                "description": "Whether the action is active or not",
+                "tags": [],
+                "required": false,
+                "type": "boolean | undefined",
+                "declarations": [],
+                "schema": "boolean | undefined"
+              },
+              "variant": {
+                "name": "variant",
+                "global": false,
+                "description": "The item variations",
+                "tags": [],
+                "required": false,
+                "type": "\"default\" | \"menu\" | \"indented\" | undefined",
+                "declarations": [],
+                "schema": {
+                  "kind": "enum",
+                  "type": "\"default\" | \"menu\" | \"indented\" | undefined",
+                  "schema": [
+                    "undefined",
+                    "\"default\"",
+                    "\"menu\"",
+                    "\"indented\""
+                  ]
+                }
+              },
+              "role": {
+                "name": "role",
+                "global": false,
+                "description": "Defines a role for the action",
+                "tags": [],
+                "required": false,
+                "type": "string | undefined",
+                "declarations": [],
+                "schema": "string | undefined"
+              },
+              "disabled": {
+                "name": "disabled",
+                "global": false,
+                "description": "Whether or not the action is disabled",
+                "tags": [],
+                "required": false,
+                "type": "boolean | undefined",
+                "declarations": [],
+                "schema": "boolean | undefined"
+              },
+              "id": {
+                "name": "id",
+                "global": false,
+                "description": "A unique identifier for the action",
+                "tags": [],
+                "required": false,
+                "type": "string | undefined",
+                "declarations": [],
+                "schema": "string | undefined"
+              },
+              "content": {
+                "name": "content",
+                "global": false,
+                "description": "Content the action displays",
+                "tags": [],
+                "required": false,
+                "type": "string | undefined",
+                "declarations": [],
+                "schema": "string | undefined"
+              },
+              "url": {
+                "name": "url",
+                "global": false,
+                "description": "A destination to link to, rendered in the action",
+                "tags": [],
+                "required": false,
+                "type": "string | undefined",
+                "declarations": [],
+                "schema": "string | undefined"
+              },
+              "external": {
+                "name": "external",
+                "global": false,
+                "description": "Forces url to open in a new tab",
+                "tags": [],
+                "required": false,
+                "type": "boolean | undefined",
+                "declarations": [],
+                "schema": "boolean | undefined"
+              },
+              "target": {
+                "name": "target",
+                "global": false,
+                "description": "Where to display the url",
+                "tags": [],
+                "required": false,
+                "type": "Target | undefined",
+                "declarations": [],
+                "schema": {
+                  "kind": "enum",
+                  "type": "Target | undefined",
+                  "schema": [
+                    "undefined",
+                    "\"_blank\"",
+                    "\"_self\"",
+                    "\"_parent\"",
+                    "\"_top\""
+                  ]
+                }
+              },
+              "onAction": {
+                "name": "onAction",
+                "global": false,
+                "description": "Callback when an action takes place",
+                "tags": [],
+                "required": false,
+                "type": "(() => void) | undefined",
+                "declarations": [],
+                "schema": {
+                  "kind": "enum",
+                  "type": "(() => void) | undefined",
+                  "schema": [
+                    "undefined",
+                    {
+                      "kind": "event",
+                      "type": "(): void"
+                    }
+                  ]
+                }
+              },
+              "onMouseEnter": {
+                "name": "onMouseEnter",
+                "global": false,
+                "description": "Callback when mouse enter",
+                "tags": [],
+                "required": false,
+                "type": "(() => void) | undefined",
+                "declarations": [],
+                "schema": {
+                  "kind": "enum",
+                  "type": "(() => void) | undefined",
+                  "schema": [
+                    "undefined",
+                    {
+                      "kind": "event",
+                      "type": "(): void"
+                    }
+                  ]
+                }
+              },
+              "onTouchStart": {
+                "name": "onTouchStart",
+                "global": false,
+                "description": "Callback when element is touched",
+                "tags": [],
+                "required": false,
+                "type": "(() => void) | undefined",
+                "declarations": [],
+                "schema": {
+                  "kind": "enum",
+                  "type": "(() => void) | undefined",
+                  "schema": [
+                    "undefined",
+                    {
+                      "kind": "event",
+                      "type": "(): void"
+                    }
+                  ]
+                }
+              },
+              "destructive": {
+                "name": "destructive",
+                "global": false,
+                "description": "Destructive action",
+                "tags": [],
+                "required": false,
+                "type": "boolean | undefined",
+                "declarations": [],
+                "schema": "boolean | undefined"
+              },
+              "wrapOverflow": {
+                "name": "wrapOverflow",
+                "global": false,
+                "description": "Specifies that if the label is too long it will wrap instead of being hidden",
+                "tags": [],
+                "required": false,
+                "type": "boolean | undefined",
+                "declarations": [],
+                "schema": "boolean | undefined"
+              }
+            }
+          }
+        ]
+      }
+    },
+    {
+      "name": "loading",
+      "type": "boolean | undefined",
+      "required": false,
+      "description": "Display loading state",
+      "tags": [],
+      "declarations": [],
+      "schema": {
+        "kind": "enum",
+        "type": "boolean | undefined",
+        "schema": [
+          "undefined",
+          "false",
+          "true"
+        ]
+      }
+    },
+    {
+      "name": "willLoadMoreResults",
+      "type": "boolean | undefined",
+      "required": false,
+      "description": "Indicates if more results will load dynamically",
+      "tags": [],
+      "declarations": [],
+      "schema": {
+        "kind": "enum",
+        "type": "boolean | undefined",
+        "schema": [
+          "undefined",
+          "false",
+          "true"
+        ]
+      }
+    }
+  ],
+  "events": [
+    {
+      "name": "select",
+      "description": "Callback when the selection of options is changed",
+      "params": {
+        "selected": "string[]"
+      }
+    },
+    {
+      "name": "load-more-results",
+      "description": "Callback when the end of the list is reached",
+      "params": {}
+    }
+  ],
+  "slots": [
+    {
+      "name": "textField",
+      "type": "VueNode",
+      "description": "The text field component attached to the list of options",
+      "declarations": [],
+      "schema": "VueNode"
+    },
+    {
+      "name": "default",
+      "type": "VueNode",
+      "description": "The content to display inside the popover",
+      "declarations": [],
+      "schema": "VueNode"
+    },
+    {
+      "name": "emptyState",
+      "type": "VueNode",
+      "description": "Is rendered when there are no options",
+      "declarations": [],
+      "schema": "VueNode"
+    }
+  ]
+}

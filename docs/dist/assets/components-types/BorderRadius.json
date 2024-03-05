@@ -1,0 +1,8 @@
+{
+  "filePath": "src/components/Tooltip/types.ts",
+  "kind": "TypeAliasDeclaration",
+  "name": "BorderRadius",
+  "value": "\"100\" | \"200\"",
+  "description": "",
+  "members": []
+}

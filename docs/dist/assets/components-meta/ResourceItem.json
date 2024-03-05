@@ -1,0 +1,413 @@
+{
+  "props": [
+    {
+      "name": "persistActions",
+      "type": "boolean | undefined",
+      "required": false,
+      "description": "Makes the shortcut actions always visible",
+      "tags": [],
+      "declarations": [],
+      "schema": {
+        "kind": "enum",
+        "type": "boolean | undefined",
+        "schema": [
+          "undefined",
+          "false",
+          "true"
+        ]
+      }
+    },
+    {
+      "name": "name",
+      "type": "string | undefined",
+      "required": false,
+      "description": "Individual item name used by various text labels",
+      "tags": [],
+      "declarations": [],
+      "schema": {
+        "kind": "enum",
+        "type": "string | undefined",
+        "schema": [
+          "undefined",
+          "string"
+        ]
+      }
+    },
+    {
+      "name": "id",
+      "type": "string",
+      "required": true,
+      "description": "Unique identifier for the item",
+      "tags": [],
+      "declarations": [],
+      "schema": "string"
+    },
+    {
+      "name": "accessibilityLabel",
+      "type": "string | undefined",
+      "required": false,
+      "description": "Visually hidden text for screen readers used for item link",
+      "tags": [],
+      "declarations": [],
+      "schema": {
+        "kind": "enum",
+        "type": "string | undefined",
+        "schema": [
+          "undefined",
+          "string"
+        ]
+      }
+    },
+    {
+      "name": "disabled",
+      "type": "boolean | undefined",
+      "required": false,
+      "description": "Whether or not interaction is disabled",
+      "tags": [],
+      "declarations": [],
+      "schema": {
+        "kind": "enum",
+        "type": "boolean | undefined",
+        "schema": [
+          "undefined",
+          "false",
+          "true"
+        ]
+      }
+    },
+    {
+      "name": "url",
+      "type": "string | undefined",
+      "required": false,
+      "description": "URL for the resource’s details page (required unless onClick is provided)",
+      "tags": [],
+      "declarations": [],
+      "schema": {
+        "kind": "enum",
+        "type": "string | undefined",
+        "schema": [
+          "undefined",
+          "string"
+        ]
+      }
+    },
+    {
+      "name": "external",
+      "type": "boolean | undefined",
+      "required": false,
+      "description": "Allows url to open in a new tab",
+      "tags": [],
+      "declarations": [],
+      "schema": {
+        "kind": "enum",
+        "type": "boolean | undefined",
+        "schema": [
+          "undefined",
+          "false",
+          "true"
+        ]
+      }
+    },
+    {
+      "name": "ariaControls",
+      "type": "string | undefined",
+      "required": false,
+      "description": "Id of the element the item onClick controls",
+      "tags": [],
+      "declarations": [],
+      "schema": {
+        "kind": "enum",
+        "type": "string | undefined",
+        "schema": [
+          "undefined",
+          "string"
+        ]
+      }
+    },
+    {
+      "name": "ariaExpanded",
+      "type": "boolean | undefined",
+      "required": false,
+      "description": "Tells screen reader the controlled element is expanded",
+      "tags": [],
+      "declarations": [],
+      "schema": {
+        "kind": "enum",
+        "type": "boolean | undefined",
+        "schema": [
+          "undefined",
+          "false",
+          "true"
+        ]
+      }
+    },
+    {
+      "name": "shortcutActions",
+      "type": "DisableableAction[] | undefined",
+      "required": false,
+      "description": "1 or 2 shortcut actions; must be available on the page linked to by url",
+      "tags": [],
+      "declarations": [],
+      "schema": {
+        "kind": "enum",
+        "type": "DisableableAction[] | undefined",
+        "schema": [
+          "undefined",
+          {
+            "kind": "array",
+            "type": "DisableableAction[]",
+            "schema": [
+              {
+                "kind": "object",
+                "type": "DisableableAction",
+                "schema": {
+                  "disabled": {
+                    "name": "disabled",
+                    "global": false,
+                    "description": "Whether or not the action is disabled",
+                    "tags": [],
+                    "required": false,
+                    "type": "boolean | undefined",
+                    "declarations": [],
+                    "schema": {
+                      "kind": "enum",
+                      "type": "boolean | undefined",
+                      "schema": [
+                        "undefined",
+                        "false",
+                        "true"
+                      ]
+                    }
+                  },
+                  "id": {
+                    "name": "id",
+                    "global": false,
+                    "description": "A unique identifier for the action",
+                    "tags": [],
+                    "required": false,
+                    "type": "string | undefined",
+                    "declarations": [],
+                    "schema": {
+                      "kind": "enum",
+                      "type": "string | undefined",
+                      "schema": [
+                        "undefined",
+                        "string"
+                      ]
+                    }
+                  },
+                  "content": {
+                    "name": "content",
+                    "global": false,
+                    "description": "Content the action displays",
+                    "tags": [],
+                    "required": false,
+                    "type": "string | undefined",
+                    "declarations": [],
+                    "schema": "string | undefined"
+                  },
+                  "accessibilityLabel": {
+                    "name": "accessibilityLabel",
+                    "global": false,
+                    "description": "Visually hidden text for screen readers",
+                    "tags": [],
+                    "required": false,
+                    "type": "string | undefined",
+                    "declarations": [],
+                    "schema": "string | undefined"
+                  },
+                  "url": {
+                    "name": "url",
+                    "global": false,
+                    "description": "A destination to link to, rendered in the action",
+                    "tags": [],
+                    "required": false,
+                    "type": "string | undefined",
+                    "declarations": [],
+                    "schema": "string | undefined"
+                  },
+                  "external": {
+                    "name": "external",
+                    "global": false,
+                    "description": "Forces url to open in a new tab",
+                    "tags": [],
+                    "required": false,
+                    "type": "boolean | undefined",
+                    "declarations": [],
+                    "schema": "boolean | undefined"
+                  },
+                  "target": {
+                    "name": "target",
+                    "global": false,
+                    "description": "Where to display the url",
+                    "tags": [],
+                    "required": false,
+                    "type": "Target | undefined",
+                    "declarations": [],
+                    "schema": {
+                      "kind": "enum",
+                      "type": "Target | undefined",
+                      "schema": [
+                        "undefined",
+                        "\"_blank\"",
+                        "\"_self\"",
+                        "\"_parent\"",
+                        "\"_top\""
+                      ]
+                    }
+                  },
+                  "onAction": {
+                    "name": "onAction",
+                    "global": false,
+                    "description": "Callback when an action takes place",
+                    "tags": [],
+                    "required": false,
+                    "type": "(() => void) | undefined",
+                    "declarations": [],
+                    "schema": {
+                      "kind": "enum",
+                      "type": "(() => void) | undefined",
+                      "schema": [
+                        "undefined",
+                        {
+                          "kind": "event",
+                          "type": "(): void"
+                        }
+                      ]
+                    }
+                  },
+                  "onMouseEnter": {
+                    "name": "onMouseEnter",
+                    "global": false,
+                    "description": "Callback when mouse enter",
+                    "tags": [],
+                    "required": false,
+                    "type": "(() => void) | undefined",
+                    "declarations": [],
+                    "schema": {
+                      "kind": "enum",
+                      "type": "(() => void) | undefined",
+                      "schema": [
+                        "undefined",
+                        {
+                          "kind": "event",
+                          "type": "(): void"
+                        }
+                      ]
+                    }
+                  },
+                  "onTouchStart": {
+                    "name": "onTouchStart",
+                    "global": false,
+                    "description": "Callback when element is touched",
+                    "tags": [],
+                    "required": false,
+                    "type": "(() => void) | undefined",
+                    "declarations": [],
+                    "schema": {
+                      "kind": "enum",
+                      "type": "(() => void) | undefined",
+                      "schema": [
+                        "undefined",
+                        {
+                          "kind": "event",
+                          "type": "(): void"
+                        }
+                      ]
+                    }
+                  }
+                }
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "name": "sortOrder",
+      "type": "number | undefined",
+      "required": false,
+      "description": "The order the item is rendered",
+      "tags": [],
+      "declarations": [],
+      "schema": {
+        "kind": "enum",
+        "type": "number | undefined",
+        "schema": [
+          "undefined",
+          "number"
+        ]
+      }
+    },
+    {
+      "name": "verticalAlignment",
+      "type": "Alignment | undefined",
+      "required": false,
+      "description": "Adjust vertical alignment of elements",
+      "tags": [],
+      "declarations": [],
+      "schema": {
+        "kind": "enum",
+        "type": "Alignment | undefined",
+        "schema": [
+          "undefined",
+          "\"fill\"",
+          "\"center\"",
+          "\"baseline\"",
+          "\"leading\"",
+          "\"trailing\""
+        ]
+      }
+    },
+    {
+      "name": "dataHref",
+      "type": "string | undefined",
+      "required": false,
+      "description": "Prefetched url attribute to bind to the main element being returned",
+      "tags": [],
+      "declarations": [],
+      "schema": {
+        "kind": "enum",
+        "type": "string | undefined",
+        "schema": [
+          "undefined",
+          "string"
+        ]
+      }
+    }
+  ],
+  "events": [
+    {
+      "name": "e",
+      "description": "",
+      "params": {
+        "id": "string)",
+        "": "void"
+      }
+    }
+  ],
+  "slots": [
+    {
+      "name": "media",
+      "type": "{}",
+      "description": "",
+      "declarations": [],
+      "schema": {
+        "kind": "object",
+        "type": "{}",
+        "schema": {}
+      }
+    },
+    {
+      "name": "default",
+      "type": "{}",
+      "description": "",
+      "declarations": [],
+      "schema": {
+        "kind": "object",
+        "type": "{}",
+        "schema": {}
+      }
+    }
+  ]
+}

@@ -1,0 +1,48 @@
+{
+  "filePath": "src/utilities/auto-complete.ts",
+  "name": "MappedActionContextType",
+  "description": "",
+  "value": "export interface MappedActionContextType {\n  role?: string;\n  url?: string;\n  external?: boolean;\n  onAction?(): void;\n  destructive?: boolean;\n}",
+  "members": [
+    {
+      "filePath": "src/utilities/auto-complete.ts",
+      "syntaxKind": "PropertySignature",
+      "name": "role",
+      "value": "string",
+      "description": "",
+      "isOptional": true
+    },
+    {
+      "filePath": "src/utilities/auto-complete.ts",
+      "syntaxKind": "PropertySignature",
+      "name": "url",
+      "value": "string",
+      "description": "",
+      "isOptional": true
+    },
+    {
+      "filePath": "src/utilities/auto-complete.ts",
+      "syntaxKind": "PropertySignature",
+      "name": "external",
+      "value": "boolean",
+      "description": "",
+      "isOptional": true
+    },
+    {
+      "filePath": "src/utilities/auto-complete.ts",
+      "syntaxKind": "MethodSignature",
+      "name": "onAction",
+      "value": "() => void",
+      "description": "",
+      "isOptional": true
+    },
+    {
+      "filePath": "src/utilities/auto-complete.ts",
+      "syntaxKind": "PropertySignature",
+      "name": "destructive",
+      "value": "boolean",
+      "description": "",
+      "isOptional": true
+    }
+  ]
+}

@@ -1,0 +1,21 @@
+{
+  "name": "Frame",
+  "description": "The frame component, while not visible in the user interface itself, provides the structure for an application. It wraps the main elements and houses the primary [navigation](https://polaris.shopify.com/components/internal-only/navigation), [top bar](https://polaris.shopify.com/components/internal-only/top-bar), [toast](https://polaris.shopify.com/components/internal-only/toast), and [contextual save bar](https://polaris.shopify.com/components/internal-only/contextual-save-bar) components.",
+  "bestPractices": "For the best experience when creating an application frame, use the following components:\n\n- [Top bar](https://polaris.shopify.com/components/internal-only/top-bar)\n- [Navigation](https://polaris.shopify.com/components/internal-only/navigation)\n- [Contextual save bar](https://polaris.shopify.com/components/internal-only/contextual-save-bar)\n- [Toast](https://polaris.shopify.com/components/internal-only/toast)\n- [Loading](https://polaris.shopify.com/components/internal-only/loading)",
+  "keywords": [
+    " navigation\n  ",
+    " nav\n  ",
+    " links\n  ",
+    " primary navigation\n  ",
+    " main navigation\n  ",
+    " global\n  ",
+    " frame\n  ",
+    " sidebar\n  ",
+    " side bar\n  ",
+    " loading\n  ",
+    " top bar\n  ",
+    " menu\n  ",
+    " toast"
+  ],
+  "previewImg": "frame.png"
+}

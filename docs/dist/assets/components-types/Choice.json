@@ -1,0 +1,63 @@
+{
+  "filePath": "src/components/ChoiceList/types.ts",
+  "name": "Choice",
+  "description": "",
+  "value": "export interface Choice {\n  /** Value of the choice */\n  value: string;\n  /** Label for the choice */\n  label?: string;\n  /** A unique identifier for the choice */\n  id?: string;\n  /** Disable choice */\n  disabled?: boolean;\n  /** Additional text to aide in use */\n  helpText?: string;\n  /** Indicates that the choice is aria-describedBy the error message */\n  describedByError?: boolean;\n  /**  Method to render children with a choice */\n  renderChildren?: VueNode;\n}",
+  "members": [
+    {
+      "filePath": "src/components/ChoiceList/types.ts",
+      "syntaxKind": "PropertySignature",
+      "name": "value",
+      "value": "string",
+      "description": "Value of the choice"
+    },
+    {
+      "filePath": "src/components/ChoiceList/types.ts",
+      "syntaxKind": "PropertySignature",
+      "name": "label",
+      "value": "string",
+      "description": "Label for the choice",
+      "isOptional": true
+    },
+    {
+      "filePath": "src/components/ChoiceList/types.ts",
+      "syntaxKind": "PropertySignature",
+      "name": "id",
+      "value": "string",
+      "description": "A unique identifier for the choice",
+      "isOptional": true
+    },
+    {
+      "filePath": "src/components/ChoiceList/types.ts",
+      "syntaxKind": "PropertySignature",
+      "name": "disabled",
+      "value": "boolean",
+      "description": "Disable choice",
+      "isOptional": true
+    },
+    {
+      "filePath": "src/components/ChoiceList/types.ts",
+      "syntaxKind": "PropertySignature",
+      "name": "helpText",
+      "value": "string",
+      "description": "Additional text to aide in use",
+      "isOptional": true
+    },
+    {
+      "filePath": "src/components/ChoiceList/types.ts",
+      "syntaxKind": "PropertySignature",
+      "name": "describedByError",
+      "value": "boolean",
+      "description": "Indicates that the choice is aria-describedBy the error message",
+      "isOptional": true
+    },
+    {
+      "filePath": "src/components/ChoiceList/types.ts",
+      "syntaxKind": "PropertySignature",
+      "name": "renderChildren",
+      "value": "VueNode",
+      "description": "Method to render children with a choice",
+      "isOptional": true
+    }
+  ]
+}

@@ -1,0 +1,190 @@
+{
+  "props": [
+    {
+      "name": "implicitSubmit",
+      "type": "boolean | undefined",
+      "required": false,
+      "description": "Toggles if form submits on Enter keypress. Defaults to true.",
+      "tags": [],
+      "declarations": [],
+      "schema": {
+        "kind": "enum",
+        "type": "boolean | undefined",
+        "schema": [
+          "undefined",
+          "false",
+          "true"
+        ]
+      }
+    },
+    {
+      "name": "method",
+      "type": "Method | undefined",
+      "required": false,
+      "description": "Method used to submit form",
+      "tags": [],
+      "declarations": [],
+      "schema": {
+        "kind": "enum",
+        "type": "Method | undefined",
+        "schema": [
+          "undefined",
+          "\"action\"",
+          "\"get\"",
+          "\"post\""
+        ]
+      }
+    },
+    {
+      "name": "preventDefault",
+      "type": "boolean | undefined",
+      "required": false,
+      "description": "Blocks the default form action",
+      "tags": [],
+      "declarations": [],
+      "schema": {
+        "kind": "enum",
+        "type": "boolean | undefined",
+        "schema": [
+          "undefined",
+          "false",
+          "true"
+        ]
+      }
+    },
+    {
+      "name": "action",
+      "type": "string | undefined",
+      "required": false,
+      "description": "Where to send form-data on submittal",
+      "tags": [],
+      "declarations": [],
+      "schema": {
+        "kind": "enum",
+        "type": "string | undefined",
+        "schema": [
+          "undefined",
+          "string"
+        ]
+      }
+    },
+    {
+      "name": "name",
+      "type": "string | undefined",
+      "required": false,
+      "description": "A unique name for the form",
+      "tags": [],
+      "declarations": [],
+      "schema": {
+        "kind": "enum",
+        "type": "string | undefined",
+        "schema": [
+          "undefined",
+          "string"
+        ]
+      }
+    },
+    {
+      "name": "target",
+      "type": "string | undefined",
+      "required": false,
+      "description": "Where to display response after form submittal",
+      "tags": [],
+      "declarations": [],
+      "schema": {
+        "kind": "enum",
+        "type": "string | undefined",
+        "schema": [
+          "undefined",
+          "string"
+        ]
+      }
+    },
+    {
+      "name": "acceptCharset",
+      "type": "string | undefined",
+      "required": false,
+      "description": "Space separated list of character encodings",
+      "tags": [],
+      "declarations": [],
+      "schema": {
+        "kind": "enum",
+        "type": "string | undefined",
+        "schema": [
+          "undefined",
+          "string"
+        ]
+      }
+    },
+    {
+      "name": "autoComplete",
+      "type": "boolean | undefined",
+      "required": false,
+      "description": "Grants the browser the ability to autocomplete input elements",
+      "tags": [],
+      "declarations": [],
+      "schema": {
+        "kind": "enum",
+        "type": "boolean | undefined",
+        "schema": [
+          "undefined",
+          "false",
+          "true"
+        ]
+      }
+    },
+    {
+      "name": "encType",
+      "type": "Enctype | undefined",
+      "required": false,
+      "description": "Media type when submitting content to server",
+      "tags": [],
+      "declarations": [],
+      "schema": {
+        "kind": "enum",
+        "type": "Enctype | undefined",
+        "schema": [
+          "undefined",
+          "\"application/x-www-form-urlencoded\"",
+          "\"multipart/form-data\"",
+          "\"text/plain\""
+        ]
+      }
+    },
+    {
+      "name": "noValidate",
+      "type": "boolean | undefined",
+      "required": false,
+      "description": "Whether or not form is validated when submitting",
+      "tags": [],
+      "declarations": [],
+      "schema": {
+        "kind": "enum",
+        "type": "boolean | undefined",
+        "schema": [
+          "undefined",
+          "false",
+          "true"
+        ]
+      }
+    }
+  ],
+  "events": [
+    {
+      "name": "submit",
+      "description": "Callback when form is submitted",
+      "params": {
+        "e": "Event"
+      }
+    }
+  ],
+  "slots": [
+    {
+      "name": "default",
+      "type": "VueNode",
+      "description": "The content to display inside the form.",
+      "declarations": [],
+      "schema": "VueNode"
+    }
+  ]
+}

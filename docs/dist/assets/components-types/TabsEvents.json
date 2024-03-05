@@ -1,0 +1,21 @@
+{
+  "filePath": "src/components/Tabs/types.ts",
+  "kind": "TypeAliasDeclaration",
+  "name": "TabsEvents",
+  "value": "{\n  /** Optional callback invoked when a Tab becomes selected. */\n  'select': [selectedTabIndex: number];\n  /** Optional callback invoked when a merchant saves a new view from the Modal */\n  'create-new-view': [value: string];\n}",
+  "description": "",
+  "members": [
+    {
+      "filePath": "src/components/Tabs/types.ts",
+      "name": "'select'",
+      "value": "[selectedTabIndex: number]",
+      "description": "Optional callback invoked when a Tab becomes selected."
+    },
+    {
+      "filePath": "src/components/Tabs/types.ts",
+      "name": "'create-new-view'",
+      "value": "[value: string]",
+      "description": "Optional callback invoked when a merchant saves a new view from the Modal"
+    }
+  ]
+}

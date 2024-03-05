@@ -1,0 +1,20 @@
+{
+  "name": "Badge",
+  "description": "Badges are used to inform merchants of the tone of an object or of an action that’s been taken.",
+  "bestPractices": "Badges benefit merchants by:\n\n- Using established color patterns so that merchants can quickly identify their tone or importance level\n- Being clearly labeled with short, scannable text\n- Being positioned to clearly identify the object they’re informing or labelling",
+  "keywords": [
+    " pills\n  ",
+    " tone indicators\n  ",
+    " color",
+    "coded indicators\n  ",
+    " informational badge\n  ",
+    " success badge\n  ",
+    " attention badge\n  ",
+    " warning badge\n  ",
+    " critical badge\n  ",
+    " object tone\n  ",
+    " tone\n  ",
+    " alert"
+  ],
+  "previewImg": "badge.png"
+}

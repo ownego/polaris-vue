@@ -1,0 +1,494 @@
+{
+  "props": [
+    {
+      "name": "filters",
+      "type": "FilterInterface[]",
+      "required": true,
+      "description": "Available filters added to the filter bar. Shortcut filters are pinned to the front of the bar.",
+      "tags": [],
+      "declarations": [],
+      "schema": {
+        "kind": "array",
+        "type": "FilterInterface[]",
+        "schema": [
+          {
+            "kind": "object",
+            "type": "FilterInterface",
+            "schema": {
+              "name": {
+                "name": "name",
+                "global": false,
+                "description": "A unique key used to identify the filter",
+                "tags": [],
+                "required": true,
+                "type": "string",
+                "declarations": [],
+                "schema": "string"
+              },
+              "label": {
+                "name": "label",
+                "global": false,
+                "description": "The label for the filter",
+                "tags": [],
+                "required": true,
+                "type": "string",
+                "declarations": [],
+                "schema": "string"
+              },
+              "filter": {
+                "name": "filter",
+                "global": false,
+                "description": "The markup for the given filter",
+                "tags": [],
+                "required": true,
+                "type": "VueNode",
+                "declarations": [],
+                "schema": "VueNode"
+              },
+              "shortcut": {
+                "name": "shortcut",
+                "global": false,
+                "description": "Whether or not the filter should have a shortcut popover displayed",
+                "tags": [],
+                "required": false,
+                "type": "boolean | undefined",
+                "declarations": [],
+                "schema": {
+                  "kind": "enum",
+                  "type": "boolean | undefined",
+                  "schema": [
+                    "undefined",
+                    "false",
+                    "true"
+                  ]
+                }
+              },
+              "pinned": {
+                "name": "pinned",
+                "global": false,
+                "description": "Whether or not the filter should be pinned, permanently displaying the filter",
+                "tags": [],
+                "required": false,
+                "type": "boolean | undefined",
+                "declarations": [],
+                "schema": "boolean | undefined"
+              },
+              "disabled": {
+                "name": "disabled",
+                "global": false,
+                "description": "Whether or not the filter is disabled",
+                "tags": [],
+                "required": false,
+                "type": "boolean | undefined",
+                "declarations": [],
+                "schema": "boolean | undefined"
+              },
+              "hideClearButton": {
+                "name": "hideClearButton",
+                "global": false,
+                "description": "",
+                "tags": [
+                  {
+                    "name": "default",
+                    "text": "false\nWhether or not the clear button is displayed"
+                  }
+                ],
+                "required": false,
+                "type": "boolean | undefined",
+                "declarations": [],
+                "schema": "boolean | undefined"
+              },
+              "onAction": {
+                "name": "onAction",
+                "global": false,
+                "description": "Optional callback when filter is pressed",
+                "tags": [],
+                "required": false,
+                "type": "(() => void) | undefined",
+                "declarations": [],
+                "schema": {
+                  "kind": "enum",
+                  "type": "(() => void) | undefined",
+                  "schema": [
+                    "undefined",
+                    {
+                      "kind": "event",
+                      "type": "(): void"
+                    }
+                  ]
+                }
+              },
+              "suffix": {
+                "name": "suffix",
+                "global": false,
+                "description": "Suffix source",
+                "tags": [],
+                "required": false,
+                "type": "VueNode",
+                "declarations": [],
+                "schema": "VueNode"
+              },
+              "section": {
+                "name": "section",
+                "global": false,
+                "description": "Optional section heading that this filter will go under",
+                "tags": [],
+                "required": false,
+                "type": "string | undefined",
+                "declarations": [],
+                "schema": {
+                  "kind": "enum",
+                  "type": "string | undefined",
+                  "schema": [
+                    "undefined",
+                    "string"
+                  ]
+                }
+              },
+              "hidden": {
+                "name": "hidden",
+                "global": false,
+                "description": "Optional: hides the filter from the dropdown",
+                "tags": [],
+                "required": false,
+                "type": "boolean | undefined",
+                "declarations": [],
+                "schema": "boolean | undefined"
+              }
+            }
+          }
+        ]
+      }
+    },
+    {
+      "name": "loading",
+      "type": "boolean | undefined",
+      "required": false,
+      "description": "Whether an asyncronous task is currently being run.",
+      "tags": [],
+      "declarations": [],
+      "schema": {
+        "kind": "enum",
+        "type": "boolean | undefined",
+        "schema": [
+          "undefined",
+          "false",
+          "true"
+        ]
+      }
+    },
+    {
+      "name": "disabled",
+      "type": "boolean | undefined",
+      "required": false,
+      "description": "Disable all filters.",
+      "tags": [],
+      "declarations": [],
+      "schema": {
+        "kind": "enum",
+        "type": "boolean | undefined",
+        "schema": [
+          "undefined",
+          "false",
+          "true"
+        ]
+      }
+    },
+    {
+      "name": "queryValue",
+      "type": "string | undefined",
+      "required": false,
+      "description": "Currently entered text in the query field",
+      "tags": [],
+      "declarations": [],
+      "schema": {
+        "kind": "enum",
+        "type": "string | undefined",
+        "schema": [
+          "undefined",
+          "string"
+        ]
+      }
+    },
+    {
+      "name": "queryPlaceholder",
+      "type": "string | undefined",
+      "required": false,
+      "description": "Placeholder text for the query field.",
+      "tags": [],
+      "declarations": [],
+      "schema": {
+        "kind": "enum",
+        "type": "string | undefined",
+        "schema": [
+          "undefined",
+          "string"
+        ]
+      }
+    },
+    {
+      "name": "focused",
+      "type": "boolean | undefined",
+      "required": false,
+      "description": "Whether the query field is focused.",
+      "tags": [],
+      "declarations": [],
+      "schema": {
+        "kind": "enum",
+        "type": "boolean | undefined",
+        "schema": [
+          "undefined",
+          "false",
+          "true"
+        ]
+      }
+    },
+    {
+      "name": "appliedFilters",
+      "type": "AppliedFilterInterface[] | undefined",
+      "required": false,
+      "description": "Applied filters which are rendered as filter pills. The remove callback is called with the respective key.",
+      "tags": [],
+      "declarations": [],
+      "schema": {
+        "kind": "enum",
+        "type": "AppliedFilterInterface[] | undefined",
+        "schema": [
+          "undefined",
+          {
+            "kind": "array",
+            "type": "AppliedFilterInterface[]",
+            "schema": [
+              {
+                "kind": "object",
+                "type": "AppliedFilterInterface",
+                "schema": {
+                  "name": {
+                    "name": "name",
+                    "global": false,
+                    "description": "A unique key used to identify the applied filter",
+                    "tags": [],
+                    "required": true,
+                    "type": "string",
+                    "declarations": [],
+                    "schema": "string"
+                  },
+                  "label": {
+                    "name": "label",
+                    "global": false,
+                    "description": "A label for the applied filter",
+                    "tags": [],
+                    "required": true,
+                    "type": "string",
+                    "declarations": [],
+                    "schema": "string"
+                  },
+                  "onRemove": {
+                    "name": "onRemove",
+                    "global": false,
+                    "description": "Callback when the remove button is pressed",
+                    "tags": [],
+                    "required": true,
+                    "type": "(key: string) => void",
+                    "declarations": [],
+                    "schema": {
+                      "kind": "event",
+                      "type": "(key: string): void",
+                      "schema": []
+                    }
+                  }
+                }
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "name": "hideFilters",
+      "type": "boolean | undefined",
+      "required": false,
+      "description": "Hide filter bar for applied filters.",
+      "tags": [],
+      "declarations": [],
+      "schema": {
+        "kind": "enum",
+        "type": "boolean | undefined",
+        "schema": [
+          "undefined",
+          "false",
+          "true"
+        ]
+      }
+    },
+    {
+      "name": "hideQueryField",
+      "type": "boolean | undefined",
+      "required": false,
+      "description": "Hide the query field.",
+      "tags": [],
+      "declarations": [],
+      "schema": {
+        "kind": "enum",
+        "type": "boolean | undefined",
+        "schema": [
+          "undefined",
+          "false",
+          "true"
+        ]
+      }
+    },
+    {
+      "name": "disableQueryField",
+      "type": "boolean | undefined",
+      "required": false,
+      "description": "Disable the query field.",
+      "tags": [],
+      "declarations": [],
+      "schema": {
+        "kind": "enum",
+        "type": "boolean | undefined",
+        "schema": [
+          "undefined",
+          "false",
+          "true"
+        ]
+      }
+    },
+    {
+      "name": "disableFilters",
+      "type": "boolean | undefined",
+      "required": false,
+      "description": "Disable the filters",
+      "tags": [],
+      "declarations": [],
+      "schema": {
+        "kind": "enum",
+        "type": "boolean | undefined",
+        "schema": [
+          "undefined",
+          "false",
+          "true"
+        ]
+      }
+    },
+    {
+      "name": "borderlessQueryField",
+      "type": "boolean | undefined",
+      "required": false,
+      "description": "Whether the text field should be borderless. Should be true when used as part of the IndexFilters component.",
+      "tags": [],
+      "declarations": [],
+      "schema": {
+        "kind": "enum",
+        "type": "boolean | undefined",
+        "schema": [
+          "undefined",
+          "false",
+          "true"
+        ]
+      }
+    },
+    {
+      "name": "mountedState",
+      "type": "TransitionStatus | undefined",
+      "required": false,
+      "description": "",
+      "tags": [],
+      "declarations": [],
+      "schema": {
+        "kind": "enum",
+        "type": "TransitionStatus | undefined",
+        "schema": [
+          "undefined",
+          "\"entering\"",
+          "\"entered\"",
+          "\"exiting\"",
+          "\"exited\"",
+          "\"unmounted\""
+        ]
+      }
+    },
+    {
+      "name": "closeOnChildOverlayClick",
+      "type": "boolean | undefined",
+      "required": false,
+      "description": "Whether the filter should close when clicking inside another Popover.",
+      "tags": [],
+      "declarations": [],
+      "schema": {
+        "kind": "enum",
+        "type": "boolean | undefined",
+        "schema": [
+          "undefined",
+          "false",
+          "true"
+        ]
+      }
+    },
+    {
+      "name": "selectedViewName",
+      "type": "string | undefined",
+      "required": false,
+      "description": "",
+      "tags": [
+        {
+          "name": "deprecated",
+          "text": "The name of the currently selected view"
+        }
+      ],
+      "declarations": [],
+      "schema": {
+        "kind": "enum",
+        "type": "string | undefined",
+        "schema": [
+          "undefined",
+          "string"
+        ]
+      }
+    }
+  ],
+  "events": [
+    {
+      "name": "query-change",
+      "description": "Callback when the query field is changed.",
+      "params": {
+        "query": "string"
+      }
+    },
+    {
+      "name": "query-clear",
+      "description": "Callback when the clear button is triggered.",
+      "params": {}
+    },
+    {
+      "name": "clear-all",
+      "description": "Callback when the reset all button is pressed.",
+      "params": {}
+    },
+    {
+      "name": "query-blur",
+      "description": "Callback when the query field is blurred.",
+      "params": {}
+    },
+    {
+      "name": "query-focus",
+      "description": "Callback when the query field is focused.",
+      "params": {}
+    },
+    {
+      "name": "add-filter-click",
+      "description": "Callback when the add filter button is clicked.",
+      "params": {}
+    }
+  ],
+  "slots": [
+    {
+      "name": "default",
+      "type": "VueNode",
+      "description": "The content to display inline with the controls.",
+      "declarations": [],
+      "schema": "VueNode"
+    }
+  ]
+}

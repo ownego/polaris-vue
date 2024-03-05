@@ -1,0 +1,13 @@
+{
+  "name": "Autocomplete",
+  "description": "The autocomplete component is an input field that provides selectable suggestions as a merchant types into it. It allows merchants to quickly search through and select from large collections of options. It's a convenience wrapper around the `Combobox` and `Listbox` components with minor UI differences.",
+  "bestPractices": "The autocomplete component should:\n\n- Be clearly labeled so it’s obvious to the merchant what type of options will be available\n- Limit the number of options displayed at once\n- Not be used within a popover\n- Indicate a loading state to the merchant while option data is being populated",
+  "keywords": [
+    " autocomplete\n  ",
+    " searchable\n  ",
+    " typeahead\n  ",
+    " combobox\n  ",
+    " listbox"
+  ],
+  "previewImg": "autocomplete.png"
+}

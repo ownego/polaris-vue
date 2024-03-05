@@ -1,0 +1,8 @@
+{
+  "filePath": "src/components/DataTable/types.ts",
+  "kind": "TypeAliasDeclaration",
+  "name": "TableRow",
+  "value": "DataTableProps['headings'] | DataTableProps['rows'] | DataTableProps['totals']",
+  "description": "",
+  "members": []
+}

@@ -1,0 +1,9 @@
+{
+  "name": "Bleed",
+  "description": "Applies negative margin to allow content to bleed out into the surrounding layout.",
+  "bestPractices": "",
+  "keywords": [
+    " layout"
+  ],
+  "previewImg": "bleed.png"
+}

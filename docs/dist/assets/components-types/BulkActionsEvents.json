@@ -1,0 +1,27 @@
+{
+  "filePath": "src/components/BulkActions/types.ts",
+  "kind": "TypeAliasDeclaration",
+  "name": "BulkActionsEvents",
+  "value": "{\n  /** Callback when the select all checkbox is clicked */\n  'toggle-all': [];\n  /** Callback when more actions button is toggled */\n  'more-action-popover-toggle': [isOpen: boolean];\n  /** @deprecated Callback when selectable state of list is changed. Unused callback */\n  'select-mode-toggle': [selectMode: boolean];\n}",
+  "description": "",
+  "members": [
+    {
+      "filePath": "src/components/BulkActions/types.ts",
+      "name": "'toggle-all'",
+      "value": "[]",
+      "description": "Callback when the select all checkbox is clicked"
+    },
+    {
+      "filePath": "src/components/BulkActions/types.ts",
+      "name": "'more-action-popover-toggle'",
+      "value": "[isOpen: boolean]",
+      "description": "Callback when more actions button is toggled"
+    },
+    {
+      "filePath": "src/components/BulkActions/types.ts",
+      "name": "'select-mode-toggle'",
+      "value": "[selectMode: boolean]",
+      "description": "@deprecated Callback when selectable state of list is changed. Unused callback"
+    }
+  ]
+}

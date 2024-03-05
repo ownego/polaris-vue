@@ -1,0 +1,106 @@
+{
+  "props": [
+    {
+      "name": "videoLength",
+      "type": "number | undefined",
+      "required": false,
+      "description": "Length of video in seconds.",
+      "tags": [
+        {
+          "name": "default",
+          "text": "0"
+        }
+      ],
+      "declarations": [],
+      "schema": {
+        "kind": "enum",
+        "type": "number | undefined",
+        "schema": [
+          "undefined",
+          "number"
+        ]
+      }
+    },
+    {
+      "name": "videoProgress",
+      "type": "number | undefined",
+      "required": false,
+      "description": "Video progress in seconds. Displays a progress bar at the bottom of the thumbnail. Only renders when videoLength is also set.",
+      "tags": [
+        {
+          "name": "default",
+          "text": "0"
+        }
+      ],
+      "declarations": [],
+      "schema": {
+        "kind": "enum",
+        "type": "number | undefined",
+        "schema": [
+          "undefined",
+          "number"
+        ]
+      }
+    },
+    {
+      "name": "showVideoProgress",
+      "type": "boolean | undefined",
+      "required": false,
+      "description": "Indicate whether to allow video progress to be displayed",
+      "tags": [
+        {
+          "name": "default",
+          "text": "false"
+        }
+      ],
+      "declarations": [],
+      "schema": {
+        "kind": "enum",
+        "type": "boolean | undefined",
+        "schema": [
+          "undefined",
+          "false",
+          "true"
+        ]
+      }
+    },
+    {
+      "name": "accessibilityLabel",
+      "type": "string | undefined",
+      "required": false,
+      "description": "Custom ARIA label for play button.",
+      "tags": [
+        {
+          "name": "default",
+          "text": "'Play video of length {human readable duration}'"
+        }
+      ],
+      "declarations": [],
+      "schema": {
+        "kind": "enum",
+        "type": "string | undefined",
+        "schema": [
+          "undefined",
+          "string"
+        ]
+      }
+    },
+    {
+      "name": "thumbnailUrl",
+      "type": "string",
+      "required": true,
+      "description": "URL source for thumbnail image.",
+      "tags": [],
+      "declarations": [],
+      "schema": "string"
+    }
+  ],
+  "events": [
+    {
+      "name": "",
+      "description": "",
+      "params": {}
+    }
+  ],
+  "slots": []
+}

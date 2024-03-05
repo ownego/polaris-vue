@@ -1,0 +1,90 @@
+{
+  "props": [
+    {
+      "name": "disabled",
+      "type": "boolean | undefined",
+      "required": false,
+      "description": "Disables the tag",
+      "tags": [],
+      "declarations": [],
+      "schema": {
+        "kind": "enum",
+        "type": "boolean | undefined",
+        "schema": [
+          "undefined",
+          "false",
+          "true"
+        ]
+      }
+    },
+    {
+      "name": "size",
+      "type": "\"large\" | undefined",
+      "required": false,
+      "description": "The size of the tag",
+      "tags": [],
+      "declarations": [],
+      "schema": {
+        "kind": "enum",
+        "type": "\"large\" | undefined",
+        "schema": [
+          "undefined",
+          "\"large\""
+        ]
+      }
+    },
+    {
+      "name": "accessibilityLabel",
+      "type": "string | undefined",
+      "required": false,
+      "description": "A string to use when tag has more than textual content",
+      "tags": [],
+      "declarations": [],
+      "schema": {
+        "kind": "enum",
+        "type": "string | undefined",
+        "schema": [
+          "undefined",
+          "string"
+        ]
+      }
+    },
+    {
+      "name": "url",
+      "type": "string | undefined",
+      "required": false,
+      "description": "Url to navigate to when tag is clicked or keypressed.",
+      "tags": [],
+      "declarations": [],
+      "schema": {
+        "kind": "enum",
+        "type": "string | undefined",
+        "schema": [
+          "undefined",
+          "string"
+        ]
+      }
+    }
+  ],
+  "events": [
+    {
+      "name": "remove",
+      "description": "Callback when remove button is clicked or keypressed.",
+      "params": {}
+    },
+    {
+      "name": "click",
+      "description": "Callback when tag is clicked or keypressed. Renders without remove button or url when set.",
+      "params": {}
+    }
+  ],
+  "slots": [
+    {
+      "name": "default",
+      "type": "VueNode",
+      "description": "Elements to display inside the tag",
+      "declarations": [],
+      "schema": "VueNode"
+    }
+  ]
+}

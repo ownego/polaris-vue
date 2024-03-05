@@ -1,0 +1,8 @@
+{
+  "filePath": "src/components/RangeSlider/types.ts",
+  "kind": "TypeAliasDeclaration",
+  "name": "DualValue",
+  "value": "[number, number]",
+  "description": "",
+  "members": []
+}

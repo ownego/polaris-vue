@@ -1,0 +1,31 @@
+{
+  "filePath": "src/components/Tabs/types.ts",
+  "kind": "TypeAliasDeclaration",
+  "name": "TabEvents",
+  "value": "{\n  'tab-action': [];\n  'focus': [];\n  /** Callback to let the Tabs know that a Popover is open inside of a Tab. Used to control focus. */\n  'toggle-popover': [value: boolean];\n  /** Callback to let the Tabs know that a Modal is open inside of a Tab. Used to control focus. */\n  'toggle-modal': [value: boolean];\n}",
+  "description": "",
+  "members": [
+    {
+      "filePath": "src/components/Tabs/types.ts",
+      "name": "'tab-action'",
+      "value": "[]"
+    },
+    {
+      "filePath": "src/components/Tabs/types.ts",
+      "name": "'focus'",
+      "value": "[]"
+    },
+    {
+      "filePath": "src/components/Tabs/types.ts",
+      "name": "'toggle-popover'",
+      "value": "[value: boolean]",
+      "description": "Callback to let the Tabs know that a Popover is open inside of a Tab. Used to control focus."
+    },
+    {
+      "filePath": "src/components/Tabs/types.ts",
+      "name": "'toggle-modal'",
+      "value": "[value: boolean]",
+      "description": "Callback to let the Tabs know that a Modal is open inside of a Tab. Used to control focus."
+    }
+  ]
+}

@@ -1,0 +1,8 @@
+{
+  "filePath": "src/utilities/css.ts",
+  "kind": "TypeAliasDeclaration",
+  "name": "Falsy",
+  "value": "boolean | undefined | null | 0",
+  "description": "",
+  "members": []
+}

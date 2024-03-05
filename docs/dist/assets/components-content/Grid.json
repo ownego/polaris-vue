@@ -1,0 +1,18 @@
+{
+  "name": "Grid",
+  "description": "Create complex layouts based on [CSS Grid](https://developer.mozilla.org/en-US/docs/Web/CSS/grid).",
+  "bestPractices": "",
+  "keywords": [
+    " one column\n  ",
+    " two column\n  ",
+    " three column\n  ",
+    " column\n  ",
+    " row\n  ",
+    " column layouts\n  ",
+    " grid layouts\n  ",
+    " containers\n  ",
+    " full width containers\n  ",
+    " css grid"
+  ],
+  "previewImg": "grid.png"
+}

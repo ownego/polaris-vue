@@ -1,0 +1,15 @@
+{
+  "filePath": "src/components/VideoThumbnail/types.ts",
+  "name": "MediaQueryType",
+  "description": "",
+  "value": "export interface MediaQueryType {\n  isNavigationCollapsed: boolean;\n}",
+  "members": [
+    {
+      "filePath": "src/components/VideoThumbnail/types.ts",
+      "syntaxKind": "PropertySignature",
+      "name": "isNavigationCollapsed",
+      "value": "boolean",
+      "description": ""
+    }
+  ]
+}

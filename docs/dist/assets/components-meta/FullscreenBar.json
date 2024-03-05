@@ -1,0 +1,19 @@
+{
+  "props": [],
+  "events": [
+    {
+      "name": "action",
+      "description": "Callback when back button is clicked",
+      "params": {}
+    }
+  ],
+  "slots": [
+    {
+      "name": "default",
+      "type": "VueNode",
+      "description": "Render child elements",
+      "declarations": [],
+      "schema": "VueNode"
+    }
+  ]
+}

@@ -1,0 +1,277 @@
+{
+  "props": [
+    {
+      "name": "disabled",
+      "type": "boolean | undefined",
+      "required": false,
+      "description": "Disable all choices *",
+      "tags": [],
+      "declarations": [],
+      "schema": {
+        "kind": "enum",
+        "type": "boolean | undefined",
+        "schema": [
+          "undefined",
+          "false",
+          "true"
+        ]
+      }
+    },
+    {
+      "name": "name",
+      "type": "string | undefined",
+      "required": false,
+      "description": "Name for form input",
+      "tags": [],
+      "declarations": [],
+      "schema": {
+        "kind": "enum",
+        "type": "string | undefined",
+        "schema": [
+          "undefined",
+          "string"
+        ]
+      }
+    },
+    {
+      "name": "title",
+      "type": "string | undefined",
+      "required": false,
+      "description": "Label for list of choices",
+      "tags": [],
+      "declarations": [],
+      "schema": {
+        "kind": "enum",
+        "type": "string | undefined",
+        "schema": [
+          "undefined",
+          "string"
+        ]
+      }
+    },
+    {
+      "name": "allowMultiple",
+      "type": "boolean | undefined",
+      "required": false,
+      "description": "Allow merchants to select multiple options at once",
+      "tags": [],
+      "declarations": [],
+      "schema": {
+        "kind": "enum",
+        "type": "boolean | undefined",
+        "schema": [
+          "undefined",
+          "false",
+          "true"
+        ]
+      }
+    },
+    {
+      "name": "tone",
+      "type": "\"magic\" | undefined",
+      "required": false,
+      "description": "Indicates the tone of the choice list",
+      "tags": [],
+      "declarations": [],
+      "schema": {
+        "kind": "enum",
+        "type": "\"magic\" | undefined",
+        "schema": [
+          "undefined",
+          "\"magic\""
+        ]
+      }
+    },
+    {
+      "name": "error",
+      "type": "Error | undefined",
+      "required": false,
+      "description": "Display an error message",
+      "tags": [],
+      "declarations": [],
+      "schema": {
+        "kind": "enum",
+        "type": "Error | undefined",
+        "schema": [
+          "undefined",
+          "string",
+          "Element",
+          {
+            "kind": "array",
+            "type": "(string | Element)[]",
+            "schema": [
+              {
+                "kind": "enum",
+                "type": "string | Element",
+                "schema": [
+                  "string",
+                  "Element"
+                ]
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "name": "modelValue",
+      "type": "string[] | undefined",
+      "required": false,
+      "description": "",
+      "tags": [],
+      "declarations": [],
+      "schema": {
+        "kind": "enum",
+        "type": "string[] | undefined",
+        "schema": [
+          "undefined",
+          {
+            "kind": "array",
+            "type": "string[]",
+            "schema": [
+              "string"
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "name": "choices",
+      "type": "Choice[]",
+      "required": true,
+      "description": "Collection of choices",
+      "tags": [],
+      "declarations": [],
+      "schema": {
+        "kind": "array",
+        "type": "Choice[]",
+        "schema": [
+          {
+            "kind": "object",
+            "type": "Choice",
+            "schema": {
+              "value": {
+                "name": "value",
+                "global": false,
+                "description": "Value of the choice",
+                "tags": [],
+                "required": true,
+                "type": "string",
+                "declarations": [],
+                "schema": "string"
+              },
+              "label": {
+                "name": "label",
+                "global": false,
+                "description": "Label for the choice",
+                "tags": [],
+                "required": false,
+                "type": "string | undefined",
+                "declarations": [],
+                "schema": {
+                  "kind": "enum",
+                  "type": "string | undefined",
+                  "schema": [
+                    "undefined",
+                    "string"
+                  ]
+                }
+              },
+              "id": {
+                "name": "id",
+                "global": false,
+                "description": "A unique identifier for the choice",
+                "tags": [],
+                "required": false,
+                "type": "string | undefined",
+                "declarations": [],
+                "schema": "string | undefined"
+              },
+              "disabled": {
+                "name": "disabled",
+                "global": false,
+                "description": "Disable choice",
+                "tags": [],
+                "required": false,
+                "type": "boolean | undefined",
+                "declarations": [],
+                "schema": {
+                  "kind": "enum",
+                  "type": "boolean | undefined",
+                  "schema": [
+                    "undefined",
+                    "false",
+                    "true"
+                  ]
+                }
+              },
+              "helpText": {
+                "name": "helpText",
+                "global": false,
+                "description": "Additional text to aide in use",
+                "tags": [],
+                "required": false,
+                "type": "string | undefined",
+                "declarations": [],
+                "schema": "string | undefined"
+              },
+              "describedByError": {
+                "name": "describedByError",
+                "global": false,
+                "description": "Indicates that the choice is aria-describedBy the error message",
+                "tags": [],
+                "required": false,
+                "type": "boolean | undefined",
+                "declarations": [],
+                "schema": "boolean | undefined"
+              },
+              "renderChildren": {
+                "name": "renderChildren",
+                "global": false,
+                "description": "Method to render children with a choice",
+                "tags": [],
+                "required": false,
+                "type": "VueNode",
+                "declarations": [],
+                "schema": "VueNode"
+              }
+            }
+          }
+        ]
+      }
+    },
+    {
+      "name": "titleHidden",
+      "type": "boolean | undefined",
+      "required": false,
+      "description": "Toggles display of the title",
+      "tags": [],
+      "declarations": [],
+      "schema": {
+        "kind": "enum",
+        "type": "boolean | undefined",
+        "schema": [
+          "undefined",
+          "false",
+          "true"
+        ]
+      }
+    }
+  ],
+  "events": [
+    {
+      "name": "",
+      "description": "",
+      "params": {}
+    }
+  ],
+  "slots": [
+    {
+      "name": "title",
+      "type": "VueNode",
+      "description": "Label for list of choices",
+      "declarations": [],
+      "schema": "VueNode"
+    }
+  ]
+}

@@ -1,0 +1,19 @@
+{
+  "name": "FooterHelp",
+  "description": "Footer help is used to refer merchants to more information related to the product or feature they’re using.",
+  "bestPractices": "Footer help should:\n\n- Be positioned at the bottom of the interface\n- Provide links to help that’s related to the experience on the screen\n- Not be used to promote features or provide explanations for how something works\n- Never link to information designed to upsell to merchants\n- In rare cases, link to blog posts when there isn’t any help documentation to help merchants with the most logical next step in the workflow\n\nIt’s recommended to link your footer help component to [help documentation](https://polaris.shopify.com/content/help-documentation). Linking directly to your contact information might result in receiving a higher number of emails or calls.",
+  "keywords": [
+    " FooterHelp\n  ",
+    " learn more about\n  ",
+    " help documentation links\n  ",
+    " links to help documentation\n  ",
+    " link to help documentation\n  ",
+    " footer help boxes\n  ",
+    " educate about features\n  ",
+    " merchant education\n  ",
+    " educational opportunity\n  ",
+    " educating\n  ",
+    " teaching"
+  ],
+  "previewImg": "footer-help.png"
+}

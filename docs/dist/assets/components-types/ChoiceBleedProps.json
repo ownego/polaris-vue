@@ -1,0 +1,48 @@
+{
+  "filePath": "src/components/Choice/types.ts",
+  "name": "ChoiceBleedProps",
+  "description": "",
+  "value": "export interface ChoiceBleedProps {\n  /** Spacing around children. Accepts a spacing token or an object of spacing tokens for different screen sizes.\n   * @example\n   * bleed='4'\n   * bleed={{xs: '2', sm: '3', md: '4', lg: '5', xl: '6'}}\n   */\n  bleed?: Spacing;\n  /** Vertical start spacing around children. Accepts a spacing token or an object of spacing tokens for different screen sizes.\n   * @example\n   * bleedBlockStart='4'\n   * bleedBlockStart={{xs: '2', sm: '3', md: '4', lg: '5', xl: '6'}}\n   */\n  bleedBlockStart?: Spacing;\n  /** Vertical end spacing around children. Accepts a spacing token or an object of spacing tokens for different screen sizes.\n   * @example\n   * bleedBlockEnd='4'\n   * bleedBlockEnd={{xs: '2', sm: '3', md: '4', lg: '5', xl: '6'}}\n   */\n  bleedBlockEnd?: Spacing;\n  /** Horizontal start spacing around children. Accepts a spacing token or an object of spacing tokens for different screen sizes.\n   * @example\n   * bleedInlineStart='4'\n   * bleedInlineStart={{xs: '2', sm: '3', md: '4', lg: '5', xl: '6'}}\n   */\n  bleedInlineStart?: Spacing;\n  /** Horizontal end spacing around children. Accepts a spacing token or an object of spacing tokens for different screen sizes.\n   * @example\n   * bleedInlineEnd='4'\n   * bleedInlineEnd={{xs: '2', sm: '3', md: '4', lg: '5', xl: '6'}}\n   */\n  bleedInlineEnd?: Spacing;\n}",
+  "members": [
+    {
+      "filePath": "src/components/Choice/types.ts",
+      "syntaxKind": "PropertySignature",
+      "name": "bleed",
+      "value": "ResponsiveProp<SpaceScale>",
+      "description": "Spacing around children. Accepts a spacing token or an object of spacing tokens for different screen sizes.",
+      "isOptional": true
+    },
+    {
+      "filePath": "src/components/Choice/types.ts",
+      "syntaxKind": "PropertySignature",
+      "name": "bleedBlockStart",
+      "value": "ResponsiveProp<SpaceScale>",
+      "description": "Vertical start spacing around children. Accepts a spacing token or an object of spacing tokens for different screen sizes.",
+      "isOptional": true
+    },
+    {
+      "filePath": "src/components/Choice/types.ts",
+      "syntaxKind": "PropertySignature",
+      "name": "bleedBlockEnd",
+      "value": "ResponsiveProp<SpaceScale>",
+      "description": "Vertical end spacing around children. Accepts a spacing token or an object of spacing tokens for different screen sizes.",
+      "isOptional": true
+    },
+    {
+      "filePath": "src/components/Choice/types.ts",
+      "syntaxKind": "PropertySignature",
+      "name": "bleedInlineStart",
+      "value": "ResponsiveProp<SpaceScale>",
+      "description": "Horizontal start spacing around children. Accepts a spacing token or an object of spacing tokens for different screen sizes.",
+      "isOptional": true
+    },
+    {
+      "filePath": "src/components/Choice/types.ts",
+      "syntaxKind": "PropertySignature",
+      "name": "bleedInlineEnd",
+      "value": "ResponsiveProp<SpaceScale>",
+      "description": "Horizontal end spacing around children. Accepts a spacing token or an object of spacing tokens for different screen sizes.",
+      "isOptional": true
+    }
+  ]
+}

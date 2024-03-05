@@ -1,0 +1,13 @@
+{
+  "props": [],
+  "events": [],
+  "slots": [
+    {
+      "name": "default",
+      "type": "VueNode",
+      "description": "The content to display inside the layout.",
+      "declarations": [],
+      "schema": "VueNode"
+    }
+  ]
+}

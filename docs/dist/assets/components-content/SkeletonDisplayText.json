@@ -1,0 +1,12 @@
+{
+  "name": "SkeletonDisplayText",
+  "description": "Skeleton display text is used to provide a low fidelity representation of content before it appears on the page, and improves load times perceived by merchants. Can be used for content in or outside of a card.",
+  "bestPractices": "Skeleton display text component should:\n\n- Give merchants an indication of what the page content will be once loaded\n- Use real content for display text that never changes",
+  "keywords": [
+    " SkeletonDisplayText\n  ",
+    " skeleton\n  ",
+    " loading\n  ",
+    " page"
+  ],
+  "previewImg": "skeleton-display-text.png"
+}

@@ -1,0 +1,8 @@
+{
+  "filePath": "src/components/InlineStack/types.ts",
+  "kind": "TypeAliasDeclaration",
+  "name": "Direction",
+  "value": "\"row\" | \"row-reverse\"",
+  "description": "",
+  "members": []
+}

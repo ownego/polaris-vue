@@ -1,0 +1,124 @@
+{
+  "props": [
+    {
+      "name": "transition",
+      "type": "boolean | Transition | undefined",
+      "required": false,
+      "description": "Override transition properties. When set to false, disables transition completely.",
+      "tags": [
+        {
+          "name": "default",
+          "text": ":transition=\"{duration: 'var(--p-motion-duration-150)', timingFunction: 'var(--p-motion-ease-in-out)'}\""
+        }
+      ],
+      "declarations": [],
+      "schema": {
+        "kind": "enum",
+        "type": "boolean | Transition | undefined",
+        "schema": [
+          "undefined",
+          "false",
+          "true",
+          {
+            "kind": "object",
+            "type": "Transition",
+            "schema": {
+              "duration": {
+                "name": "duration",
+                "global": false,
+                "description": "Assign a transition duration to the collapsible animation.",
+                "tags": [],
+                "required": false,
+                "type": "string | undefined",
+                "declarations": [],
+                "schema": {
+                  "kind": "enum",
+                  "type": "string | undefined",
+                  "schema": [
+                    "undefined",
+                    "string"
+                  ]
+                }
+              },
+              "timingFunction": {
+                "name": "timingFunction",
+                "global": false,
+                "description": "Assign a transition timing function to the collapsible animation",
+                "tags": [],
+                "required": false,
+                "type": "string | undefined",
+                "declarations": [],
+                "schema": "string | undefined"
+              }
+            }
+          }
+        ]
+      }
+    },
+    {
+      "name": "id",
+      "type": "string | undefined",
+      "required": false,
+      "description": "Assign a unique ID to the collapsible. For accessibility, pass this ID as the value of the triggering component’s aria-controls prop.",
+      "tags": [],
+      "declarations": [],
+      "schema": {
+        "kind": "enum",
+        "type": "string | undefined",
+        "schema": [
+          "undefined",
+          "string"
+        ]
+      }
+    },
+    {
+      "name": "expandOnPrint",
+      "type": "boolean | undefined",
+      "required": false,
+      "description": "Option to show collapsible content when printing",
+      "tags": [],
+      "declarations": [],
+      "schema": {
+        "kind": "enum",
+        "type": "boolean | undefined",
+        "schema": [
+          "undefined",
+          "false",
+          "true"
+        ]
+      }
+    },
+    {
+      "name": "open",
+      "type": "boolean",
+      "required": true,
+      "description": "Toggle whether the collapsible is expanded or not.",
+      "tags": [],
+      "declarations": [],
+      "schema": {
+        "kind": "enum",
+        "type": "boolean",
+        "schema": [
+          "false",
+          "true"
+        ]
+      }
+    }
+  ],
+  "events": [
+    {
+      "name": "animation-end",
+      "description": "Callback when the animation completes",
+      "params": {}
+    }
+  ],
+  "slots": [
+    {
+      "name": "default",
+      "type": "VueNode",
+      "description": "Elements to display inside the collapsible",
+      "declarations": [],
+      "schema": "VueNode"
+    }
+  ]
+}

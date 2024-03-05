@@ -1,0 +1,8 @@
+{
+  "filePath": "Users/ser/scatola/jobs/opensources/polaris-vue/src/components/IndexProvider/types.ts",
+  "kind": "TypeAliasDeclaration",
+  "name": "Range",
+  "value": "[number, number]",
+  "description": "",
+  "members": []
+}

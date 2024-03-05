@@ -1,0 +1,63 @@
+{
+  "filePath": "src/components/Button/types.ts",
+  "kind": "TypeAliasDeclaration",
+  "name": "ButtonEmits",
+  "value": "{\n  /** Callback when clicked */\n  'click': [];\n  /** Callback when button becomes focussed */\n  'focus': [];\n  /** Callback when focus leaves button */\n  'blur': [];\n  /** Callback when a keypress event is registered on the button */\n  'keypress': [event: KeyboardEvent];\n  /** Call back when a keyup event is registered on the button */\n  'keyup': [event: KeyboardEvent];\n  /** Callback when a keydown event is registered on the button */\n  'keydown': [event: KeyboardEvent];\n  /** Callback when mouse enter */\n  'mouseenter': [];\n  /** Callback when element is touched */\n  'touchstart': [];\n  /** Callback when pointerdown event is being triggered */\n  'pointerdown': [event: PointerEvent];\n}",
+  "description": "",
+  "members": [
+    {
+      "filePath": "src/components/Button/types.ts",
+      "name": "'click'",
+      "value": "[]",
+      "description": "Callback when clicked"
+    },
+    {
+      "filePath": "src/components/Button/types.ts",
+      "name": "'focus'",
+      "value": "[]",
+      "description": "Callback when button becomes focussed"
+    },
+    {
+      "filePath": "src/components/Button/types.ts",
+      "name": "'blur'",
+      "value": "[]",
+      "description": "Callback when focus leaves button"
+    },
+    {
+      "filePath": "src/components/Button/types.ts",
+      "name": "'keypress'",
+      "value": "[event: KeyboardEvent]",
+      "description": "Callback when a keypress event is registered on the button"
+    },
+    {
+      "filePath": "src/components/Button/types.ts",
+      "name": "'keyup'",
+      "value": "[event: KeyboardEvent]",
+      "description": "Call back when a keyup event is registered on the button"
+    },
+    {
+      "filePath": "src/components/Button/types.ts",
+      "name": "'keydown'",
+      "value": "[event: KeyboardEvent]",
+      "description": "Callback when a keydown event is registered on the button"
+    },
+    {
+      "filePath": "src/components/Button/types.ts",
+      "name": "'mouseenter'",
+      "value": "[]",
+      "description": "Callback when mouse enter"
+    },
+    {
+      "filePath": "src/components/Button/types.ts",
+      "name": "'touchstart'",
+      "value": "[]",
+      "description": "Callback when element is touched"
+    },
+    {
+      "filePath": "src/components/Button/types.ts",
+      "name": "'pointerdown'",
+      "value": "[event: PointerEvent]",
+      "description": "Callback when pointerdown event is being triggered"
+    }
+  ]
+}

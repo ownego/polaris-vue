@@ -1,0 +1,12 @@
+{
+  "name": "SkeletonTabs",
+  "description": "Skeleton tabs are used to provide a low fidelity representation of content before it appears on the page, and improves load times perceived by merchants. Can be used for content in or outside of a card.",
+  "bestPractices": "Skeleton tabs component should:\n\n- Give merchants an indication of what the page content will be once loaded",
+  "keywords": [
+    " SkeletonTabs\n  ",
+    " skeleton\n  ",
+    " loading\n  ",
+    " page"
+  ],
+  "previewImg": "skeleton-tabs.png"
+}

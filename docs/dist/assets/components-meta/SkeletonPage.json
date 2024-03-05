@@ -1,0 +1,98 @@
+{
+  "props": [
+    {
+      "name": "title",
+      "type": "string | undefined",
+      "required": false,
+      "description": "Page title, in large type",
+      "tags": [],
+      "declarations": [],
+      "schema": {
+        "kind": "enum",
+        "type": "string | undefined",
+        "schema": [
+          "undefined",
+          "string"
+        ]
+      }
+    },
+    {
+      "name": "backAction",
+      "type": "boolean | undefined",
+      "required": false,
+      "description": "Shows a skeleton over the backAction",
+      "tags": [],
+      "declarations": [],
+      "schema": {
+        "kind": "enum",
+        "type": "boolean | undefined",
+        "schema": [
+          "undefined",
+          "false",
+          "true"
+        ]
+      }
+    },
+    {
+      "name": "fullWidth",
+      "type": "boolean | undefined",
+      "required": false,
+      "description": "Remove the normal max-width on the page",
+      "tags": [],
+      "declarations": [],
+      "schema": {
+        "kind": "enum",
+        "type": "boolean | undefined",
+        "schema": [
+          "undefined",
+          "false",
+          "true"
+        ]
+      }
+    },
+    {
+      "name": "primaryAction",
+      "type": "boolean | undefined",
+      "required": false,
+      "description": "Shows a skeleton over the primary action",
+      "tags": [],
+      "declarations": [],
+      "schema": {
+        "kind": "enum",
+        "type": "boolean | undefined",
+        "schema": [
+          "undefined",
+          "false",
+          "true"
+        ]
+      }
+    },
+    {
+      "name": "narrowWidth",
+      "type": "boolean | undefined",
+      "required": false,
+      "description": "Decreases the maximum layout width. Intended for single-column layouts",
+      "tags": [],
+      "declarations": [],
+      "schema": {
+        "kind": "enum",
+        "type": "boolean | undefined",
+        "schema": [
+          "undefined",
+          "false",
+          "true"
+        ]
+      }
+    }
+  ],
+  "events": [],
+  "slots": [
+    {
+      "name": "default",
+      "type": "VueNode",
+      "description": "The child elements to render in the skeleton page.",
+      "declarations": [],
+      "schema": "VueNode"
+    }
+  ]
+}

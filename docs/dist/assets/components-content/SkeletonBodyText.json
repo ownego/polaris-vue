@@ -1,0 +1,12 @@
+{
+  "name": "SkeletonBodyText",
+  "description": "Skeleton body text is used to provide a low fidelity representation of content before it appears on the page, and improves load times perceived by merchants. Can be used for content in or outside of a card.",
+  "bestPractices": "Skeleton body text component should:\n\n- Be used with [Skeleton page](https://polaris.shopify.com/components/skeleton-page) when page content loads all at once. Together, these components give merchants an indication of what the page layout will be once loaded.\n- Be used on its own, inside any content container component (like a [card](https://polaris.shopify.com/components/layout-and-structure/card)), and when content loads after the main page load.\n- Try to match the number of lines to the content being loaded so it gives an accurate representation.",
+  "keywords": [
+    " SkeletonBodyText\n  ",
+    " skeleton\n  ",
+    " loading\n  ",
+    " page"
+  ],
+  "previewImg": "skeleton-body-text.png"
+}

@@ -1,0 +1,128 @@
+{
+  "filePath": "Users/ser/scatola/jobs/opensources/polaris-vue/src/utilities/types.ts",
+  "name": "ComplexAction",
+  "description": "",
+  "value": "export interface ComplexAction\n  extends Action,\n    DisableableAction,\n    DestructableAction,\n    IconableAction,\n    OutlineableAction,\n    LoadableAction,\n    PlainAction {}",
+  "members": [
+    {
+      "filePath": "Users/ser/scatola/jobs/opensources/polaris-vue/src/utilities/types.ts",
+      "syntaxKind": "PropertySignature",
+      "name": "id",
+      "value": "string",
+      "description": "A unique identifier for the action",
+      "isOptional": true
+    },
+    {
+      "filePath": "Users/ser/scatola/jobs/opensources/polaris-vue/src/utilities/types.ts",
+      "syntaxKind": "PropertySignature",
+      "name": "content",
+      "value": "string",
+      "description": "Content the action displays",
+      "isOptional": true
+    },
+    {
+      "filePath": "Users/ser/scatola/jobs/opensources/polaris-vue/src/utilities/types.ts",
+      "syntaxKind": "PropertySignature",
+      "name": "accessibilityLabel",
+      "value": "string",
+      "description": "Visually hidden text for screen readers",
+      "isOptional": true
+    },
+    {
+      "filePath": "Users/ser/scatola/jobs/opensources/polaris-vue/src/utilities/types.ts",
+      "syntaxKind": "PropertySignature",
+      "name": "url",
+      "value": "string",
+      "description": "A destination to link to, rendered in the action",
+      "isOptional": true
+    },
+    {
+      "filePath": "Users/ser/scatola/jobs/opensources/polaris-vue/src/utilities/types.ts",
+      "syntaxKind": "PropertySignature",
+      "name": "external",
+      "value": "boolean",
+      "description": "Forces url to open in a new tab",
+      "isOptional": true
+    },
+    {
+      "filePath": "Users/ser/scatola/jobs/opensources/polaris-vue/src/utilities/types.ts",
+      "syntaxKind": "PropertySignature",
+      "name": "target",
+      "value": "Target",
+      "description": "Where to display the url",
+      "isOptional": true
+    },
+    {
+      "filePath": "Users/ser/scatola/jobs/opensources/polaris-vue/src/utilities/types.ts",
+      "syntaxKind": "MethodSignature",
+      "name": "onAction",
+      "value": "() => void",
+      "description": "Callback when an action takes place",
+      "isOptional": true
+    },
+    {
+      "filePath": "Users/ser/scatola/jobs/opensources/polaris-vue/src/utilities/types.ts",
+      "syntaxKind": "MethodSignature",
+      "name": "onMouseEnter",
+      "value": "() => void",
+      "description": "Callback when mouse enter",
+      "isOptional": true
+    },
+    {
+      "filePath": "Users/ser/scatola/jobs/opensources/polaris-vue/src/utilities/types.ts",
+      "syntaxKind": "MethodSignature",
+      "name": "onTouchStart",
+      "value": "() => void",
+      "description": "Callback when element is touched",
+      "isOptional": true
+    },
+    {
+      "filePath": "Users/ser/scatola/jobs/opensources/polaris-vue/src/utilities/types.ts",
+      "syntaxKind": "PropertySignature",
+      "name": "disabled",
+      "value": "boolean",
+      "description": "Whether or not the action is disabled",
+      "isOptional": true
+    },
+    {
+      "filePath": "Users/ser/scatola/jobs/opensources/polaris-vue/src/utilities/types.ts",
+      "syntaxKind": "PropertySignature",
+      "name": "destructive",
+      "value": "boolean",
+      "description": "Destructive action",
+      "isOptional": true
+    },
+    {
+      "filePath": "Users/ser/scatola/jobs/opensources/polaris-vue/src/utilities/types.ts",
+      "syntaxKind": "PropertySignature",
+      "name": "icon",
+      "value": "IconSource",
+      "description": "Source of the icon",
+      "isOptional": true
+    },
+    {
+      "filePath": "Users/ser/scatola/jobs/opensources/polaris-vue/src/utilities/types.ts",
+      "syntaxKind": "PropertySignature",
+      "name": "outline",
+      "value": "boolean",
+      "description": "Should action be displayed as an outlined button",
+      "isOptional": true
+    },
+    {
+      "filePath": "Users/ser/scatola/jobs/opensources/polaris-vue/src/utilities/types.ts",
+      "syntaxKind": "PropertySignature",
+      "name": "loading",
+      "value": "boolean",
+      "description": "Should a spinner be displayed",
+      "isOptional": true
+    },
+    {
+      "filePath": "Users/ser/scatola/jobs/opensources/polaris-vue/src/utilities/types.ts",
+      "syntaxKind": "PropertySignature",
+      "name": "plain",
+      "value": "boolean",
+      "description": "Should action be displayed as a plain link",
+      "isOptional": true
+    }
+  ]
+}

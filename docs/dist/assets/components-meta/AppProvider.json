@@ -1,0 +1,87 @@
+{
+  "props": [
+    {
+      "name": "theme",
+      "type": "\"light\" | \"light-mobile\" | \"light-high-contrast-experimental\" | undefined",
+      "required": false,
+      "description": "",
+      "tags": [],
+      "declarations": [],
+      "schema": {
+        "kind": "enum",
+        "type": "\"light\" | \"light-mobile\" | \"light-high-contrast-experimental\" | undefined",
+        "schema": [
+          "undefined",
+          "\"light\"",
+          "\"light-mobile\"",
+          "\"light-high-contrast-experimental\""
+        ]
+      }
+    },
+    {
+      "name": "i18n",
+      "type": "TranslationDictionary | TranslationDictionary[]",
+      "required": true,
+      "description": "A locale object or array of locale objects that overrides default translations. If specifying an array then your primary language dictionary should come first, followed by your fallback language dictionaries",
+      "tags": [],
+      "declarations": [],
+      "schema": {
+        "kind": "enum",
+        "type": "TranslationDictionary | TranslationDictionary[]",
+        "schema": [
+          {
+            "kind": "object",
+            "type": "TranslationDictionary",
+            "schema": {}
+          },
+          {
+            "kind": "array",
+            "type": "TranslationDictionary[]",
+            "schema": [
+              "TranslationDictionary"
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "name": "linkComponent",
+      "type": "LinkLikeComponent | undefined",
+      "required": false,
+      "description": "A custom component to use for all links used by Polaris components",
+      "tags": [],
+      "declarations": [],
+      "schema": "LinkLikeComponent | undefined"
+    },
+    {
+      "name": "features",
+      "type": "FeaturesConfig | undefined",
+      "required": false,
+      "description": "For toggling features",
+      "tags": [],
+      "declarations": [],
+      "schema": {
+        "kind": "enum",
+        "type": "FeaturesConfig | undefined",
+        "schema": [
+          "undefined",
+          {
+            "kind": "object",
+            "type": "FeaturesConfig",
+            "schema": {}
+          }
+        ]
+      }
+    }
+  ],
+  "events": [],
+  "slots": [
+    {
+      "name": "default",
+      "type": "VueNode",
+      "description": "Inner content of the application",
+      "declarations": [],
+      "schema": "VueNode"
+    }
+  ]
+}

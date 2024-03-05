@@ -1,0 +1,58 @@
+{
+  "filePath": "src/components/TextField/types.ts",
+  "kind": "TypeAliasDeclaration",
+  "name": "TextFieldSlots",
+  "value": "{\n  /** Additional hint text to display */\n  helpText?: (_?: VueNode) => VNode[];\n  /** Label for the input */\n  label?: (_?: VueNode) => VNode[];\n  /** An element connected to the right of the input */\n  connectedRight?: (_?: VueNode) => VNode[];\n  /** An element connected to the left of the input */\n  connectedLeft?: (_?: VueNode) => VNode[];\n  /** Content to vertically display above the input value */\n  verticalContent?: (_?: VueNode) => VNode[];\n  /** Text to display before value */\n  prefix?: (_?: VueNode) => VNode[];\n  /** Text to display after value */\n  suffix?: (_?: VueNode) => VNode[];\n}",
+  "description": "",
+  "members": [
+    {
+      "filePath": "src/components/TextField/types.ts",
+      "name": "helpText",
+      "value": "(_?: VueNode) => VNode[]",
+      "isOptional": true,
+      "description": "Additional hint text to display"
+    },
+    {
+      "filePath": "src/components/TextField/types.ts",
+      "name": "label",
+      "value": "(_?: VueNode) => VNode[]",
+      "isOptional": true,
+      "description": "Label for the input"
+    },
+    {
+      "filePath": "src/components/TextField/types.ts",
+      "name": "connectedRight",
+      "value": "(_?: VueNode) => VNode[]",
+      "isOptional": true,
+      "description": "An element connected to the right of the input"
+    },
+    {
+      "filePath": "src/components/TextField/types.ts",
+      "name": "connectedLeft",
+      "value": "(_?: VueNode) => VNode[]",
+      "isOptional": true,
+      "description": "An element connected to the left of the input"
+    },
+    {
+      "filePath": "src/components/TextField/types.ts",
+      "name": "verticalContent",
+      "value": "(_?: VueNode) => VNode[]",
+      "isOptional": true,
+      "description": "Content to vertically display above the input value"
+    },
+    {
+      "filePath": "src/components/TextField/types.ts",
+      "name": "prefix",
+      "value": "(_?: VueNode) => VNode[]",
+      "isOptional": true,
+      "description": "Text to display before value"
+    },
+    {
+      "filePath": "src/components/TextField/types.ts",
+      "name": "suffix",
+      "value": "(_?: VueNode) => VNode[]",
+      "isOptional": true,
+      "description": "Text to display after value"
+    }
+  ]
+}

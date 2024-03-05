@@ -1,0 +1,8 @@
+{
+  "filePath": "src/components/IndexTable/types.ts",
+  "kind": "TypeAliasDeclaration",
+  "name": "IndexTableSortDirection",
+  "value": "'ascending' | 'descending'",
+  "description": "",
+  "members": []
+}

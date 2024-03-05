@@ -1,0 +1,8 @@
+{
+  "filePath": "src/components/TextField/types.ts",
+  "kind": "TypeAliasDeclaration",
+  "name": "MutuallyExclusiveInteractionProps",
+  "value": "Readonly | Disabled",
+  "description": "",
+  "members": []
+}

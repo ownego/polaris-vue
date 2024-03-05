@@ -1,0 +1,15 @@
+{
+  "name": "Thumbnail",
+  "description": "Use thumbnails as a visual anchor and identifier for an object. They should be used along with text to provide context.",
+  "bestPractices": "On web, thumbnails should:\n\n- Be one of 4 sizes:\n  - Extra small (24 x 24 px): use in tightly condensed layouts\n  - Small (40 × 40 px): use when the medium size is too large for the layout, or when the thumbnail has less importance.\n  - Medium (60 × 60 px): use as the default size.\n  - Large (80 × 80 px): use when an thumbnail is a major focal point. Avoid this size in lists of like items.\n\nOn Android and iOS, thumbnails should:\n\n- Be one of 2 sizes:\n  - Default (40 × 40): use as the default size.\n  - Large (72 × 72): use when an thumbnail is a major focal point. Avoid this size in lists of like items.",
+  "keywords": [
+    " photo\n  ",
+    " picture\n  ",
+    " image\n  ",
+    " small thumbnail\n  ",
+    " medium thumbnail\n  ",
+    " large thumbnail\n  ",
+    " image preview"
+  ],
+  "previewImg": "thumbnail.png"
+}

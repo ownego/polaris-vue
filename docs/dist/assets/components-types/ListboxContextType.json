@@ -1,0 +1,22 @@
+{
+  "filePath": "Users/ser/scatola/jobs/opensources/polaris-vue/src/utilities/types.ts",
+  "name": "ListboxContextType",
+  "description": "",
+  "value": "export interface ListboxContextType {\n  onOptionSelect(option: NavigableOption): void;\n  setLoading(label?: string): void;\n}",
+  "members": [
+    {
+      "filePath": "Users/ser/scatola/jobs/opensources/polaris-vue/src/utilities/types.ts",
+      "syntaxKind": "MethodSignature",
+      "name": "onOptionSelect",
+      "value": "(option: NavigableOption) => void",
+      "description": ""
+    },
+    {
+      "filePath": "Users/ser/scatola/jobs/opensources/polaris-vue/src/utilities/types.ts",
+      "syntaxKind": "MethodSignature",
+      "name": "setLoading",
+      "value": "(label?: string) => void",
+      "description": ""
+    }
+  ]
+}

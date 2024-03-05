@@ -1,0 +1,16 @@
+{
+  "filePath": "src/components/TextField/types.ts",
+  "name": "Readonly",
+  "description": "",
+  "value": "interface Readonly {\n  readonly?: boolean;\n}",
+  "members": [
+    {
+      "filePath": "src/components/TextField/types.ts",
+      "syntaxKind": "PropertySignature",
+      "name": "readonly",
+      "value": "boolean",
+      "description": "",
+      "isOptional": true
+    }
+  ]
+}

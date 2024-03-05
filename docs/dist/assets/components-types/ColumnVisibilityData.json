@@ -1,0 +1,44 @@
+{
+  "filePath": "src/components/DataTable/types.ts",
+  "name": "ColumnVisibilityData",
+  "description": "",
+  "value": "export interface ColumnVisibilityData {\n  leftEdge: number;\n  rightEdge: number;\n  isVisible?: boolean;\n  width: number;\n  index: number;\n}",
+  "members": [
+    {
+      "filePath": "src/components/DataTable/types.ts",
+      "syntaxKind": "PropertySignature",
+      "name": "leftEdge",
+      "value": "number",
+      "description": ""
+    },
+    {
+      "filePath": "src/components/DataTable/types.ts",
+      "syntaxKind": "PropertySignature",
+      "name": "rightEdge",
+      "value": "number",
+      "description": ""
+    },
+    {
+      "filePath": "src/components/DataTable/types.ts",
+      "syntaxKind": "PropertySignature",
+      "name": "isVisible",
+      "value": "boolean",
+      "description": "",
+      "isOptional": true
+    },
+    {
+      "filePath": "src/components/DataTable/types.ts",
+      "syntaxKind": "PropertySignature",
+      "name": "width",
+      "value": "number",
+      "description": ""
+    },
+    {
+      "filePath": "src/components/DataTable/types.ts",
+      "syntaxKind": "PropertySignature",
+      "name": "index",
+      "value": "number",
+      "description": ""
+    }
+  ]
+}

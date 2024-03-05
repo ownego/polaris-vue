@@ -1,0 +1,32 @@
+{
+  "name": "IndexTable",
+  "description": "An index table displays a collection of objects of the same type, like orders or products. The main job of an index table is to help merchants get an at-a-glance of the objects to perform actions or navigate to a full-page representation of it.",
+  "bestPractices": "Index tables should:\n\n- Have items that perform an action when clicked. The action should navigate to the resource’s details page or otherwise provide more detail about the item.\n- [Customize the content and layout](https://polaris.shopify.com/components/resource-item) of their items rows to surface information to support merchants’ needs.\n- Support sorting if the list can be long, and especially if different merchant tasks benefit from different sort orders.\n- Support [filtering](https://polaris.shopify.com/components/filters) if the list can be long.\n- Paginate when the current list contains more than 50 items.\n- Use the [skeleton page](https://polaris.shopify.com/components/skeleton-page) component on initial page load for the rest of the page if the loading prop is true and items are processing.\n- Numeric cells and titles should be right aligned with the [Text](https://polaris.shopify.com/components/text) component\n- Numeric cells should use the numeric style with the [Text](https://polaris.shopify.com/components/text) component\n\nIndex tables can optionally:\n\n- Provide bulk actions for tasks that are often applied to many list items at once. For example, merchants may want to add the same tag to a large number of products.\n- Hide bulk actions on small screens using the `condensed` prop. We only recommend hiding bulk actions on screens smaller than 490px using our `breakpoints-sm` value: `condensed={useBreakpoints().smDown}`.\n  - Hiding bulk actions means a merchant can’t select multiple items at once, so it should only be used when the bulk actions are not essential to the merchant’s workflow.",
+  "keywords": [
+    " ResourceList\n  ",
+    " index\n  ",
+    " table\n  ",
+    " list\n  ",
+    " collections\n  ",
+    " items\n  ",
+    " objects\n  ",
+    " list of products\n  ",
+    " list of orders\n  ",
+    " product lists\n  ",
+    " order lists\n  ",
+    " collections lists\n  ",
+    " collection lists\n  ",
+    " list of collections\n  ",
+    " product listings list\n  ",
+    " channel lists\n  ",
+    " resource list attributes\n  ",
+    " list attributes\n  ",
+    " exceptions list\n  ",
+    " list secondary actions\n  ",
+    " secondary actions in a list\n  ",
+    " list of resources\n  ",
+    " filter\n  ",
+    " sort"
+  ],
+  "previewImg": "index-table.png"
+}

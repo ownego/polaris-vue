@@ -1,0 +1,90 @@
+{
+  "props": [
+    {
+      "name": "tone",
+      "type": "Tone | undefined",
+      "required": false,
+      "description": "Set the color for the SVG fill",
+      "tags": [],
+      "declarations": [],
+      "schema": {
+        "kind": "enum",
+        "type": "Tone | undefined",
+        "schema": [
+          "undefined",
+          "\"info\"",
+          "\"success\"",
+          "\"warning\"",
+          "\"critical\"",
+          "\"primary\"",
+          "\"magic\"",
+          "\"base\"",
+          "\"interactive\"",
+          "\"inherit\"",
+          "\"subdued\"",
+          "\"caution\"",
+          "\"emphasis\"",
+          "\"textCaution\"",
+          "\"textWarning\"",
+          "\"textCritical\"",
+          "\"textInfo\"",
+          "\"textSuccess\"",
+          "\"textPrimary\"",
+          "\"textMagic\""
+        ]
+      }
+    },
+    {
+      "name": "source",
+      "type": "IconSource",
+      "required": true,
+      "description": "The SVG contents to display in the icon (icons should fit in a 20 × 20 pixel viewBox)",
+      "tags": [],
+      "declarations": [],
+      "schema": {
+        "kind": "enum",
+        "type": "IconSource",
+        "schema": [
+          "string",
+          "ComponentOptions<any, any, any, ComputedOptions, MethodOptions, any, any, any, any>",
+          "FunctionalComponent<any, {}, any, {}>",
+          "ComponentPublicInstanceConstructor<any, any, any, any, ComputedOptions, MethodOptions>",
+          {
+            "kind": "array",
+            "type": "(string | Component)[]",
+            "schema": [
+              {
+                "kind": "enum",
+                "type": "string | Component",
+                "schema": [
+                  "string",
+                  "ComponentOptions<any, any, any, ComputedOptions, MethodOptions, any, any, any, any>",
+                  "FunctionalComponent<any, {}, any, {}>",
+                  "ComponentPublicInstanceConstructor<any, any, any, any, ComputedOptions, MethodOptions>"
+                ]
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "name": "accessibilityLabel",
+      "type": "string | undefined",
+      "required": false,
+      "description": "Descriptive text to be read to screenreaders",
+      "tags": [],
+      "declarations": [],
+      "schema": {
+        "kind": "enum",
+        "type": "string | undefined",
+        "schema": [
+          "undefined",
+          "string"
+        ]
+      }
+    }
+  ],
+  "events": [],
+  "slots": []
+}

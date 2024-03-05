@@ -1,0 +1,25 @@
+{
+  "name": "ButtonGroup",
+  "description": "Button group displays multiple related actions stacked or in a horizontal row to help with arrangement and spacing.",
+  "bestPractices": "Button groups should:\n\n- Only use buttons that follow the\n  [best practices outlined in the button component](https://polaris.shopify.com/components/actions/button#best-practices)\n- Group together calls to action that have a relationship\n- Be used with consideration that too many calls to action can cause merchants to be unsure of what to do next\n- Be thoughtful about how multiple buttons will look and work on small screens\n- Only be used in groups of up to six buttons if the buttons contain an icon with no text",
+  "keywords": [
+    " ButtonGroup\n  ",
+    " choices\n  ",
+    " decision\n  ",
+    " call",
+    "to",
+    "action\n  ",
+    " CTA\n  ",
+    " segmented buttons\n  ",
+    " divided buttons\n  ",
+    " grouped actions\n  ",
+    " multiple horizontal buttons\n  ",
+    " multiple buttons\n  ",
+    " set of buttons\n  ",
+    " set of actions\n  ",
+    " horizontal arrangement of buttons\n  ",
+    " stacked\n  ",
+    " segmented control"
+  ],
+  "previewImg": "button-group.png"
+}

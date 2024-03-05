@@ -1,0 +1,24 @@
+{
+  "filePath": "src/components/IndexTable/types.ts",
+  "kind": "TypeAliasDeclaration",
+  "name": "IndexTableSlots",
+  "value": "{\n  default: (_: VueNode) => VNode[];\n  emptyState: (_: VueNode) => VNode[];\n  sort: (_?: VueNode) => VNode[];\n}",
+  "description": "",
+  "members": [
+    {
+      "filePath": "src/components/IndexTable/types.ts",
+      "name": "default",
+      "value": "(_: VueNode) => VNode[]"
+    },
+    {
+      "filePath": "src/components/IndexTable/types.ts",
+      "name": "emptyState",
+      "value": "(_: VueNode) => VNode[]"
+    },
+    {
+      "filePath": "src/components/IndexTable/types.ts",
+      "name": "sort",
+      "value": "(_?: VueNode) => VNode[]"
+    }
+  ]
+}

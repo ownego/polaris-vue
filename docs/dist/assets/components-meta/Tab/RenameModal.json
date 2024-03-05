@@ -1,0 +1,118 @@
+{
+  "props": [
+    {
+      "name": "name",
+      "type": "string",
+      "required": true,
+      "description": "",
+      "tags": [],
+      "declarations": [],
+      "schema": "string"
+    },
+    {
+      "name": "helpText",
+      "type": "string | undefined",
+      "required": false,
+      "description": "",
+      "tags": [],
+      "declarations": [],
+      "schema": {
+        "kind": "enum",
+        "type": "string | undefined",
+        "schema": [
+          "undefined",
+          "string"
+        ]
+      }
+    },
+    {
+      "name": "open",
+      "type": "boolean",
+      "required": true,
+      "description": "",
+      "tags": [],
+      "declarations": [],
+      "schema": {
+        "kind": "enum",
+        "type": "boolean",
+        "schema": [
+          "false",
+          "true"
+        ]
+      }
+    },
+    {
+      "name": "viewNames",
+      "type": "string[] | undefined",
+      "required": false,
+      "description": "",
+      "tags": [],
+      "declarations": [],
+      "schema": {
+        "kind": "enum",
+        "type": "string[] | undefined",
+        "schema": [
+          "undefined",
+          {
+            "kind": "array",
+            "type": "string[]",
+            "schema": [
+              "string"
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "name": "isModalLoading",
+      "type": "boolean | undefined",
+      "required": false,
+      "description": "",
+      "tags": [],
+      "declarations": [],
+      "schema": {
+        "kind": "enum",
+        "type": "boolean | undefined",
+        "schema": [
+          "undefined",
+          "false",
+          "true"
+        ]
+      }
+    }
+  ],
+  "events": [
+    {
+      "name": "e",
+      "description": "",
+      "params": {
+        "": "void"
+      }
+    },
+    {
+      "name": "e",
+      "description": "",
+      "params": {
+        "value": "string)",
+        "": "Promise<void>"
+      }
+    },
+    {
+      "name": "e",
+      "description": "",
+      "params": {
+        "": "void"
+      }
+    },
+    {
+      "name": "e",
+      "description": "",
+      "params": {
+        "update": "modelValue'",
+        "value": "string)",
+        "": "void"
+      }
+    }
+  ],
+  "slots": []
+}

@@ -1,0 +1,16 @@
+{
+  "name": "Navigation",
+  "description": "The navigation component is used to display the primary navigation in the sidebar of the [frame](https://polaris.shopify.com/components/internal-only/frame) of an application. Navigation includes a list of links that merchants use to move between sections of the application.",
+  "bestPractices": "The navigation component should:\n\n- Contain primary navigation items that perform an action when clicked. Each action should navigate to a URL or trigger another action like a modal overlay.\n- Only use secondary actions for supplementary actions to the primary actions.\n- Provide a non-primary link or action as a secondary action to a section or an item.\n- Group navigation items into sections based on related categories.\n- Use a section title to clarify the category of a section.\n- Use a major icon for item actions.\n- Use a minor icon for secondary actions.\n- Use the provided navigation section component to group navigation items.\n- Not add additional components, like [badge](/components/feedback-indicators/badge), in navigation items. Example: Don‘t add the [New badge](/patterns-legacy/new-badge).",
+  "keywords": [
+    " navigation\n  ",
+    " nav\n  ",
+    " links\n  ",
+    " primary navigation\n  ",
+    " main navigation\n  ",
+    " frame\n  ",
+    " sidebar\n  ",
+    " side bar"
+  ],
+  "previewImg": "navigation.png"
+}

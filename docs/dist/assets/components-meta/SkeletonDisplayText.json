@@ -1,0 +1,52 @@
+{
+  "props": [
+    {
+      "name": "size",
+      "type": "Size | undefined",
+      "required": false,
+      "description": "Size of the text",
+      "tags": [
+        {
+          "name": "default",
+          "text": "'medium'"
+        }
+      ],
+      "declarations": [],
+      "schema": {
+        "kind": "enum",
+        "type": "Size | undefined",
+        "schema": [
+          "undefined",
+          "\"small\"",
+          "\"medium\"",
+          "\"large\"",
+          "\"extraLarge\""
+        ]
+      }
+    },
+    {
+      "name": "maxWidth",
+      "type": "`${number}ch` | `${number}%` | undefined",
+      "required": false,
+      "description": "Maxium width of the text",
+      "tags": [
+        {
+          "name": "default",
+          "text": "'120px'"
+        }
+      ],
+      "declarations": [],
+      "schema": {
+        "kind": "enum",
+        "type": "`${number}ch` | `${number}%` | undefined",
+        "schema": [
+          "undefined",
+          "`${number}ch`",
+          "`${number}%`"
+        ]
+      }
+    }
+  ],
+  "events": [],
+  "slots": []
+}

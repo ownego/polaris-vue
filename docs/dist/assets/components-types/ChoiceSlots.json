@@ -1,0 +1,29 @@
+{
+  "filePath": "src/components/Choice/types.ts",
+  "name": "ChoiceSlots",
+  "description": "",
+  "value": "export interface ChoiceSlots {\n  /**  Content to display inside the choice */\n  default: (_: VueNode) => any;\n  /** The label for the choice */\n  label: (_: VueNode) => any;\n  /** Additional text to aide in use. Will add a wrapping <div> */\n  helpText: (_: VueNode) => any;\n}",
+  "members": [
+    {
+      "filePath": "src/components/Choice/types.ts",
+      "syntaxKind": "PropertySignature",
+      "name": "default",
+      "value": "(_: VueNode) => any",
+      "description": "Content to display inside the choice"
+    },
+    {
+      "filePath": "src/components/Choice/types.ts",
+      "syntaxKind": "PropertySignature",
+      "name": "label",
+      "value": "(_: VueNode) => any",
+      "description": "The label for the choice"
+    },
+    {
+      "filePath": "src/components/Choice/types.ts",
+      "syntaxKind": "PropertySignature",
+      "name": "helpText",
+      "value": "(_: VueNode) => any",
+      "description": "Additional text to aide in use. Will add a wrapping <div>"
+    }
+  ]
+}

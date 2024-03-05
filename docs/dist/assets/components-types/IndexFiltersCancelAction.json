@@ -1,0 +1,31 @@
+{
+  "filePath": "src/components/IndexFilters/types.ts",
+  "name": "IndexFiltersCancelAction",
+  "description": "",
+  "value": "export interface IndexFiltersCancelAction {\n  onAction: () => void;\n  disabled?: boolean;\n  loading?: boolean;\n}",
+  "members": [
+    {
+      "filePath": "src/components/IndexFilters/types.ts",
+      "syntaxKind": "PropertySignature",
+      "name": "onAction",
+      "value": "() => void",
+      "description": ""
+    },
+    {
+      "filePath": "src/components/IndexFilters/types.ts",
+      "syntaxKind": "PropertySignature",
+      "name": "disabled",
+      "value": "boolean",
+      "description": "",
+      "isOptional": true
+    },
+    {
+      "filePath": "src/components/IndexFilters/types.ts",
+      "syntaxKind": "PropertySignature",
+      "name": "loading",
+      "value": "boolean",
+      "description": "",
+      "isOptional": true
+    }
+  ]
+}

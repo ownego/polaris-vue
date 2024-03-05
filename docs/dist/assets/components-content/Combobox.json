@@ -1,0 +1,15 @@
+{
+  "name": "Combobox",
+  "description": "Combobox is an accessible autocomplete input that enables merchants to filter a list of options and select one or more values.",
+  "bestPractices": "The `Combobox` component should:\n\n- Be clearly labeled so the merchant knows what kind of options will be available\n- Not be used within a popover\n- Indicate a loading state to the merchant while option data is being populated\n- Order items in an intentional way so it’s easy for the merchant to find a specific value",
+  "keywords": [
+    " autocomplete\n  ",
+    " searchable\n  ",
+    " typeahead\n  ",
+    " combobox\n  ",
+    " combo box\n  ",
+    " listbox\n  ",
+    " list box"
+  ],
+  "previewImg": "combobox.png"
+}

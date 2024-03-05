@@ -1,0 +1,12 @@
+{
+  "name": "InlineGrid",
+  "description": "Use to lay out children horizontally with equal gap between columns. Based on [CSS Grid](https://developer.mozilla.org/en-US/docs/Web/CSS/grid).",
+  "bestPractices": "",
+  "keywords": [
+    " layout\n  ",
+    " columns\n  ",
+    " grid\n  ",
+    " responsive"
+  ],
+  "previewImg": "inline-grid.png"
+}

@@ -1,0 +1,20 @@
+{
+  "name": "AppProvider",
+  "description": "App provider is a required component that enables sharing global settings throughout the hierarchy of your application.",
+  "bestPractices": "The app provider component is required to use Polaris. Without it, the components in your application will not function correctly. You must wrap the root (the top) of your application in the app provider component.",
+  "keywords": [
+    " app\n  ",
+    " provider\n  ",
+    " appprovider\n  ",
+    " internationalization\n  ",
+    " i18n\n  ",
+    " localization\n  ",
+    " context\n  ",
+    " translate\n  ",
+    " translation\n  ",
+    " application wrapper\n  ",
+    " wrapper\n  ",
+    " sdk"
+  ],
+  "previewImg": "app-provider.png"
+}

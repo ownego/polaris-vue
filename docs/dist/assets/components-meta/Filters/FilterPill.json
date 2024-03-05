@@ -1,0 +1,237 @@
+{
+  "props": [
+    {
+      "name": "filter",
+      "type": "VueNode",
+      "required": true,
+      "description": "The markup for the given filter",
+      "tags": [],
+      "declarations": [],
+      "schema": "VueNode"
+    },
+    {
+      "name": "name",
+      "type": "string",
+      "required": true,
+      "description": "A unique key used to identify the filter",
+      "tags": [],
+      "declarations": [],
+      "schema": "string"
+    },
+    {
+      "name": "selected",
+      "type": "boolean | undefined",
+      "required": false,
+      "description": "Whether the filter is selected or not",
+      "tags": [],
+      "declarations": [],
+      "schema": {
+        "kind": "enum",
+        "type": "boolean | undefined",
+        "schema": [
+          "undefined",
+          "false",
+          "true"
+        ]
+      }
+    },
+    {
+      "name": "section",
+      "type": "string | undefined",
+      "required": false,
+      "description": "Optional section heading that this filter will go under",
+      "tags": [],
+      "declarations": [],
+      "schema": {
+        "kind": "enum",
+        "type": "string | undefined",
+        "schema": [
+          "undefined",
+          "string"
+        ]
+      }
+    },
+    {
+      "name": "hidden",
+      "type": "boolean | undefined",
+      "required": false,
+      "description": "Optional: hides the filter from the dropdown",
+      "tags": [],
+      "declarations": [],
+      "schema": {
+        "kind": "enum",
+        "type": "boolean | undefined",
+        "schema": [
+          "undefined",
+          "false",
+          "true"
+        ]
+      }
+    },
+    {
+      "name": "disabled",
+      "type": "boolean | undefined",
+      "required": false,
+      "description": "Whether filtering is disabled",
+      "tags": [],
+      "declarations": [],
+      "schema": {
+        "kind": "enum",
+        "type": "boolean | undefined",
+        "schema": [
+          "undefined",
+          "false",
+          "true"
+        ]
+      }
+    },
+    {
+      "name": "label",
+      "type": "string",
+      "required": true,
+      "description": "The label for the filter",
+      "tags": [],
+      "declarations": [],
+      "schema": "string"
+    },
+    {
+      "name": "closeOnChildOverlayClick",
+      "type": "boolean | undefined",
+      "required": false,
+      "description": "Whether the filter should close when clicking inside another Popover.",
+      "tags": [],
+      "declarations": [],
+      "schema": {
+        "kind": "enum",
+        "type": "boolean | undefined",
+        "schema": [
+          "undefined",
+          "false",
+          "true"
+        ]
+      }
+    },
+    {
+      "name": "suffix",
+      "type": "string | number | boolean | Element | Component | null | undefined",
+      "required": false,
+      "description": "Suffix source",
+      "tags": [],
+      "declarations": [],
+      "schema": {
+        "kind": "enum",
+        "type": "string | number | boolean | Element | Component | null | undefined",
+        "schema": [
+          "undefined",
+          "null",
+          "string",
+          "number",
+          "false",
+          "true",
+          "Element",
+          "ComponentOptions<any, any, any, ComputedOptions, MethodOptions, any, any, any, any>",
+          "FunctionalComponent<any, {}, any, {}>",
+          "ComponentPublicInstanceConstructor<any, any, any, any, ComputedOptions, MethodOptions>"
+        ]
+      }
+    },
+    {
+      "name": "filterKey",
+      "type": "string",
+      "required": true,
+      "description": "A unique identifier for the filter",
+      "tags": [],
+      "declarations": [],
+      "schema": "string"
+    },
+    {
+      "name": "initialActive",
+      "type": "boolean",
+      "required": true,
+      "description": "Whether the Popover will be initially open or not",
+      "tags": [],
+      "declarations": [],
+      "schema": {
+        "kind": "enum",
+        "type": "boolean",
+        "schema": [
+          "false",
+          "true"
+        ]
+      }
+    },
+    {
+      "name": "shortcut",
+      "type": "boolean | undefined",
+      "required": false,
+      "description": "Whether or not the filter should have a shortcut popover displayed",
+      "tags": [],
+      "declarations": [],
+      "schema": {
+        "kind": "enum",
+        "type": "boolean | undefined",
+        "schema": [
+          "undefined",
+          "false",
+          "true"
+        ]
+      }
+    },
+    {
+      "name": "pinned",
+      "type": "boolean | undefined",
+      "required": false,
+      "description": "Whether or not the filter should be pinned, permanently displaying the filter",
+      "tags": [],
+      "declarations": [],
+      "schema": {
+        "kind": "enum",
+        "type": "boolean | undefined",
+        "schema": [
+          "undefined",
+          "false",
+          "true"
+        ]
+      }
+    },
+    {
+      "name": "hideClearButton",
+      "type": "boolean | undefined",
+      "required": false,
+      "description": "",
+      "tags": [
+        {
+          "name": "default",
+          "text": "false\nWhether or not the clear button is displayed"
+        }
+      ],
+      "declarations": [],
+      "schema": {
+        "kind": "enum",
+        "type": "boolean | undefined",
+        "schema": [
+          "undefined",
+          "false",
+          "true"
+        ]
+      }
+    }
+  ],
+  "events": [
+    {
+      "name": "click",
+      "description": "Callback invoked when the filter is clicked",
+      "params": {
+        "name": "string"
+      }
+    },
+    {
+      "name": "remove",
+      "description": "Callback invoked when the filter is removed",
+      "params": {
+        "name": "string"
+      }
+    }
+  ],
+  "slots": []
+}

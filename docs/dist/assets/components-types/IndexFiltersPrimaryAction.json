@@ -1,0 +1,38 @@
+{
+  "filePath": "src/components/IndexFilters/types.ts",
+  "name": "IndexFiltersPrimaryAction",
+  "description": "",
+  "value": "export interface IndexFiltersPrimaryAction {\n  type: 'save' | 'save-as' | 'cancel';\n  onAction: (name: string) => Promise<boolean>;\n  disabled?: boolean;\n  loading?: boolean;\n}",
+  "members": [
+    {
+      "filePath": "src/components/IndexFilters/types.ts",
+      "syntaxKind": "PropertySignature",
+      "name": "type",
+      "value": "\"save\" | \"save-as\" | \"cancel\"",
+      "description": ""
+    },
+    {
+      "filePath": "src/components/IndexFilters/types.ts",
+      "syntaxKind": "PropertySignature",
+      "name": "onAction",
+      "value": "(name: string) => Promise<boolean>",
+      "description": ""
+    },
+    {
+      "filePath": "src/components/IndexFilters/types.ts",
+      "syntaxKind": "PropertySignature",
+      "name": "disabled",
+      "value": "boolean",
+      "description": "",
+      "isOptional": true
+    },
+    {
+      "filePath": "src/components/IndexFilters/types.ts",
+      "syntaxKind": "PropertySignature",
+      "name": "loading",
+      "value": "boolean",
+      "description": "",
+      "isOptional": true
+    }
+  ]
+}

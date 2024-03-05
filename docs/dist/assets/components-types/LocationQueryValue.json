@@ -1,0 +1,8 @@
+{
+  "filePath": "src/components/Link/types.ts",
+  "kind": "TypeAliasDeclaration",
+  "name": "LocationQueryValue",
+  "value": "string | null",
+  "description": "",
+  "members": []
+}

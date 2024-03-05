@@ -1,0 +1,15 @@
+{
+  "filePath": "src/components/Pagination/types.ts",
+  "kind": "TypeAliasDeclaration",
+  "name": "PaginationSlots",
+  "value": "{\n  /** Text to provide more context in between the arrow buttons */\n  default: (_: VueNode) => VNode[];\n}",
+  "description": "",
+  "members": [
+    {
+      "filePath": "src/components/Pagination/types.ts",
+      "name": "default",
+      "value": "(_: VueNode) => VNode[]",
+      "description": "Text to provide more context in between the arrow buttons"
+    }
+  ]
+}

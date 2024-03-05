@@ -1,0 +1,38 @@
+{
+  "filePath": "Users/ser/scatola/jobs/opensources/polaris-vue/src/components/IndexProvider/types.ts",
+  "name": "BulkSelectionDataOptions",
+  "description": "",
+  "value": "export interface BulkSelectionDataOptions {\n  selectedItemsCount: Ref<number | typeof SELECT_ALL_ITEMS>;\n  itemCount: Ref<number>;\n  hasMoreItems?: Ref<boolean>;\n  resourceName?: {\n    singular: string;\n    plural: string;\n  };\n}",
+  "members": [
+    {
+      "filePath": "Users/ser/scatola/jobs/opensources/polaris-vue/src/components/IndexProvider/types.ts",
+      "syntaxKind": "PropertySignature",
+      "name": "selectedItemsCount",
+      "value": "Ref<number | \"All\">",
+      "description": ""
+    },
+    {
+      "filePath": "Users/ser/scatola/jobs/opensources/polaris-vue/src/components/IndexProvider/types.ts",
+      "syntaxKind": "PropertySignature",
+      "name": "itemCount",
+      "value": "Ref<number>",
+      "description": ""
+    },
+    {
+      "filePath": "Users/ser/scatola/jobs/opensources/polaris-vue/src/components/IndexProvider/types.ts",
+      "syntaxKind": "PropertySignature",
+      "name": "hasMoreItems",
+      "value": "Ref<boolean>",
+      "description": "",
+      "isOptional": true
+    },
+    {
+      "filePath": "Users/ser/scatola/jobs/opensources/polaris-vue/src/components/IndexProvider/types.ts",
+      "syntaxKind": "PropertySignature",
+      "name": "resourceName",
+      "value": "{ singular: string; plural: string; }",
+      "description": "",
+      "isOptional": true
+    }
+  ]
+}

@@ -1,0 +1,72 @@
+{
+  "filePath": "src/components/Combobox/context.ts",
+  "name": "ComboboxTextFieldType",
+  "description": "",
+  "value": "export interface ComboboxTextFieldType {\n  // Value for the TextField aria-activedescendant. (also on list context when not in combobox)\n  activeOptionId?: Ref<string | undefined>;\n  // Value for the Combobox aria-owns and TextField aria-control\n  listboxId?: Ref<string | undefined>;\n  // Value for aria-expanded on TextField\n  expanded?: Ref<boolean>;\n  // Sets the value for the Listbox aria-labelledby\n  setTextFieldLabelId?(id: string): void;\n  // Sets a boolean to enable/disable keyboard control for the Listbox\n  setTextFieldFocused?(value: boolean): void;\n  // Callback fired when TextField is focused\n  onTextFieldFocus?(): void;\n  // Callback fired when TextField is blurred\n  onTextFieldBlur?(): void;\n  // Callback fired when TextField value changes\n  onTextFieldChange?(value: string): void;\n}",
+  "members": [
+    {
+      "filePath": "src/components/Combobox/context.ts",
+      "syntaxKind": "PropertySignature",
+      "name": "activeOptionId",
+      "value": "Ref<string>",
+      "description": "",
+      "isOptional": true
+    },
+    {
+      "filePath": "src/components/Combobox/context.ts",
+      "syntaxKind": "PropertySignature",
+      "name": "listboxId",
+      "value": "Ref<string>",
+      "description": "",
+      "isOptional": true
+    },
+    {
+      "filePath": "src/components/Combobox/context.ts",
+      "syntaxKind": "PropertySignature",
+      "name": "expanded",
+      "value": "Ref<boolean>",
+      "description": "",
+      "isOptional": true
+    },
+    {
+      "filePath": "src/components/Combobox/context.ts",
+      "syntaxKind": "MethodSignature",
+      "name": "setTextFieldLabelId",
+      "value": "(id: string) => void",
+      "description": "",
+      "isOptional": true
+    },
+    {
+      "filePath": "src/components/Combobox/context.ts",
+      "syntaxKind": "MethodSignature",
+      "name": "setTextFieldFocused",
+      "value": "(value: boolean) => void",
+      "description": "",
+      "isOptional": true
+    },
+    {
+      "filePath": "src/components/Combobox/context.ts",
+      "syntaxKind": "MethodSignature",
+      "name": "onTextFieldFocus",
+      "value": "() => void",
+      "description": "",
+      "isOptional": true
+    },
+    {
+      "filePath": "src/components/Combobox/context.ts",
+      "syntaxKind": "MethodSignature",
+      "name": "onTextFieldBlur",
+      "value": "() => void",
+      "description": "",
+      "isOptional": true
+    },
+    {
+      "filePath": "src/components/Combobox/context.ts",
+      "syntaxKind": "MethodSignature",
+      "name": "onTextFieldChange",
+      "value": "(value: string) => void",
+      "description": "",
+      "isOptional": true
+    }
+  ]
+}

@@ -1,0 +1,31 @@
+{
+  "props": [
+    {
+      "name": "sectioned",
+      "type": "boolean | undefined",
+      "required": false,
+      "description": "Automatically adds sections to layout.",
+      "tags": [],
+      "declarations": [],
+      "schema": {
+        "kind": "enum",
+        "type": "boolean | undefined",
+        "schema": [
+          "undefined",
+          "false",
+          "true"
+        ]
+      }
+    }
+  ],
+  "events": [],
+  "slots": [
+    {
+      "name": "default",
+      "type": "VueNode",
+      "description": "The content to display inside the layout.",
+      "declarations": [],
+      "schema": "VueNode"
+    }
+  ]
+}

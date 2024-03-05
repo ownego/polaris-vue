@@ -1,0 +1,29 @@
+{
+  "filePath": "src/components/Tabs/types.ts",
+  "name": "TabMeasurements",
+  "description": "",
+  "value": "export interface TabMeasurements {\n  containerWidth: number;\n  disclosureWidth: number;\n  hiddenTabWidths: number[];\n}",
+  "members": [
+    {
+      "filePath": "src/components/Tabs/types.ts",
+      "syntaxKind": "PropertySignature",
+      "name": "containerWidth",
+      "value": "number",
+      "description": ""
+    },
+    {
+      "filePath": "src/components/Tabs/types.ts",
+      "syntaxKind": "PropertySignature",
+      "name": "disclosureWidth",
+      "value": "number",
+      "description": ""
+    },
+    {
+      "filePath": "src/components/Tabs/types.ts",
+      "syntaxKind": "PropertySignature",
+      "name": "hiddenTabWidths",
+      "value": "number[]",
+      "description": ""
+    }
+  ]
+}

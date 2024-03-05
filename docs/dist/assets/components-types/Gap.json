@@ -1,0 +1,8 @@
+{
+  "filePath": "src/components/ButtonGroup/types.ts",
+  "kind": "TypeAliasDeclaration",
+  "name": "Gap",
+  "value": "'extraTight' | 'tight' | 'loose'",
+  "description": "",
+  "members": []
+}

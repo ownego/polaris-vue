@@ -1,0 +1,26 @@
+{
+  "props": [],
+  "events": [
+    {
+      "name": "scroll",
+      "description": "",
+      "params": {
+        "canScrollLeft": "boolean",
+        "canScrollRight": "boolean"
+      }
+    }
+  ],
+  "slots": [
+    {
+      "name": "default",
+      "type": "{}",
+      "description": "",
+      "declarations": [],
+      "schema": {
+        "kind": "object",
+        "type": "{}",
+        "schema": {}
+      }
+    }
+  ]
+}

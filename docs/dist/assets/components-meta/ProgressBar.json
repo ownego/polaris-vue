@@ -1,0 +1,112 @@
+{
+  "props": [
+    {
+      "name": "size",
+      "type": "Size | undefined",
+      "required": false,
+      "description": "Size of progressbar",
+      "tags": [
+        {
+          "name": "default",
+          "text": "'medium'"
+        }
+      ],
+      "declarations": [],
+      "schema": {
+        "kind": "enum",
+        "type": "Size | undefined",
+        "schema": [
+          "undefined",
+          "\"small\"",
+          "\"medium\"",
+          "\"large\""
+        ]
+      }
+    },
+    {
+      "name": "progress",
+      "type": "number | undefined",
+      "required": false,
+      "description": "The progression of certain tasks",
+      "tags": [
+        {
+          "name": "default",
+          "text": "0"
+        }
+      ],
+      "declarations": [],
+      "schema": {
+        "kind": "enum",
+        "type": "number | undefined",
+        "schema": [
+          "undefined",
+          "number"
+        ]
+      }
+    },
+    {
+      "name": "color",
+      "type": "Color | undefined",
+      "required": false,
+      "description": "Color of progressbar",
+      "tags": [
+        {
+          "name": "default",
+          "text": "'highlight'"
+        }
+      ],
+      "declarations": [],
+      "schema": {
+        "kind": "enum",
+        "type": "Color | undefined",
+        "schema": [
+          "undefined",
+          "\"success\"",
+          "\"critical\"",
+          "\"primary\"",
+          "\"highlight\""
+        ]
+      }
+    },
+    {
+      "name": "animated",
+      "type": "boolean | undefined",
+      "required": false,
+      "description": "Whether the fill animation is triggered",
+      "tags": [
+        {
+          "name": "default",
+          "text": "'true'"
+        }
+      ],
+      "declarations": [],
+      "schema": {
+        "kind": "enum",
+        "type": "boolean | undefined",
+        "schema": [
+          "undefined",
+          "false",
+          "true"
+        ]
+      }
+    },
+    {
+      "name": "ariaLabelledBy",
+      "type": "string | undefined",
+      "required": false,
+      "description": "Id (ids) of element (elements) that describes progressbar",
+      "tags": [],
+      "declarations": [],
+      "schema": {
+        "kind": "enum",
+        "type": "string | undefined",
+        "schema": [
+          "undefined",
+          "string"
+        ]
+      }
+    }
+  ],
+  "events": [],
+  "slots": []
+}

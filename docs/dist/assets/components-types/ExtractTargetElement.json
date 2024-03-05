@@ -1,0 +1,8 @@
+{
+  "filePath": "src/utilities/use-event-listener.ts",
+  "kind": "TypeAliasDeclaration",
+  "name": "ExtractTargetElement",
+  "value": "Target extends Element\n  ? Element\n  : Target",
+  "description": "Extracts the target element from a React `RefObject` or returns the input element.",
+  "members": []
+}

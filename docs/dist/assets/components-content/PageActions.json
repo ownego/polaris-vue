@@ -1,0 +1,17 @@
+{
+  "name": "PageActions",
+  "description": "Page actions let merchants take key actions at the bottom of specific pages in the interface. This is important because sometimes the primary call to action is hard to access when merchants are at the bottom of a page.",
+  "bestPractices": "Page actions should:\n\n- Include a single primary action on the right. It should be the same as the primary action that shows in the title bar at the top of the page.\n- Include a maximum of two secondary actions, but doesn’t have to include any secondary actions.",
+  "keywords": [
+    " PageActions\n  ",
+    " bottom of page actions\n  ",
+    " bottom page actions\n  ",
+    " primary action\n  ",
+    " primary page actions\n  ",
+    " default page actions\n  ",
+    " save delete actions\n  ",
+    " save actions\n  ",
+    " delete actions"
+  ],
+  "previewImg": "page-actions.png"
+}

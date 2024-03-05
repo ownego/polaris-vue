@@ -1,0 +1,63 @@
+{
+  "props": [
+    {
+      "name": "value",
+      "type": "string",
+      "required": true,
+      "description": "",
+      "tags": [],
+      "declarations": [],
+      "schema": "string"
+    },
+    {
+      "name": "active",
+      "type": "boolean",
+      "required": true,
+      "description": "",
+      "tags": [],
+      "declarations": [],
+      "schema": {
+        "kind": "enum",
+        "type": "boolean",
+        "schema": [
+          "false",
+          "true"
+        ]
+      }
+    },
+    {
+      "name": "direction",
+      "type": "DirectionButtonDirection",
+      "required": true,
+      "description": "",
+      "tags": [],
+      "declarations": [],
+      "schema": {
+        "kind": "enum",
+        "type": "DirectionButtonDirection",
+        "schema": [
+          "\"desc\"",
+          "\"asc\""
+        ]
+      }
+    }
+  ],
+  "events": [
+    {
+      "name": "click",
+      "description": "",
+      "params": {
+        "value": "string[]"
+      }
+    }
+  ],
+  "slots": [
+    {
+      "name": "default",
+      "type": "VueNode",
+      "description": "",
+      "declarations": [],
+      "schema": "VueNode"
+    }
+  ]
+}

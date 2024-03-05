@@ -1,0 +1,16 @@
+{
+  "filePath": "src/components/TextField/types.ts",
+  "name": "Disabled",
+  "description": "",
+  "value": "interface Disabled {\n  disabled?: boolean;\n}",
+  "members": [
+    {
+      "filePath": "src/components/TextField/types.ts",
+      "syntaxKind": "PropertySignature",
+      "name": "disabled",
+      "value": "boolean",
+      "description": "",
+      "isOptional": true
+    }
+  ]
+}

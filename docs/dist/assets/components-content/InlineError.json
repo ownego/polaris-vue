@@ -1,0 +1,13 @@
+{
+  "name": "InlineError",
+  "description": "Inline errors are brief, in-context messages that tell merchants something went wrong with a single or group of inputs in a form. Use inline errors to help merchants understand why a form input may not be valid and how to fix it.",
+  "bestPractices": "Inline errors should:\n\n- Be brief\n- Be written in sentence case\n- Be visible immediately upon a form input that is not valid\n- Be removed as soon as the input is valid so merchants can immediately tell they fixed the issue\n- Describe specific solutions so merchants can successfully complete their task in the form\n- Not be placed out of context of the input or group of inputs they describe\n\n[Learn more about error message patterns](https://polaris.shopify.com/patterns/error-messages#form-validation)",
+  "keywords": [
+    " InlineError\n  ",
+    " error message\n  ",
+    " form error\n  ",
+    " invalid input\n  ",
+    " form group"
+  ],
+  "previewImg": "inline-error.png"
+}

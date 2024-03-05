@@ -1,0 +1,23 @@
+{
+  "filePath": "src/components/Select/types.ts",
+  "kind": "TypeAliasDeclaration",
+  "name": "SelectSlots",
+  "value": "{\n  /** Label for the select */\n  label?: (_?: VueNode) => VNode[];\n  /** Additional text to aide in use */\n  helpText?: (_?: VueNode) => VNode[];\n}",
+  "description": "",
+  "members": [
+    {
+      "filePath": "src/components/Select/types.ts",
+      "name": "label",
+      "value": "(_?: VueNode) => VNode[]",
+      "isOptional": true,
+      "description": "Label for the select"
+    },
+    {
+      "filePath": "src/components/Select/types.ts",
+      "name": "helpText",
+      "value": "(_?: VueNode) => VNode[]",
+      "isOptional": true,
+      "description": "Additional text to aide in use"
+    }
+  ]
+}

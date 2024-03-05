@@ -1,0 +1,25 @@
+{
+  "name": "Link",
+  "description": "Links take users to another place, and usually appear within or directly following a sentence.",
+  "bestPractices": "### Buttons versus links\n\nLinks are used primarily for navigation, and usually appear within or directly following a sentence.\n\nButtons are used primarily for actions, such as “Add”, “Close”, “Cancel”, or “Save”. Plain buttons, which look similar to links, are used for less important or less commonly used actions, such as “view shipping settings”.\n\nThe HTML that renders for the `Button` and `Link` components carries meaning. Using these components intentionally and consistently results in:\n\n- a more inclusive experience for assistive technology users\n- a more cohesive visual experience for sighted users\n- products that are easier to maintain at scale\n\n### Open a new tab only when necessary\n\nUse default links whenever possible to avoid disorienting merchants and causing accessibility problems by opening a new tab.\n\nExternal links should be used when merchants are:\n\n- Performing a task or workflow, like creating a product\n- Navigating to a page outside of the Shopify admin\n\n### No icon\n\nAvoid using the [external icon](/icons?icon=ExternalIcon&q=external), as it can add unnecessary visual load inside a sentence or when accompanied by other content. Instead, add clarity to external links through clear link text and predictable placement of the link in a merchant’s workflow.\n\nEdge cases: External icons should not be used to indicate a new tab or window is being opened. However, they may be used sparingly in features where symbols help merchants scan and pick from a list of several kinds of navigation options, like the admin's global search results.\n\n<DoDont>\n\n#### Do\n\nInstead of using an external icon, consider using an icon with more meaning to strenghten your message\n\n![Shopify admin search search results with an example of an icon being used as a decorative element](/images/components/navigation/link/external-link-icon-decorative@2x.png)\n\n#### Don’t\n\nAvoid using the icon beside link text\n\n![Shopify admin page with an example of an external link to the Shopify help center with no icon](/images/components/navigation/link/external-link-dont-example@2x.png)\n\n</DoDont>\n\n### Unstyled links\n\nIf the existing link styles don’t meet the needs of your project, then use the `UnstyledLink` component to create a custom link style.",
+  "keywords": [
+    " URL\n  ",
+    " linklist\n  ",
+    " link list\n  ",
+    " embed\n  ",
+    " actions\n  ",
+    " pathways\n  ",
+    " deep link\n  ",
+    " text link\n  ",
+    " plain button\n  ",
+    " plain call to action\n  ",
+    " plain cta\n  ",
+    " embeddd action\n  ",
+    " action in text\n  ",
+    " hyperlink\n  ",
+    " secondary actions\n  ",
+    " secondary cta\n  ",
+    " secondary call to action"
+  ],
+  "previewImg": "link.png"
+}

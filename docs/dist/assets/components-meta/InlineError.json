@@ -1,0 +1,45 @@
+{
+  "props": [
+    {
+      "name": "message",
+      "type": "Error",
+      "required": true,
+      "description": "Content briefly explaining how to resolve the invalid form field input.",
+      "tags": [],
+      "declarations": [],
+      "schema": {
+        "kind": "enum",
+        "type": "Error",
+        "schema": [
+          "string",
+          "Element",
+          {
+            "kind": "array",
+            "type": "(string | Element)[]",
+            "schema": [
+              {
+                "kind": "enum",
+                "type": "string | Element",
+                "schema": [
+                  "string",
+                  "Element"
+                ]
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "name": "fieldId",
+      "type": "string",
+      "required": true,
+      "description": "Unique identifier of the invalid form field that the message describes",
+      "tags": [],
+      "declarations": [],
+      "schema": "string"
+    }
+  ],
+  "events": [],
+  "slots": []
+}

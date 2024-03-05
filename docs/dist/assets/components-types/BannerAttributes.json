@@ -1,0 +1,29 @@
+{
+  "filePath": "src/components/Banner/types.ts",
+  "name": "BannerAttributes",
+  "description": "",
+  "value": "interface BannerAttributes {\n  withinPage: BannerColorAliases;\n  withinContentContainer: BannerColorAliases;\n  icon: IconSource;\n}",
+  "members": [
+    {
+      "filePath": "src/components/Banner/types.ts",
+      "syntaxKind": "PropertySignature",
+      "name": "withinPage",
+      "value": "BannerColorAliases",
+      "description": ""
+    },
+    {
+      "filePath": "src/components/Banner/types.ts",
+      "syntaxKind": "PropertySignature",
+      "name": "withinContentContainer",
+      "value": "BannerColorAliases",
+      "description": ""
+    },
+    {
+      "filePath": "src/components/Banner/types.ts",
+      "syntaxKind": "PropertySignature",
+      "name": "icon",
+      "value": "IconSource",
+      "description": ""
+    }
+  ]
+}

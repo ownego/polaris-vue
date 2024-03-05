@@ -1,0 +1,8 @@
+{
+  "filePath": "src/components/BulkActions/types.ts",
+  "kind": "TypeAliasDeclaration",
+  "name": "BulkActionListSection",
+  "value": "ActionListSection",
+  "description": "",
+  "members": []
+}

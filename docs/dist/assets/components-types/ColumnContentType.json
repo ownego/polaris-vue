@@ -1,0 +1,8 @@
+{
+  "filePath": "src/components/DataTable/types.ts",
+  "kind": "TypeAliasDeclaration",
+  "name": "ColumnContentType",
+  "value": "'text' | 'numeric'",
+  "description": "",
+  "members": []
+}

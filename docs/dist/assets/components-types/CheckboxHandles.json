@@ -1,0 +1,15 @@
+{
+  "filePath": "Users/ser/scatola/jobs/opensources/polaris-vue/src/utilities/types.ts",
+  "name": "CheckboxHandles",
+  "description": "",
+  "value": "export interface CheckboxHandles {\n  focus(): void;\n}",
+  "members": [
+    {
+      "filePath": "Users/ser/scatola/jobs/opensources/polaris-vue/src/utilities/types.ts",
+      "syntaxKind": "MethodSignature",
+      "name": "focus",
+      "value": "() => void",
+      "description": ""
+    }
+  ]
+}

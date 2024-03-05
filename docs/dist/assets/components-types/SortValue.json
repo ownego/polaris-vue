@@ -1,0 +1,8 @@
+{
+  "filePath": "src/components/IndexFilters/types.ts",
+  "kind": "TypeAliasDeclaration",
+  "name": "SortValue",
+  "value": "`${string} ${'asc' | 'desc'}`",
+  "description": "",
+  "members": []
+}
