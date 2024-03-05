@@ -135,6 +135,11 @@ interface NonMutuallyExclusiveProps {
    * @default 'inherit'
    */
   variant?: 'inherit' | 'borderless';
+  /**
+   * Changes the size of the input, giving it more or less padding
+   * @default 'medium'
+   */
+  size?: 'slim' | 'medium';
   /** Indicates the tone of the text field */
   tone?: 'magic';
   /** Whether the TextField will grow as the text within the input changes */

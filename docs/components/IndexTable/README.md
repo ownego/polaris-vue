@@ -19,6 +19,7 @@ examples:
     title: Small screen
     description: A small screen index table with simple items and no bulk actions, sorting, or filtering.
   - fileName: SmallScreenWithElements.vue
+    frameHeight: 450
     title: Small screen with saved views, search, filtering, and sorting
     description: A small screen index table with saved views, search, filtering, sorting, and bulk actions.
   - fileName: WithEmptyState.vue

@@ -74,7 +74,7 @@ div(
     div(ref="filteringRef")
       Filters(
         v-if="mode === IndexFiltersMode.Filtering",
-        border-less-query-field,
+        borderless-query-field,
         :close-on-child-overlay-click="closeOnChildOverlayClick",
         :query-value="queryValue",
         :query-placeholder="queryPlaceholder",

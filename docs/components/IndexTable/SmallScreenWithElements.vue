@@ -17,21 +17,20 @@
       canCreateNewView
       :filters="filters"
       :appliedFilters="appliedFilters"
-      :onClearAll="handleFiltersClearAll"
       :mode="mode"
-      :setMode="setMode"
+      @set-mode="setMode"
+      @clear-all="handleFiltersClearAll"
+      @create-new-view="onCreateNewView"
+      @select="handleFiltersSelect"
       @query-change="handleFiltersQueryChange"
-      @query-clear="handleFiltersQueryClear"
-      @sort="handleSortChange"
-      @select="handleSelectChange"
-      @creat-new-view="onCreateNewView"
+      @query-clear="handleQueryValueRemove"
+      @sort="handleFiltersSort"
     />
     <IndexTable
       :resourceName="resourceName"
       :itemCount="orders.length"
       :selectedItemsCount="allResourcesSelected ? 'All' : selectedResources.length"
       condensed
-      @selection-change="handleSelectionChange"
       :headings="[
         {title: 'Order'},
         {title: 'Date'},
@@ -40,6 +39,7 @@
         {title: 'Payment status'},
         {title: 'Fulfillment status'},
       ]"
+      @selection-change="handleSelectionChange"
     >
       <IndexTableRow
         v-for="{id, order, date, customer, total, paymentStatus, fulfillmentStatus}, index in orders"
@@ -62,8 +62,8 @@
               </Text>
             </InlineStack>
             <InlineStack align="start" gap="100">
-              <component :is="paymentStatus" />
-              <component :is="fulfillmentStatus" />
+              <component :is="paymentStatus"></component>
+              <component :is="fulfillmentStatus"></component>
             </InlineStack>
           </BlockStack>
         </div>
@@ -71,56 +71,119 @@
     </IndexTable>
   </LegacyCard>
 </div>
-
 </template>
 
 <script setup lang="ts">
 import { computed, h, ref, resolveComponent } from 'vue';
-// import { useIndexResourceState } from '@ownego/polaris-vue';
-import { useIndexResourceState } from '@/polaris-vue';
+// import { useIndexResourceState, useSetIndexFiltersMode } from '@ownego/polaris-vue';
+import { useIndexResourceState, useSetIndexFiltersMode } from '@/polaris-vue';
 
-const handleAccountStatusChange = (value: string[]) => {
-  accountStatus.value = value;
+const sleep = (ms: number) => new Promise((resolve) => setTimeout(resolve, ms));
+
+const itemStrings = ref(['All', 'Unpaid']);
+
+const selected = ref(0);
+const sortSelected = ref(['order asc']);
+const accountStatus = ref<string[]>();
+const moneySpent = ref<[number, number]>();
+const taggedWith = ref('');
+const queryValue = ref('');
+const { mode, setMode } = useSetIndexFiltersMode();
+
+const onHandleCancel = () => {};
+
+const onHandleSave = async () => {
+  await sleep(1);
+  return true;
 };
 
-const handleMoneySpentChange = (value: [number, number]) => {
-  moneySpent.value = value;
-};
+const tabs = computed(() => {
+  return itemStrings.value.map((item, index) => ({
+    content: item,
+    index,
+    onAction: () => {},
+    id: `${item}-${index}`,
+    isLocked: index === 0,
+    actions:
+      index === 0
+        ? []
+        : [
+            {
+              type: 'rename',
+              onAction: () => {},
+              onPrimaryAction: async (value: string): Promise<boolean> => {
+                const newItemsStrings = tabs.value.map((item, idx) => {
+                  if (idx === index) {
+                    return value;
+                  }
+                  return item.content;
+                });
+                await sleep(1);
 
-const handleTaggedWithChange = (value: string) => {
-  taggedWith.value = value;
-};
+                itemStrings.value = newItemsStrings;
+                return true;
+              },
+            },
+            {
+              type: 'duplicate',
+              onPrimaryAction: async (value: string): Promise<boolean> => {
+                await sleep(1);
+                duplicateView(value);
+                return true;
+              },
+            },
+            {
+              type: 'edit',
+            },
+            {
+              type: 'delete',
+              onPrimaryAction: async () => {
+                await sleep(1);
+                deleteView(index);
+                return true;
+              },
+            },
+          ],
+  }));
+});
 
-const handleFiltersQueryChange = (value: string) => {
-  queryValue.value = value;
-};
+const primaryAction = computed(() => (
+  selected.value === 0
+  ? {
+      type: 'save-as',
+      onAction: onCreateNewView,
+      disabled: false,
+      loading: false,
+    }
+  : {
+      type: 'save',
+      onAction: onHandleSave,
+      disabled: false,
+      loading: false,
+    }
+));
 
-const handleAccountStatusRemove = () => {
-  accountStatus.value = undefined;
-};
+const sortOptions = [
+  {label: 'Order', value: 'order asc', directionLabel: 'Ascending'},
+  {label: 'Order', value: 'order desc', directionLabel: 'Descending'},
+  {label: 'Customer', value: 'customer asc', directionLabel: 'A-Z'},
+  {label: 'Customer', value: 'customer desc', directionLabel: 'Z-A'},
+  {label: 'Date', value: 'date asc', directionLabel: 'A-Z'},
+  {label: 'Date', value: 'date desc', directionLabel: 'Z-A'},
+  {label: 'Total', value: 'total asc', directionLabel: 'Ascending'},
+  {label: 'Total', value: 'total desc', directionLabel: 'Descending'},
+];
 
-const handleMoneySpentRemove = () => {
-  moneySpent.value = undefined;
-};
-
-const handleTaggedWithRemove = () => {
-  taggedWith.value = '';
-};
-
-const handleQueryValueRemove = () => {
-  queryValue.value = '';
-};
-
-const handleFiltersClearAll = () => {
-  handleAccountStatusRemove();
-  handleMoneySpentRemove();
-  handleTaggedWithRemove();
-  handleQueryValueRemove();
-}
+const filterChoices = [
+  {label: 'Enabled', value: 'enabled'},
+  {label: 'Not invited', value: 'not invited'},
+  {label: 'Invited', value: 'invited'},
+  {label: 'Declined', value: 'declined'},
+];
 
 const filters = [
   {
-    key: 'accountStatus',
+    name: 'accountStatus',
     label: 'Account status',
     filter: () => h(
       resolveComponent('ChoiceList'),
@@ -128,7 +191,7 @@ const filters = [
         title: 'Account status',
         titleHidden: true,
         choices: filterChoices,
-        selected: accountStatus || [],
+        modelValue: accountStatus.value || [],
         onChange: handleAccountStatusChange,
         allowMultiple: true,
       },
@@ -136,29 +199,29 @@ const filters = [
     shortcut: true,
   },
   {
-    key: 'taggedWith',
+    name: 'taggedWith',
     label: 'Tagged with',
     filter: () => h(
       resolveComponent('TextField'),
       {
         label: 'Tagged with',
-        value: taggedWith,
-        onChange: handleTaggedWithChange,
+        modelValue: taggedWith.value,
         autoComplete: 'off',
         labelHidden: true,
+        onInput: handleTaggedWithChange,
       },
     ),
     shortcut: true,
   },
   {
-    key: 'moneySpent',
+    name: 'moneySpent',
     label: 'Money spent',
     filter: () => h(
       resolveComponent('RangeSlider'),
       {
         label: 'Money spent is between',
         labelHidden: true,
-        value: moneySpent || [0, 500],
+        modelValue: moneySpent.value || [0, 500],
         prefix: '$',
         output: true,
         min: 0,
@@ -174,26 +237,26 @@ const appliedFilters = computed(() => {
   const results = [];
 
   if (accountStatus.value && !isEmpty(accountStatus.value)) {
-    const key = 'accountStatus';
+    const name = 'accountStatus';
     results.push({
-      key,
-      label: disambiguateLabel(key, accountStatus.value),
+      name,
+      label: disambiguateLabel(name, accountStatus.value),
       onRemove: handleAccountStatusRemove,
     });
   }
   if (moneySpent.value) {
-    const key = 'moneySpent';
+    const name = 'moneySpent';
     results.push({
-      key,
-      label: disambiguateLabel(key, moneySpent.value),
+      name,
+      label: disambiguateLabel(name, moneySpent.value),
       onRemove: handleMoneySpentRemove,
     });
   }
   if (!isEmpty(taggedWith.value)) {
-    const key = 'taggedWith';
+    const name = 'taggedWith';
     results.push({
-      key,
-      label: disambiguateLabel(key, taggedWith.value),
+      name,
+      label: disambiguateLabel(name, taggedWith.value),
       onRemove: handleTaggedWithRemove,
     });
   }
@@ -237,6 +300,79 @@ const resourceName = {
 };
 
 const {selectedResources, allResourcesSelected, handleSelectionChange} = useIndexResourceState(orders);
+
+// View actions
+const deleteView = (index: number) => {
+  const newItemStrings = [...itemStrings.value];
+  newItemStrings.splice(index, 1);
+
+  itemStrings.value = newItemStrings;
+  selected.value = 0
+};
+
+const duplicateView = async (name: string) => {
+  itemStrings.value = [...itemStrings.value, name];
+  selected.value = itemStrings.value.length;
+
+  await sleep(1);
+  return true;
+};
+
+const onCreateNewView = async (value: string) => {
+  await sleep(500);
+
+  itemStrings.value = [...itemStrings.value, value];
+  selected.value = itemStrings.value.length;
+  return true;
+};
+
+// Filters
+const handleFiltersSort = (value: string[]) => {
+  sortSelected.value = value;
+};
+
+const handleFiltersSelect = (index: number) => {
+  selected.value = index;
+};
+
+const handleAccountStatusChange = (value: string[]) => {
+  accountStatus.value = value;
+};
+
+const handleMoneySpentChange = (value: [number, number]) => {
+  moneySpent.value = value;
+};
+
+const handleTaggedWithChange = (_e: Event, value: string) => {
+  taggedWith.value = value;
+};
+
+const handleFiltersQueryChange = (value: string) => {
+  queryValue.value = value;
+};
+
+const handleAccountStatusRemove = () => {
+  accountStatus.value = undefined;
+};
+
+const handleMoneySpentRemove = () => {
+  moneySpent.value = undefined;
+};
+
+const handleTaggedWithRemove = () => {
+  taggedWith.value = '';
+};
+
+const handleQueryValueRemove = () => {
+  queryValue.value = '';
+};
+
+const handleFiltersClearAll = () => {
+  handleAccountStatusRemove();
+  handleMoneySpentRemove();
+  handleTaggedWithRemove();
+  handleQueryValueRemove();
+}
 
 function disambiguateLabel(key: string, value: any[] | string): string {
   switch (key) {

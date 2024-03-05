@@ -17,7 +17,7 @@
     :filters="filters"
     :appliedFilters="appliedFilters"
     :mode="mode"
-    @setMode="setMode"
+    @set-mode="setMode"
     @query-change="handleFiltersQueryChange"
     @query-clear="handleQueryValueRemove"
     @sort="handleFiltersSort"
@@ -176,7 +176,7 @@ const filters = [
         title: 'Account status',
         titleHidden: true,
         choices: filterChoices,
-        selected: accountStatus.value || [],
+        modelValue: accountStatus.value || [],
         onChange: handleAccountStatusChange,
         allowMultiple: true,
       },
@@ -190,10 +190,10 @@ const filters = [
       resolveComponent('TextField'),
       {
         label: 'Tagged with',
-        value: taggedWith,
-        onChange: handleTaggedWithChange,
+        modelValue: taggedWith.value,
         autoComplete: 'off',
         labelHidden: true,
+        onInput: handleTaggedWithChange,
       },
     ),
     shortcut: true,
@@ -206,7 +206,7 @@ const filters = [
       {
         label: 'Money spent is between',
         labelHidden: true,
-        value: moneySpent || [0, 500],
+        modelValue: moneySpent.value || [0, 500],
         prefix: '$',
         output: true,
         min: 0,
@@ -238,26 +238,26 @@ const appliedFilters = computed(() => {
   const results = [];
 
   if (accountStatus.value && !isEmpty(accountStatus.value)) {
-    const key = 'accountStatus';
+    const name = 'accountStatus';
     results.push({
-      key,
-      label: disambiguateLabel(key, accountStatus.value),
+      name,
+      label: disambiguateLabel(name, accountStatus.value),
       onRemove: handleAccountStatusRemove,
     });
   }
   if (moneySpent.value) {
-    const key = 'moneySpent';
+    const name = 'moneySpent';
     results.push({
-      key,
-      label: disambiguateLabel(key, moneySpent.value),
+      name,
+      label: disambiguateLabel(name, moneySpent.value),
       onRemove: handleMoneySpentRemove,
     });
   }
   if (!isEmpty(taggedWith.value)) {
-    const key = 'taggedWith';
+    const name = 'taggedWith';
     results.push({
-      key,
-      label: disambiguateLabel(key, taggedWith.value),
+      name,
+      label: disambiguateLabel(name, taggedWith.value),
       onRemove: handleTaggedWithRemove,
     });
   }
@@ -344,7 +344,7 @@ const handleMoneySpentChange = (value: [number, number]) => {
   moneySpent.value = value;
 };
 
-const handleTaggedWithChange = (value: string) => {
+const handleTaggedWithChange = (_e: Event, value: string) => {
   taggedWith.value = value;
 };
 
