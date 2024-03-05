@@ -66,6 +66,15 @@ export function useMeta(ignoreFetch = false) {
       return tmpSchema.split('|').map(s => s.trim()).filter((t) => t && t !== 'undefined');
     }
 
+    if (schema.kind === 'event') {
+      const eventPattern = /\((.*)\):\s*(.*)/;
+      const match = eventPattern.exec(schema.type);
+
+      if (match) {
+        return ['(', match[1], ') ', '=> ', match[2]];
+      }
+    }
+
     const types = schema.type.split('|').map(s => s.trim()).filter((t) => t !== 'undefined');
 
     if (types.length === 1) {
@@ -120,19 +129,26 @@ export function useMeta(ignoreFetch = false) {
     const startGroupPattern = /\((\w*)/;
     const endGroupPattern = /(\w*)\)(\[\])?/;
 
-    if (startGroupPattern.test(types[0])) {
+    if (
+      types.length > 1
+      && startGroupPattern.test(types[0])
+      && endGroupPattern.test(types[types.length - 1])
+    ) {
       const group = ['('];
       types.map((t, idx) => {
         if (!idx) {
           const startMatch = startGroupPattern.exec(t);
-          group.push(startMatch.length > 1 ? startMatch[1] : t);
+          group.push(startMatch && startMatch.length > 1 ? startMatch[1] : t);
           return;
         }
 
         if (endGroupPattern.test(t)) {
           const endMatch = endGroupPattern.exec(t);
-          group.push(endMatch[1]);
-          group.push(')[]');
+
+          if (endMatch && endMatch.length > 1) {
+            group.push(endMatch[1]);
+            group.push(')[]');
+          }
           return;
         }
 
@@ -157,6 +173,7 @@ export function useMeta(ignoreFetch = false) {
       || (t.startsWith('\'') && t.endsWith('\''))
       || t.startsWith('string')
       || t.endsWith('string')
+      || t.startsWith('=>')
     ) {
       return 'string';
     }

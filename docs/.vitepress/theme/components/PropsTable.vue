@@ -196,7 +196,9 @@ const typeMarkup = (p: ComponentPropsMeta) => {
       && !t.startsWith('&')
       && types[idx - 1] !== '&'
       && !t.startsWith(')')
-      && !types[idx - 1].endsWith('(');
+      && !types[idx - 1].endsWith('(')
+      && !t.startsWith('=>')
+      && !types[idx-1].startsWith('=>');
 
     if (hasSeparator) {
       typeEls.push(
