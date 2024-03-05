@@ -12,10 +12,10 @@ import lang from '../../polaris/polaris-react/locales/en.json';
 
 const { params } = useData();
 
-const isAppProvider = params.value.component === 'AppProvider';
+const isAppProvider = params.value?.component === 'AppProvider';
 
 const exampleComponent = defineAsyncComponent(() =>
-  import(`../components/${params.value.component}/${params.value.example}.vue`)
+  import(`../components/${params.value?.component}/${params.value?.example}.vue`)
 );
 
 const wrappedComponent = () => {

@@ -95,22 +95,6 @@ const switchExample = (index: number) => {
   isLoadingFrame.value = true;
 };
 
-// Fix iframe timeStamp
-// @see: https://github.com/vuejs/core/issues/3933#issuecomment-1214459923
-const fixIframeEvent = () => {
-  const handler = (e: any) => {
-    Object.defineProperty(e, 'timeStamp', { get: () => performance.now() });
-  };
-
-  const events = Object.keys(window).filter(name => name.substring(0, 2) === 'on').map(name => name.substring(2));
-
-  events.forEach((name: string) => {
-    if (iframeRef.value && iframeRef.value.contentWindow) {
-      iframeRef.value.contentWindow.addEventListener(name, handler, true);
-    }
-  });
-};
-
 const iframeLoaded = () => {
   setTimeout(() => {
     isLoadingFrame.value = false;
@@ -128,10 +112,6 @@ if (example) {
     selectedExampleIndex.value = index;
   }
 }
-
-onMounted(() => {
-  fixIframeEvent();
-});
 </script>
 
 <style lang="scss">
