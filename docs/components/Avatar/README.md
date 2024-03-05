@@ -78,7 +78,6 @@ Annotated section descriptions should:
 ## Related components
 
 - To visually group content in a layout section, [use the card component](/components/Card)
-- To lay out a set of smaller components in a row, [use the vertical stack component](/components/VerticalStack)
 - To lay out form fields, [use the form layout component](/components/FormLayout)
 
 </div>

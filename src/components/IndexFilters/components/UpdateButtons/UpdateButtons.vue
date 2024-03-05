@@ -158,6 +158,6 @@ watch(
       focusFirstFocusableNode(container.value);
     }
   },
-  { immediate: true },
+  { flush: 'post' },
 );
 </script>

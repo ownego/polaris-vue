@@ -131,7 +131,7 @@ Don’t use alternatives to existing badge options. Only create a new badge opti
 
 ## Accessibility
 
-Badges that convey information with icons or color include text provided by the [visually hidden component](/components/VisuallyHidden#navigation). This text is read out by assistive technologies like screen readers so that merchants with vision issues can access the meaning of the badge in context.
+Badges that convey information with icons or color include text provided by the visually hidden component. This text is read out by assistive technologies like screen readers so that merchants with vision issues can access the meaning of the badge in context.
 
 </div>
 
