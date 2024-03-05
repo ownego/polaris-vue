@@ -6,8 +6,6 @@ import type {
   BreakpointsTokenGroup,
 } from '@shopify/polaris-tokens';
 
-import { isServer } from '@polaris/utilities/target';
-
 const Breakpoints = {
   // TODO: Update to smDown
   navigationBarCollapsed: '767.95px',
@@ -67,6 +65,8 @@ function getMatches(
    */
   forceDefaults?: boolean,
 ) {
+  const isServer = typeof window === 'undefined' || typeof document === 'undefined';
+
   if (!isServer && !forceDefaults) {
     return Object.fromEntries(
       breakpointsQueryEntries.map(([directionAlias, query]) => [
