@@ -29,11 +29,10 @@ template(v-else)
 </template>
 
 <script setup lang="ts">
-import { computed, h, getCurrentInstance } from 'vue';
+import { computed, h, getCurrentInstance, resolveComponent } from 'vue';
 import styles from '@polaris/components/Banner/Banner.module.scss';
 import useI18n from '@/use/useI18n';
 import type { VueNode } from '@/utilities/types';
-import { Icon, ButtonGroup, Text, Button } from '@/components';
 import XIcon from '@icons/XIcon.svg';
 import type { BannerProps } from '../types';
 import { bannerAttributes } from '../types';
@@ -44,9 +43,16 @@ defineSlots<{
   default: (_: VueNode) => any;
 }>();
 
+type BannerLayoutEmits = {
+  /** Callback when Banner is dismissed */
+  'dismiss': [];
+}
+
 const props = withDefaults(defineProps<BannerProps>(), {
   tone: 'info',
 });
+
+const emits = defineEmits<BannerLayoutEmits>();
 
 const i18n = useI18n();
 const currentInstance = getCurrentInstance();
@@ -62,7 +68,7 @@ const bannerTone = computed(() => Object.keys(bannerAttributes).includes(props.t
 
 const bannerColors = computed(() =>
   bannerAttributes[bannerTone.value][
-    withinContentContainer ? 'withinContentContainer' : 'withinPage'
+  withinContentContainer ? 'withinContentContainer' : 'withinPage'
   ]
 );
 
@@ -74,50 +80,52 @@ const sharedBannerProps = computed(() => {
 });
 
 const bannerTitle = computed(() =>
-  props.title && h(
-    Text,
+  props.title ? () => h(
+    resolveComponent('Text'),
     { variant: 'headingSm', as: 'h2', breakWord: true },
-    props.title,
-  ),
+    () => props.title,
+  ) : null,
 );
 
 const bannerIcon = computed(() =>
-  !props.hideIcon && h(
+  !props.hideIcon ? () => h(
     'span',
     { class: styles[bannerColors.value.icon] },
-    [
-      h(Icon, { source: props.icon || bannerAttributes[bannerTone.value].icon, }),
-    ],
-  )
+    h(resolveComponent('Icon'), { source: props.icon || bannerAttributes[bannerTone.value].icon, }),
+  ) : null,
 );
 
 const actionButtons = computed(() =>
-  (props.action || props.secondaryAction) && h(
-    ButtonGroup,
-    [
-      props.action
-      && h(Button, { onClick: props.action.onAction, props: { ...props.action } }, props.action.content),
-      props.secondaryAction
-      && h(Button, { onClick: props.secondaryAction.onAction, props: { ...props.secondaryAction } }, props.secondaryAction.content),
+  (props.action || props.secondaryAction) ? () => h(
+    resolveComponent('ButtonGroup'),
+    () => [
+      props.action && h(resolveComponent('Button'),
+        { onClick: props.action.onAction, props: { ...props.action } },
+        () => props.action?.content,
+      ),
+      props.secondaryAction && h(resolveComponent('Button'),
+        { onClick: props.secondaryAction.onAction, props: { ...props.secondaryAction } },
+        () => props.secondaryAction?.content,
+      ),
     ],
-  ),
-)
+  ) : null,
+);
 
 const hasDismiss = computed(() => Boolean(currentInstance?.vnode.props?.onDismiss));
 
-const dismissButton = computed(() => {
-  return hasDismiss.value && h(
-    Button,
+const dismissButton = computed(() =>
+  hasDismiss.value ? () => h(
+    resolveComponent('Button'),
     {
       variant: 'tertiary',
       icon: h(
         'span',
         { class: styles[isInlineIconBanner.value ? 'icon-secondary' : bannerColors.value.icon] },
-        [ h(Icon, { source: XIcon }) ],
+        h(resolveComponent('Icon'), { source: XIcon }),
       ),
-      onClick: currentInstance?.vnode.props?.onDismiss,
+      onClick: () => emits('dismiss'),
       accessibilityLabel: i18n.translate('Polaris.Banner.dismissButton'),
-    }
-  )
-});
+    },
+  ) : null,
+);
 </script>
