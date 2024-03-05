@@ -19,7 +19,6 @@ Modal(
             :maxLength="MAX_VIEW_NAME_LENGTH",
             :showCharacterCount="true",
             :error="errorMessage",
-            @change="handleChange",
           )
 </template>
 
@@ -49,34 +48,43 @@ const emits = defineEmits<{
   (e: 'close'): void;
   (e: 'click-primary-action', value: string): Promise<boolean>;
   (e: 'click-secondary-action'): void;
+  (e: 'update:modelValue', value: string): void;
 }>();
 
 const i18n = useI18n();
 const isTouchDevice = useIsTouchDevice();
+const modalValue = ref<string>('');
 
-const model = defineModel<string>({
-  default: '',
+const model = computed({
+  get() {
+    return '';
+  },
+  set(value: string) {
+    modalValue.value = value;
+    emits('update:modelValue', value);
+  },
 });
+
 const loading = ref<boolean>(false);
 const container = ref<HTMLDivElement | null>(null);
 
 const hasSameNameError = computed(() => props.viewNames.some(
-  (viewName) => viewName.trim().toLowerCase() === model.value.trim().toLowerCase(),
+  (viewName) => viewName.trim().toLowerCase() === modalValue.value.trim().toLowerCase(),
 ));
 
 const isPrimaryActionDisabled = computed(() =>
-  !model.value ||
+  !modalValue.value ||
   hasSameNameError.value ||
   loading.value ||
-  model.value.length > MAX_VIEW_NAME_LENGTH,
+  modalValue.value.length > MAX_VIEW_NAME_LENGTH,
 );
 
-const primaryAction = computed(() => {
+const primaryAction = computed<ComplexAction>(() => {
   return {
     content: i18n.translate('Polaris.Tabs.CreateViewModal.create'),
     disabled: isPrimaryActionDisabled.value,
     onAction: handlePrimaryAction,
-  } as unknown as ComplexAction;
+  };
 });
 
 const secondaryActions = computed(() => [
@@ -87,12 +95,8 @@ const secondaryActions = computed(() => [
 ]);
 
 const errorMessage = computed(() => hasSameNameError.value
-  && i18n.translate('Polaris.Tabs.CreateViewModal.errors.sameName', { name: model.value }),
+  && i18n.translate('Polaris.Tabs.CreateViewModal.errors.sameName', { name: modalValue.value }),
 );
-
-const handleChange = (newValue: string) => {
-  model.value = newValue;
-};
 
 const handlePrimaryAction = async () => {
   if (hasSameNameError.value || isPrimaryActionDisabled.value) {
@@ -100,7 +104,7 @@ const handlePrimaryAction = async () => {
   }
 
   loading.value = true;
-  await emits('click-primary-action', model.value);
+  await emits('click-primary-action', modalValue.value);
   loading.value = false;
   model.value = '';
   emits('close');

@@ -535,27 +535,22 @@ const activator = () => h(
   },
   () => [
     h(
-      'template',
-      () => [
-        h(
-          resolveComponent('Text'),
-          { as: 'span', variant: 'bodySm', fontWeight: 'medium' },
-          props.disclosureText ?? i18n.translate('Polaris.Tabs.toggleTabsLabel'),
+      resolveComponent('Text'),
+      { as: 'span', variant: 'bodySm', fontWeight: 'medium' },
+      () => props.disclosureText ?? i18n.translate('Polaris.Tabs.toggleTabsLabel'),
+    ),
+    h(
+      'div',
+      {
+        class: classNames(
+          styles.IconWrap,
+          disclosureActivatorVisible.value && state.showDisclosure && styles['IconWrap-open'],
         ),
-        h(
-          'div',
-          {
-            class: classNames(
-              styles.IconWrap,
-              disclosureActivatorVisible.value && state.showDisclosure && styles['IconWrap-open'],
-            ),
-          },
-          h(
-            resolveComponent('Icon'),
-            { source: ChevronDownIcon, tone: 'subdued' },
-          ),
-        ),
-      ],
+      },
+      h(
+        resolveComponent('Icon'),
+        { source: ChevronDownIcon, tone: 'subdued' },
+      ),
     ),
   ],
 );
