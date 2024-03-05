@@ -46,7 +46,7 @@ examples:
 
 ::: tip :grey_exclamation: Tip
 
-Check out the [new patterns section](/patterns/date-picking) to learn how merchants prefer to select dates in different scenarios!
+Check out the [new patterns section](https://polaris.shopify.com/patterns/date-picking) to learn how merchants prefer to select dates in different scenarios!
 
 :::
 
@@ -78,6 +78,6 @@ If you use the date picker within a [popover component](/components/Popover), th
 
 ## Related patterns
 
-- [Date picking](/patterns/date-picking)
+- [Date picking](https://polaris.shopify.com/patterns/date-picking)
 
 </div>
