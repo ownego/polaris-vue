@@ -13,7 +13,7 @@
     v-html="md.render(examples[selectedExampleIndex].description)",
   )
   //- Iframe to show example
-  .preview-wrapper(:style="{ height: `${frameHeight}px` }")
+  .frame-wrapper(:style="{ height: `${frameHeight}px` }")
     iframe.preview-frame(
       ref="iframeRef",
       :src="withBase(`/preview/${component}-${selectedFile}`)",
@@ -165,7 +165,7 @@ if (example) {
   }
 }
 
-.preview-wrapper {
+.frame-wrapper {
   position: relative;
   width: 100%;
   background-color: #f1f1f1;

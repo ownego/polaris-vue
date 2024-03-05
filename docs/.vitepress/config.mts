@@ -1,4 +1,4 @@
-import { defineConfig, withBase } from 'vitepress';
+import { defineConfig } from 'vitepress';
 import { fileURLToPath } from 'url';
 import { replaceCodePlugin } from 'vite-plugin-replace';
 import svgLoader from 'vite-svg-loader';
@@ -20,7 +20,7 @@ export default defineConfig({
   titleTemplate: ":title — Shopify Polaris Vue by ownego",
   description: "Shopify Polaris for VueJS 3",
   head: [
-    ['link', { rel: 'icon', href: withBase('/assets/images/favicon.ico') }],
+    ['link', { rel: 'icon', href: '/polaris-vue/assets/images/favicon.ico' }],
     ['link', { rel: 'preconnect', href: 'https://cdn.shopify.com/' }],
     ['link', { rel: 'stylesheet', href: 'https://cdn.shopify.com/static/fonts/inter/inter.css', id: 'inter-font-link' }],
   ],
