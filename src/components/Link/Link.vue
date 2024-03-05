@@ -16,6 +16,7 @@ UnstyledLink(
   :target="target",
   :aria-label="accessibilityLabel",
   :data-primary-link="dataPrimaryLink",
+  @click="emits('click')",
 )
   slot
 
@@ -25,6 +26,7 @@ button(
   :class="className",
   :aria-label="accessibilityLabel",
   :data-primary-link="dataPrimaryLink",
+  @click="emits('click')",
 )
   slot
 </template>
@@ -76,6 +78,11 @@ const props = defineProps<LinkProps>();
 defineSlots<{
   /** Content to display inside the link */
   default: (_: VueNode) => null;
+}>();
+
+const emits = defineEmits<{
+  /** Callback when a link is clicked */
+  click: [];
 }>();
 
 const shouldBeMonochrome = computed(() => Boolean(props.monochrome || bannerContext));
