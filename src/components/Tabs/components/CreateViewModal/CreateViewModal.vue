@@ -131,5 +131,8 @@ watch(
       return () => clearTimeout(timeout);
     }
   },
+  {
+    flush: 'post',
+  },
 );
 </script>

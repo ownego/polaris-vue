@@ -103,6 +103,9 @@ watch(
       focusFirstFocusableNode(container.value);
     }
   },
+  {
+    flush: 'post',
+  },
 );
 
 const handlePrimaryAction = async () => {

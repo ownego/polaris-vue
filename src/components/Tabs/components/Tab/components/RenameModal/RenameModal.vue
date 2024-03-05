@@ -69,7 +69,7 @@ const hasSameNameError = computed(() => props.viewNames
 );
 
 const isPrimaryActionDisabled = computed(() =>
-  props.isModalLoading||
+  props.isModalLoading ||
   hasSameNameError.value ||
   modalValue.value === props.name ||
   !modalValue.value ||
@@ -107,6 +107,9 @@ watch(
     if (newVal) {
       focusFirstFocusableNode(container.value);
     }
+  },
+  {
+    flush: 'post',
   },
 );
 
