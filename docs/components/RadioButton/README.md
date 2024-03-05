@@ -104,10 +104,10 @@ Toggle values should:
 
 ## Related components
 
-- To make simple lists of radio buttons easier to build, [use the choice list component](components/ChoiceList)
-- For long lists of options, [consider the select component](components/Select) to avoid overwhelming merchants
-- To present merchants with a list of checkboxes, [use the choice list component](components/ChoiceList) with the “allow multiple” option
-- To display non-interactive list of related content, [use the content list component](components/List)
+- To make simple lists of radio buttons easier to build, [use the choice list component](/components/ChoiceList)
+- For long lists of options, [consider the select component](/components/Select) to avoid overwhelming merchants
+- To present merchants with a list of checkboxes, [use the choice list component](/components/ChoiceList) with the “allow multiple” option
+- To display non-interactive list of related content, [use the content list component](/components/List)
 
 ---
 

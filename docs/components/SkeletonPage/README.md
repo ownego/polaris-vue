@@ -72,7 +72,7 @@ Use placeholder content that will change when the page fully loads. This will co
 
 ## Related components
 
-- Use the [Skeleton body text](components/SkeletonBodyText) and [Skeleton display text](components/SkeletonDisplayText) components to represent blocks of content.
-- When giving feedback for in-context operations, use [Progress bar](components/ProgressBar) or [Spinner](components/Spinner) component.
+- Use the [Skeleton body text](/components/SkeletonBodyText) and [Skeleton display text](/components/SkeletonDisplayText) components to represent blocks of content.
+- When giving feedback for in-context operations, use [Progress bar](/components/ProgressBar) or [Spinner](/components/Spinner) component.
 
 </div>
