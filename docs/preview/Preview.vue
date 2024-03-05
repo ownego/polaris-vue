@@ -6,7 +6,7 @@
 <script setup lang="ts">
 import { createApp, defineAsyncComponent, onMounted, h, resolveComponent } from 'vue';
 import { createWebHistory, createRouter } from 'vue-router';
-import { useData } from 'vitepress';
+import { useData, withBase } from 'vitepress';
 import PolarisVue from '../../src/polaris-vue';
 import lang from '../../polaris/polaris-react/locales/en.json';
 
@@ -30,7 +30,7 @@ const router = createRouter({
   history: createWebHistory(),
   routes: [
     {
-      path: '/preview/:example',
+      path: withBase('/preview/:example'),
       component: {},
     },
   ],

@@ -16,7 +16,7 @@
   .preview-wrapper(:style="{ height: `${frameHeight}px` }")
     iframe.preview-frame(
       ref="iframeRef",
-      :src="`/preview/${component}-${selectedFile}`",
+      :src="withBase(`/preview/${component}-${selectedFile}`)",
       :height="frameHeight",
       :class="`preview-frame__${component} ${isLoadingFrame ? 'preview-frame--loading' : ''}`",
       @load="iframeLoaded",
@@ -30,7 +30,7 @@
 
 <script setup lang="ts">
 import { computed, ref, onMounted, useSlots } from 'vue';
-import { useData, useRouter } from 'vitepress';
+import { useData, useRouter, withBase } from 'vitepress';
 import MarkdownIt from 'markdown-it';
 
 const slots = useSlots();

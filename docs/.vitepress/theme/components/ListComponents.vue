@@ -5,20 +5,20 @@
     :key="component.name",
   )
     .docs-component-list__item__thumbnail
-      a(:href="`/components/${component.name}`")
+      a(:href="withBase(`/components/${component.name}`)")
         img(
-          :src="`/assets/components-content/images/${component.previewImg}`",
+          :src="withBase(`/assets/components-content/images/${component.previewImg}`)",
           :alt="component.name",
         )
     .docs-component-list__item__content
       .docs-component-list__item__content__info
         h4
-          a(:href="`/components/${component.name}`") {{ component.name }}
+          a(:href="withBase(`/components/${component.name}`)") {{ component.name }}
         p {{ component.description }}
 </template>
 
 <script setup lang="ts">
-import { useData } from 'vitepress';
+import { useData, withBase } from 'vitepress';
 import { computed, onMounted, ref } from 'vue';
 
 const { frontmatter, theme } = useData();
@@ -58,7 +58,7 @@ onMounted(() => {
 });
 
 function fetchComponentInfo(name: string) {
-  const url = `/assets/components-content/${name}.json`;
+  const url = withBase(`/assets/components-content/${name}.json`);
 
   return new Promise((resolve, reject) => {
     fetch(url, {

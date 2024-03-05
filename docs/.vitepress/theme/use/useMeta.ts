@@ -1,5 +1,5 @@
 import { computed, onMounted, ref } from 'vue';
-import { useData } from 'vitepress';
+import { useData, withBase } from 'vitepress';
 import type { PropertyMetaSchema } from 'vue-component-meta';
 import type { ComponentApi } from '../types';
 
@@ -198,7 +198,7 @@ export function useMeta(ignoreFetch = false) {
   };
 
   function fetchMeta(): Promise<ComponentApi | undefined> {
-    const url = `/assets/components-meta/${component.value}.json`;
+    const url = withBase(`/assets/components-meta/${component.value}.json`);
 
     return new Promise((resolve, reject) => {
       fetch(url, {
