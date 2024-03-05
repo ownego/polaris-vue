@@ -1,8 +1,0 @@
-{
-  "filePath": "src/components/Link/types.ts",
-  "kind": "TypeAliasDeclaration",
-  "name": "RouteParamValueRaw",
-  "value": "RouteParamValue | number | null | undefined",
-  "description": "",
-  "members": []
-}

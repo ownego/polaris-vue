@@ -1,8 +1,0 @@
-{
-  "filePath": "src/components/Link/types.ts",
-  "kind": "TypeAliasDeclaration",
-  "name": "RouteLocationRaw",
-  "value": "string | RouteLocationPathRaw | RouteLocationNamedRaw",
-  "description": "",
-  "members": []
-}

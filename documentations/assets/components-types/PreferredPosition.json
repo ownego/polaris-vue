@@ -1,8 +1,0 @@
-{
-  "filePath": "src/utilities/math.ts",
-  "kind": "TypeAliasDeclaration",
-  "name": "PreferredPosition",
-  "value": "'above' | 'below' | 'mostSpace'",
-  "description": "",
-  "members": []
-}

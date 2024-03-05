@@ -1,8 +1,0 @@
-{
-  "filePath": "src/components/Link/types.ts",
-  "kind": "TypeAliasDeclaration",
-  "name": "LocationQueryRaw",
-  "value": "LocationQueryValueRaw | LocationQueryValueRaw[]",
-  "description": "",
-  "members": []
-}

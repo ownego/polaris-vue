@@ -1,8 +1,0 @@
-{
-  "filePath": "src/components/Popover/components/PopoverOverlay/types.ts",
-  "kind": "TypeAliasDeclaration",
-  "name": "PopoverAutofocusTarget",
-  "value": "'none' | 'first-node' | 'container'",
-  "description": "",
-  "members": []
-}

@@ -1,8 +1,0 @@
-{
-  "filePath": "src/components/Link/types.ts",
-  "kind": "TypeAliasDeclaration",
-  "name": "HistoryStateValue",
-  "value": "string | number | boolean | null | undefined | HistoryState | HistoryStateArray",
-  "description": "Allowed variables in HTML5 history state. Note that pushState clones the state\npassed and does not accept everything: e.g.: it doesn't accept symbols, nor\nfunctions as values. It also ignores Symbols as keys.",
-  "members": []
-}

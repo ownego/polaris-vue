@@ -1,8 +1,0 @@
-{
-  "filePath": "src/components/Select/types.ts",
-  "kind": "TypeAliasDeclaration",
-  "name": "SelectOption",
-  "value": "string | StrictOption",
-  "description": "",
-  "members": []
-}

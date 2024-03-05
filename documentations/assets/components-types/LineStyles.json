@@ -1,8 +1,0 @@
-{
-  "filePath": "Users/ser/scatola/jobs/opensources/polaris-vue/src/components/Box/types.ts",
-  "kind": "TypeAliasDeclaration",
-  "name": "LineStyles",
-  "value": "'solid' | 'dashed'",
-  "description": "",
-  "members": []
-}

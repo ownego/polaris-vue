@@ -1,8 +1,0 @@
-{
-  "filePath": "src/components/Banner/types.ts",
-  "kind": "TypeAliasDeclaration",
-  "name": "BannerTone",
-  "value": "'success' | 'info' | 'warning' | 'critical'",
-  "description": "",
-  "members": []
-}

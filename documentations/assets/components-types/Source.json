@@ -1,8 +1,0 @@
-{
-  "filePath": "src/components/Icon/type.ts",
-  "kind": "TypeAliasDeclaration",
-  "name": "Source",
-  "value": "'function' | 'placeholder' | 'external'",
-  "description": "",
-  "members": []
-}

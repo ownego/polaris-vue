@@ -1,8 +1,0 @@
-{
-  "filePath": "src/components/DataTable/types.ts",
-  "kind": "TypeAliasDeclaration",
-  "name": "VerticalAlign",
-  "value": "'top' | 'bottom' | 'middle' | 'baseline'",
-  "description": "",
-  "members": []
-}
