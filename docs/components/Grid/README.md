@@ -43,7 +43,7 @@ examples:
 
 ## Related components
 
-- To lay out a set of smaller components in a row, [use the vertical stack component](/components/VerticalStack)
+- To lay out a set of smaller components in a row, [use the vertical stack component](/components/BlockStack)
 - To lay out form fields, [use the form layout component](/components/FormLayout)
 
 </div>

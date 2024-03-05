@@ -150,7 +150,7 @@ Index tables should:
 - Support sorting if the list can be long, and especially if different merchant tasks benefit from different sort orders.
 - Support [filtering](/components/Filters) if the list can be long.
 - Paginate when the current list contains more than 50 items.
-- Use the [skeleton page](components/SkeletonPage) component on initial page load for the rest of the page if the loading prop is true and items are processing.
+- Use the [skeleton page](/components/SkeletonPage) component on initial page load for the rest of the page if the loading prop is true and items are processing.
 - Numeric cells and titles should be right aligned with the [Text](/components/Text) component
 - Numeric cells should use the numeric style with the [Text](/components/Text) component
 
