@@ -29,7 +29,7 @@ BlockStack(:gap="400", inlineAlign="center")
               minHeight="2.25rem",
               minWidth="2.25rem",
               maxWidth="2.25rem",
-              :borderRadius="100",
+              borderRadius="100",
             )
             Box(:paddingBlockStart="100", :paddingBlockEnd="100")
               Text(
@@ -42,7 +42,7 @@ BlockStack(:gap="400", inlineAlign="center")
                   background="bg-fill-tertiary",
                   minWidth="120px",
                   minHeight="28px",
-                  :borderRadius="100",
+                  borderRadius="100",
                 )
           Box(
             v-if="primaryAction",
@@ -50,9 +50,9 @@ BlockStack(:gap="400", inlineAlign="center")
             background="bg-fill-tertiary",
             minHeight="2.25rem",
             minWidth="6.25rem",
-            :borderRadius="100",
+            borderRadius="100",
           )
-      Box(:paddingBlockEnd="200", width="100%")
+      Box(paddingBlockEnd="200", width="100%")
         slot
 </template>
 
