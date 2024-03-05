@@ -17,7 +17,7 @@
     :filters="filters"
     :appliedFilters="appliedFilters"
     :mode="mode"
-    :setMode="setMode"
+    @set-mode="setMode"
     @query-change="handleFiltersQueryChange"
     @query-clear="handleQueryValueRemove"
     @sort="handleFiltersSort"
@@ -68,8 +68,8 @@
 
 <script setup lang="ts">
 import { computed, h, ref, resolveComponent } from 'vue';
-// import { useIndexResourceState, useBreakpoints } from '@ownego/polaris-vue';
-import { useIndexResourceState } from '@/polaris-vue';
+// import { useIndexResourceState, useSetIndexFiltersMode } from '@ownego/polaris-vue';
+import { useIndexResourceState, useSetIndexFiltersMode } from '@/polaris-vue';
 
 const sleep = (ms: number) =>
   new Promise((resolve) => setTimeout(resolve, ms));
@@ -84,17 +84,12 @@ const itemStrings = ref([
 ]);
 
 const selected = ref(0);
-const sortSelected = ref('order asc');
+const sortSelected = ref(['order asc']);
 const accountStatus = ref<string[]>();
 const moneySpent = ref<[number, number]>();
 const taggedWith = ref('');
 const queryValue = ref('');
-const mode = ref('DEFAULT');
-// const { mode, setMode } = useSetIndexFiltersMode();
-
-const setMode = (newMode: string) => {
-  mode.value = newMode;
-};
+const { mode, setMode } = useSetIndexFiltersMode();
 
 const onHandleCancel = () => {};
 
@@ -173,7 +168,7 @@ const filterChoices = [
 
 const filters = [
   {
-    key: 'accountStatus',
+    name: 'accountStatus',
     label: 'Account status',
     filter: () => h(
       resolveComponent('ChoiceList'),
@@ -181,7 +176,7 @@ const filters = [
         title: 'Account status',
         titleHidden: true,
         choices: filterChoices,
-        selected: accountStatus || [],
+        modelValue: accountStatus.value || [],
         onChange: handleAccountStatusChange,
         allowMultiple: true,
       },
@@ -189,29 +184,29 @@ const filters = [
     shortcut: true,
   },
   {
-    key: 'taggedWith',
+    name: 'taggedWith',
     label: 'Tagged with',
     filter: () => h(
       resolveComponent('TextField'),
       {
         label: 'Tagged with',
-        value: taggedWith,
-        onChange: handleTaggedWithChange,
+        modelValue: taggedWith.value,
         autoComplete: 'off',
         labelHidden: true,
+        onInput: handleTaggedWithChange,
       },
     ),
     shortcut: true,
   },
   {
-    key: 'moneySpent',
+    name: 'moneySpent',
     label: 'Money spent',
     filter: () => h(
       resolveComponent('RangeSlider'),
       {
         label: 'Money spent is between',
         labelHidden: true,
-        value: moneySpent || [0, 500],
+        modelValue: moneySpent.value || [0, 500],
         prefix: '$',
         output: true,
         min: 0,
@@ -243,26 +238,26 @@ const appliedFilters = computed(() => {
   const results = [];
 
   if (accountStatus.value && !isEmpty(accountStatus.value)) {
-    const key = 'accountStatus';
+    const name = 'accountStatus';
     results.push({
-      key,
-      label: disambiguateLabel(key, accountStatus.value),
+      name,
+      label: disambiguateLabel(name, accountStatus.value),
       onRemove: handleAccountStatusRemove,
     });
   }
   if (moneySpent.value) {
-    const key = 'moneySpent';
+    const name = 'moneySpent';
     results.push({
-      key,
-      label: disambiguateLabel(key, moneySpent.value),
+      name,
+      label: disambiguateLabel(name, moneySpent.value),
       onRemove: handleMoneySpentRemove,
     });
   }
   if (!isEmpty(taggedWith.value)) {
-    const key = 'taggedWith';
+    const name = 'taggedWith';
     results.push({
-      key,
-      label: disambiguateLabel(key, taggedWith.value),
+      name,
+      label: disambiguateLabel(name, taggedWith.value),
       onRemove: handleTaggedWithRemove,
     });
   }
@@ -333,8 +328,8 @@ const onCreateNewView = async (value: string) => {
 };
 
 // Filter actions
-const handleFiltersSort = (index: number) => {
-  sortSelected.value = sortOptions[index].value;
+const handleFiltersSort = (value: string[]) => {
+  sortSelected.value = value;
 };
 
 const handleFiltersSelect = (index: number) => {
@@ -349,7 +344,7 @@ const handleMoneySpentChange = (value: [number, number]) => {
   moneySpent.value = value;
 };
 
-const handleTaggedWithChange = (value: string) => {
+const handleTaggedWithChange = (_e: Event, value: string) => {
   taggedWith.value = value;
 };
 

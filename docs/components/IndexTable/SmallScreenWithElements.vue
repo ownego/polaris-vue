@@ -1,87 +1,86 @@
 <template>
-<LegacyCard>
-  <IndexFilters
-    :sortOptions="sortOptions"
-    :sortSelected="sortSelected"
-    :queryValue="queryValue"
-    queryPlaceholder="Searching in all"
-    :primaryAction="primaryAction"
-    :cancelAction="{
-      onAction: onHandleCancel,
-      disabled: false,
-      loading: false,
-    }"
-    :tabs="tabs"
-    :selected="selected"
-    canCreateNewView
-    :filters="filters"
-    :appliedFilters="appliedFilters"
-    :mode="mode"
-    @set-mode="setMode"
-    @query-change="handleFiltersQueryChange"
-    @query-clear="handleQueryValueRemove"
-    @sort="handleFiltersSort"
-    @select="handleFiltersSelect"
-    @create-new-view="onCreateNewView"
-    @clear-all="handleFiltersClearAll"
-  />
-  <IndexTable
-    :condensed="false"
-    :resourceName="resourceName"
-    :itemCount="orders.length"
-    :selectedItemsCount="allResourcesSelected ? 'All' : selectedResources.length"
-    @selection-change="handleSelectionChange"
-    :headings="[
-      {title: 'Order'},
-      {title: 'Date'},
-      {title: 'Customer'},
-      {title: 'Total', alignment: 'end'},
-      {title: 'Payment status'},
-      {title: 'Fulfillment status'},
-    ]"
-  >
-    <IndexTableRow
-      v-for="{ id, order, date, customer, total, paymentStatus, fulfillmentStatus }, index in orders"
-      :id="id"
-      :key="id"
-      :position="index"
-      :selected="selectedResources.includes(id)"
+<div :style="{width: '430px'}">
+  <LegacyCard>
+    <IndexFilters
+      :sortOptions="sortOptions"
+      :sortSelected="sortSelected"
+      :queryValue="queryValue"
+      queryPlaceholder="Searching in all"
+      :primaryAction="primaryAction"
+      :cancelAction="{
+        onAction: onHandleCancel,
+        disabled: false,
+        loading: false,
+      }"
+      :tabs="tabs"
+      :selected="selected"
+      canCreateNewView
+      :filters="filters"
+      :appliedFilters="appliedFilters"
+      :mode="mode"
+      @set-mode="setMode"
+      @clear-all="handleFiltersClearAll"
+      @create-new-view="onCreateNewView"
+      @select="handleFiltersSelect"
+      @query-change="handleFiltersQueryChange"
+      @query-clear="handleQueryValueRemove"
+      @sort="handleFiltersSort"
+    />
+    <IndexTable
+      :resourceName="resourceName"
+      :itemCount="orders.length"
+      :selectedItemsCount="allResourcesSelected ? 'All' : selectedResources.length"
+      condensed
+      :headings="[
+        {title: 'Order'},
+        {title: 'Date'},
+        {title: 'Customer'},
+        {title: 'Total', alignment: 'end'},
+        {title: 'Payment status'},
+        {title: 'Fulfillment status'},
+      ]"
+      @selection-change="handleSelectionChange"
     >
-      <IndexTableCell>
-        <Text variant="bodyMd" fontWeight="bold" as="span">{{ order }}</Text>
-      </IndexTableCell>
-      <IndexTableCell>{{ date }}</IndexTableCell>
-      <IndexTableCell>{{ customer }}</IndexTableCell>
-      <IndexTableCell>
-        <Text as="span" alignment="end" numeric>{{ total }}</Text>
-      </IndexTableCell>
-      <IndexTableCell>
-        <component :is="paymentStatus"></component>
-      </IndexTableCell>
-      <IndexTableCell>
-        <component :is="fulfillmentStatus"></component>
-      </IndexTableCell>
-    </IndexTableRow>
-  </IndexTable>
-</LegacyCard>
+      <IndexTableRow
+        v-for="{id, order, date, customer, total, paymentStatus, fulfillmentStatus}, index in orders"
+        :id="id"
+        :key="id"
+        :selected="selectedResources.includes(id)"
+        :position="index"
+      >
+        <div :style="{padding: '12px 16px', width: '100%'}">
+          <BlockStack gap="100">
+            <Text as="span" variant="bodySm" tone="subdued">
+              {{ order }} • {{ date }}
+            </Text>
+            <InlineStack align="space-between">
+              <Text as="span" variant="bodyMd" fontWeight="semibold">
+                {{ customer }}
+              </Text>
+              <Text as="span" variant="bodyMd">
+                {{ total }}
+              </Text>
+            </InlineStack>
+            <InlineStack align="start" gap="100">
+              <component :is="paymentStatus"></component>
+              <component :is="fulfillmentStatus"></component>
+            </InlineStack>
+          </BlockStack>
+        </div>
+      </IndexTableRow>
+    </IndexTable>
+  </LegacyCard>
+</div>
 </template>
 
 <script setup lang="ts">
 import { computed, h, ref, resolveComponent } from 'vue';
-// import { useIndexResourceState, useSetIndexFiltersMode, IndexFiltersMode } from '@ownego/polaris-vue';
-import { useIndexResourceState, useSetIndexFiltersMode, IndexFiltersMode } from '@/polaris-vue';
+// import { useIndexResourceState, useSetIndexFiltersMode } from '@ownego/polaris-vue';
+import { useIndexResourceState, useSetIndexFiltersMode } from '@/polaris-vue';
 
-const sleep = (ms: number) =>
-  new Promise((resolve) => setTimeout(resolve, ms));
+const sleep = (ms: number) => new Promise((resolve) => setTimeout(resolve, ms));
 
-const itemStrings = ref([
-  'All',
-  'Unpaid',
-  'Open',
-  'Closed',
-  'Local delivery',
-  'Local pickup',
-]);
+const itemStrings = ref(['All', 'Unpaid']);
 
 const selected = ref(0);
 const sortSelected = ref(['order asc']);
@@ -89,7 +88,7 @@ const accountStatus = ref<string[]>();
 const moneySpent = ref<[number, number]>();
 const taggedWith = ref('');
 const queryValue = ref('');
-const { mode, setMode } = useSetIndexFiltersMode(IndexFiltersMode.Filtering);
+const { mode, setMode } = useSetIndexFiltersMode();
 
 const onHandleCancel = () => {};
 
@@ -147,6 +146,22 @@ const tabs = computed(() => {
           ],
   }));
 });
+
+const primaryAction = computed(() => (
+  selected.value === 0
+  ? {
+      type: 'save-as',
+      onAction: onCreateNewView,
+      disabled: false,
+      loading: false,
+    }
+  : {
+      type: 'save',
+      onAction: onHandleSave,
+      disabled: false,
+      loading: false,
+    }
+));
 
 const sortOptions = [
   {label: 'Order', value: 'order asc', directionLabel: 'Ascending'},
@@ -217,22 +232,6 @@ const filters = [
     ),
   },
 ];
-
-const primaryAction = computed(() => (
-  selected.value === 0
-  ? {
-      type: 'save-as',
-      onAction: onCreateNewView,
-      disabled: false,
-      loading: false,
-    }
-  : {
-      type: 'save',
-      onAction: onHandleSave,
-      disabled: false,
-      loading: false,
-    }
-));
 
 const appliedFilters = computed(() => {
   const results = [];
@@ -327,7 +326,7 @@ const onCreateNewView = async (value: string) => {
   return true;
 };
 
-// Filter actions
+// Filters
 const handleFiltersSort = (value: string[]) => {
   sortSelected.value = value;
 };
@@ -375,8 +374,7 @@ const handleFiltersClearAll = () => {
   handleQueryValueRemove();
 }
 
-// Utilities
-function disambiguateLabel(key: string, value: string | any[]): string {
+function disambiguateLabel(key: string, value: any[] | string): string {
   switch (key) {
     case 'moneySpent':
       return `Money spent is between $${value[0]} and $${value[1]}`;
@@ -389,7 +387,7 @@ function disambiguateLabel(key: string, value: string | any[]): string {
   }
 }
 
-function isEmpty(value: string | string[]): boolean {
+function isEmpty(value: string | string[]) {
   if (Array.isArray(value)) {
     return value.length === 0;
   } else {

@@ -1,0 +1,13 @@
+{
+  "filePath": "src/components/IndexTable/types.ts",
+  "name": "IndexTableSortToggleLabels",
+  "description": "",
+  "value": "interface IndexTableSortToggleLabels {\n  [key: number]: IndexTableSortToggleLabel;\n}",
+  "members": [
+    {
+      "filePath": "src/components/IndexTable/types.ts",
+      "name": "[key: number]",
+      "value": "{ [key in 'ascending' | 'descending']: string; }"
+    }
+  ]
+}

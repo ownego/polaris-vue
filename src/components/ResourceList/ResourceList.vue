@@ -135,7 +135,7 @@ import {
   CheckableButton,
   Pagination,
 } from '@/components';
-import type { PaginationProps } from '@/components/Pagination/types.ts';
+import type { PaginationProps } from '@/components/Pagination/types';
 import type { BulkActionsProps } from '@/components/BulkActions/types';
 import type { SelectOption } from '@/components/Select/types';
 import styles from '@polaris/components/ResourceList/ResourceList.module.scss';

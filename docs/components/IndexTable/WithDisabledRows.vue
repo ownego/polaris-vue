@@ -2,7 +2,7 @@
 <LegacyCard>
   <IndexTable
     :resourceName="resourceName"
-    :itemCount="orders.length"
+    :itemCount="selectableOrders.length"
     :selectedItemsCount="allResourcesSelected ? 'All' : selectedResources.length"
     @selection-change="handleSelectionChange"
     :headings="[
@@ -42,7 +42,7 @@
 </template>
 
 <script setup lang="ts">
-import { h, resolveComponent } from 'vue';
+import { computed, h, resolveComponent } from 'vue';
 // import { useIndexResourceState } from '@ownego/polaris-vue';
 import { useIndexResourceState } from '@/polaris-vue';
 
@@ -83,5 +83,7 @@ const resourceName = {
   plural: 'orders',
 };
 
-const {selectedResources, allResourcesSelected, handleSelectionChange} = useIndexResourceState(orders);
+const selectableOrders = computed(() => orders.filter((order) => !order.disabled));
+
+const {selectedResources, allResourcesSelected, handleSelectionChange} = useIndexResourceState(selectableOrders.value);
 </script>
