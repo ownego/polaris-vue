@@ -76,11 +76,11 @@ You can create views and control which actions can be performed on a particular 
 
 The filters component relies on the accessibility features of several other components:
 
-- [Popover](/components/overlays/popover)
-- [ChoiceList](/components/selection-and-input/choice-list)
-- [Modal](/components/deprecated/modal)
-- [Tabs](/components/navigation/tabs)
-- [Tooltip](/components/overlays/tooltip)
+- [Popover](/components/Popover)
+- [ChoiceList](/components/ChoiceList)
+- [Modal](/components/Modal)
+- [Tabs](/components/Tabs)
+- [Tooltip](/components/Tooltip)
 
 ### Maintain accessibility with custom features
 
