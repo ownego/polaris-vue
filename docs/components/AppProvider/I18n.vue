@@ -2,7 +2,7 @@
 <AppProvider :i18n="locales">
   <Page>
     <LegacyCard>
-      <ResourceList show-header>
+      <ResourceList :items="items" show-header>
         <ResourceItem
           v-for="item in items"
           :key="item.id"

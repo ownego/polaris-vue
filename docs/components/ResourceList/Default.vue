@@ -4,21 +4,21 @@
     :resourceName="{ singular: 'customer', plural: 'customers' }"
     :items="items"
   >
-      <template v-for="{id, url, name, location} in items" :key="id">
-        <ResourceItem
-          :id="id"
-          :url="url"
-          :accessibilityLabel="`View details for ${name}`"
-        >
-          <template #media>
-            <Avatar customer size="md" :name="name" />
-          </template>
-          <Text variant="bodyMd" fontWeight="bold" as="h3">
-            {{ name }}
-          </Text>
-          <div>{{location}}</div>
-        </ResourceItem>
+    <ResourceItem
+      v-for="{id, url, name, location} in items"
+      :key="id"
+      :id="id"
+      :url="url"
+      :accessibilityLabel="`View details for ${name}`"
+    >
+      <template #media>
+        <Avatar customer size="md" :name="name" />
       </template>
+      <Text variant="bodyMd" fontWeight="bold" as="h3">
+        {{ name }}
+      </Text>
+      <div>{{location}}</div>
+    </ResourceItem>
   </ResourceList>
 </LegacyCard>
 </template>
