@@ -16,13 +16,12 @@
     ],
     "outDir": "dist/types",
 
-    "noEmit": true,
+    // "noEmit": true,
     "moduleResolution": "node",
     "allowImportingTsExtensions": true,
     "resolveJsonModule": true,
     "isolatedModules": true,
     "jsx": "preserve",
-    "esModuleInterop": true,
 
     "strict": true,
     "noUnusedLocals": true,

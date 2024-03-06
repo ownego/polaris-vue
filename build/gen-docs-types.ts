@@ -4,7 +4,18 @@ import { globby } from 'globby';
 import { default as path } from 'path';
 import { default as fs } from 'fs';
 import { default as ts } from 'typescript';
-import { Type } from '../polaris/polaris.shopify.com/src/types';
+
+export type Type = {
+  filePath: string;
+  name: string;
+  value: string | number | object;
+  syntaxKind?: string;
+  description?: string;
+  isOptional?: true;
+  deprecationMessage?: string;
+  defaultValue?: string;
+  members?: Type[];
+};
 
 const typePath = './docs/assets/components-types';
 
