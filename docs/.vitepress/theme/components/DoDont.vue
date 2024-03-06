@@ -15,30 +15,32 @@
 </template>
 
 <script setup lang="ts">
-import { ref, useSlots } from 'vue';
+import { ref, useSlots, type VNode } from 'vue';
 
 const slots = useSlots();
 
-const slotContent = slots.default();
+const slotContent = slots.default?.() || [];
 
-const doContent = ref([]);
-const dontContent = ref([]);
+const doContent = ref<VNode[]>([]);
+const dontContent = ref<VNode[]>([]);
 
 let contentWall = 'do';
 
 slotContent.map((s) => {
   if (s.type === 'h4') {
-    if (s.props.id.startsWith('don-t')) {
+    if (s.props?.id.startsWith('don-t')) {
       contentWall = 'dont';
     }
 
-    s.props.class = 'docs-dodont__title';
-    s.props['data-dodont-type'] = contentWall;
+    if (s.props) {
+      s.props.class = 'docs-dodont__title';
+      s.props['data-dodont-type'] = contentWall;
+    }
   }
 
   if (contentWall === 'do') {
     // Put image at beginning of doContent
-    if (s.type === 'p' && s.children[0].type === 'img') {
+    if (s.type === 'p' && s.children?.[0].type === 'img') {
       s.props = { class: 'docs-dodont__image' };
 
       doContent.value.unshift(s);
@@ -46,7 +48,7 @@ slotContent.map((s) => {
       doContent.value.push(s);
     }
   } else {
-    if (s.type === 'p' && s.children[0].type === 'img') {
+    if (s.type === 'p' && s.children?.[0].type === 'img') {
       s.props = { class: 'docs-dodont__image' };
 
       dontContent.value.unshift(s);
