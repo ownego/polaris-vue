@@ -1,8 +1,0 @@
-{
-  "filePath": "src/components/Badge/types.ts",
-  "kind": "TypeAliasDeclaration",
-  "name": "Progress",
-  "value": "'incomplete' | 'partiallyComplete' | 'complete'",
-  "description": "",
-  "members": []
-}

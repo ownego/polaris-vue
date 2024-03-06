@@ -1,8 +1,0 @@
-{
-  "filePath": "src/components/ExceptionList/types.ts",
-  "kind": "TypeAliasDeclaration",
-  "name": "Description",
-  "value": "string | VueNode | (string | VueNode)[]",
-  "description": "",
-  "members": []
-}

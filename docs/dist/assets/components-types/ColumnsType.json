@@ -1,8 +1,0 @@
-{
-  "filePath": "src/components/InlineGrid/types.ts",
-  "kind": "TypeAliasDeclaration",
-  "name": "ColumnsType",
-  "value": "number | string | ColumnsAlias[]",
-  "description": "",
-  "members": []
-}

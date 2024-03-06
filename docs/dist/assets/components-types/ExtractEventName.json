@@ -1,8 +1,0 @@
-{
-  "filePath": "src/utilities/use-event-listener.ts",
-  "kind": "TypeAliasDeclaration",
-  "name": "ExtractEventName",
-  "value": "keyof ExtractEventMap<\n  ExtractTargetElement<Target>\n>",
-  "description": "Extracts all event names for a given target element.",
-  "members": []
-}

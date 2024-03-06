@@ -1,8 +1,0 @@
-{
-  "filePath": "src/components/Text/types.ts",
-  "kind": "TypeAliasDeclaration",
-  "name": "Alignment",
-  "value": "'start' | 'center' | 'end' | 'justify'",
-  "description": "",
-  "members": []
-}

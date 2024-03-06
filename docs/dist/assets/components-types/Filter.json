@@ -1,8 +1,0 @@
-{
-  "filePath": "src/utilities/focus.ts",
-  "kind": "TypeAliasDeclaration",
-  "name": "Filter",
-  "value": "(element: Element) => void",
-  "description": "",
-  "members": []
-}

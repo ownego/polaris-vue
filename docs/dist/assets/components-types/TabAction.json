@@ -1,8 +1,0 @@
-{
-  "filePath": "src/components/Tabs/types.ts",
-  "kind": "TypeAliasDeclaration",
-  "name": "TabAction",
-  "value": "'rename' | 'edit' | 'edit-columns' | 'duplicate' | 'delete'",
-  "description": "",
-  "members": []
-}

@@ -1,8 +1,0 @@
-{
-  "filePath": "Users/ser/scatola/jobs/opensources/polaris-vue/src/utilities/types.ts",
-  "kind": "TypeAliasDeclaration",
-  "name": "CheckableButtons",
-  "value": "Map<CheckableButtonKey, CheckboxHandles>",
-  "description": "",
-  "members": []
-}

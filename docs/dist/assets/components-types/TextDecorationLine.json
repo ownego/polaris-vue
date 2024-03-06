@@ -1,8 +1,0 @@
-{
-  "filePath": "src/components/Text/types.ts",
-  "kind": "TypeAliasDeclaration",
-  "name": "TextDecorationLine",
-  "value": "'line-through'",
-  "description": "",
-  "members": []
-}

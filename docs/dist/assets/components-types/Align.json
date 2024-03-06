@@ -1,8 +1,0 @@
-{
-  "filePath": "src/components/InlineStack/types.ts",
-  "kind": "TypeAliasDeclaration",
-  "name": "Align",
-  "value": "'start' | 'center' | 'end' | 'space-around' | 'space-between' | 'space-evenly'",
-  "description": "",
-  "members": []
-}

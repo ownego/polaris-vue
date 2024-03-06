@@ -1,8 +1,0 @@
-{
-  "filePath": "src/utilities/use-event-listener.ts",
-  "kind": "TypeAliasDeclaration",
-  "name": "ExtractEventMap",
-  "value": "ExtractTargetElement<Target> extends Window\n  ? WindowEventMap\n  : ExtractTargetElement<Target> extends Document\n  ? DocumentEventMap\n  : HTMLElementEventMap",
-  "description": "Extracts a (lib.dom.ts) EventMap for a given target element.",
-  "members": []
-}

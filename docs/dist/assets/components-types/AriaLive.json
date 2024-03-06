@@ -1,8 +1,0 @@
-{
-  "filePath": "src/components/BulkActions/types.ts",
-  "kind": "TypeAliasDeclaration",
-  "name": "AriaLive",
-  "value": "'off' | 'polite' | undefined",
-  "description": "",
-  "members": []
-}

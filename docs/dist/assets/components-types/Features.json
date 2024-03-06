@@ -1,7 +1,0 @@
-{
-  "filePath": "src/utilities/features/types.ts",
-  "name": "Features",
-  "description": "",
-  "value": "export interface Features {}",
-  "members": []
-}

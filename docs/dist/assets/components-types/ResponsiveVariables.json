@@ -1,8 +1,0 @@
-{
-  "filePath": "src/utilities/css.ts",
-  "kind": "TypeAliasDeclaration",
-  "name": "ResponsiveVariables",
-  "value": "{\n  [Breakpoint in `${string}-${BreakpointsAlias}`]?: T;\n}",
-  "description": "",
-  "members": []
-}
