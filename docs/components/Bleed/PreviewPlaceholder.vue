@@ -1,11 +1,7 @@
 <template>
-<div
-  :style="styles"
->
+<div :style="styles">
   <InlineStack gap="400" align="center">
-    <div
-      style="color: var(--p-color-text-info-on-bg-fill)"
-    >
+    <div style="color: var(--p-color-text-info-on-bg-fill)">
       <Text
         as="h2"
         variant="bodyMd"

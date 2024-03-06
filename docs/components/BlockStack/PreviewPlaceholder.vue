@@ -1,11 +1,7 @@
 <template>
-<div
-  :style="wrapperStyle"
->
+<div :style="wrapperStyle">
   <InlineStack align="center">
-    <div
-      style="color: var(--p-color-text-info-on-bg-fill)"
-    >
+    <div style="color: var(--p-color-text-info-on-bg-fill)">
       <Text
         as="h2"
         variant="bodyMd"
