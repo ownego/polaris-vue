@@ -50,8 +50,8 @@ jobs:
         run: |
           cd polaris
           yarn install
-          cd ../
           yarn build
+          cd ../
       - name: Build with VitePress
         run: |
           yarn docs:build
