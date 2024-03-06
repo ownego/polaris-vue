@@ -16,7 +16,7 @@
     ],
     "outDir": "dist/types",
 
-    // "noEmit": true,
+    "noEmit": true,
     "moduleResolution": "node",
     "allowImportingTsExtensions": true,
     "resolveJsonModule": true,
