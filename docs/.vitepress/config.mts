@@ -25,7 +25,7 @@ export default defineConfig({
     ['link', { rel: 'stylesheet', href: 'https://cdn.shopify.com/static/fonts/inter/inter.css', id: 'inter-font-link' }],
     ['meta', { property: 'og:title', content: 'Shopify Polaris for VueJS 3' }],
     ['meta', { property: 'og:description', content: 'Shopify Polaris UI components for Vue 3, with better performance, small bundle size, 99% matching Shopify Polaris 12. Compatible with Vue 3.3+' }],
-    ['meta', { property: 'og:image', content: 'https://github.com/ownego/polaris-vue/blob/master/public/images/banner.jpg?raw=true' }],
+    ['meta', { property: 'og:image', content: 'https://github.com/ownego/polaris-vue/blob/master/public/images/ogimg.png?raw=true' }],
   ],
 
   rewrites: {
