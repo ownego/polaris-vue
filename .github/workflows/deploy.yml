@@ -46,6 +46,9 @@ jobs:
         run: |
           yarn install
           npm install -g ts-node
+          cd polaris
+          yarn install
+          cd ../
       - name: Build with VitePress
         run: |
           yarn docs:build
