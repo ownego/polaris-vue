@@ -4,7 +4,6 @@
   "polaris_version": "12.19.2",
   "description": "Shopify Polaris 12 - UI library for Vue 3",
   "author": "Ownego Team",
-  "type": "module",
   "keywords": [
     "polaris",
     "shopify polaris",
