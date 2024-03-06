@@ -23,7 +23,7 @@
 </template>
 
 <script setup lang="ts">
-// import locales from '@ownego/polaris-vue/dist/locales/fr.json';
+// import locales from '@ownego/polaris-vue/locales/fr.json';
 import locales from './fr.json'; // Let's use the import as above, this is just for demo purpose
 
 const items = [
