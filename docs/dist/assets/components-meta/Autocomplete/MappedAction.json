@@ -18,6 +18,38 @@
       }
     },
     {
+      "name": "id",
+      "type": "string | undefined",
+      "required": false,
+      "description": "A unique identifier for the action",
+      "tags": [],
+      "declarations": [],
+      "schema": {
+        "kind": "enum",
+        "type": "string | undefined",
+        "schema": [
+          "undefined",
+          "string"
+        ]
+      }
+    },
+    {
+      "name": "accessibilityLabel",
+      "type": "string | undefined",
+      "required": false,
+      "description": "Visually hidden text for screen readers",
+      "tags": [],
+      "declarations": [],
+      "schema": {
+        "kind": "enum",
+        "type": "string | undefined",
+        "schema": [
+          "undefined",
+          "string"
+        ]
+      }
+    },
+    {
       "name": "icon",
       "type": "IconSource | undefined",
       "required": false,
@@ -58,38 +90,6 @@
       }
     },
     {
-      "name": "id",
-      "type": "string | undefined",
-      "required": false,
-      "description": "A unique identifier for the action",
-      "tags": [],
-      "declarations": [],
-      "schema": {
-        "kind": "enum",
-        "type": "string | undefined",
-        "schema": [
-          "undefined",
-          "string"
-        ]
-      }
-    },
-    {
-      "name": "accessibilityLabel",
-      "type": "string | undefined",
-      "required": false,
-      "description": "Visually hidden text for screen readers",
-      "tags": [],
-      "declarations": [],
-      "schema": {
-        "kind": "enum",
-        "type": "string | undefined",
-        "schema": [
-          "undefined",
-          "string"
-        ]
-      }
-    },
-    {
       "name": "role",
       "type": "string | undefined",
       "required": false,
@@ -102,6 +102,23 @@
         "schema": [
           "undefined",
           "string"
+        ]
+      }
+    },
+    {
+      "name": "disabled",
+      "type": "boolean | undefined",
+      "required": false,
+      "description": "Whether or not the action is disabled",
+      "tags": [],
+      "declarations": [],
+      "schema": {
+        "kind": "enum",
+        "type": "boolean | undefined",
+        "schema": [
+          "undefined",
+          "false",
+          "true"
         ]
       }
     },
@@ -172,23 +189,6 @@
           "\"_self\"",
           "\"_parent\"",
           "\"_top\""
-        ]
-      }
-    },
-    {
-      "name": "disabled",
-      "type": "boolean | undefined",
-      "required": false,
-      "description": "Whether or not the action is disabled",
-      "tags": [],
-      "declarations": [],
-      "schema": {
-        "kind": "enum",
-        "type": "boolean | undefined",
-        "schema": [
-          "undefined",
-          "false",
-          "true"
         ]
       }
     },

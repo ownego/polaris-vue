@@ -84,10 +84,10 @@
       }
     },
     {
-      "name": "ariaDescribedBy",
+      "name": "label",
       "type": "string | undefined",
       "required": false,
-      "description": "Indicates the ID of the element that describes the radio button",
+      "description": "Label for the radio button",
       "tags": [],
       "declarations": [],
       "schema": {
@@ -100,10 +100,10 @@
       }
     },
     {
-      "name": "label",
+      "name": "ariaDescribedBy",
       "type": "string | undefined",
       "required": false,
-      "description": "Label for the radio button",
+      "description": "Indicates the ID of the element that describes the radio button",
       "tags": [],
       "declarations": [],
       "schema": {

@@ -50,6 +50,23 @@
       }
     },
     {
+      "name": "disabled",
+      "type": "boolean | undefined",
+      "required": false,
+      "description": "Whether or not the action is disabled",
+      "tags": [],
+      "declarations": [],
+      "schema": {
+        "kind": "enum",
+        "type": "boolean | undefined",
+        "schema": [
+          "undefined",
+          "false",
+          "true"
+        ]
+      }
+    },
+    {
       "name": "disclosure",
       "type": "boolean | undefined",
       "required": false,
@@ -115,23 +132,6 @@
           "\"_self\"",
           "\"_parent\"",
           "\"_top\""
-        ]
-      }
-    },
-    {
-      "name": "disabled",
-      "type": "boolean | undefined",
-      "required": false,
-      "description": "Whether or not the action is disabled",
-      "tags": [],
-      "declarations": [],
-      "schema": {
-        "kind": "enum",
-        "type": "boolean | undefined",
-        "schema": [
-          "undefined",
-          "false",
-          "true"
         ]
       }
     },

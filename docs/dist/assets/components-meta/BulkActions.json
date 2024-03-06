@@ -1,6 +1,40 @@
 {
   "props": [
     {
+      "name": "selected",
+      "type": "boolean | \"indeterminate\" | undefined",
+      "required": false,
+      "description": "State of the bulk actions checkbox",
+      "tags": [],
+      "declarations": [],
+      "schema": {
+        "kind": "enum",
+        "type": "boolean | \"indeterminate\" | undefined",
+        "schema": [
+          "undefined",
+          "false",
+          "true",
+          "\"indeterminate\""
+        ]
+      }
+    },
+    {
+      "name": "accessibilityLabel",
+      "type": "string | undefined",
+      "required": false,
+      "description": "Visually hidden text for screen readers",
+      "tags": [],
+      "declarations": [],
+      "schema": {
+        "kind": "enum",
+        "type": "string | undefined",
+        "schema": [
+          "undefined",
+          "string"
+        ]
+      }
+    },
+    {
       "name": "actions",
       "type": "(ActionListSection | BulkAction)[] | undefined",
       "required": false,
@@ -575,40 +609,6 @@
       }
     },
     {
-      "name": "selected",
-      "type": "boolean | \"indeterminate\" | undefined",
-      "required": false,
-      "description": "State of the bulk actions checkbox",
-      "tags": [],
-      "declarations": [],
-      "schema": {
-        "kind": "enum",
-        "type": "boolean | \"indeterminate\" | undefined",
-        "schema": [
-          "undefined",
-          "false",
-          "true",
-          "\"indeterminate\""
-        ]
-      }
-    },
-    {
-      "name": "accessibilityLabel",
-      "type": "string | undefined",
-      "required": false,
-      "description": "Visually hidden text for screen readers",
-      "tags": [],
-      "declarations": [],
-      "schema": {
-        "kind": "enum",
-        "type": "string | undefined",
-        "schema": [
-          "undefined",
-          "string"
-        ]
-      }
-    },
-    {
       "name": "width",
       "type": "number | undefined",
       "required": false,
@@ -626,23 +626,6 @@
         "schema": [
           "undefined",
           "number"
-        ]
-      }
-    },
-    {
-      "name": "disabled",
-      "type": "boolean | undefined",
-      "required": false,
-      "description": "Disables bulk actions",
-      "tags": [],
-      "declarations": [],
-      "schema": {
-        "kind": "enum",
-        "type": "boolean | undefined",
-        "schema": [
-          "undefined",
-          "false",
-          "true"
         ]
       }
     },
@@ -1487,6 +1470,23 @@
               }
             ]
           }
+        ]
+      }
+    },
+    {
+      "name": "disabled",
+      "type": "boolean | undefined",
+      "required": false,
+      "description": "Disables bulk actions",
+      "tags": [],
+      "declarations": [],
+      "schema": {
+        "kind": "enum",
+        "type": "boolean | undefined",
+        "schema": [
+          "undefined",
+          "false",
+          "true"
         ]
       }
     },

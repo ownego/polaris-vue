@@ -1,5 +1,5 @@
 {
-  "filePath": "src/components/Card/types.ts",
+  "filePath": "src/components/Choice/types.ts",
   "kind": "TypeAliasDeclaration",
   "name": "Spacing",
   "value": "ResponsiveProp<SpaceScale>",

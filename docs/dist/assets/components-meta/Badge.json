@@ -24,41 +24,6 @@
       }
     },
     {
-      "name": "icon",
-      "type": "IconSource | undefined",
-      "required": false,
-      "description": "Icon to display to the left of the badge’s content.",
-      "tags": [],
-      "declarations": [],
-      "schema": {
-        "kind": "enum",
-        "type": "IconSource | undefined",
-        "schema": [
-          "undefined",
-          "string",
-          "ComponentOptions<any, any, any, ComputedOptions, MethodOptions, any, any, any, any>",
-          "FunctionalComponent<any, {}, any, {}>",
-          "ComponentPublicInstanceConstructor<any, any, any, any, ComputedOptions, MethodOptions>",
-          {
-            "kind": "array",
-            "type": "(string | Component)[]",
-            "schema": [
-              {
-                "kind": "enum",
-                "type": "string | Component",
-                "schema": [
-                  "string",
-                  "ComponentOptions<any, any, any, ComputedOptions, MethodOptions, any, any, any, any>",
-                  "FunctionalComponent<any, {}, any, {}>",
-                  "ComponentPublicInstanceConstructor<any, any, any, any, ComputedOptions, MethodOptions>"
-                ]
-              }
-            ]
-          }
-        ]
-      }
-    },
-    {
       "name": "tone",
       "type": "Tone | undefined",
       "required": false,
@@ -101,6 +66,41 @@
           "\"incomplete\"",
           "\"partiallyComplete\"",
           "\"complete\""
+        ]
+      }
+    },
+    {
+      "name": "icon",
+      "type": "IconSource | undefined",
+      "required": false,
+      "description": "Icon to display to the left of the badge’s content.",
+      "tags": [],
+      "declarations": [],
+      "schema": {
+        "kind": "enum",
+        "type": "IconSource | undefined",
+        "schema": [
+          "undefined",
+          "string",
+          "ComponentOptions<any, any, any, ComputedOptions, MethodOptions, any, any, any, any>",
+          "FunctionalComponent<any, {}, any, {}>",
+          "ComponentPublicInstanceConstructor<any, any, any, any, ComputedOptions, MethodOptions>",
+          {
+            "kind": "array",
+            "type": "(string | Component)[]",
+            "schema": [
+              {
+                "kind": "enum",
+                "type": "string | Component",
+                "schema": [
+                  "string",
+                  "ComponentOptions<any, any, any, ComputedOptions, MethodOptions, any, any, any, any>",
+                  "FunctionalComponent<any, {}, any, {}>",
+                  "ComponentPublicInstanceConstructor<any, any, any, any, ComputedOptions, MethodOptions>"
+                ]
+              }
+            ]
+          }
         ]
       }
     },

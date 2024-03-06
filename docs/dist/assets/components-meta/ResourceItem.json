@@ -59,6 +59,23 @@
       }
     },
     {
+      "name": "disabled",
+      "type": "boolean | undefined",
+      "required": false,
+      "description": "Whether or not interaction is disabled",
+      "tags": [],
+      "declarations": [],
+      "schema": {
+        "kind": "enum",
+        "type": "boolean | undefined",
+        "schema": [
+          "undefined",
+          "false",
+          "true"
+        ]
+      }
+    },
+    {
       "name": "url",
       "type": "string | undefined",
       "required": false,
@@ -79,23 +96,6 @@
       "type": "boolean | undefined",
       "required": false,
       "description": "Allows url to open in a new tab",
-      "tags": [],
-      "declarations": [],
-      "schema": {
-        "kind": "enum",
-        "type": "boolean | undefined",
-        "schema": [
-          "undefined",
-          "false",
-          "true"
-        ]
-      }
-    },
-    {
-      "name": "disabled",
-      "type": "boolean | undefined",
-      "required": false,
-      "description": "Whether or not interaction is disabled",
       "tags": [],
       "declarations": [],
       "schema": {

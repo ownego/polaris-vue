@@ -200,6 +200,39 @@
       }
     },
     {
+      "name": "disabled",
+      "type": "boolean | undefined",
+      "required": false,
+      "description": "Disable the input",
+      "tags": [],
+      "declarations": [],
+      "schema": {
+        "kind": "enum",
+        "type": "boolean | undefined",
+        "schema": [
+          "undefined",
+          "false",
+          "true"
+        ]
+      }
+    },
+    {
+      "name": "label",
+      "type": "string | undefined",
+      "required": false,
+      "description": "Label for the input",
+      "tags": [],
+      "declarations": [],
+      "schema": {
+        "kind": "enum",
+        "type": "string | undefined",
+        "schema": [
+          "undefined",
+          "string"
+        ]
+      }
+    },
+    {
       "name": "variant",
       "type": "\"inherit\" | \"borderless\" | undefined",
       "required": false,
@@ -218,23 +251,6 @@
           "undefined",
           "\"inherit\"",
           "\"borderless\""
-        ]
-      }
-    },
-    {
-      "name": "disabled",
-      "type": "boolean | undefined",
-      "required": false,
-      "description": "Disable the input",
-      "tags": [],
-      "declarations": [],
-      "schema": {
-        "kind": "enum",
-        "type": "boolean | undefined",
-        "schema": [
-          "undefined",
-          "false",
-          "true"
         ]
       }
     },
@@ -268,22 +284,6 @@
           "undefined",
           "false",
           "true"
-        ]
-      }
-    },
-    {
-      "name": "label",
-      "type": "string | undefined",
-      "required": false,
-      "description": "Label for the input",
-      "tags": [],
-      "declarations": [],
-      "schema": {
-        "kind": "enum",
-        "type": "string | undefined",
-        "schema": [
-          "undefined",
-          "string"
         ]
       }
     },

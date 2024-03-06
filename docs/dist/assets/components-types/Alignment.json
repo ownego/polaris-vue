@@ -1,8 +1,8 @@
 {
-  "filePath": "src/components/TextField/types.ts",
+  "filePath": "src/components/Text/types.ts",
   "kind": "TypeAliasDeclaration",
   "name": "Alignment",
-  "value": "'left' | 'center' | 'right'",
+  "value": "'start' | 'center' | 'end' | 'justify'",
   "description": "",
   "members": []
 }

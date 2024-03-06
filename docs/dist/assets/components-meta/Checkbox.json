@@ -117,6 +117,22 @@
       }
     },
     {
+      "name": "label",
+      "type": "string | undefined",
+      "required": false,
+      "description": "Label for the checkbox",
+      "tags": [],
+      "declarations": [],
+      "schema": {
+        "kind": "enum",
+        "type": "string | undefined",
+        "schema": [
+          "undefined",
+          "string"
+        ]
+      }
+    },
+    {
       "name": "ariaControls",
       "type": "string | undefined",
       "required": false,
@@ -137,22 +153,6 @@
       "type": "string | undefined",
       "required": false,
       "description": "Indicates the ID of the element that describes the checkbox",
-      "tags": [],
-      "declarations": [],
-      "schema": {
-        "kind": "enum",
-        "type": "string | undefined",
-        "schema": [
-          "undefined",
-          "string"
-        ]
-      }
-    },
-    {
-      "name": "label",
-      "type": "string | undefined",
-      "required": false,
-      "description": "Label for the checkbox",
       "tags": [],
       "declarations": [],
       "schema": {

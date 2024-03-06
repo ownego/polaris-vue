@@ -219,6 +219,26 @@
                                 ]
                               }
                             },
+                            "id": {
+                              "name": "id",
+                              "global": false,
+                              "description": "A unique identifier for the action",
+                              "tags": [],
+                              "required": false,
+                              "type": "string | undefined",
+                              "declarations": [],
+                              "schema": "string | undefined"
+                            },
+                            "accessibilityLabel": {
+                              "name": "accessibilityLabel",
+                              "global": false,
+                              "description": "Visually hidden text for screen readers",
+                              "tags": [],
+                              "required": false,
+                              "type": "string | undefined",
+                              "declarations": [],
+                              "schema": "string | undefined"
+                            },
                             "icon": {
                               "name": "icon",
                               "global": false,
@@ -260,26 +280,6 @@
                                 ]
                               }
                             },
-                            "id": {
-                              "name": "id",
-                              "global": false,
-                              "description": "A unique identifier for the action",
-                              "tags": [],
-                              "required": false,
-                              "type": "string | undefined",
-                              "declarations": [],
-                              "schema": "string | undefined"
-                            },
-                            "accessibilityLabel": {
-                              "name": "accessibilityLabel",
-                              "global": false,
-                              "description": "Visually hidden text for screen readers",
-                              "tags": [],
-                              "required": false,
-                              "type": "string | undefined",
-                              "declarations": [],
-                              "schema": "string | undefined"
-                            },
                             "role": {
                               "name": "role",
                               "global": false,
@@ -289,6 +289,16 @@
                               "type": "string | undefined",
                               "declarations": [],
                               "schema": "string | undefined"
+                            },
+                            "disabled": {
+                              "name": "disabled",
+                              "global": false,
+                              "description": "Whether or not the action is disabled",
+                              "tags": [],
+                              "required": false,
+                              "type": "boolean | undefined",
+                              "declarations": [],
+                              "schema": "boolean | undefined"
                             },
                             "variant": {
                               "name": "variant",
@@ -348,16 +358,6 @@
                                   "\"_top\""
                                 ]
                               }
-                            },
-                            "disabled": {
-                              "name": "disabled",
-                              "global": false,
-                              "description": "Whether or not the action is disabled",
-                              "tags": [],
-                              "required": false,
-                              "type": "boolean | undefined",
-                              "declarations": [],
-                              "schema": "boolean | undefined"
                             },
                             "helpText": {
                               "name": "helpText",

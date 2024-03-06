@@ -1,41 +1,6 @@
 {
   "props": [
     {
-      "name": "icon",
-      "type": "IconSource | undefined",
-      "required": false,
-      "description": "Source of the icon",
-      "tags": [],
-      "declarations": [],
-      "schema": {
-        "kind": "enum",
-        "type": "IconSource | undefined",
-        "schema": [
-          "undefined",
-          "string",
-          "ComponentOptions<any, any, any, ComputedOptions, MethodOptions, any, any, any, any>",
-          "FunctionalComponent<any, {}, any, {}>",
-          "ComponentPublicInstanceConstructor<any, any, any, any, ComputedOptions, MethodOptions>",
-          {
-            "kind": "array",
-            "type": "(string | Component)[]",
-            "schema": [
-              {
-                "kind": "enum",
-                "type": "string | Component",
-                "schema": [
-                  "string",
-                  "ComponentOptions<any, any, any, ComputedOptions, MethodOptions, any, any, any, any>",
-                  "FunctionalComponent<any, {}, any, {}>",
-                  "ComponentPublicInstanceConstructor<any, any, any, any, ComputedOptions, MethodOptions>"
-                ]
-              }
-            ]
-          }
-        ]
-      }
-    },
-    {
       "name": "id",
       "type": "string | undefined",
       "required": false,
@@ -81,6 +46,58 @@
         "schema": [
           "undefined",
           "string"
+        ]
+      }
+    },
+    {
+      "name": "icon",
+      "type": "IconSource | undefined",
+      "required": false,
+      "description": "Source of the icon",
+      "tags": [],
+      "declarations": [],
+      "schema": {
+        "kind": "enum",
+        "type": "IconSource | undefined",
+        "schema": [
+          "undefined",
+          "string",
+          "ComponentOptions<any, any, any, ComputedOptions, MethodOptions, any, any, any, any>",
+          "FunctionalComponent<any, {}, any, {}>",
+          "ComponentPublicInstanceConstructor<any, any, any, any, ComputedOptions, MethodOptions>",
+          {
+            "kind": "array",
+            "type": "(string | Component)[]",
+            "schema": [
+              {
+                "kind": "enum",
+                "type": "string | Component",
+                "schema": [
+                  "string",
+                  "ComponentOptions<any, any, any, ComputedOptions, MethodOptions, any, any, any, any>",
+                  "FunctionalComponent<any, {}, any, {}>",
+                  "ComponentPublicInstanceConstructor<any, any, any, any, ComputedOptions, MethodOptions>"
+                ]
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "name": "disabled",
+      "type": "boolean | undefined",
+      "required": false,
+      "description": "Whether or not the action is disabled",
+      "tags": [],
+      "declarations": [],
+      "schema": {
+        "kind": "enum",
+        "type": "boolean | undefined",
+        "schema": [
+          "undefined",
+          "false",
+          "true"
         ]
       }
     },
@@ -133,23 +150,6 @@
           "\"_self\"",
           "\"_parent\"",
           "\"_top\""
-        ]
-      }
-    },
-    {
-      "name": "disabled",
-      "type": "boolean | undefined",
-      "required": false,
-      "description": "Whether or not the action is disabled",
-      "tags": [],
-      "declarations": [],
-      "schema": {
-        "kind": "enum",
-        "type": "boolean | undefined",
-        "schema": [
-          "undefined",
-          "false",
-          "true"
         ]
       }
     },

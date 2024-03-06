@@ -25,23 +25,6 @@
       }
     },
     {
-      "name": "transparent",
-      "type": "boolean | undefined",
-      "required": false,
-      "description": "Transparent background",
-      "tags": [],
-      "declarations": [],
-      "schema": {
-        "kind": "enum",
-        "type": "boolean | undefined",
-        "schema": [
-          "undefined",
-          "false",
-          "true"
-        ]
-      }
-    },
-    {
       "name": "source",
       "type": "string | ComponentOptions<any, any, any, ComputedOptions, MethodOptions, any, any, any, any> | FunctionalComponent<any, {}, any, {}> | ComponentPublicInstanceConstructor<...> | (string | Component)[]",
       "required": true,
@@ -72,6 +55,23 @@
               }
             ]
           }
+        ]
+      }
+    },
+    {
+      "name": "transparent",
+      "type": "boolean | undefined",
+      "required": false,
+      "description": "Transparent background",
+      "tags": [],
+      "declarations": [],
+      "schema": {
+        "kind": "enum",
+        "type": "boolean | undefined",
+        "schema": [
+          "undefined",
+          "false",
+          "true"
         ]
       }
     },

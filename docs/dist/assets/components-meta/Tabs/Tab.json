@@ -1,6 +1,48 @@
 {
   "props": [
     {
+      "name": "id",
+      "type": "string",
+      "required": true,
+      "description": "The unique identifier for the Tab",
+      "tags": [],
+      "declarations": [],
+      "schema": "string"
+    },
+    {
+      "name": "selected",
+      "type": "boolean | undefined",
+      "required": false,
+      "description": "If the Tab is selected",
+      "tags": [],
+      "declarations": [],
+      "schema": {
+        "kind": "enum",
+        "type": "boolean | undefined",
+        "schema": [
+          "undefined",
+          "false",
+          "true"
+        ]
+      }
+    },
+    {
+      "name": "accessibilityLabel",
+      "type": "string | undefined",
+      "required": false,
+      "description": "The accessible label for the Tab, if the name alone does not give enough context",
+      "tags": [],
+      "declarations": [],
+      "schema": {
+        "kind": "enum",
+        "type": "string | undefined",
+        "schema": [
+          "undefined",
+          "string"
+        ]
+      }
+    },
+    {
       "name": "actions",
       "type": "TabActionDescriptor[] | undefined",
       "required": false,
@@ -82,6 +124,33 @@
                       ]
                     }
                   },
+                  "id": {
+                    "name": "id",
+                    "global": false,
+                    "description": "A unique identifier for the action",
+                    "tags": [],
+                    "required": false,
+                    "type": "string | undefined",
+                    "declarations": [],
+                    "schema": {
+                      "kind": "enum",
+                      "type": "string | undefined",
+                      "schema": [
+                        "undefined",
+                        "string"
+                      ]
+                    }
+                  },
+                  "accessibilityLabel": {
+                    "name": "accessibilityLabel",
+                    "global": false,
+                    "description": "Visually hidden text for screen readers",
+                    "tags": [],
+                    "required": false,
+                    "type": "string | undefined",
+                    "declarations": [],
+                    "schema": "string | undefined"
+                  },
                   "icon": {
                     "name": "icon",
                     "global": false,
@@ -123,33 +192,6 @@
                       ]
                     }
                   },
-                  "id": {
-                    "name": "id",
-                    "global": false,
-                    "description": "A unique identifier for the action",
-                    "tags": [],
-                    "required": false,
-                    "type": "string | undefined",
-                    "declarations": [],
-                    "schema": {
-                      "kind": "enum",
-                      "type": "string | undefined",
-                      "schema": [
-                        "undefined",
-                        "string"
-                      ]
-                    }
-                  },
-                  "accessibilityLabel": {
-                    "name": "accessibilityLabel",
-                    "global": false,
-                    "description": "Visually hidden text for screen readers",
-                    "tags": [],
-                    "required": false,
-                    "type": "string | undefined",
-                    "declarations": [],
-                    "schema": "string | undefined"
-                  },
                   "role": {
                     "name": "role",
                     "global": false,
@@ -159,6 +201,24 @@
                     "type": "string | undefined",
                     "declarations": [],
                     "schema": "string | undefined"
+                  },
+                  "disabled": {
+                    "name": "disabled",
+                    "global": false,
+                    "description": "Whether or not the action is disabled",
+                    "tags": [],
+                    "required": false,
+                    "type": "boolean | undefined",
+                    "declarations": [],
+                    "schema": {
+                      "kind": "enum",
+                      "type": "boolean | undefined",
+                      "schema": [
+                        "undefined",
+                        "false",
+                        "true"
+                      ]
+                    }
                   },
                   "variant": {
                     "name": "variant",
@@ -197,15 +257,7 @@
                     "required": false,
                     "type": "boolean | undefined",
                     "declarations": [],
-                    "schema": {
-                      "kind": "enum",
-                      "type": "boolean | undefined",
-                      "schema": [
-                        "undefined",
-                        "false",
-                        "true"
-                      ]
-                    }
+                    "schema": "boolean | undefined"
                   },
                   "target": {
                     "name": "target",
@@ -226,16 +278,6 @@
                         "\"_top\""
                       ]
                     }
-                  },
-                  "disabled": {
-                    "name": "disabled",
-                    "global": false,
-                    "description": "Whether or not the action is disabled",
-                    "tags": [],
-                    "required": false,
-                    "type": "boolean | undefined",
-                    "declarations": [],
-                    "schema": "boolean | undefined"
                   },
                   "helpText": {
                     "name": "helpText",
@@ -432,19 +474,10 @@
       }
     },
     {
-      "name": "id",
-      "type": "string",
-      "required": true,
-      "description": "The unique identifier for the Tab",
-      "tags": [],
-      "declarations": [],
-      "schema": "string"
-    },
-    {
-      "name": "selected",
+      "name": "disabled",
       "type": "boolean | undefined",
       "required": false,
-      "description": "If the Tab is selected",
+      "description": "Whether the Tab is disabled",
       "tags": [],
       "declarations": [],
       "schema": {
@@ -454,22 +487,6 @@
           "undefined",
           "false",
           "true"
-        ]
-      }
-    },
-    {
-      "name": "accessibilityLabel",
-      "type": "string | undefined",
-      "required": false,
-      "description": "The accessible label for the Tab, if the name alone does not give enough context",
-      "tags": [],
-      "declarations": [],
-      "schema": {
-        "kind": "enum",
-        "type": "string | undefined",
-        "schema": [
-          "undefined",
-          "string"
         ]
       }
     },
@@ -486,23 +503,6 @@
         "schema": [
           "undefined",
           "string"
-        ]
-      }
-    },
-    {
-      "name": "disabled",
-      "type": "boolean | undefined",
-      "required": false,
-      "description": "Whether the Tab is disabled",
-      "tags": [],
-      "declarations": [],
-      "schema": {
-        "kind": "enum",
-        "type": "boolean | undefined",
-        "schema": [
-          "undefined",
-          "false",
-          "true"
         ]
       }
     },
@@ -588,23 +588,6 @@
       }
     },
     {
-      "name": "siblingTabHasFocus",
-      "type": "boolean | undefined",
-      "required": false,
-      "description": "If a sibling Tab currently has focus",
-      "tags": [],
-      "declarations": [],
-      "schema": {
-        "kind": "enum",
-        "type": "boolean | undefined",
-        "schema": [
-          "undefined",
-          "false",
-          "true"
-        ]
-      }
-    },
-    {
       "name": "panelID",
       "type": "string | undefined",
       "required": false,
@@ -642,6 +625,23 @@
       "type": "boolean | undefined",
       "required": false,
       "description": "If true, the primary button in the currently open Modal will show a loading state",
+      "tags": [],
+      "declarations": [],
+      "schema": {
+        "kind": "enum",
+        "type": "boolean | undefined",
+        "schema": [
+          "undefined",
+          "false",
+          "true"
+        ]
+      }
+    },
+    {
+      "name": "siblingTabHasFocus",
+      "type": "boolean | undefined",
+      "required": false,
+      "description": "If a sibling Tab currently has focus",
       "tags": [],
       "declarations": [],
       "schema": {
