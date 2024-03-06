@@ -46,9 +46,12 @@ jobs:
         run: |
           yarn install
           npm install -g ts-node
+      - name: Build submodule polaris to get tokens
+        run: |
           cd polaris
           yarn install
           cd ../
+          yarn build
       - name: Build with VitePress
         run: |
           yarn docs:build
