@@ -1,6 +1,8 @@
 # Shopify Polaris Vue
 
-Polaris Vue by Ownego only supports **Vue 3.3+**.
+### The whole new version Polaris Vue 2.0 has been released! :tada:
+
+Polaris Vue by Ownego supports **Vue 3.3+**.
 
 Polaris Vue based on [Shopify Polaris style guide](https://polaris.shopify.com/), built especially for Vue 3.
 We're trying to make it mostly close with Shopify style guide and get a better performance.
