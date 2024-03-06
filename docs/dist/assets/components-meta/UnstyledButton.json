@@ -66,23 +66,6 @@
       }
     },
     {
-      "name": "disabled",
-      "type": "boolean | undefined",
-      "required": false,
-      "description": "Disables the button, disallowing merchant interaction",
-      "tags": [],
-      "declarations": [],
-      "schema": {
-        "kind": "enum",
-        "type": "boolean | undefined",
-        "schema": [
-          "undefined",
-          "false",
-          "true"
-        ]
-      }
-    },
-    {
       "name": "url",
       "type": "string | undefined",
       "required": false,
@@ -157,6 +140,23 @@
       "type": "boolean | undefined",
       "required": false,
       "description": "Allows the button to submit a form",
+      "tags": [],
+      "declarations": [],
+      "schema": {
+        "kind": "enum",
+        "type": "boolean | undefined",
+        "schema": [
+          "undefined",
+          "false",
+          "true"
+        ]
+      }
+    },
+    {
+      "name": "disabled",
+      "type": "boolean | undefined",
+      "required": false,
+      "description": "Disables the button, disallowing merchant interaction",
       "tags": [],
       "declarations": [],
       "schema": {

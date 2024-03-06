@@ -25,6 +25,15 @@
       }
     },
     {
+      "name": "tabToFocus",
+      "type": "number",
+      "required": true,
+      "description": "",
+      "tags": [],
+      "declarations": [],
+      "schema": "number"
+    },
+    {
       "name": "siblingTabHasFocus",
       "type": "boolean",
       "required": true,
@@ -39,15 +48,6 @@
           "true"
         ]
       }
-    },
-    {
-      "name": "tabToFocus",
-      "type": "number",
-      "required": true,
-      "description": "",
-      "tags": [],
-      "declarations": [],
-      "schema": "number"
     }
   ],
   "events": [

@@ -630,6 +630,23 @@
       }
     },
     {
+      "name": "disabled",
+      "type": "boolean | undefined",
+      "required": false,
+      "description": "Disables bulk actions",
+      "tags": [],
+      "declarations": [],
+      "schema": {
+        "kind": "enum",
+        "type": "boolean | undefined",
+        "schema": [
+          "undefined",
+          "false",
+          "true"
+        ]
+      }
+    },
+    {
       "name": "paginatedSelectAllText",
       "type": "string | undefined",
       "required": false,
@@ -1470,23 +1487,6 @@
               }
             ]
           }
-        ]
-      }
-    },
-    {
-      "name": "disabled",
-      "type": "boolean | undefined",
-      "required": false,
-      "description": "Disables bulk actions",
-      "tags": [],
-      "declarations": [],
-      "schema": {
-        "kind": "enum",
-        "type": "boolean | undefined",
-        "schema": [
-          "undefined",
-          "false",
-          "true"
         ]
       }
     },

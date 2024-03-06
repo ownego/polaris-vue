@@ -343,6 +343,72 @@
       }
     },
     {
+      "name": "src",
+      "type": "string | undefined",
+      "required": false,
+      "description": "The url that will be loaded as the content of the modal",
+      "tags": [],
+      "declarations": [],
+      "schema": {
+        "kind": "enum",
+        "type": "string | undefined",
+        "schema": [
+          "undefined",
+          "string"
+        ]
+      }
+    },
+    {
+      "name": "iFrameName",
+      "type": "string | undefined",
+      "required": false,
+      "description": "The name of the modal content iframe",
+      "tags": [],
+      "declarations": [],
+      "schema": {
+        "kind": "enum",
+        "type": "string | undefined",
+        "schema": [
+          "undefined",
+          "string"
+        ]
+      }
+    },
+    {
+      "name": "limitHeight",
+      "type": "boolean | undefined",
+      "required": false,
+      "description": "Limits modal height on large screens with scrolling",
+      "tags": [],
+      "declarations": [],
+      "schema": {
+        "kind": "enum",
+        "type": "boolean | undefined",
+        "schema": [
+          "undefined",
+          "false",
+          "true"
+        ]
+      }
+    },
+    {
+      "name": "noScroll",
+      "type": "boolean | undefined",
+      "required": false,
+      "description": "Removes Scrollable container from the modal content",
+      "tags": [],
+      "declarations": [],
+      "schema": {
+        "kind": "enum",
+        "type": "boolean | undefined",
+        "schema": [
+          "undefined",
+          "false",
+          "true"
+        ]
+      }
+    },
+    {
       "name": "secondaryActions",
       "type": "ComplexAction[] | undefined",
       "required": false,
@@ -597,72 +663,6 @@
               }
             ]
           }
-        ]
-      }
-    },
-    {
-      "name": "src",
-      "type": "string | undefined",
-      "required": false,
-      "description": "The url that will be loaded as the content of the modal",
-      "tags": [],
-      "declarations": [],
-      "schema": {
-        "kind": "enum",
-        "type": "string | undefined",
-        "schema": [
-          "undefined",
-          "string"
-        ]
-      }
-    },
-    {
-      "name": "iFrameName",
-      "type": "string | undefined",
-      "required": false,
-      "description": "The name of the modal content iframe",
-      "tags": [],
-      "declarations": [],
-      "schema": {
-        "kind": "enum",
-        "type": "string | undefined",
-        "schema": [
-          "undefined",
-          "string"
-        ]
-      }
-    },
-    {
-      "name": "limitHeight",
-      "type": "boolean | undefined",
-      "required": false,
-      "description": "Limits modal height on large screens with scrolling",
-      "tags": [],
-      "declarations": [],
-      "schema": {
-        "kind": "enum",
-        "type": "boolean | undefined",
-        "schema": [
-          "undefined",
-          "false",
-          "true"
-        ]
-      }
-    },
-    {
-      "name": "noScroll",
-      "type": "boolean | undefined",
-      "required": false,
-      "description": "Removes Scrollable container from the modal content",
-      "tags": [],
-      "declarations": [],
-      "schema": {
-        "kind": "enum",
-        "type": "boolean | undefined",
-        "schema": [
-          "undefined",
-          "false",
-          "true"
         ]
       }
     }

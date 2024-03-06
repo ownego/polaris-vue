@@ -93,6 +93,81 @@
       }
     },
     {
+      "name": "selectable",
+      "type": "boolean | undefined",
+      "required": false,
+      "description": "Renders a Select All button at the top of the list and checkboxes in front of each list item. For use when bulkActions aren't provided. *",
+      "tags": [],
+      "declarations": [],
+      "schema": {
+        "kind": "enum",
+        "type": "boolean | undefined",
+        "schema": [
+          "undefined",
+          "false",
+          "true"
+        ]
+      }
+    },
+    {
+      "name": "resourceName",
+      "type": "{ singular: string; plural: string; } | undefined",
+      "required": false,
+      "description": "Name of the resource, such as customers or products",
+      "tags": [],
+      "declarations": [],
+      "schema": {
+        "kind": "enum",
+        "type": "{ singular: string; plural: string; } | undefined",
+        "schema": [
+          "undefined",
+          {
+            "kind": "object",
+            "type": "{ singular: string; plural: string; }",
+            "schema": {
+              "singular": {
+                "name": "singular",
+                "global": false,
+                "description": "",
+                "tags": [],
+                "required": true,
+                "type": "string",
+                "declarations": [],
+                "schema": "string"
+              },
+              "plural": {
+                "name": "plural",
+                "global": false,
+                "description": "",
+                "tags": [],
+                "required": true,
+                "type": "string",
+                "declarations": [],
+                "schema": "string"
+              }
+            }
+          }
+        ]
+      }
+    },
+    {
+      "name": "hasMoreItems",
+      "type": "boolean | undefined",
+      "required": false,
+      "description": "Whether or not there are more items than currently set on the items prop. Determines whether or not to set the paginatedSelectAllAction and paginatedSelectAllText props on the BulkActions component.",
+      "tags": [],
+      "declarations": [],
+      "schema": {
+        "kind": "enum",
+        "type": "boolean | undefined",
+        "schema": [
+          "undefined",
+          "false",
+          "true"
+        ]
+      }
+    },
+    {
       "name": "sortOptions",
       "type": "SelectOption[] | undefined",
       "required": false,
@@ -188,81 +263,6 @@
               }
             ]
           }
-        ]
-      }
-    },
-    {
-      "name": "selectable",
-      "type": "boolean | undefined",
-      "required": false,
-      "description": "Renders a Select All button at the top of the list and checkboxes in front of each list item. For use when bulkActions aren't provided. *",
-      "tags": [],
-      "declarations": [],
-      "schema": {
-        "kind": "enum",
-        "type": "boolean | undefined",
-        "schema": [
-          "undefined",
-          "false",
-          "true"
-        ]
-      }
-    },
-    {
-      "name": "resourceName",
-      "type": "{ singular: string; plural: string; } | undefined",
-      "required": false,
-      "description": "Name of the resource, such as customers or products",
-      "tags": [],
-      "declarations": [],
-      "schema": {
-        "kind": "enum",
-        "type": "{ singular: string; plural: string; } | undefined",
-        "schema": [
-          "undefined",
-          {
-            "kind": "object",
-            "type": "{ singular: string; plural: string; }",
-            "schema": {
-              "singular": {
-                "name": "singular",
-                "global": false,
-                "description": "",
-                "tags": [],
-                "required": true,
-                "type": "string",
-                "declarations": [],
-                "schema": "string"
-              },
-              "plural": {
-                "name": "plural",
-                "global": false,
-                "description": "",
-                "tags": [],
-                "required": true,
-                "type": "string",
-                "declarations": [],
-                "schema": "string"
-              }
-            }
-          }
-        ]
-      }
-    },
-    {
-      "name": "hasMoreItems",
-      "type": "boolean | undefined",
-      "required": false,
-      "description": "Whether or not there are more items than currently set on the items prop. Determines whether or not to set the paginatedSelectAllAction and paginatedSelectAllText props on the BulkActions component.",
-      "tags": [],
-      "declarations": [],
-      "schema": {
-        "kind": "enum",
-        "type": "boolean | undefined",
-        "schema": [
-          "undefined",
-          "false",
-          "true"
         ]
       }
     },

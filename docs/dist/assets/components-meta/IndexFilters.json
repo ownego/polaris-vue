@@ -801,16 +801,6 @@
                               "declarations": [],
                               "schema": "string | undefined"
                             },
-                            "disabled": {
-                              "name": "disabled",
-                              "global": false,
-                              "description": "Whether or not the action is disabled",
-                              "tags": [],
-                              "required": false,
-                              "type": "boolean | undefined",
-                              "declarations": [],
-                              "schema": "boolean | undefined"
-                            },
                             "variant": {
                               "name": "variant",
                               "global": false,
@@ -869,6 +859,16 @@
                                   "\"_top\""
                                 ]
                               }
+                            },
+                            "disabled": {
+                              "name": "disabled",
+                              "global": false,
+                              "description": "Whether or not the action is disabled",
+                              "tags": [],
+                              "required": false,
+                              "type": "boolean | undefined",
+                              "declarations": [],
+                              "schema": "boolean | undefined"
                             },
                             "helpText": {
                               "name": "helpText",

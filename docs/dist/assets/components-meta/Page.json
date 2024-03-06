@@ -723,56 +723,6 @@
       }
     },
     {
-      "name": "narrowWidth",
-      "type": "boolean | undefined",
-      "required": false,
-      "description": "Decreases the maximum layout width. Intended for single-column layouts",
-      "tags": [],
-      "declarations": [],
-      "schema": {
-        "kind": "enum",
-        "type": "boolean | undefined",
-        "schema": [
-          "undefined",
-          "false",
-          "true"
-        ]
-      }
-    },
-    {
-      "name": "pageReadyAccessibilityLabel",
-      "type": "string | undefined",
-      "required": false,
-      "description": "A label to use for the page when the page is ready, used by screen readers. Will override the title prop if present",
-      "tags": [],
-      "declarations": [],
-      "schema": {
-        "kind": "enum",
-        "type": "string | undefined",
-        "schema": [
-          "undefined",
-          "string"
-        ]
-      }
-    },
-    {
-      "name": "filterActions",
-      "type": "boolean | undefined",
-      "required": false,
-      "description": "Enables filtering action list items",
-      "tags": [],
-      "declarations": [],
-      "schema": {
-        "kind": "enum",
-        "type": "boolean | undefined",
-        "schema": [
-          "undefined",
-          "false",
-          "true"
-        ]
-      }
-    },
-    {
       "name": "secondaryActions",
       "type": "MenuActionDescriptor[] | undefined",
       "required": false,
@@ -1054,6 +1004,56 @@
               }
             ]
           }
+        ]
+      }
+    },
+    {
+      "name": "narrowWidth",
+      "type": "boolean | undefined",
+      "required": false,
+      "description": "Decreases the maximum layout width. Intended for single-column layouts",
+      "tags": [],
+      "declarations": [],
+      "schema": {
+        "kind": "enum",
+        "type": "boolean | undefined",
+        "schema": [
+          "undefined",
+          "false",
+          "true"
+        ]
+      }
+    },
+    {
+      "name": "pageReadyAccessibilityLabel",
+      "type": "string | undefined",
+      "required": false,
+      "description": "A label to use for the page when the page is ready, used by screen readers. Will override the title prop if present",
+      "tags": [],
+      "declarations": [],
+      "schema": {
+        "kind": "enum",
+        "type": "string | undefined",
+        "schema": [
+          "undefined",
+          "string"
+        ]
+      }
+    },
+    {
+      "name": "filterActions",
+      "type": "boolean | undefined",
+      "required": false,
+      "description": "Enables filtering action list items",
+      "tags": [],
+      "declarations": [],
+      "schema": {
+        "kind": "enum",
+        "type": "boolean | undefined",
+        "schema": [
+          "undefined",
+          "false",
+          "true"
         ]
       }
     },

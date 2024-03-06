@@ -160,24 +160,6 @@
                     "declarations": [],
                     "schema": "string | undefined"
                   },
-                  "disabled": {
-                    "name": "disabled",
-                    "global": false,
-                    "description": "Whether or not the action is disabled",
-                    "tags": [],
-                    "required": false,
-                    "type": "boolean | undefined",
-                    "declarations": [],
-                    "schema": {
-                      "kind": "enum",
-                      "type": "boolean | undefined",
-                      "schema": [
-                        "undefined",
-                        "false",
-                        "true"
-                      ]
-                    }
-                  },
                   "variant": {
                     "name": "variant",
                     "global": false,
@@ -215,7 +197,15 @@
                     "required": false,
                     "type": "boolean | undefined",
                     "declarations": [],
-                    "schema": "boolean | undefined"
+                    "schema": {
+                      "kind": "enum",
+                      "type": "boolean | undefined",
+                      "schema": [
+                        "undefined",
+                        "false",
+                        "true"
+                      ]
+                    }
                   },
                   "target": {
                     "name": "target",
@@ -236,6 +226,16 @@
                         "\"_top\""
                       ]
                     }
+                  },
+                  "disabled": {
+                    "name": "disabled",
+                    "global": false,
+                    "description": "Whether or not the action is disabled",
+                    "tags": [],
+                    "required": false,
+                    "type": "boolean | undefined",
+                    "declarations": [],
+                    "schema": "boolean | undefined"
                   },
                   "helpText": {
                     "name": "helpText",
@@ -474,6 +474,22 @@
       }
     },
     {
+      "name": "url",
+      "type": "string | undefined",
+      "required": false,
+      "description": "Optional URL if the Tab points to a location",
+      "tags": [],
+      "declarations": [],
+      "schema": {
+        "kind": "enum",
+        "type": "string | undefined",
+        "schema": [
+          "undefined",
+          "string"
+        ]
+      }
+    },
+    {
       "name": "disabled",
       "type": "boolean | undefined",
       "required": false,
@@ -487,22 +503,6 @@
           "undefined",
           "false",
           "true"
-        ]
-      }
-    },
-    {
-      "name": "url",
-      "type": "string | undefined",
-      "required": false,
-      "description": "Optional URL if the Tab points to a location",
-      "tags": [],
-      "declarations": [],
-      "schema": {
-        "kind": "enum",
-        "type": "string | undefined",
-        "schema": [
-          "undefined",
-          "string"
         ]
       }
     },
@@ -588,6 +588,23 @@
       }
     },
     {
+      "name": "siblingTabHasFocus",
+      "type": "boolean | undefined",
+      "required": false,
+      "description": "If a sibling Tab currently has focus",
+      "tags": [],
+      "declarations": [],
+      "schema": {
+        "kind": "enum",
+        "type": "boolean | undefined",
+        "schema": [
+          "undefined",
+          "false",
+          "true"
+        ]
+      }
+    },
+    {
       "name": "panelID",
       "type": "string | undefined",
       "required": false,
@@ -625,23 +642,6 @@
       "type": "boolean | undefined",
       "required": false,
       "description": "If true, the primary button in the currently open Modal will show a loading state",
-      "tags": [],
-      "declarations": [],
-      "schema": {
-        "kind": "enum",
-        "type": "boolean | undefined",
-        "schema": [
-          "undefined",
-          "false",
-          "true"
-        ]
-      }
-    },
-    {
-      "name": "siblingTabHasFocus",
-      "type": "boolean | undefined",
-      "required": false,
-      "description": "If a sibling Tab currently has focus",
       "tags": [],
       "declarations": [],
       "schema": {

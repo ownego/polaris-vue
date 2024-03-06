@@ -163,6 +163,8 @@ export default defineConfig({
 
       const info = await getCategoryContent(categoryName);
 
+      if (!info) return;
+
       if (info.title) {
         pageData.title = info.title;
         pageData.frontmatter.title = info.title;
@@ -187,6 +189,8 @@ export default defineConfig({
 
       if (componentName) {
         const info = await getComponentContent(componentName);
+
+        if (!info) return;
 
         if (info.description) {
           pageData.frontmatter.description = info.description;

@@ -1,6 +1,5 @@
 ---
 title: Account connection
-shortDescription: Used for connecting or disconnecting a store to various accounts, like Facebook for the sales channel.
 category: Actions
 examples:
   - fileName: Default.vue

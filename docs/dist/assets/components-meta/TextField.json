@@ -223,22 +223,6 @@
       }
     },
     {
-      "name": "label",
-      "type": "string | undefined",
-      "required": false,
-      "description": "Label for the input",
-      "tags": [],
-      "declarations": [],
-      "schema": {
-        "kind": "enum",
-        "type": "string | undefined",
-        "schema": [
-          "undefined",
-          "string"
-        ]
-      }
-    },
-    {
       "name": "ariaControls",
       "type": "string | undefined",
       "required": false,
@@ -268,6 +252,22 @@
           "undefined",
           "false",
           "true"
+        ]
+      }
+    },
+    {
+      "name": "label",
+      "type": "string | undefined",
+      "required": false,
+      "description": "Label for the input",
+      "tags": [],
+      "declarations": [],
+      "schema": {
+        "kind": "enum",
+        "type": "string | undefined",
+        "schema": [
+          "undefined",
+          "string"
         ]
       }
     },

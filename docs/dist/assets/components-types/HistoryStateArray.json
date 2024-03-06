@@ -231,14 +231,14 @@
     {
       "filePath": "src/components/Link/types.ts",
       "syntaxKind": "MethodSignature",
-      "name": "__@iterator@1645",
+      "name": "__@iterator@1676",
       "value": "() => IterableIterator<HistoryStateValue>",
       "description": "Iterator"
     },
     {
       "filePath": "src/components/Link/types.ts",
       "syntaxKind": "PropertySignature",
-      "name": "__@unscopables@1647",
+      "name": "__@unscopables@1678",
       "value": "{ [x: number]: boolean; length?: boolean; toString?: boolean; toLocaleString?: boolean; pop?: boolean; push?: boolean; concat?: boolean; join?: boolean; reverse?: boolean; shift?: boolean; slice?: boolean; sort?: boolean; ... 23 more ...; at?: boolean; }",
       "description": "Is an object whose properties have the value 'true'\nwhen they will be absent when used in a 'with' statement."
     },
