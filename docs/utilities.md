@@ -2,8 +2,8 @@
 title: Utilities
 outline: deep
 next:
-  text: 'Examples'
-  link: '/examples'
+  text: 'Patterns'
+  link: '/patterns'
 ---
 
 # {{ $frontmatter.title }}

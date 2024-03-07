@@ -45,7 +45,12 @@ export default defineConfig({
       alt: 'Polaris Vue Logo',
     },
     search: {
-      provider: 'local',
+      provider: 'algolia',
+      options: {
+        appId: 'WDJIGRBMUR',
+        apiKey: 'c6344bfcbfe04b0915ab43ed59a90c9b',
+        indexName: 'polaris-vue',
+      },
     },
     nav: [
       { text: 'Home', link: '/' },
