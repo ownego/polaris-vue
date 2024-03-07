@@ -72,7 +72,7 @@ div(
             )
 
           ActionList(
-            :sections="[hiddenPromotedSection, ...allHiddenActions]",
+            :sections="actionListSections",
             @action-any-item="togglePopover",
           )
 </template>
@@ -201,23 +201,50 @@ const hiddenPromotedSection = computed(() => ({
   items: mergedHiddenPromotedActions.value,
 }));
 
-const allHiddenActions = computed(() => (
-  props.actions
-  ? props.actions
-      .filter((action) => action)
-      .map(
-        (
-          action: BulkAction | MenuGroupDescriptor | BulkActionListSection,
-        ) => {
-          if (instanceOfBulkActionListSection(action)) {
-            return {items: [...action.items]};
-          } else if (instanceOfMenuGroupDescriptor(action)) {
-            return {items: [...action.actions]};
+const allHiddenActions = computed(() => {
+  if (actionSections.value) {
+    return actionSections.value;
+  }
+
+  if (!props.actions) {
+    return [];
+  }
+
+  let isAFlatArray = true;
+  return props.actions
+    .filter((action) => action)
+    .reduce(
+      (
+        memo: BulkActionListSection[],
+        action: BulkAction | BulkActionListSection,
+      ): BulkActionListSection[] => {
+        if (instanceOfBulkActionListSection(action)) {
+          isAFlatArray = false;
+          return memo.concat(action);
+        }
+        if (isAFlatArray) {
+          if (memo.length === 0) {
+            return [{items: [action]}];
           }
-          return {items: [action]};
-        },
-      )
-  : []
+          const lastItem = memo[memo.length - 1];
+          memo.splice(memo.length - 1, 1, {
+            items: [...lastItem.items, action],
+          });
+          return memo;
+        }
+
+        isAFlatArray = true;
+
+        return memo.concat({items: [action]});
+      },
+      [],
+    );
+});
+
+const actionListSections = computed(() => (
+  hiddenPromotedSection.value.items.length > 0
+    ? [hiddenPromotedSection.value, ...allHiddenActions.value]
+    : allHiddenActions.value
 ));
 
 watch(

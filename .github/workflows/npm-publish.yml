@@ -11,8 +11,8 @@ jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v2
-      - uses: actions/setup-node@v2
+      - uses: actions/checkout@v3
+      - uses: actions/setup-node@v3
         with:
           node-version: lts/hydrogen
       - run: yarn
@@ -21,23 +21,24 @@ jobs:
     needs: build
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v2
-      - uses: actions/setup-node@v2
+      - uses: actions/checkout@v3
+        with:
+          submodules: 'recursive'
+          persist-credentials: false
+      - uses: actions/setup-node@v3
         with:
           node-version: lts/hydrogen
           registry-url: https://registry.npmjs.org/
       - run: yarn --frozen-lockfile
-      - name: Git Submodule Update
-        run: |
-          git submodule update --init --recursive
-          git submodule update --recursive --remote
       - name: Setup submodule
         run: |
           cd polaris
           yarn
           yarn build
           cd ../
-      - run: yarn build
-      - run: yarn publish --access public
+      - name: Build the package
+        run: yarn build
+      - name: Publish to NPM
+        run: yarn publish --access public
         env:
           NODE_AUTH_TOKEN: ${{secrets.NPM_TOKEN}}

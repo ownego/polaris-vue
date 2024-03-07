@@ -26,6 +26,10 @@ export default defineConfig({
     ['meta', { property: 'og:title', content: 'Shopify Polaris for VueJS 3' }],
     ['meta', { property: 'og:description', content: 'Shopify Polaris UI components for Vue 3, with better performance, small bundle size, 99% matching Shopify Polaris 12. Compatible with Vue 3.3+' }],
     ['meta', { property: 'og:image', content: 'https://github.com/ownego/polaris-vue/blob/master/public/images/ogimg.png?raw=true' }],
+    ['meta', { name: 'twitter:card', content: 'summary_large_image' }],
+    ['meta', { name: 'twitter:title', content: 'Shopify Polaris for VueJS 3' }],
+    ['meta', { name: 'twitter:description', content: 'Shopify Polaris UI components for Vue 3, with better performance, small bundle size, 99% matching Shopify Polaris 12. Compatible with Vue 3.3+' }],
+    ['meta', { name: 'twitter:image', content: 'https://github.com/ownego/polaris-vue/blob/master/public/images/ogimg.png?raw=true' }],
   ],
 
   rewrites: {

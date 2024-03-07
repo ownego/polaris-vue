@@ -75,7 +75,7 @@
 </template>
 
 <script setup lang="ts">
-import { computed, h, ref } from 'vue';
+import { computed, h, ref, type VNode } from 'vue';
 import MarkdownIt from 'markdown-it';
 import { useMeta } from '../use/useMeta';
 import type { ComponentPropsMeta } from '../types';
@@ -115,7 +115,7 @@ const expandType = async (t: string, propName: string) => {
   // Remove [] from type
   const typeName = type.replace(/\[\]/g, '');
 
-  let types = null;
+  let types = {};
 
   try {
     types = await fetchType(typeName, true);
@@ -141,7 +141,7 @@ const expandType = async (t: string, propName: string) => {
   console.log(extraType.value[propName]);
 }
 
-function fetchType(type: string, isExtra?: boolean) {
+function fetchType(type: string, isExtra?: boolean): Record<string, any> {
   const url = isExtra
     ? withBase(`/assets/extra-types/${type}.json`)
     : withBase(`/assets/components-types/${type}.json`);
@@ -177,7 +177,7 @@ const syntaxKindToDeveloperFriendlyString = (
 const typeMarkup = (p: ComponentPropsMeta) => {
   const types = serializeSchema(p.schema);
 
-  const typeEls = [];
+  const typeEls: VNode[] = [];
   let isInGroup = false;
 
   types.map((t, idx) => {

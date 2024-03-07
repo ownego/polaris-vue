@@ -23,7 +23,7 @@ import { computed, onMounted, ref } from 'vue';
 
 const { frontmatter, theme } = useData();
 
-const data = ref([]);
+const data = ref<Record<string, any>[]>([]);
 
 const sidebar = computed(() => theme.value.sidebar);
 const category = computed(() => frontmatter.value.title);

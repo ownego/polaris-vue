@@ -3,11 +3,11 @@ LegacyCard
   div(:class="containerClassName")
     div(:class="styles.Dismiss")
       Button(
-        v-if="attrs['onDismiss']",
+        v-if="hasDismiss",
         variant="plain",
         accessibilityLabel="Dismiss card",
         :icon="XSmallIcon",
-        @click="attrs['onDismiss']",
+        @click="emits('dismiss')",
       )
     LegacyCardSection
       div(:class="styles.CalloutCard")
@@ -37,7 +37,7 @@ LegacyCard
 </template>
 
 <script setup lang="ts">
-import { computed, useAttrs, useSlots } from 'vue';
+import { computed, getCurrentInstance, useSlots } from 'vue';
 import type { VueNode, IconableAction } from '@/utilities/types';
 import { classNames } from '@/utilities/css';
 import { useHasSlot } from '@/use/useHasSlot';
@@ -56,7 +56,7 @@ export interface CalloutCardProps {
   secondaryAction?: IconableAction & Pick<ButtonProps, 'variant'>;
 }
 
-export type CalloutCardEmits = {
+export type CalloutCardEvents = {
   /** Callback when banner is dismissed */
   'dismiss': [];
 }
@@ -70,21 +70,26 @@ defineSlots<{
   title: (_: VueNode) => any;
 }>();
 
-const attrs = useAttrs();
+const emits = defineEmits<CalloutCardEvents>();
+
+const currentInstance = getCurrentInstance();
+
 const slots = useSlots();
 const { hasSlot } = useHasSlot();
 
 const imageClassName = computed(() =>
   classNames(
     styles.Image,
-    !!attrs['onDismiss'] && styles.DismissImage,
+    hasDismiss.value && styles.DismissImage,
   ),
 );
 
 const containerClassName = computed(() =>
   classNames(
     styles.Container,
-    !!attrs['onDismiss'] && styles.hasDismiss,
+    hasDismiss.value && styles.hasDismiss,
   ),
 );
+
+const hasDismiss = computed(() => currentInstance?.vnode.props?.onDismiss);
 </script>

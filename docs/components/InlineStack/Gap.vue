@@ -1,9 +1,7 @@
 <template>
 <BlockStack>
   <InlineStack>
-    <div
-      :style="spacingStyleWithMargin"
-    >
+    <div :style="spacingStyleWithMargin">
       <InlineStack gap="400" :wrap="false" block-align="center">
         <Placeholder width="106px" height="36px" />
         <Placeholder width="106px" height="20px" />

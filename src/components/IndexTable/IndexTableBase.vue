@@ -208,11 +208,6 @@ const renderAfterSelectEvent = ref(false);
 const lastSelectedItemsCount = ref<number | 'All'>(0);
 const hasSelected = ref(false);
 
-const hasBulkActions = computed(() => Boolean(
-  (props.promotedBulkActions && props.promotedBulkActions.length > 0) ||
-    (props.bulkActions && props.bulkActions.length > 0),
-));
-
 const selectedItemsCountValue = computed(() => {
   if (selectedItemsCount.value === SELECT_ALL_ITEMS || selectedItemsCount.value > 0) {
     return selectedItemsCount.value === SELECT_ALL_ITEMS
@@ -232,7 +227,7 @@ const stickyColumnHeaderStyle = computed(() => (
 ));
 
 const paginatedSelectAllAction = computed(() => {
-  if (!selectable?.value || !hasBulkActions.value || !hasMoreItems?.value) {
+  if (!selectable?.value || !hasMoreItems?.value) {
     return;
   }
 

@@ -4,13 +4,9 @@
     Content inside a card
   </Text>
   <Bleed margin-inline="400">
-    <div
-      :style="placeHolderStyle"
-    >
+    <div :style="placeHolderStyle">
       <InlineStack gap="400" align="center">
-        <div
-          style="color: var(--p-color-text-info-on-bg-fill)"
-        >
+        <div style="color: var(--p-color-text-info-on-bg-fill)">
           <Text
             as="h2"
             variant="bodyMd"

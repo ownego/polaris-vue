@@ -72,13 +72,13 @@ const noMetaContent = computed(() => {
 
 onMounted(async () => {
   if (!props.typeFile) {
-    metaEvents.value = cEvents.value;
+    metaEvents.value = cEvents.value || [];
     return;
   }
 
   const events = await fetchTypes(props.typeFile);
 
-  metaEvents.value = events.members.map((e) => {
+  metaEvents.value = events?.members.map((e) => {
     return {
       name: e.name.replace(/["']/g, ''),
       description: e.description,

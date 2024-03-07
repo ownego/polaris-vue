@@ -51,7 +51,7 @@ Some types of props are following the [Polaris Design Tokens](https://polaris.sh
 
 ## Events
 
-<EventsTable typeFile="CalloutCardEmits" />
+<EventsTable />
 
 <div style="font-size: 0.8125rem">
 
