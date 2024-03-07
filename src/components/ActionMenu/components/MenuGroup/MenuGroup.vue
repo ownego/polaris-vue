@@ -13,7 +13,6 @@ Popover(
       :accessibilityLabel="accessibilityLabel",
       :disabled="disabled",
       @click="handleClick",
-      @get-offset-width="handleOffsetWidth",
     ) {{ title }}
   ActionList(
     :items="actions",
@@ -74,7 +73,6 @@ const emits = defineEmits<{
   (e: 'click'): void;
   (e: 'open', title: string): void;
   (e: 'close', title: string): void;
-  (e: 'get-offset-width', width: number): void;
 }>();
 
 const handleClose = () => {
@@ -84,9 +82,5 @@ const handleClose = () => {
 const handleClick = () => {
   emits('click');
   emits('open', props.title);
-};
-
-const handleOffsetWidth = (width: number) => {
-  emits('get-offset-width', width);
 };
 </script>

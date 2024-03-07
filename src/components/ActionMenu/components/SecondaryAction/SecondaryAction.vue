@@ -1,6 +1,5 @@
 <template lang="pug">
 div(
-  ref="secondaryActionsRef",
   :class="className",
 )
   Tooltip(
@@ -29,7 +28,7 @@ div(
 </template>
 
 <script setup lang="ts">
-import { ref, computed, onMounted } from 'vue';
+import { computed } from 'vue';
 import { classNames } from '@/utilities/css';
 import { useHasSlot } from '@/use/useHasSlot';
 import type { VueNode } from '@/utilities/types';
@@ -50,12 +49,9 @@ const props = defineProps<SecondaryActionProps>();
 
 const emits = defineEmits<{
   (e: 'click'): void;
-  (e: 'get-offset-width', width: number): void;
 }>();
 
 const { hasSlot } = useHasSlot();
-
-const secondaryActionsRef = ref<HTMLDivElement | null>(null);
 
 const className = computed(() =>
   classNames(
@@ -63,15 +59,5 @@ const className = computed(() =>
     props.tone === 'critical' && styles.critical,
   )
 );
-
-onMounted(() => {
-  onGetOffsetWidth(secondaryActionsRef.value?.offsetWidth || 0);
-})
-
-const onGetOffsetWidth = (width: number) => {
-  if (secondaryActionsRef.value) {
-    emits('get-offset-width', width);
-  }
-};
 
 </script>

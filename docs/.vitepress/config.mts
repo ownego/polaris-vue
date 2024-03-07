@@ -9,6 +9,7 @@ import { getComponentContent, getCategoryContent } from '../script/content';
 import { generateSideBar } from '../script/sidebar';
 import { oeIcon } from '../script/svg';
 import { exampleParser } from '../script/parser';
+import { linkInsideHeader } from './theme/use/permalink';
 
 // https://vitepress.dev/reference/site-config
 export default defineConfig({
@@ -158,6 +159,9 @@ export default defineConfig({
 
         return (fence(...args));
       };
+    },
+    anchor: {
+      permalink: linkInsideHeader(),
     },
   },
 

@@ -2,25 +2,26 @@
 div(:class="styles.PrimaryActionWrapper")
   Box(printHidden)
     slot(v-if="hasSlot(slots.default)")
-    Tooltip(
-      v-else-if="helpText",
-      :content="helpText",
-    )
+    template(v-else)
+      Tooltip(
+        v-if="helpText",
+        :content="helpText",
+      )
+        ButtonFrom(
+          :action="iconOnly",
+          :overrides="{ variant: primary ? 'primary' : undefined }",
+          @action="() => { onAction && onAction() }",
+          @mouseenter="() => { onMouseEnter && onMouseEnter() }",
+          @touchstart="() => { onTouchStart && onTouchStart() }",
+        )
       ButtonFrom(
+        v-else,
         :action="iconOnly",
         :overrides="{ variant: primary ? 'primary' : undefined }",
         @action="() => { onAction && onAction() }",
         @mouseenter="() => { onMouseEnter && onMouseEnter() }",
         @touchstart="() => { onTouchStart && onTouchStart() }",
       )
-    ButtonFrom(
-      v-else,
-      :action="iconOnly",
-      :overrides="{ variant: primary ? 'primary' : undefined }",
-      @action="() => { onAction && onAction() }",
-      @mouseenter="() => { onMouseEnter && onMouseEnter() }",
-      @touchstart="() => { onTouchStart && onTouchStart() }",
-    )
 </template>
 
 <script setup lang="ts">
