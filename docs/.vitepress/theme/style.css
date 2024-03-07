@@ -215,6 +215,10 @@ h1, h2, h3, h4, h5, h6, p {
   }
 }
 
+.VPNavBar.has-sidebar .title {
+  background-color: var(--vp-sidebar-bg-color, var(--surface));
+}
+
 html:not(.example-preview) {
   background-color: var(--vp-c-bg);
 }
