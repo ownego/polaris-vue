@@ -1,29 +1,17 @@
 <template lang="pug">
-div(
-  ref="actionsLayoutRef",
-  :class="styles.ActionsLayout",
-)
-  ButtonGroup(gap="tight")
-    template(
-      v-if="measuredActions.showable.length > 0"
-      v-for="action, index in measuredActions.showable",
+div(:class="styles.ActionsLayoutOuter")
+  ActionsMeasurer(
+    :actions="actions",
+    :groups="groups",
+    @measurements="handleMeasurement",
+  )
+  div(:class="classname")
+    SecondaryAction(
+      v-for="action, index in actionsFilter",
+      v-bind="getSecondaryActionProps(index)"
       :key="action.content",
-    )
-      SecondaryAction(
-        v-if="action.content",
-        v-bind="getSecondaryActionProps(index)",
-        @get-offset-width="handleActionsOffsetWidth",
-      ) {{ action.content }}
-    template(
-      v-for="action, index in actions",
-      :key="action.content",
-    )
-      SecondaryAction(
-        v-if="!measuredActions.showable.length && !measuredActions.rolledUp.includes(action)",
-        v-bind="getSecondaryActionProps(index)",
-        @click="action.onAction?.() || undefined",
-        @get-offset-width="handleActionsOffsetWidth",
-      ) {{ action.content }}
+      @click="action.onAction?.() || undefined",
+    ) {{ action.content }}
     MenuGroup(
       v-for="group in filteredGroups",
       v-bind="menuGroupProps(group)",
@@ -32,17 +20,18 @@ div(
       :actions="getMenuGroupActions(group)",
       @open="handleMenuGroupToggle",
       @close="handleMenuGroupClose",
-      @get-offset-width="handleActionsOffsetWidth",
     )
-  EventListener(
-    event="resize",
-    :handler="handleResize",
-  )
 </template>
 
 <script setup lang="ts">
-import { ref, computed, onUpdated } from 'vue';
-import { debounce } from '@polaris/utilities/debounce';
+import {
+  ref,
+  computed,
+  watch,
+  reactive,
+  getCurrentInstance,
+} from 'vue';
+import { getVisibleAndHiddenActionsIndices } from '@polaris/components/ActionMenu/components/Actions/utilities';
 import type {
   ActionListItemDescriptor,
   MenuActionDescriptor,
@@ -50,11 +39,13 @@ import type {
   MenuGroupDescriptor,
 } from '@/utilities/types';
 import useI18n from '@/use/useI18n';
+import { classNames } from '@/utilities/css';
 import styles from '@polaris/components/ActionMenu/components/Actions/Actions.module.scss';
-import { SecondaryAction } from '../SecondaryAction';
-import { MenuGroup } from '../MenuGroup';
+import { SecondaryAction, MenuGroup } from '../index';
+import { ActionsMeasurer } from './components/ActionMeasurer';
 import type { MenuGroupProps } from '../MenuGroup/MenuGroup.vue';
 import type { SecondaryActionProps } from '../SecondaryAction/SecondaryAction.vue';
+import type { ActionsMeasurements } from './components/ActionMeasurer/ActionsMeasurer.vue';
 
 interface Props {
   /** Collection of page-level secondary actions */
@@ -63,14 +54,19 @@ interface Props {
   groups?: MenuGroupDescriptor[];
 }
 
-interface MeasuredActions {
-  showable: MenuActionDescriptor[];
-  rolledUp: (MenuActionDescriptor | MenuGroupDescriptor)[];
+interface ActionsState {
+  visibleActions: number[];
+  hiddenActions: number[];
+  visibleGroups: number[];
+  hiddenGroups: number[];
+  actionsWidths: number[];
+  containerWidth: number;
+  disclosureWidth: number;
+  hasMeasured: boolean;
 }
 
-const ACTION_SPACING = 8;
-
 const i18n = useI18n();
+const currentInstance = getCurrentInstance();
 
 const props = defineProps<Props>();
 
@@ -79,42 +75,33 @@ const emits = defineEmits<{
   (event: 'action-rollup', hasRolledUp: boolean): void;
 }>();
 
-const actionsLayoutRef = ref<HTMLDivElement | null>(null);
-const menuGroupWidth = ref<number>(0);
-const availableWidth = ref<number>(0);
-const actionsAndGroupsLength = ref<number>(0);
-const timesMeasured = ref(0);
-const actionWidths = ref<number[]>([]);
 const rollupActiveRef = ref<boolean | null>(null);
-
 const activeMenuGroup = ref<string | null>(null);
-const measuredActions = ref<MeasuredActions>({
-  showable: [],
-  rolledUp: [],
-});
 
 const defaultRollupGroup = ref<MenuGroupDescriptor>({
   title: i18n.translate('Polaris.ActionMenu.Actions.moreActions'),
   actions: [],
 });
 
-const lastMenuGroup = computed(() => {
-  if (props.groups && props.groups.length) {
-    return [...props.groups].pop();
-  }
-
-  return [];
+const state = reactive<ActionsState>({
+  disclosureWidth: 0,
+  containerWidth: Infinity,
+  actionsWidths: [],
+  visibleActions: [],
+  hiddenActions: [],
+  visibleGroups: [],
+  hiddenGroups: [],
+  hasMeasured: false,
 });
 
-const lastMenuGroupWidth = computed(() => [...actionWidths.value].pop() || 0);
+const classname = computed(() => classNames(
+  styles.ActionsLayout,
+  !state.hasMeasured && styles['ActionsLayout--measuring'],
+));
 
 const getSecondaryActionProps = (index: number) => (
   props.actions?.[index] as SecondaryActionProps
 );
-
-const handleActionsOffsetWidth = (width: number) => {
-  actionWidths.value = [...actionWidths.value, width];
-}
 
 const handleMenuGroupToggle = (group: string) => {
   if (activeMenuGroup.value) {
@@ -128,28 +115,57 @@ const handleMenuGroupClose = () => {
   activeMenuGroup.value = null;
 }
 
-const combinedGroups = computed(() => {
-  if (props.groups) {
-    return [...props.groups, defaultRollupGroup.value];
-  }
+const actionsOrDefault = computed(() => props.actions ?? []);
+const groupsOrDefault = computed(() => props.groups ?? []);
 
-  return [defaultRollupGroup.value];
-});
+const groupsToFilter = computed(() =>
+  state.hiddenGroups.length > 0 || state.hiddenActions.length > 0
+    ? [...groupsOrDefault.value, defaultRollupGroup.value]
+    : [...groupsOrDefault.value],
+);
 
-const filteredGroups = computed(() => {
-  return combinedGroups.value.filter((group) => {
-    return props.groups && props.groups.length === 0
-      ? group
-      : group === lastMenuGroup.value ||
-          !measuredActions.value.rolledUp.some(
-            (rolledUpGroup) =>
-              isMenuGroup(rolledUpGroup) && rolledUpGroup.title === group.title,
-          );
-  });
-});
+const filteredGroups = computed(() =>
+  groupsToFilter.value.filter((group, index) => {
+    const hasNoGroupsProp = groupsOrDefault.value.length === 0;
+    const isVisibleGroup = state.visibleGroups.includes(index);
+    const isDefaultGroup = group.title === defaultRollupGroup.value.title &&
+      group.actions.length === 0;
+
+    if (hasNoGroupsProp) {
+      return state.hiddenActions.length > 0;
+    }
+
+    if (isDefaultGroup) {
+      return true;
+    }
+
+    return isVisibleGroup;
+  }),
+);
+
+const actionsFilter = computed(() =>
+  actionsOrDefault.value.filter((_, index) => {
+    if (!state.visibleActions.includes(index)) {
+      return false;
+    }
+
+    return true;
+  }),
+);
+
+const hiddenActionObjects = computed(() => state.hiddenActions
+  .map((index) => actionsOrDefault.value[index])
+  .filter((action) => action != null)
+);
+
+const hiddenGroupObjects = computed(() => state.hiddenGroups
+  .map((index) => groupsOrDefault.value[index])
+  .filter((group) => group != null)
+);
 
 const finalRolledUp = computed(() => {
-  return measuredActions.value.rolledUp.reduce(
+  const allHiddenItems = [...hiddenActionObjects.value, ...hiddenGroupObjects.value];
+  return allHiddenItems.reduce(
     ([actions, sections], action) => {
       if (isMenuGroup(action)) {
         sections.push({
@@ -185,141 +201,82 @@ const menuGroupProps = (group: MenuGroupDescriptor) => {
 
 const getMenuGroupActions = (group: MenuGroupDescriptor): ActionListItemDescriptor[] => {
   const isDefaultGroup = group === defaultRollupGroup.value;
-  const isLastMenuGroup = group === lastMenuGroup.value;
+
   // The condition is `(!x && !y) || (!x && y) || (x && z && w)`
   // there are too many ways to write this condition, e.g: !x || (w && z)
   // But I want to keep it simple and readable as original conditions from polaris-react.
-  if (!isDefaultGroup && !isLastMenuGroup) {
+  if (!isDefaultGroup) {
     return group.actions;
   }
 
-  if (!isDefaultGroup && isLastMenuGroup) {
-    return [...finalRolledUpActions.value, ...group.actions];
-  }
+  return [...finalRolledUpActions.value, ...group.actions];
+};
 
-  if (isDefaultGroup && (!props.groups || props.groups.length === 0) && finalRolledUpActions.value.length) {
-    return finalRolledUpActions.value;
-  }
+const handleMeasurement = (measurements: ActionsMeasurements) => {
+  const {
+    hiddenActionsWidths: actionsWidths,
+    containerWidth,
+    disclosureWidth,
+  } = measurements;
 
-  return [];
-}
-
-const updateActions = () => {
-  let actionsAndGroups = [...(props.actions || []), ...(props.groups || [])];
-
-  if (props.groups && props.groups.length > 0) {
-    // We don't want to include actions from the last group
-    // since it is always rendered with its own actions
-    actionsAndGroups = [...actionsAndGroups].slice(
-      0,
-      actionsAndGroups.length - 1,
+  const { visibleActions, hiddenActions, visibleGroups, hiddenGroups } =
+    getVisibleAndHiddenActionsIndices(
+      actionsOrDefault.value,
+      groupsOrDefault.value,
+      disclosureWidth,
+      actionsWidths,
+      containerWidth,
     );
-  }
-  const showable = actionsAndGroups.slice(0, measuredActions.value.showable.length);
-  const rolledUp = actionsAndGroups.slice(
-    measuredActions.value.showable.length,
-    actionsAndGroups.length,
-  );
 
-  measuredActions.value = {
-    showable,
-    rolledUp,
-  };
-};
-
-onUpdated(() => {
-  updateActions();
-
-  if (!actionsLayoutRef.value) {
-    return;
-  }
-
-  availableWidth.value = actionsLayoutRef.value.offsetWidth;
-  if (
-    // Allow measuring twice
-    // This accounts for the initial paint and re-flow
-    timesMeasured.value >= 2 &&
-    [...(props.actions || []), ...(props.groups || [])].length === actionsAndGroupsLength.value
-  ) {
-    updateActions();
-    return;
-  }
-  measureActions();
-});
-
-const measureActions = () => {
-  if (
-    actionWidths.value.length === 0 ||
-    availableWidth.value === 0
-  ) {
-    return;
-  }
-
-  const actionsAndGroups = [...(props.actions || []), ...(props.groups || [])];
-
-  if (actionsAndGroups.length === 1) {
-    measuredActions.value = {
-      showable: actionsAndGroups,
-      rolledUp: [],
-    };
-    return;
-  }
-
-  let currentAvailableWidth = availableWidth.value;
-  let newShowableActions: MenuActionDescriptor[] = [];
-  let newRolledUpActions: (MenuActionDescriptor | MenuGroupDescriptor)[] = [];
-
-  actionsAndGroups.forEach((action, index) => {
-    const canFitAction =
-      actionWidths.value[index] +
-        menuGroupWidth.value +
-        ACTION_SPACING +
-        lastMenuGroupWidth.value <=
-      currentAvailableWidth;
-
-    if (canFitAction) {
-      currentAvailableWidth -=
-        actionWidths.value[index] + ACTION_SPACING * 2;
-      newShowableActions = [...newShowableActions, action];
-    } else {
-      currentAvailableWidth = 0;
-      // Find last group if it exists and always render it as a rolled up action below
-      if (action === lastMenuGroup) return;
-      newRolledUpActions = [...newRolledUpActions, action];
+  if (currentInstance?.vnode.props?.onActionRollup) {
+    const isRollupActive =
+      hiddenActions.length > 0 || hiddenGroups.length > 0;
+    if (rollupActiveRef.value !== isRollupActive) {
+      emits('action-rollup', isRollupActive);
+      rollupActiveRef.value = isRollupActive;
     }
-  });
-
-  // Note: Do not include last group actions since we are skipping `lastMenuGroup` above
-  // as it is always rendered with its own actions
-  const isRollupActive = newShowableActions.length < actionsAndGroups.length - 1;
-  if (rollupActiveRef.value !== isRollupActive) {
-    emits('action-rollup', isRollupActive);
-    rollupActiveRef.value = isRollupActive;
   }
 
-  measuredActions.value = {
-    showable: newShowableActions,
-    rolledUp: newRolledUpActions,
-  };
-
-  timesMeasured.value += 1;
-  actionsAndGroupsLength.value = actionsAndGroups.length;
+  state.visibleActions = visibleActions;
+  state.hiddenActions = hiddenActions;
+  state.visibleGroups = visibleGroups;
+  state.hiddenGroups = hiddenGroups;
+  state.actionsWidths = actionsWidths;
+  state.containerWidth = containerWidth;
+  state.disclosureWidth = disclosureWidth;
+  state.hasMeasured = true;
 };
 
-const handleResize = () => {
-  debounce(
-    () => {
-      if (!actionsLayoutRef.value) return;
-
-      availableWidth.value = actionsLayoutRef.value.offsetWidth;
-      // Set timesMeasured to 0 to allow re-measuring
-      timesMeasured.value = 0;
-      measureActions();
-    },
-    50,
-    {leading: false, trailing: true},
-  );
-};
+watch(
+  () => [
+    state.containerWidth,
+    state.disclosureWidth,
+    props.actions,
+    props.groups,
+    state.actionsWidths,
+  ],
+  () => {
+    if (state.containerWidth === 0) {
+      return;
+    }
+    const { visibleActions, visibleGroups, hiddenActions, hiddenGroups } =
+      getVisibleAndHiddenActionsIndices(
+        props.actions,
+        props.groups,
+        state.disclosureWidth,
+        state.actionsWidths,
+        state.containerWidth,
+      );
+    state.visibleActions = visibleActions;
+    state.visibleGroups = visibleGroups;
+    state.hiddenActions = hiddenActions;
+    state.hiddenGroups = hiddenGroups;
+    state.hasMeasured = state.containerWidth !== Infinity;
+  },
+  {
+    immediate: true,
+  }
+);
 
 const isMenuGroup = (
   actionOrMenuGroup: MenuGroupDescriptor | MenuActionDescriptor,
