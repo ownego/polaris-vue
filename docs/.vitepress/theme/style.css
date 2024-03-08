@@ -215,8 +215,10 @@ h1, h2, h3, h4, h5, h6, p {
   }
 }
 
-.VPNavBar.has-sidebar .title {
-  background-color: var(--vp-sidebar-bg-color, var(--surface));
+@media screen and (min-width: 960px) {
+  .VPNavBar.has-sidebar .title {
+    background-color: var(--vp-sidebar-bg-color, var(--surface));
+  }
 }
 
 html:not(.example-preview) {
@@ -225,6 +227,10 @@ html:not(.example-preview) {
 
 .VPFeature .title {
   color: var(--text-strong);
+}
+
+.VPSidebar.open {
+  background-color: var(--vp-sidebar-bg-color, var(--surface));
 }
 
 .VPSidebarItem.level-0 > .items {
