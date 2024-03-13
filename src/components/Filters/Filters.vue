@@ -1,5 +1,9 @@
 <template lang="pug">
-div(:class="filtersClassName")
+div(
+  ref="containerRef",
+  :class="filtersClassName",
+  :style="searchFieldStyle",
+)
   //- QueryField
   div(
     v-if="!hideQueryField",
@@ -13,7 +17,6 @@ div(:class="filtersClassName")
       )
         div(
           :class="styles.SearchField",
-          :style="searchFieldStyle",
         )
           SearchField(
             v-model="modelValue",
@@ -37,7 +40,7 @@ div(:class="filtersClassName")
     :hide-query-field="hideQueryField",
     :disable-filters="disableFilters",
     :close-on-child-overlay-click="closeOnChildOverlayClick",
-    :mounted-state-styles="mountedStateStyles",
+    :style="mountedStateStyles",
     @add-filter-click="emits('add-filter-click')",
     @clear-all="emits('clear-all')",
   )
@@ -57,6 +60,7 @@ import {
   SearchField,
 } from './components';
 import styles  from '@polaris/components/Filters/Filters.module.scss';
+import { type TransitionStatus } from '../IndexFilters/types';
 
 const TRANSITION_DURATION = 'var(--p-motion-duration-150)';
 const TRANSITION_MARGIN = '-36px';
@@ -102,8 +106,6 @@ const transitionFilterStyles = {
     marginTop: TRANSITION_MARGIN,
   },
 };
-
-type TransitionStatus = "entering" | "entered" | "exiting" | "exited" | "unmounted";
 
 export type FiltersProps = {
   /** Currently entered text in the query field */
@@ -159,8 +161,6 @@ const slots = defineSlots<{
   default?: (_?: VueNode) => VNode[];
 }>();
 
-// const modelValue = defineModel<string>();
-
 const modelValue = computed({
   get: () => props.queryValue || '',
   set: (value: string) => emits('query-change', value),
@@ -171,7 +171,11 @@ const filtersClassName = computed(() => classNames(
   props.hideQueryField && styles.hideQueryField,
 ));
 const searchFieldStyle = computed(() => {
-  return props.mountedState && !props.hideQueryField
+  if (props.mountedState === 'entered') {
+    return undefined;
+  }
+
+  return props.mountedState
     ? {
         ...defaultStyle,
         ...transitionStyles[props.mountedState],
