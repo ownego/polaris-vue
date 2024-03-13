@@ -50,8 +50,7 @@ div(
               @after-leave="onTransitionButtonAfterLeave",
             )
               SearchFilterButton(
-                v-show="mode === IndexFiltersMode.Default"
-                v-if="!(hideFilters && hideQueryField)",
+                v-if="!(hideFilters && hideQueryField) && mode === IndexFiltersMode.Default",
                 :label="searchFilterAriaLabel",
                 :tooltip-content="searchFilterTooltip",
                 :disabled="disabled",
@@ -91,7 +90,7 @@ div(
         @leave="onTransitionFiltersLeave",
       )
         Filters(
-          v-show="mode === IndexFiltersMode.Filtering",
+          v-if="mode === IndexFiltersMode.Filtering",
           borderless-query-field,
           :close-on-child-overlay-click="closeOnChildOverlayClick",
           :query-value="queryValue",
@@ -432,7 +431,9 @@ function onPressF() {
 
 // Filters Mode Transition Action
 function onTransitionFiltersBeforeEnter() {
-  transitionFiltersState.value = 'entering';
+  setTimeout(() => {
+    transitionFiltersState.value = 'entering';
+  }, 1);
 }
 
 function onTransitionFiltersEnter() {
