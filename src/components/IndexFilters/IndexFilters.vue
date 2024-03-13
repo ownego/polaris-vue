@@ -88,9 +88,10 @@ div(
         @after-enter="onTransitionFiltersAfterEnter",
         @before-leave="onTransitionFiltersBeforeLeave",
         @leave="onTransitionFiltersLeave",
+        @after-leave="onTransitionFiltersAfterLeave",
       )
         Filters(
-          v-if="mode === IndexFiltersMode.Filtering",
+          v-show="mode === IndexFiltersMode.Filtering",
           borderless-query-field,
           :close-on-child-overlay-click="closeOnChildOverlayClick",
           :query-value="queryValue",
@@ -437,48 +438,70 @@ function onTransitionFiltersBeforeEnter() {
 }
 
 function onTransitionFiltersEnter() {
-  transitionFiltersState.value = 'entered';
+  setTimeout(() => {
+    transitionFiltersState.value = 'entered';
+  }, 1);
 }
 
 function onTransitionFiltersAfterEnter() {
-  transitionFiltersState.value = 'entered';
+  setTimeout(() => {
+    transitionFiltersState.value = 'entered';
+  }, 1);
 }
 
 function onTransitionFiltersBeforeLeave() {
-  transitionFiltersState.value = 'exiting';
+  setTimeout(() => {
+    transitionFiltersState.value = 'exiting';
+  }, 1);
 }
 
 function onTransitionFiltersLeave() {
-  transitionFiltersState.value = 'exited';
+  setTimeout(() => {
+    transitionFiltersState.value = 'exited';
+  }, 1);
 }
 
 function onTransitionFiltersAfterLeave() {
-  transitionFiltersState.value = 'unmounted';
+  setTimeout(() => {
+    transitionFiltersState.value = 'unmounted';
+  }, 1);
 }
 
 // - Button Filter Icon Transition Action
 function onTransitionButtonBeforeEnter() {
-  transitionButtonState.value = 'entering';
+  setTimeout(() => {
+    transitionButtonState.value = 'entering';
+  }, 1);
 }
 
 function onTransitionButtonEnter() {
-  transitionButtonState.value = 'entered';
+  setTimeout(() => {
+    transitionButtonState.value = 'entered';
+  }, 1);
 }
 
 function onTransitionButtonAfterEnter() {
-  transitionButtonState.value = 'entered';
+  setTimeout(() => {
+    transitionButtonState.value = 'entered';
+  }, 1);
 }
 
 function onTransitionButtonBeforeLeave() {
-  transitionButtonState.value = 'exiting';
+  setTimeout(() => {
+    transitionButtonState.value = 'exiting';
+  }, 1);
 }
 
 function onTransitionButtonLeave() {
-  transitionButtonState.value = 'exited';
+  setTimeout(() => {
+    transitionButtonState.value = 'exited';
+  }, 1);
 }
 
 function onTransitionButtonAfterLeave() {
-  transitionButtonState.value = 'unmounted';
+  setTimeout(() => {
+    transitionButtonState.value = 'umnounted';
+  }, 1);
 }
 
 watch(
