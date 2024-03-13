@@ -1,5 +1,6 @@
 <template lang="pug">
 div(
+  ref="containerRef",
   :class="filtersClassName",
   :style="searchFieldStyle",
 )
@@ -39,7 +40,7 @@ div(
     :hide-query-field="hideQueryField",
     :disable-filters="disableFilters",
     :close-on-child-overlay-click="closeOnChildOverlayClick",
-    :mounted-state-styles="mountedStateStyles",
+    :style="mountedStateStyles",
     @add-filter-click="emits('add-filter-click')",
     @clear-all="emits('clear-all')",
   )
@@ -47,7 +48,7 @@ div(
 </template>
 
 <script setup lang="ts">
-import { type VNode, computed, ref } from 'vue';
+import { type VNode, computed } from 'vue';
 import { classNames } from '@/utilities/css';
 import type { AppliedFilterInterface, FilterInterface, VueNode } from '@/utilities/types';
 import {
@@ -59,6 +60,7 @@ import {
   SearchField,
 } from './components';
 import styles  from '@polaris/components/Filters/Filters.module.scss';
+import { type TransitionStatus } from '../IndexFilters/types';
 
 const TRANSITION_DURATION = 'var(--p-motion-duration-150)';
 const TRANSITION_MARGIN = '-36px';
@@ -104,8 +106,6 @@ const transitionFilterStyles = {
     marginTop: TRANSITION_MARGIN,
   },
 };
-
-type TransitionStatus = "entering" | "entered" | "exiting" | "exited" | "unmounted";
 
 export type FiltersProps = {
   /** Currently entered text in the query field */
@@ -171,6 +171,10 @@ const filtersClassName = computed(() => classNames(
   props.hideQueryField && styles.hideQueryField,
 ));
 const searchFieldStyle = computed(() => {
+  if (props.mountedState === 'entered') {
+    return undefined;
+  }
+
   return props.mountedState
     ? {
         ...defaultStyle,

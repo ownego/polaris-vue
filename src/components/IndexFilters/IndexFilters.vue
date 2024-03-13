@@ -9,46 +9,48 @@ div(
     :class="indexFiltersClassName",
   )
     div(ref="defaultRef")
-      Container(v-show="mode !== IndexFiltersMode.Filtering")
-        InlineStack(
-          align="start",
-          block-align="center",
-          :gap="{ xs: '0', md: '200'}",
-          :wrap="false",
-        )
-          div(:class="tabsWrapperClassName")
-            div(
-              :class="styles.TabsInner",
-              :style="{...defaultStyle, ...transitionStyles[transitionButtonState]}",
-            )
-              Tabs(
-                :tabs="tabs",
-                :selected="selected",
-                :disabled="Boolean(mode !== IndexFiltersMode.Default || disabled)",
-                :can-create-new-view="canCreateNewView",
-                @select="emits('select', $event)",
-                @create-new-view="emits('create-new-view', $event)",
+      Transition(
+        name='custom-index-filters-button-transition',
+        :css="false",
+        @before-enter="onTransitionButtonBeforeEnter",
+        @enter="onTransitionButtonEnter",
+        @after-enter="onTransitionButtonAfterEnter",
+        @before-leave="onTransitionButtonBeforeLeave",
+        @leave="onTransitionButtonLeave",
+        @after-leave="onTransitionButtonAfterLeave",
+      )
+        Container(v-if="mode !== IndexFiltersMode.Filtering")
+          InlineStack(
+            align="start",
+            block-align="center",
+            :gap="{ xs: '0', md: '200'}",
+            :wrap="false",
+          )
+            div(:class="tabsWrapperClassName")
+              div(
+                :class="styles.TabsInner",
+                :style="{...defaultStyle, ...transitionStyles[transitionButtonState]}",
               )
-            div(
-              v-if="isLoading && breakpoints.mdDown",
-              :class="styles.TabsLoading",
-            )
-              Spinner(size="small")
-          div(:class="styles.ActionWrap")
-            div(
-              v-if="isLoading && !breakpoints.mdDown",
-              :class="styles.DesktopLoading",
-            )
-              Spinner(size="small")
-            Transition(
-              name='custom-index-filters-button-transition',
-              @before-enter="onTransitionButtonBeforeEnter",
-              @enter="onTransitionButtonEnter",
-              @after-enter="onTransitionButtonAfterEnter",
-              @before-leave="onTransitionButtonBeforeLeave",
-              @leave="onTransitionButtonLeave",
-              @after-leave="onTransitionButtonAfterLeave",
-            )
+                Tabs(
+                  :tabs="tabs",
+                  :selected="selected",
+                  :disabled="Boolean(mode !== IndexFiltersMode.Default || disabled)",
+                  :can-create-new-view="canCreateNewView",
+                  @select="emits('select', $event)",
+                  @create-new-view="emits('create-new-view', $event)",
+                )
+              div(
+                v-if="isLoading && breakpoints.mdDown",
+                :class="styles.TabsLoading",
+              )
+                Spinner(size="small")
+            div(:class="styles.ActionWrap")
+              div(
+                v-if="isLoading && !breakpoints.mdDown",
+                :class="styles.DesktopLoading",
+              )
+                Spinner(size="small")
+
               SearchFilterButton(
                 v-if="!(hideFilters && hideQueryField) && mode === IndexFiltersMode.Default",
                 :label="searchFilterAriaLabel",
@@ -56,33 +58,36 @@ div(
                 :disabled="disabled",
                 :hide-query-field="hideQueryField",
                 :hide-filters="hideFilters",
-                :style="{...defaultStyle, ...transitionStyles[transitionButtonState]}",
+                :style="mountedStateStyles",
                 @click="handleClickFilterButton",
               )
-            template(v-if="mode === IndexFiltersMode.Default")
-              EditColumnsButton(
-                v-if="showEditColumnsButton",
-                :disabled="disabled",
-                @click="handleClickEditColumnsButton",
-              )
-              SortButton(
-                v-if="sortOptions && sortOptions.length",
-                :choices="sortOptions",
-                :selected="sortSelected || ['']",
-                :disabled="disabled",
-                v-bind="sortButtonEvents",
-              )
-            template(v-if="mode === IndexFiltersMode.EditingColumns")
-              UpdateButtons(
-                v-if="enhancedCancelAction || enhancedPrimaryAction",
-                :primaryAction="enhancedPrimaryAction",
-                :cancelAction="enhancedCancelAction",
-                :disabled="disabled",
-                :view-names="viewNames",
-              )
+
+              template(v-if="mode === IndexFiltersMode.Default")
+                EditColumnsButton(
+                  v-if="showEditColumnsButton",
+                  :disabled="disabled",
+                  @click="handleClickEditColumnsButton",
+                )
+                SortButton(
+                  v-if="sortOptions && sortOptions.length",
+                  :choices="sortOptions",
+                  :selected="sortSelected || ['']",
+                  :disabled="disabled",
+                  v-bind="sortButtonEvents",
+                )
+              template(v-if="mode === IndexFiltersMode.EditingColumns")
+                UpdateButtons(
+                  v-if="enhancedCancelAction || enhancedPrimaryAction",
+                  :primaryAction="enhancedPrimaryAction",
+                  :cancelAction="enhancedCancelAction",
+                  :disabled="disabled",
+                  :view-names="viewNames",
+                )
+
     div(ref="filteringRef")
       Transition(
         name='slide-fade',
+        :css="false",
         @before-enter="onTransitionFiltersBeforeEnter",
         @enter="onTransitionFiltersEnter",
         @after-enter="onTransitionFiltersAfterEnter",
@@ -91,7 +96,7 @@ div(
         @after-leave="onTransitionFiltersAfterLeave",
       )
         Filters(
-          v-show="mode === IndexFiltersMode.Filtering",
+          v-if="mode === IndexFiltersMode.Filtering",
           borderless-query-field,
           :close-on-child-overlay-click="closeOnChildOverlayClick",
           :query-value="queryValue",
@@ -131,14 +136,13 @@ div(
 </template>
 
 <script setup lang="ts">
-import { ref, computed, getCurrentInstance, Transition, watch } from 'vue';
+import { ref, computed, getCurrentInstance, Transition, watch, type CSSProperties } from 'vue';
 import useI18n from '@/use/useI18n';
 import { useToggle } from '@/use/useToggle';
 import { useIsSticky } from '@/use/useIsSticky';
 import { useBreakpoints } from '@/use/useBreakpoints';
 import { classNames } from '@/utilities/css';
 import { useEventListener } from '@/utilities/use-event-listener';
-import { useOnValueChange } from '@/utilities/use-on-value-change';
 import {
   InlineStack,
   Spinner,
@@ -158,16 +162,17 @@ import {
   type IndexFiltersCancelAction,
   type IndexFiltersPrimaryAction,
   type SortButtonChoice,
+  type TransitionStatus,
   IndexFiltersMode,
 } from './types';
 import styles from '@polaris/components/IndexFilters/IndexFilters.module.scss';
 
-const TRANSITION_DURATION = 150;
+const TRANSITION_DURATION = 'var(--p-motion-duration-150)';
 
 const DEFAULT_IGNORED_TAGS = ['INPUT', 'SELECT', 'TEXTAREA'];
 
 const defaultStyle = {
-  transition: `opacity ${TRANSITION_DURATION}ms var(--p-motion-ease)`,
+  transition: `opacity ${TRANSITION_DURATION} var(--p-motion-ease)`,
   opacity: 0,
 };
 
@@ -177,7 +182,7 @@ const transitionStyles = {
   exiting: {opacity: 0},
   exited: {opacity: 0},
   unmounted: {opacity: 0},
-};
+} as Record<TransitionStatus, CSSProperties>;
 
 type ExecutedCallback = (name: string) => Promise<boolean>;
 
@@ -280,8 +285,17 @@ const {intersectionRef, measurerRef, indexFilteringHeight, isSticky} =
 
 const defaultRef = ref<HTMLElement | null>(null);
 const filteringRef = ref<HTMLElement | null>(null);
-const transitionFiltersState = ref(props.mode === IndexFiltersMode.Filtering ? 'entering' : 'unmounted');
-const transitionButtonState = ref('entering');
+const transitionFiltersState = ref<TransitionStatus>(props.mode === IndexFiltersMode.Filtering ? 'entering' : 'unmounted');
+const transitionButtonState = ref<TransitionStatus>('entered');
+
+const mountedStateStyles = computed<CSSProperties>(() => {
+  return transitionButtonState.value
+    ? {
+        ...defaultStyle,
+        ...transitionStyles[transitionButtonState.value],
+      }
+    : {};
+});
 
 const isActionLoading = computed(() => props.primaryAction?.loading || props.cancelAction?.loading);
 const searchFilterTooltipLabelId = computed(() => {
@@ -361,7 +375,7 @@ const onExecutedCancelAction = () => {
   emits('set-mode', IndexFiltersMode.Default);
 };
 
-const handleModeChange = (newMode: IndexFiltersMode) => {
+const handleModeChange = (newMode: IndexFiltersMode, _oldMode: IndexFiltersMode) => {
   if (newMode === IndexFiltersMode.Filtering && props.autoFocusSearchField) {
     setFiltersFocused();
   } else {
@@ -432,82 +446,60 @@ function onPressF() {
 
 // Filters Mode Transition Action
 function onTransitionFiltersBeforeEnter() {
-  setTimeout(() => {
-    transitionFiltersState.value = 'entering';
-  }, 1);
+  setTimeout(() => transitionFiltersState.value = 'entering', 1);
 }
 
 function onTransitionFiltersEnter() {
-  setTimeout(() => {
-    transitionFiltersState.value = 'entered';
-  }, 1);
+  setTimeout(() => transitionFiltersState.value = 'entered', 1);
 }
 
 function onTransitionFiltersAfterEnter() {
-  setTimeout(() => {
-    transitionFiltersState.value = 'entered';
-  }, 1);
+  setTimeout(() => transitionFiltersState.value = 'entered', 1);
 }
 
 function onTransitionFiltersBeforeLeave() {
-  setTimeout(() => {
-    transitionFiltersState.value = 'exiting';
-  }, 1);
+  transitionFiltersState.value = 'exiting';
 }
 
 function onTransitionFiltersLeave() {
-  setTimeout(() => {
-    transitionFiltersState.value = 'exited';
-  }, 1);
+  transitionFiltersState.value = 'exited';
 }
 
 function onTransitionFiltersAfterLeave() {
-  setTimeout(() => {
-    transitionFiltersState.value = 'unmounted';
-  }, 1);
+  transitionFiltersState.value = 'unmounted';
 }
 
 // - Button Filter Icon Transition Action
 function onTransitionButtonBeforeEnter() {
-  setTimeout(() => {
-    transitionButtonState.value = 'entering';
-  }, 1);
+  transitionButtonState.value = 'entering';
 }
 
 function onTransitionButtonEnter() {
-  setTimeout(() => {
-    transitionButtonState.value = 'entered';
-  }, 1);
+  transitionButtonState.value = 'entered';
 }
 
 function onTransitionButtonAfterEnter() {
-  setTimeout(() => {
-    transitionButtonState.value = 'entered';
-  }, 1);
+  transitionButtonState.value = 'entered';
 }
 
 function onTransitionButtonBeforeLeave() {
-  setTimeout(() => {
-    transitionButtonState.value = 'exiting';
-  }, 1);
+  transitionButtonState.value = 'exiting';
 }
 
 function onTransitionButtonLeave() {
-  setTimeout(() => {
-    transitionButtonState.value = 'exited';
-  }, 1);
+  transitionButtonState.value = 'exited';
 }
 
 function onTransitionButtonAfterLeave() {
-  setTimeout(() => {
-    transitionButtonState.value = 'umnounted';
-  }, 1);
+  transitionButtonState.value = 'unmounted';
 }
 
 watch(
   () => props.mode,
-  () => {
-    useOnValueChange(props.mode, handleModeChange(props.mode));
+  (newValue, oldValue) => {
+    if (newValue !== oldValue) {
+      handleModeChange(newValue, oldValue);
+    }
   },
   { flush: 'post' },
 );
