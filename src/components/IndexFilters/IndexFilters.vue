@@ -9,7 +9,7 @@ div(
     :class="indexFiltersClassName",
   )
     div(ref="defaultRef")
-      Container(v-if="mode !== IndexFiltersMode.Filtering")
+      Container(v-show="mode !== IndexFiltersMode.Filtering")
         InlineStack(
           align="start",
           block-align="center",
@@ -19,7 +19,7 @@ div(
           div(:class="tabsWrapperClassName")
             div(
               :class="styles.TabsInner",
-              :style="{...defaultStyle, ...transitionStyles[isSticky ? 'exited' : 'entered']}",
+              :style="{...defaultStyle, ...transitionStyles[transitionButtonState]}",
             )
               Tabs(
                 :tabs="tabs",
@@ -40,17 +40,27 @@ div(
               :class="styles.DesktopLoading",
             )
               Spinner(size="small")
-            template(v-if="mode === IndexFiltersMode.Default")
+            Transition(
+              name='custom-index-filters-button-transition',
+              @before-enter="onTransitionButtonBeforeEnter",
+              @enter="onTransitionButtonEnter",
+              @after-enter="onTransitionButtonAfterEnter",
+              @before-leave="onTransitionButtonBeforeLeave",
+              @leave="onTransitionButtonLeave",
+              @after-leave="onTransitionButtonAfterLeave",
+            )
               SearchFilterButton(
+                v-show="mode === IndexFiltersMode.Default"
                 v-if="!(hideFilters && hideQueryField)",
                 :label="searchFilterAriaLabel",
                 :tooltip-content="searchFilterTooltip",
                 :disabled="disabled",
                 :hide-query-field="hideQueryField",
                 :hide-filters="hideFilters",
-                :style="{...defaultStyle, ...transitionStyles[isSticky ? 'exited' : 'entered']}",
+                :style="{...defaultStyle, ...transitionStyles[transitionButtonState]}",
                 @click="handleClickFilterButton",
               )
+            template(v-if="mode === IndexFiltersMode.Default")
               EditColumnsButton(
                 v-if="showEditColumnsButton",
                 :disabled="disabled",
@@ -72,48 +82,56 @@ div(
                 :view-names="viewNames",
               )
     div(ref="filteringRef")
-      Filters(
-        v-if="mode === IndexFiltersMode.Filtering",
-        borderless-query-field,
-        :close-on-child-overlay-click="closeOnChildOverlayClick",
-        :query-value="queryValue",
-        :query-placeholder="queryPlaceholder",
-        :filters="filters",
-        :applied-filters="appliedFilters",
-        :hide-filters="hideFilters",
-        :hide-query-field="hideQueryField",
-        :disable-query-field="disableQueryField",
-        :focused="filtersFocused",
-        :loading="loading || isActionLoading",
-        :mounted-state="breakpoints.mdDown ? undefined : 'entered'",
-        @query-change="handleChangeSearch",
-        @query-clear="handleClearSearch",
-        @query-blur="handleQueryBlur",
-        @query-focus="handleQueryFocus",
-        @add-filter-click="emits('filter-click')",
-        @clear-all="emits('clear-all')",
+      Transition(
+        name='slide-fade',
+        @before-enter="onTransitionFiltersBeforeEnter",
+        @enter="onTransitionFiltersEnter",
+        @after-enter="onTransitionFiltersAfterEnter",
+        @before-leave="onTransitionFiltersBeforeLeave",
+        @leave="onTransitionFiltersLeave",
       )
-        div(:class="styles.ButtonWrap")
-          InlineStack(gap="200", align="start", block-align="center")
-            div(:style="{...defaultStyle, ...transitionStyles[isSticky ? 'exited' : 'entered']}")
-              UpdateButtons(
-                v-if="enhancedCancelAction || enhancedPrimaryAction",
-                :primaryAction="enhancedPrimaryAction",
-                :cancelAction="enhancedCancelAction",
+        Filters(
+          v-show="mode === IndexFiltersMode.Filtering",
+          borderless-query-field,
+          :close-on-child-overlay-click="closeOnChildOverlayClick",
+          :query-value="queryValue",
+          :query-placeholder="queryPlaceholder",
+          :filters="filters",
+          :applied-filters="appliedFilters",
+          :hide-filters="hideFilters",
+          :hide-query-field="hideQueryField",
+          :disable-query-field="disableQueryField",
+          :focused="filtersFocused",
+          :loading="loading || isActionLoading",
+          :mounted-state="breakpoints.mdDown ? undefined : transitionFiltersState",
+          @query-change="handleChangeSearch",
+          @query-clear="handleClearSearch",
+          @query-blur="handleQueryBlur",
+          @query-focus="handleQueryFocus",
+          @add-filter-click="emits('filter-click')",
+          @clear-all="emits('clear-all')",
+        )
+          div(:class="styles.ButtonWrap")
+            InlineStack(gap="200", align="start", block-align="center")
+              div(:style="{...defaultStyle, ...transitionStyles[transitionFiltersState]}")
+                UpdateButtons(
+                  v-if="enhancedCancelAction || enhancedPrimaryAction",
+                  :primaryAction="enhancedPrimaryAction",
+                  :cancelAction="enhancedCancelAction",
+                  :disabled="disabled",
+                  :view-names="viewNames",
+                )
+              SortButton(
+                v-if="sortOptions && sortOptions.length",
+                :choices="sortOptions",
+                :selected="sortSelected || ['']",
                 :disabled="disabled",
-                :view-names="viewNames",
+                v-bind="sortButtonEvents",
               )
-            SortButton(
-              v-if="sortOptions && sortOptions.length",
-              :choices="sortOptions",
-              :selected="sortSelected || ['']",
-              :disabled="disabled",
-              v-bind="sortButtonEvents",
-            )
 </template>
 
 <script setup lang="ts">
-import { ref, computed, getCurrentInstance } from 'vue';
+import { ref, computed, getCurrentInstance, Transition, watch } from 'vue';
 import useI18n from '@/use/useI18n';
 import { useToggle } from '@/use/useToggle';
 import { useIsSticky } from '@/use/useIsSticky';
@@ -244,6 +262,7 @@ const props = withDefaults(defineProps<IndexFiltersProps>(), {
   queryValue: '',
   isFlushWhenSticky: false,
   canCreateNewView: true,
+  autoFocusSearchField: true,
 });
 const emits: any = defineEmits<IndexFiltersEvents>();
 
@@ -261,6 +280,8 @@ const {intersectionRef, measurerRef, indexFilteringHeight, isSticky} =
 
 const defaultRef = ref<HTMLElement | null>(null);
 const filteringRef = ref<HTMLElement | null>(null);
+const transitionFiltersState = ref(props.mode === IndexFiltersMode.Filtering ? 'entering' : 'unmounted');
+const transitionButtonState = ref('entering');
 
 const isActionLoading = computed(() => props.primaryAction?.loading || props.cancelAction?.loading);
 const searchFilterTooltipLabelId = computed(() => {
@@ -348,8 +369,6 @@ const handleModeChange = (newMode: IndexFiltersMode) => {
   }
 };
 
-useOnValueChange(props.mode, handleModeChange);
-
 useEventListener('keydown', (event) => {
   const hasNoFiltersOrSearch = props.hideQueryField && props.hideFilters;
   if (props.disableKeyboardShortcuts || hasNoFiltersOrSearch) return;
@@ -410,4 +429,63 @@ function onPressF() {
   }
   beginEdit(IndexFiltersMode.Filtering);
 }
+
+// Filters Mode Transition Action
+function onTransitionFiltersBeforeEnter() {
+  transitionFiltersState.value = 'entering';
+}
+
+function onTransitionFiltersEnter() {
+  transitionFiltersState.value = 'entered';
+}
+
+function onTransitionFiltersAfterEnter() {
+  transitionFiltersState.value = 'entered';
+}
+
+function onTransitionFiltersBeforeLeave() {
+  transitionFiltersState.value = 'exiting';
+}
+
+function onTransitionFiltersLeave() {
+  transitionFiltersState.value = 'exited';
+}
+
+function onTransitionFiltersAfterLeave() {
+  transitionFiltersState.value = 'unmounted';
+}
+
+// - Button Filter Icon Transition Action
+function onTransitionButtonBeforeEnter() {
+  transitionButtonState.value = 'entering';
+}
+
+function onTransitionButtonEnter() {
+  transitionButtonState.value = 'entered';
+}
+
+function onTransitionButtonAfterEnter() {
+  transitionButtonState.value = 'entered';
+}
+
+function onTransitionButtonBeforeLeave() {
+  transitionButtonState.value = 'exiting';
+}
+
+function onTransitionButtonLeave() {
+  transitionButtonState.value = 'exited';
+}
+
+function onTransitionButtonAfterLeave() {
+  transitionButtonState.value = 'unmounted';
+}
+
+watch(
+  () => props.mode,
+  () => {
+    useOnValueChange(props.mode, handleModeChange(props.mode));
+  },
+  { flush: 'post' },
+);
 </script>
+

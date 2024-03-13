@@ -1,5 +1,8 @@
 <template lang="pug">
-div(:class="filtersClassName")
+div(
+  :class="filtersClassName",
+  :style="searchFieldStyle",
+)
   //- QueryField
   div(
     v-if="!hideQueryField",
@@ -13,7 +16,6 @@ div(:class="filtersClassName")
       )
         div(
           :class="styles.SearchField",
-          :style="searchFieldStyle",
         )
           SearchField(
             v-model="modelValue",
@@ -45,7 +47,7 @@ div(:class="filtersClassName")
 </template>
 
 <script setup lang="ts">
-import { type VNode, computed } from 'vue';
+import { type VNode, computed, ref } from 'vue';
 import { classNames } from '@/utilities/css';
 import type { AppliedFilterInterface, FilterInterface, VueNode } from '@/utilities/types';
 import {
@@ -159,8 +161,6 @@ const slots = defineSlots<{
   default?: (_?: VueNode) => VNode[];
 }>();
 
-// const modelValue = defineModel<string>();
-
 const modelValue = computed({
   get: () => props.queryValue || '',
   set: (value: string) => emits('query-change', value),
@@ -171,7 +171,7 @@ const filtersClassName = computed(() => classNames(
   props.hideQueryField && styles.hideQueryField,
 ));
 const searchFieldStyle = computed(() => {
-  return props.mountedState && !props.hideQueryField
+  return props.mountedState
     ? {
         ...defaultStyle,
         ...transitionStyles[props.mountedState],
