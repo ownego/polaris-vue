@@ -1,5 +1,7 @@
 type SortValue = `${string} ${'asc' | 'desc'}`;
 
+export type TransitionStatus = 'entering' | 'entered' | 'exiting' | 'exited' | 'unmounted';
+
 export interface SortButtonChoice {
   label: string;
   disabled?: boolean;

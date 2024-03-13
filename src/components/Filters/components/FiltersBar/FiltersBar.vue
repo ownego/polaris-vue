@@ -2,7 +2,6 @@
 div(
   aria-live="polite",
   :class="filterWrapperClass",
-  :style="mountedStateStyles",
 )
   div(:class="classNames(styles.FiltersInner)")
     div(:class="classNames(styles.FiltersStickyArea)")
@@ -70,7 +69,7 @@ div(
 </template>
 
 <script setup lang="ts">
-import { ref, computed, onMounted } from 'vue';
+import { ref, computed, onMounted, watch } from 'vue';
 import {
   Popover,
   ActionList,
@@ -81,7 +80,6 @@ import {
   Button,
 } from '@/components';
 import FilterPill from '../FilterPill/FilterPill.vue';
-import { useOnValueChange } from '@/utilities/use-on-value-change';
 import { classNames } from '@/utilities/css';
 import { useBreakpoints } from '@/use/useBreakpoints';
 import type {
@@ -112,7 +110,6 @@ type FiltersBarProps = {
   disableFilters?: boolean;
   /** Whether the filter should close when clicking inside another Popover. */
   closeOnChildOverlayClick?: boolean;
-  mountedStateStyles?: any;
 };
 
 type FilterBarEvents = {
@@ -155,10 +152,6 @@ const pinnedFiltersFromPropsAndAppliedFilters = computed<FilterInterface[]>(() =
 const localPinnedFilters = ref<string[]>(
   pinnedFiltersFromPropsAndAppliedFilters.value.map((filter) => filter.name),
 );
-
-useOnValueChange(props.filters.length, () => {
-  localPinnedFilters.value = pinnedFiltersFromPropsAndAppliedFilters.value.map((filter) => filter.name);
-});
 
 const pinnedFilters = computed(() => {
   return localPinnedFilters.value
@@ -280,4 +273,11 @@ const handleClearAllFilters = () => {
 onMounted(() => {
   hasMounted.value = true;
 });
+
+watch(
+  () => props.filters.length,
+  () => {
+    localPinnedFilters.value = pinnedFiltersFromPropsAndAppliedFilters.value.map((filter) => filter.name);
+  },
+);
 </script>
