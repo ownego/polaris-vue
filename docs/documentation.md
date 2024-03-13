@@ -83,14 +83,19 @@ export default defineConfig({
 
 The [AppProvider](/components/AppProvider) component is **required** to use PolarisVue. Without it, the components in your application will not function correctly. You must wrap the root (the top) of your application in the app provider component.
 
+The `i18n` prop is required to pass the locales, you can check the [supported locales](/utilities#locales) here.
+
 ::: code-group
 ```vue [App.vue]
 <template>
-  <AppProvider>
+  <AppProvider :i18n="locales">
     ...
     <router-view />
   </AppProvider>
 </template>
+<script setup>
+import locales from '@ownego/polaris-vue/locales/en.json';
+</script>
 ```
 :::
 
