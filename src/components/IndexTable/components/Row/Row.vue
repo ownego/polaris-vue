@@ -17,7 +17,7 @@ component(
 </template>
 
 <script setup lang="ts">
-import { type VNode, ref, computed, provide, onMounted, type Ref, toRef } from 'vue';
+import { type VNode, ref, computed, provide, onMounted, type Ref, toRef, getCurrentInstance } from 'vue';
 import { useToggle } from '@/use/useToggle';
 import { classNames, variationName } from '@/utilities/css';
 import type { VueNode } from '@/utilities/types';
@@ -73,6 +73,8 @@ const emits = defineEmits<RowEvents>();
 
 const { selectable, selectMode, condensed } = useIndexRowContext();
 const onSelectionChange = useIndexSelectionChangeContext();
+
+const currentInstance = getCurrentInstance();
 
 const {
   value: hovered,
@@ -131,7 +133,10 @@ const handleRowClick = (event: MouseEvent) => {
   event.stopPropagation();
   event.preventDefault();
 
-  emits('click');
+  if (currentInstance?.vnode.props?.onClick) {
+    emits('click');
+    return;
+  }
 
   if (primaryLinkElement.value && !selectMode.value) {
     isNavigating.value = true;

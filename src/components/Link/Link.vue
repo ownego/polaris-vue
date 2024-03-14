@@ -15,7 +15,7 @@ UnstyledLink(
   :external="external",
   :target="target",
   :aria-label="accessibilityLabel",
-  :data-primary-link="dataPrimaryLink",
+  :data-primary-link="dataPrimaryLink ?? undefined",
   @click="emits('click')",
 )
   slot
@@ -25,7 +25,7 @@ button(
   type="button",
   :class="className",
   :aria-label="accessibilityLabel",
-  :data-primary-link="dataPrimaryLink",
+  :data-primary-link="dataPrimaryLink ?? undefined",
   @click="emits('click')",
 )
   slot

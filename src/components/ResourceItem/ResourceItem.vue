@@ -39,6 +39,7 @@ li(:class="listItemClassName", :dataHref="dataHref")
         padding-inline-end="300",
         padding-block-start="300",
         padding-block-end="300",
+        :zIndex="'var(--pc-resource-item-content-stacking-order)'",
       )
         InlineGrid(:columns="{ xs: '1fr auto' }")
           InlineGrid(

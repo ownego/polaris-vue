@@ -105,7 +105,7 @@ const commonProps = computed(() => {
     role,
     accessibilityLabel,
     ariaDescribedBy,
-    'data-primary-link': props.dataPrimaryLink,
+    'data-primary-link': props.dataPrimaryLink ? true : undefined,
   };
 });
 const linkProps = computed(() => {
@@ -114,7 +114,7 @@ const linkProps = computed(() => {
   return {
     url,
     external,
-    download,
+    download: download ?? undefined,
   };
 });
 const actionProps = computed(() => {
