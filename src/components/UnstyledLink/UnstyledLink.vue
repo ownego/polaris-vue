@@ -8,9 +8,9 @@ component(
 a(
   v-else,
   :target="target",
+  v-bind="{ ...attrs, ...linkProps.rest, ...unstyled.props }",
   :href="url"
   :rel="rel",
-  v-bind="{ ...attrs, ...linkProps.rest, ...unstyled.props }",
 )
   slot
 </template>
@@ -33,7 +33,9 @@ const attrs = useAttrs();
 
 const LinkComponent = useLink();
 
-const props = defineProps<UnstyledLinkProps>();
+const props = withDefaults(defineProps<UnstyledLinkProps>(), {
+  download: undefined,
+});
 
 const linkProps = computed(() => {
   const {

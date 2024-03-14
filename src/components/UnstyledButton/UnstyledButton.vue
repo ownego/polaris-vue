@@ -6,7 +6,7 @@ UnstyledLink(
   v-bind="{ ...attrs, ...interactiveProps }",
   :url="url",
   :external="external",
-  :download="download",
+  :download="download ? download : undefined",
   :target="target",
   @click="handleClick",
   v-on="linkListeners",
