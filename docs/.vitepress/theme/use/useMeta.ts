@@ -66,6 +66,15 @@ export function useMeta(ignoreFetch = false) {
       return tmpSchema.split('|').map(s => s.trim()).filter((t) => t && t !== 'undefined');
     }
 
+    if (schema.kind === 'event') {
+      const eventPattern = /\((.*)\):\s*(.*)/;
+      const match = eventPattern.exec(schema.type);
+
+      if (match) {
+        return ['(', match[1], ') ', '=> ', match[2]];
+      }
+    }
+
     const types = schema.type.split('|').map(s => s.trim()).filter((t) => t !== 'undefined');
 
     if (types.length === 1) {
@@ -93,13 +102,60 @@ export function useMeta(ignoreFetch = false) {
       }
     }
 
-    const combinedPattern = /(\w*)\s*\&\s*\{(.*)/;
+    const combinedPattern = /(\w*)\s*\&\s*\{?(.*)/;
     if (combinedPattern.test(types[0])) {
       const match = combinedPattern.exec(types[0]);
 
       if (match) {
-        return [match[1], `& {${match[2]} }`].map((s) => serializeSchema(s)).flat();
+        let m1 = match[1].trim();
+        let m2 = match[2].trim();
+
+        if (m1.includes(':')) {
+          m1 = `{ ${m1} }`;
+        }
+
+        if (m2.includes(':')) {
+          m2 = `{ ${m2} }`;
+        }
+
+        if (m2.includes(')')) {
+          m2 = m2.replace(')', '');
+        }
+
+        return [m1, '&', m2].map((s) => serializeSchema(s)).flat();
       }
+    }
+
+    const startGroupPattern = /\((\w*)/;
+    const endGroupPattern = /(\w*)\)(\[\])?/;
+
+    if (
+      types.length > 1
+      && startGroupPattern.test(types[0])
+      && endGroupPattern.test(types[types.length - 1])
+    ) {
+      const group = ['('];
+      types.map((t, idx) => {
+        if (!idx) {
+          const startMatch = startGroupPattern.exec(t);
+          group.push(startMatch && startMatch.length > 1 ? startMatch[1] : t);
+          return;
+        }
+
+        if (endGroupPattern.test(t)) {
+          const endMatch = endGroupPattern.exec(t);
+
+          if (endMatch && endMatch.length > 1) {
+            group.push(endMatch[1]);
+            group.push(')[]');
+          }
+          return;
+        }
+
+        return group.push(t);
+      });
+
+      return group.map((s) => serializeSchema(s)).flat();
     }
 
     if (schema.kind === 'enum' && Array.isArray(schema.schema) && schema.schema.length < 8) {
@@ -115,12 +171,18 @@ export function useMeta(ignoreFetch = false) {
     if (
       (t.startsWith('"') && t.endsWith('"'))
       || (t.startsWith('\'') && t.endsWith('\''))
-      || t === 'string'
+      || t.startsWith('string')
+      || t.endsWith('string')
+      || t.startsWith('=>')
     ) {
       return 'string';
     }
 
-    if (/\{.*\}/.test(t)) {
+    if (t === '&' || t === '(' || t.startsWith(')')) {
+      return 'none';
+    }
+
+    if (/\{.*\}/.test(t) || t === 'Component') {
       return 'collection';
     }
 

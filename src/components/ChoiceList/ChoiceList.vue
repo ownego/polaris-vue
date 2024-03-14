@@ -44,7 +44,6 @@ BlockStack(
         )
           Box(:padding-block-start="{xs: '400', md: '0'}")
             component(:is="choice.renderChildren")
-
   Box(
     v-if="error"
     :padding-block-start="{xs: '0', md: '100'}"
@@ -79,8 +78,10 @@ const name = computed(() => String(props.name ?? uniqId));
 const finalName = computed(() => props.allowMultiple ? `${name.value}[]` : name.value);
 
 const handleChange = (checked: boolean, value: string): void => {
-  model.value = updateSelectedChoices(value, checked);
-  emits('change', model.value, value);
+  const newValue = updateSelectedChoices(value, checked);
+
+  model.value = newValue;
+  emits('change', newValue, finalName.value);
 }
 
 const choiceIsSelected = ({value}: Choice) => {

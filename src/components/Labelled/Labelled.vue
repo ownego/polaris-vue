@@ -6,10 +6,10 @@ div(:class="className")
     :class="styles.LabelWrapper",
   )
     Label(
+      v-bind="props",
       :id="id",
       :required-indicator="requiredIndicator",
       :hidden="false",
-      v-bind="rest",
     )
       slot(name="label")
 
@@ -69,17 +69,6 @@ const slots = defineSlots<{
   /** Hint text to display */
   helpText: (_?: VueNode) => any;
 }>();
-
-const {
-  id,
-  error,
-  action,
-  labelHidden,
-  requiredIndicator,
-  disabled,
-  readOnly,
-  ...rest
-}: any = props;
 
 const className = computed(() => {
   return classNames(

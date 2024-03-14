@@ -10,10 +10,11 @@ UnstyledButton(
       :accessibility-label="i18n.translate('Polaris.Button.spinnerAccessibilityLabel')",
     )
   span(
-    v-if="icon",
+    v-if="icon || hasSlot(slots.icon)",
     :class="loading ? styles.hidden : styles.Icon",
   )
-    Icon(:source="loading ? 'placeholder' : icon")
+    slot(v-if="hasSlot(slots.icon)" name="icon")
+    Icon(v-else-if="icon", :source="loading ? 'placeholder' : icon")
   span(
     v-if="hasChildren",
     :class="removeUnderline ? styles.removeUnderline : ''",
@@ -46,6 +47,8 @@ import styles from '@polaris/components/Button/Button.module.scss';
 defineSlots<{
   /** The content to display inside the button */
   default: (_: VueNode) => any;
+  /** Icon to display to the left of the button content */
+  icon?: (_: VueNode) => any;
 }>();
 
 const slots = useSlots();
@@ -84,8 +87,8 @@ const className = computed(() => classNames(
   styles[variationName('textAlign', props.textAlign)],
   props.fullWidth && styles.fullWidth,
   props.disclosure && styles.disclosure,
-  props.icon && hasSlot(slots.default) && styles.iconWithText,
-  props.icon && !hasSlot(slots.default) && styles.iconOnly,
+  (props.icon || hasSlot(slots.icon)) && hasSlot(slots.default) && styles.iconWithText,
+  (props.icon || hasSlot(slots.icon)) && !hasSlot(slots.default) && styles.iconOnly,
   isDisabled.value && styles.disabled,
   props.loading && styles.loading,
   props.pressed && !props.disabled && !props.url && styles.pressed,

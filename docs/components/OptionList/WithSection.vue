@@ -2,8 +2,8 @@
 <LegacyCard>
   <OptionList
     allowMultiple
-    :selected="selected"
     :sections="sections"
+    :selected="selected"
     @change="handleSelect"
   />
 </LegacyCard>

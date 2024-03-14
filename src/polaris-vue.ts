@@ -12,4 +12,8 @@ const PolarisVue = {
 
 export * from '@/components';
 
+export { useBreakpoints } from '@/use/useBreakpoints';
+export { useIndexResourceState } from '@/use/useIndexResourceState';
+export { useSetIndexFiltersMode } from '@/use/useSetIndexFiltersMode';
+
 export default PolarisVue;

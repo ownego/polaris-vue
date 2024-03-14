@@ -4,12 +4,15 @@ title: List
 category: Lists
 examples:
   - fileName: ListBulleted.vue
+    frameHeight: 200
     title: Bulleted
     description: Use for a text-only list of related items that don’t need to be in a specific order and don’t require an icon or other indicator.
   - fileName: ListNumber.vue
+    frameHeight: 200
     title: Numbered
     description: Use for a text-only list of related items when an inherent order, priority, or sequence needs to be communicated.
   - fileName: ExtraTight.vue
+    frameHeight: 200
     title: Extra Tight
     description: Use when there is limited space for a text-only list of related items when an inherent order, priority, or sequence needs to be communicated.
 ---
@@ -105,6 +108,6 @@ Every item in a list should:
 
 The list component outputs list items (`<li>`) inside a list wrapper (`<ul>` for bullet lists or `<ol>` for numbered lists). By default, list items are conveyed as a group of related elements to assistive technology users.
 
-To group items for layout only, consider using the [vertical stack component](/components/VerticalStack).
+To group items for layout only, consider using the [vertical stack component](/components/BlockStack).
 
 </div>

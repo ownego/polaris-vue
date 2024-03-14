@@ -26,7 +26,7 @@
 <script setup lang="ts">
 import { ref } from 'vue';
 
-const popoverActive = ref(false);
+const popoverActive = ref(true);
 
 const actionListItem = [
   {content: 'Online store'},

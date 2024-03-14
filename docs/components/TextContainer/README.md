@@ -4,12 +4,15 @@ title: Text container
 category: Deprecated
 examples:
   - fileName: Default.vue
+    frameHeight: 200
     title: Default
     description: Use this component for default vertical spacing.
   - fileName: TextContainerTight.vue
+    frameHeight: 200
     title: Tight
     description: Use the tight spacing option to relate content topics to each other.
   - fileName: TextContainerLoose.vue
+    frameHeight: 200
     title: Loose
     description: Use the loose spacing option to separate concepts that are independent of each other.
 ---

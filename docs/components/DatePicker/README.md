@@ -46,7 +46,7 @@ examples:
 
 ::: tip :grey_exclamation: Tip
 
-Check out the [new patterns section](/patterns/date-picking) to learn how merchants prefer to select dates in different scenarios!
+Check out the [new patterns section](https://polaris.shopify.com/patterns/date-picking) to learn how merchants prefer to select dates in different scenarios!
 
 :::
 
@@ -68,7 +68,7 @@ Date pickers should:
 
 Some users might find interacting with date pickers to be challenging. When you use the date picker component, always give users the option to enter the date using a text field component as well.
 
-If you use the date picker within a [popover component](/components/overlays/popover), then use a button to trigger the popover instead of displaying the popover when the text input gets focus. This gives users more control over their experience.
+If you use the date picker within a [popover component](/components/Popover), then use a button to trigger the popover instead of displaying the popover when the text input gets focus. This gives users more control over their experience.
 
 ### Keyboard support
 
@@ -78,6 +78,6 @@ If you use the date picker within a [popover component](/components/overlays/pop
 
 ## Related patterns
 
-- [Date picking](/patterns/date-picking)
+- [Date picking](https://polaris.shopify.com/patterns/date-picking)
 
 </div>

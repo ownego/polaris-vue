@@ -68,7 +68,7 @@ Choice(
 </template>
 
 <script setup lang="ts">
-import { computed, ref } from 'vue';
+import { computed, onMounted, ref, watch } from 'vue';
 import { classNames, variationName, type ResponsiveProp } from '@/utilities/css';
 import type { Error, VueNode } from '@/utilities/types';
 import { useWithinListbox } from '@/use/useListbox';
@@ -137,7 +137,6 @@ const slots = defineSlots<CheckboxSlots>();
 const emits = defineEmits<CheckboxEvents>();
 
 const model = defineModel<boolean | string>();
-model.value = props.checked;
 
 const isWithinListbox = useWithinListbox();
 const uniqId = useId();
@@ -204,6 +203,21 @@ const extraChoiceProps = computed(() => ({
 }));
 
 const svgPathClassName = computed(() => classNames(isChecked.value && styles.checked));
+
+watch(
+  () => props.checked,
+  (value, oldVal) => {
+    if (value === oldVal) return;
+    model.value = value;
+  },
+  { flush: 'post'},
+);
+
+onMounted(() => {
+  if (props.checked) {
+    model.value = props.checked;
+  }
+});
 
 const handleBlur = () => {
   emits('blur');

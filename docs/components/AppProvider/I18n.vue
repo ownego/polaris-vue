@@ -3,7 +3,7 @@
   <Page>
     <LegacyCard>
       <ResourceList show-header>
-        <ResourceListItem
+        <ResourceItem
           v-for="item in items"
           :key="item.id"
           :id="item.id"
@@ -15,7 +15,7 @@
           <template #media>
             <Avatar customer size="md" :name="item.name" />
           </template>
-        </ResourceListItem>
+        </ResourceItem>
       </ResourceList>
     </LegacyCard>
   </Page>
@@ -23,8 +23,8 @@
 </template>
 
 <script setup lang="ts">
-// import locales from '@ownego/polaris-vue/dist/locales/en.json';
-import locales from './en.json'; // Let's use the import as above, this is just for demo purpose
+// import locales from '@ownego/polaris-vue/dist/locales/fr.json';
+import locales from './fr.json'; // Let's use the import as above, this is just for demo purpose
 
 const items = [
   {

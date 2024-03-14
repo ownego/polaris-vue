@@ -26,9 +26,7 @@
 </template>
 
 <script setup lang="ts">
-import { h, ref } from 'vue';
-import { Link, Text } from '@/components';
-// import { Link, Text } from '@ownego/polaris-vue';
+import { h, ref, resolveComponent } from 'vue';
 
 const weight = ref('12');
 const unit = ref('');
@@ -50,10 +48,10 @@ const errorMessage = () => {
   }
 
   return h('span', [
-    h(Text, { tone: 'critical', as: 'span' }, () => [
+    h(resolveComponent('Text'), { tone: 'critical', as: 'span' }, () => [
       h('p', [
         `${weightError}${unitError} is required when weight based shipping rates are enabled. `,
-        h(Link, () => 'Manage shipping'),
+        h(resolveComponent('Link'), () => 'Manage shipping'),
       ]),
     ]),
   ]);

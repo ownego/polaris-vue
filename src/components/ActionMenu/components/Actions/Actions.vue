@@ -6,22 +6,22 @@ div(
   ButtonGroup(gap="tight")
     template(
       v-if="measuredActions.showable.length > 0"
-      v-for="action in measuredActions.showable",
+      v-for="action, index in measuredActions.showable",
       :key="action.content",
     )
       SecondaryAction(
         v-if="action.content",
-        v-bind="action",
+        v-bind="getSecondaryActionProps(index)",
         @get-offset-width="handleActionsOffsetWidth",
       ) {{ action.content }}
     template(
-      v-for="action in actions",
+      v-for="action, index in actions",
       :key="action.content",
     )
       SecondaryAction(
         v-if="!measuredActions.showable.length && !measuredActions.rolledUp.includes(action)",
-        v-bind="action",
-        @click="action.onAction ? action.onAction() : undefined",
+        v-bind="getSecondaryActionProps(index)",
+        @click="action.onAction?.() || undefined",
         @get-offset-width="handleActionsOffsetWidth",
       ) {{ action.content }}
     MenuGroup(
@@ -53,6 +53,8 @@ import useI18n from '@/use/useI18n';
 import styles from '@polaris/components/ActionMenu/components/Actions/Actions.module.scss';
 import { SecondaryAction } from '../SecondaryAction';
 import { MenuGroup } from '../MenuGroup';
+import type { MenuGroupProps } from '../MenuGroup/MenuGroup.vue';
+import type { SecondaryActionProps } from '../SecondaryAction/SecondaryAction.vue';
 
 interface Props {
   /** Collection of page-level secondary actions */
@@ -105,6 +107,10 @@ const lastMenuGroup = computed(() => {
 });
 
 const lastMenuGroupWidth = computed(() => [...actionWidths.value].pop() || 0);
+
+const getSecondaryActionProps = (index: number) => (
+  props.actions?.[index] as SecondaryActionProps
+);
 
 const handleActionsOffsetWidth = (width: number) => {
   actionWidths.value = [...actionWidths.value, width];
@@ -174,7 +180,7 @@ const menuGroupProps = (group: MenuGroupDescriptor) => {
     ...rest,
     active: activeMenuGroup.value === group.title,
     sections: finalRolledUpSectionGroups.value,
-  };
+  } as unknown as MenuGroupProps;
 }
 
 const getMenuGroupActions = (group: MenuGroupDescriptor): ActionListItemDescriptor[] => {

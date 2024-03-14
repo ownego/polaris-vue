@@ -432,7 +432,6 @@ const handleTouchStartTrack = (event: TouchEvent) => {
 };
 
 const actualXPosition = (dirtyXPosition: number): number => {
-  console.log(dirtyXPosition, model.value[1], trackLeft.value);
   if (track.value) {
     const relativeX = dirtyXPosition - trackLeft.value;
     const percentageOfTrack = relativeX / trackWidth.value;

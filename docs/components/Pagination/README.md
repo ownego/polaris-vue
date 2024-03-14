@@ -4,15 +4,19 @@ title: Pagination
 category: Navigation
 examples:
   - fileName: Default.vue
+    frameHeight: 250
     title: Default
     description: Use for pagination of resources.
   - fileName: PaginationWithKeyboardNavigation.vue
+    frameHeight: 250
     title: With keyboard navigation
     description: Attach standard keyboard shortcuts to important pagination controls.
   - fileName: PaginationWithLabel.vue
+    frameHeight: 250
     title: With label
     description: Add a label between navigation buttons to provide more context of the content being viewed by the user.
   - fileName: PaginationWithTableType.vue
+    frameHeight: 250
     title: With table type
     description: Use for pagination at the bottom of tables or lists.
 ---
@@ -41,7 +45,7 @@ examples:
 
 ## Events
 
-<EventsTable typeFile="PaginationEmits" />
+<EventsTable typeFile="PaginationEvents" />
 
 <div style="font-size: 0.8125rem">
 

@@ -4,18 +4,23 @@ title: Thumbnail
 category: Images and icons
 examples:
   - fileName: Default.vue
+    frameHeight: 300
     title: Default
     description: Use as the default size.
   - fileName: ThumbnailExtraSmall.vue
+    frameHeight: 300
     title: Extra small
     description: Use to present a thumbnail in a condensed layout, such as a data table cell or an action list item.
   - fileName: ThumbnailSmall.vue
+    frameHeight: 300
     title: Small
     description: Use when the default size is too large for the layout, or when the thumbnail has less importance.
   - fileName: ThumbnailLarge.vue
+    frameHeight: 300
     title: Large
     description: Use when a thumbnail is a major focal point. Avoid this size in lists of like items.
   - fileName: ThumbnailWithComponentSource.vue
+    frameHeight: 300
     title: With component source
     description: Use to render an icon inside of thumbnail.
 ---

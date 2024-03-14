@@ -7,13 +7,13 @@ Popover(
   template(#activator)
     BulkActionButton(
       show-content-in-button,
+      :size="size",
       :disclosure="true",
       :content="title",
       :indicator="isNewBadgeInBadgeActions",
       @action="toggleMenuVisibility",
     )
-  template(#content)
-    ActionList(:items="actions", @action-any-item="toggleMenuVisibility")
+  ActionList(:items="actions", @action-any-item="toggleMenuVisibility")
 </template>
 
 <script setup lang="ts">
@@ -24,12 +24,13 @@ import {
 } from '@/components';
 import { BulkActionButton } from '../BulkActionButton';
 import type { ActionListItemDescriptor } from '@/utilities/types';
-
+import type { ButtonProps } from '@/components/Button/types';
 
 interface BulkActionsMenuProps {
   actions: ActionListItemDescriptor[];
   title: string;
   isNewBadgeInBadgeActions: boolean;
+  size?: Extract<ButtonProps['size'], 'micro' | 'medium'>;
 }
 
 defineProps<BulkActionsMenuProps>();

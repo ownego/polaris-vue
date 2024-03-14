@@ -3,7 +3,7 @@ a(v-if="url && disabled", v-bind="commonProps")
   slot
 UnstyledLink(
   v-else-if="url && !disabled",
-  v-bind="{ ...interactiveProps, ...rest }",
+  v-bind="{ ...attrs, ...interactiveProps }",
   :url="url",
   :external="external",
   :download="download",
@@ -14,7 +14,7 @@ UnstyledLink(
   slot
 button(
   v-else,
-  v-bind="{ ...interactiveProps, ...rest }",
+  v-bind="{ ...attrs, ...interactiveProps, }",
   :aria-disabled="disabled",
   :disabled="disabled",
   :type="submit ? 'submit' : 'button'",
@@ -77,26 +77,6 @@ export type UnstyledButtonProps = {
 const props = defineProps<UnstyledButtonProps>();
 
 const attrs = useAttrs();
-
-const {
-  className,
-  id,
-  url,
-  external,
-  download,
-  target,
-  submit,
-  disabled,
-  loading,
-  pressed,
-  accessibilityLabel,
-  role,
-  ariaControls,
-  ariaExpanded,
-  ariaDescribedBy,
-  ariaChecked,
-  ...rest
-}: any = attrs;
 
 const getEventList = (events: string[]) => {
   const eventBindings: Record<string, any> = { mouseup: handleMouseUpByBlurring };

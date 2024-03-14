@@ -3,7 +3,7 @@
   <OptionList
     title="Manage sales channels availability"
     allow-multiple
-    v-model="selected"
+    :selected="selected"
     :options="options"
     @change="handleSelect"
   />

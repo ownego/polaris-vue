@@ -232,6 +232,14 @@ html:not(.example-preview) {
   font-weight: 500;
 }
 
+.VPSidebarItem.level-1 > .item .text {
+  color: var(--vp-c-text-1);
+}
+
+.VPSidebarItem.level-1.has-active > .item .text {
+  color: var(--text-strong);
+}
+
 #VPSidebarNav .group:last-child .VPSidebarItem.level-1 {
   padding-bottom: 1rem;
 }

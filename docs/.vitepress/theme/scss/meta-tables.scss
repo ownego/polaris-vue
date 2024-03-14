@@ -108,8 +108,19 @@
       font-size: 0.7rem;
     }
 
-    span.dpt--no-space {
-      margin: 0;
+    span[data-props-type="none"] {
+      color: var(--text-strong);
+      font-size: 0.9rem;
+    }
+
+    span.dpt__separator {
+      color: var(--text-strong);
+      font-size: 0.9rem;
+
+      &.dpt__separator--sm {
+        font-size: 0.7rem;
+        opacity: 0.7;
+      }
     }
   }
 

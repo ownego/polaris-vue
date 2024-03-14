@@ -15,6 +15,7 @@ span(:class="className")
 <script setup lang="ts">
 import { computed } from 'vue';
 import { classNames, variationName } from '@/utilities/css';
+import { type IconSource } from '@/utilities/types';
 import styles from '@polaris/components/Thumbnail/Thumbnail.module.scss';
 import type { Source } from '../Icon/type';
 
@@ -27,7 +28,7 @@ export interface ThumbnailProps {
    */
   size?: Size;
   /** URL for the image */
-  source: string | Source;
+    source: string | Source | IconSource;
   /** Alt text for the thumbnail image */
   alt: string;
   /** Transparent background */

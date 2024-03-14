@@ -8,8 +8,8 @@
       <div>This is a custom empty state</div>
     </template>
     <template #filterControl>
-      <LegacyFilters
-        v-model="queryValue"
+      <Filters
+        :query-value="queryValue"
         :filters="filters"
         :appliedFilters="appliedFilters"
         @query-change="setQueryValue"
@@ -19,7 +19,7 @@
         <div style="paddingLeft: 8px">
           <Button @click="() => console.log('New filter saved')">Save</Button>
         </div>
-    </LegacyFilters>
+    </Filters>
     </template>
     <template v-for="{id, url, name, location} in items" :key="id">
       <ResourceItem
@@ -41,22 +41,25 @@
 </template>
 
 <script setup lang="ts">
-import { ref, computed } from 'vue';
+import { ref, computed, h, resolveComponent } from 'vue';
 
 const taggedWith = ref('');
 const queryValue = ref('');
 
 const appliedFilters = computed(() => {
-  return  taggedWith.value && !isEmpty(taggedWith.value)
-    ? [
-        {
-          key: 'taggedWith1',
-          label: disambiguateLabel('taggedWith1', taggedWith.value),
-          onRemove: handleTaggedWithRemove,
-        },
-      ]
-    : [];
-})
+  const tmpFilters = [];
+
+  if (!isEmpty(taggedWith.value)) {
+    const name = 'taggedWith';
+    tmpFilters.push({
+      name,
+      label: disambiguateLabel(name, taggedWith.value),
+      onRemove: handleTaggedWithRemove,
+    });
+  }
+
+  return tmpFilters;
+});
 
 const setTaggedWith = (value: any) => {
   taggedWith.value = value;
@@ -66,6 +69,11 @@ const setQueryValue = (value: any) => {
   queryValue.value = value;
 };
 
+const handleTaggedWithChange = (_e: Event, value: string) => {
+  taggedWith.value = value;
+};
+
+
 const handleTaggedWithRemove = () => setTaggedWith(undefined);
 const handleQueryValueRemove = () => setQueryValue(undefined);
 
@@ -74,37 +82,33 @@ const handleClearAll = () => {
   handleQueryValueRemove();
 };
 
+
 const filters = [
-  {
-    key: 'taggedWith1',
+ {
+    name: 'taggedWith',
     label: 'Tagged with',
+    filter: () => h(resolveComponent('TextField'), {
+      label: 'Tagged with',
+      modelValue: taggedWith.value,
+      autoComplete: "off",
+      labelHidden: true,
+      onInput: handleTaggedWithChange,
+    }),
     shortcut: true,
   },
 ];
+
 
 const resourceName = {
   singular: 'customer',
   plural: 'customers',
 };
 
-const items = [
-  {
-    id: '108',
-    url: '#',
-    name: 'Mae Jemison',
-    location: 'Decatur, USA',
-  },
-  {
-    id: '208',
-    url: '#',
-    name: 'Ellen Ochoa',
-    location: 'Los Angeles, USA',
-  },
-];
+const items: any = [];
 
 function disambiguateLabel(key: string, value: string): string {
   switch (key) {
-    case 'taggedWith1':
+    case 'taggedWith':
       return `Tagged with ${value}`;
     default:
       return value;

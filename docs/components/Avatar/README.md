@@ -4,12 +4,15 @@ title: Avatar
 category: Images and icons
 examples:
   - fileName: Default.vue
+    frameHeight: 250
     title: Default
     description: Use to present an avatar for a merchant, customer, or business.
   - fileName: Initial.vue
+    frameHeight: 250
     title: Initials
     description: Use to present an avatar with initials for a merchant, customer, or business.
   - fileName: ExtraSmall.vue
+    frameHeight: 250
     title: Extra small
     description: Use to present an avatar in a condensed layout, such as a data table cell or an action list item.
 ---
@@ -75,7 +78,6 @@ Annotated section descriptions should:
 ## Related components
 
 - To visually group content in a layout section, [use the card component](/components/Card)
-- To lay out a set of smaller components in a row, [use the vertical stack component](/components/VerticalStack)
 - To lay out form fields, [use the form layout component](/components/FormLayout)
 
 </div>

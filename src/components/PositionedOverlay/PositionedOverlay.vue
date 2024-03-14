@@ -21,7 +21,6 @@ import {
   onMounted,
   onUpdated,
   onBeforeUnmount,
-  defineExpose,
 } from 'vue';
 import styles from '@polaris/components/PositionedOverlay/PositionedOverlay.module.scss';
 import { classNames } from '@/utilities/css';

@@ -7,6 +7,8 @@ export type IconSource = Component | string | (string | Component)[]
 
 export type VueNode = string | number | boolean | Component | Element | null | undefined;
 
+export type NonEmptyArray<T> = [T, ...T[]];
+
 export interface BaseButton {
   /** A unique identifier for the button */
   id?: string;
@@ -172,7 +174,7 @@ export interface DisableableAction extends Action {
 
 export interface BadgeAction {
   badge?: {
-    status: 'new';
+    tone: 'new';
     content: string;
   };
 }

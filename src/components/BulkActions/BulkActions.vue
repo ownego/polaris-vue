@@ -1,326 +1,267 @@
 <template lang="pug">
 div(
-  ref="containerNode",
+  :class="styles.BulkActions",
+  :style="{ width: width ? `${width}px` : undefined }",
 )
-  transition(
-    name="Group",
-    ref="groupNode",
-    @before-enter="onTransitionEnter",
-    @enter="onTransitionEntered",
-    @before-leave="onTransitionExiting"
-    @leave="onTransitionExit",
-  )
-    div(
-      v-if="selectMode",
-      :class="groupClassName",
-      ref="groupNode",
-      :style="{ width: width + 'px' }",
-    )
-      EventListener(
-        event="resize",
-        :handler="handleResize",
+  InlineStack(gap="400", blockAlign="center")
+    div(:class="styles.BulkActionsSelectAllWrapper")
+      CheckableButton(
+        v-bind="checkableButtonProps",
+        ref="checkableButtonRef",
+        @toggle-all="emits('toggle-all')",
       )
+      //- paginatedSelectAllMarkup
       div(
-        :class="styles.ButtonGroupWrapper",
-        ref="buttonsNode",
+        v-if="paginatedSelectAllAction",
+        :class="styles.PaginatedSelectAll",
       )
-        div(
-          :class="styles.ButtonGroupInner"
-        )
-          template(
-            v-if="hasPromotedActions || hasActionsPopover",
+        UnstyledButton(
+          :class="styles.AllAction",
+          size="slim",
+          :disabled="disabled",
+          @click="paginatedSelectAllAction.onAction",
+        ) {{ paginatedSelectAllAction.content }}
+
+    div(:class="styles.BulkActionsPromotedActionsWrapper")
+      InlineStack(gap="100", blockAlign="center")
+        div(:class="styles.BulkActionsOuterLayout")
+          //- measurerMarkup
+          BulkActionMeasurer(
+            :promotedActions="promotedActions",
+            :disabled="disabled",
+            :buttonSize="buttonSize",
+            :handleMeasurement="handleMeasurement",
           )
-            InlineStack(gap="300")
-              template(v-if="hasPromotedActions")
-                template(
-                  v-for="action in promotedActions?.slice(0, numberOfPromotedActionsToRender)",
-                )
-                  BulkActionMenu(
-                    v-if="instanceOfMenuGroupDescriptor(action)",
-                    v-bind="bulkActionPropsGenerate(action)",
-                    :isNewBadgeInBadgeActions="isNewBadgeInBadgeActions",
-                  )
-                  BulkActionButton(
-                    v-else,
-                    :disabled="disabled",
-                    v-bind="action",
-                    :handleMeasurement="handleMeasurement",
-                  )
-              div(
-                v-if="hasActionsPopover",
-                :class="styles.Popover",
-                ref="moreActionsNode",
+
+          div(:class="bulkActionLayoutClassName")
+            //- promotedActionsMarkup
+            template(
+              v-if="promotedActions",
+              v-for="action, _index in promotedActionsFiltered",
+              :key="_index",
+            )
+              BulkActionMenu(
+                v-if="instanceOfMenuGroupDescriptor(action)",
+                v-bind="action",
+                :isNewBadgeInBadgeActions="isNewBadgeInBadgeActions(actionSections)",
+                :size="buttonSize",
               )
-                Popover(
-                  :active="popoverVisible",
-                  @close="togglePopover",
-                )
-                  template(#activator)
-                    BulkActionButton(
-                      disclosure,
-                      :content="activatorLabel",
-                      :disabled="disabled",
-                      :indicator="isNewBadgeInBadgeActions",
-                      :show-content-in-button="!hasPromotedActions"
-                      @action="togglePopover",
-                    )
-                  template(#content)
-                    ActionList(
-                      :sections="combinedActions",
-                      @action-any-item="togglePopover",
-                    )
+              BulkActionButton(
+                v-else,
+                :disabled="disabled",
+                v-bind="action",
+                :size="buttonSize",
+              )
+
+        //- actionsMarkup
+        Popover(
+          v-if="allHiddenActions.length > 0",
+          :active="popoverActive",
+          preferredAlignment="right",
+          @close="togglePopover",
+        )
+          template(#activator)
+            BulkActionButton(
+              disclosure,
+              :showContentInButton="!promotedActions",
+              :disabled="disabled",
+              :content="activatorLabel",
+              :size="buttonSize",
+              :indicator="isNewBadgeInBadgeActions(actionSections)",
+              @action="togglePopover",
+            )
+
+          ActionList(
+            :sections="[hiddenPromotedSection, ...allHiddenActions]",
+            @action-any-item="togglePopover",
+          )
 </template>
 
 <script setup lang="ts">
-import { computed, onMounted, ref } from 'vue';
+import { computed, ref, watch } from 'vue';
 import { classNames } from '@/utilities/css';
-import { debounce } from '@polaris/utilities/debounce';
-import { clamp } from '@polaris/utilities/clamp';
 import useI18n from '@/use/useI18n';
+import type { MenuGroupDescriptor } from '@/utilities/types';
 import {
   ActionList,
   Popover,
   InlineStack,
-  EventListener,
+  CheckableButton,
+  UnstyledButton,
 } from '@/components';
-import { BulkActionButton, BulkActionMenu } from './components';
-import type { BulkAction, BulkActionListSection, BulkActionsProps } from './utils';
-import type { MenuGroupDescriptor, ActionListSection } from '@/utilities/types';
+import type { CheckableButtonProps } from '@/components/CheckableButton';
+import {
+  BulkActionButton,
+  BulkActionMenu,
+  BulkActionMeasurer,
+  type ActionsMeasurements,
+} from './components';
+import type {
+  BulkActionsProps,
+  BulkActionsEvents,
+  BulkAction,
+  BulkActionListSection,
+} from './types';
+import {
+  getVisibleAndHiddenActionsIndices,
+  isNewBadgeInBadgeActions,
+  instanceOfMenuGroupDescriptor,
+  instanceOfBulkActionListSection,
+  getActionSections,
+} from './utils';
 import styles from '@polaris/components/BulkActions/BulkActions.module.scss';
-
-type TransitionStatus = 'entering' | 'entered' | 'exiting' | 'exited';
 
 const i18n = useI18n();
 
 const props = defineProps<BulkActionsProps>();
-const emits = defineEmits<{
-  /** Callback when selectable state of list is changed */
-  'select-mode-toggle': [selectMode: boolean];
-  /** Callback when more actions button is toggled */
-  'more-action-popover-toggle': [isOpen: boolean];
-}>();
+const emits = defineEmits<BulkActionsEvents>();
 
-const popoverVisible = ref<boolean>(false);
-const containerWidth = ref<number>(0);
-const measuring = ref<boolean>(true);
-const statusTransitionGroup = ref<TransitionStatus>('entered');
+const popoverActive = ref<boolean>(false);
+const disclosureWidth = ref<number>(0);
+const containerWidth = ref<number>(Infinity);
+const actionsWidths = ref<number[]>([]);
+const visiblePromotedActions = ref<number[]>([]);
+const hiddenPromotedActions = ref<number[]>([]);
+const hasMeasured = ref<boolean>(false);
+const checkableButtonRef = ref<InstanceType<typeof CheckableButton> | null>(null);
 
-const containerNode = ref<HTMLElement | null>(null);
-const moreActionsNode = ref<HTMLElement | null>(null);
-const groupNode = ref<HTMLDivElement | null>(null);
-const buttonsNode = ref<HTMLDivElement | null>(null);
+const setPromotedActions = () => {
+  if (
+    containerWidth.value === 0 ||
+    !props.promotedActions ||
+    props.promotedActions.length === 0
+  ) {
+    return;
+  }
+  const {
+    visiblePromotedActions: tmpVisiblePromotedActions,
+    hiddenPromotedActions: tmpHiddenPromotedActions,
+  } =
+    getVisibleAndHiddenActionsIndices(
+      props.promotedActions,
+      disclosureWidth.value,
+      actionsWidths.value,
+      containerWidth.value,
+    );
 
-const promotedActionsWidths = ref<number[]>([]);
-const bulkActionsWidth = ref(0);
-const addedMoreActionsWidthForMeasuring = ref(0);
+  visiblePromotedActions.value = tmpVisiblePromotedActions;
+  hiddenPromotedActions.value = tmpHiddenPromotedActions;
+  hasMeasured.value = containerWidth.value !== Infinity;
+};
 
-const handleResize = debounce(
-  () => {
-    if (containerNode.value) {
-      const tmpContainerWidth = containerNode.value.getBoundingClientRect().width;
-      if (tmpContainerWidth > 0) {
-        containerWidth.value = tmpContainerWidth;
+const activatorLabel = computed(() => (
+  !props.promotedActions || (props.promotedActions && visiblePromotedActions.value.length === 0)
+    ? i18n.translate('Polaris.ResourceList.BulkActions.actionsActivatorLabel')
+    : i18n.translate('Polaris.ResourceList.BulkActions.moreActionsActivatorLabel')
+));
+
+const hasTextAndAction = computed(() => props.paginatedSelectAllText && props.paginatedSelectAllAction);
+
+const ariaLive = computed(() => hasTextAndAction.value ? 'polite' : undefined);
+
+const checkableButtonProps = computed<CheckableButtonProps>(() => ({
+  accessibilityLabel: props.accessibilityLabel,
+  label: hasTextAndAction.value ? props.paginatedSelectAllText : props.label,
+  selected: props.selected,
+  disabled: props.disabled,
+  ariaLive: ariaLive.value,
+}));
+
+const bulkActionLayoutClassName = computed(() => (
+  classNames(
+    styles.BulkActionsLayout,
+    !hasMeasured.value && styles['BulkActionsLayout--measuring'],
+  )
+));
+
+const actionSections = computed(() => getActionSections(props.actions));
+
+const promotedActionsFiltered = computed(() => (
+  props.promotedActions?.filter((_, index) => visiblePromotedActions.value.includes(index)) || []
+));
+
+const hiddenPromotedActionObjects = computed(() => (
+  hiddenPromotedActions.value.map((index) => props.promotedActions?.[index])
+));
+
+const mergedHiddenPromotedActions = computed(() => (
+  hiddenPromotedActionObjects.value.reduce(
+    (memo, action) => {
+      if (!action) return memo;
+      if (instanceOfMenuGroupDescriptor(action)) {
+        return memo.concat(action.actions);
       }
-    }
+      return memo.concat(action);
+    },
+    [] as (BulkAction | MenuGroupDescriptor)[],
+  )
+));
 
-    if (popoverVisible.value) {
-      popoverVisible.value = false;
-    }
+const hiddenPromotedSection = computed(() => ({
+  items: mergedHiddenPromotedActions.value,
+}));
+
+const allHiddenActions = computed(() => (
+  props.actions
+  ? props.actions
+      .filter((action) => action)
+      .map(
+        (
+          action: BulkAction | MenuGroupDescriptor | BulkActionListSection,
+        ) => {
+          if (instanceOfBulkActionListSection(action)) {
+            return {items: [...action.items]};
+          } else if (instanceOfMenuGroupDescriptor(action)) {
+            return {items: [...action.actions]};
+          }
+          return {items: [action]};
+        },
+      )
+  : []
+));
+
+watch(
+  () => props.promotedActions,
+  () => {
+    setPromotedActions();
   },
-  50,
-  { trailing: true },
 );
 
-const numberOfPromotedActionsToRender = computed<number>(() => {
-  if (!props.promotedActions) {
-    return 0;
-  }
+const togglePopover = () => {
+  emits('more-action-popover-toggle', popoverActive.value);
+  popoverActive.value = !popoverActive.value;
+};
 
-  if (containerWidth.value >= bulkActionsWidth.value || measuring.value) {
-    return props.promotedActions.length;
-  }
-
-  let sufficientSpace = false;
-  let counter = props.promotedActions.length - 1;
-  let totalWidth = 0;
-
-  while (!sufficientSpace && counter >= 0) {
-    totalWidth += promotedActionsWidths.value[counter];
-    const widthWithRemovedAction =
-      bulkActionsWidth.value -
-      totalWidth +
-      addedMoreActionsWidthForMeasuring.value;
-    if (containerWidth.value >= widthWithRemovedAction) {
-      sufficientSpace = true;
-    } else {
-      counter--;
-    }
-  }
-
-  return clamp(counter, 0, props.promotedActions.length);
-});
-
-const actionSections = computed<BulkActionListSection[] | undefined | any>(() => {
-  if (!props.actions || props.actions.length === 0) {
+const handleMeasurement = (measurements: ActionsMeasurements) => {
+  if (!props.promotedActions || props.promotedActions.length === 0) {
     return;
   }
 
-  if (instanceOfBulkActionListSectionArray(props.actions)) {
-    return props.actions;
-  }
+  const {
+    hiddenActionsWidths: tmpActionsWidths,
+    containerWidth: tmpContainerWidth,
+    disclosureWidth: tmpDisclosureWidth,
+  } = measurements;
 
-  if (instanceOfBulkActionArray(props.actions)) {
-    return [{ items: props.actions }];
-  }
-
-  return undefined;
-});
-
-const rolledInPromotedActions = computed(() => {
-  const number = numberOfPromotedActionsToRender.value;
-
-  if (
-    !props.promotedActions ||
-    props.promotedActions.length === 0 ||
-    number >= props.promotedActions.length
-  ) {
-    return [];
-  }
-
-  const rolled = props.promotedActions.map((action) => {
-    if (instanceOfMenuGroupDescriptor(action)) {
-      const group = action as MenuGroupDescriptor;
-      return { items: [...group.actions]};
-    }
-    return {items: [action]};
-  });
-
-  return rolled.slice(number);
-});
-
-const isNewBadgeInBadgeActions = computed(() => {
-  const actions = actionSections.value;
-  if (!actions) {
-    return false;
-  }
-
-  for (const action of actions) {
-    for (const item of action.items) {
-      if (item.badge?.tone === 'new') {
-        return true;
-      }
-    }
-  }
-
-  return false;
-});
-
-const combinedActions = computed<ActionListSection[]>(() => {
-  if (actionSections.value && rolledInPromotedActions.value.length > 0) {
-    return [...rolledInPromotedActions.value, ...actionSections.value];
-  }
-  if (actionSections.value) {
-    return actionSections.value;
-  }
-  if (rolledInPromotedActions.value.length > 0) {
-    return rolledInPromotedActions.value;
-  }
-  return [];
-});
-
-const activatorLabel = computed(() => {
-  return !props.promotedActions ||
-  (props.promotedActions && numberOfPromotedActionsToRender.value === 0 && !measuring.value)
-    ? i18n.translate('Polaris.ResourceList.BulkActions.actionsActivatorLabel')
-    : i18n.translate('Polaris.ResourceList.BulkActions.moreActionsActivatorLabel');
-});
-
-const groupClassName = computed(() => {
-  return classNames(
-    styles.Group,
-    !props.isSticky && styles['Group-not-sticky'],
-    statusTransitionGroup.value && styles[`Group-${statusTransitionGroup.value}`],
-    measuring.value && styles['Group-measuring'],
+  const {
+    visiblePromotedActions: tmpVisiblePromotedActions,
+    hiddenPromotedActions: tmpHiddenPromotedActions,
+  } = getVisibleAndHiddenActionsIndices(
+    props.promotedActions,
+    tmpDisclosureWidth,
+    tmpActionsWidths,
+    tmpContainerWidth,
   );
-});
 
-const hasActionsPopover = computed(() => actionSections.value || rolledInPromotedActions.value.length > 0 || measuring.value);
-const hasPromotedActions = computed(() => props.promotedActions && numberOfPromotedActionsToRender.value > 0);
-
-const onTransitionEnter = () => {
-  statusTransitionGroup.value = 'entering';
+  visiblePromotedActions.value = tmpVisiblePromotedActions;
+  hiddenPromotedActions.value = tmpHiddenPromotedActions;
+  containerWidth.value = tmpContainerWidth;
+  disclosureWidth.value = tmpDisclosureWidth;
+  actionsWidths.value = tmpActionsWidths;
+  hasMeasured.value = true;
 };
 
-const onTransitionEntered = () => {
-  statusTransitionGroup.value = 'entered';
-};
-
-const onTransitionExiting = () => {
-  statusTransitionGroup.value = 'exiting';
-};
-
-const onTransitionExit = () => {
-  statusTransitionGroup.value = 'exited';
-};
-
-const bulkActionPropsGenerate = (action: MenuGroupDescriptor | BulkAction) => {
-  return action as MenuGroupDescriptor;
-};
-
-const handleMeasurement = (width: number) => {
-  if (measuring.value) {
-    promotedActionsWidths.value.push(width);
-  }
-};
-
-const togglePopover = () => {
-  emits('more-action-popover-toggle', popoverVisible.value);
-  popoverVisible.value = !popoverVisible.value;
-};
-
-function instanceOfBulkActionListSectionArray(
-  actions: (BulkAction | BulkActionListSection)[],
-): actions is BulkActionListSection[] {
-  const validList = actions.filter((action: any) => {
-    return action.items;
-  });
-
-  return actions.length === validList.length;
-}
-
-function instanceOfBulkActionArray(
-  actions: (BulkAction | BulkActionListSection)[],
-): actions is BulkAction[] {
-  const validList = actions.filter((action: any) => {
-    return !action.items;
-  });
-
-  return actions.length === validList.length;
-}
-
-function instanceOfMenuGroupDescriptor(
-  action: MenuGroupDescriptor | BulkAction,
-): action is MenuGroupDescriptor {
-  return 'title' in action;
-}
-
-onMounted(() => {
-   // Set time out to make sure all the nodes was rendered
-  setTimeout(() => {
-    if (props.promotedActions && !props.actions && moreActionsNode.value) {
-      addedMoreActionsWidthForMeasuring.value =
-        moreActionsNode.value.getBoundingClientRect().width;
-    }
-
-    bulkActionsWidth.value = buttonsNode.value
-      ? buttonsNode.value.getBoundingClientRect().width -
-        addedMoreActionsWidthForMeasuring.value
-      : 0;
-
-    if (containerNode.value) {
-      containerWidth.value = containerNode.value.getBoundingClientRect().width;
-      measuring.value = false;
-    }
-  }, 10);
+defineExpose({
+  checkableButtonRef,
 });
 </script>

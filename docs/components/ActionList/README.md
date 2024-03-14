@@ -111,14 +111,14 @@ Each item in an action list should be scannable avoiding unnecessary words and a
 
 ## Related components
 
-- To combine more than one button in a single layout, [use the button group component](components/ButtonGroup)
-- To display a list of related content, [use the list component](components/List)
+- To combine more than one button in a single layout, [use the button group component](/components/ButtonGroup)
+- To display a list of related content, [use the list component](/components/List)
 
 ---
 
 ## Accessibility
 
-Items in an action list are organized as list items (`<li>`) in an unordered list (`<ul>`) and are conveyed as a group of related elements to assistive technology users. Each item is implemented as a [button](components/Button).
+Items in an action list are organized as list items (`<li>`) in an unordered list (`<ul>`) and are conveyed as a group of related elements to assistive technology users. Each item is implemented as a [button](/components/Button).
 
 ### Keyboard support
 

@@ -41,7 +41,7 @@ import {
   Icon,
   TextField,
 } from '@/components';
-import { useBreakpoints } from '@/utilities/breakpoints';
+import { useBreakpoints } from '@/use/useBreakpoints';
 import useId from '@/use/useId';
 import useI18n from '@/use/useI18n';
 import SearchIcon from '@icons/SearchIcon.svg';

@@ -4,15 +4,19 @@ title: Callout card
 category: Layout and structure
 examples:
   - fileName: Default.vue
+    frameHeight: 300
     title: Default
     description: Use to let merchants know about a feature or opportunity where there is a clear, single action they need to take to move to the next step.
   - fileName: CalloutCardWithSecondaryAction.vue
+    frameHeight: 300
     title: With secondary action
     description: Use to let merchants know about a feature or opportunity where there are two distinct actions they can take on the information.
   - fileName: CalloutCardDismissable.vue
+    frameHeight: 300
     title: Dismissable
     description: Make all callout cards dismissible so merchants can get rid of cards about features they’re not interested in.
   - fileName: WithIconableActions.vue
+    frameHeight: 300
     title: With iconable actions
     description: Display the icons beside secondary and/or primary actions.
 ---

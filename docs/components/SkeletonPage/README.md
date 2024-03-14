@@ -4,9 +4,11 @@ title: Skeleton page
 category: Feedback indicators
 examples:
   - fileName: Default.vue
+    frameHeight: 500
     title: With dynamic content
     description: Use this component to compose a loading version of a page where the page title and header content are dynamic, meaning, the content changes.
   - fileName: SkeletonPageWithStaticContent.vue
+    frameHeight: 500
     title: With static content
     description: Use this component to compose a loading version of a page where the page title and header content are known and stay the same.
 ---
@@ -70,7 +72,7 @@ Use placeholder content that will change when the page fully loads. This will co
 
 ## Related components
 
-- Use the [Skeleton body text](components/SkeletonBodyText) and [Skeleton display text](components/SkeletonDisplayText) components to represent blocks of content.
-- When giving feedback for in-context operations, use [Progress bar](components/ProgressBar) or [Spinner](components/Spinner) component.
+- Use the [Skeleton body text](/components/SkeletonBodyText) and [Skeleton display text](/components/SkeletonDisplayText) components to represent blocks of content.
+- When giving feedback for in-context operations, use [Progress bar](/components/ProgressBar) or [Spinner](/components/Spinner) component.
 
 </div>

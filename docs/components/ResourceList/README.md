@@ -78,7 +78,7 @@ examples:
 
 Resource lists can also:
 
-- Support [customized list items](components/ResourceItem)
+- Support [customized list items](/components/ResourceItem)
 - Include bulk actions so merchants can act on multiple objects at once
 - Support sorting and [filtering](/components/Filters) of long lists
 - Be paired with pagination to make long lists digestible
@@ -91,7 +91,7 @@ Using a resource list in a project involves combining the following components a
 
 - ResourceList
 - [ResourceItem](/components/ResourceItem) or a customized list item
-- [Filters](components/Filters) (optional)
+- [Filters](/components/Filters) (optional)
 - Pagination component (optional)
 
 The resource list component provides the UI elements for list sorting, filtering, and pagination, but doesn’t provide the logic for these operations. When a sort option is changed, filter added, or second page requested, you’ll need to handle that event (including any network requests) and then update the component with new props.
@@ -122,7 +122,7 @@ On wide screens, a resource list often looks like a table, especially if some co
 
 A data table is a form of data visualization. It works best to present highly structured data for comparison and analysis.
 
-If your use case is more about visualizing or analyzing data, use the [data table component](components/DataTable). If your use case is more about finding and taking action on objects, use a resource list.
+If your use case is more about visualizing or analyzing data, use the [data table component](/components/DataTable). If your use case is more about finding and taking action on objects, use a resource list.
 
 ---
 
@@ -133,11 +133,11 @@ Resource lists can live in many places in Shopify. You could include a short res
 Resource lists should:
 
 - Have items that perform an action when clicked. The action should navigate to the resource’s details page or otherwise provide more detail about the item.
-- [Customize the content and layout](components/ResourceItem) of their list items to support merchants’ needs.
+- [Customize the content and layout](/components/ResourceItem) of their list items to support merchants’ needs.
 - Support sorting if the list can be long, and especially if different merchant tasks benefit from different sort orders.
-- Support [filtering](components/Filters) if the list can be long.
+- Support [filtering](/components/Filters) if the list can be long.
 - Paginate when the current list contains more than 50 items.
-- Use the [skeleton page](components/SkeletonPage) component on initial page load for the rest of the page if the loading prop is true and items are processing.
+- Use the [skeleton page](/components/SkeletonPage) component on initial page load for the rest of the page if the loading prop is true and items are processing.
 
 Resource lists can optionally:
 
@@ -180,14 +180,14 @@ Resource lists should:
 
 - Follow the verb + noun formula for bulk actions
 
-- Follow the [content guidelines for filter options and applied filters](components/Filters#content-guidelines)
+- Follow the [content guidelines for filter options and applied filters](/components/Filters#content-guidelines)
 
 ---
 
 ## Related components
 
-- To present structured data for comparison and analysis, like when helping merchants to gain insights or review analytics, use the [data table component](components/DataTable)
-- To display a simple list of related content, [use the list component](components/List)
+- To present structured data for comparison and analysis, like when helping merchants to gain insights or review analytics, use the [data table component](/components/DataTable)
+- To display a simple list of related content, [use the list component](/components/List)
 
 </div>
 

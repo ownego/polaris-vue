@@ -1,7 +1,7 @@
 import { inject, ref } from 'vue';
 import { debounce } from '@polaris/utilities/debounce';
 import { MediaQueryContextType } from '@/utilities/media-query';
-import { navigationBarCollapsed } from '@/utilities/breakpoints';
+import { navigationBarCollapsed } from '@/use/useBreakpoints';
 import { useEventListener } from '@/utilities/use-event-listener';
 
 export default function useMediaQuery() {

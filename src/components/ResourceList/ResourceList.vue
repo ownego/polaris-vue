@@ -1,14 +1,13 @@
 <template lang="pug">
+//-FilterControl
 div(
-  ref="tableMeasurerRef",
+  v-if="hasSlot(slots.filterControl)",
+  :class="classNames(!flushFilters && styles.FiltersWrapper)",
+)
+  slot(name="filterControl")
+div(
   :class="resourceListWrapperClassName",
 )
-  //-FilterControl
-  div(
-    v-if="hasSlot(slots.filterControl)",
-    :class="classNames(!flushFilters && styles.FiltersWrapper)",
-  )
-    slot(name="filterControl")
   //-HeaderMarkup
   div(
     v-if="showHeaderMarkup",
@@ -31,7 +30,6 @@ div(
               :disabled="loading",
               :selected="selectAllSelectState",
               @toggle-all="handleToggleAll",
-              ref="checkableButtonRef",
             )
           div(
             v-if="hasSlot(slots.alternateTool) && !showSortingSelect",
@@ -40,7 +38,7 @@ div(
             slot(name="alternateTool")
           div(v-if="showSortingSelect && sortOptions", :className="styles.SortWrapper")
             Select(
-              v-model="sortValueSelect",
+              :value="sortValueSelect",
               :labelInline="!smallScreen",
               :labelHidden="smallScreen",
               :options="sortOptions",
@@ -55,35 +53,26 @@ div(
               :icon="CheckboxIcon",
               @click="() => handleSelectMode(true)",
             ) {{ i18n.translate('Polaris.ResourceList.selectButtonText') }}
-        //- SelectAllActions
-        div(v-if="isSelectable", :class="styles.SelectAllActionsWrapper")
-          SelectAllActions(
-            v-model="selectAllSelectState",
-            ref="checkableButtonRef"
-            :label="bulkActionsLabel",
+        //- BulkAction
+        div(
+          v-if="isSelectable",
+          :class="bulkActionClassNames",
+        )
+          BulkActions(
+            ref="CheckableButtonRef",
+            button-size="medium",
+            :paginated-select-all-action="paginatedSelectAllAction",
+            :paginated-select-all-text="paginatedSelectAllText",
+            :accessibility-label="bulkActionsAccessibilityLabel",
             :selected="selectAllSelectState",
-            :accessibilityLabel="bulkActionsAccessibilityLabel",
-            :selectMode="selectMode",
-            :paginatedSelectAllAction="paginatedSelectAllAction",
-            :paginatedSelectAllText="paginatedSelectAllText",
+            :promotedActions="promotedBulkActions",
+            :actions="bulkActions",
             :disabled="loading",
+            :select-mode="selectMode",
+            :label="selectAllActionsLabel",
             @toggle-all="handleToggleAll",
+            @select-mode-toggle="handleSelectMode",
           )
-  //- BulkAction
-  div(
-    v-if="showBulkActions",
-    :class="bulkActionsClassName",
-    :style="bulkActionsStyle",
-  )
-    BulkActions(
-      :promotedActions="promotedBulkActions",
-      :actions="bulkActions",
-      :disabled="loading",
-      :is-sticky="isBulkActionsSticky",
-      :width="bulkActionsMaxWidth",
-      :select-mode="selectMode",
-      @select-mode-toggle="handleSelectMode",
-    )
   //-List
   ul(
     v-if="itemsExist",
@@ -119,8 +108,11 @@ div(
         Spinner(:size="spinnerSize", accessibilityLabel="Items are loading")
       li(:class="styles.LoadingOverlay")
   //- Pagination
-  Pagination(v-if="pagination", type="table", v-bind="pagination")
-div(ref="bulkActionsIntersectionRef")
+  div(
+    v-if="pagination",
+    :class="styles.PaginationWrapper",
+  )
+    Pagination(type="table", v-bind="pagination")
 </template>
 
 <script setup lang="ts">
@@ -142,12 +134,10 @@ import {
   BulkActions,
   CheckableButton,
   Pagination,
-  SelectAllActions,
 } from '@/components';
-import type { PaginationProps } from '@/components/Pagination/types.ts';
-import type { BulkActionsProps } from '@/components/BulkActions/utils';
+import type { PaginationProps } from '@/components/Pagination/types';
+import type { BulkActionsProps } from '@/components/BulkActions/types';
 import type { SelectOption } from '@/components/Select/types';
-import { useIsBulkActionsSticky } from '../BulkActions/hooks/use-bulk-action-sticky';
 import styles from '@polaris/components/ResourceList/ResourceList.module.scss';
 import CheckboxIcon from '@icons/CheckboxIcon.svg';
 
@@ -227,8 +217,6 @@ export interface ResourceListProps<
   sortValue?: string;
   /** Collection of sort options to choose from */
   sortOptions?: SelectOption[];
-  /** ReactNode to display instead of the sort control */
-  alternateTool?: React.ReactNode;
   /** Custom header text displayed above the list instead of the resource count. */
   headerContent?: string;
   /** Function to customize the unique ID for each item */
@@ -276,16 +264,6 @@ const lastSelected = ref<number | undefined>();
 const smallScreen = ref(isBreakpointsXS());
 const checkableButtons = ref<CheckableButtons>(new Map());
 const isSticky = ref(false);
-const {
-  bulkActionsIntersectionRef,
-  tableMeasurerRef,
-  isBulkActionsSticky,
-  bulkActionsAbsoluteOffset,
-  bulkActionsMaxWidth,
-  bulkActionsOffsetLeft,
-  computeTableDimensions,
-} = useIsBulkActionsSticky(selectMode.value);
-
 
 const defaultResourceName = {
   singular: i18n.translate('Polaris.ResourceList.defaultItemSingular'),
@@ -294,13 +272,6 @@ const defaultResourceName = {
 
 const listRef = ref<HTMLUListElement | null>(null);
 
-const bulkActionsStyle = computed(() => {
-  return {
-    top: isBulkActionsSticky ? undefined : `${bulkActionsAbsoluteOffset.value}px`,
-    maxWidth: `${bulkActionsMaxWidth.value}px`,
-    left: isBulkActionsSticky ? `${bulkActionsOffsetLeft.value}px` : undefined,
-  };
-});
 const items = computed(() => {
   let tmpItems: VNodeArrayChildren = [];
   if (slots.default) {
@@ -312,6 +283,8 @@ const items = computed(() => {
 
   return tmpItems;
 });
+const selectedItemsCount = ref(props.selectedItems === SELECT_ALL_ITEMS ? `${items.value.length}+` : props.selectedItems?.length);
+
 const sortValueSelect = computed(() => {
   return props.sortValue || '';
 });
@@ -352,11 +325,6 @@ const showEmptySearchState = computed(() => !showEmptyState.value && hasSlot(slo
 
 const showSortingSelect = computed(() => props.sortOptions && props.sortOptions.length > 0 && !hasSlot(slots.alternateTool));
 
-const showBulkActions = computed(() => {
-  return Boolean(isSelectable.value && selectMode.value
-    && (props.bulkActions || props.promotedBulkActions));
-});
-
 const showHeaderMarkup = computed(() => {
   return !showEmptyState.value
     && props.showHeader
@@ -371,8 +339,8 @@ const spinnerSize = computed(() => items.value.length < 2 ? 'small' : 'large');
 
 const resourceListWrapperClassName = computed(() => classNames(
   styles.ResourceListWrapper,
-  Boolean(showBulkActions.value) && selectMode.value
-    && props.bulkActions && styles.ResourceListWrapperWithBulkActions,
+  Boolean(isSelectable.value) && selectMode.value
+    && !props.pagination && styles.ResourceListWrapperWithBulkActions,
 ));
 
 const headerClassName = computed(() => {
@@ -390,9 +358,9 @@ const headerClassName = computed(() => {
   );
 });
 
-const bulkActionsClassName = computed(() => classNames(
+const bulkActionClassNames = computed(() => classNames(
   styles.BulkActionsWrapper,
-  isBulkActionsSticky.value && styles.BulkActionsWrapperSticky,
+  selectMode.value && styles.BulkActionsWrapperVisible,
 ));
 
 const headerTitle = computed(() => {
@@ -419,17 +387,9 @@ const headerTitle = computed(() => {
   }
 });
 
-const bulkActionsLabel = computed(() => {
-  const selectedItemsCount =
-    props.selectedItems === SELECT_ALL_ITEMS
-    || (Array.isArray(props.selectedItems) && props.selectedItems.length === items.value.length)
-      ? `${items.value.length}+`
-      : props.selectedItems?.length;
-
-  return i18n.translate('Polaris.ResourceList.selected', {
-    selectedItemsCount: `${selectedItemsCount}`,
-  });
-});
+const selectAllActionsLabel = computed(() => i18n.translate( 'Polaris.ResourceList.selected', {
+  selectedItemsCount: `${selectedItemsCount.value}`,
+}));
 
 const bulkActionsAccessibilityLabel = computed(() => {
   const selectedItemsCount = props.selectedItems?.length;
@@ -755,10 +715,17 @@ watch(
 );
 
 watch(
-  () => items.value.length,
-  () => {
-    computeTableDimensions();
+  () => props.selectedItems,
+  (newSelectedItems) => {
+    if (newSelectedItems && (newSelectedItems === SELECT_ALL_ITEMS || newSelectedItems.length > 0)) {
+      selectedItemsCount.value = newSelectedItems === SELECT_ALL_ITEMS
+        ? `${items.value.length}+`
+        : newSelectedItems.length;
+    }
   },
+  {
+    immediate: true,
+  }
 );
 
 const selected = computed(() => {

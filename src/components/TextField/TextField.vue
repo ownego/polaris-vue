@@ -259,6 +259,7 @@ const className = computed(() => classNames(
   props.multiline && styles.multiline,
   focus.value && !props.disabled && styles.focus,
   props.variant !== 'inherit' && styles[props.variant],
+  props.size === 'slim' && styles.slim,
 ));
 
 const inputType = computed(() => {

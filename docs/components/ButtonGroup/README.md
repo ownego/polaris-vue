@@ -46,7 +46,7 @@ examples:
 Button groups should:
 
 - Only use buttons that follow the
-  [best practices outlined in the button component](/components/Button#best-practices)
+  [best practices outlined in the button component](/components/Button)
 - Group together calls to action that have a relationship
 - Be used with consideration that too many calls to action can cause merchants to be unsure of what to do next
 - Be thoughtful about how multiple buttons will look and work on small screens
