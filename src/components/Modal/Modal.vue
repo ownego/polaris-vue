@@ -28,7 +28,7 @@ Portal(
     <!-- body markup -->
     iframe(
       v-if="src",
-      :name="iFrameName",
+      :name="iframeName",
       :title="iframeTitle",
       :src="src",
       :class="styles.Iframe",
@@ -97,7 +97,7 @@ Portal(
 
   Backdrop(
     @closing="setClosing", 
-    @click="emits('close')",
+    @click="clickOutsideToClose ? emits('close') : undefined",
   )
 </template>
 
@@ -139,7 +139,7 @@ interface ModalProps {
   /** The url that will be loaded as the content of the modal */
   src?: string;
   /** The name of the modal content iframe */
-  iFrameName?: string;
+  iframeName?: string;
   /**
    * Hide the title in the modal
    * @default false
@@ -155,6 +155,8 @@ interface ModalProps {
   loading?: boolean;
   /** Removes Scrollable container from the modal content */
   noScroll?: boolean;
+  /** Click or tap the area outside to close the modal */
+  clickOutsideToClose?: boolean;
   /** Primary action */
   primaryAction?: ComplexAction;
   /** Collection of secondary actions */
@@ -185,6 +187,7 @@ export type ModalEvents = {
 
 withDefaults(defineProps<ModalProps>(), {
   titleHidden: false,
+  clickOutsideToClose: true,
 });
 
 defineSlots<ModalSlots>();

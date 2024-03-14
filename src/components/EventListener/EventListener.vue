@@ -1,5 +1,6 @@
 <script lang="ts">
 export default {
+  name: 'EventListener',
   inheritAttrs: false,
   render() {
     return null;
@@ -9,13 +10,10 @@ export default {
 <script setup lang="ts">
 import { onMounted, watch, onBeforeUnmount } from 'vue';
 
-interface BaseEventProps {
+type EventListenerProps = {
   event: string;
   capture?: boolean;
   handler(event: Event): void;
-}
-
-export interface EventListenerProps extends BaseEventProps {
   passive?: boolean;
 }
 
