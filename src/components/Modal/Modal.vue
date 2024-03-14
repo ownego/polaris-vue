@@ -28,7 +28,7 @@ Portal(
     <!-- body markup -->
     iframe(
       v-if="src",
-      :name="iFrameName",
+      :name="iframeName",
       :title="iframeTitle",
       :src="src",
       :class="styles.Iframe",
@@ -139,7 +139,7 @@ interface ModalProps {
   /** The url that will be loaded as the content of the modal */
   src?: string;
   /** The name of the modal content iframe */
-  iFrameName?: string;
+  iframeName?: string;
   /**
    * Hide the title in the modal
    * @default false
