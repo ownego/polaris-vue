@@ -51,7 +51,6 @@ import useId from '@/use/useId';
 import { useHasSlot } from '@/use/useHasSlot';
 import { useComboboxTextField } from '../../context';
 
-
 const props = withDefaults(defineProps<TextFieldProps>(), {
   type: 'text',
   ariaAutocomplete: 'list',
