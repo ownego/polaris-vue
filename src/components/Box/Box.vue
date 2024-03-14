@@ -29,7 +29,6 @@ const props = withDefaults(defineProps<BoxProps>(), {
 
 defineSlots<BoxSlots>();
 
-
 const borderStyleValue = computed(() => (props.borderStyle
   ? props.borderStyle
   : props.borderColor ||

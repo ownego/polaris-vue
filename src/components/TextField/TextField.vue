@@ -425,7 +425,6 @@ const handleExpandingResize = (heightValue: number) => {
 
 const handleOnFocus = (e: FocusEvent | MouseEvent) => {
   focus.value = true;
-
   if (props.selectTextOnFocus && !props.suggestion) {
     inputElm.value?.select();
   }
@@ -447,7 +446,7 @@ const input = () => h(props.multiline ? 'textarea' : 'input', {
   disabled: props.disabled,
   readOnly: props.readOnly,
   role: props.role,
-  autoFocus: props.autoFocus,
+  autoFocus: props.autoFocus ? props.autoFocus : undefined,
   value: normalizedValue.value || props.value,
   placeholder: props.placeholder,
   style: style.value,
@@ -523,7 +522,6 @@ function handleClick(e: MouseEvent) {
   ) {
     return;
   }
-
   inputElm.value?.focus();
 }
 
