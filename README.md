@@ -21,7 +21,9 @@ We're using this library for our apps and got `Built for Shopify` badge, so hope
 
 ## Documentation
 
-Online documentation: [Click Here](https://ownego.github.io/polaris-vue/)
+Official documentation for v2.x: [Click Here](https://ownego.github.io/polaris-vue/)
+
+> Documentation for v1.3.x: [here](https://ownego.github.io/polaris-vue/v1/)
 
 <br/>
 
