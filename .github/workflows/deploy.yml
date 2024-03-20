@@ -54,6 +54,7 @@ jobs:
         run: |
           yarn docs:build
           touch docs/dist/.nojekyll
+          cp -R docs/v1 docs/dist/v1
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v2
         with:
