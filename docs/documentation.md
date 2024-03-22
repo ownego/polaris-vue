@@ -94,7 +94,7 @@ The `i18n` prop is required to pass the locales, you can check the [supported lo
   </AppProvider>
 </template>
 <script setup>
-import locales from '@ownego/polaris-vue/locales/en.json';
+import locales from '@ownego/polaris-vue/dist/locales/en.json';
 </script>
 ```
 :::
