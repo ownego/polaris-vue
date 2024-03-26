@@ -85,7 +85,9 @@ export function useMeta(ignoreFetch = false) {
 
       // String
       if (types[0].startsWith('string')) {
-        return ['string'];
+        console.log(types[0]);
+
+        return [types[0]];
       }
 
       // Number
@@ -187,6 +189,10 @@ export function useMeta(ignoreFetch = false) {
     }
 
     if (t === 'boolean') {
+      return 'boolean';
+    }
+
+    if (t === 'boolean[]') {
       return 'boolean';
     }
 
