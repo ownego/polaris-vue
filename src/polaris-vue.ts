@@ -1,6 +1,6 @@
 import type { App } from 'vue';
 
-import * as components from '@/components';
+import * as components from './components';
 
 const PolarisVue = {
   install(Vue: App) {
@@ -10,10 +10,10 @@ const PolarisVue = {
   },
 };
 
-export * from '@/components';
+export * from './components';
 
-export { useBreakpoints } from '@/use/useBreakpoints';
-export { useIndexResourceState } from '@/use/useIndexResourceState';
-export { useSetIndexFiltersMode } from '@/use/useSetIndexFiltersMode';
+export { useBreakpoints } from './use/useBreakpoints';
+export { useIndexResourceState } from './use/useIndexResourceState';
+export { useSetIndexFiltersMode } from './use/useSetIndexFiltersMode';
 
 export default PolarisVue;

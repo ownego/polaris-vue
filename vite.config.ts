@@ -1,15 +1,14 @@
-import { defineConfig, loadEnv } from 'vite';
+import { defineConfig } from 'vite';
 import vue from '@vitejs/plugin-vue';
 import svgLoader from 'vite-svg-loader';
 import { fileURLToPath } from 'url';
 import { replaceCodePlugin } from 'vite-plugin-replace';
 import packageJson from './package.json';
 import { generateScopedName } from './build/namespaced-classname.js';
+import dts from 'vite-plugin-dts';
 
 // https://vitejs.dev/config/
-export default ({ mode }) => {
-  const env = loadEnv(mode, '.');
-
+export default () => {
   return defineConfig({
     plugins: [
       vue(),
@@ -21,6 +20,10 @@ export default ({ mode }) => {
             to: packageJson.polaris_version,
           },
         ],
+      }),
+      dts({
+        rollupTypes: true,
+        outDir: 'dist/types',
       }),
     ],
     resolve: {
@@ -40,7 +43,6 @@ export default ({ mode }) => {
         },
       },
       modules: {
-        // generateScopedName: `${env.VITE_CLASS_PREFIX}-[local]`,
         generateScopedName,
       },
     },
