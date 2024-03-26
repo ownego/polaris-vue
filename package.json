@@ -20,13 +20,12 @@
     "LICENSE",
     "README.md"
   ],
-  "locales": "./dist/locales",
-  "types": "./dist/types/src/polaris-vue.d.ts",
+  "types": "./dist/types/polaris-vue.d.ts",
   "main": "./dist/polaris-vue.umd.js",
   "module": "./dist/polaris-vue.es.js",
   "scripts": {
     "dev": "vite",
-    "build": "rimraf dist && vite build && vue-tsc --declaration --emitDeclarationOnly && npm run gen-dts && npm run copy-locales && npm run remove-trashes",
+    "build": "rimraf dist && vue-tsc --noEmit && vite build && npm run gen-dts && npm run copy-locales && npm run remove-trashes",
     "preview": "vite preview --port 5050",
     "lint": "eslint . --ext .vue,.js,.jsx,.cjs,.mjs,.ts,.tsx,.cts,.mts --fix --ignore-path .gitignore",
     "gen-dts": "esbuild build/gen-component-declaration.js --bundle --platform=node | node && npm run move-dts",
@@ -53,7 +52,7 @@
     "@shopify/postcss-plugin": "^5.0.2",
     "@types/node": "^20.10.4",
     "@vitejs/plugin-vue": "^5.0.2",
-    "@vue/language-plugin-pug": "^2.0.6",
+    "@vue/language-plugin-pug": "1.8.27",
     "change-case": "^5.3.0",
     "eslint": "^8.54.0",
     "eslint-plugin-vue": "^9.18.1",
@@ -70,13 +69,14 @@
     "typescript": "^5.3.3",
     "url": "^0.11.3",
     "vite": "^5.0.10",
+    "vite-plugin-dts": "^3.7.3",
     "vite-plugin-eslint": "^1.8.1",
     "vite-plugin-replace": "^0.1.1",
     "vitepress": "^1.0.0-rc.35",
     "vue": "^3.4.19",
     "vue-component-meta": "^1.8.27",
     "vue-router": "^4.2.5",
-    "vue-tsc": "^2.0.6"
+    "vue-tsc": "^1.8.27"
   },
   "peerDependencies": {
     "vue": "^3.3"

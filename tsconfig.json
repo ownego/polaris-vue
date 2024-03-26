@@ -8,21 +8,19 @@
     "skipLibCheck": true,
     "paths": {
       "@/*": ["./src/*"],
-      "@polaris/*": ["./polaris/polaris-react/src/*"]
+      "@polaris/*": ["./polaris/polaris-react/src/*"],
     },
     "types": [
       "node",
       "vite/client"
     ],
     "outDir": "dist/types",
-
     // "noEmit": true,
     "moduleResolution": "node",
     // "allowImportingTsExtensions": true,
     "resolveJsonModule": true,
     "isolatedModules": true,
     "jsx": "preserve",
-
     "strict": true,
     "noUnusedLocals": true,
     "noUnusedParameters": true,
