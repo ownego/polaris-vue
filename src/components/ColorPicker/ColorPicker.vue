@@ -45,7 +45,7 @@ import {
 } from '@/utilities/color-transformers';
 import { EventListener } from '@/components';
 import { AlphaPicker, HuePicker, Slidable } from './components';
-import styles from '@polaris/components/ColorPicker/ColorPicker.module.scss';
+import styles from '@polaris/components/ColorPicker/ColorPicker.module.css';
 
 interface Color extends HSBColor {
   /** Level of transparency */

@@ -16,7 +16,7 @@ import {
 import type { ResponsiveValue } from '@/utilities/css';
 import type { VueNode } from '@/utilities/types';
 import type { InlineGridProps, Columns, ColumnsType } from './types';
-import styles from '@polaris/components/InlineGrid/InlineGrid.module.scss';
+import styles from '@polaris/components/InlineGrid/InlineGrid.module.css';
 
 export type InlineGridSlots = {
   default: (_: VueNode) => any;

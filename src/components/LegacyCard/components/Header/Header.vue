@@ -37,7 +37,7 @@ div(:class="styles.Header")
 
 <script setup lang="ts">
 import { computed, useSlots } from 'vue';
-import styles from '@polaris/components/LegacyCard/LegacyCard.module.scss';
+import styles from '@polaris/components/LegacyCard/LegacyCard.module.css';
 import { useHasSlot } from '@/use/useHasSlot';
 import type { DisableableAction } from '@/utilities/types';
 

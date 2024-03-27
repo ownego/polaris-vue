@@ -21,7 +21,7 @@ div(:class="pageClassName")
 <script setup lang="ts">
 import { computed } from 'vue';
 import { classNames } from '@/utilities/css';
-import styles from '@polaris/components/Page/Page.module.scss';
+import styles from '@polaris/components/Page/Page.module.css';
 import type { HeaderProps } from './components/Header/Header.vue';
 import { Header } from './components';
 import { useHasSlot } from '@/use/useHasSlot';

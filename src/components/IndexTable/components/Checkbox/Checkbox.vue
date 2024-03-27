@@ -28,8 +28,8 @@ import { Checkbox as PolarisCheckbox } from '@/components';
 import { setRootProperty } from '@polaris/utilities/set-root-property';
 import { useRowContext } from '../../context';
 
-import sharedStyles from '@polaris/components/IndexTable/IndexTable.module.scss';
-import styles from '@polaris/components/IndexTable/components/Checkbox/Checkbox.module.scss';
+import sharedStyles from '@polaris/components/IndexTable/IndexTable.module.css';
+import styles from '@polaris/components/IndexTable/components/Checkbox/Checkbox.module.css';
 
 type CheckboxProps = {
   accessibilityLabel?: string;

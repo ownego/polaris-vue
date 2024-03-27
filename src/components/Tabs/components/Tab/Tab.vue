@@ -124,7 +124,7 @@ import { focusFirstFocusableNode, handleMouseUpByBlurring } from '@/utilities/fo
 import { classNames } from '@/utilities/css';
 import { useHasSlot } from '@/use/useHasSlot';
 import { Popover, ActionList, Modal, ModalSection } from '@/components';
-import styles from '@polaris/components/Tabs/Tabs.module.scss';
+import styles from '@polaris/components/Tabs/Tabs.module.css';
 import InfoIcon from '@icons/InfoIcon.svg';
 import DuplicateIcon from '@icons/DuplicateIcon.svg';
 import EditIcon from '@icons/EditIcon.svg';

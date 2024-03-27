@@ -12,7 +12,7 @@ div(:class="className")
 import { computed } from 'vue';
 import { Box } from '@/components';
 import { classNames } from '@/utilities/css';
-import styles from '@polaris/components/Modal/components/Section/Section.module.scss';
+import styles from '@polaris/components/Modal/components/Section/Section.module.css';
 
 export interface SectionProps {
   flush?: boolean;
@@ -43,5 +43,5 @@ const additionalAttrs = computed(() => {
   }
 
   return attrs;
-}); 
+});
 </script>

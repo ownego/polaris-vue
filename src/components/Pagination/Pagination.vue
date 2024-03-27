@@ -188,7 +188,7 @@ import useI18n from '@/use/useI18n';
 import ChevronLeftIcon from '@icons/ChevronLeftIcon.svg';
 import ChevronRightIcon from '@icons/ChevronRightIcon.svg';
 import { isInputFocused } from '@polaris/utilities/is-input-focused';
-import styles from '@polaris/components/Pagination/Pagination.module.scss';
+import styles from '@polaris/components/Pagination/Pagination.module.css';
 import type { PaginationProps, PaginationEvents, PaginationSlots } from './types';
 
 const props = withDefaults(defineProps<PaginationProps>(), {

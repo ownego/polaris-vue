@@ -87,7 +87,7 @@ import { useToggle } from '@/use/useToggle';
 import { useBreakpoints } from '@/use/useBreakpoints';
 import ChevronDownIcon from '@icons/ChevronDownIcon.svg';
 import XSmallIcon from '@icons/XSmallIcon.svg';
-import styles from '@polaris/components/Filters/components/FilterPill/FilterPill.module.scss';
+import styles from '@polaris/components/Filters/components/FilterPill/FilterPill.module.css';
 
 interface FilterPillProps extends FilterInterface {
   /** A unique identifier for the filter */

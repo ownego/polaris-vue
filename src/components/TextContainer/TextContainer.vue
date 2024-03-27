@@ -7,7 +7,7 @@ div(:class="className")
 import { computed } from 'vue';
 import { classNames, variationName } from '@/utilities/css';
 import type { VueNode } from '@/utilities/types';
-import styles from '@polaris/components/TextContainer/TextContainer.module.scss';
+import styles from '@polaris/components/TextContainer/TextContainer.module.css';
 
 type Spacing = 'tight' | 'loose';
 

@@ -42,7 +42,7 @@ import SelectIcon from '@icons/SelectIcon.svg';
 import ChevronDownIcon from '@icons/ChevronDownIcon.svg';
 import ChevronUpIcon from '@icons/ChevronUpIcon.svg';
 import { handleMouseUpByBlurring } from '@/utilities/focus';
-import styles from '@polaris/components/Button/Button.module.scss';
+import styles from '@polaris/components/Button/Button.module.css';
 
 defineSlots<{
   /** The content to display inside the button */

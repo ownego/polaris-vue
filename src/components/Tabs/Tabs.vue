@@ -148,7 +148,7 @@ import { Icon, Tooltip, Popover } from '@/components';
 import { Tab, TabMeasurer, CreateViewModal, Panel, List } from './components';
 import type { TabMeasurements, TabProps, TabsEvents } from './types';
 import { getVisibleAndHiddenTabIndices } from './utilities';
-import styles from '@polaris/components/Tabs/Tabs.module.scss';
+import styles from '@polaris/components/Tabs/Tabs.module.css';
 import ChevronDownIcon from '@icons/ChevronDownIcon.svg';
 import PlusIcon from '@icons/PlusIcon.svg';
 import { classNames } from '@/utilities/css';

@@ -13,7 +13,7 @@ div(
 import { computed } from 'vue';
 import type { VueNode } from '@/utilities/types';
 import { classNames } from '@/utilities/css';
-import styles from '@polaris/components/Tabs/Tabs.module.scss';
+import styles from '@polaris/components/Tabs/Tabs.module.css';
 
 export interface PanelProps {
   hidden?: boolean;

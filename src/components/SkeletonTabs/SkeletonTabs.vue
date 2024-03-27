@@ -10,7 +10,7 @@ div(:class="classNames(styles.Tabs, fitted && styles.fitted)")
 
 <script setup lang="ts">
 import { classNames } from '@/utilities/css';
-import styles from '@polaris/components/SkeletonTabs/SkeletonTabs.module.scss';
+import styles from '@polaris/components/SkeletonTabs/SkeletonTabs.module.css';
 
 export interface SkeletonTabsProps {
   count?: number;

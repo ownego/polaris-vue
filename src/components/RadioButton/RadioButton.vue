@@ -45,7 +45,7 @@ import type {
   RadioButtonSlots,
   RadioButtonEvents,
 } from './types';
-import styles from '@polaris/components/RadioButton/RadioButton.module.scss';
+import styles from '@polaris/components/RadioButton/RadioButton.module.css';
 
 const props = defineProps<RadioButtonProps>();
 const slots = defineSlots<RadioButtonSlots>();

@@ -7,7 +7,7 @@ div(:class="className")
 import { computed } from 'vue';
 import type { VueNode } from '@/utilities/types';
 import { classNames } from '@/utilities/css';
-import styles from '@polaris/components/LegacyStack/LegacyStack.module.scss';
+import styles from '@polaris/components/LegacyStack/LegacyStack.module.css';
 
 export interface LegacyItemProps {
   /** Fill the remaining horizontal space in the stack with the item  */

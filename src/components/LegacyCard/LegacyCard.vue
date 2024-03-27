@@ -72,7 +72,7 @@ import { useLegacyCardPaddingObserverRef } from '@/use/useLegacyCard';
 import { classNames } from '@/utilities/css';
 import { Button } from '@/components';
 import { useHasSlot } from '@/use/useHasSlot';
-import styles from '@polaris/components/LegacyCard/LegacyCard.module.scss';
+import styles from '@polaris/components/LegacyCard/LegacyCard.module.css';
 import { Header, Section } from './components';
 
 interface LegacyCardProps {

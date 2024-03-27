@@ -39,7 +39,7 @@ import {
 import type { ButtonProps } from '@/components/Button/types';
 import type { DisableableAction } from '@/utilities/types';
 import MenuHorizontalIcon from '@icons/MenuHorizontalIcon.svg';
-import styles from '@polaris/components/BulkActions/BulkActions.module.scss';
+import styles from '@polaris/components/BulkActions/BulkActions.module.css';
 
 
 export type BulkActionButtonProps = {

@@ -13,7 +13,7 @@ import { classNames } from '@/utilities/css';
 import type { IconSource } from '@/utilities/types';
 import Option from '../Option/Option.vue';
 import TextOption from '../TextOption/TextOption.vue';
-import styles from '@polaris/components/Listbox/components/Action/Action.module.scss';
+import styles from '@polaris/components/Listbox/components/Action/Action.module.css';
 
 interface ActionProps {
   // Unique item value

@@ -23,7 +23,7 @@ import { computed, inject } from 'vue';
 import type { Theme } from '@shopify/polaris-tokens';
 import { classNames, variationName } from '@/utilities/css';
 import useI18n from '@/use/useI18n';
-import styles from '@polaris/components/ProgressBar/ProgressBar.module.scss';
+import styles from '@polaris/components/ProgressBar/ProgressBar.module.css';
 
 type Size = 'small' | 'medium' | 'large';
 type Color = 'highlight' | 'primary' | 'success' | 'critical';

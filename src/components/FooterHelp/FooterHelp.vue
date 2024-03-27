@@ -7,7 +7,7 @@ div(:class="styles.FooterHelp")
 <script setup lang="ts">
 import { type VNode } from 'vue';
 import { type VueNode } from '@/utilities/types';
-import styles from '@polaris/components/FooterHelp/FooterHelp.module.scss';
+import styles from '@polaris/components/FooterHelp/FooterHelp.module.css';
 
 const slots = defineSlots<{
   /** The content to display inside the layout. */

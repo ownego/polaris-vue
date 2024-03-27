@@ -22,7 +22,7 @@ import {
   onUpdated,
   onBeforeUnmount,
 } from 'vue';
-import styles from '@polaris/components/PositionedOverlay/PositionedOverlay.module.scss';
+import styles from '@polaris/components/PositionedOverlay/PositionedOverlay.module.css';
 import { classNames } from '@/utilities/css';
 import { getRectForNode, Rect } from '@/utilities/geometry';
 import { forNode } from '@/utilities/scrollable/for-node';

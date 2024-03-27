@@ -16,7 +16,7 @@ import {
 } from '@/utilities/css';
 import type { VueNode } from '@/utilities/types';
 import type { BoxProps } from './types';
-import styles from '@polaris/components/Box/Box.module.scss';
+import styles from '@polaris/components/Box/Box.module.css';
 
 export type BoxSlots = {
   /** Inner content of the box */

@@ -146,7 +146,7 @@ import {
 } from '@/components';
 import TruncateText from '../TruncateText.vue';
 import type { ActionListItemDescriptor, VueNode } from '@/utilities/types';
-import styles from '@polaris/components/ActionList/ActionList.module.scss';
+import styles from '@polaris/components/ActionList/ActionList.module.css';
 
 type ItemProps = ActionListItemDescriptor;
 

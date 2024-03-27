@@ -45,7 +45,7 @@ import { AutoSelection } from './utils';
 import { scrollOptionIntoView } from '@polaris/utilities/listbox/utilities';
 import { debounce } from '@polaris/utilities/debounce';
 import { scrollable } from '@polaris/components/shared';
-import styles from '@polaris/components/Listbox/Listbox.module.scss';
+import styles from '@polaris/components/Listbox/Listbox.module.css';
 
 type ArrowKeys = 'up' | 'down';
 

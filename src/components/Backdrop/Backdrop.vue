@@ -13,7 +13,7 @@ div(
 import { computed } from 'vue';
 import { ScrollLock } from '@/components';
 import { classNames } from '@/utilities/css';
-import styles from '@polaris/components/Backdrop/Backdrop.module.scss';
+import styles from '@polaris/components/Backdrop/Backdrop.module.css';
 
 interface BackdropProps {
   belowNavigation?: boolean;

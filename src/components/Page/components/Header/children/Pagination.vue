@@ -14,7 +14,7 @@ import { useSlots } from 'vue';
 import type { PaginationProps } from '@/components/Pagination/types.ts';
 import { useMediaQueryContext } from '@/use/useMediaQuery';
 import { useHasSlot } from '@/use/useHasSlot';
-import styles from '@polaris/components/Page/components/Header/Header.module.scss';
+import styles from '@polaris/components/Page/components/Header/Header.module.css';
 
 defineProps<{
   pagination?: PaginationProps;

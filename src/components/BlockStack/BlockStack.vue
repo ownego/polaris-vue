@@ -16,7 +16,7 @@ import {
 } from '@/utilities/css';
 import type { VueNode } from '@/utilities/types';
 import type { BlockStackProps } from './types';
-import styles from '@polaris/components/BlockStack/BlockStack.module.scss';
+import styles from '@polaris/components/BlockStack/BlockStack.module.css';
 
 export type BlockStackSlots = {
   default: (_: VueNode) => any;

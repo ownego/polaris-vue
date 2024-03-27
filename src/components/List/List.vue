@@ -10,7 +10,7 @@ component(
 import { type VNode, computed } from 'vue';
 import { classNames, variationName } from '@/utilities/css';
 import type { VueNode } from '@/utilities/types';
-import styles from '@polaris/components/List/List.module.scss';
+import styles from '@polaris/components/List/List.module.css';
 
 type Type = 'bullet' | 'number';
 

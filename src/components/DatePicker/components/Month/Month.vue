@@ -70,7 +70,7 @@ import useI18n from '@/use/useI18n';
 import { Day } from '../Day';
 import { Weekday } from '../Weekday';
 import { monthName, weekdayName } from '@polaris/components/DatePicker/utilities';
-import styles from '@polaris/components/DatePicker/DatePicker.module.scss';
+import styles from '@polaris/components/DatePicker/DatePicker.module.css';
 
 export type MonthProps = {
   focusedDate?: Date;

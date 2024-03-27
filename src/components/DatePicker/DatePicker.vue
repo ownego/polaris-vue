@@ -71,7 +71,7 @@ import useI18n from '@/use/useI18n';
 import { Button } from '@/components';
 import { monthName } from '@polaris/components/DatePicker/utilities';
 import { Month } from './components';
-import styles from '@polaris/components/DatePicker/DatePicker.module.scss';
+import styles from '@polaris/components/DatePicker/DatePicker.module.css';
 import ArrowLeftIcon from '@icons/ArrowLeftIcon.svg';
 import ArrowRightIcon from '@icons/ArrowRightIcon.svg';
 

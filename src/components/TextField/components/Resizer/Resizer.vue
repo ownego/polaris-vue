@@ -19,7 +19,7 @@ div(
 <script setup lang="ts">
 import { computed, onMounted, ref } from 'vue';
 import { useEventListener } from '@/utilities/use-event-listener';
-import styles from '@polaris/components/TextField/TextField.module.scss';
+import styles from '@polaris/components/TextField/TextField.module.css';
 
 export type ResizerProps = {
   contents?: string;

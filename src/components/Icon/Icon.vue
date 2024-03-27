@@ -36,7 +36,7 @@ import type {
   Tone,
   Source,
 } from './type';
-import styles from '@polaris/components/Icon/Icon.module.scss';
+import styles from '@polaris/components/Icon/Icon.module.css';
 
 export type IconProps = {
   /** The SVG contents to display in the icon (icons should fit in a 20 × 20 pixel viewBox) */

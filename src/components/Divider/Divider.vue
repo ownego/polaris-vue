@@ -11,7 +11,7 @@ import type {
   BorderWidthScale,
   ColorBorderAlias,
 } from '@shopify/polaris-tokens';
-import styles from '@polaris/components/Divider/Divider.module.scss';
+import styles from '@polaris/components/Divider/Divider.module.css';
 
 export interface DividerProps {
   /**

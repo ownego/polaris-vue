@@ -109,7 +109,7 @@ import {
   instanceOfBulkActionListSection,
   getActionSections,
 } from './utils';
-import styles from '@polaris/components/BulkActions/BulkActions.module.scss';
+import styles from '@polaris/components/BulkActions/BulkActions.module.css';
 
 const i18n = useI18n();
 

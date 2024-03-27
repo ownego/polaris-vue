@@ -14,7 +14,7 @@ component(
 import { type VNode, computed } from 'vue';
 import { classNames } from '@/utilities/css';
 import type { VueNode } from '@/utilities/types';
-import styles from '@polaris/components/IndexTable/IndexTable.module.scss';
+import styles from '@polaris/components/IndexTable/IndexTable.module.css';
 
 export type CellProps = {
   /** The table cell element to render. Render the cell as a `th` if it serves as a subheading

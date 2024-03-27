@@ -30,12 +30,12 @@ div(
 <script setup lang="ts">
 import { computed, onBeforeUnmount, onMounted, ref } from 'vue';
 import { classNames, variationName } from '@/utilities/css';
-import styles from '@polaris/components/Modal/components/Dialog/Dialog.module.scss';
+import styles from '@polaris/components/Modal/components/Dialog/Dialog.module.css';
 import { focusFirstFocusableNode } from '@/utilities/focus';
 import { KeypressListener, TrapFocus } from '@/components';
 import { Key } from '@/utilities/types';
 import type { ModalSize } from '../../utils';
- 
+
 export interface DialogProps {
   labelledBy?: string;
   limitHeight?: boolean;

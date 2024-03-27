@@ -6,7 +6,7 @@ div(:class="className")
 <script setup lang="ts">
 import { computed } from 'vue';
 import { classNames } from '@/utilities/css';
-import styles from '@polaris/components/Layout/Layout.module.scss';
+import styles from '@polaris/components/Layout/Layout.module.css';
 
 export type SectionProps = {
   variant?: 'oneHalf' | 'oneThird' | 'fullWidth';

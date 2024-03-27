@@ -49,7 +49,7 @@ import { classNames, variationName } from '@/utilities/css';
 import type { VueNode } from '@/utilities/types';
 import { handleMouseUpByBlurring } from '@/utilities/focus';
 import XSmallIcon from '@icons/XSmallIcon.svg';
-import styles from '@polaris/components/Tag/Tag.module.scss';
+import styles from '@polaris/components/Tag/Tag.module.css';
 
 const currentInstance = getCurrentInstance();
 

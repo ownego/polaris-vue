@@ -52,7 +52,7 @@ import { ref, computed } from 'vue';
 import { classNames, variationName } from '@/utilities/css';
 import useI18n from '@/use/useI18n';
 import { Image } from '@/components';
-import styles from '@polaris/components/Avatar/Avatar.module.scss';
+import styles from '@polaris/components/Avatar/Avatar.module.css';
 import type { Size, AvatarProps } from './utils';
 import { styleClass } from './utils';
 

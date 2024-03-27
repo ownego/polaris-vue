@@ -24,7 +24,7 @@ import { classNames } from '@/utilities/css';
 import { isSameDay } from '@polaris/utilities/dates';
 import useI18n from '@/use/useI18n';
 import { monthName } from '@polaris/components/DatePicker/utilities';
-import styles from '@polaris/components/DatePicker/DatePicker.module.scss';
+import styles from '@polaris/components/DatePicker/DatePicker.module.css';
 
 export type DayProps = {
   focused?: boolean;

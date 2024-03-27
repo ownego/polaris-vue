@@ -138,7 +138,7 @@ import {
 import type { PaginationProps } from '@/components/Pagination/types';
 import type { BulkActionsProps } from '@/components/BulkActions/types';
 import type { SelectOption } from '@/components/Select/types';
-import styles from '@polaris/components/ResourceList/ResourceList.module.scss';
+import styles from '@polaris/components/ResourceList/ResourceList.module.css';
 import CheckboxIcon from '@icons/CheckboxIcon.svg';
 
 const SMALL_SPINNER_HEIGHT = 28;

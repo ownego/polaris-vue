@@ -38,7 +38,7 @@ import type { IconSource, VueNode } from '@/utilities/types';
 import CompleteSvg from '@/assets/Badge/complete.svg';
 import PartiallySvg from '@/assets/Badge/partially.svg';
 import IncompleteSvg from '@/assets/Badge/incomplete.svg'
-import styles from '@polaris/components/Badge/Badge.module.scss';
+import styles from '@polaris/components/Badge/Badge.module.css';
 
 const DEFAULT_SIZE: Size = 'medium';
 interface NonMutuallyExclusiveProps {

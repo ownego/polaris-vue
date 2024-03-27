@@ -139,6 +139,5 @@ provide('ephemeral-presence-manager', ephemeralPresenceManager);
 </script>
 
 <style lang="scss">
-@import '@polaris/components/AppProvider/AppProvider.scss';
-@import '@polaris/components/AppProvider/global.scss';
+@import '@polaris/components/AppProvider/global.css';
 </style>

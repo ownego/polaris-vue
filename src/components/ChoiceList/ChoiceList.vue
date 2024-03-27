@@ -59,7 +59,7 @@ import { useHasSlot } from '@/use/useHasSlot';
 import { Box, Bleed, BlockStack, Checkbox, InlineError, RadioButton } from '@/components';
 import { errorTextID } from '@/components/InlineError/utils';
 import type { Choice, ChoiceListProps, ChoiceListSlots, ChoiceListEvents } from './types';
-import styles from '@polaris/components/ChoiceList/ChoiceList.module.scss';
+import styles from '@polaris/components/ChoiceList/ChoiceList.module.css';
 
 const props = withDefaults(defineProps<ChoiceListProps>(), {
   disabled: false,

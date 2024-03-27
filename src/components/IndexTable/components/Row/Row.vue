@@ -25,7 +25,7 @@ import { useIndexRowContext, useIndexSelectionChangeContext } from '@/components
 import { SelectionType, type Range } from '@/components/IndexProvider/types';
 import { type RowContextType } from '../../context';
 import { Checkbox } from '../Checkbox';
-import styles from '@polaris/components/IndexTable/IndexTable.module.scss';
+import styles from '@polaris/components/IndexTable/IndexTable.module.css';
 
 type RowType = 'data' | 'subheader' | 'child';
 type RowStatus = 'subdued' | 'success' | 'warning' | 'critical';
