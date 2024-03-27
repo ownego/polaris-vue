@@ -24,7 +24,7 @@ Portal(
       @close="emits('close')",
     )
       slot(name="title")
-    
+
     <!-- body markup -->
     iframe(
       v-if="src",
@@ -34,7 +34,7 @@ Portal(
       :class="styles.Iframe",
       :style="{ height: `${iframeHeight}px` }",
       @load="handleIframeLoad",
-    ) 
+    )
     div(
       v-else-if="noScroll",
       :class="styles.noScrollBody",
@@ -86,17 +86,17 @@ Portal(
         )
           slot
         slot(v-else)
-  
+
     <!-- footer markup -->
     Footer(
       v-if="hasSlot(slots.footer)  || primaryAction || secondaryActions",
       :primary-action="primaryAction",
       :secondary-actions="secondaryActions",
-    ) 
+    )
       slot(name="footer")
 
   Backdrop(
-    @closing="setClosing", 
+    @closing="setClosing",
     @click="clickOutsideToClose ? emits('close') : undefined",
   )
 </template>
@@ -111,7 +111,7 @@ import useId from '@/use/useId';
 import useI18n from '@/use/useI18n';
 import { useHasSlot } from '@/use/useHasSlot';
 import { focusFirstFocusableNode } from '@/utilities/focus';
-import styles from '@polaris/components/Modal/Modal.module.scss';
+import styles from '@polaris/components/Modal/Modal.module.css';
 import {
   Portal,
   Spinner,
@@ -208,7 +208,7 @@ const closing = ref<boolean>(false);
 
 const handleIframeLoad = (evt: Event) => {
   const iframe = evt.target as HTMLIFrameElement;
-  
+
   if (iframe && iframe.contentWindow) {
     try {
       iframeHeight.value = iframe.contentWindow.document.body.scrollHeight;

@@ -5,7 +5,7 @@ div(:class="styles.Subsection")
 
 <script setup lang="ts">
 import type { VueNode } from '@/utilities/types';
-import styles from '@polaris/components/LegacyCard/LegacyCard.module.scss';
+import styles from '@polaris/components/LegacyCard/LegacyCard.module.css';
 
 defineSlots<{
   default: (_?: VueNode) => any;

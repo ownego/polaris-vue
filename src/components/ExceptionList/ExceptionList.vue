@@ -10,7 +10,7 @@ ul(:class="styles.ExceptionList")
       span(v-else, :class="styles.Bullet")
     Truncate(v-if="item.truncate")
       span(
-        v-if="item.title", 
+        v-if="item.title",
         :class="styles.Title",
       ) {{ item.title }}
       span(
@@ -19,7 +19,7 @@ ul(:class="styles.ExceptionList")
       ) {{ item.description }}
     template(v-else)
       span(
-        v-if="item.title", 
+        v-if="item.title",
         :class="styles.Title",
       ) {{ item.title }}
       span(
@@ -31,7 +31,7 @@ ul(:class="styles.ExceptionList")
 <script setup lang="ts">
 import type { VueNode } from '@/utilities/types';
 import { classNames, variationName } from '@/utilities/css';
-import styles from '@polaris/components/ExceptionList/ExceptionList.module.scss';
+import styles from '@polaris/components/ExceptionList/ExceptionList.module.css';
 import type { Item, ExceptionListProps } from './types';
 
 defineSlots<{

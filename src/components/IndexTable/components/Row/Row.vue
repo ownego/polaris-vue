@@ -25,7 +25,7 @@ import { useIndexRowContext, useIndexSelectionChangeContext } from '@/components
 import { SelectionType, type Range } from '@/components/IndexProvider/types';
 import { type RowContextType } from '../../context';
 import { Checkbox } from '../Checkbox';
-import styles from '@polaris/components/IndexTable/IndexTable.module.scss';
+import styles from '@polaris/components/IndexTable/IndexTable.module.css';
 
 type RowType = 'data' | 'subheader' | 'child';
 type RowStatus = 'subdued' | 'success' | 'warning' | 'critical';
@@ -96,6 +96,7 @@ const rowClassName = computed(() => classNames(
   props.disabled && styles['TableRow-disabled'],
   props.tone && styles[variationName('tone', props.tone)],
   !selectable.value &&
+    !currentInstance?.vnode.props?.onClick &&
     !primaryLinkElement.value &&
     styles['TableRow-unclickable'],
 ));
@@ -118,7 +119,10 @@ const handleInteraction = (event: MouseEvent | KeyboardEvent) => {
 };
 
 const handleRowClick = (event: MouseEvent) => {
-  if ((props.disabled || !selectable.value) && !primaryLinkElement.value) {
+  if ((props.disabled || !selectable.value)
+    && !currentInstance?.vnode.props?.onClick
+    && !primaryLinkElement.value
+  ) {
     return;
   }
 

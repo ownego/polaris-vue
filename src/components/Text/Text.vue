@@ -19,7 +19,7 @@ import type {
   Variant,
   TextDecorationLine,
 } from './types';
-import styles from '@polaris/components/Text/Text.module.scss';
+import styles from '@polaris/components/Text/Text.module.css';
 
 /**
  * This component will not use children props because of slot method in vue can do the same thing

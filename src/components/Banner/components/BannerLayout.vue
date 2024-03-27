@@ -30,7 +30,7 @@ template(v-else)
 
 <script setup lang="ts">
 import { computed, h, getCurrentInstance, resolveComponent } from 'vue';
-import styles from '@polaris/components/Banner/Banner.module.scss';
+import styles from '@polaris/components/Banner/Banner.module.css';
 import useI18n from '@/use/useI18n';
 import type { VueNode } from '@/utilities/types';
 import XIcon from '@icons/XIcon.svg';

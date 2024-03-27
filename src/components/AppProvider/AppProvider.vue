@@ -69,7 +69,13 @@ onMounted(() => {
         navigator.userAgent.includes('Version/16.2') ||
         navigator.userAgent.includes('Version/16.3'));
 
-    if (isSafari16) {
+    const isMobileApp16 =
+      navigator.userAgent.includes('Shopify Mobile/iOS') &&
+      (navigator.userAgent.includes('OS 16_1') ||
+        navigator.userAgent.includes('OS 16_2') ||
+        navigator.userAgent.includes('OS 16_3'));
+
+    if (isSafari16 || isMobileApp16) {
       document.documentElement.classList.add(
         'Polaris-Safari-16-Font-Optical-Sizing-Patch',
       );
@@ -126,6 +132,7 @@ function measureScrollbars() {
   document.body.removeChild(parentEl);
 }
 
+provide('themeName', themeName); // TODO: This should be reactive
 provide('theme', getTheme(themeName.value)); // TODO: This should be reactive
 provide('features', props.features ?? {});
 provide('i18n', new I18n(props.i18n));
@@ -139,6 +146,5 @@ provide('ephemeral-presence-manager', ephemeralPresenceManager);
 </script>
 
 <style lang="scss">
-@import '@polaris/components/AppProvider/AppProvider.scss';
-@import '@polaris/components/AppProvider/global.scss';
+@import '@polaris/components/AppProvider/global.css';
 </style>

@@ -23,7 +23,7 @@ import { ref, watch, computed } from 'vue';
 import { UnstyledLink } from '@/components';
 import type { VueNode } from '@/utilities/types';
 import { classNames } from '@/utilities/css';
-import styles from '@polaris/components/Tabs/Tabs.module.scss';
+import styles from '@polaris/components/Tabs/Tabs.module.css';
 
 export interface ItemProps {
   id: string;

@@ -24,7 +24,7 @@ Labelled(
       @mousedown="handleMouseDownTrack",
     )
       div(:class="styles.Track", :style="cssVars", ref="track")
-      div(:class="styles['Track--dashed']")
+      div(:class="sharedStyles['Track--dashed']")
       div(
         ref="thumbLower",
         :id="idLower",
@@ -112,8 +112,8 @@ import { Key } from '@/utilities/types';
 import { useEventListener } from '@/utilities/use-event-listener';
 import { useHasSlot } from '@/use/useHasSlot';
 
-import sharedStyles from '@polaris/components/RangeSlider/RangeSlider.module.scss';
-import styles from '@polaris/components/RangeSlider/components/DualThumb/DualThumb.module.scss';
+import sharedStyles from '@polaris/components/RangeSlider/RangeSlider.module.css';
+import styles from '@polaris/components/RangeSlider/components/DualThumb/DualThumb.module.css';
 
 export type DualThumbProps = RangeSliderProps & {
   id: string;

@@ -19,7 +19,7 @@ import { classNames, variationName } from '@/utilities/css';
 import type { VueNode } from '@/utilities/types';
 import LegacyStackItem from './components/Item/Item.vue';
 import { isElementOfType } from '@/utilities/component';
-import styles from '@polaris/components/LegacyStack/LegacyStack.module.scss';
+import styles from '@polaris/components/LegacyStack/LegacyStack.module.css';
 
 type Spacing =
   | 'extraTight'

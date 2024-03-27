@@ -12,7 +12,7 @@ import { onMounted, provide, ref } from 'vue';
 import { debounce } from '@polaris/utilities/debounce';
 import { scrollDefaultContext, type ScrollContextType } from '../../context';
 
-import styles from '@polaris/components/IndexTable/components/ScrollContainer/ScrollContainer.module.scss';
+import styles from '@polaris/components/IndexTable/components/ScrollContainer/ScrollContainer.module.css';
 
 export type ScrollContainerEvents = {
   'scroll': [canScrollLeft: boolean, canScrollRight: boolean];

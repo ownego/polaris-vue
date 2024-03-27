@@ -43,7 +43,7 @@ import { classNames } from '@/utilities/css';
 import { useHasSlot } from '@/use/useHasSlot';
 import type { ButtonProps } from '@/components/Button/types';
 import XSmallIcon from '@icons/XSmallIcon.svg';
-import styles from '@polaris/components/CalloutCard/CalloutCard.module.scss';
+import styles from '@polaris/components/CalloutCard/CalloutCard.module.css';
 
 export interface CalloutCardProps {
   /** The title of the card */

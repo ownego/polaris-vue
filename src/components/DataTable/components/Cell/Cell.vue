@@ -76,7 +76,7 @@ import type {
 } from '../../types';
 import SortDescendingIcon from '@icons/SortDescendingIcon.svg';
 import SortAscendingIcon from '@icons/SortAscendingIcon.svg';
-import styles from '@polaris/components/DataTable/DataTable.module.scss';
+import styles from '@polaris/components/DataTable/DataTable.module.css';
 
 const props = withDefaults(defineProps<CellProps>(), {
   verticalAlign: 'top',

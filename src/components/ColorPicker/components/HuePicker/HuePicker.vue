@@ -14,7 +14,7 @@ div(
 <script setup lang="ts">
 import { computed, onMounted, ref } from 'vue';
 import { calculateDraggerY, hueForDraggerY } from '@polaris/components/ColorPicker/components/HuePicker/utilities';
-import styles from '@polaris/components/ColorPicker/ColorPicker.module.scss';
+import styles from '@polaris/components/ColorPicker/ColorPicker.module.css';
 import { Slidable } from '../Slidable';
 
 type HuePickerProps = {

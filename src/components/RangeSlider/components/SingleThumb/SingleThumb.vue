@@ -17,7 +17,7 @@ Labelled(
       slot(v-if="slots.prefix", name="prefix")
       template(v-else) {{ prefix }}
 
-    div(:class="styles.InputWrapper")
+    div(:class="classNames(styles.InputWrapper, sharedStyles['Track--dashed-after'])")
       input(
         type="range",
         :class="styles.Input",
@@ -65,8 +65,8 @@ import { invertNumber } from '@polaris/components/RangeSlider/utilities';
 import { useHasSlot } from '@/use/useHasSlot';
 import type { RangeSliderProps, RangeSliderSlots, RangeSliderEvents } from '../../types';
 
-import sharedStyles from '@polaris/components/RangeSlider/RangeSlider.module.scss';
-import styles from '@polaris/components/RangeSlider/components/SingleThumb/SingleThumb.module.scss';
+import sharedStyles from '@polaris/components/RangeSlider/RangeSlider.module.css';
+import styles from '@polaris/components/RangeSlider/components/SingleThumb/SingleThumb.module.css';
 
 export type SingleThumbProps = RangeSliderProps & {
   id: string;

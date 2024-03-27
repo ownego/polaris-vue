@@ -23,7 +23,7 @@ import { onMounted, ref } from 'vue';
 import useI18n from '@/use/useI18n';
 import type { MenuActionDescriptor, MenuGroupDescriptor } from '@/utilities/types';
 import { useEventListener } from '@/utilities/use-event-listener';
-import styles from '@polaris/components/ActionMenu/components/Actions/Actions.module.scss';
+import styles from '@polaris/components/ActionMenu/components/Actions/Actions.module.css';
 import type { SecondaryActionProps } from '../../../SecondaryAction/SecondaryAction.vue';
 import { SecondaryAction } from '../../../SecondaryAction';
 

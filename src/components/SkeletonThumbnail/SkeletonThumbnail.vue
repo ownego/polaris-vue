@@ -5,7 +5,7 @@ div(:class="className")
 <script setup lang="ts">
 import { computed } from 'vue';
 import { classNames, variationName } from '@/utilities/css';
-import styles from '@polaris/components/SkeletonThumbnail/SkeletonThumbnail.module.scss';
+import styles from '@polaris/components/SkeletonThumbnail/SkeletonThumbnail.module.css';
 
 type Size = 'extraSmall' | 'small' | 'medium' | 'large';
 

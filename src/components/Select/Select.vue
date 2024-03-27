@@ -95,7 +95,7 @@ import type {
 } from './types';
 
 import SelectIcon from '@icons/SelectIcon.svg';
-import styles from '@polaris/components/Select/Select.module.scss';
+import styles from '@polaris/components/Select/Select.module.css';
 
 const PLACEHOLDER_VALUE = '';
 

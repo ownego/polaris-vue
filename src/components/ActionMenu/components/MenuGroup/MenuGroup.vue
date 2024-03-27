@@ -39,7 +39,7 @@ import type {
   ActionListItemDescriptor,
   ActionListSection,
 } from '@/utilities/types';
-import styles from '@polaris/components/ActionMenu/components/MenuGroup/MenuGroup.module.scss';
+import styles from '@polaris/components/ActionMenu/components/MenuGroup/MenuGroup.module.css';
 import { SecondaryAction } from '../SecondaryAction';
 
 export interface MenuGroupProps {

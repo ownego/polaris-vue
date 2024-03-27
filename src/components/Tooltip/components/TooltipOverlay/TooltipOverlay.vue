@@ -40,7 +40,7 @@ import { PositionedOverlay } from '@/components';
 import TailDownPathsVue from './TailDownPaths.vue';
 import TailUpPaths from './TailUpPaths.vue';
 import type { TooltipOverlayProps } from './utils';
-import styles from '@polaris/components/Tooltip/components/TooltipOverlay/TooltipOverlay.module.scss';
+import styles from '@polaris/components/Tooltip/components/TooltipOverlay/TooltipOverlay.module.css';
 
 const i18n = useI18n();
 

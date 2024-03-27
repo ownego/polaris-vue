@@ -22,7 +22,7 @@ import {
   onUpdated,
   onBeforeUnmount,
 } from 'vue';
-import styles from '@polaris/components/PositionedOverlay/PositionedOverlay.module.scss';
+import styles from '@polaris/components/PositionedOverlay/PositionedOverlay.module.css';
 import { classNames } from '@/utilities/css';
 import { getRectForNode, Rect } from '@/utilities/geometry';
 import { forNode } from '@/utilities/scrollable/for-node';
@@ -44,7 +44,7 @@ import {
 import type { PreferredPosition, PreferredAlignment } from './utilities/math';
 import type { VueNode } from '@/utilities/types';
 
-type Positioning = 'above' | 'below';
+type Positioning = 'above' | 'below' | 'cover';
 
 export interface OverlayDetails {
   left?: number;
@@ -260,7 +260,7 @@ function handleMeasurement() {
       : firstScrollableContainer.value;
     const scrollableContainerRect = getRectForNode(scrollableElement);
 
-    const overlayRect = fullWidth
+    const overlayRect = fullWidth || preferredPosition === 'cover'
       ? new Rect({ ...currentOverlayRect, width: activatorRect.width })
       : currentOverlayRect;
 
@@ -321,7 +321,7 @@ function handleMeasurement() {
     state.top = lockPosition ? top : verticalPosition.top;
     state.lockPosition = Boolean(fixed);
     state.height = verticalPosition.height || 0;
-    state.width = fullWidth ? overlayRect.width : null;
+    state.width = fullWidth || preferredPosition === 'cover' ? overlayRect.width : null;
     state.positioning = verticalPosition.positioning as Positioning;
     state.outsideScrollableContainer = rectIsOutsideOfRect(activatorRect, intersectionWithViewport(scrollableContainerRect));
     state.zIndex = zIndex;

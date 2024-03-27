@@ -157,7 +157,7 @@ import type {
   DataTableEvents,
   TableData,
 } from './types';
-import styles from '@polaris/components/DataTable/DataTable.module.scss';
+import styles from '@polaris/components/DataTable/DataTable.module.css';
 
 const props = withDefaults(defineProps<DataTableProps>(), {
   hideScrollIndicator: false,

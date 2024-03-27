@@ -94,7 +94,7 @@ import {
 } from './utils';
 import UploadIcon from '@icons/UploadIcon.svg';
 import AlertCircleIcon from '@icons/AlertCircleIcon.svg';
-import styles from '@polaris/components/DropZone/DropZone.module.scss';
+import styles from '@polaris/components/DropZone/DropZone.module.css';
 
 export type DropZoneFileType = 'file' | 'image' | 'video';
 

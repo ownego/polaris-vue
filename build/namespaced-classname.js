@@ -6,7 +6,7 @@ const SUBCOMPONENT_VARIATION_SELECTOR = /^\w+-\w+$/;
 const NESTED_COMPONENT_PATH_REGEX = /.*\/components\/(.*)\/components/;
 
 export function generateScopedName(name, filename) {
-  let componentName = basename(filename, '.module.scss').replace(/\.vue.*/, '');
+  let componentName = basename(filename, '.module.css').replace(/\.vue.*/, '');
   const nestedComponentMatch = NESTED_COMPONENT_PATH_REGEX.exec(filename);
 
   const polarisComponentName =

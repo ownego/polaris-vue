@@ -10,7 +10,7 @@ div(
 <script setup lang="ts">
 import { ref, computed } from 'vue';
 import { classNames } from '@/utilities/css';
-import styles from '@polaris/components/ButtonGroup/ButtonGroup.module.scss';
+import styles from '@polaris/components/ButtonGroup/ButtonGroup.module.css';
 
 interface ItemProps {
   buttonElm: Element | any;

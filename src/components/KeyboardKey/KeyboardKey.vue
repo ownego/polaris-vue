@@ -9,7 +9,7 @@ kbd(
 import { computed } from 'vue';
 import { classNames } from '@/utilities/css';
 import type { VueNode } from '@/utilities/types';
-import styles from '@polaris/components/KeyboardKey/KeyboardKey.module.scss';
+import styles from '@polaris/components/KeyboardKey/KeyboardKey.module.css';
 
 type Size = 'small';
 
@@ -23,7 +23,7 @@ const slots = defineSlots<{
   default: (_: VueNode) => any;
 }>();
 
-const className = computed(() => 
+const className = computed(() =>
   classNames(styles.KeyboardKey, props.size && styles[props.size]),
 );
 

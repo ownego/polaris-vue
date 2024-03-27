@@ -60,7 +60,7 @@ import { useHasSlot } from '@/use/useHasSlot';
 import { InlineError } from '@/components';
 import type { ChoiceProps, ChoiceSlots } from './types';
 import { helpTextID } from './utils';
-import styles from '@polaris/components/Choice/Choice.module.scss';
+import styles from '@polaris/components/Choice/Choice.module.css';
 
 type ChoiceEvents = {
   'click': [];

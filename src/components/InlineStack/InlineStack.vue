@@ -12,7 +12,7 @@ import { computed } from 'vue';
 import type { VueNode } from '@/utilities/types';
 import { getResponsiveProps, classNames, getResponsiveValue } from '@/utilities/css';
 import type { InlineStackProps } from './types';
-import styles from '@polaris/components/InlineStack/InlineStack.module.scss';
+import styles from '@polaris/components/InlineStack/InlineStack.module.css';
 
 export type InlineStackSlots = {
   default: (_: VueNode) => any;

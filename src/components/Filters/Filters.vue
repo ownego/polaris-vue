@@ -59,7 +59,7 @@ import {
   FiltersBar,
   SearchField,
 } from './components';
-import styles  from '@polaris/components/Filters/Filters.module.scss';
+import styles  from '@polaris/components/Filters/Filters.module.css';
 import { type TransitionStatus } from '../IndexFilters/types';
 
 const TRANSITION_DURATION = 'var(--p-motion-duration-150)';

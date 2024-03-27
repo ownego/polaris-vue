@@ -42,7 +42,7 @@ import type { MappedActionContextType } from '@/utilities/auto-complete';
 import useI18n from '@/use/useI18n';
 import { Badge, ListboxAction, Icon, Text } from '@/components';
 
-import styles from '@polaris/components/Autocomplete/components/MappedAction/MappedAction.module.scss';
+import styles from '@polaris/components/Autocomplete/components/MappedAction/MappedAction.module.css';
 
 interface MappedActionProps extends ActionListItemDescriptor {
   wrapOverflow?: boolean;

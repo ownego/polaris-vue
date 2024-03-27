@@ -37,7 +37,7 @@ Box(
 
 <script setup lang="ts">
 import { ref, watch, onMounted, onBeforeUnmount } from 'vue';
-import styles from '@polaris/components/Banner/Banner.module.scss';
+import styles from '@polaris/components/Banner/Banner.module.css';
 import type { VueNode } from '@/utilities/types';
 import type { BannerLayoutProps } from '../types';
 import type { InlineStackProps } from '../../InlineStack/types';

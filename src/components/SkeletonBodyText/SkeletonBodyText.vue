@@ -8,7 +8,7 @@ div(:class="styles.SkeletonBodyTextContainer")
 </template>
 
 <script setup lang="ts">
-import styles from '@polaris/components/SkeletonBodyText/SkeletonBodyText.module.scss';
+import styles from '@polaris/components/SkeletonBodyText/SkeletonBodyText.module.css';
 
 export interface SkeletonBodyTextProps {
   /**

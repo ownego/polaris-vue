@@ -59,7 +59,7 @@ import {
   onMounted,
   onBeforeUnmount,
 } from 'vue';
-import styles from '@polaris/components/Popover/Popover.module.scss';
+import styles from '@polaris/components/Popover/Popover.module.css';
 import { themeDefault } from '@shopify/polaris-tokens';
 import { overlay } from '@polaris/components/shared';
 import { classNames } from '@/utilities/css';
@@ -154,7 +154,7 @@ const isChildContentWrappedByPane = computed(() => {
   const childContents: any = slots.default?.() || [];
 
   if (!childContents.length) {
-    return false; 
+    return false;
   }
 
   const children = childContents[0].children && childContents[0].children.length
@@ -299,7 +299,7 @@ function nodeContainsDescendant(
     if (parent === rootNode) {
       return true;
     }
-    
+
     parent = parent.parentNode;
   }
 

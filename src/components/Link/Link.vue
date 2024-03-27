@@ -43,7 +43,7 @@ import type {
   VueNode,
 } from '@/utilities/types';
 import type { RouteLocationRaw } from './types';
-import styles from '@polaris/components/Link/Link.module.scss';
+import styles from '@polaris/components/Link/Link.module.css';
 
 export type LinkProps = {
   /** ID for the link */

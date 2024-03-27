@@ -33,7 +33,7 @@ import { classNames } from '@/utilities/css';
 import { useHasSlot } from '@/use/useHasSlot';
 import type { VueNode } from '@/utilities/types';
 import type { ButtonProps } from '@/components/Button/types';
-import styles from '@polaris/components/ActionMenu/components/SecondaryAction/SecondaryAction.module.scss';
+import styles from '@polaris/components/ActionMenu/components/SecondaryAction/SecondaryAction.module.css';
 
 export interface SecondaryActionProps extends ButtonProps {
   helpText?: string;

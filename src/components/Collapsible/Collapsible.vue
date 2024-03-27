@@ -16,7 +16,7 @@ import { computed, watch, onMounted, ref } from 'vue';
 import type { Transition, AnimationState } from './types';
 import type { VueNode } from '@/utilities/types';
 import { classNames } from '@/utilities/css';
-import styles from '@polaris/components/Collapsible/Collapsible.module.scss';
+import styles from '@polaris/components/Collapsible/Collapsible.module.css';
 
 export type CollapsibleProps = {
   /** Assign a unique ID to the collapsible. For accessibility, pass this ID as the value of the triggering component’s aria-controls prop. */
@@ -50,7 +50,7 @@ const isOpen = ref<boolean>(props.open);
 const animationState = ref<AnimationState>('idle');
 const collapsibleContainer = ref<HTMLDivElement | null>(null);
 
-const isFullyOpen = computed(() => 
+const isFullyOpen = computed(() =>
   animationState.value === 'idle' && props.open && isOpen.value,
 );
 

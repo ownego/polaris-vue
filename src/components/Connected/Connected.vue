@@ -11,7 +11,7 @@ div(:class="styles.Connected")
 <script setup lang="ts">
 import { Item } from './components';
 import { type VueNode } from '@/utilities/types';
-import styles from '@polaris/components/Connected/Connected.module.scss';
+import styles from '@polaris/components/Connected/Connected.module.css';
 
 type ConnectedSlots = {
   left?: (_?: VueNode) => null;

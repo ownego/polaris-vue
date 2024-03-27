@@ -11,7 +11,7 @@ div(
 import { computed } from 'vue';
 import { classNames } from '@/utilities/css';
 import { useToggle } from '@/use/useToggle';
-import styles from '@polaris/components/Connected/Connected.module.scss';
+import styles from '@polaris/components/Connected/Connected.module.css';
 
 type ItemPosition = 'left' | 'right' | 'primary';
 

@@ -28,7 +28,7 @@ div(:class="styles.PrimaryActionWrapper")
 import { computed, useSlots } from 'vue';
 import { useMediaQueryContext } from '@/use/useMediaQuery';
 import { useHasSlot } from '@/use/useHasSlot';
-import styles from '@polaris/components/Page/components/Header/Header.module.scss';
+import styles from '@polaris/components/Page/components/Header/Header.module.css';
 import type { PrimaryActionType } from '../Header.vue';
 
 const props = defineProps<PrimaryActionType>();

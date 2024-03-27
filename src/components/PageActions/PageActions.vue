@@ -34,7 +34,7 @@ import {
 } from '@/components';
 import { useHasSlot } from '@/use/useHasSlot';
 
-import styles from '@polaris/components/PageActions/PageActions.module.scss';
+import styles from '@polaris/components/PageActions/PageActions.module.css';
 
 export type PageActionsProps = {
   /** The primary action for the page */

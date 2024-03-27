@@ -12,7 +12,7 @@ import {
   variationName,
   sanitizeCustomProperties,
 } from '@/utilities/css';
-import styles from '@polaris/components/SkeletonDisplayText/SkeletonDisplayText.module.scss';
+import styles from '@polaris/components/SkeletonDisplayText/SkeletonDisplayText.module.css';
 
 type Size = 'small' | 'medium' | 'large' | 'extraLarge';
 

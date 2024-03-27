@@ -155,7 +155,7 @@ import { labelId } from '../Label/utils';
 import { Labelled, Icon, Text, Spinner as LoadingSpinner } from '@/components';
 import { Connected } from '../Connected';
 import XCircleIcon from '@icons/XCircleIcon.svg';
-import styles from '@polaris/components/TextField/TextField.module.scss';
+import styles from '@polaris/components/TextField/TextField.module.css';
 
 import type { TextFieldProps, TextFieldSlots, TextFieldEvents } from './types';
 import { Resizer, Spinner } from './components';

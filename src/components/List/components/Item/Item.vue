@@ -6,5 +6,5 @@ li(
 </template>
 
 <script setup lang="ts">
-import styles from '@polaris/components/List/List.module.scss';
+import styles from '@polaris/components/List/List.module.css';
 </script>

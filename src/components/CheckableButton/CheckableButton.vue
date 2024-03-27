@@ -21,7 +21,7 @@ div(:class="className", @click="emits('toggle-all')")
 import { computed, ref } from 'vue';
 import { classNames } from '@/utilities/css';
 import { Checkbox } from '@/components';
-import styles from '@polaris/components/CheckableButton/CheckableButton.module.scss';
+import styles from '@polaris/components/CheckableButton/CheckableButton.module.css';
 
 export interface CheckboxHandles {
   focus(): void;

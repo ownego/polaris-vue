@@ -25,8 +25,6 @@ export interface BlockStackProps {
   inlineAlign?: InlineAlign;
   /** The spacing between children */
   gap?: Gap;
-  /** HTML id attribute */
-  id?: string;
   /** Reverse the render order of child items
    * @default false
    */

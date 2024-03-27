@@ -9,7 +9,7 @@ div(
 <script setup lang="ts">
 import { computed } from 'vue';
 import type { VueNode } from '@/utilities/types';
-import styles from '@polaris/components/Grid/Grid.module.scss';
+import styles from '@polaris/components/Grid/Grid.module.css';
 
 export type GridSlots = {
   default: (_: VueNode) => any;

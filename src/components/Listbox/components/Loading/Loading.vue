@@ -12,7 +12,7 @@ li(:class="styles.ListItem", role="presentation")
 import { watch, useSlots } from 'vue';
 import { Spinner } from '@/components';
 import { useListbox } from '@/use/useListbox';
-import styles from '@polaris/components/Listbox/components/Loading/Loading.module.scss';
+import styles from '@polaris/components/Listbox/components/Loading/Loading.module.css';
 
 interface LoadingProps {
   accessibilityLabel: string;

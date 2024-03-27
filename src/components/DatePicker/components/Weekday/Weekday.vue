@@ -9,7 +9,7 @@ th(
 <script setup lang="ts">
 import { computed } from 'vue';
 import { classNames } from '@/utilities/css';
-import styles from '@polaris/components/DatePicker/DatePicker.module.scss';
+import styles from '@polaris/components/DatePicker/DatePicker.module.css';
 
 export type WeekdayProps = {
   label: string;

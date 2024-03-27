@@ -11,7 +11,7 @@ div(:class="styles.Section")
 
 <script setup lang="ts">
 import { Box } from '@/components';
-import styles from '@polaris/components/Popover/Popover.module.scss';
+import styles from '@polaris/components/Popover/Popover.module.css';
 </script>
 
 

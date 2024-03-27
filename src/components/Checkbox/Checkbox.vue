@@ -83,7 +83,7 @@ import type { ChoiceBleedProps } from '../Choice/types';
 import { errorTextID } from '../InlineError/utils';
 
 import MinusIcon from '@icons/MinusIcon.svg';
-import styles from '@polaris/components/Checkbox/Checkbox.module.scss';
+import styles from '@polaris/components/Checkbox/Checkbox.module.css';
 
 export interface CheckboxProps extends ChoiceBleedProps {
   /** Indicates the ID of the element that is controlled by the checkbox */

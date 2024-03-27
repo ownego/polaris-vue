@@ -22,7 +22,7 @@ import { hsbToRgb } from '@/utilities/color-transformers';
 import { Slidable } from '../Slidable';
 
 import { calculateDraggerY, alphaForDraggerY } from '@polaris/components/ColorPicker/components/AlphaPicker/utilities';
-import styles from '@polaris/components/ColorPicker/ColorPicker.module.scss';
+import styles from '@polaris/components/ColorPicker/ColorPicker.module.css';
 
 export type AlphaPickerProps = {
   color: HSBColor

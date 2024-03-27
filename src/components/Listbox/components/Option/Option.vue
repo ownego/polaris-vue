@@ -47,7 +47,7 @@ import useId from '@/use/useId';
 import { listboxWithinSectionDataSelector } from '@polaris/components/Listbox/components/Section/selectors';
 import TextOption from '../TextOption/TextOption.vue';
 import { UnstyledLink } from '@/components';
-import styles from '@polaris/components/Listbox/components/Option/Option.module.scss';
+import styles from '@polaris/components/Listbox/components/Option/Option.module.css';
 import { useAction, useListbox, useSection } from '@/use/useListbox';
 import { useHasSlot } from '@/use/useHasSlot';
 import type { VueNode } from '@/utilities/types';

@@ -16,5 +16,5 @@ onBeforeUnmount(() => {
 </script>
 
 <style lang="scss">
-@import '@polaris/components/ScrollLock/ScrollLock.module.scss';
+@import '@polaris/components/ScrollLock/ScrollLock.module.css';
 </style>

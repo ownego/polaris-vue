@@ -6,5 +6,5 @@ dt(:class="styles.Term")
 
 <script setup lang="ts">
 import { Text } from '@/components';
-import styles from '@polaris/components/DescriptionList/DescriptionList.module.scss';
+import styles from '@polaris/components/DescriptionList/DescriptionList.module.css';
 </script>

@@ -67,7 +67,7 @@ import {
 } from '@/components';
 import type { InlineStackProps } from '@/components/InlineStack/types';
 import CheckIcon from '@icons/CheckIcon.svg';
-import styles from '@polaris/components/OptionList/components/Option/Option.module.scss';
+import styles from '@polaris/components/OptionList/components/Option/Option.module.css';
 
 type Alignment = 'top' | 'center' | 'bottom';
 
