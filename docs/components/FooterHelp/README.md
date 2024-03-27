@@ -22,6 +22,10 @@ examples:
 
 </Examples>
 
+## Props
+
+<PropsTable />
+
 ## Slots
 
 <SlotsTable />
