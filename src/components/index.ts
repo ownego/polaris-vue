@@ -89,6 +89,7 @@ export * from './Tag';
 export * from './Text';
 export * from './TextContainer';
 export * from './TextField';
+export * from './ThemeProvider';
 export * from './Thumbnail';
 export * from './Tooltip';
 export * from './TrapFocus';

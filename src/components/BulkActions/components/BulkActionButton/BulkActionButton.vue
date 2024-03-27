@@ -2,13 +2,14 @@
 div(:class="styles.BulkActionButton", ref="bulkActionButton")
   template(v-if="isActivatorForMoreActionsPopover")
     Tooltip(
-      preferred-position="above",
+      preferred-position="below",
       :content="content",
     )
       Button(
         :size="size",
         :external="external",
         :url="url",
+        :tone="destructive ? 'critical' : undefined",
         :disclosure="disclosure && showContentInButton",
         :accessibility-label="isActivatorForMoreActionsPopover ? content : accessibilityLabel",
         :disabled="disabled",
@@ -20,6 +21,7 @@ div(:class="styles.BulkActionButton", ref="bulkActionButton")
     :size="size",
     :external="external",
     :url="url",
+    :tone="destructive ? 'critical' : undefined",
     :disclosure="disclosure && showContentInButton",
     :accessibility-label="isActivatorForMoreActionsPopover ? content : accessibilityLabel",
     :disabled="disabled",
@@ -37,7 +39,7 @@ import {
   Tooltip,
 } from '@/components';
 import type { ButtonProps } from '@/components/Button/types';
-import type { DisableableAction } from '@/utilities/types';
+import type { DestructableAction, DisableableAction } from '@/utilities/types';
 import MenuHorizontalIcon from '@icons/MenuHorizontalIcon.svg';
 import styles from '@polaris/components/BulkActions/BulkActions.module.css';
 
@@ -48,7 +50,7 @@ export type BulkActionButtonProps = {
   handleMeasurement?(width: number): void;
   showContentInButton?: boolean;
   size?: Extract<ButtonProps['size'], 'micro' | 'medium'>;
-} & DisableableAction;
+} & DisableableAction & DestructableAction;
 
 const props = defineProps<BulkActionButtonProps>();
 const emits = defineEmits<{

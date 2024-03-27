@@ -17,7 +17,7 @@ Labelled(
       slot(v-if="slots.prefix", name="prefix")
       template(v-else) {{ prefix }}
 
-    div(:class="styles.InputWrapper")
+    div(:class="classNames(styles.InputWrapper, sharedStyles['Track--dashed-after'])")
       input(
         type="range",
         :class="styles.Input",

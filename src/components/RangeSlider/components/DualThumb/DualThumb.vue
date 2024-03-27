@@ -24,7 +24,7 @@ Labelled(
       @mousedown="handleMouseDownTrack",
     )
       div(:class="styles.Track", :style="cssVars", ref="track")
-      div(:class="styles['Track--dashed']")
+      div(:class="sharedStyles['Track--dashed']")
       div(
         ref="thumbLower",
         :id="idLower",

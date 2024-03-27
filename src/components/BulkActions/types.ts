@@ -33,7 +33,7 @@ export type BulkActionsProps = {
   buttonSize?: Extract<ButtonProps['size'], 'micro' | 'medium'>;
   /** Label for the bulk actions */
   label?: string;
-  /** @deprecated List is in a selectable state. No longer needed due to removal of Transition */
+  /** List is in a selectable state. Will only render the bulk actions when `true` */
   selectMode?: boolean;
   /** @deprecated Used for forwarding the ref. Use `ref` prop instead */
   innerRef?: Ref<any>;

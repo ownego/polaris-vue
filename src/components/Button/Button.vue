@@ -17,7 +17,9 @@ UnstyledButton(
     Icon(v-else-if="icon", :source="loading ? 'placeholder' : icon")
   span(
     v-if="hasChildren",
-    :class="removeUnderline ? styles.removeUnderline : ''",
+    as="span",
+    :variant="size === 'large' || hasPlainText ? 'bodyMd' : 'bodySm'",
+    :fontWeight="textFontWeight",
     :key="disabled ? 'text-disabled' : 'text'"
   )
     slot
@@ -35,6 +37,7 @@ import { classNames, variationName } from '@/utilities/css';
 import type { VueNode } from '@/utilities/types';
 import useI18n from '@/use/useI18n';
 import { useHasSlot } from '@/use/useHasSlot';
+import { useBreakpoints } from '@/use/useBreakpoints';
 import type { ButtonProps } from './types';
 import { Spinner, Icon } from '@/components';
 import { UnstyledButton } from '../UnstyledButton';
@@ -56,6 +59,9 @@ const attrs = useAttrs();
 const i18n = useI18n();
 const { hasSlot } = useHasSlot();
 
+const breakpoints = useBreakpoints();
+const { mdUp } = breakpoints.value;
+
 const props = withDefaults(defineProps<ButtonProps>(), {
   size: 'medium',
   textAlign: 'center',
@@ -76,7 +82,18 @@ const listeners = computed(() => {
 
   return eventBindings;
 });
+const hasPlainText = computed(() => ['plain', 'monochromePlain'].includes(props.variant));
+const textFontWeight = computed(() => {
+  if (hasPlainText.value) {
+    return 'regular';
+  }
 
+  if (props.variant === 'primary') {
+    return mdUp ? 'medium' : 'semibold';
+  }
+
+  return 'medium';
+});
 const hasChildren = computed(() => hasSlot(slots.default));
 const isDisabled = computed(() => props.disabled || props.loading);
 const className = computed(() => classNames(

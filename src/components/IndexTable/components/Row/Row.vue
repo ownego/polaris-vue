@@ -96,6 +96,7 @@ const rowClassName = computed(() => classNames(
   props.disabled && styles['TableRow-disabled'],
   props.tone && styles[variationName('tone', props.tone)],
   !selectable.value &&
+    !currentInstance?.vnode.props?.onClick &&
     !primaryLinkElement.value &&
     styles['TableRow-unclickable'],
 ));
@@ -118,7 +119,10 @@ const handleInteraction = (event: MouseEvent | KeyboardEvent) => {
 };
 
 const handleRowClick = (event: MouseEvent) => {
-  if ((props.disabled || !selectable.value) && !primaryLinkElement.value) {
+  if ((props.disabled || !selectable.value)
+    && !currentInstance?.vnode.props?.onClick
+    && !primaryLinkElement.value
+  ) {
     return;
   }
 
