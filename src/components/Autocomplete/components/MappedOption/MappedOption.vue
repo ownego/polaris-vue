@@ -23,7 +23,7 @@ import type { OptionDescriptor } from '@/utilities/types';
 import { classNames } from '@/utilities/css';
 import { ListboxOption, ListboxTextOption } from '@/components';
 
-import styles from '@polaris/components/Autocomplete/components/MappedOption/MappedOption.module.scss';
+import styles from '@polaris/components/Autocomplete/components/MappedOption/MappedOption.module.css';
 
 type MappedOptionProps = OptionDescriptor & {
   selected: boolean;

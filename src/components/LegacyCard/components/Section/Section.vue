@@ -39,7 +39,7 @@ import { computed, useSlots } from 'vue';
 import { classNames } from '@/utilities/css';
 import { useHasSlot } from '@/use/useHasSlot';
 import type { ComplexAction } from '@/utilities/types';
-import styles from '@polaris/components/LegacyCard/LegacyCard.module.scss';
+import styles from '@polaris/components/LegacyCard/LegacyCard.module.css';
 
 export interface LegacyCardSectionProps {
   title?: string;

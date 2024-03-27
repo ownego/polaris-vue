@@ -34,7 +34,7 @@ import { ref } from 'vue';
 import { Icon } from '@/components';
 import ChevronDownIcon from '@icons/ChevronDownIcon.svg';
 import ChevronUpIcon from '@icons/ChevronUpIcon.svg';
-import styles from '@polaris/components/TextField/TextField.module.scss';
+import styles from '@polaris/components/TextField/TextField.module.css';
 
 export type SpinnerEvents = {
   'change': [step: number];

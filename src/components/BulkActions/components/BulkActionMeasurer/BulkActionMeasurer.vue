@@ -28,7 +28,7 @@ import { BulkActionButton } from '../BulkActionButton';
 import type { BulkActionsProps } from '../../types';
 import { instanceOfMenuGroupDescriptor } from '../../utils';
 
-import styles from '@polaris/components/BulkActions/BulkActions.module.scss';
+import styles from '@polaris/components/BulkActions/BulkActions.module.css';
 
 export type ActionsMeasurements = {
   containerWidth: number;

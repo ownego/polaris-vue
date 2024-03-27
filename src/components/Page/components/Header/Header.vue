@@ -94,7 +94,7 @@ import {
   Pagination,
   PageTitle,
 } from './children';
-import styles from '@polaris/components/Page/components/Header/Header.module.scss';
+import styles from '@polaris/components/Page/components/Header/Header.module.css';
 
 //    Header Layout
 // |----------------------------------------------------|

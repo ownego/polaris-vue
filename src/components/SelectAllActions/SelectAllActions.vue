@@ -52,7 +52,7 @@ import {
   InlineStack,
 } from '@/components';
 import type { Action } from '@/utilities/types';
-import styles from '@polaris/components/SelectAllActions/SelectAllActions.module.scss';
+import styles from '@polaris/components/SelectAllActions/SelectAllActions.module.css';
 
 type AriaLive = 'off' | 'polite' | undefined;
 

@@ -5,7 +5,7 @@ span(:class="className")
 <script setup lang="ts">
 import { computed } from 'vue';
 import { classNames } from '@/utilities/css';
-import styles from '@polaris/components/Indicator/Indicator.module.scss';
+import styles from '@polaris/components/Indicator/Indicator.module.css';
 
 export interface IndicatorProps {
   pulse?: boolean;

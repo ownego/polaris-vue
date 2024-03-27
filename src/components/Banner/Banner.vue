@@ -20,7 +20,7 @@ div(
 import { computed, ref, provide, getCurrentInstance } from 'vue';
 import { classNames } from '@/utilities/css';
 import type { VueNode } from '@/utilities/types';
-import styles from '@polaris/components/Banner/Banner.module.scss';
+import styles from '@polaris/components/Banner/Banner.module.css';
 import type { BannerProps } from './types';
 import useWithinContentContext from './context';
 

@@ -6,7 +6,7 @@ div(:class="className")
 <script setup lang="ts">
 import { computed } from 'vue';
 import { classNames } from '@/utilities/css';
-import styles from '@polaris/components/FormLayout/FormLayout.module.scss';
+import styles from '@polaris/components/FormLayout/FormLayout.module.css';
 
 type FormItemProps = {
   condensed?: boolean;

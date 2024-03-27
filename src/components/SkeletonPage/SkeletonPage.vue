@@ -60,7 +60,7 @@ BlockStack(:gap="400", inlineAlign="center")
 import { computed } from 'vue';
 import type { VueNode } from '@/utilities/types';
 import useI18n from '@/use/useI18n';
-import styles from '@polaris/components/SkeletonPage/SkeletonPage.module.scss';
+import styles from '@polaris/components/SkeletonPage/SkeletonPage.module.css';
 
 export interface SkeletonPageProps {
   /** Page title, in large type */

@@ -89,7 +89,7 @@ import type {
 } from '@/utilities/types';
 import useI18n from '@/use/useI18n';
 import PlusIcon from '@icons/PlusIcon.svg';
-import styles from '@polaris/components/Filters/Filters.module.scss';
+import styles from '@polaris/components/Filters/Filters.module.css';
 
 type FiltersBarProps = {
   /** Currently entered text in the query field */

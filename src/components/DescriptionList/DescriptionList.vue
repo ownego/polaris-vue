@@ -6,7 +6,7 @@ dl(:class="className")
 <script setup lang="ts">
 import { computed } from 'vue';
 import { classNames } from '@/utilities/css';
-import styles from '@polaris/components/DescriptionList/DescriptionList.module.scss';
+import styles from '@polaris/components/DescriptionList/DescriptionList.module.css';
 
 interface DescriptionListProps {
   /** Determines the spacing between list items */

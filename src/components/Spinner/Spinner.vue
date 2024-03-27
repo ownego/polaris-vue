@@ -16,7 +16,7 @@ import { classNames, variationName } from '@/utilities/css';
 import { Text } from '@/components';
 import SpinnerIconLarge from '@/assets/spinner-large.svg';
 import SpinnerIconSmall from '@/assets/spinner-small.svg';
-import styles from '@polaris/components/Spinner/Spinner.module.scss';
+import styles from '@polaris/components/Spinner/Spinner.module.css';
 
 type Size = 'small' | 'large';
 

@@ -12,7 +12,7 @@ import { classNames, variationName } from '@/utilities/css';
 import { Text } from '@/components';
 import { getDefaultAccessibilityLabel } from '../../utils';
 import type { Tone, Progress } from '../../types';
-import styles from '@polaris/components/Badge/components/Pip/Pip.module.scss';
+import styles from '@polaris/components/Badge/components/Pip/Pip.module.css';
 
 interface PipProps {
   tone?: Tone;

@@ -16,7 +16,7 @@ span(:class="className")
 import { computed } from 'vue';
 import { classNames, variationName } from '@/utilities/css';
 import { type IconSource } from '@/utilities/types';
-import styles from '@polaris/components/Thumbnail/Thumbnail.module.scss';
+import styles from '@polaris/components/Thumbnail/Thumbnail.module.css';
 import type { Source } from '../Icon/type';
 
 type Size = 'extraSmall' | 'small' | 'medium' | 'large';

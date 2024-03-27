@@ -13,7 +13,7 @@ import {
 } from '@/utilities/css';
 import type { VueNode } from '@/utilities/types';
 import type { ResponsiveProp } from '../../utilities/css';
-import styles from '@polaris/components/Bleed/Bleed.module.scss';
+import styles from '@polaris/components/Bleed/Bleed.module.css';
 
 type Spacing = ResponsiveProp<SpaceScale>;
 

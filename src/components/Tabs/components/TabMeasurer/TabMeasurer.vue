@@ -19,7 +19,7 @@ import { computed, onMounted, ref } from 'vue';
 import type { VueNode } from '@/utilities/types';
 import { classNames } from '@/utilities/css';
 import { useEventListener } from '@/utilities/use-event-listener';
-import styles from '@polaris/components/Tabs/Tabs.module.scss';
+import styles from '@polaris/components/Tabs/Tabs.module.css';
 import type { TabMeasurements, TabProps } from '../../types';
 import { Tab } from '../index';
 

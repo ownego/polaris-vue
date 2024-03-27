@@ -16,7 +16,7 @@ ul(
 </template>
 
 <script setup lang="ts">
-import styles from '@polaris/components/Tabs/Tabs.module.scss';
+import styles from '@polaris/components/Tabs/Tabs.module.css';
 import { Item } from '../index';
 import type { TabProps } from '../../types';
 

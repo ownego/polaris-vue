@@ -17,7 +17,7 @@ div(:class="styles.AnnotatedSection")
 <script setup lang="ts">
 import { computed } from 'vue';
 import type { VueNode } from '@/utilities/types';
-import styles from '@polaris/components/Layout/Layout.module.scss';
+import styles from '@polaris/components/Layout/Layout.module.css';
 
 export type AnnotatedSectionProps = {
   id?: string;

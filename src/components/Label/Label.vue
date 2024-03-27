@@ -15,7 +15,7 @@ import { computed } from 'vue';
 import { classNames } from '@/utilities/css';
 import type { VueNode } from '@/utilities/types';
 import { labelId } from './utils';
-import styles from '@polaris/components/Label/Label.module.scss';
+import styles from '@polaris/components/Label/Label.module.css';
 
 export type LabelProps = {
   /** A unique identifier for the label */

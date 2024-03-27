@@ -93,7 +93,7 @@ import { AutoSelection } from '@/components/Listbox/utils';
 import { useHasSlot } from '@/use/useHasSlot';
 
 import { MappedAction, MappedOption } from './components';
-import styles from '@polaris/components/Autocomplete/components/MappedAction/MappedAction.module.scss';
+import styles from '@polaris/components/Autocomplete/components/MappedAction/MappedAction.module.css';
 import { Listbox, ListboxHeader, ListboxSection, ListboxLoading } from '../Listbox';
 
 type AutocompleteProps = {

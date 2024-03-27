@@ -4,5 +4,5 @@ dd(:class="styles.Description")
 </template>
 
 <script setup lang="ts">
-import styles from '@polaris/components/DescriptionList/DescriptionList.module.scss';
+import styles from '@polaris/components/DescriptionList/DescriptionList.module.css';
 </script>

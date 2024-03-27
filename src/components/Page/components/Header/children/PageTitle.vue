@@ -11,7 +11,7 @@ div(:class="titleWrapperclassName")
 
 <script setup lang="ts">
 import { computed } from 'vue';
-import styles from '@polaris/components/Page/components/Header/Header.module.scss';
+import styles from '@polaris/components/Page/components/Header/Header.module.css';
 import { Title as TitlePage } from '../components/Title';
 import { classNames } from '@/utilities/css';
 

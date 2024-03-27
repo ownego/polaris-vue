@@ -9,7 +9,7 @@ div(
 <script setup lang="ts">
 import { computed } from 'vue';
 import { classNames } from '@/utilities/css';
-import styles from '@polaris/components/Grid/components/Cell/Cell.module.scss';
+import styles from '@polaris/components/Grid/components/Cell/Cell.module.css';
 
 type Breakpoints = 'xs' | 'sm' | 'md' | 'lg' | 'xl';
 

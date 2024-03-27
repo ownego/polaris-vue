@@ -22,7 +22,7 @@ import { classNames, variationName } from '@/utilities/css';
 import { StickyManager } from '@/utilities/sticky-manager';
 import useLazyRef from '@/use/useLazyRef';
 import type { VueNode } from '@/utilities/types';
-import styles from '@polaris/components/Scrollable/Scrollable.module.scss';
+import styles from '@polaris/components/Scrollable/Scrollable.module.css';
 
 const MAX_SCROLL_HINT_DISTANCE = 100;
 const LOW_RES_BUFFER = 2;

@@ -28,7 +28,7 @@ import useI18n from '@/use/useI18n';
 import { BlockStack, Icon, Text } from '@/components';
 import { createAllowMultipleKey } from '../../utils';
 import { useDropZoneContext } from '../../useDropZoneContext';
-import styles from '@polaris/components/DropZone/components/FileUpload/FileUpload.module.scss';
+import styles from '@polaris/components/DropZone/components/FileUpload/FileUpload.module.css';
 import UploadIcon from '@icons/UploadIcon.svg';
 
 type FileUploadProps = {

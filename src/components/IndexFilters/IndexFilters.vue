@@ -165,7 +165,7 @@ import {
   type TransitionStatus,
   IndexFiltersMode,
 } from './types';
-import styles from '@polaris/components/IndexFilters/IndexFilters.module.scss';
+import styles from '@polaris/components/IndexFilters/IndexFilters.module.css';
 
 const TRANSITION_DURATION = 'var(--p-motion-duration-150)';
 

@@ -19,7 +19,7 @@ div(
 <script setup lang="ts">
 import { computed } from 'vue';
 import { classNames } from '@/utilities/css';
-import styles from '@polaris/components/Page/components/Header/components/Title/Title.module.scss';
+import styles from '@polaris/components/Page/components/Header/components/Title/Title.module.css';
 
 export interface TitleProps {
   /** Page title, in large type */

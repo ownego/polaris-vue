@@ -11,6 +11,7 @@ span(:class="className")
     :class="styles.Svg",
     :focusable="false",
     :aria-hidden="true",
+    :viewBox="mdDown ? '1 1 18 18' : undefined",
   )
 
   div(
@@ -32,11 +33,12 @@ import { computed } from 'vue';
 import { classNames, variationName } from '@/utilities/css';
 import { Text } from '@/components';
 import type { IconSource } from '@/utilities/types';
+import { useBreakpoints } from '@/use/useBreakpoints';
 import type {
   Tone,
   Source,
 } from './type';
-import styles from '@polaris/components/Icon/Icon.module.scss';
+import styles from '@polaris/components/Icon/Icon.module.css';
 
 export type IconProps = {
   /** The SVG contents to display in the icon (icons should fit in a 20 × 20 pixel viewBox) */
@@ -48,6 +50,9 @@ export type IconProps = {
 };
 
 const props = defineProps<IconProps>();
+
+const breakpoints = useBreakpoints();
+const { mdDown } = breakpoints.value;
 
 const sourceType = computed<Source>(() => {
   // Because of svgLoader so we need to check if the source is a function AND an object

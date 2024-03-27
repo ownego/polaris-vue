@@ -45,7 +45,7 @@ import { computed, onMounted, ref } from 'vue';
 import { isServer } from '@polaris/utilities/target';
 import { EventListener } from '@/components';
 
-import styles from '@polaris/components/ColorPicker/ColorPicker.module.scss';
+import styles from '@polaris/components/ColorPicker/ColorPicker.module.css';
 
 interface Position {
   x: number;

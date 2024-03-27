@@ -86,7 +86,7 @@ import {
 import { useHasSlot } from '@/use/useHasSlot';
 import { classNames } from '@/utilities/css';
 import type { VueNode, ComplexAction } from '@/utilities/types';
-import styles from '@polaris/components/EmptyState/EmptyState.module.scss';
+import styles from '@polaris/components/EmptyState/EmptyState.module.css';
 
 interface EmptyStateProps {
   /** The empty state heading */

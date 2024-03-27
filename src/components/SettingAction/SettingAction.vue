@@ -7,5 +7,5 @@ div(:class="styles.SettingAction")
 </template>
 
 <script setup lang="ts">
-import styles from '@polaris/components/SettingAction/SettingAction.module.scss';
+import styles from '@polaris/components/SettingAction/SettingAction.module.css';
 </script>

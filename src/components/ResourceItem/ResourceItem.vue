@@ -151,7 +151,7 @@ import type { DisableableAction } from '@/utilities/types';
 import { SELECT_ALL_ITEMS } from '@polaris/utilities/resource-list';
 import type { ResourceListSelectedItems, ResourceListContextType } from '@/utilities/types';
 import type { InlineStackProps } from '../InlineStack/types';
-import styles from '@polaris/components/ResourceItem/ResourceItem.module.scss';
+import styles from '@polaris/components/ResourceItem/ResourceItem.module.css';
 import MenuHorizontalIcon from '@icons/MenuHorizontalIcon.svg';
 
 type Alignment = 'leading' | 'trailing' | 'center' | 'fill' | 'baseline';

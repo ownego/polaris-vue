@@ -21,7 +21,7 @@ import {
 } from '@/components';
 import ArrowDownIcon from '@icons/ArrowDownIcon.svg';
 import ArrowUpIcon from '@icons/ArrowUpIcon.svg';
-import styles from '@polaris/components/IndexFilters/components/SortButton/components/DirectionButton/DirectionButton.module.scss';
+import styles from '@polaris/components/IndexFilters/components/SortButton/components/DirectionButton/DirectionButton.module.css';
 
 type DirectionButtonDirection = 'asc' | 'desc';
 

@@ -6,7 +6,7 @@ div(:class="styles.Container")
 <script setup lang="ts">
 import { type VNode } from 'vue';
 import type { VueNode } from '@/utilities/types';
-import styles from '@polaris/components/IndexFilters/components/Container/Container.module.scss';
+import styles from '@polaris/components/IndexFilters/components/Container/Container.module.css';
 
 const slots = defineSlots<{
   default?: (_?: VueNode) => VNode[];

@@ -30,7 +30,7 @@ import { classNames } from '@/utilities/css';
 import type { VueNode } from '@/utilities/types';
 import { Scrollable } from '@/components';
 import { PopoverSection as Section } from '../Section';
-import styles from '@polaris/components/Popover/Popover.module.scss';
+import styles from '@polaris/components/Popover/Popover.module.css';
 
 export type PaneProps = {
   /** Fix the pane to the top of the popover */

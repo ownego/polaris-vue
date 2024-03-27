@@ -137,7 +137,7 @@ import type {
 
 import SortAscendingIcon from '@icons/SortAscendingIcon.svg';
 import SortDescendingIcon from '@icons/SortDescendingIcon.svg';
-import styles from '@polaris/components/IndexTable/IndexTable.module.scss';
+import styles from '@polaris/components/IndexTable/IndexTable.module.css';
 
 
 const SCROLL_BAR_PADDING = 4;

@@ -18,7 +18,7 @@ import { classNames } from '@/utilities/css';
 import type { VueNode } from '@/utilities/types';
 import useId from '@/use/useId';
 import { listboxSectionDataSelector } from '@polaris/components/Listbox/components/Section/selectors';
-import styles from '@polaris/components/Listbox/components/Section/Section.module.scss';
+import styles from '@polaris/components/Listbox/components/Section/Section.module.css';
 
 interface SectionProps {
   divider?: boolean;

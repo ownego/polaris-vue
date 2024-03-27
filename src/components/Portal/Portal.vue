@@ -3,7 +3,10 @@ teleport(
   v-if="container",
   :to="PORTAL_CONTAINER_ID",
 )
-  div(:data-portal-id="portalId")
+  ThemeProvider(
+    :theme="isThemeNameLocal(themeName) ? themeName : themeNameDefault",
+    :data-portal-id="portalId",
+  )
     slot
 </template>
 
@@ -12,8 +15,12 @@ import {
   computed,
   onMounted,
 } from 'vue';
+import { themeNameDefault } from '@shopify/polaris-tokens';
 import useId from '@/use/useId';
 import usePortalsManager from '@/use/usePortalsManager';
+import { useThemeName } from '@/use/useTheme';
+import { ThemeProvider } from '@/components/ThemeProvider';
+import { isThemeNameLocal } from '@/components/ThemeProvider/utils';
 
 const PORTAL_CONTAINER_ID = '#PolarisPortalsContainer';
 
@@ -32,6 +39,7 @@ const emits = defineEmits<PortalEmits>();
 // This variable to make sure that Portal is within AppProvider
 const container = usePortalsManager();
 const uniqueId = useId();
+const themeName = useThemeName();
 
 const portalId =  computed(() => {
   return props.idPrefix

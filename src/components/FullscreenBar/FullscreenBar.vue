@@ -19,7 +19,7 @@ import {
 import useI18n from '@/use/useI18n';
 import type { VueNode } from '@/utilities/types';
 import ExitIcon from '@icons/ExitIcon.svg';
-import styles from '@polaris/components/FullscreenBar/FullscreenBar.module.scss';
+import styles from '@polaris/components/FullscreenBar/FullscreenBar.module.css';
 
 type FullscreenBarEvents = {
   /** Callback when back button is clicked */

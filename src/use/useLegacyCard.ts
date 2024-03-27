@@ -1,5 +1,5 @@
 import { ref, onMounted } from 'vue';
-import styles from '@polaris/components/LegacyCard/LegacyCard.module.scss';
+import styles from '@polaris/components/LegacyCard/LegacyCard.module.css';
 
 export function useLegacyCardPaddingObserverRef() {
   const legacyCard = ref<HTMLDivElement | null>(null);

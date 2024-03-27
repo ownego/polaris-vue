@@ -40,7 +40,7 @@ import type {
 } from '@/utilities/types';
 import useI18n from '@/use/useI18n';
 import { classNames } from '@/utilities/css';
-import styles from '@polaris/components/ActionMenu/components/Actions/Actions.module.scss';
+import styles from '@polaris/components/ActionMenu/components/Actions/Actions.module.css';
 import { SecondaryAction, MenuGroup } from '../index';
 import { ActionsMeasurer } from './components/ActionMeasurer';
 import type { MenuGroupProps } from '../MenuGroup/MenuGroup.vue';

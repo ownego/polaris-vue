@@ -26,7 +26,7 @@ import { ref } from 'vue';
 import type { ActionListItemDescriptor, ActionListSection } from '@/utilities/types';
 import MenuHorizontalIcon from '@icons/MenuHorizontalIcon.svg';
 import useI18n from '@/use/useI18n';
-import styles from '@polaris/components/ActionMenu/components/RollupActions/RollupActions.module.scss';
+import styles from '@polaris/components/ActionMenu/components/RollupActions/RollupActions.module.css';
 
 interface RollupActionsProps {
   /** Accessibilty label */

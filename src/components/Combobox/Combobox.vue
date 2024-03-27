@@ -28,7 +28,7 @@ import type { VueNode, ComboboxListboxType } from '@/utilities/types';
 import type { ComboboxListboxOptionType } from '@/use/useListbox';
 import { useHasSlot } from '@/use/useHasSlot';
 
-import styles from '@polaris/components/Combobox/Combobox.module.scss';
+import styles from '@polaris/components/Combobox/Combobox.module.css';
 import type { ComboboxTextFieldType } from './context';
 
 export type ComboboxProps = {

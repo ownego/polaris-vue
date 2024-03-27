@@ -22,7 +22,7 @@ div(
           @click="paginatedSelectAllAction.onAction",
         ) {{ paginatedSelectAllAction.content }}
 
-    div(:class="styles.BulkActionsPromotedActionsWrapper")
+    div(v-if="selectMode", :class="styles.BulkActionsPromotedActionsWrapper")
       InlineStack(gap="100", blockAlign="center")
         div(:class="styles.BulkActionsOuterLayout")
           //- measurerMarkup
@@ -109,7 +109,7 @@ import {
   instanceOfBulkActionListSection,
   getActionSections,
 } from './utils';
-import styles from '@polaris/components/BulkActions/BulkActions.module.scss';
+import styles from '@polaris/components/BulkActions/BulkActions.module.css';
 
 const i18n = useI18n();
 

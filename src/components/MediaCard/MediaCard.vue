@@ -61,7 +61,7 @@ LegacyCard
 
 <script setup lang="ts">
 import { computed, getCurrentInstance } from 'vue';
-import styles from '@polaris/components/MediaCard/MediaCard.module.scss';
+import styles from '@polaris/components/MediaCard/MediaCard.module.css';
 import useI18n from '@/use/useI18n';
 import type {
   VueNode,
