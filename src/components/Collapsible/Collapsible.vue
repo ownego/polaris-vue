@@ -133,9 +133,8 @@ onMounted(() => {
 watch(
   () => [props.open, isOpen.value],
   () => {
-    if (props.open !== isOpen.value) {
-      startAnimation();
-    }
+    // startAnimation should only be fired if the open state changes.
+    startAnimation();
   },
   { immediate: true },
 );
