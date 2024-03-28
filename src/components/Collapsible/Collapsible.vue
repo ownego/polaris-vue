@@ -133,7 +133,7 @@ onMounted(() => {
 watch(
   () => [props.open, isOpen.value],
   () => {
-    if (props.open === isOpen.value) {
+    if (props.open !== isOpen.value) {
       startAnimation();
     }
   },
