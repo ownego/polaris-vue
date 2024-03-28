@@ -23,9 +23,7 @@ export function useComboboxTextField() {
   const context = inject<ComboboxTextFieldType | undefined>('combobox-textfield', undefined);
 
   if (!context) {
-    throw new Error(
-      'No Combobox was provided. Your component must be wrapped in a <Combobox> component.',
-    );
+    throw new Error('No Combobox was provided.');
   }
 
   return context;
