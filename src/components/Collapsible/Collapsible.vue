@@ -140,7 +140,7 @@ watch(
 );
 
 watch(
-  () => [animationState.value, props.open, isOpen.value],
+  () => [animationState.value, props.open],
   () => {
     if (!collapsibleContainer.value) return;
 
