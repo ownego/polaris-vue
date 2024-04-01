@@ -21,18 +21,11 @@ div(:class="className", @click="emits('toggle-all')")
 import { computed, ref } from 'vue';
 import { classNames } from '@/utilities/css';
 import { Checkbox } from '@/components';
+import type { CheckableButtonProps } from './types';
 import styles from '@polaris/components/CheckableButton/CheckableButton.module.css';
 
 export interface CheckboxHandles {
   focus(): void;
-}
-
-export type CheckableButtonProps = {
-  accessibilityLabel?: string;
-  label?: string;
-  selected?: boolean | 'indeterminate';
-  disabled?: boolean;
-  ariaLive?: 'off' | 'polite';
 }
 
 const props = withDefaults(defineProps<CheckableButtonProps>(), {

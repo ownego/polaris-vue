@@ -1,11 +1,13 @@
+import {readFileSync} from 'fs';
 import { defineConfig } from 'vite';
 import vue from '@vitejs/plugin-vue';
 import svgLoader from 'vite-svg-loader';
 import { fileURLToPath } from 'url';
 import { replaceCodePlugin } from 'vite-plugin-replace';
-import packageJson from './package.json';
 import { generateScopedName } from './build/namespaced-classname.js';
 import dts from 'vite-plugin-dts';
+
+const pkg = JSON.parse(readFileSync(new URL('./package.json', import.meta.url).pathname).toString());
 
 // https://vitejs.dev/config/
 export default () => {
@@ -17,7 +19,7 @@ export default () => {
         replacements: [
           {
             from: '%POLARIS_VERSION%',
-            to: packageJson.polaris_version,
+            to: pkg.polaris_version,
           },
         ],
       }),
@@ -30,7 +32,6 @@ export default () => {
       alias: {
         '@icons': fileURLToPath(new URL('node_modules/@shopify/polaris-icons/dist/svg', import.meta.url)),
         '@polaris': fileURLToPath(new URL('./polaris/polaris-react/src', import.meta.url)),
-        '@tokens': fileURLToPath(new URL('./polaris/polaris-tokens/src', import.meta.url)),
         '@': fileURLToPath(new URL('./src', import.meta.url)),
         '~': fileURLToPath(new URL('./node_modules', import.meta.url)),
       },
@@ -44,23 +45,6 @@ export default () => {
       },
       modules: {
         generateScopedName,
-      },
-    },
-    build: {
-      lib: {
-        entry: fileURLToPath(new URL('./src/polaris-vue.ts', import.meta.url)),
-        name: 'Polaris Vue',
-        fileName: (format) => `polaris-vue.${format}.js`,
-      },
-      cssCodeSplit: false,
-      rollupOptions: {
-        external: ['vue'],
-        output: {
-          globals: {
-            vue: 'Vue',
-          },
-          exports: 'named',
-        },
       },
     },
   });

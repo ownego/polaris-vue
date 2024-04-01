@@ -1,5 +1,5 @@
 import type { Width, Padding, BorderRadius } from '../../types';
-import type { PositionedOverlayProps } from '@/components/PositionedOverlay/PositionedOverlay.vue';
+import type { PositionedOverlayProps } from '@/components/PositionedOverlay/types';
 
 export type TooltipOverlayBaseProps = {
   id: string;

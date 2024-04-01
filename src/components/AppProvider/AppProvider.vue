@@ -132,7 +132,7 @@ function measureScrollbars() {
   document.body.removeChild(parentEl);
 }
 
-provide('themeName', themeName); // TODO: This should be reactive
+provide('themeName', themeName);
 provide('theme', getTheme(themeName.value)); // TODO: This should be reactive
 provide('features', props.features ?? {});
 provide('i18n', new I18n(props.i18n));
