@@ -15,7 +15,7 @@ UnstyledButton(
   )
     slot(v-if="hasSlot(slots.icon)" name="icon")
     Icon(v-else-if="icon", :source="loading ? 'placeholder' : icon")
-  span(
+  Text(
     v-if="hasChildren",
     as="span",
     :variant="size === 'large' || hasPlainText ? 'bodyMd' : 'bodySm'",
