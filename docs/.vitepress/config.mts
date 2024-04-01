@@ -121,8 +121,6 @@ export default defineConfig({
         // @ts-ignore
         '@polaris': fileURLToPath(new URL('../../polaris/polaris-react/src', import.meta.url)),
         // @ts-ignore
-        '@tokens': fileURLToPath(new URL('../../polaris/polaris-tokens/src', import.meta.url)),
-        // @ts-ignore
         '@': fileURLToPath(new URL('../../src', import.meta.url)),
         // @ts-ignore
         '~': fileURLToPath(new URL('../../node_modules', import.meta.url)),

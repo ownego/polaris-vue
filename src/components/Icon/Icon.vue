@@ -11,7 +11,7 @@ span(:class="className")
     :class="styles.Svg",
     :focusable="false",
     :aria-hidden="true",
-    :viewBox="mdDown ? '1 1 18 18' : undefined",
+    v-bind="iconAttrs",
   )
 
   div(
@@ -69,7 +69,11 @@ const className = computed(() => classNames(
   styles.Icon,
   props.tone && styles[variationName('tone', props.tone)],
   props.tone && styles.applyColor,
-))
+));
+
+const iconAttrs = computed(() => {
+  return mdDown ? { viewBox: '1 1 18 18' } : {};
+});
 
 if (
   props.tone

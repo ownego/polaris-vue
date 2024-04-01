@@ -6,7 +6,7 @@ export default function useTheme() {
 
   if (!theme) {
     throw new Error(
-      'No theme was provided. Your application must be wrapped in an <AppProvider> component. See https://polaris.shopify.com/components/AppProvider for implementation instructions.',
+      'No theme was provided.',
     );
   }
 
@@ -18,7 +18,7 @@ export function useThemeName() {
 
   if (!themeName || !themeName.value) {
     throw new Error(
-      'No themeName was provided. Your application must be wrapped in an <AppProvider> or <ThemeProvider> component. See https://polaris.shopify.com/components/app-provider for implementation instructions.'
+      'No themeName was provided.'
     );
   }
 

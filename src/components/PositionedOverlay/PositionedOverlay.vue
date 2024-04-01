@@ -41,7 +41,7 @@ import {
   intersectionWithViewport,
   windowRect,
 } from './utilities/math';
-import type { PreferredPosition, PreferredAlignment } from './utilities/math';
+import type { PositionedOverlayProps } from './types';
 import type { VueNode } from '@/utilities/types';
 
 type Positioning = 'above' | 'below' | 'cover';
@@ -54,19 +54,6 @@ export interface OverlayDetails {
   measuring: boolean;
   activatorRect: Rect;
   chevronOffset: number;
-}
-
-export type PositionedOverlayProps = {
-  active: boolean;
-  activator: HTMLElement;
-  preferInputActivator?: boolean;
-  preferredPosition?: PreferredPosition;
-  preferredAlignment?: PreferredAlignment;
-  fullWidth?: boolean;
-  fixed?: boolean;
-  preventInteraction?: boolean;
-  classNames?: string;
-  zIndexOverride?: number;
 }
 
 interface State {

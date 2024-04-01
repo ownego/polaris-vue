@@ -28,7 +28,7 @@
     "allowSyntheticDefaultImports": true
   },
   "include": [
-    "docs/components/**/*.vue",
+    // "docs/components/**/*.vue",
     "src/**/*.ts",
     "src/**/*.vue",
     "dts/*.ts"
