@@ -7,7 +7,12 @@ WithinContentContainerBanner(
   :actionButtons="actionButtons",
   :dismissButton="dismissButton",
 )
-  slot
+  Text(
+    v-if="hasSlot(slots.default)",
+    as="span",
+    variant="bodyMd",
+  )
+    slot
 template(v-else)
   InlineIconBanner(
     v-if="isInlineIconBanner",
@@ -16,7 +21,12 @@ template(v-else)
     :actionButtons="actionButtons",
     :dismissButton="dismissButton",
   )
-    slot
+    Text(
+      v-if="hasSlot(slots.default)",
+      as="span",
+      variant="bodyMd",
+    )
+      slot
   DefaultBanner(
     v-else,
     v-bind="{ ...sharedBannerProps }",
@@ -25,7 +35,12 @@ template(v-else)
     :actionButtons="actionButtons",
     :dismissButton="dismissButton",
   )
-    slot
+    Text(
+      v-if="hasSlot(slots.default)",
+      as="span",
+      variant="bodyMd",
+    )
+      slot
 </template>
 
 <script setup lang="ts">
@@ -33,12 +48,13 @@ import { computed, h, getCurrentInstance, resolveComponent } from 'vue';
 import styles from '@polaris/components/Banner/Banner.module.css';
 import useI18n from '@/use/useI18n';
 import type { VueNode } from '@/utilities/types';
+import { useHasSlot } from '@/use/useHasSlot';
 import XIcon from '@icons/XIcon.svg';
 import type { BannerProps } from '../types';
 import { bannerAttributes } from '../types';
 import useWithinContentContext from '../context';
 
-defineSlots<{
+const slots = defineSlots<{
   /** The content to display inside the button */
   default: (_: VueNode) => any;
 }>();
@@ -56,6 +72,7 @@ const emits = defineEmits<BannerLayoutEmits>();
 
 const i18n = useI18n();
 const currentInstance = getCurrentInstance();
+const { hasSlot } = useHasSlot();
 
 const withinContentContainer = useWithinContentContext();
 
