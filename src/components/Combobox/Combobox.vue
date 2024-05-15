@@ -15,6 +15,8 @@ Popover(
   Pane(
     v-if="hasSlot(slots.default)",
     :height="height",
+    :max-height="maxHeight",
+    :min-height="minHeight",
     @scrolled-to-bottom="onScrolledToBottom",
   )
     div(:class="styles.Listbox")
@@ -43,6 +45,10 @@ export type ComboboxProps = {
   willLoadMoreOptions?: boolean;
   /** Height to set on the Popover Pane. */
   height?: string;
+  /** Callback fired when the bottom of the listbox is reached. Use to lazy load when listbox option data is paginated. */
+  maxHeight?: string;
+  /** Min Height to set on the Popover Pane. */
+  minHeight?: string;
 };
 
 type ComboboxSlots = {

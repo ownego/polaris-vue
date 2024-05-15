@@ -1,8 +1,13 @@
 <template lang="pug">
 div(:class="styles.MonthContainer")
   table(role="grid", :class="styles.Month")
-    caption(:class="className")
-      | {{ i18n.translate(`Polaris.DatePicker.months.${monthName(month)}`) }} {{ year }}
+    caption(:class="styles.Title")
+      Text(
+        as="span",
+        variant="bodyMd",
+        alignment="center",
+        :font-weight="current ? 'bold' : 'medium'",
+      ) {{ i18n.translate(`Polaris.DatePicker.months.${monthName(month)}`) }} {{ year }}
 
     thead
       tr(:class="styles.WeekHeadings")
@@ -52,7 +57,6 @@ div(:class="styles.MonthContainer")
 
 <script setup lang="ts">
 import { computed } from 'vue';
-import { classNames } from '@/utilities/css';
 import {
   isDateBefore,
   isDateAfter,
@@ -66,7 +70,7 @@ import {
   type Range,
 } from '@polaris/utilities/dates';
 import useI18n from '@/use/useI18n';
-
+import { Text } from '@/components';
 import { Day } from '../Day';
 import { Weekday } from '../Weekday';
 import { monthName, weekdayName } from '@polaris/components/DatePicker/utilities';
@@ -100,12 +104,6 @@ const i18n = useI18n();
 const isInHoveringRange = props.allowRange ? hoveringDateIsInRange : () => false;
 const now = new Date();
 const current = computed(() => (now.getMonth() === props.month && now.getFullYear() === props.year));
-
-const className = computed(() => classNames(
-  styles.Title,
-  current.value && styles['Month-current'],
-));
-
 const weeks = computed(() => getWeeksForMonth(props.month, props.year, props.weekStartsOn));
 
 const lastDayOfMonth = computed(() => {
