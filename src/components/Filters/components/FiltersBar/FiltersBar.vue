@@ -15,6 +15,7 @@ div(
           :disabled="filter.disabled || disableFilters",
           :close-on-child-overlay-click="closeOnChildOverlayClick",
           :selected="appliedFilterKeys?.includes(filter.name)",
+          :unsaved-changes="appliedFilter(filter.name)?.unsavedChanges",
           @remove="handleFilterPillRemove(filter.name)",
         )
       //- Add Button

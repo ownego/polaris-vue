@@ -12,6 +12,9 @@ examples:
   - fileName: WithChildrenContent.vue
     frameHeight: 600
     title: With children content
+  - fileName: WithChildrenAndUnsavedChanges.vue
+    frameHeight: 600
+    title: With children content and unsaved changes
   - fileName: Disabled.vue
     frameHeight: 600
     title: Disabled
