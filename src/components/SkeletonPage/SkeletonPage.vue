@@ -35,7 +35,8 @@ BlockStack(:gap="400", inlineAlign="center")
               Text(
                 v-if="title",
                 as="h1",
-                :style="styles.Title",
+                variant="headingLg",
+                font-weight="bold",
               ) {{ title }}
               template(v-else, :class="styles.SkeletonTitle")
                 Box(
@@ -59,6 +60,7 @@ BlockStack(:gap="400", inlineAlign="center")
 <script setup lang="ts">
 import { computed } from 'vue';
 import type { VueNode } from '@/utilities/types';
+import { Text } from '@/components';
 import useI18n from '@/use/useI18n';
 import styles from '@polaris/components/SkeletonPage/SkeletonPage.module.css';
 

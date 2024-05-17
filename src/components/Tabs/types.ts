@@ -55,6 +55,8 @@ export interface TabProps {
   measuring?: boolean;
   /** Overrides the tabIndex calculated by the Tabs component */
   tabIndexOverride?: 0 | -1;
+  /** Override z-index of popovers and tooltips */
+  disclosureZIndexOverride?: number;
 }
 
 export type TabEvents = {

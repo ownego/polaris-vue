@@ -32,13 +32,18 @@ transition(
           variant="bodySm",
           font-weight="medium",
         ) {{ hasTextAndAction ? paginatedSelectAllText : label}}
-        div(v-if="paginatedSelectAllAction", :class="styles.PaginatedSelectAll")
-          UnstyledButton(
-            :class="styles.AllAction",
-            size="slim",
-            :disabled="disabled",
-            @click="handleClick",
+        UnstyledButton(
+          v-if="paginatedSelectAllAction",
+          :class="styles.AllAction",
+          size="slim",
+          :disabled="disabled",
+          @click="handleClick",
         )
+          Text(
+            as="span",
+            variant="bodySm",
+            font-weight="medium",
+          ) {{ paginatedSelectAllAction.content }}
 </template>
 
 <script setup lang="ts">

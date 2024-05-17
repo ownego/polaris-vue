@@ -7,7 +7,11 @@ UnstyledButton(
     tone="base",
     :source="iconSource",
   )
-  span(:class="styles.Label")
+  Text(
+    as="span",
+    variant="bodySm",
+    font-weight="medium",
+  )
     slot
 </template>
 
@@ -18,6 +22,7 @@ import { type VueNode } from '@/utilities/types';
 import {
   UnstyledButton,
   Icon,
+  Text,
 } from '@/components';
 import ArrowDownIcon from '@icons/ArrowDownIcon.svg';
 import ArrowUpIcon from '@icons/ArrowUpIcon.svg';

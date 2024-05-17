@@ -7,12 +7,12 @@ div(
   div(:class="styles.Icon")
     Icon(:source="AlertCircleIcon")
   template(v-if="typeof message === 'string'")
-    span {{ message }}
+    Text(as="span", variant="bodyMd") {{ message }}
   component(v-else, :is="message")
 </template>
 
 <script setup lang="ts">
-import { Icon } from '@/components';
+import { Icon, Text } from '@/components';
 import type { Error } from '@/utilities/types';
 import { errorTextID } from './utils';
 import AlertCircleIcon from '@icons/AlertCircleIcon.svg';

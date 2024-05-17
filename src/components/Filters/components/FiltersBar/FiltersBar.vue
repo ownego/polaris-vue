@@ -36,7 +36,11 @@ div(
                 :aria-disabled="activatorButtonDisabled",
                 @click="handleAddFilterClick",
               )
-                Text(:variant="labelVariant", as="span") {{ i18n.translate('Polaris.Filters.addFilter') }}{{' '}}
+                Text(
+                  variant="bodySm",
+                  as="span",
+                  :tone="disabled ? 'disabled' : 'base'",
+                ) {{ i18n.translate('Polaris.Filters.addFilter') }}{{' '}}
                 PlusIcon
           ActionList(
             action-role="menuitem",
@@ -50,7 +54,6 @@ div(
       )
         Button(
           size="micro",
-          remove-underline,
           variant="monochromePlain",
           @click="handleClearAllFilters",
         ) {{ i18n.translate('Polaris.Filters.clearFilters') }}
@@ -81,7 +84,6 @@ import {
 } from '@/components';
 import FilterPill from '../FilterPill/FilterPill.vue';
 import { classNames } from '@/utilities/css';
-import { useBreakpoints } from '@/use/useBreakpoints';
 import type {
   ActionListItemDescriptor,
   AppliedFilterInterface,
@@ -123,7 +125,6 @@ const props = defineProps<FiltersBarProps>();
 const emits = defineEmits<FilterBarEvents>();
 
 const i18n = useI18n();
-const breakpoints = useBreakpoints();
 
 const popoverActive = ref(false);
 const hasMounted = ref(false);
@@ -224,8 +225,6 @@ const sectionedFilters = computed(() => unpinnedFilters.value
   ));
 
 const hasOneOrMorePinnedFilters = computed(() => pinnedFilters.value.length >= 1);
-
-const labelVariant = computed(() => breakpoints.value.mdDown ? 'bodyLg' : 'bodySm');
 
 const shouldShowAddButton = computed(() => props.filters.some((filter) => !filter.pinned) || props.filters.length !== localPinnedFilters.value.length);
 const filterWrapperClass = computed(() => classNames(

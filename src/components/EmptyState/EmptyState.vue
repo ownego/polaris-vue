@@ -7,21 +7,31 @@ Box(
 )
   BlockStack(inline-align="center")
     //- ImageMarkUp
-    Image(
-      v-if="largeImage",
-      alt="",
-      role="presentation",
-      :source="largeImage",
-      :class-name="imageContainedClass",
-      :source-set="sourceSet",
+    div(
+      :class="imageContainerClass",
     )
-    Image(
-      v-else,
-      alt="",
-      role="presentation",
-      :class-name="imageContainedClass",
-      :source="image",
-    )
+      Image(
+        v-if="largeImage",
+        ref="imageRef",
+        alt="",
+        role="presentation",
+        :source="largeImage",
+        :class-name="imageClassName",
+        :source-set="sourceSet",
+        @load="imageLoaded = true",
+      )
+      Image(
+        v-else,
+        ref="imageRef",
+        alt="",
+        role="presentation",
+        :class-name="imageClassName",
+        :source="image",
+        @load="imageLoaded = true",
+      )
+      div(
+        :class="skeletonImageClass",
+      )
     //- Detail Markup
     Box(:max-width="fullWidth ? '100%' : '400px'")
       BlockStack(inline-align="center")
@@ -74,7 +84,7 @@ Box(
 </template>
 
 <script setup lang="ts">
-import { computed } from 'vue';
+import { ref, computed, watch } from 'vue';
 import {
   Box,
   ButtonFrom,
@@ -121,8 +131,23 @@ const props = withDefaults(defineProps<EmptyStateProps>(), {
   fullWidth: false
 });
 
-const imageContainedClass = computed(() => classNames(
-  props.imageContained && styles.imageContained
+const imageLoaded = ref<boolean>(false);
+const imageRef = ref<HTMLImageElement | null>(null);
+
+const imageClassName = computed(() => classNames(
+  styles.Image,
+  imageLoaded.value && styles.loaded,
+  props.imageContained && styles.imageContained,
+));
+
+const skeletonImageClass = computed(() => classNames(
+  styles.SkeletonImage,
+  imageLoaded.value && styles.loaded,
+));
+
+const imageContainerClass = computed(() => classNames(
+  props.imageContained && styles.imageContained,
+  !imageLoaded.value && styles.SkeletonImageContainer,
 ));
 
 const sourceSet = computed(() => {
@@ -131,4 +156,13 @@ const sourceSet = computed(() => {
     { source: props.largeImage, descriptor: '1136w' },
   ];
 });
+
+watch(
+  () => imageRef.value,
+  newVal => {
+    if (newVal && newVal.complete) {
+      imageLoaded.value = true;
+    }
+  }
+);
 </script>

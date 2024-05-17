@@ -3,19 +3,18 @@ td(
   ref="checkboxNode",
   :class="checkboxClassName",
 )
-  div(:class="styles.TableCellContentContainer")
-    div(
-      :class="wrapperClassName",
-      @click="onInteraction",
-      @keyup="() => {}",
+  div(
+    :class="styles.Wrapper",
+    @click="onInteraction",
+    @keyup="() => {}",
+  )
+    PolarisCheckbox(
+      :id="`Select-${itemId}`",
+      label-hidden,
+      :checked="selected",
+      :disabled="disabled",
     )
-      PolarisCheckbox(
-        :id="`Select-${itemId}`",
-        label-hidden,
-        :checked="selected",
-        :disabled="disabled",
-      )
-        template(#label) {{ label }}
+      template(#label) {{ label }}
 </template>
 
 <script setup lang="ts">
@@ -45,8 +44,6 @@ const { resourceName } = indexContext;
 const { itemId, selected, disabled, position, onInteraction } = useRowContext();
 
 const checkboxNode = ref<HTMLTableDataCellElement | null>(null);
-
-const wrapperClassName = classNames(styles.Wrapper);
 
 const label = computed(() => (
   props.accessibilityLabel || i18n.translate('Polaris.IndexTable.selectItem', {

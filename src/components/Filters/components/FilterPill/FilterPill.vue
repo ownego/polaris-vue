@@ -6,6 +6,7 @@ div(
   Popover(
     :active="popoverActive",
     :key="filterKey",
+    :z-index-override="disclosureZIndexOverride",
     :prevent-close-on-child-overlay-click="!closeOnChildOverlayClick",
     preferred-alignment="left",
     @close="handlePopoverClose",
@@ -17,6 +18,7 @@ div(
           UnstyledButton(
             type="button",
             :class="toggleButtonClassNames",
+            :accessibilityLabel="unsavedChanges ? i18n.translate('Polaris.FilterPill.unsavedChanges', {label}) : label",
             @click="togglePopoverActive",
             @focus="setFocusedTrue",
             @blur="setFocusedFalse",
@@ -27,8 +29,22 @@ div(
               gap="0",
               :wrap="false",
             )
-              div(:class="styles.Label")
-                Text(:variant="labelVariant", as="span") {{ label }}
+              Box(
+                v-if="unsavedChanges",
+                padding-inline-end="150",
+              )
+                Box(
+                  background="bg-fill-emphasis",
+                  border-radius="050",
+                  width="6px",
+                  min-height="6px",
+                )
+              Box(:padding-inline-start="unsavedChanges ? '0' : '050'")
+                InlineStack
+                  Text(
+                    as="span",
+                    variant="bodySm",
+                  ) {{ label }}
               div(
                 v-if="!selected"
                 :class="styles.IconWrapper",
@@ -79,12 +95,12 @@ import {
   Text,
   InlineStack,
   UnstyledButton,
+  Box,
 } from '@/components';
 import { classNames } from '@/utilities/css';
 import type { FilterInterface } from '@/utilities/types';
 import useI18n from '@/use/useI18n';
 import { useToggle } from '@/use/useToggle';
-import { useBreakpoints } from '@/use/useBreakpoints';
 import ChevronDownIcon from '@icons/ChevronDownIcon.svg';
 import XSmallIcon from '@icons/XSmallIcon.svg';
 import styles from '@polaris/components/Filters/components/FilterPill/FilterPill.module.css';
@@ -100,6 +116,10 @@ interface FilterPillProps extends FilterInterface {
   disabled?: boolean;
   /** Whether the filter should close when clicking inside another Popover. */
   closeOnChildOverlayClick?: boolean;
+  /** Whether the filter is newly applied or updated and hasn't been saved */
+  unsavedChanges?: boolean;
+   /** Override z-index of popovers and tooltips */
+  disclosureZIndexOverride?: number;
 }
 
 type FilterPillEvents = {
@@ -109,11 +129,12 @@ type FilterPillEvents = {
   'remove': [name: string];
 };
 
-const props = defineProps<FilterPillProps>();
+const props = withDefaults(defineProps<FilterPillProps>(), {
+  unsavedChanges: false,
+});
 const emits = defineEmits<FilterPillEvents>();
 
 const i18n = useI18n();
-const breakpoints = useBreakpoints();
 const {
   value: focused,
   setTrue: setFocusedTrue,
@@ -139,8 +160,6 @@ const toggleButtonClassNames = computed(() => classNames(
   styles.PlainButton,
   styles.ToggleButton,
 ));
-
-const labelVariant = computed(() => (breakpoints.value.mdDown ? 'bodyLg' : 'bodySm'));
 
 const togglePopoverActive = () => {
   if (props.filter) {
