@@ -764,15 +764,15 @@
   dependencies:
     shiki "1.2.2"
 
-"@shopify/polaris-icons@^8.9.0":
-  version "8.9.0"
-  resolved "https://registry.yarnpkg.com/@shopify/polaris-icons/-/polaris-icons-8.9.0.tgz#7618538c8f2ec51fb51420253806d82b36b9bb25"
-  integrity sha512-3qtqr3kmK2ScjdlnwMiSzvN5oLRRSmMgB0Ys5u2EnWj/TE4DO2nPkHBiZtFImg7wt4ju7qYYIf5cU9qYo37tuQ==
+"@shopify/polaris-icons@^9.0.1":
+  version "9.0.1"
+  resolved "https://registry.yarnpkg.com/@shopify/polaris-icons/-/polaris-icons-9.0.1.tgz#8260ac90c70f0c931c7f2d50d82b4d8d0513366c"
+  integrity sha512-g3V76HcxTXcp6DuKOIWIE08pj95yfzqZw7fnVTGQ1q49PRXTHWh0byDivQCt8wiQPenzWm2pWeme/Ix057nDLw==
 
-"@shopify/polaris-tokens@^8.9.0":
-  version "8.9.0"
-  resolved "https://registry.yarnpkg.com/@shopify/polaris-tokens/-/polaris-tokens-8.9.0.tgz#4e87925d9c5703787607d6fc5c9fb845275a626d"
-  integrity sha512-ilhVAe7AYVg7TJ5MbvI+jLzynpoKJHbYzlE5kaUrecRVliOximdgqc3/GdBKiFt2dAVgOcjG8C/T7c48d5dR2w==
+"@shopify/polaris-tokens@^9.1.0":
+  version "9.1.0"
+  resolved "https://registry.yarnpkg.com/@shopify/polaris-tokens/-/polaris-tokens-9.1.0.tgz#128ba661e890bf25fd55d68fec00a0bc7569d7e7"
+  integrity sha512-nIsOJYNENqfGC/O1Rjo+w4rytLa+9Cp841KTbq/lDwCsBKXBLf+RUOeXTvO070j8Qnc5PJ5ZvRs9EWU7XsQFDA==
   dependencies:
     deepmerge "^4.3.1"
 
