@@ -764,10 +764,10 @@
   dependencies:
     shiki "1.2.2"
 
-"@shopify/polaris-icons@^9.0.1":
-  version "9.0.1"
-  resolved "https://registry.yarnpkg.com/@shopify/polaris-icons/-/polaris-icons-9.0.1.tgz#8260ac90c70f0c931c7f2d50d82b4d8d0513366c"
-  integrity sha512-g3V76HcxTXcp6DuKOIWIE08pj95yfzqZw7fnVTGQ1q49PRXTHWh0byDivQCt8wiQPenzWm2pWeme/Ix057nDLw==
+"@shopify/polaris-icons@^9.1.0":
+  version "9.1.0"
+  resolved "https://registry.yarnpkg.com/@shopify/polaris-icons/-/polaris-icons-9.1.0.tgz#2230d8dc0e8cce938b9b215dfb8cb548c8e76f64"
+  integrity sha512-KygYw+/Hud15oTUMw0feU+NYZkOoZ8CjQARRAEFIiZ8L85C3lqCv0Pg+gdA8g7PJdJV16SYXAFtv1HxzZNrTPQ==
 
 "@shopify/polaris-tokens@^9.1.0":
   version "9.1.0"
