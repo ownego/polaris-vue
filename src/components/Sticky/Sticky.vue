@@ -6,7 +6,7 @@ div
 </template>
 
 <script setup lang="ts">
-import { type VNode, inject, ref, onMounted, onBeforeUnmount } from 'vue';
+import { type VNode, inject, ref, onMounted, onBeforeUnmount, onUpdated } from 'vue';
 import { getRectForNode } from '@/utilities/geometry';
 import type { VueNode } from '@/utilities/types';
 import type { StickyManager } from '@/utilities/sticky-manager';
@@ -94,4 +94,37 @@ const adjustPlaceHolderNode = (add: boolean) => {
       : '0px';
   }
 };
+
+const updateComponent = () => {
+  const {
+    boundingElement,
+    offset,
+    disableWhenStacked,
+  } = props;
+
+  if (!stickyNode.value || !placeHolderNode.value) return;
+
+  const stickyManagerItem = stickyManager.getStickyItem(stickyNode.value);
+  const didPropsChange =
+    !stickyManagerItem ||
+    boundingElement !== stickyManagerItem.boundingElement ||
+    offset !== stickyManagerItem.offset ||
+    disableWhenStacked !== stickyManagerItem.disableWhenStacked;
+
+  if (!didPropsChange) return;
+
+  stickyManager.unregisterStickyItem(stickyNode.value);
+  stickyManager.registerStickyItem({
+    stickyNode: stickyNode.value,
+    placeHolderNode: placeHolderNode.value,
+    handlePositioning: handlePositioning,
+    offset,
+    boundingElement,
+    disableWhenStacked,
+  });
+};
+
+onUpdated(() => {
+  updateComponent();
+});
 </script>

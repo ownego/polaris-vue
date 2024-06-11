@@ -55,8 +55,7 @@ export type TextSlots = {
 }
 
 const deprecatedVariants: {[V in Variant]?: Variant} = {
-  heading2xl: 'headingXl',
-  heading3xl: 'headingXl',
+  heading3xl: 'heading2xl',
 };
 
 const props = withDefaults(defineProps<TextProps>(), {

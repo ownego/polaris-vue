@@ -1,5 +1,5 @@
 <template lang="pug">
-div(:class="className", @click="emits('toggle-all')")
+div(:class="styles.CheckableButton", @click="emits('toggle-all')")
   div(:class="styles.Checkbox")
     Checkbox(
       v-model="model",
@@ -14,13 +14,17 @@ div(:class="className", @click="emits('toggle-all')")
     v-if="label",
     :class="styles.Label",
     :aria-live="ariaLive",
-    ) {{ label }}
+    )
+      Text(
+        as="span",
+        variant="bodySm",
+        font-weight="medium",
+      ) {{ label }}
 </template>
 
 <script setup lang="ts">
 import { computed, ref } from 'vue';
-import { classNames } from '@/utilities/css';
-import { Checkbox } from '@/components';
+import { Checkbox, Text } from '@/components';
 import type { CheckableButtonProps } from './types';
 import styles from '@polaris/components/CheckableButton/CheckableButton.module.css';
 
@@ -47,8 +51,6 @@ const model = computed({
 });
 
 const checkBoxRef = ref<CheckboxHandles | null>(null);
-
-const className = computed(() => classNames(styles.CheckableButton));
 
 function focus() {
   checkBoxRef.value?.focus();

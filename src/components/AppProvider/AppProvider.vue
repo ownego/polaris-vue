@@ -41,6 +41,7 @@ export type AppProviderSlots = {
 const MAX_SCROLLBAR_WIDTH = 20;
 const SCROLLBAR_TEST_ELEMENT_PARENT_SIZE = 30;
 const SCROLLBAR_TEST_ELEMENT_CHILD_SIZE = SCROLLBAR_TEST_ELEMENT_PARENT_SIZE + 10;
+const APP_FRAME_SCROLLABLE = 'AppFrameScollable';
 
 const props = defineProps<AppProviderProps>();
 defineSlots<AppProviderSlots>();
@@ -58,7 +59,15 @@ const themeName = computed<ThemeName>(() => props.theme ?? themeNameDefault);
 
 onMounted(() => {
   if (document != null) {
-    stickyManager.setContainer(document);
+
+    if (!props.features?.dynamicTopBarAndReframe) {
+      stickyManager.setContainer(document);
+    } else {
+      const scrollContainerElement = document.getElementById(APP_FRAME_SCROLLABLE);
+
+      stickyManager.setContainer(scrollContainerElement || document);
+    }
+
     setBodyStyles();
     setRootAttributes();
 

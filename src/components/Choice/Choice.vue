@@ -9,7 +9,10 @@ div(v-if="hasDescription")
     span(:class="styles.Control")
       slot
     span(:class="styles.Label")
-      span
+      Text(
+        as="span",
+        variant="bodyMd",
+      )
         slot(v-if="hasSlot(slots.label)", name="label")
         template(v-else) {{ label }}
 
@@ -27,7 +30,7 @@ div(v-if="hasDescription")
     )
       Text(
         as="span",
-        :tone="!disabled && 'subdued'",
+        :tone="disabled ? undefined : 'subdued'",
       )
         slot(v-if="hasSlot(slots.helpText)", name="helpText")
         template(v-else) {{ helpText }}
@@ -57,7 +60,7 @@ import {
   sanitizeCustomProperties,
 } from '@/utilities/css';
 import { useHasSlot } from '@/use/useHasSlot';
-import { InlineError } from '@/components';
+import { InlineError, Text } from '@/components';
 import type { ChoiceProps, ChoiceSlots } from './types';
 import { helpTextID } from './utils';
 import styles from '@polaris/components/Choice/Choice.module.css';

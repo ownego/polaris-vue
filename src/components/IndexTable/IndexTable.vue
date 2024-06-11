@@ -7,6 +7,7 @@ IndexProvider(
   :loading="loading",
   :hasMoreItems="hasMoreItems",
   :condensed="condensed",
+  :paginated-select-all-text="paginatedSelectAllText",
   @selection-change="onSelectionChange",
 )
   IndexTableBase(
@@ -35,7 +36,6 @@ import type {
 import { default as IndexTableBase } from './IndexTableBase.vue';
 import { useHasSlot } from '@/use/useHasSlot';
 
-
 const props = withDefaults(defineProps<IndexTableProps>(), {
   selectable: true,
   selectedItemsCount: 0,
@@ -55,6 +55,7 @@ const indexTableBaseProps = computed<IndexTableBaseProps>(() => {
     hasMoreItems,
     condensed,
     onSelectionChange,
+    paginatedSelectAllText,
     ...rest
   } = props;
 

@@ -11,15 +11,17 @@ div(
         @toggle-all="emits('toggle-all')",
       )
       //- paginatedSelectAllMarkup
-      div(
+      UnstyledButton(
         v-if="paginatedSelectAllAction",
-        :class="styles.PaginatedSelectAll",
+        :class="styles.AllAction",
+        size="slim",
+        :disabled="disabled",
+        @click="paginatedSelectAllAction.onAction",
       )
-        UnstyledButton(
-          :class="styles.AllAction",
-          size="slim",
-          :disabled="disabled",
-          @click="paginatedSelectAllAction.onAction",
+        Text(
+          as="span",
+          variant="bodyMd",
+          font-weight="medium",
         ) {{ paginatedSelectAllAction.content }}
 
     div(v-if="selectMode", :class="styles.BulkActionsPromotedActionsWrapper")
@@ -88,6 +90,7 @@ import {
   InlineStack,
   CheckableButton,
   UnstyledButton,
+  Text,
 } from '@/components';
 import type { CheckableButtonProps } from '@/components/CheckableButton';
 import {

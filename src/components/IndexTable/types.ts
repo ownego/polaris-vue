@@ -57,6 +57,7 @@ export type IndexTableBaseProps = {
   promotedBulkActions?: BulkActionsProps['promotedActions'];
   bulkActions?: BulkActionsProps['actions'];
   paginatedSelectAllActionText?: string;
+  paginatedSelectAllText?: string;
   lastColumnSticky?: boolean;
   selectable?: boolean;
   /** List of booleans, which maps to whether sorting is enabled or not for each column. Defaults to false for all columns.  */

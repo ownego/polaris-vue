@@ -66,7 +66,7 @@ For more details, please check `AppProvider` component documentation in `docs/co
 
 ### How to run the documentation locally
 
-1. Using Node.js `v18.18.2` as required.
+1. Using Node.js `v20.14.0` as required.
 2. Run `yarn gen:init` to prepare automatically generate types.
 3. Run `yarn gen:docs` to generate component's metadata & content. (You have to run this command every time you change the component's props, events or slots)
 4. Preview the docs by: `yarn docs:dev`

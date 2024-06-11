@@ -2,13 +2,19 @@
 th(
   :aria-label="label",
   scope="col",
-  :class="className",
-) {{ title }}
+  :class="styles.Weekday",
+)
+  Text(
+    as="span",
+    variant="bodySm",
+    alignment="center",
+    :font-weight="current ? 'bold' : 'regular'",
+    :tone="!current ? 'subdued': undefined",
+  ) {{ title }}
 </template>
 
 <script setup lang="ts">
-import { computed } from 'vue';
-import { classNames } from '@/utilities/css';
+import { Text } from '@/components';
 import styles from '@polaris/components/DatePicker/DatePicker.module.css';
 
 export type WeekdayProps = {
@@ -17,10 +23,5 @@ export type WeekdayProps = {
   current: boolean;
 }
 
-const props = defineProps<WeekdayProps>();
-
-const className = computed(() => classNames(
-  styles.Weekday,
-  props.current && styles['Weekday-current'],
-));
+defineProps<WeekdayProps>();
 </script>

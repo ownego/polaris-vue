@@ -44,6 +44,7 @@ div(:class="className")
       break-word,
       as="span",
       tone="subdued",
+      variant="bodyMd",
     )
       slot(name="helpText")
 </template>

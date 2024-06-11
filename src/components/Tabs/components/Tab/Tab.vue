@@ -62,6 +62,7 @@ li(
     Popover(
       autofocusTarget="first-node",
       :active="popoverActive",
+      :z-index-override="disclosureZIndexOverride",
       @close="togglePopoverActive",
     )
       template(#activator)
@@ -119,7 +120,6 @@ import {
   resolveComponent,
 } from 'vue';
 import useI18n from '@/use/useI18n';
-import { useBreakpoints } from '@/use/useBreakpoints';
 import { focusFirstFocusableNode, handleMouseUpByBlurring } from '@/utilities/focus';
 import { classNames } from '@/utilities/css';
 import { useHasSlot } from '@/use/useHasSlot';
@@ -141,7 +141,6 @@ const emits = defineEmits<TabEvents & {
 }>();
 
 const i18n = useI18n();
-const breakpoints = useBreakpoints();
 const currentInstance = getCurrentInstance();
 const { hasSlot } = useHasSlot();
 
@@ -334,7 +333,7 @@ const activator = () => {
             resolveComponent('Text'),
             {
               as: 'span',
-              variant: breakpoints.value.mdDown ? 'bodyLg' : 'bodySm',
+              variant: 'bodySm',
               fontWeight: 'medium',
             },
             {

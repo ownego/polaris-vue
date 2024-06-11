@@ -14,6 +14,7 @@ div(
 <script setup lang="ts">
 import { computed, watch, onMounted, ref } from 'vue';
 import type { Transition, AnimationState } from './types';
+import { createVar } from '@shopify/polaris-tokens';
 import type { VueNode } from '@/utilities/types';
 import { classNames } from '@/utilities/css';
 import styles from '@polaris/components/Collapsible/Collapsible.module.css';
@@ -25,6 +26,10 @@ export type CollapsibleProps = {
   expandOnPrint?: boolean;
   /** Toggle whether the collapsible is expanded or not. */
   open: boolean;
+  /** The direction the collapsible collapses in.
+   * @default 'block'
+   */
+   variant?: 'block' | 'inline';
   /** Override transition properties. When set to false, disables transition completely.
    * @default :transition="{duration: 'var(--p-motion-duration-150)', timingFunction: 'var(--p-motion-ease-in-out)'}"
    */
@@ -38,6 +43,7 @@ const slot = defineSlots<{
 
 const props = withDefaults(defineProps<CollapsibleProps>(), {
   transition: true,
+  variant: 'block',
 });
 
 const emits = defineEmits<{
@@ -45,11 +51,12 @@ const emits = defineEmits<{
   'animation-end': [];
 }>();
 
-const height = ref<number>(0);
+const size = ref<number>(0);
 const isOpen = ref<boolean>(props.open);
 const animationState = ref<AnimationState>('idle');
 const collapsibleContainer = ref<HTMLDivElement | null>(null);
 
+const vertical = computed(() => props.variant === 'block');
 const isFullyOpen = computed(() =>
   animationState.value === 'idle' && props.open && isOpen.value,
 );
@@ -58,11 +65,15 @@ const isFullyClosed = computed(() =>
   animationState.value === 'idle' && !props.open && !isOpen.value,
 );
 
+const animateIn = computed(() => typeof props.transition === 'object' && props.transition.animateIn);
+
 const wrapperClassName = computed(() => {
   return classNames(
     styles.Collapsible,
     isFullyClosed.value && styles.isFullyClosed,
     props.expandOnPrint && styles.expandOnPrint,
+    props.variant === 'inline' && styles.inline,
+    animateIn.value && styles.animateIn,
   );
 });
 
@@ -85,6 +96,7 @@ const transitionDisabled = computed(() => isTransitionDisabled(props.transition)
 
 const transitionStyles = computed(() =>
   typeof props.transition === 'object' && {
+    transitionDelay: createVar(`motion-duration-${props.transition.delay ?? '0'}`),
     transitionDuration: props.transition.duration,
     transitionTimingFunction: props.transition.timingFunction,
 });
@@ -92,8 +104,15 @@ const transitionStyles = computed(() =>
 const collapsibleStyles = computed(() => {
   return {
     ...transitionStyles.value,
-    maxHeight: isFullyOpen.value ? 'none' : `${height.value}px`,
-    overflow: isFullyOpen.value ? 'visible' : 'hidden',
+    ...(vertical.value
+    ? {
+        maxHeight: isFullyOpen.value ? 'none' : `${size.value}px`,
+        overflow: isFullyOpen.value ? 'visible' : 'hidden',
+      }
+    : {
+        maxWidth: isFullyOpen.value ? 'none' : `${size.value}px`,
+        overflow: isFullyOpen.value ? 'visible' : 'hidden',
+      })
   };
 });
 
@@ -114,9 +133,11 @@ const startAnimation = () => {
     animationState.value = 'idle';
 
     if (props.open && collapsibleContainer.value) {
-      height.value = collapsibleContainer.value.scrollHeight;
+      size.value = vertical.value
+        ? collapsibleContainer.value.scrollHeight
+        : collapsibleContainer.value.scrollWidth;
     } else {
-      height.value = 0;
+      size.value = 0;
     }
   } else {
     animationState.value = 'measuring';
@@ -127,12 +148,14 @@ onMounted(() => {
   if (!props.open || !collapsibleContainer.value) return;
 
   // If collapsible defaults to open, set an initial height
-  height.value = collapsibleContainer.value.scrollHeight;
+  size.value = vertical.value
+    ? collapsibleContainer.value.scrollHeight
+    : collapsibleContainer.value.scrollWidth;
 });
 
 watch(
-  () => [props.open, isOpen.value],
-  () => {
+  () => props.open,
+  (newVal, oldVal) => {
     // startAnimation should only be fired if the open state changes.
     startAnimation();
   },
@@ -148,11 +171,20 @@ watch(
       case 'idle':
         break;
       case 'measuring':
-        height.value = collapsibleContainer.value.scrollHeight;
-        animationState.value = 'animating';
+        size.value = vertical.value
+          ? collapsibleContainer.value.scrollHeight
+          : collapsibleContainer.value.scrollWidth;
+        setTimeout(() => {
+          animationState.value = 'animating';
+        }, 0);
         break;
       case 'animating':
-        height.value = props.open ? collapsibleContainer.value.scrollHeight : 0;
+        size.value = props.open
+          ? vertical.value
+            ? collapsibleContainer.value.scrollHeight
+            : collapsibleContainer.value.scrollWidth
+          : 0;
+        break;
     }
   },
 );

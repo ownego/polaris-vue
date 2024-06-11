@@ -414,6 +414,7 @@ export interface AppliedFilterInterface {
   name: string;
   /** A label for the applied filter */
   label: string;
+  unsavedChanges?: boolean;
   /** Callback when the remove button is pressed */
   onRemove(key: string): void;
 }

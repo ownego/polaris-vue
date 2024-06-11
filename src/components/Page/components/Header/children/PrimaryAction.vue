@@ -58,8 +58,6 @@ function shouldShowIconOnly(
   if (isMobile) {
     accessibilityLabel = accessibilityLabel || content;
     content = undefined;
-  } else {
-    icon = undefined;
   }
 
   return {

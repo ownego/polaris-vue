@@ -49,6 +49,7 @@ div(:class="styles.Outer")
               preferredPosition="below",
               preferredAlignment="left",
               autofocusTarget="first-node",
+              :z-index-override="disclosureZIndexOverride",
               :active="disclosureActivatorVisible && state.showDisclosure",
               @close="handleClose",
             )
@@ -92,6 +93,7 @@ div(:class="styles.Outer")
                 preferredPosition="above",
                 :content="i18n.translate('Polaris.Tabs.newViewTooltip')",
                 :hoverDelay="400",
+                :z-index-override="disclosureZIndexOverride",
               )
                 Tab(
                   :id="CREATE_NEW_VIEW_ID",
@@ -183,6 +185,8 @@ export interface TabsProps {
   fitted?: boolean;
   /** Text to replace disclosures horizontal dots */
   disclosureText?: string;
+  /** Override z-index of popovers and tooltips */
+  disclosureZIndexOverride?: number;
 }
 const CREATE_NEW_VIEW_ID = 'create-new-view';
 

@@ -19,11 +19,16 @@ div(:class="styles.ActionContainer")
         )
 
         div(:class="styles.Text")
-          div(:class="contentOverflowStyle") {{ contentText }}
+          Text(
+            as="p",
+            variant="bodyMd",
+            :break-word="wrapOverflow",
+          ) {{ contentText }}
           Text(
             v-if="helpText",
+            as="p",
+            variant="bodyMd",
             tone="subdued",
-            as="span",
           ) {{ helpText }}
 
         span(v-if="badge", :class="styles.Suffix")
@@ -72,8 +77,6 @@ const actionClassNames = computed(() => classNames(
   props.destructive && styles.destructive,
   props.active && styles.selected,
 ));
-
-const contentOverflowStyle = computed(() => props.wrapOverflow ? styles.ContentWrap : undefined);
 
 const contentText = computed(() => {
   return props.ellipsis && props.content

@@ -52,7 +52,10 @@ LegacyCard
                   :accessibilityLabel="i18n.translate('Polaris.MediaCard.dismissButton')",
                   @click="emits('dismiss')",
                 )
-          p(:class="styles.Description") {{ description }}
+          Text(
+            as="p",
+            variant="bodySm",
+          ) {{ description }}
           div(:class="actionClassName")
             ButtonGroup
               ButtonFrom(v-if="primaryAction", :action="primaryAction")
@@ -63,6 +66,7 @@ LegacyCard
 import { computed, getCurrentInstance } from 'vue';
 import styles from '@polaris/components/MediaCard/MediaCard.module.css';
 import useI18n from '@/use/useI18n';
+import { Text } from '@/components';
 import type {
   VueNode,
   ComplexAction,

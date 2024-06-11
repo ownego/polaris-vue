@@ -15,6 +15,7 @@ Scrollable(
   shadow,
   :style="style",
   :class="className",
+  scrollbar-width="thin",
   @scrolled-to-bottom="emits('scrolled-to-bottom')",
 )
   template(v-if="sectioned")
@@ -37,8 +38,12 @@ export type PaneProps = {
   fixed?: boolean;
   /** Automatically wrap children in padded sections */
   sectioned?: boolean;
-  /** Sets a fixed height and max-height on the Scrollable */
+  /** Sets a fixed height on the Scrollable */
   height?: string;
+   /** Sets maxHeight on the Scrollable */
+  maxHeight?: string;
+  /** Sets minHeight on the Scrollable */
+  minHeight?: string;
   /**
    * Prevents page scrolling when the end of the scrollable Popover content is reached
    * @default false
@@ -76,11 +81,11 @@ const className = computed(() => classNames(
   props.captureOverscroll && styles['Pane-captureOverscroll'],
 ));
 
-const style = computed(() => props.height
-  ? {
+const style = computed(() => {
+  return {
     height: `${props.height}px`,
-    maxHeight: `${props.height}px`,
-    minHeight: `${props.height}px`,
+    maxHeight: `${props.maxHeight}px`,
+    minHeight: `${props.minHeight}px`,
   }
-  : undefined);
+});
 </script>

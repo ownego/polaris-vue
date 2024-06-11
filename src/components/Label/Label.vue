@@ -7,7 +7,11 @@ div(
     :for="id",
     :class="requiredIndicator",
   )
-    slot
+    Text(
+      as="span",
+      variant="bodyMd",
+    )
+      slot
 </template>
 
 <script setup lang="ts">
@@ -15,6 +19,7 @@ import { computed } from 'vue';
 import { classNames } from '@/utilities/css';
 import type { VueNode } from '@/utilities/types';
 import { labelId } from './utils';
+import { Text } from '@/components';
 import styles from '@polaris/components/Label/Label.module.css';
 
 export type LabelProps = {

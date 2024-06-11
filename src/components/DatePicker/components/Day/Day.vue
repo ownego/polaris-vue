@@ -10,7 +10,12 @@ td(v-if="day", :class="dayCellClassName")
     @mouseover="handleHover",
     @click="handleClick",
   )
-    | {{ date }}
+    Text(
+      as="span",
+      variant="bodySm",
+      alignment="center",
+      :font-weight="today ? 'bold' : 'regular'",
+    ) {{ date }}
 td(
   v-else,
   :class="styles.EmptyDayCell",
@@ -21,6 +26,7 @@ td(
 <script setup lang="ts">
 import { computed, ref, watch } from 'vue';
 import { classNames } from '@/utilities/css';
+import { Text } from '@/components';
 import { isSameDay } from '@polaris/utilities/dates';
 import useI18n from '@/use/useI18n';
 import { monthName } from '@polaris/components/DatePicker/utilities';

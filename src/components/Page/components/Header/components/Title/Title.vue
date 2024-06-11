@@ -1,10 +1,14 @@
 <template lang="pug">
 div(:class="styles.TitleWrapper")
-  Text(
+  h1(
     v-if="title",
-    as="h1",
     :class="className",
-  ) {{ title }}
+  )
+    Text(
+      as="span",
+      variant="headingLg",
+      font-weight="bold",
+    ) {{ title }}
   Bleed(
     :marginBlock="100",
   )
@@ -13,12 +17,13 @@ div(
   v-if="subtitle",
   :class="classNames(styles.SubTitle, compactTitle && styles.SubtitleCompact)",
 )
-  Text(as="p", variant="bodySm") {{ subtitle }}
+  Text(as="p", variant="bodySm", tone="subdued") {{ subtitle }}
 </template>
 
 <script setup lang="ts">
 import { computed } from 'vue';
 import { classNames } from '@/utilities/css';
+import { Text } from '@/components';
 import styles from '@polaris/components/Page/components/Header/components/Title/Title.module.css';
 
 export interface TitleProps {
