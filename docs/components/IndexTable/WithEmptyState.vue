@@ -54,13 +54,7 @@ const customers: {
   location: string;
   orders: number;
   amountSpent: string;
-}[] = [{
-  id: '1',
-  name: 'Mae Jemison',
-  location: 'Decatur, USA',
-  orders: 20,
-  amountSpent: '$2,400',
-}];
+}[] = [];
 
 const headings = [
   {title: 'Name'},

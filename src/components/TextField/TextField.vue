@@ -35,7 +35,11 @@ Labelled(
         ref="prefixRef",
       )
         slot(v-if="hasSlot(slots.prefix)", name="prefix")
-        template(v-else) {{ prefix }}
+        template(v-else)
+          Text(
+            as="span",
+            variant="bodyMd",
+          ) {{ prefix }}
 
       div(
         v-if="autoSize",
@@ -88,7 +92,11 @@ Labelled(
           ref="suffixRef",
         )
           slot(v-if="hasSlot(slots.suffix)", name="suffix")
-          template(v-else) {{ suffix }}
+          template(v-else)
+            Text(
+              as="span",
+              variant="bodyMd",
+            ) {{ suffix }}
 
       //- characterCountMarkup
       div(
@@ -98,7 +106,11 @@ Labelled(
         :aria-live="focus ? 'polite' : 'off'",
         aria-atomic="true",
         @click="handleClickChild",
-      ) {{ characterCountText }}
+      )
+        Text(
+          as="span",
+          variant="bodyMd",
+        ) {{ characterCountText }}
 
       //- loadingMarkup
       div(

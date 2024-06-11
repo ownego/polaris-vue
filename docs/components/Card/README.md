@@ -72,6 +72,10 @@ examples:
     title: With custom footer actions
     description: >-
       Use to present actionable content that is optional or not the primary purpose of the page.
+  - fileName: WithHeaderIcon.vue
+    title: With header icon actions
+    description: >-
+      Use for less important card actions, or actions merchants may do before reviewing the contents of the card. For example, merchants may want to export items in a list.
   - fileName: CriticalFooterAction.vue
     title: With critical footer action
     description: >-

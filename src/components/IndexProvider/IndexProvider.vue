@@ -25,6 +25,7 @@ const {
   itemCount: toRef(props, 'itemCount'),
   hasMoreItems: toRef(props, 'hasMoreItems'),
   resourceName: props.resourceName,
+  defaultPaginatedSelectAllText: props.paginatedSelectAllText,
 });
 
 const handleSelectionChange = useHandleBulkSelection({

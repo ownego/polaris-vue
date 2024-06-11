@@ -22,7 +22,11 @@ div(
         div(v-if="loading", :class="styles['HeaderWrapper-overlay']")
         //- Header content wrapper
         div(:class="styles.HeaderContentWrapper")
-          div(:class="styles.HeaderTitleWrapper") {{ headerTitle }}
+          div(:class="styles.HeaderTitleWrapper")
+            Text(
+              as="span",
+              variant="bodyMd",
+            ) {{ headerTitle }}
           div(v-if="isSelectable", :class="styles.CheckableButtonWrapper")
             CheckableButton(
               :accessibilityLabel="bulkActionsAccessibilityLabel",
@@ -134,6 +138,7 @@ import {
   BulkActions,
   CheckableButton,
   Pagination,
+  Text,
 } from '@/components';
 import type { PaginationProps } from '@/components/Pagination/types';
 import type { BulkActionsProps } from '@/components/BulkActions/types';

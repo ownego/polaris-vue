@@ -7,8 +7,8 @@ template(v-if="(allowFiltering || filterActions) && hasManyActions && isFilterab
     TextField(
       clear-button,
       label-hidden,
-      :label="i18n.translate('Polaris.ActionList.SearchField.placeholder')",
-      :placeholder="i18n.translate('Polaris.ActionList.SearchField.placeholder')",
+      :label="filterLabel || i18n.translate('Polaris.ActionList.SearchField.placeholder')",
+      :placeholder="filterLabel || i18n.translate('Polaris.ActionList.SearchField.placeholder')",
       autoComplete="off"
       :value="searchText"
       @change="(value) => setSearchText(value)",
@@ -74,6 +74,8 @@ interface ActionListProps {
   actionRole?: 'menuitem' | string;
   /** Allow users to filter items in the list. Will only show if more than 8 items in the list. The item content of every items must be a string for this to work */
   allowFiltering?: boolean;
+  /** Filter label used as a placeholder in the search field */
+  filterLabel?: string;
 }
 
 const FILTER_ACTIONS_THRESHOLD = 8;

@@ -26,7 +26,11 @@ component(
       :instant="!shouldAnimate",
     )
       slot(v-if="slots.content", name="content")
-      template(v-else) {{ content }}
+      template(v-else)
+        Text(
+          as="span",
+          variant="bodyMd",
+        ) {{ content }}
 </template>
 
 <script setup lang="ts">
@@ -36,6 +40,7 @@ import { findFirstFocusableNode } from '@/utilities/focus';
 import { useEphemeralPresenceManagerContext } from '@/use/useEphemeralPresenceManager';
 import useId from '@/use/useId';
 import { useToggle } from '@/use/useToggle';
+import { Text } from '@/components';
 import { Portal } from '../Portal';
 import { TooltipOverlay } from './components';
 import type { VueNode } from '@/utilities/types';

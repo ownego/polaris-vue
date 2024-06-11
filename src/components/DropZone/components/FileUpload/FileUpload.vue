@@ -5,7 +5,9 @@ div(:class="fileUploadClassName")
     inline-align="center",
     gap="200",
   )
-    div(:class="actionClassNames") {{ actionTitleValue }}
+    Button(
+      :diabled="disabled",
+    ) {{ actionTitleValue }}
     Text(
       v-if="actionHint",
       variant="bodySm",
@@ -25,7 +27,7 @@ import { computed } from 'vue';
 import { capitalize } from '@polaris/utilities/capitalize';
 import { classNames } from '@/utilities/css';
 import useI18n from '@/use/useI18n';
-import { BlockStack, Icon, Text } from '@/components';
+import { BlockStack, Icon, Text, Button } from '@/components';
 import { createAllowMultipleKey } from '../../utils';
 import { useDropZoneContext } from '../../useDropZoneContext';
 import styles from '@polaris/components/DropZone/components/FileUpload/FileUpload.module.css';
@@ -47,11 +49,6 @@ const props = defineProps<FileUploadProps>();
 const actionTitleValue = computed(() => (
   props.actionTitle || i18n.translate(`Polaris.DropZone.${allowMultipleKey}.actionTitle${typeSuffix}`)
 ))
-
-const actionClassNames = computed(() => classNames(
-  styles.Action,
-  disabled.value && styles.disabled,
-));
 
 const fileUploadClassName = computed(() => classNames(
   styles.FileUpload,

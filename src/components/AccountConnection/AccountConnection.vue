@@ -31,6 +31,7 @@ Card
         Text(
           v-if="hasSlot(slots.details)",
           as="span",
+          variant="bodyMd",
           tone="subdued",
         )
           slot(name="details")
@@ -39,7 +40,11 @@ Card
     v-if="hasSlot(slots['term-of-service'])"
     :padding-block-start="breakpoints.mdUp ? '400' : '500'",
   )
-    slot(name="term-of-service")
+    Text(
+      as="span",
+      variant="bodyMd",
+    )
+      slot(name="term-of-service")
 </template>
 
 <script setup lang="ts">

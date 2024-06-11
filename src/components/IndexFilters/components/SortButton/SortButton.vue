@@ -4,13 +4,15 @@ Popover(
   autofocus-target="first-node",
   preferred-alignment="right",
   :active="active && !disabled",
+  :z-index-override="disclosureZIndexOverride",
   @close="handleClose",
 )
   template(#activator)
     Tooltip(
       preferred-position="above",
       :content="i18n.translate('Polaris.IndexFilters.SortButton.tooltip')",
-      :hover-delay="400"
+      :hover-delay="400",
+      :z-index-override="disclosureZIndexOverride",
     )
     Button(
       size="slim",
@@ -74,6 +76,7 @@ interface SortButtonProps {
   choices: SortButtonChoice[];
   selected: string[];
   disabled?: boolean;
+  disclosureZIndexOverride?: number;
 }
 
 enum SortButtonDirection {

@@ -10,7 +10,6 @@ div(:class="styles.IndexTable")
     template(v-if="itemCount > 0")
       EventListener(event="resize", :handler="handleResize")
       div(
-        v-if="isMounted",
         :class="stickyTableClassNames",
         role="presentation",
       )
@@ -28,13 +27,11 @@ div(:class="styles.IndexTable")
             ref="stickyHeaderWrapperElement",
           )
             component(:is="loadingMarkup")
-            div(:class="styles.StickyTableColumnHeader")
-              component(:is="stickyColumnHeader")
             div(:class="styles.StickyTableHeadings", ref="stickyHeaderElement")
               component(
                 v-for="heading, index in headings",
                 :key="getHeadingKey(heading)",
-                :is="renderStickyHeading(heading, index)",
+                :is="renderHeading(heading, index, 'div', { 'data-index-table-sticky-heading': true })",
               )
 
           component(
@@ -61,7 +58,7 @@ div(:class="styles.IndexTable")
             tr(:class="styles.HeadingRow")
               template(v-for="heading, index in headings")
                 component(
-                  v-for="headingEl in renderHeading(heading, index)",
+                  v-for="headingEl in renderHeading(heading, index, 'th', { 'data-index-table-heading': true }, getHeadingKey(heading))",
                   :is="headingEl",
                 )
 
@@ -95,13 +92,11 @@ div(:class="styles.IndexTable")
 </template>
 
 <script setup lang="ts">
-import { Transition, type VNode, computed, h, onMounted, ref, toRef, watch } from 'vue';
-import { themeDefault, toPx } from '@shopify/polaris-tokens';
+import { type VNode, computed, h, onMounted, ref, toRef, watch } from 'vue';
 import { debounce } from '@polaris/utilities/debounce';
 import { classNames } from '@/utilities/css';
 import { useToggle } from '@/use/useToggle';
 import useI18n from '@/use/useI18n';
-import useTheme from '@/use/useTheme';
 import { useHasSlot } from '@/use/useHasSlot';
 import {
   Badge,
@@ -140,7 +135,7 @@ import SortDescendingIcon from '@icons/SortDescendingIcon.svg';
 import styles from '@polaris/components/IndexTable/IndexTable.module.css';
 
 
-const SCROLL_BAR_PADDING = 4;
+const SCROLL_BAR_PADDING = 16;
 const SCROLL_BAR_DEBOUNCE_PERIOD = 300;
 
 const props = withDefaults(defineProps<IndexTableBaseProps>(), {
@@ -154,7 +149,6 @@ const slots = defineSlots<IndexTableSlots>();
 const emits = defineEmits<IndexTableBaseEvents>();
 
 const i18n = useI18n();
-const theme = useTheme();
 const { hasSlot } = useHasSlot();
 
 const {
@@ -185,11 +179,10 @@ const scrollableContainerElementRef = ref<InstanceType<typeof ScrollContainer> |
 const tableElement = ref<HTMLTableElement | null>(null);
 const tableBodyElement = ref<Element | null>(null);
 const condensedListElement = ref<HTMLUListElement | null>(null);
-const loadingElement = ref<HTMLDivElement | null>(null);
 
 const tableInitialized = ref(false);
 const stickyWrapper = ref<HTMLElement | null>(null);
-const hideScrollContainer = ref(false);
+const hideScrollContainer = ref(true);
 const canFitStickyColumn = ref(true);
 
 const tableHeadings = ref<HTMLElement[]>([]);
@@ -220,11 +213,6 @@ const selectAllActionsLabel = computed(() => i18n.translate('Polaris.IndexTable.
   selectedItemsCount: `${selectedItemsCountValue.value}`,
 }));
 
-const stickyColumnHeaderStyle = computed(() => (
-  tableHeadingRects.value && tableHeadingRects.value.length > 0
-    ? { minWidth: `${calculateFirstHeaderOffset.value}px` }
-    : undefined
-));
 
 const paginatedSelectAllAction = computed(() => {
   if (!selectable?.value || !hasMoreItems?.value) {
@@ -251,6 +239,7 @@ const paginatedSelectAllAction = computed(() => {
 
 const stickyTableClassNames = computed(() => classNames(
   styles.StickyTable,
+  hasMoreLeftColumns.value && styles['StickyTable-scrolling'],
   condensed?.value && styles['StickyTable-condensed'],
 ));
 
@@ -275,31 +264,27 @@ const promotedActions = computed(() =>
 
 const actions = computed(() => shouldShowActions.value ? props.bulkActions : []);
 
-const calculateFirstHeaderOffset = computed(() => {
-  if (!selectable.value) {
-    return tableHeadingRects.value[0].offsetWidth;
-  }
-
-  return condensed?.value
-    ? tableHeadingRects.value[0].offsetWidth
-    : tableHeadingRects.value[0].offsetWidth +
-        tableHeadingRects.value[1].offsetWidth;
-});
-
 const headerWrapperClassNames = computed(() => classNames(
   styles.HeaderWrapper,
   (!selectable.value || condensed?.value) && styles.unselectable,
 ));
 
-const stickyColumnHeaderClassNames = computed(() => classNames(
-  styles.TableHeading,
-  selectable.value && styles['TableHeading-first'],
-  props.headings[0].flush && styles['TableHeading-flush'],
-))
-
 const stickyHeaderClassNames = computed(() => classNames(
   styles.StickyTableHeader,
   isSticky.value && styles['StickyTableHeader-isSticky'],
+  // Has a sticky left column enabled
+  canFitStickyColumn.value && styles['StickyTableHeader-sticky'],
+  // ie; is scrolled to the right
+  hasMoreLeftColumns.value && styles['StickyTableHeader-scrolling'],
+  // Has a sticky right column enabled
+  canFitStickyColumn.value &&
+    props.lastColumnSticky &&
+    styles['StickyTableHeader-sticky-last'],
+  // ie; is scrolled to the left
+  canFitStickyColumn.value &&
+    props.lastColumnSticky &&
+    canScrollRight.value &&
+    styles['StickyTableHeader-sticky-scrolling'],
 ));
 
 const condensedClassNames = computed(() => classNames(
@@ -359,24 +344,17 @@ const resizeTableHeadings = debounce(() => {
   // update left offset for first column
   if (selectable?.value && tableHeadings.value.length > 1) {
     tableHeadings.value[1].style.left = `${tableHeadingRects.value[0].offsetWidth}px`;
+
+    if (stickyTableHeadings.value.length) {
+      stickyTableHeadings.value[1].style.left = `${tableHeadingRects.value[0].offsetWidth}px`;
+    }
   }
 
-  // update sticky header min-widths
-  stickyTableHeadings.value.forEach((heading, index) => {
-    let minWidth = 0;
-    if (index === 0 && (!isBreakpointsXS() || !selectable?.value)) {
-      minWidth = calculateFirstHeaderOffset.value;
-    } else if (selectable?.value && tableHeadingRects.value.length > index) {
-      minWidth = tableHeadingRects.value[index]?.offsetWidth || 0;
-    } else if (
-      !selectable?.value &&
-      tableHeadingRects.value.length >= index
-    ) {
-      minWidth = tableHeadingRects.value[index - 1]?.offsetWidth || 0;
-    }
-
-    heading.style.minWidth = `${minWidth}px`;
-  });
+  if (stickyTableHeadings.value.length) {
+    stickyTableHeadings.value.forEach((heading, index) => {
+      heading.style.minWidth = `${tableHeadingRects.value[index]?.offsetWidth || 0}px`;
+    });
+  }
 });
 
 onMounted(() => {
@@ -588,13 +566,6 @@ function triggerResizeTableScrollBar() {
     ? condensedListElement.value : tableElement.value;
 };
 
-function isBreakpointsXS() {
-  return typeof window === 'undefined'
-    ? false
-    : window.innerWidth <
-        parseFloat(toPx(themeDefault.breakpoints['breakpoints-sm']) ?? '');
-};
-
 function handleSelectModeToggle() {
   handleSelectionChange(SelectionType.All, false);
 }
@@ -619,71 +590,30 @@ function handleSortHeadingClick(
  * This component is a bit complex, so we have to split the render functions
  * Based on original Polaris IndexTable markup functions
  */
-// stickyColumnHeader
-function stickyColumnHeader() {
-  return h(
-    'div',
-    {
-      class: stickyColumnHeaderClassNames.value,
-      key: getHeadingKey(props.headings[0]),
-      style: stickyColumnHeaderStyle.value,
-      'data-index-table-sticky-heading': true,
-    },
-    h(
-      LegacyStack,
-      {
-        spacing: 'none',
-        wrap: false,
-        alignment: 'center',
-      },
-      () => [
-        selectable.value && h(
-          'div', { class: styles.FirstStickyHeaderElement, ref: firstStickyHeaderElement },
-          renderCheckboxContent(),
-        ),
-        selectable.value && h(
-          'div', { class: styles['StickyTableHeading-second-scrolling'] },
-          renderHeadingContent(props.headings[0], 0),
-        )
-      ],
-    ),
-  );
-}
 
 // loadingMarkup
 const loadingMarkup = computed(() => {
   return h(
-    Transition,
+    'div',
     {
-      name: 'custom-indextable-loading-transition',
-      appear: true,
-      onBeforeEnter: onTransitionBeforeEnter,
-      onEnter: onTransitionEnter,
-      onAfterEnter: onTransitionAfterEnter,
-      onBeforeLeave: onTransitionBeforeLeave,
-      onLeave: onTransitionLeave,
-      onAfterLeave: onTransitionAfterLeave,
+      class: classNames(
+        styles.LoadingPanel,
+        loading?.value && styles.LoadingPanelEntered,
+      )
     },
-    () => loading?.value && h(
+    () => h(
       'div',
-      {
-        class: styles.LoadingPanel,
-        ref: loadingElement,
-      },
-      h(
-        'div',
-        { class: styles.LoadingPanelRow },
-        [
-          h(Spinner, { size: 'small' }),
-          h(
-            'span',
-            { class: styles.LoadingPanelText },
-            i18n.translate('Polaris.IndexTable.resourceLoadingAccessibilityLabel', {
-              resourceNamePlural: contextResourceName.plural.toLocaleLowerCase(),
-            }),
-          ),
-        ],
-      ),
+      { class: styles.LoadingPanelRow },
+      [
+        h(Spinner, { size: 'small' }),
+        h(
+          'span',
+          { class: styles.LoadingPanelText },
+          i18n.translate('Polaris.IndexTable.resourceLoadingAccessibilityLabel', {
+            resourceNamePlural: contextResourceName.plural.toLocaleLowerCase(),
+          }),
+        ),
+      ],
     ),
   );
 });
@@ -717,7 +647,13 @@ const bulkActionsMarkup = computed(() => (
 ));
 
 // renderHeading
-const renderHeading = (heading: IndexTableHeading, index: number) => {
+const renderHeading = (
+  heading: IndexTableHeading,
+  index: number,
+  Tag: string,
+  tagProps: {[x: string]: unknown},
+  id?: string,
+) => {
   const isSecond = index === 0;
   const isLast = index === props.headings.length - 1;
   const hasSortable = props.sortable?.some((value) => value === true);
@@ -743,13 +679,13 @@ const renderHeading = (heading: IndexTableHeading, index: number) => {
       : undefined;
 
   const headingContent = h(
-    'th',
+    Tag,
     {
-      id: heading.id,
+      id: id,
       class: headingContentClassName,
       key: getHeadingKey(heading),
       style: stickyPositioningStyle,
-      'data-index-table-heading': true,
+      ...tagProps,
     },
     renderHeadingContent(heading, index),
   );
@@ -765,11 +701,11 @@ const renderHeading = (heading: IndexTableHeading, index: number) => {
   );
 
   const checkboxContent = h(
-    'th',
+    Tag,
     {
       class: checkboxClassName,
       key: `${heading}-${index}`,
-      'data-index-table-heading': true,
+      ...tagProps,
     },
     renderCheckboxContent(),
   );
@@ -814,23 +750,28 @@ function renderHeadingContent(heading: IndexTableHeading, index: number) {
     preferredPosition: 'above' as TooltipOverlayProps['preferredPosition'],
   };
 
+  const headingTitle = h(
+    Text,
+    {
+      as: 'span',
+      variant: 'bodySm',
+      fontWeight: 'medium',
+      visuallyHidden: heading.hidden,
+    },
+    () => heading.title,
+  );
+
   if (heading.new) {
     headingContent = h(
       LegacyStack,
       { wrap: false, alignment: 'center' },
       () => [
-        h('span', () => heading.title),
+        headingTitle,
         h(Badge, { tone: 'new' }, i18n.translate('Polaris.IndexTable.onboardingBadgeText')),
       ]
     );
-  } else if (heading.hidden) {
-    headingContent = h(
-      Text,
-      { as: 'span', visuallyHidden: true },
-      () => heading.title,
-    )
   } else {
-    headingContent = heading.title as VNode;
+    headingContent = headingTitle;
   }
 
   const style = {
@@ -1008,75 +949,5 @@ function renderHeadingContent(heading: IndexTableHeading, index: number) {
     },
     headingContent,
   );
-}
-
-function renderStickyHeading(heading: IndexTableHeading, index: number) {
-  const position = selectable.value ? index + 1 : index;
-  const headingStyle =
-    tableHeadingRects.value && tableHeadingRects.value.length > position
-      && {minWidth: `${tableHeadingRects.value[position].offsetWidth}px`};
-  const headingAlignment = heading.alignment || 'start';
-
-  const headingContent = renderHeadingContent(heading, index);
-  const stickyHeadingClassName = classNames(
-    styles.TableHeading,
-    heading.flush && styles['TableHeading-flush'],
-    headingAlignment === 'center' && styles['TableHeading-align-center'],
-    headingAlignment === 'end' && styles['TableHeading-align-end'],
-    index === 0 && styles['StickyTableHeading-second'],
-    index === 0 && !selectable.value && styles.unselectable,
-  );
-
-  return h(
-    'div',
-    {
-      class: stickyHeadingClassName,
-      style: headingStyle,
-      'data-index-table-sticky-heading': true,
-    },
-    headingContent,
-  );
-}
-
-/**
- * ===== Animations =====
- */
-// Animation
-const loadingTransitionClassNames = {
-  enter: styles['LoadingContainer-enter'],
-  enterActive: styles['LoadingContainer-enter-active'],
-  exit: styles['LoadingContainer-exit'],
-  exitActive: styles['LoadingContainer-exit-active'],
-};
-
-const onTransitionBeforeEnter = (el: Element) => {
-  el.classList.add(loadingTransitionClassNames.enter);
-};
-
-const onTransitionEnter = (el: Element, done: any) => {
-  setTimeout(() => {
-    el.classList.add(loadingTransitionClassNames.enterActive);
-    done();
-  }, 1);
-};
-
-const onTransitionAfterEnter = (el: Element) => {
-  el.classList.remove(loadingTransitionClassNames.enter);
-}
-
-const onTransitionBeforeLeave = (el: Element) => {
-  el.classList.remove(loadingTransitionClassNames.enterActive);
-  el.classList.add(loadingTransitionClassNames.exit);
-};
-
-const onTransitionLeave = (el: Element, done: any) => {
-  el.classList.add(loadingTransitionClassNames.exitActive);
-  setTimeout(() => {
-    done();
-  }, parseInt(theme.motion['motion-duration-100'], 10));
-};
-
-const onTransitionAfterLeave = (el: Element) => {
-  el.classList.remove(loadingTransitionClassNames.exit);
 }
 </script>

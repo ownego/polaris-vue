@@ -18,7 +18,7 @@ UnstyledButton(
   Text(
     v-if="hasChildren",
     as="span",
-    :variant="size === 'large' || hasPlainText ? 'bodyMd' : 'bodySm'",
+    :variant="textVariant",
     :fontWeight="textFontWeight",
     :key="disabled ? 'text-disabled' : 'text'"
   )
@@ -93,6 +93,13 @@ const textFontWeight = computed(() => {
   }
 
   return 'medium';
+});
+const textVariant = computed(() => {
+  if (props.size === 'large' || hasPlainText.value && props.size !== 'micro') {
+    return 'bodyMd';
+  }
+
+  return 'bodySm';
 });
 const hasChildren = computed(() => hasSlot(slots.default));
 const isDisabled = computed(() => props.disabled || props.loading);

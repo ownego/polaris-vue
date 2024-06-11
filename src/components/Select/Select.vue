@@ -59,6 +59,7 @@ Labelled(
       Box(v-if="labelInline", padding-inline-end="100")
         Text(
           as="span",
+          variant="bodyMd",
           :tone="tone && tone === 'magic' && !focused ? 'magic-subdued' : 'subdued'",
           truncate,
         )

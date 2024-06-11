@@ -30,11 +30,15 @@ export type Alignment = 'start' | 'center' | 'end' | 'justify';
 export type FontWeight = 'regular' | 'medium' | 'semibold' | 'bold';
 
 export type Tone =
+  | 'base'
+  | 'disabled'
+  | 'inherit'
   | 'success'
   | 'critical'
   | 'caution'
   | 'subdued'
   | 'text-inverse'
+  | 'text-inverse-secondary'
   | 'magic'
   | 'magic-subdued';
 

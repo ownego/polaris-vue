@@ -1,12 +1,16 @@
 <template lang="pug">
 div(:class="styles.FooterHelp", :style="style")
-  div(:class="styles.Text")
+  Text(
+    as="p",
+    variant="bodyLg",
+  )
     slot
 </template>
 
 <script setup lang="ts">
 import { computed, type VNode } from 'vue';
 import { type VueNode } from '@/utilities/types';
+import { Text } from '@/components';
 import styles from '@polaris/components/FooterHelp/FooterHelp.module.css';
 
 type FooterHelpProps = {

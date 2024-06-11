@@ -36,6 +36,7 @@ div(
                   :selected="selected",
                   :disabled="Boolean(mode !== IndexFiltersMode.Default || disabled)",
                   :can-create-new-view="canCreateNewView",
+                  :disclosure-z-index-override="disclosureZIndexOverride",
                   @select="emits('select', $event)",
                   @create-new-view="emits('create-new-view', $event)",
                 )
@@ -59,6 +60,7 @@ div(
                 :hide-query-field="hideQueryField",
                 :hide-filters="hideFilters",
                 :style="mountedStateStyles",
+                :disclosure-z-index-override="disclosureZIndexOverride",
                 @click="handleClickFilterButton",
               )
 
@@ -73,6 +75,7 @@ div(
                   :choices="sortOptions",
                   :selected="sortSelected || ['']",
                   :disabled="disabled",
+                  :disclosure-z-index-override="disclosureZIndexOverride",
                   v-bind="sortButtonEvents",
                 )
               template(v-if="mode === IndexFiltersMode.EditingColumns")
@@ -207,6 +210,8 @@ interface IndexFiltersProps
   cancelAction?: IndexFiltersCancelAction;
   /** The current mode of the IndexFilters component. Used to determine which view to show */
   mode: IndexFiltersMode;
+   /** Override z-index of popovers and tooltips */
+  disclosureZIndexOverride?: number;
   /** Will disable all the elements within the IndexFilters component */
   disabled?: boolean;
   /** Will disable just the query field */

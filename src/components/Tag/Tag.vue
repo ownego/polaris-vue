@@ -6,7 +6,13 @@ button(
   :class="className",
   @click="emits('click')",
 )
-  slot
+  Text(
+    as="span",
+    variant="bodySm",
+    truncate,
+  )
+    span(:title="tagTitle", :class="styles.Text")
+      slot
 span(
   v-else,
   :class="className",
@@ -17,17 +23,21 @@ span(
     :class="classLink",
     :href="url",
   )
-    span(
-      :title="tagTitle",
-      :class="styles.LinkText",
+    Text(
+      as="span",
+      variant="bodySm",
+      truncate,
     )
-      slot
-  span(
+      span(:title="tagTitle", :class="styles.Text")
+        slot
+  Text(
     v-else,
-    :title="tagTitle",
-    :class="styles.TagText",
+    as="span",
+    variant="bodySm",
+    truncate,
   )
-    slot
+    span(:title="tagTitle", :class="styles.Text")
+      slot
 
   span(v-if="size === 'large'", :class="styles.overlay")
 
@@ -46,6 +56,7 @@ span(
 <script setup lang="ts">
 import { computed, getCurrentInstance } from 'vue';
 import { classNames, variationName } from '@/utilities/css';
+import { Text } from '@/components';
 import type { VueNode } from '@/utilities/types';
 import { handleMouseUpByBlurring } from '@/utilities/focus';
 import XSmallIcon from '@icons/XSmallIcon.svg';

@@ -8,11 +8,15 @@ BlockStack(
   Box(
     v-if="hasSlot(slots.title) || title"
     as="legend"
-    :padding-block-end="{xs: '500', md: '100'}"
-    :visually-hidden="titleHidden"
+    :padding-block-end="{xs: '0', md: '100'}"
   )
-    slot(v-if="hasSlot(slots.title)", name="title")
-    template(v-else) {{ title }}
+    Text(
+      as="span",
+      variant="bodyMd",
+      :visually-hidden="titleHidden",
+    )
+      slot(v-if="hasSlot(slots.title)", name="title")
+      template(v-else) {{ title }}
 
   BlockStack(
     as="ul"
@@ -56,7 +60,7 @@ BlockStack(
 import { computed, getCurrentInstance } from 'vue';
 import { useHasSlot } from '@/use/useHasSlot';
 // @ts-ignore Note: using component:is in template
-import { Box, Bleed, BlockStack, Checkbox, InlineError, RadioButton } from '@/components';
+import { Box, Bleed, BlockStack, Checkbox, InlineError, RadioButton, Text } from '@/components';
 import { errorTextID } from '@/components/InlineError/utils';
 import type { Choice, ChoiceListProps, ChoiceListSlots, ChoiceListEvents } from './types';
 import styles from '@polaris/components/ChoiceList/ChoiceList.module.css';

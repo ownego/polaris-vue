@@ -15,6 +15,7 @@
     id="collapsible"
     :expandOnPrint="true"
     :open="isCollapse"
+    :transition="{duration: '500ms', timingFunction: 'ease-in-out'}"
   >
     <Box paddingBlockStart="400">
       <Text as="p">
@@ -29,7 +30,7 @@
 <script setup lang="ts">
 import { ref } from 'vue';
 
-const isCollapse = ref<boolean>(false);
+const isCollapse = ref<boolean>(true);
 
 const handleClick = () => {
   isCollapse.value = !isCollapse.value;
