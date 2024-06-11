@@ -33,8 +33,8 @@ jobs:
       - name: Setup submodule
         run: |
           cd polaris
-          yarn
-          yarn build
+          pnpm install
+          pnpm build
           cd ../
       - name: Build the package
         run: yarn build

@@ -47,8 +47,8 @@ jobs:
       - name: Build submodule polaris to get tokens
         run: |
           cd polaris
-          yarn install
-          yarn build
+          pnpm install
+          pnpm build
           cd ../
       - name: Build with VitePress
         run: |
