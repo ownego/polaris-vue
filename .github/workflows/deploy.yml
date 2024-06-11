@@ -36,14 +36,14 @@ jobs:
       - name: Setup Node
         uses: actions/setup-node@v3
         with:
-          node-version: 18.18.2
+          node-version: lts/iron
           cache: yarn
       - name: Setup Pages
         uses: actions/configure-pages@v3
       - name: Install dependencies
         run: |
           yarn install
-          npm install -g ts-node
+          npm install -g vite-node
       - name: Build submodule polaris to get tokens
         run: |
           cd polaris
