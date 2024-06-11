@@ -1,4 +1,4 @@
-#!/usr/bin/env ts-node-esm
+#!/usr/bin/env vite-node
 
 import { globby } from 'globby';
 import { default as path } from 'path';
