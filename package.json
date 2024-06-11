@@ -96,6 +96,5 @@
     "url": "https://github.com/ownego/polaris-vue/issues"
   },
   "homepage": "https://github.com/ownego/polaris-vue#readme",
-  "license": "MIT",
-  "packageManager": "yarn@4.3.0"
+  "license": "MIT"
 }
