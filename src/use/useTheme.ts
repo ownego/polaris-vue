@@ -16,7 +16,7 @@ export default function useTheme() {
 export function useThemeName() {
   const themeName = inject<ComputedRef<ThemeName>>('themeName');
 
-  if (!themeName || !themeName.value) {
+  if (!themeName) {
     throw new Error(
       'No themeName was provided.'
     );
