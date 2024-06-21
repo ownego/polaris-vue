@@ -39,6 +39,7 @@ import type {
   ActionListItemDescriptor,
   ActionListSection,
 } from '@/utilities/types';
+import { ActionList } from '@/components';
 import styles from '@polaris/components/ActionMenu/components/MenuGroup/MenuGroup.module.css';
 import { SecondaryAction } from '../SecondaryAction';
 
@@ -62,7 +63,7 @@ export interface MenuGroupProps {
   /** Whether or not the menu is disable */
   disabled?: boolean;
   /** Collection of sectioned action items */
-  sections?: readonly ActionListSection[];
+  sections?: ActionListSection[];
 }
 
 const props = defineProps<MenuGroupProps>();

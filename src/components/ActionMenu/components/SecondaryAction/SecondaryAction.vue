@@ -33,6 +33,7 @@ import { classNames } from '@/utilities/css';
 import { useHasSlot } from '@/use/useHasSlot';
 import type { VueNode } from '@/utilities/types';
 import type { ButtonProps } from '@/components/Button/types';
+import { Button, Tooltip } from '@/components';
 import styles from '@polaris/components/ActionMenu/components/SecondaryAction/SecondaryAction.module.css';
 
 export interface SecondaryActionProps extends ButtonProps {

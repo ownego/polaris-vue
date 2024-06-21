@@ -3,21 +3,21 @@ Box(
   width="100%",
   borderRadius="200",
   :background="backgroundColor",
-  :padding="200",
+  padding="200",
   :color="textColor",
 )
   InlineStack(
     align="space-between",
     blockAlign="start",
     :wrap="false",
-    :gap="200",
+    gap="200",
   )
-    InlineStack(:gap="150", :wrap="false")
+    InlineStack(gap="150", :wrap="false")
       template(v-if="bannerIcon")
         component(:is="bannerIcon")
       Box(width="100%")
-        BlockStack(:gap="200")
-          BlockStack(:gap="50")
+        BlockStack(gap="200")
+          BlockStack(gap="050")
             template(v-if="bannerTitle")
               component(:is="bannerTitle")
             slot
@@ -28,6 +28,7 @@ Box(
 </template>
 
 <script setup lang="ts">
+import { Box, InlineStack, BlockStack } from '@/components';
 import type { VueNode } from '@/utilities/types';
 import type { BannerLayoutProps } from '../types';
 
@@ -38,9 +39,9 @@ type BannerWithinContentContainerSlots = {
 defineSlots<BannerWithinContentContainerSlots>();
 
 defineProps<BannerLayoutProps & {
-  bannerTitle?: (_: VueNode) => any;
-  bannerIcon?: (_: VueNode) => any;
-  actionButtons?: (_: VueNode) => any;
-  dismissButton?: (_: VueNode) => any;
+  bannerTitle?: VueNode;
+  bannerIcon?: VueNode;
+  actionButtons?: VueNode;
+  dismissButton?: VueNode;
 }>();
 </script>

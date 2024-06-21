@@ -47,6 +47,10 @@ template(v-else)
 import { computed, h, getCurrentInstance, resolveComponent } from 'vue';
 import styles from '@polaris/components/Banner/Banner.module.css';
 import useI18n from '@/use/useI18n';
+import { Text } from '@/components';
+import WithinContentContainerBanner from './WithinContentContainerBanner.vue';
+import InlineIconBanner from './InlineIconBanner.vue';
+import DefaultBanner from './DefaultBanner.vue';
 import type { VueNode } from '@/utilities/types';
 import { useHasSlot } from '@/use/useHasSlot';
 import XIcon from '@icons/XIcon.svg';
@@ -96,24 +100,24 @@ const sharedBannerProps = computed(() => {
   }
 });
 
-const bannerTitle = computed(() =>
-  props.title ? () => h(
+const bannerTitle = props.title
+  ? h(
     resolveComponent('Text'),
     { variant: 'headingSm', as: 'h2', breakWord: true },
     () => props.title,
-  ) : null,
-);
+  )
+  : undefined;
 
-const bannerIcon = computed(() =>
-  !props.hideIcon ? () => h(
+const bannerIcon = !props.hideIcon
+  ? h(
     'span',
     { class: styles[bannerColors.value.icon] },
     h(resolveComponent('Icon'), { source: props.icon || bannerAttributes[bannerTone.value].icon, }),
-  ) : null,
-);
+  )
+  : undefined;
 
-const actionButtons = computed(() =>
-  (props.action || props.secondaryAction) ? () => h(
+const actionButtons = (props.action || props.secondaryAction)
+  ? h(
     resolveComponent('ButtonGroup'),
     () => [
       props.action && h(resolveComponent('Button'),
@@ -125,13 +129,13 @@ const actionButtons = computed(() =>
         () => props.secondaryAction?.content,
       ),
     ],
-  ) : null,
-);
+  )
+  : undefined;
 
 const hasDismiss = computed(() => Boolean(currentInstance?.vnode.props?.onDismiss));
 
-const dismissButton = computed(() =>
-  hasDismiss.value ? () => h(
+const dismissButton = hasDismiss.value
+  ? h(
     resolveComponent('Button'),
     {
       variant: 'tertiary',
@@ -143,6 +147,6 @@ const dismissButton = computed(() =>
       onClick: () => emits('dismiss'),
       accessibilityLabel: i18n.translate('Polaris.Banner.dismissButton'),
     },
-  ) : null,
-);
+  )
+  : undefined;
 </script>

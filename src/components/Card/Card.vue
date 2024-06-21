@@ -20,8 +20,7 @@ import { computed } from 'vue';
 import type { BorderRadiusAliasOrScale } from '@shopify/polaris-tokens';
 import { useBreakpoints } from '@/use/useBreakpoints';
 import type { VueNode } from '@/utilities/types';
-import Box from '../Box/Box.vue';
-import ShadowBevel from '../ShadowBevel/ShadowBevel.vue';
+import { Box, ShadowBevel } from '@/components';
 import type { CardProps } from './types';
 
 export type CardSlots = {

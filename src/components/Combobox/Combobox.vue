@@ -25,7 +25,7 @@ Popover(
 
 <script setup lang="ts">
 import { type VNode, ref, computed, provide } from 'vue';
-import { Popover, type PopoverProps } from '@/components';
+import { Popover, type PopoverProps, Pane } from '@/components';
 import type { VueNode, ComboboxListboxType } from '@/utilities/types';
 import type { ComboboxListboxOptionType } from '@/use/useListbox';
 import { useHasSlot } from '@/use/useHasSlot';

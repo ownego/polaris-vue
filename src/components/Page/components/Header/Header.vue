@@ -24,7 +24,7 @@ Box(
           Box(
             maxWidth="100%",
             printHidden,
-            :paddingInlineEnd="100",
+            paddingInlineEnd="100",
           )
             Breadcrumbs(
               v-if="backAction",
@@ -63,7 +63,7 @@ Box(
       v-if="additionalMetadata",
       :class="styles.Row",
     )
-      InlineStack(:gap="400")
+      InlineStack(gap="400")
         div(:class="styles.AdditionalMetaData")
           Text(tone="subdued", as="span", variant="bodySm")
             slot(name="additionalMetadata")
@@ -81,6 +81,7 @@ import type {
   MenuGroupDescriptor,
 } from '@/utilities/types';
 import useI18n from '@/use/useI18n';
+import { Box, InlineStack, Text, Breadcrumbs } from '@/components';
 import { useMediaQueryContext } from '@/use/useMediaQuery';
 import type { PaginationProps } from '@/components/Pagination/types.ts';
 import type { BreadcrumbsProps } from '@/components/Breadcrumbs/Breadcrumbs.vue';

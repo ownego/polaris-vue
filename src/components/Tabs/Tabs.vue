@@ -146,7 +146,7 @@ import { useBreakpoints } from '@/use/useBreakpoints';
 import useI18n from '@/use/useI18n';
 import type { VueNode } from '@/utilities/types';
 import { useHasSlot } from '@/use/useHasSlot';
-import { Icon, Tooltip, Popover } from '@/components';
+import { Icon, Tooltip, Popover, Box } from '@/components';
 import { Tab, TabMeasurer, CreateViewModal, Panel, List } from './components';
 import type { TabMeasurements, TabProps, TabsEvents } from './types';
 import { getVisibleAndHiddenTabIndices } from './utilities';

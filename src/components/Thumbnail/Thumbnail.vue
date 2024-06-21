@@ -14,6 +14,7 @@ span(:class="className")
 
 <script setup lang="ts">
 import { computed } from 'vue';
+import { Image, Icon } from '@/components';
 import { classNames, variationName } from '@/utilities/css';
 import { type IconSource } from '@/utilities/types';
 import styles from '@polaris/components/Thumbnail/Thumbnail.module.css';

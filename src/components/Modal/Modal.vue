@@ -117,6 +117,8 @@ import {
   Spinner,
   Backdrop,
   Scrollable,
+  Box,
+  InlineStack,
 } from '@/components';
 import {
   Dialog,

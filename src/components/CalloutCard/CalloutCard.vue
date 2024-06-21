@@ -39,6 +39,16 @@ LegacyCard
 <script setup lang="ts">
 import { computed, getCurrentInstance, useSlots } from 'vue';
 import type { VueNode, IconableAction } from '@/utilities/types';
+import {
+  LegacyCard,
+  Button,
+  LegacyCardSection,
+  BlockStack,
+  ButtonGroup,
+  ButtonFrom,
+  Image,
+  Text,
+} from '@/components';
 import { classNames } from '@/utilities/css';
 import { useHasSlot } from '@/use/useHasSlot';
 import type { ButtonProps } from '@/components/Button/types';

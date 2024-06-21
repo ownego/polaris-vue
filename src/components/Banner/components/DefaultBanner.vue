@@ -8,15 +8,15 @@ Box(width="100%")
       :borderStartEndRadius="breakpoints.smUp ? '300' : undefined",
       :borderEndStartRadius="!hasContent && breakpoints.smUp ? '300' : undefined",
       :borderEndEndRadius="!hasContent && breakpoints.smUp ? '300' : undefined",
-      :padding="300",
+      padding="300",
     )
       InlineStack(
         align="space-between",
         blockAlign="center",
-        :gap="200",
+        gap="200",
         :wrap="false",
       )
-        InlineStack(:gap="100", :wrap="false")
+        InlineStack(gap="100", :wrap="false")
           template(v-if="bannerIcon")
             component(:is="bannerIcon")
           template(v-if="bannerTitle")
@@ -26,9 +26,9 @@ Box(width="100%")
     Box(
       v-if="Boolean(hasContent)",
       :padding="{ xs: '300', md: '400'}",
-      :paddingBlockStart="300",
+      paddingBlockStart="300",
     )
-      BlockStack(:gap="200")
+      BlockStack(gap="200")
         slot
         template(v-if="actionButtons")
           component(:is="actionButtons")
@@ -37,6 +37,7 @@ Box(width="100%")
 <script setup lang="ts">
 import { computed } from 'vue';
 import type { VueNode } from '@/utilities/types';
+import { Box, BlockStack, InlineStack } from '@/components';
 import { useBreakpoints } from '@/use/useBreakpoints';
 import type { BannerLayoutProps } from '../types';
 
@@ -47,10 +48,10 @@ type DefaultBannerSlots = {
 const slots = defineSlots<DefaultBannerSlots>();
 
 const props = defineProps<BannerLayoutProps & {
-  bannerIcon?: (_: VueNode) => any;
-  bannerTitle?: (_: VueNode) => any;
-  actionButtons?: (_: VueNode) => any;
-  dismissButton?: (_: VueNode) => any;
+  bannerIcon?: VueNode;
+  bannerTitle?: VueNode;
+  actionButtons?: VueNode;
+  dismissButton?: VueNode;
 }>();
 
 const breakpoints = useBreakpoints();

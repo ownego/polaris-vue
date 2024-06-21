@@ -21,10 +21,10 @@ nav(
   )
   Box(
     background="bg-surface-secondary",
-    :paddingBlockStart="150",
-    :paddingBlockEnd="150",
-    :paddingInlineStart="300",
-    :paddingInlineEnd="200",
+    paddingBlockStart="150",
+    paddingBlockEnd="150",
+    paddingInlineStart="300",
+    paddingInlineEnd="200",
   )
     InlineStack(blockAlign="center", align="center")
       div(
@@ -142,9 +142,9 @@ nav(
     )
     Box(
       v-if="hasSlot(slots.default)"
-      :padding="300",
-      :paddingBlockStart="0",
-      :paddingBlockEnd="0",
+      padding="300",
+      paddingBlockStart="0",
+      paddingBlockEnd="0",
     )
       div(aria-live="polite")
         span(v-if="hasNext && hasPrevious")
@@ -182,6 +182,7 @@ nav(
 
 <script setup lang="ts">
 import { ref, computed, getCurrentInstance } from 'vue';
+import { Box, KeypressListener, Button, Tooltip, Text, ButtonGroup } from '@/components';
 import { classNames } from '@/utilities/css';
 import { useHasSlot } from '@/use/useHasSlot';
 import useI18n from '@/use/useI18n';

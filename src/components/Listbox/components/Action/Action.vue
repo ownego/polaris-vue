@@ -11,6 +11,7 @@ Option(v-bind="props")
 import { computed, provide } from 'vue';
 import { classNames } from '@/utilities/css';
 import type { IconSource } from '@/utilities/types';
+import { Icon } from '@/components';
 import Option from '../Option/Option.vue';
 import TextOption from '../TextOption/TextOption.vue';
 import styles from '@polaris/components/Listbox/components/Action/Action.module.css';

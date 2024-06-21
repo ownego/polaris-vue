@@ -70,7 +70,7 @@ import useI18n from '@/use/useI18n';
 import { useToggle } from '@/use/useToggle';
 import { useLegacyCardPaddingObserverRef } from '@/use/useLegacyCard';
 import { classNames } from '@/utilities/css';
-import { Button } from '@/components';
+import { Button, ButtonFrom, ButtonGroup, Popover, ActionList } from '@/components';
 import { useHasSlot } from '@/use/useHasSlot';
 import styles from '@polaris/components/LegacyCard/LegacyCard.module.css';
 import { Header, Section } from './components';

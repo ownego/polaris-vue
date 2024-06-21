@@ -5,7 +5,7 @@ div(:class="styles.PrimaryActionWrapper")
     template(v-else)
       Tooltip(
         v-if="helpText",
-        :content="helpText",
+        :content="`${helpText}`",
       )
         ButtonFrom(
           :action="iconOnly",
@@ -26,6 +26,7 @@ div(:class="styles.PrimaryActionWrapper")
 
 <script setup lang="ts">
 import { computed, useSlots } from 'vue';
+import { Box, Tooltip, ButtonFrom } from '@/components';
 import { useMediaQueryContext } from '@/use/useMediaQuery';
 import { useHasSlot } from '@/use/useHasSlot';
 import styles from '@polaris/components/Page/components/Header/Header.module.css';

@@ -1,6 +1,5 @@
 <template lang="pug">
 img(
-  :ref="ref",
   :alt="alt",
   :src="source",
   :crossOrigin="crossOrigin",
@@ -10,7 +9,7 @@ img(
 </template>
 
 <script setup lang="ts">
-import { computed, type Ref } from 'vue';
+import { computed } from 'vue';
 
 interface SourceSet {
   source?: string;
@@ -24,7 +23,6 @@ export interface ImageProps {
   source: string;
   crossOrigin?: CrossOrigin;
   sourceSet?: SourceSet[];
-  ref?: Ref<HTMLImageElement>;
 }
 
 const props = defineProps<ImageProps>();

@@ -39,7 +39,7 @@ import useI18n from '@/use/useI18n';
 import { useHasSlot } from '@/use/useHasSlot';
 import { useBreakpoints } from '@/use/useBreakpoints';
 import type { ButtonProps } from './types';
-import { Spinner, Icon } from '@/components';
+import { Spinner, Icon, Text } from '@/components';
 import { UnstyledButton } from '../UnstyledButton';
 import SelectIcon from '@icons/SelectIcon.svg';
 import ChevronDownIcon from '@icons/ChevronDownIcon.svg';

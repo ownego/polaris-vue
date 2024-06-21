@@ -5,7 +5,7 @@ div(:class="styles.Header")
     align="space-between",
     blockAlign="center",
     :wrap="false",
-    :gap="200",
+    gap="200",
   )
     slot(v-if="isTextOnlyTitle", name="title")
     Text(
@@ -16,7 +16,7 @@ div(:class="styles.Header")
     InlineStack(
       blockAlign="center",
       :wrap="false",
-      :gap="400",
+      gap="400",
     )
       ButtonGroup(v-if="actions")
         ButtonFrom(
@@ -37,6 +37,7 @@ div(:class="styles.Header")
 
 <script setup lang="ts">
 import { computed, useSlots } from 'vue';
+import { InlineStack, ButtonGroup, ButtonFrom, Text } from '@/components';
 import styles from '@polaris/components/LegacyCard/LegacyCard.module.css';
 import { useHasSlot } from '@/use/useHasSlot';
 import type { DisableableAction } from '@/utilities/types';
