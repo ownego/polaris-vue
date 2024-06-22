@@ -148,7 +148,7 @@ import {
 } from '@/components';
 import { useBreakpoints } from '@/use/useBreakpoints';
 import type { DisableableAction } from '@/utilities/types';
-import { SELECT_ALL_ITEMS } from '@polaris/utilities/resource-list';
+import { SELECT_ALL_ITEMS } from '@/components/IndexProvider/types';
 import type { ResourceListSelectedItems, ResourceListContextType } from '@/utilities/types';
 import type { InlineStackProps } from '../InlineStack/types';
 import styles from '@polaris/components/ResourceItem/ResourceItem.module.css';

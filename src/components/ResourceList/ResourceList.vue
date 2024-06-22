@@ -142,6 +142,7 @@ import {
 } from '@/components';
 import type { PaginationProps } from '@/components/Pagination/types';
 import type { BulkActionsProps } from '@/components/BulkActions/types';
+import { SELECT_ALL_ITEMS } from '@/components/IndexProvider/types';
 import type { SelectOption } from '@/components/Select/types';
 import styles from '@polaris/components/ResourceList/ResourceList.module.css';
 import CheckboxIcon from '@icons/CheckboxIcon.svg';
@@ -150,8 +151,6 @@ const SMALL_SPINNER_HEIGHT = 28;
 const LARGE_SPINNER_HEIGHT = 45;
 
 type ResourceListSelectedItems = string[] | 'All';
-
-const SELECT_ALL_ITEMS = 'All';
 
 interface ResourceListItemData {
   [data: string]: any;
