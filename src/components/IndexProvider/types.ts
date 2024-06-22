@@ -17,7 +17,7 @@ export type Range = [number, number];
 export type IndexProviderProps = {
   selectable?: boolean;
   itemCount: number;
-  selectedItemsCount?: typeof SELECT_ALL_ITEMS | number;
+  selectedItemsCount?: 'All' | number;
   resourceName?: {
     singular: string;
     plural: string;
