@@ -44,7 +44,7 @@ template(v-else)
 </template>
 
 <script setup lang="ts">
-import { computed, h, getCurrentInstance, resolveComponent } from 'vue';
+import { computed, h, getCurrentInstance } from 'vue';
 import styles from '@polaris/components/Banner/Banner.module.css';
 import useI18n from '@/use/useI18n';
 import { Text, Icon, ButtonGroup, Button } from '@/components';
@@ -100,57 +100,53 @@ const sharedBannerProps = computed(() => {
   }
 });
 
-const bannerTitle = computed(() => props.title
+const bannerTitle = props.title
   ? h(
-    resolveComponent('Text'),
+    Text,
     { variant: 'headingSm', as: 'h2', breakWord: true },
     () => props.title,
   )
-  : undefined
-);
+  : undefined;
 
-const bannerIcon = computed(() => !props.hideIcon
+const bannerIcon = !props.hideIcon
   ? h(
     'span',
     { class: styles[bannerColors.value.icon] },
-    h(resolveComponent('Icon'), { source: props.icon || bannerAttributes[bannerTone.value].icon, }),
+    h(Icon, { source: props.icon || bannerAttributes[bannerTone.value].icon, }),
   )
-  : undefined
-);
+  : undefined;
 
-const actionButtons = computed(() => (props.action || props.secondaryAction)
+const actionButtons = (props.action || props.secondaryAction)
   ? h(
-    resolveComponent('ButtonGroup'),
+    ButtonGroup,
     () => [
-      props.action && h(resolveComponent('Button'),
-        { onClick: props.action.onAction, props: { ...props.action } },
+      props.action && h(Button,
+        { onClick: props.action?.onAction, props: { ...props.action } },
         () => props.action?.content,
       ),
-      props.secondaryAction && h(resolveComponent('Button'),
+      props.secondaryAction && h(Button,
         { onClick: props.secondaryAction.onAction, props: { ...props.secondaryAction } },
         () => props.secondaryAction?.content,
       ),
     ],
   )
-  : undefined
-);
+  : undefined;
 
 const hasDismiss = computed(() => Boolean(currentInstance?.vnode.props?.onDismiss));
 
-const dismissButton = computed(() => hasDismiss.value
+const dismissButton = hasDismiss.value
   ? h(
-    resolveComponent('Button'),
+    Button,
     {
       variant: 'tertiary',
       icon: h(
         'span',
         { class: styles[isInlineIconBanner.value ? 'icon-secondary' : bannerColors.value.icon] },
-        h(resolveComponent('Icon'), { source: XIcon }),
+        h(Icon, { source: XIcon }),
       ),
       onClick: () => emits('dismiss'),
       accessibilityLabel: i18n.translate('Polaris.Banner.dismissButton'),
     },
   )
-  : undefined
-);
+  : undefined;
 </script>
