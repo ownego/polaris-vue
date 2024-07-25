@@ -41,7 +41,7 @@ div(:class="styles.Outer")
             @toggle-popover="handleTogglePopover",
           )
           li(
-            v-if="breakpoints.mdDown || tabsToShow.length === 0",
+            v-if="!(breakpoints.mdDown || tabsToShow.length === 0)",
             role="presentation",
             :class="disclosureTabClassName",
           )
