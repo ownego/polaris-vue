@@ -28,11 +28,14 @@ div(:class="styles.IndexTable")
           )
             component(:is="loadingMarkup")
             div(:class="styles.StickyTableHeadings", ref="stickyHeaderElement")
-              component(
+              template(
                 v-for="heading, index in headings",
                 :key="getHeadingKey(heading)",
-                :is="renderHeading(heading, index, 'div', { 'data-index-table-sticky-heading': true })",
               )
+                component(
+                  v-for="headingEl in renderHeading(heading, index, 'div', { 'data-index-table-sticky-heading': true })",
+                  :is="headingEl",
+                )
 
           component(
             v-if="!condensed",
