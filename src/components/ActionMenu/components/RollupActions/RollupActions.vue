@@ -24,6 +24,7 @@ Popover(
 <script setup lang="ts">
 import { ref } from 'vue';
 import type { ActionListItemDescriptor, ActionListSection } from '@/utilities/types';
+import { Popover, Button, ActionList } from '@/components';
 import MenuHorizontalIcon from '@icons/MenuHorizontalIcon.svg';
 import useI18n from '@/use/useI18n';
 import styles from '@polaris/components/ActionMenu/components/RollupActions/RollupActions.module.css';

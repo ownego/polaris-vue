@@ -4,12 +4,12 @@ LegacyCard
     div(:class="mediaContainerClassName")
       slot
     div(:class="infoContainerClassName")
-      Box(:padding="500")
-        BlockStack(:gap="200")
+      Box(padding="500")
+        BlockStack(gap="200")
           InlineStack(
             align="space-between",
             :wrap="false",
-            :gap="200",
+            gap="200",
           )
             slot(v-if="hasSlot(slots.title)", name="title")
             Text(
@@ -20,10 +20,10 @@ LegacyCard
             Box(
               v-if="popoverActions.length > 0 || hasDismiss",
               position="absolute",
-              :insetInlineEnd="500",
+              insetInlineEnd="500",
               :zIndex="'var(--p-z-index-2)'",
             )
-              InlineStack(:gap="100", :wrap="false")
+              InlineStack(gap="100", :wrap="false")
                 Popover(
                   v-if="popoverActions.length > 0",
                   :active="popoverActive",
@@ -66,7 +66,17 @@ LegacyCard
 import { computed, getCurrentInstance } from 'vue';
 import styles from '@polaris/components/MediaCard/MediaCard.module.css';
 import useI18n from '@/use/useI18n';
-import { Text } from '@/components';
+import {
+  Text,
+  BlockStack,
+  InlineStack,
+  Button,
+  Box,
+  Popover,
+  ButtonGroup,
+  ActionList,
+  LegacyCard,
+} from '@/components';
 import type {
   VueNode,
   ComplexAction,

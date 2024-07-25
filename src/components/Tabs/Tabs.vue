@@ -41,7 +41,7 @@ div(:class="styles.Outer")
             @toggle-popover="handleTogglePopover",
           )
           li(
-            v-if="breakpoints.mdDown || tabsToShow.length === 0",
+            v-if="!(breakpoints.mdDown || tabsToShow.length === 0)",
             role="presentation",
             :class="disclosureTabClassName",
           )
@@ -140,13 +140,12 @@ import {
   reactive,
   computed,
   h,
-  resolveComponent,
 } from 'vue';
 import { useBreakpoints } from '@/use/useBreakpoints';
 import useI18n from '@/use/useI18n';
 import type { VueNode } from '@/utilities/types';
 import { useHasSlot } from '@/use/useHasSlot';
-import { Icon, Tooltip, Popover } from '@/components';
+import { Icon, Tooltip, Popover, Box, Text, UnstyledButton } from '@/components';
 import { Tab, TabMeasurer, CreateViewModal, Panel, List } from './components';
 import type { TabMeasurements, TabProps, TabsEvents } from './types';
 import { getVisibleAndHiddenTabIndices } from './utilities';
@@ -529,7 +528,7 @@ watch(
 );
 
 const activator = () => h(
-  resolveComponent('UnstyledButton'),
+  UnstyledButton,
   {
     type: 'button',
     className: classNames(styles.DisclosureActivator),
@@ -539,7 +538,7 @@ const activator = () => h(
   },
   () => [
     h(
-      resolveComponent('Text'),
+      Text,
       { as: 'span', variant: 'bodySm', fontWeight: 'medium' },
       () => props.disclosureText ?? i18n.translate('Polaris.Tabs.toggleTabsLabel'),
     ),
@@ -552,7 +551,7 @@ const activator = () => h(
         ),
       },
       h(
-        resolveComponent('Icon'),
+        Icon,
         { source: ChevronDownIcon, tone: 'subdued' },
       ),
     ),

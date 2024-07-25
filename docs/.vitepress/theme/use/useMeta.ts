@@ -85,8 +85,6 @@ export function useMeta(ignoreFetch = false) {
 
       // String
       if (types[0].startsWith('string')) {
-        console.log(types[0]);
-
         return [types[0]];
       }
 

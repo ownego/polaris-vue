@@ -44,9 +44,13 @@ template(v-else)
 </template>
 
 <script setup lang="ts">
-import { computed, h, getCurrentInstance, resolveComponent } from 'vue';
+import { computed, h, getCurrentInstance } from 'vue';
 import styles from '@polaris/components/Banner/Banner.module.css';
 import useI18n from '@/use/useI18n';
+import { Text, Icon, ButtonGroup, Button } from '@/components';
+import WithinContentContainerBanner from './WithinContentContainerBanner.vue';
+import InlineIconBanner from './InlineIconBanner.vue';
+import DefaultBanner from './DefaultBanner.vue';
 import type { VueNode } from '@/utilities/types';
 import { useHasSlot } from '@/use/useHasSlot';
 import XIcon from '@icons/XIcon.svg';
@@ -96,53 +100,53 @@ const sharedBannerProps = computed(() => {
   }
 });
 
-const bannerTitle = computed(() =>
-  props.title ? () => h(
-    resolveComponent('Text'),
+const bannerTitle = props.title
+  ? h(
+    Text,
     { variant: 'headingSm', as: 'h2', breakWord: true },
     () => props.title,
-  ) : null,
-);
+  )
+  : undefined;
 
-const bannerIcon = computed(() =>
-  !props.hideIcon ? () => h(
+const bannerIcon = !props.hideIcon
+  ? h(
     'span',
     { class: styles[bannerColors.value.icon] },
-    h(resolveComponent('Icon'), { source: props.icon || bannerAttributes[bannerTone.value].icon, }),
-  ) : null,
-);
+    h(Icon, { source: props.icon || bannerAttributes[bannerTone.value].icon, }),
+  )
+  : undefined;
 
-const actionButtons = computed(() =>
-  (props.action || props.secondaryAction) ? () => h(
-    resolveComponent('ButtonGroup'),
+const actionButtons = (props.action || props.secondaryAction)
+  ? h(
+    ButtonGroup,
     () => [
-      props.action && h(resolveComponent('Button'),
-        { onClick: props.action.onAction, props: { ...props.action } },
+      props.action && h(Button,
+        { onClick: props.action?.onAction, props: { ...props.action } },
         () => props.action?.content,
       ),
-      props.secondaryAction && h(resolveComponent('Button'),
+      props.secondaryAction && h(Button,
         { onClick: props.secondaryAction.onAction, props: { ...props.secondaryAction } },
         () => props.secondaryAction?.content,
       ),
     ],
-  ) : null,
-);
+  )
+  : undefined;
 
 const hasDismiss = computed(() => Boolean(currentInstance?.vnode.props?.onDismiss));
 
-const dismissButton = computed(() =>
-  hasDismiss.value ? () => h(
-    resolveComponent('Button'),
+const dismissButton = hasDismiss.value
+  ? h(
+    Button,
     {
       variant: 'tertiary',
       icon: h(
         'span',
         { class: styles[isInlineIconBanner.value ? 'icon-secondary' : bannerColors.value.icon] },
-        h(resolveComponent('Icon'), { source: XIcon }),
+        h(Icon, { source: XIcon }),
       ),
       onClick: () => emits('dismiss'),
       accessibilityLabel: i18n.translate('Polaris.Banner.dismissButton'),
     },
-  ) : null,
-);
+  )
+  : undefined;
 </script>

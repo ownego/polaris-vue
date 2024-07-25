@@ -117,13 +117,12 @@ import {
   getCurrentInstance,
   watch,
   h,
-  resolveComponent,
 } from 'vue';
 import useI18n from '@/use/useI18n';
 import { focusFirstFocusableNode, handleMouseUpByBlurring } from '@/utilities/focus';
 import { classNames } from '@/utilities/css';
 import { useHasSlot } from '@/use/useHasSlot';
-import { Popover, ActionList, Modal, ModalSection } from '@/components';
+import { Popover, ActionList, Modal, ModalSection, InlineStack, UnstyledButton, UnstyledLink, Icon, Text, Badge } from '@/components';
 import styles from '@polaris/components/Tabs/Tabs.module.css';
 import InfoIcon from '@icons/InfoIcon.svg';
 import DuplicateIcon from '@icons/DuplicateIcon.svg';
@@ -302,8 +301,8 @@ const handleKeyDown = (event: KeyboardEvent) => {
 const activator = () => {
   return h(
     urlIfNotDisabledOrSelected.value
-      ? resolveComponent('UnstyledLink')
-      : resolveComponent('UnstyledButton'),
+      ? UnstyledLink
+      : UnstyledButton,
     {
       id: props.id,
       className: tabClassName.value,
@@ -321,16 +320,16 @@ const activator = () => {
     },
     () => [
       h(
-        resolveComponent('InlineStack'),
+        InlineStack,
         {
-          gap: 200,
+          gap: '200',
           align: 'center',
           blockAlign: 'center',
           wrap: false,
         },
         () => [
           h(
-            resolveComponent('Text'),
+            Text,
             {
               as: 'span',
               variant: 'bodySm',
@@ -341,7 +340,7 @@ const activator = () => {
             },
           ),
           props.badge ? h(
-            resolveComponent('Badge'),
+            Badge,
             { tone: props.selected ? undefined : 'new' },
             { default: () => props.badge },
           ) : null,
@@ -350,7 +349,7 @@ const activator = () => {
       props.selected && props.actions?.length ? h(
         'div',
         { class: classNames(styles.IconWrap) },
-        h(resolveComponent('Icon'), { source: ChevronDownIcon }),
+        h(Icon, { source: ChevronDownIcon }),
       ) : null,
     ],
   );

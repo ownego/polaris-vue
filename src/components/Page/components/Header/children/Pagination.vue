@@ -11,6 +11,7 @@ div(
 
 <script setup lang="ts">
 import { useSlots } from 'vue';
+import { Box } from '@/components';
 import type { PaginationProps } from '@/components/Pagination/types.ts';
 import { useMediaQueryContext } from '@/use/useMediaQuery';
 import { useHasSlot } from '@/use/useHasSlot';

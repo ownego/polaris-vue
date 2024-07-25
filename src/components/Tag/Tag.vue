@@ -56,7 +56,7 @@ span(
 <script setup lang="ts">
 import { computed, getCurrentInstance } from 'vue';
 import { classNames, variationName } from '@/utilities/css';
-import { Text } from '@/components';
+import { Text, Icon } from '@/components';
 import type { VueNode } from '@/utilities/types';
 import { handleMouseUpByBlurring } from '@/utilities/focus';
 import XSmallIcon from '@icons/XSmallIcon.svg';

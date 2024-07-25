@@ -30,6 +30,7 @@ ul(:class="styles.ExceptionList")
 
 <script setup lang="ts">
 import type { VueNode } from '@/utilities/types';
+import { Truncate, Icon } from '@/components';
 import { classNames, variationName } from '@/utilities/css';
 import styles from '@polaris/components/ExceptionList/ExceptionList.module.css';
 import type { Item, ExceptionListProps } from './types';

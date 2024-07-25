@@ -43,6 +43,7 @@ div(:class="styles.ThumbnailContainer")
 
 <script setup lang="ts">
 import { computed, inject } from 'vue';
+import { Button, LegacyStack, Text, Icon } from '@/components';
 import {
   secondsToTimeComponents,
   secondsToDurationTranslationKey,

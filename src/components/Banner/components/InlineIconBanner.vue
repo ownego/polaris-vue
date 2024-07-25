@@ -2,7 +2,7 @@
 Box(
   width="100%",
   borderRadius="300",
-  :padding="300",
+  padding="300",
 )
   InlineStack(
     align="space-between",
@@ -11,7 +11,7 @@ Box(
   )
     Box(width="100%")
       InlineStack(
-        :gap="200",
+        gap="200",
         :wrap="false",
         :blockAlign="blockAlign",
       )
@@ -19,11 +19,11 @@ Box(
           Box(
             borderRadius="200",
             :background="backgroundColor",
-            :padding="100",
+            padding="100",
           )
             component(:is="bannerIcon")
         Box(ref="contentNode", width="100%")
-          BlockStack(:gap="200")
+          BlockStack(gap="200")
             slot
             template(v-if="actionButtons")
               component(:is="actionButtons")
@@ -37,10 +37,11 @@ Box(
 
 <script setup lang="ts">
 import { ref, watch, onMounted, onBeforeUnmount } from 'vue';
-import styles from '@polaris/components/Banner/Banner.module.css';
 import type { VueNode } from '@/utilities/types';
+import { Box, BlockStack, InlineStack } from '@/components';
 import type { BannerLayoutProps } from '../types';
 import type { InlineStackProps } from '../../InlineStack/types';
+import styles from '@polaris/components/Banner/Banner.module.css';
 
 type BannerLayoutSlots = {
   default: (_: VueNode) => any;
@@ -49,9 +50,9 @@ type BannerLayoutSlots = {
 defineSlots<BannerLayoutSlots>();
 
 defineProps<BannerLayoutProps & {
-  bannerIcon?: (_: VueNode) => any;
-  actionButtons?: (_: VueNode) => any;
-  dismissButton?: (_: VueNode) => any;
+  bannerIcon?: VueNode;
+  actionButtons?: VueNode;
+  dismissButton?: VueNode;
 }>();
 
 const blockAlign = ref<InlineStackProps['blockAlign']>('center');

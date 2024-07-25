@@ -16,6 +16,7 @@ div(:class="styles.AnnotatedSection")
 
 <script setup lang="ts">
 import { computed } from 'vue';
+import { TextContainer, Text, Box } from '@/components';
 import type { VueNode } from '@/utilities/types';
 import styles from '@polaris/components/Layout/Layout.module.css';
 

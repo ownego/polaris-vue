@@ -12,6 +12,7 @@ Button(
 <script setup lang="ts">
 import { computed } from 'vue';
 import ArrowLeftIcon from '@icons/ArrowLeftIcon.svg';
+import { Button } from '@/components';
 import type { CallbackAction, LinkAction } from '@/utilities/types';
 import { handleMouseUpByBlurring } from '@/utilities/focus';
 

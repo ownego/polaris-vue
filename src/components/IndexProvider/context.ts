@@ -1,5 +1,5 @@
 import { type ComputedRef, inject, type Ref } from 'vue';
-import { SelectionType, SELECT_ALL_ITEMS, type Range } from './types';
+import { SelectionType, type Range } from './types';
 
 export interface IndexContextType {
   loading?: Ref<boolean | undefined>;
@@ -8,7 +8,7 @@ export interface IndexContextType {
     singular: string;
     plural: string;
   };
-  selectedItemsCount: Ref<typeof SELECT_ALL_ITEMS | number>;
+  selectedItemsCount: Ref<'All' | number>;
   bulkActionsAccessibilityLabel?: ComputedRef<string>;
   selectMode: ComputedRef<boolean>;
   paginatedSelectAllText?: ComputedRef<string | undefined>;

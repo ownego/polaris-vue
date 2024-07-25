@@ -17,6 +17,7 @@ BlockStack(gap="400")
 
 <script setup lang="ts">
 import { ref, type VNode } from 'vue';
+import { BlockStack } from '@/components';
 import type { VueNode } from '@/utilities/types';
 import { useExtractFragment } from '@/use/useExtractFragment';
 

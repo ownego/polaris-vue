@@ -36,6 +36,7 @@ div(:class="className")
 
 <script setup lang="ts">
 import { computed, useSlots } from 'vue';
+import { LegacyStack, LegacyStackItem, ButtonGroup, ButtonFrom, Text } from '@/components';
 import { classNames } from '@/utilities/css';
 import { useHasSlot } from '@/use/useHasSlot';
 import type { ComplexAction } from '@/utilities/types';

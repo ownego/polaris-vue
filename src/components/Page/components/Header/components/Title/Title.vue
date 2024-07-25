@@ -10,7 +10,7 @@ div(:class="styles.TitleWrapper")
       font-weight="bold",
     ) {{ title }}
   Bleed(
-    :marginBlock="100",
+    marginBlock="100",
   )
     slot
 div(
@@ -23,7 +23,7 @@ div(
 <script setup lang="ts">
 import { computed } from 'vue';
 import { classNames } from '@/utilities/css';
-import { Text } from '@/components';
+import { Text, Bleed } from '@/components';
 import styles from '@polaris/components/Page/components/Header/components/Title/Title.module.css';
 
 export interface TitleProps {
