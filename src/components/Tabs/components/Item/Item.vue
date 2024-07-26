@@ -63,7 +63,7 @@ const classname = computed(() => classNames(styles.Item));
 
 const sharedProps = computed(() => ({
   id: props.id,
-  className: classname,
+  class: classname.value,
   'aria-selected': false,
   'aria-label': props.accessibilityLabel,
 }));
