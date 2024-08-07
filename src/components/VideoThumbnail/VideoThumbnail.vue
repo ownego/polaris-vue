@@ -4,7 +4,7 @@ div(:class="styles.ThumbnailContainer")
     :class="styles.Thumbnail",
     :style="{ backgroundImage: `url(${thumbnailUrl})` }",
   )
-  Button(
+  button(
     type="button",
     :class="styles.PlayButton",
     :aria-label="buttonLabel",
@@ -43,7 +43,7 @@ div(:class="styles.ThumbnailContainer")
 
 <script setup lang="ts">
 import { computed, inject } from 'vue';
-import { Button, LegacyStack, Text, Icon } from '@/components';
+import { LegacyStack, Text, Icon } from '@/components';
 import {
   secondsToTimeComponents,
   secondsToDurationTranslationKey,
