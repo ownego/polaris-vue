@@ -18,7 +18,7 @@ Labelled(
     select(
       :id="`${id}`",
       :name="name",
-      :value="value",
+      :value="model",
       :class="styles.Input",
       :disabled="disabled",
       :aria-invalid="Boolean(error)",
