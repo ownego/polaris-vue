@@ -59,11 +59,11 @@ watch(
   },
 );
 
-const classname = computed(() => classNames(styles.Item));
+const buttonClass = computed(() => classNames(styles.Item));
 
 const sharedProps = computed(() => ({
   id: props.id,
-  className: classname,
+  className: buttonClass.value,
   'aria-selected': false,
   'aria-label': props.accessibilityLabel,
 }));
