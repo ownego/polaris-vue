@@ -1,7 +1,7 @@
 <template lang="pug">
 teleport(
   v-if="container",
-  :to="PORTAL_CONTAINER_ID",
+  :to="container",
 )
   ThemeProvider(
     :theme="isThemeNameLocal(themeName) ? themeName : themeNameDefault",
@@ -21,8 +21,6 @@ import usePortalsManager from '@/use/usePortalsManager';
 import { useThemeName } from '@/use/useTheme';
 import { ThemeProvider } from '@/components/ThemeProvider';
 import { isThemeNameLocal } from '@/components/ThemeProvider/utils';
-
-const PORTAL_CONTAINER_ID = '#PolarisPortalsContainer';
 
 export type PortalProps = {
   idPrefix?: string;
