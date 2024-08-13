@@ -21,22 +21,22 @@ div(:class="styles.Outer")
           data-tabs-focus-catchment,
         )
           Tab(
-            v-for="_tab, index in tabData",
-            v-bind="tabs[index]",
-            ref=`${index === selected ? selectedTabRef : null}`,
-            :actions="tabs[index].actions",
-            :key="`${index}-${tabs[index].id}`",
-            :id="tabs[index].id"
-            :panelID="hasSlot(slots.default) ? tabs[index].panelID || `${tabs[index].id}-panel` : undefined",
-            :disabled="disabled || tabs[index].disabled",
+            v-for="tabIndex in tabData",
+            v-bind="tabs[tabIndex]",
+            ref=`${tabIndex === selected ? selectedTabRef : null}`,
+            :actions="tabs[tabIndex].actions",
+            :key="`${tabIndex}-${tabs[tabIndex].id}`",
+            :id="tabs[tabIndex].id"
+            :panelID="hasSlot(slots.default) ? tabs[tabIndex].panelID || `${tabs[tabIndex].id}-panel` : undefined",
+            :disabled="disabled || tabs[tabIndex].disabled",
             :siblingTabHasFocus="state.tabToFocus > -1",
-            :focused="index === state.tabToFocus",
-            :selected="index === selected",
-            :accessibilityLabel="tabs[index].accessibilityLabel"
-            :url="tabs[index].url",
-            :content="tabs[index].content",
+            :focused="tabIndex === state.tabToFocus",
+            :selected="tabIndex === selected",
+            :accessibilityLabel="tabs[tabIndex].accessibilityLabel"
+            :url="tabs[tabIndex].url",
+            :content="tabs[tabIndex].content",
             :viewNames="viewNames",
-            @tab-action="() => { handleTabClick(tabs[index].id) }",
+            @tab-action="() => { handleTabClick(tabs[tabIndex].id) }",
             @toggle-modal="handleToggleModal",
             @toggle-popover="handleTogglePopover",
           )
