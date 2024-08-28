@@ -20,7 +20,6 @@ import { scrollable } from '@polaris/components/shared';
 import { debounce } from '@polaris/utilities/debounce';
 import { classNames, variationName } from '@/utilities/css';
 import { StickyManager } from '@/utilities/sticky-manager';
-import useLazyRef from '@/use/useLazyRef';
 import type { VueNode } from '@/utilities/types';
 import styles from '@polaris/components/Scrollable/Scrollable.module.css';
 
@@ -87,7 +86,7 @@ const topShadow = ref<boolean>(false);
 const bottomShadow = ref<boolean>(false);
 const scrollArea = ref<HTMLDivElement | null>(null);
 
-const stickyManager = useLazyRef(() => new StickyManager());
+const stickyManager = ref(new StickyManager());
 
 const finalClassName = computed(() => classNames(
   styles.Scrollable,

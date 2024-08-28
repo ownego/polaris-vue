@@ -46,7 +46,7 @@ const APP_FRAME_SCROLLABLE = 'AppFrameScollable';
 const props = defineProps<AppProviderProps>();
 defineSlots<AppProviderSlots>();
 
-const stickyManager = new StickyManager();
+const stickyManager = ref(new StickyManager());
 const scrollLockManager = new ScrollLockManager();
 
 const { isNavigationCollapsed } = useMediaQueryContext();
@@ -61,11 +61,11 @@ onMounted(() => {
   if (document != null) {
 
     if (!props.features?.dynamicTopBarAndReframe) {
-      stickyManager.setContainer(document);
+      stickyManager.value.setContainer(document);
     } else {
       const scrollContainerElement = document.getElementById(APP_FRAME_SCROLLABLE);
 
-      stickyManager.setContainer(scrollContainerElement || document);
+      stickyManager.value.setContainer(scrollContainerElement || document);
     }
 
     setBodyStyles();

@@ -6,10 +6,10 @@ div
 </template>
 
 <script setup lang="ts">
-import { type VNode, inject, ref, onMounted, onBeforeUnmount, onUpdated } from 'vue';
+import { type VNode, ref, onMounted, onBeforeUnmount, onUpdated } from 'vue';
+import useStickyManager from '@/use/useStickyManager';
 import { getRectForNode } from '@/utilities/geometry';
 import type { VueNode } from '@/utilities/types';
-import type { StickyManager } from '@/utilities/sticky-manager';
 
 export type StickyProps = {
   /** Element outlining the fixed position boundaries */
@@ -29,7 +29,7 @@ const slots = defineSlots<{
 }>();
 
 
-const stickyManager = inject<StickyManager>('sticky-manager', {} as StickyManager);
+const stickyManager = useStickyManager();
 
 const isSticky = ref(false);
 const style = ref({});
@@ -41,7 +41,7 @@ onMounted(() => {
     return;
   }
 
-  stickyManager.registerStickyItem({
+  stickyManager.value.registerStickyItem({
     stickyNode: stickyNode.value,
     placeHolderNode: placeHolderNode.value,
     handlePositioning: handlePositioning,
@@ -56,7 +56,7 @@ onBeforeUnmount(() => {
     return;
   }
 
-  stickyManager.unregisterStickyItem(stickyNode.value);
+  stickyManager.value.unregisterStickyItem(stickyNode.value);
 });
 
 const handlePositioning = (
@@ -104,7 +104,7 @@ const updateComponent = () => {
 
   if (!stickyNode.value || !placeHolderNode.value) return;
 
-  const stickyManagerItem = stickyManager.getStickyItem(stickyNode.value);
+  const stickyManagerItem = stickyManager.value.getStickyItem(stickyNode.value);
   const didPropsChange =
     !stickyManagerItem ||
     boundingElement !== stickyManagerItem.boundingElement ||
@@ -113,8 +113,8 @@ const updateComponent = () => {
 
   if (!didPropsChange) return;
 
-  stickyManager.unregisterStickyItem(stickyNode.value);
-  stickyManager.registerStickyItem({
+  stickyManager.value.unregisterStickyItem(stickyNode.value);
+  stickyManager.value.registerStickyItem({
     stickyNode: stickyNode.value,
     placeHolderNode: placeHolderNode.value,
     handlePositioning: handlePositioning,
