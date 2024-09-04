@@ -69,7 +69,7 @@ const handlePositioning = (
     adjustPlaceHolderNode(stick);
     isSticky.value = !isSticky.value;
 
-    emits('sticky-change', isSticky.value);
+    emits('sticky-change', !isSticky.value);
 
     if (!props.boundingElement) {
       return;
