@@ -66,14 +66,15 @@ const handlePositioning = (
   width = 0,
 ) => {
   if ((stick && !isSticky.value) || (!stick && isSticky.value)) {
-    adjustPlaceHolderNode(stick);
     isSticky.value = !isSticky.value;
 
-    emits('sticky-change', isSticky.value);
+    emits('sticky-change', !isSticky.value);
 
     if (!props.boundingElement) {
       return;
     }
+
+    adjustPlaceHolderNode(stick);
 
     props.boundingElement.toggleAttribute('data-sticky-active');
   }
