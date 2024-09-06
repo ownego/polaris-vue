@@ -596,7 +596,7 @@ function handleSortHeadingClick(
 
 // loadingMarkup
 const loadingMarkup = computed(() => {
-  return h(
+  return loading?.value && h(
     'div',
     {
       class: classNames(

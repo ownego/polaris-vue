@@ -1,11 +1,10 @@
-import type { Component } from 'vue';
-import type { ComputedRef, Ref } from 'vue';
+import type { Component, ComputedRef, Ref } from 'vue';
 
 export type Target = '_blank' | '_self' | '_parent' | '_top';
 
 export type IconSource = Component | string | (string | Component)[]
 
-export type VueNode = string | number | boolean | Component | Element | null | undefined;
+export type VueNode = string | number | boolean | Component | Element | Function | null | undefined;
 
 export type NonEmptyArray<T> = [T, ...T[]];
 
