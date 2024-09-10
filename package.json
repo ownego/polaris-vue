@@ -23,6 +23,14 @@
   "types": "./dist/types/polaris-vue.d.ts",
   "main": "./dist/polaris-vue.js",
   "module": "./dist/es/polaris-vue.js",
+  "exports": {
+    ".": {
+      "import": "./dist/es/polaris-vue.js",
+      "require": "./dist/polaris-vue.js",
+      "types": "./dist/types/polaris-vue.d.ts"
+    },
+    "./*": "./*"
+  },
   "scripts": {
     "dev": "vite",
     "build": "rimraf dist && yarn build:cjs && yarn build:es && npm run gen-dts && npm run copy-locales && npm run remove-trashes",
