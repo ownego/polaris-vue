@@ -12,7 +12,7 @@ div(
 </template>
 
 <script setup lang="ts">
-import { computed, onMounted, ref } from 'vue';
+import { computed, onMounted, onBeforeUnmount, ref } from 'vue';
 import { calculateDraggerY, hueForDraggerY } from '@polaris/components/ColorPicker/components/HuePicker/utilities';
 import styles from '@polaris/components/ColorPicker/ColorPicker.module.css';
 import { Slidable } from '../Slidable';
@@ -31,13 +31,28 @@ const emits = defineEmits<HuePickerEvents>();
 const sliderHeight = ref(0);
 const draggerHeight = ref(0);
 const huePickerRef = ref<HTMLElement | null>(null);
+const observer = ref<ResizeObserver | null>(null);
 
 const draggerY = computed(() => {
   return calculateDraggerY(props.hue, sliderHeight.value, draggerHeight.value);
 });
 
 onMounted(() => {
+  if (!huePickerRef.value) {
+    return;
+  }
+
+  observer.value = new ResizeObserver(() => {
+    setSliderHeight();
+  });
+
+  observer.value.observe(huePickerRef.value);
+
   setSliderHeight();
+});
+
+onBeforeUnmount(() => {
+  observer.value?.disconnect();
 });
 
 const setSliderHeight = () => {
