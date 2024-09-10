@@ -50,7 +50,7 @@
   },
   "devDependencies": {
     "@csstools/postcss-global-data": "^2.1.1",
-    "@shopify/polaris-tokens": "^9.1.0",
+    "@shopify/polaris-tokens": "9.4.0",
     "@shopify/postcss-plugin": "^5.0.2",
     "@types/node": "^20.10.4",
     "@vitejs/plugin-vue": "^5.0.5",
