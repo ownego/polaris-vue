@@ -28,7 +28,7 @@ BlockStack(
     )
       Bleed(:margin-block-end="choice.helpText ? {xs: '100', md: '0'} : {xs: '0'}")
         component(
-          :is="allowMultiple ? 'Checkbox' : 'RadioButton'"
+          :is="allowMultiple ? Checkbox : RadioButton"
           :name="finalName"
           :value="choice.value"
           :id="choice.id"
