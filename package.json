@@ -45,7 +45,7 @@
     "docs:assets": "cp -r docs/assets/** docs/dist/assets"
   },
   "dependencies": {
-    "@shopify/polaris-icons": "^9.1.1",
+    "@shopify/polaris-icons": "9.3.0",
     "vite-svg-loader": "^5.1.0"
   },
   "devDependencies": {
