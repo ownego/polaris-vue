@@ -21,6 +21,7 @@ export function calculateVerticalPosition(
   topBarOffset = 0,
 ) {
   const activatorTop = activatorRect.top;
+  console.log({ containerRect });
   const activatorBottom = activatorTop + activatorRect.height;
   const spaceAbove = activatorRect.top - topBarOffset;
   const spaceBelow =
@@ -172,7 +173,10 @@ export function intersectionWithViewport(
   });
 }
 
-export function windowRect() {
+export function windowRect(node?: HTMLElement) {
+  const document = node?.ownerDocument || globalThis.document;
+  const window = document.defaultView || globalThis.window;
+
   return new Rect({
     top: window.scrollY,
     left: window.scrollX,

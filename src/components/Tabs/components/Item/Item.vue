@@ -49,12 +49,12 @@ const focusedNode = ref<HTMLButtonElement | null>(null);
 watch(
   () => props.focused,
   () => {
-    if (
-      focusedNode.value &&
-      focusedNode.value instanceof HTMLElement &&
-      props.focused
-    ) {
-      focusedNode.value.focus();
+    const focusTarget = focusedNode.value;
+
+    if (focusTarget && focusTarget instanceof HTMLElement && props.focused) {
+      requestAnimationFrame(() => {
+        focusTarget.focus();
+      });
     }
   },
 );
