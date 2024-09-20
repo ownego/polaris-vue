@@ -213,8 +213,6 @@ onMounted(() => {
     window.value = props.activator.ownerDocument.defaultView!;
   });
 
-  console.log(2, props.activator);
-
   observer.value.observe(props.activator);
 });
 

@@ -241,8 +241,6 @@ function handleMeasurement() {
       ? activator.querySelector('input') || activator
       : activator;
 
-    console.log({ preferredActivator });
-
     const activatorRect = getRectForNode(preferredActivator);
 
     const currentOverlayRect = getRectForNode(overlay.value);
