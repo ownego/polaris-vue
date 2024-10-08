@@ -17,9 +17,9 @@ PositionedOverlay(
     v-bind="overlay.props",
     :class="popoverOverlayClass",
   )
-    EventListener(event="click", :handler="handleClick")
-    EventListener(event="touchstart", :handler="handleClick")
-    KeypressListener(:key-code="Key.Escape", :handler="handleEscape")
+    EventListener(event="click", :handler="handleClick", :custom-window="window")
+    EventListener(event="touchstart", :handler="handleClick", :custom-window="window")
+    KeypressListener(:key-code="Key.Escape", :handler="handleEscape", :custom-window="window")
     div(
       tabindex="0",
       :class="styles.FocusTracker",
@@ -114,6 +114,8 @@ const state = reactive<State>({
 const contentNode = ref<HTMLDivElement | null>(null);
 const enteringTimer = ref<number | undefined>(undefined);
 const overlayRef = ref<InstanceType<typeof PositionedOverlay> | null>(null);
+const observer = ref<ResizeObserver | null>(null);
+const window = ref<Window>(globalThis.window);
 
 const overlayDetails = computed(() => (overlayRef.value as InstanceType<typeof PositionedOverlay>)?.overlayDetails);
 
@@ -172,7 +174,7 @@ watch(
       changeTransitionStatus(TransitionStatus.Entering, () => {
         clearTransitionTimeout();
 
-        enteringTimer.value = window.setTimeout(() => {
+        enteringTimer.value = window.value.setTimeout(() => {
           state.transitionStatus = TransitionStatus.Entered;
           // Important: This will not update when the active theme changes.
           // Update this to `useTheme` once converted to a function component.
@@ -188,16 +190,36 @@ watch(
   }
 );
 
+watch(
+  () => props.activator,
+  (newVal, oldVal) => {
+    if (newVal !== oldVal) {
+      observer.value?.unobserve(oldVal);
+      observer.value?.observe(newVal);
+    }
+  }
+);
+
 onMounted(() => {
   if (props.active) {
     focusContent();
 
     changeTransitionStatus(TransitionStatus.Entered);
   }
+
+  if (!props.activator) return;
+
+  observer.value = new ResizeObserver(() => {
+    window.value = props.activator.ownerDocument.defaultView!;
+  });
+
+  observer.value.observe(props.activator);
 });
 
 onBeforeUnmount(() => {
   clearTransitionTimeout();
+
+  observer.value?.disconnect();
 });
 
 const changeTransitionStatus = (transitionStatus: TransitionStatus, callback?: () => void) => {
@@ -210,7 +232,7 @@ const changeTransitionStatus = (transitionStatus: TransitionStatus, callback?: (
 
 function clearTransitionTimeout() {
   if (enteringTimer.value) {
-    window.clearTimeout(enteringTimer.value);
+    window.value.clearTimeout(enteringTimer.value);
   }
 }
 

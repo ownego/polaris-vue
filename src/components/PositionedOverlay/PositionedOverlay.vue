@@ -7,6 +7,7 @@ div(
   EventListener(
     event="resize",
     :handler="handleMeasurement",
+    :custom-window="overlay?.ownerDocument.defaultView",
   )
   slot
 </template>
@@ -234,6 +235,8 @@ function handleMeasurement() {
       preferInputActivator = true,
     } = props;
 
+    const document = activator.ownerDocument;
+
     const preferredActivator = preferInputActivator
       ? activator.querySelector('input') || activator
       : activator;
@@ -273,11 +276,17 @@ function handleMeasurement() {
      * Note:
      * - With original version if overlay.value.firstElementChild is available and overlay.value.firstChild is not then there will be small padding below popover
      */
-    const overlayMargins = overlay.value.firstElementChild
-      ? getMarginsForNode(overlay.value.firstElementChild as HTMLElement)
-      : { activator: 0, container: 0, horizontal: 0 };
+    let overlayMargins = {activator: 0, container: 0, horizontal: 0};
 
-    const containerRect = windowRect();
+    if (overlay.value.firstElementChild) {
+      const nodeMargins = getMarginsForNode(
+        overlay.value.firstElementChild as HTMLElement,
+      );
+
+      overlayMargins = nodeMargins;
+    }
+
+    const containerRect = windowRect(props.activator);
     const zIndexForLayer = getZIndexForLayerFromNode(activator);
     const zIndex = zIndexForLayer == null ? zIndexForLayer : zIndexForLayer + 1;
     const verticalPosition = calculateVerticalPosition(
@@ -310,7 +319,7 @@ function handleMeasurement() {
     state.height = verticalPosition.height || 0;
     state.width = fullWidth || preferredPosition === 'cover' ? overlayRect.width : null;
     state.positioning = verticalPosition.positioning as Positioning;
-    state.outsideScrollableContainer = rectIsOutsideOfRect(activatorRect, intersectionWithViewport(scrollableContainerRect));
+    state.outsideScrollableContainer = rectIsOutsideOfRect(activatorRect, intersectionWithViewport(scrollableContainerRect, containerRect));
     state.zIndex = zIndex;
     state.chevronOffset = tmpChevronOffset;
 

@@ -41,7 +41,7 @@ div(
 </template>
 
 <script setup lang="ts">
-import { computed, onMounted, ref } from 'vue';
+import { computed, onMounted, ref, onBeforeUnmount } from 'vue';
 import { isServer } from '@polaris/utilities/target';
 import { EventListener } from '@/components';
 
@@ -77,6 +77,7 @@ if (!isServer) {
 
 const nodeRef = ref<HTMLElement | null>(null);
 const draggerNode = ref<HTMLElement | null>(null);
+const observer = ref<ResizeObserver | null>(null);
 
 const draggerPositioning = computed(() => ({
   transform: `translate3d(${props.draggerX}px, ${props.draggerY}px, 0)`,
@@ -87,7 +88,26 @@ onMounted(() => {
     return;
   }
 
-  emits('dragger-height', draggerNode.value.clientWidth);
+  observer.value = new ResizeObserver(() => {
+    /**
+     * This is a workaround to enable event listeners to be
+     * re-attached when moving from one document to another
+     * when using a React portal across iframes.
+     * Using a resize observer works because when the clientWidth
+     * will go from 0 to the real width after the node
+     * gets rendered in its new place.
+     */
+    // if (window !== draggerNode.value?.ownerDocument.defaultView) {
+    //   (window as Window) = draggerNode.value?.ownerDocument.defaultView as Window;
+    // }
+    handleResize();
+  });
+
+  observer.value.observe(draggerNode.value);
+});
+
+onBeforeUnmount(() => {
+  observer.value?.disconnect();
 });
 
 const startDrag = (event: MouseEvent | TouchEvent) => {
@@ -97,6 +117,14 @@ const startDrag = (event: MouseEvent | TouchEvent) => {
 
   isDragging.value = true;
 };
+
+const handleResize = () => {
+  if (!draggerNode.value) {
+    return;
+  }
+
+  emits('dragger-height', draggerNode.value.clientWidth);
+}
 
 const handleDragEnd = () => {
   isDragging.value = false;

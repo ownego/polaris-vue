@@ -194,12 +194,15 @@ const currentInstance = getCurrentInstance();
 const dropNodeRef = ref<HTMLDivElement | null>(null);
 const inputRef = ref<HTMLInputElement | null>(null);
 const dragTargets = ref<HTMLElement[]>([]);
+const observer = ref<ResizeObserver | null>(null);
 
 const dragging = ref(false);
 const internalError = ref(false);
 const { value: focused, setTrue: handleFocus, setFalse: handleBlur } = useToggle(false);
 const size = ref('large');
 const measuring = ref(true);
+
+const customDocument = dropNodeRef.value?.ownerDocument || document;
 
 const id = computed(() => props.id || uniqId);
 const typeSuffix = computed(() => capitalize(props.type));
@@ -337,7 +340,7 @@ const handleDragLeave = (event: Event) => {
   if (props.disabled) return;
 
   dragTargets.value = dragTargets.value.filter((el) => {
-    const compareNode = props.dropOnPage ? document : dropNodeRef.value;
+    const compareNode = props.dropOnPage ? customDocument : dropNodeRef.value;
 
     return el !== event.target && compareNode && compareNode.contains(el);
   });
@@ -382,10 +385,20 @@ watch(
   },
 );
 
+watch(
+  () => adjustSize,
+  () => {
+    if (!dropNodeRef.value) return;
+
+    observer.value = new ResizeObserver(adjustSize);
+    observer.value.observe(dropNodeRef.value);
+  },
+)
+
 onMounted(() => {
   adjustSize();
 
-  const dropNode = props.dropOnPage ? document : dropNodeRef.value;
+  const dropNode = props.dropOnPage ? customDocument : dropNodeRef.value;
 
   if (!dropNode) return;
 
@@ -397,7 +410,7 @@ onMounted(() => {
 });
 
 onBeforeUnmount(() => {
-  const dropNode = props.dropOnPage ? document : dropNodeRef.value;
+  const dropNode = props.dropOnPage ? customDocument : dropNodeRef.value;
 
   if (!dropNode) return;
 
@@ -406,6 +419,8 @@ onBeforeUnmount(() => {
   dropNode.removeEventListener('dragenter', handleDragEnter);
   dropNode.removeEventListener('dragleave', handleDragLeave);
   window.removeEventListener('resize', adjustSize);
+
+  observer.value?.disconnect();
 });
 
 const context = reactive<DropZoneContextType>({

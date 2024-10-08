@@ -5,7 +5,7 @@ component(
 )
   slot(name="activator")
   Portal(
-    v-if="activatorNode",
+    v-if="activatorNode && isDisplayed",
     id-prefix="popover",
   )
     PopoverOverlay(
@@ -25,6 +25,7 @@ component(
 <script setup lang="ts">
 import {
   onMounted,
+  onBeforeUnmount,
   ref,
   watch,
 } from 'vue';
@@ -56,6 +57,8 @@ const slots = defineSlots<{
 
 const id = useId();
 
+const observer = ref<ResizeObserver | null>(null);
+const isDisplayed = ref<boolean>(false);
 const activatorNode = ref<HTMLElement | null>(null);
 const activatorContainer = ref<HTMLElement | null>(null);
 const overlayRef = ref<InstanceType<typeof PopoverOverlay> | HTMLElement | null>(null);
@@ -135,7 +138,23 @@ onMounted(() => {
     activatorNode.value = activatorContainer.value.firstElementChild as HTMLElement;
   }
 
+  if (!activatorNode.value) {
+    return;
+  }
+
+  observer.value = new ResizeObserver(() => {
+    setDisplayState();
+  });
+
+  observer.value.observe(activatorNode.value);
+
+  setDisplayState();
+
   setAccessibilityAttributes();
+});
+
+onBeforeUnmount(() => {
+  observer.value?.disconnect();
 });
 
 function isInPortal(element: Element) {
@@ -149,7 +168,32 @@ function isInPortal(element: Element) {
   return true;
 };
 
+function setDisplayState() {
+  /**
+   * This is a workaround to prevent rendering the Popover when the content is moved into
+   * a React portal that hasn't been rendered. We don't want to render the Popover in this
+   * case because the auto-focus logic will break. We wait until the activatorContainer is
+   * displayed, which is when it has an offsetParent, or if the activatorContainer is the
+   * body, if it has a clientWidth bigger than 0.
+   * See: https://developer.mozilla.org/en-US/docs/Web/API/HTMLElement/offsetParent
+   */
+  isDisplayed.value = Boolean(
+    activatorContainer.value
+    && (activatorContainer.value.offsetParent !== null
+      || (activatorContainer.value === activatorContainer.value.ownerDocument.body
+        && activatorContainer.value.clientWidth > 0)),
+  );
+}
+
 defineExpose({
   forceUpdatePosition,
+  close: (target = 'activator') => {
+    const source =
+      target === 'activator'
+        ? PopoverCloseSource.EscapeKeypress
+        : PopoverCloseSource.FocusOut;
+
+    handleClose(source);
+  },
 });
 </script>

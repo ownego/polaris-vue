@@ -179,8 +179,9 @@ function setActivator(node: HTMLElement | null) {
     return;
   }
 
-  node.firstElementChild instanceof HTMLElement && (activatorNode.value = node.firstElementChild);
-
+  if (node.firstElementChild) {
+    activatorNode.value = node.firstElementChild as HTMLElement;
+  }
   activatorContainerRef.current = node;
 }
 

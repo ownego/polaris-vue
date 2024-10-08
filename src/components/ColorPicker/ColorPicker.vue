@@ -25,14 +25,10 @@ div(
     :color="colorHsb",
     @change="handleAlphaChange",
   )
-  EventListener(
-    event="resize",
-    :handler="handleResize",
-  )
 </template>
 
 <script setup lang="ts">
-import { computed, onMounted, reactive, ref } from 'vue';
+import { computed, onMounted, onBeforeUnmount, reactive, ref } from 'vue';
 import { debounce } from '@polaris/utilities/debounce';
 import { clamp } from '@polaris/utilities/clamp';
 import { classNames } from '@/utilities/css';
@@ -43,7 +39,6 @@ import {
   hexToRgb,
   rgbToHsb,
 } from '@/utilities/color-transformers';
-import { EventListener } from '@/components';
 import { AlphaPicker, HuePicker, Slidable } from './components';
 import styles from '@polaris/components/ColorPicker/ColorPicker.module.css';
 
@@ -88,6 +83,7 @@ const colorHsb = reactive<HSBAColor>({
 });
 
 const colorNode = ref<HTMLElement | null>(null);
+const observer = ref<ResizeObserver | null>(null);
 const huePickerRef = ref<HTMLElement | null>(null);
 
 const draggerX = computed(() => clamp(colorHsb.saturation * pickerSize.width, 0, pickerSize.width));
@@ -162,6 +158,9 @@ onMounted(() => {
     return;
   }
 
+  observer.value = new ResizeObserver(handleResize);
+  observer.value.observe(colorNode.value);
+
   pickerSize.width = colorNode.value.clientWidth;
   pickerSize.height = colorNode.value.clientHeight;
 });
@@ -174,6 +173,10 @@ const handleResize = debounce(() => {
   pickerSize.width = colorNode.value.clientWidth;
   pickerSize.height = colorNode.value.clientHeight;
 }, RESIZE_DEBOUNCE_TIME_MS, { leading: true, trailing: true, maxWait: RESIZE_DEBOUNCE_TIME_MS });
+
+onBeforeUnmount(() => {
+  observer.value?.disconnect();
+})
 
 const handleHueChange = (hue: number) => {
   colorHsb.hue = hue;
