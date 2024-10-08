@@ -16,7 +16,7 @@ div(
 </template>
 
 <script setup lang="ts">
-import { computed, onMounted, ref } from 'vue';
+import { computed, onMounted, ref, onBeforeUnmount } from 'vue';
 import type { HSBColor } from '@polaris/utilities/color-types';
 import { hsbToRgb } from '@/utilities/color-transformers';
 import { Slidable } from '../Slidable';
@@ -39,6 +39,7 @@ const emits = defineEmits<AlphaPickerEvents>();
 const sliderHeight = ref(0);
 const draggerHeight = ref(0);
 const alphaPickerRef = ref<HTMLElement | null>(null);
+const observer = ref<ResizeObserver | null>(null);
 
 const draggerY = computed(() => {
   return calculateDraggerY(props.alpha, sliderHeight.value, draggerHeight.value);
@@ -49,7 +50,17 @@ const background = computed(() => {
 });
 
 onMounted(() => {
+  if (!alphaPickerRef.value) { return; }
+
+  observer.value = new ResizeObserver(() => { setSliderHeight(); });
+
+  observer.value.observe(alphaPickerRef.value);
+
   setSliderHeight();
+});
+
+onBeforeUnmount(() => {
+  observer.value?.disconnect();
 });
 
 const setSliderHeight = () => {

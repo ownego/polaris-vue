@@ -15,6 +15,7 @@ type EventListenerProps = {
   capture?: boolean;
   handler(event: Event): void;
   passive?: boolean;
+  customWindow?: Window | null;
 }
 
 const props = defineProps<EventListenerProps>();
@@ -38,6 +39,8 @@ watch(
 );
 
 function attachListener() {
+  const window = props.customWindow || globalThis.window;
+
   window.addEventListener(props.event, props.handler, {
     capture: props.capture,
     passive: props.passive,
@@ -45,6 +48,8 @@ function attachListener() {
 }
 
 function detachListener() {
+  const window = props.customWindow || globalThis.window;
+
   window.removeEventListener(props.event, props.handler, {
     capture: props.capture,
   });
