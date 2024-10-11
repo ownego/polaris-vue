@@ -10,8 +10,7 @@ template(v-if="(allowFiltering || filterActions) && hasManyActions && isFilterab
       :label="filterLabel || i18n.translate('Polaris.ActionList.SearchField.placeholder')",
       :placeholder="filterLabel || i18n.translate('Polaris.ActionList.SearchField.placeholder')",
       autoComplete="off"
-      :value="searchText"
-      @change="(value) => setSearchText(value)",
+      v-model="searchText"
       @clear-button-click="() => setSearchText('')"
     )
       template(#prefix)
@@ -35,7 +34,7 @@ Box(
       :handler="handleFocusPreviousItem",
     )
   //- SectionMarkup
-  template(v-for="section, index in finalSections")
+  template(v-for="section, index in filteredSections")
     Section(
       v-if="section.items && section.items.length > 0",
       :key="section.title || index",
