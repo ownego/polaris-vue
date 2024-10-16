@@ -1,6 +1,6 @@
 import { inject } from 'vue';
 
 export default function useFilterActions() {
-  const context = inject('filter-actions', { filterActions: false });
+  const context = inject('filterActions', { filterActions: false });
   return context;
 }

@@ -85,7 +85,7 @@ const emits = defineEmits<{
   'action-any-item': [];
 }>();
 
-const filterActions = useFilterActions();
+const { filterActions } = useFilterActions();
 const i18n = useI18n();
 
 const searchText = ref<string>('');
