@@ -4,6 +4,7 @@ component(
   :is="LinkComponent",
   v-bind="{ ...attrs, ...unstyled.props, ...props }",
 )
+  slot
 
 a(
   v-else,
