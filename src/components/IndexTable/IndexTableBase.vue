@@ -604,20 +604,22 @@ const loadingMarkup = computed(() => {
         loading?.value && styles.LoadingPanelEntered,
       )
     },
-    () => h(
-      'div',
-      { class: styles.LoadingPanelRow },
-      [
-        h(Spinner, { size: 'small' }),
-        h(
-          'span',
-          { class: styles.LoadingPanelText },
-          i18n.translate('Polaris.IndexTable.resourceLoadingAccessibilityLabel', {
-            resourceNamePlural: contextResourceName.plural.toLocaleLowerCase(),
-          }),
-        ),
-      ],
-    ),
+    [
+      h(
+        'div',
+        { class: styles.LoadingPanelRow },
+        [
+          h(Spinner, { size: 'small' }),
+          h(
+            'span',
+            { class: styles.LoadingPanelText },
+            i18n.translate('Polaris.IndexTable.resourceLoadingAccessibilityLabel', {
+              resourceNamePlural: contextResourceName.plural.toLocaleLowerCase(),
+            }),
+          ),
+        ],
+      ),
+    ]
   );
 });
 
