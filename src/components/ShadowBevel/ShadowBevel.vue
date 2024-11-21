@@ -1,7 +1,7 @@
 <template lang="pug">
 component(
   :is="as",
-  :className="styles.ShadowBevel",
+  :class="styles.ShadowBevel",
   :style="style",
 )
   slot
