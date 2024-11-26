@@ -14,13 +14,13 @@ Popover(
       :hover-delay="400",
       :z-index-override="disclosureZIndexOverride",
     )
-    Button(
-      size="slim",
-      :icon="SortIcon",
-      :disabled="disabled",
-      :accessibility-label="i18n.translate('Polaris.IndexFilters.SortButton.ariaLabel')",
-      @click="handleClick",
-    )
+      Button(
+        size="slim",
+        :icon="SortIcon",
+        :disabled="disabled",
+        :accessibility-label="i18n.translate('Polaris.IndexFilters.SortButton.ariaLabel')",
+        @click="handleClick",
+      )
   Box(
     min-width="148px",
     padding-inline-start="300",
