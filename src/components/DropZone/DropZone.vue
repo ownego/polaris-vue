@@ -366,7 +366,7 @@ const triggerFileDialog = () => {
 const handleClick = (event: MouseEvent) => {
   if (props.disabled) return;
 
-  if (currentInstance?.attrs.onClick) {
+  if (currentInstance?.vnode?.props?.onClick) {
     emits('click', event);
   } else {
     open();
