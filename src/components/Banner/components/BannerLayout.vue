@@ -121,11 +121,11 @@ const actionButtons = (props.action || props.secondaryAction)
     ButtonGroup,
     () => [
       props.action && h(Button,
-        { onClick: props.action?.onAction, props: { ...props.action } },
+        { onClick: props.action?.onAction, ...props.action },
         () => props.action?.content,
       ),
       props.secondaryAction && h(Button,
-        { onClick: props.secondaryAction.onAction, props: { ...props.secondaryAction } },
+        { onClick: props.secondaryAction.onAction, ...props.secondaryAction },
         () => props.secondaryAction?.content,
       ),
     ],
