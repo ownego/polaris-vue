@@ -182,7 +182,7 @@ nav(
 
 <script setup lang="ts">
 import { ref, computed, getCurrentInstance } from 'vue';
-import { Box, KeypressListener, Button, Tooltip, Text, ButtonGroup } from '@/components';
+import { Box, KeypressListener, Button, Tooltip, Text, ButtonGroup, InlineStack } from '@/components';
 import { classNames } from '@/utilities/css';
 import { useHasSlot } from '@/use/useHasSlot';
 import useI18n from '@/use/useI18n';
