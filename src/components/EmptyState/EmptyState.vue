@@ -8,7 +8,7 @@ Box(
   BlockStack(inline-align="center")
     //- ImageMarkUp
     div(
-      :class="imageContainerClass",
+      :class="imageContainerClassNames",
     )
       Image(
         v-if="largeImage",
@@ -145,8 +145,8 @@ const skeletonImageClass = computed(() => classNames(
   imageLoaded.value && styles.loaded,
 ));
 
-const imageContainerClass = computed(() => classNames(
-  props.imageContained && styles.imageContained,
+const imageContainerClassNames = computed(() => classNames(
+  styles.ImageContainer,
   !imageLoaded.value && styles.SkeletonImageContainer,
 ));
 
