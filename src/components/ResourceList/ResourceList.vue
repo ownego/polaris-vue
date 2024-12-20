@@ -741,7 +741,7 @@ provide<ResourceListContextType>('resource-list-context', {
   selectedItems: selected,
   selectMode: selectMode,
   resourceName: props.resourceName,
-  loading: props.loading,
+  loading: computed(() => props.loading),
   hasBulkActions: Boolean(props.bulkActions),
   onSelectionChange: handleSelectionChange,
 });

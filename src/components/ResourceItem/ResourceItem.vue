@@ -244,7 +244,7 @@ const checkboxAccessibilityLabel = computed(() => {
   return props.name || props.accessibilityLabel || i18n.translate('Polaris.Common.checkbox');
 });
 
-const tabIndex = computed(() => loading ? -1 : 0);
+const tabIndex = computed(() => loading?.value ? -1 : 0);
 
 const ariaLabel = computed(() => {
   return props.accessibilityLabel ||
