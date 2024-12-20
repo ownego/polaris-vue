@@ -383,6 +383,8 @@ const headerTitle = computed(() => {
       totalItemsCount: props.totalItemsCount,
       resource,
     });
+  } else if (props.headerContent) {
+    return props.headerContent;
   } else {
     return i18n.translate('Polaris.ResourceList.showing', {
       itemsCount,
