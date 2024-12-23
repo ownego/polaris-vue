@@ -335,7 +335,7 @@ export interface ResourceListContextType {
     plural: string;
   };
   hasBulkActions?: boolean;
-  loading?: boolean;
+  loading?: ComputedRef<boolean>;
   onSelectionChange?(
     selected: boolean,
     id: string,
