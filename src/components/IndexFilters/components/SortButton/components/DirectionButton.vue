@@ -1,6 +1,6 @@
 <template lang="pug">
 UnstyledButton(
-  :class-name="classes",
+  :class="classes",
   @click="handleClick",
 )
   Icon(

@@ -16,7 +16,7 @@ Box(
         alt="",
         role="presentation",
         :source="largeImage",
-        :class-name="imageClassName",
+        :class="imageClassName",
         :source-set="sourceSet",
         @load="imageLoaded = true",
       )
@@ -25,7 +25,7 @@ Box(
         ref="imageRef",
         alt="",
         role="presentation",
-        :class-name="imageClassName",
+        :class="imageClassName",
         :source="image",
         @load="imageLoaded = true",
       )
