@@ -1,4 +1,4 @@
-import { Ref, ref } from 'vue';
+import { Ref, computed, ref } from 'vue';
 import { SelectionType, type Range } from '@/components/IndexProvider/types';
 
 type ResourceIDResolver<T extends {[key: string]: unknown}> = (
@@ -16,7 +16,7 @@ function defaultResourceIDResolver(resource: {[key: string]: any}): string {
 }
 
 export function useIndexResourceState<T extends {[key: string]: unknown}>(
-  resources: Ref<T[]>,
+  resourceLists: Ref<T[]> | T[],
   {
     selectedResources: initSelectedResources = [],
     allResourcesSelected: initAllResourcesSelected = false,
@@ -36,6 +36,10 @@ export function useIndexResourceState<T extends {[key: string]: unknown}>(
 ) {
   const tmpSelectedResources = ref(initSelectedResources);
   const tmpAllResourcesSelected = ref(initAllResourcesSelected);
+
+  const resources = computed(() => {
+    return Array.isArray(resourceLists) ? resourceLists : resourceLists.value;
+  });
 
   const handleSelectionChange = (
     selectionType: SelectionType,
