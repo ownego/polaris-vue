@@ -459,7 +459,7 @@ const input = () => h(props.multiline ? 'textarea' : 'input', {
   readOnly: props.readOnly,
   role: props.role,
   autoFocus: props.autoFocus ? props.autoFocus : undefined,
-  value: normalizedValue.value || props.value,
+  value: normalizedValue.value,
   placeholder: props.placeholder,
   style: style.value,
   autoComplete: props.autoComplete,
