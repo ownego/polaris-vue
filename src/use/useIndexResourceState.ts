@@ -16,7 +16,7 @@ function defaultResourceIDResolver(resource: {[key: string]: any}): string {
 }
 
 export function useIndexResourceState<T extends {[key: string]: unknown}>(
-  resourceLists: Ref<T[]> | T[],
+  resourceValue: Ref<T[]> | T[],
   {
     selectedResources: initSelectedResources = [],
     allResourcesSelected: initAllResourcesSelected = false,
@@ -38,7 +38,7 @@ export function useIndexResourceState<T extends {[key: string]: unknown}>(
   const tmpAllResourcesSelected = ref(initAllResourcesSelected);
 
   const resources = computed(() => {
-    return Array.isArray(resourceLists) ? resourceLists : resourceLists.value;
+    return Array.isArray(resourceValue) ? resourceValue : resourceValue.value;
   });
 
   const handleSelectionChange = (
