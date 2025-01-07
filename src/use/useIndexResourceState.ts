@@ -1,4 +1,4 @@
-import { ref } from 'vue';
+import { Ref, ref } from 'vue';
 import { SelectionType, type Range } from '@/components/IndexProvider/types';
 
 type ResourceIDResolver<T extends {[key: string]: unknown}> = (
@@ -16,7 +16,7 @@ function defaultResourceIDResolver(resource: {[key: string]: any}): string {
 }
 
 export function useIndexResourceState<T extends {[key: string]: unknown}>(
-  resources: T[],
+  resources: Ref<T[]>,
   {
     selectedResources: initSelectedResources = [],
     allResourcesSelected: initAllResourcesSelected = false,
@@ -59,12 +59,12 @@ export function useIndexResourceState<T extends {[key: string]: unknown}>(
       case SelectionType.All:
       case SelectionType.Page:
         if (resourceFilter) {
-          const filteredResources = resources.filter(resourceFilter);
+          const filteredResources = resources.value.filter(resourceFilter);
           tmpSelectedResources.value = isSelecting && tmpSelectedResources.value.length < filteredResources.length
             ? filteredResources.map(resourceIDResolver)
             : [];
         } else {
-          tmpSelectedResources.value = isSelecting ? resources.map(resourceIDResolver) : [];
+          tmpSelectedResources.value = isSelecting ? resources.value.map(resourceIDResolver) : [];
         }
 
         break;
@@ -74,15 +74,15 @@ export function useIndexResourceState<T extends {[key: string]: unknown}>(
         tmpSelectedResources.value = (() => {
           const ids: string[] = [];
           const filteredResources = resourceFilter
-            ? resources.filter(resourceFilter)
-            : resources;
+            ? resources.value.filter(resourceFilter)
+            : resources.value;
           for (
             let i = selection[0] as number;
             i <= (selection[1] as number);
             i++
           ) {
-            if (filteredResources.includes(resources[i])) {
-              const id = resourceIDResolver(resources[i]);
+            if (filteredResources.includes(resources.value[i])) {
+              const id = resourceIDResolver(resources.value[i]);
 
               if (
                 (isSelecting && !tmpSelectedResources.value.includes(id)) ||
@@ -104,8 +104,8 @@ export function useIndexResourceState<T extends {[key: string]: unknown}>(
 
         tmpSelectedResources.value = (() => {
           const filteredResources = resourceFilter
-            ? resources.filter(resourceFilter)
-            : resources;
+            ? resources.value.filter(resourceFilter)
+            : resources.value;
 
           const resourceIds = filteredResources.map(resourceIDResolver);
 
