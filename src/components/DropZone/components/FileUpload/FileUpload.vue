@@ -6,7 +6,7 @@ div(:class="fileUploadClassName")
     gap="200",
   )
     Button(
-      :diabled="disabled",
+      :disabled="disabled",
     ) {{ actionTitleValue }}
     Text(
       v-if="actionHint",
