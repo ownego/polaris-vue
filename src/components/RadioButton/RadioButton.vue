@@ -5,7 +5,7 @@ Choice(
   :id="`${id}`",
   :label-class-name="styles.ChoiceLabel",
   :fill="fill",
-  :tone="model === normalizedValue ? tone : undefined",
+  :tone="(checked ?? model === normalizedValue) ? tone : undefined",
   v-bind="extraChoiceProps",
 )
   template(v-if="hasSlot(slots.label) || label", #label)
@@ -22,7 +22,7 @@ Choice(
       :name="`${name}`",
       :value="value",
       type="radio",
-      :checked="checked || model === normalizedValue",
+      :checked="checked ?? model === normalizedValue",
       :disabled="disabled",
       :class="inputClassName",
       :aria-describedby="ariaDescribedBy",
