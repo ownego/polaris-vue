@@ -43,7 +43,7 @@ export function useFocusManager({ trapping }: Options) {
       addFocusItem(String(newId));
     },
     { immediate: true }
-);
+  );
 
   onUnmounted(() => {
     removeFocusItem(String(id));
