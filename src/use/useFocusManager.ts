@@ -4,7 +4,7 @@ import {
   inject,
   ref,
   computed,
-  watchEffect,
+  watch,
   onUnmounted,
 } from 'vue';
 
@@ -33,13 +33,17 @@ export function useFocusManager({ trapping }: Options) {
 
   const canSafelyFocus = computed(() => trapFocusList.value[0] === String(id));
 
-  watchEffect(() => {
-    if (!trapping) {
-      return;
-    }
+  watch(
+    () => [trapping, id],
+    ([newTrappingVal, newId]) => {
+      if (!newTrappingVal) {
+        return;
+      }
 
-    addFocusItem(String(id));
-  });
+      addFocusItem(String(newId));
+    },
+    { immediate: true }
+  );
 
   onUnmounted(() => {
     removeFocusItem(String(id));
