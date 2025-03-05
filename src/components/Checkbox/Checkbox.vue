@@ -114,7 +114,7 @@ export interface CheckboxProps extends ChoiceBleedProps {
   error?: Error | boolean;
   /** Indicates the tone of the checkbox */
   tone?: 'magic';
-  /** custom disable focus - for case Slot use checkbox in Combobox -> focus -> close popover*/
+  /** Disable auto focus to input when click to checkbox*/
   disableFocus?: boolean;
 }
 
@@ -236,6 +236,7 @@ const handleOnClick = () => {
 
   model.value = inputNode.value.checked;
 
+  // Props use for fix case Checkbox use as slot of Combobox Component -> auto close popover when change focus
   if (!props.disableFocus) {
     inputNode.value.focus();
   }
