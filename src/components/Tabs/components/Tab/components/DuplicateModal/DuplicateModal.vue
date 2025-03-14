@@ -48,12 +48,7 @@ const emits = defineEmits<{
 const i18n = useI18n();
 const container = ref<HTMLDivElement | null>(null);
 
-const model = computed({
-  get() {
-    return props.open ? props.name.slice(0, MAX_VIEW_NAME_LENGTH) : '';
-  },
-  set() {},
-});
+const model = computed(() => props.open ? props.name.slice(0, MAX_VIEW_NAME_LENGTH) : '');
 
 const hasSameNameError = computed(() => props.viewNames?.some(
   (viewName) => viewName.trim().toLowerCase() === model.value.trim().toLowerCase(),
