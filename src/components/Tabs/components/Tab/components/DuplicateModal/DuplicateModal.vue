@@ -43,32 +43,27 @@ const emits = defineEmits<{
   (e: 'close'): void;
   (e: 'click-primary-action', value: string): Promise<void>;
   (e: 'click-secondary-action'): void;
-  (e: 'update:modelValue', value: string): void;
 }>();
 
 const i18n = useI18n();
 const container = ref<HTMLDivElement | null>(null);
-const modalValue = ref<string>('');
 
 const model = computed({
   get() {
     return props.open ? props.name.slice(0, MAX_VIEW_NAME_LENGTH) : '';
   },
-  set(value: string) {
-    modalValue.value = value;
-    emits('update:modelValue', value);
-  },
+  set() {},
 });
 
 const hasSameNameError = computed(() => props.viewNames?.some(
-  (viewName) => viewName.trim().toLowerCase() === modalValue.value.trim().toLowerCase(),
+  (viewName) => viewName.trim().toLowerCase() === model.value.trim().toLowerCase(),
 ));
 
 const isPrimaryActionDisabled = computed(() => {
   return props.isModalLoading ||
     hasSameNameError.value ||
-    !modalValue.value ||
-    modalValue.value.length > MAX_VIEW_NAME_LENGTH;
+    !model.value ||
+    model.value.length > MAX_VIEW_NAME_LENGTH;
 });
 
 const primaryAction = computed(() => ({
@@ -88,7 +83,7 @@ const errorMessage = computed(() =>
   hasSameNameError.value
     ? i18n.translate(
       'Polaris.Tabs.DuplicateModal.errors.sameName',
-      { name: modalValue.value },
+      { name: model.value },
     )
     : undefined,
 );
@@ -113,7 +108,7 @@ const handlePrimaryAction = async () => {
     return;
   }
 
-  await emits('click-primary-action', modalValue.value);
+  await emits('click-primary-action', model.value);
   model.value = '';
   emits('close');
 }
