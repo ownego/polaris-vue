@@ -40,7 +40,11 @@ BlockStack(
           @change="handleChange"
         )
           template(#label, v-if="choice.label") {{ choice.label }}
-          template(#helpText, v-if="choice.helpText") {{ choice.helpText }}
+          template(
+            #helpText,
+            v-if="choice.helpText",
+            v-html="choice.helpText",
+          )
 
         div(
           v-if="choice.renderChildren",
