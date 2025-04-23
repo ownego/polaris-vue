@@ -43,8 +43,8 @@ BlockStack(
           template(
             #helpText,
             v-if="choice.helpText",
-            v-html="choice.helpText",
           )
+            span(v-html="choice.helpText")
 
         div(
           v-if="choice.renderChildren",
