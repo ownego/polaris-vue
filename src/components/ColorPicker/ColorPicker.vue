@@ -181,8 +181,6 @@ onBeforeUnmount(() => {
 const handleHueChange = (hue: number) => {
   colorHsb.hue = hue;
 
-  console.log(hue, outputColor.value);
-
   model.value = outputColor.value;
   emits('change', outputColor.value);
 };
