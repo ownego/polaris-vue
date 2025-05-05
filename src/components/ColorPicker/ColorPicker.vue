@@ -137,7 +137,7 @@ if (typeof model.value === 'string') {
   let colorRgb: RGBAColor;
 
   // Convert from hex to rgba object
-  if (/#[0-9abcdef]{3,6}/.test(model.value)) {
+  if (/#[0-9abcdef]{3,6}/.test(model.value?.toLowerCase())) {
     colorRgb = { ...hexToRgb(model.value), alpha: 1 };
   } else {
     // Convert from rgba string to object
