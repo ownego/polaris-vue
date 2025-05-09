@@ -814,7 +814,7 @@ function renderHeadingContent(heading: IndexTableHeading, index: number) {
           isCurrentlySorted && styles['TableHeadingSortIcon-visible'],
         ),
       },
-      [h(SourceComponent, { className: styles.TableHeadingSortSvg, ariaHidden: true, focusable: false })],
+      h(SourceComponent, { className: styles.TableHeadingSortSvg, ariaHidden: true, focusable: false }),
     );
 
     const defaultSortButtonProps = {
