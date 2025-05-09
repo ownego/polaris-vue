@@ -814,7 +814,7 @@ function renderHeadingContent(heading: IndexTableHeading, index: number) {
           isCurrentlySorted && styles['TableHeadingSortIcon-visible'],
         ),
       },
-      () => h(SourceComponent, { className: styles.TableHeadingSortSvg, ariaHidden: true, focusable: false }),
+      h(SourceComponent, { className: styles.TableHeadingSortSvg, ariaHidden: true, focusable: false }),
     );
 
     const defaultSortButtonProps = {
@@ -850,7 +850,7 @@ function renderHeadingContent(heading: IndexTableHeading, index: number) {
               styles.TableHeadingTooltipUnderlinePlaceholder,
             ),
           },
-          () => headingContent,
+          headingContent,
         )
       ],
     );
@@ -858,7 +858,7 @@ function renderHeadingContent(heading: IndexTableHeading, index: number) {
     if (!props.sortToggleLabels || selectMode.value) {
       return h(
         'div', { class: styles.SortableTableHeadingWithCustomMarkup },
-        () => sortMarkup,
+        sortMarkup,
       )
     }
 
