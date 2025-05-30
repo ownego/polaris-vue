@@ -22,6 +22,7 @@ import { getTheme } from '@/utilities/use-theme';
 import { useMediaQueryContext } from '@/use/useMediaQuery';
 import { useFocusManagerContext } from '@/use/useFocusManager';
 import { useEphemeralPresenceManagerContext } from '@/use/useEphemeralPresenceManager';
+import { useBreakpointsContext } from '@/use/useBreakpoints';
 
 export type AppProviderProps = {
   theme?: ThemeName;
@@ -52,6 +53,7 @@ const scrollLockManager = new ScrollLockManager();
 const { isNavigationCollapsed } = useMediaQueryContext();
 const focusManager = useFocusManagerContext();
 const ephemeralPresenceManager = useEphemeralPresenceManagerContext();
+const { breakpoints } = useBreakpointsContext();
 
 const portalsContainerRef = ref<HTMLElement | null>(null);
 
@@ -152,6 +154,7 @@ provide('media-query', { isNavigationCollapsed });
 provide('portals-manager', portalsContainerRef);
 provide('focus-manager', focusManager);
 provide('ephemeral-presence-manager', ephemeralPresenceManager);
+provide('breakpoints', { breakpoints });
 </script>
 
 <style lang="scss">

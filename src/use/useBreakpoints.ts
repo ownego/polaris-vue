@@ -1,10 +1,16 @@
-import { onBeforeUnmount, ref } from 'vue';
+import { onBeforeUnmount, ref, inject } from 'vue';
 import {getMediaConditions, themeDefault} from '@shopify/polaris-tokens';
-import type {
-  BreakpointsAlias,
-  BreakpointsAliasDirection,
-  BreakpointsTokenGroup,
-} from '@shopify/polaris-tokens';
+import type { BreakpointsTokenGroup } from '@shopify/polaris-tokens';
+import {
+  BreakpointsDirectionAlias,
+  BreakpointsMatches,
+  BreakpointsContextType
+ } from '@/utilities/breakpoints';
+
+export function useBreakpoints() {
+  const context = inject('breakpoints') as BreakpointsContextType;
+  return context;
+}
 
 const Breakpoints = {
   // TODO: Update to smDown
@@ -38,20 +44,6 @@ export function stackedContent() {
     : window.matchMedia(`(max-width: ${Breakpoints.stackedContent})`);
 }
 
-/**
- * Directional alias for each Polaris `breakpoints` token.
- *
- * @example 'smUp' | 'smDown' | 'smOnly' | 'mdUp' | etc.
- */
-export type BreakpointsDirectionAlias =
-  `${BreakpointsAlias}${Capitalize<BreakpointsAliasDirection>}`;
-
-/**
- * Match results for each directional Polaris `breakpoints` alias.
- */
-type BreakpointsMatches = {
-  [DirectionAlias in BreakpointsDirectionAlias]: boolean;
-};
 
 const breakpointsQueryEntries = getBreakpointsQueryEntries(
   themeDefault.breakpoints,
@@ -122,7 +114,7 @@ export interface UseBreakpointsOptions {
  * const breakpoints = useBreakpoints({defaults: true});
  * breakpoints //=> All values will be `true` during SSR
  */
-export function useBreakpoints(options?: UseBreakpointsOptions) {
+export function useBreakpointsContext(options?: UseBreakpointsOptions) {
   // On SSR, and initial CSR, we force usage of the defaults to avoid a
   // hydration mismatch error.
   // Later, in the effect, we will call this again on the client side without
@@ -130,6 +122,7 @@ export function useBreakpoints(options?: UseBreakpointsOptions) {
   const breakpoints = ref<BreakpointsMatches>(getMatches(options?.defaults, true));
 
   const setBreakpoints = (value: BreakpointsMatches) => {
+    console.log('Setting breakpoints:', value);
     breakpoints.value = value;
   };
 
@@ -163,7 +156,9 @@ export function useBreakpoints(options?: UseBreakpointsOptions) {
     });
   });
 
-  return breakpoints;
+  return {
+    breakpoints,
+  }
 }
 
 /**
@@ -200,3 +195,4 @@ export function getBreakpointsQueryEntries(breakpoints: BreakpointsTokenGroup) {
 function capitalize(str: string) {
   return str.charAt(0).toUpperCase() + str.slice(1);
 }
+
