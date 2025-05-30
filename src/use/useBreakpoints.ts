@@ -122,7 +122,6 @@ export function useBreakpointsContext(options?: UseBreakpointsOptions) {
   const breakpoints = ref<BreakpointsMatches>(getMatches(options?.defaults, true));
 
   const setBreakpoints = (value: BreakpointsMatches) => {
-    console.log('Setting breakpoints:', value);
     breakpoints.value = value;
   };
 
