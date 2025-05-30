@@ -154,7 +154,7 @@ provide('media-query', { isNavigationCollapsed });
 provide('portals-manager', portalsContainerRef);
 provide('focus-manager', focusManager);
 provide('ephemeral-presence-manager', ephemeralPresenceManager);
-provide('breakpoints', { breakpoints });
+provide('breakpoints', breakpoints);
 </script>
 
 <style lang="scss">

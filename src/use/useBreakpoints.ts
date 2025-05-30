@@ -8,7 +8,7 @@ import {
  } from '@/utilities/breakpoints';
 
 export function useBreakpoints() {
-  const context = inject('breakpoints') as BreakpointsContextType;
+  const context = inject('breakpoints', {}) as BreakpointsContextType;
   return context;
 }
 
