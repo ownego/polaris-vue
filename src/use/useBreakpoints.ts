@@ -1,7 +1,7 @@
 import { onBeforeUnmount, ref, inject } from 'vue';
 import {getMediaConditions, themeDefault} from '@shopify/polaris-tokens';
 import type { BreakpointsTokenGroup } from '@shopify/polaris-tokens';
-import {
+import type {
   BreakpointsDirectionAlias,
   BreakpointsMatches,
   BreakpointsContextType
