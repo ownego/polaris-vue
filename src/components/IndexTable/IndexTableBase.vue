@@ -402,8 +402,7 @@ watch(
     }
 
     if (tableElement.value) {
-      resizeTableScrollBar();
-      // Resize header headings after the scroll bar is resized
+      triggerResizeTableScrollBar();
       triggerResizeTableHeadings();
     }
   }
