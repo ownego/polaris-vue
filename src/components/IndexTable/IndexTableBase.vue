@@ -575,7 +575,6 @@ function resizeTableScrollBar() {
       `${tableElement.value.offsetWidth - SCROLL_BAR_PADDING}px`,
     );
 
-
     hideScrollContainer.value = scrollContainerElement.value?.offsetWidth === tableElement.value?.offsetWidth;
   }
 }
