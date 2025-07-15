@@ -394,6 +394,22 @@ watch(
 );
 
 watch(
+  () => [tableElement.value?.offsetWidth, scrollableContainerElementRef.value],
+  () => {
+    if (scrollableContainerElementRef.value) {
+      const { scrollableContainerRef } = scrollableContainerElementRef.value;
+      scrollableContainerElement.value = scrollableContainerRef;
+    }
+
+    if (tableElement.value) {
+      resizeTableScrollBar();
+      // Resize header headings after the scroll bar is resized
+      triggerResizeTableHeadings();
+    }
+  }
+);
+
+watch(
   () => tableInitialized.value,
   () => {
     if (tableInitialized.value) {
@@ -484,6 +500,7 @@ const handleResize = () => {
 
 const handleScrollContainerScroll = (tmpCanScrollLeft: boolean, tmpCanScrollRight: boolean) => {
   if (!scrollableContainerElement.value || !scrollBarElement.value) {
+    console.log('No scrollableContainerElement or scrollBarElement found');
     return;
   }
 
@@ -559,8 +576,10 @@ function resizeTableScrollBar() {
       `${tableElement.value.offsetWidth - SCROLL_BAR_PADDING}px`,
     );
 
+
     hideScrollContainer.value = scrollContainerElement.value?.offsetWidth === tableElement.value?.offsetWidth;
   }
+  console.log(hideScrollContainer.value, scrollContainerElement.value?.offsetWidth, tableElement.value?.offsetWidth, tableInitialized.value);
 }
 
 function triggerResizeTableScrollBar() {
