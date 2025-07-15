@@ -500,7 +500,6 @@ const handleResize = () => {
 
 const handleScrollContainerScroll = (tmpCanScrollLeft: boolean, tmpCanScrollRight: boolean) => {
   if (!scrollableContainerElement.value || !scrollBarElement.value) {
-    console.log('No scrollableContainerElement or scrollBarElement found');
     return;
   }
 
@@ -579,7 +578,6 @@ function resizeTableScrollBar() {
 
     hideScrollContainer.value = scrollContainerElement.value?.offsetWidth === tableElement.value?.offsetWidth;
   }
-  console.log(hideScrollContainer.value, scrollContainerElement.value?.offsetWidth, tableElement.value?.offsetWidth, tableInitialized.value);
 }
 
 function triggerResizeTableScrollBar() {
