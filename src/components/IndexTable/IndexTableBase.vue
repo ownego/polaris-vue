@@ -394,6 +394,21 @@ watch(
 );
 
 watch(
+  () => [tableElement.value?.offsetWidth, scrollableContainerElementRef.value],
+  () => {
+    if (scrollableContainerElementRef.value) {
+      const { scrollableContainerRef } = scrollableContainerElementRef.value;
+      scrollableContainerElement.value = scrollableContainerRef;
+    }
+
+    if (tableElement.value) {
+      triggerResizeTableScrollBar();
+      triggerResizeTableHeadings();
+    }
+  }
+);
+
+watch(
   () => tableInitialized.value,
   () => {
     if (tableInitialized.value) {
