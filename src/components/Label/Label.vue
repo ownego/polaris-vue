@@ -45,6 +45,6 @@ const className = computed(() => {
 });
 const requiredIndicator = computed(() => classNames(
   styles.Text,
-  props.requiredIndicator && styles.requiredIndicator,
+  props.requiredIndicator && styles.RequiredIndicator,
 ));
 </script>
