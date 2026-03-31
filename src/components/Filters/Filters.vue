@@ -15,6 +15,7 @@ div(
         block-align="center",
         :gap="{ xs: '400', md: '300' }",
       )
+        slot(name="prefix")
         div(
           :class="styles.SearchField",
         )
@@ -159,6 +160,8 @@ const emits = defineEmits<FiltersEvents>();
 const slots = defineSlots<{
   /** The content to display inline with the controls. */
   default?: (_?: VueNode) => VNode[];
+  /** The content to display before the search field. */
+  prefix?: (_?: VueNode) => VNode[];
 }>();
 
 const modelValue = computed({

@@ -119,6 +119,8 @@ div(
           @add-filter-click="emits('filter-click')",
           @clear-all="emits('clear-all')",
         )
+          template(v-if="$slots.prefix", #prefix)
+            slot(name="prefix")
           div(:class="styles.ButtonWrap")
             InlineStack(gap="200", align="start", block-align="center")
               div(:style="{...defaultStyle, ...transitionStyles[transitionFiltersState]}")
