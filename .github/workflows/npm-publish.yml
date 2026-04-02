@@ -16,23 +16,12 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      - uses: actions/setup-node@v4
-        with:
-          node-version: lts/jod
-      - run: yarn
-
-  publish-npm:
-    needs: build
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v4
         with:
           submodules: 'recursive'
           persist-credentials: false
       - uses: actions/setup-node@v4
         with:
-          node-version: lts/jod
-          registry-url: https://registry.npmjs.org/
+          node-version: lts/krypton
       - name: Setup pnpm
         uses: pnpm/action-setup@v3 # docs https://pnpm.io/continuous-integration#github-actions
         with:
@@ -46,7 +35,25 @@ jobs:
           cd ../
       - name: Build the package
         run: yarn build
+      - name: Upload build artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: dist
+          path: dist/
+
+  publish-npm:
+    needs: build
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: lts/krypton
+          registry-url: https://registry.npmjs.org/
+      - name: Download build artifacts
+        uses: actions/download-artifact@v4
+        with:
+          name: dist
+          path: dist/
       - name: Publish to NPM
         run: yarn publish --access public
-        env:
-          NODE_AUTH_TOKEN: ${{secrets.NPM_TOKEN}}

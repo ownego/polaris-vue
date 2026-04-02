@@ -104,5 +104,8 @@
     "url": "https://github.com/ownego/polaris-vue/issues"
   },
   "homepage": "https://github.com/ownego/polaris-vue#readme",
-  "license": "MIT"
+  "license": "MIT",
+  "publishConfig": {
+    "provenance": true
+  }
 }
