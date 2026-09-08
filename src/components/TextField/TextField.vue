@@ -397,10 +397,15 @@ const handleNumberChange = (steps: number, stepAmount = normalizedStep.value) =>
     Math.max(numericValue + steps * stepAmount, Number(normalizedMin.value)),
   );
 
-  model.value = String(newValue.toFixed(decimalPlaces));
+  // Emit the value we just computed rather than reading `model` back: while the
+  // parent controls the model, `defineModel` only emits `update:modelValue` and
+  // leaves the ref on its previous prop value until the parent re-renders.
+  const nextValue = String(newValue.toFixed(decimalPlaces));
 
-  emits('spinner-change', model.value, `${id}`);
-  emits('change', model.value, `${id}`);
+  model.value = nextValue;
+
+  emits('spinner-change', nextValue, `${id}`);
+  emits('change', nextValue, `${id}`);
 };
 
 const handleSpinnerButtonRelease = () => {
@@ -599,15 +604,17 @@ function handleKeyDown(event: KeyboardEvent) {
   }
 
   if ((which === Key.Home || key === 'Home') && props.min) {
-    model.value = String(props.min);
-    emits('spinner-change', model.value, `${id}`);
-    emits('change', model.value, `${id}`);
+    const minValue = String(props.min);
+    model.value = minValue;
+    emits('spinner-change', minValue, `${id}`);
+    emits('change', minValue, `${id}`);
   }
 
   if ((which === Key.End || key === 'End') && props.max !== undefined) {
-    model.value = String(props.max);
-    emits('spinner-change', model.value, `${id}`);
-    emits('change', model.value, `${id}`);
+    const maxValue = String(props.max);
+    model.value = maxValue;
+    emits('spinner-change', maxValue, `${id}`);
+    emits('change', maxValue, `${id}`);
   }
 
   if ((which === Key.PageUp || key === 'PageUp') && props.largeStep !== undefined) {
